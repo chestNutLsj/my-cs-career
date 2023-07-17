@@ -209,6 +209,7 @@ memset(data, -1, sizeof(data));    // right
 memset(data, 1, sizeof(data));    // wrong, data[x] would be 0x0101 instead of 1
 ```
 
+![[memset初始化的异常结果分析#`value` 参数设置为 1 错误的原因]]
 
 - 当结构体类型中包含指针时，在使用 memset 初始化时需要小心。比如如下代码中，
 ```
