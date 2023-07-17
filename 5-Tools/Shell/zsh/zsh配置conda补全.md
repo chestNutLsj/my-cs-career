@@ -12,7 +12,9 @@ conda-zsh-completion /usr/share/
 conda-zsh-completion /usr/share/licenses/
 conda-zsh-completion /usr/share/licenses/conda-zsh-completion/
 conda-zsh-completion /usr/share/licenses/conda-zsh-completion/LICENSE 
-conda-zsh-completion /usr/share/zsh/ conda-zsh-completion /usr/share/zsh/site-functions/ conda-zsh-completion /usr/share/zsh/site-functions/_conda
+conda-zsh-completion /usr/share/zsh/ 
+conda-zsh-completion /usr/share/zsh/site-functions/
+conda-zsh-completion /usr/share/zsh/site-functions/_conda
 ```
 
 需要用到的的安装路径是 `/usr/share/zsh/site-functions/_conda`。这是 zsh 插件 `conda-zsh-completion` 的主要安装位置。
@@ -34,5 +36,7 @@ conda-zsh-completion /usr/share/zsh/ conda-zsh-completion /usr/share/zsh/site-fu
 
 因此，在 `~/.zshrc` 中 compinit 行之前添加如下内容：
 ```shell
-fpath+=/usr/
+fpath+=/usr/share/zsh/site-functions/_conda
 ```
+
+之后重启终端即可使用。

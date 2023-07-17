@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "b7b9a0b6c16a6c7f",
+        "id": "088a7f4dbe692b50",
         "type": "tabs",
         "children": [
           {
-            "id": "3c3b8a3ad502e0fe",
+            "id": "1a0f7cd7aa2e2027",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "5-Tools/Shell/zsh配置conda补全.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -77,8 +73,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 234.5,
-    "collapsed": true
+    "width": 234.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -95,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "5-Tools/Shell/zsh配置conda补全.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -112,7 +106,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "5-Tools/Shell/zsh配置conda补全.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,9 +143,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "5-Tools/Shell/zsh配置conda补全.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -177,9 +168,11 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "3c3b8a3ad502e0fe",
+  "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
-    "5-Tools/Shell/zsh配置conda补全.md",
+    "5-Tools/Shell/zsh/zim配置框架.md",
+    "5-Tools/Shell/zsh",
+    "5-Tools/Shell/zsh/zsh配置conda补全.md",
     "5-Tools/Dev-Tools/Conda/报错及解决办法.md",
     "5-Tools/Dev-Tools/Conda/什么是Conda？.md",
     "5-Tools/Dev-Tools/Conda/Conda常用命令.md",
@@ -214,11 +207,9 @@
     "1-Theory/1-ProgramLanguage/Cpp/cs106l/lecture16_special_topics_s23.pdf",
     "1-Theory/1-ProgramLanguage/Cpp/cs106l/lecture14_typesafety_s23.pdf",
     "1-Theory/1-ProgramLanguage/Cpp/cs106l/lecture13_move_semantics_s23.pdf",
-    "1-Theory/1-ProgramLanguage/Cpp/cs106l/lecture11_operators_s23.pdf",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/10-info-function.md",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/05-set-pagination-off.md",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/04-quit-gdb-silently.md",
-    "5-Tools/Dev-Tools/GDB/100-gdb-tips/03-start-gdb-silently.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/derived_class_constructor.png",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/inheritance.png",
     "7-OS/Linux/WSL/assets/Pasted image 20230714104958.png",
