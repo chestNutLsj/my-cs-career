@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "900ca48d2e567521",
+        "id": "be654bed197cad09",
         "type": "tabs",
         "children": [
           {
-            "id": "02cc729a4ccdc7b0",
+            "id": "32b6041feb93b88c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "5-Tools/Dev-Tools/Git/Git小结.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -77,8 +73,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 234.5,
-    "collapsed": true
+    "width": 234.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -95,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "5-Tools/Dev-Tools/Git/Git小结.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -112,7 +106,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "5-Tools/Dev-Tools/Git/Git小结.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,9 +143,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "5-Tools/Dev-Tools/Git/Git小结.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -176,8 +167,9 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "02cc729a4ccdc7b0",
+  "active": "32b6041feb93b88c",
   "lastOpenFiles": [
+    "5-Tools/Dev-Tools/Git/Git小结.md",
     "5-Tools/Dev-Tools/Git/Git常用操作.md",
     "7-OS/Linux/universal/AppImage 介绍.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/15-打印乘法表.md",
@@ -217,7 +209,6 @@
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/use-$_exitcode.md",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/use-$_-$__-variables.md",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/up-down-select-frame.md",
-    "5-Tools/Dev-Tools/GDB/100-gdb-tips/tui-mode.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/derived_class_constructor.png",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/inheritance.png",
     "7-OS/Linux/WSL/assets/Pasted image 20230714104958.png",
