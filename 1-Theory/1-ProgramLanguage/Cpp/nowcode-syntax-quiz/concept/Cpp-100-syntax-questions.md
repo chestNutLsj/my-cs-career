@@ -1,5 +1,5 @@
-## 基本语法
-### 0x01. 返回值
+
+## 0x01. 返回值
 
 1. 通过 return 语句，函数可以返回一个或多个返回值。（❌）
 
@@ -31,7 +31,7 @@ int main() {
 
 除了 `std::tuple`，你还可以使用 `std::pair` 或自定义的结构体或类或指针或引用等数据结构来返回多个参数。这些方法都能实现在函数返回时返回多个值的目的。在选择返回多个值的方法时，需要考虑代码的可读性、维护性以及对不同类型返回值的支持。
 
-### 继承
+## 继承
 1. 派生类对象不会建立基类的私有数据成员，所以不能访问基类的私有数据成员（❌）
 
 >[!error] 派生类究竟继承了基类的私有成员了吗？
@@ -82,10 +82,10 @@ Size of Derived: 16 bytes
 
 这证实了派生类确实继承了基类的私有成员，只是不能直接访问这些私有成员而已。当您在派生类中定义了成员函数或使用基类的公有/保护成员函数来访问基类的私有成员时，您可以间接地操作这些私有成员。
 
-### 文件 IO
+## 文件 IO
 1. 使文件指针重新定位到文件读写的首地址的函数是：
 
-`rewind()`：用于将文件内部的位置指针重新指向一个流(数据流/文件)的开头；
+`rewind()`：用于将文件内部的位置指针重新指向一个流(数据流/文件)的开头；rewind 单词的本义是：倒带
 >[! note] 其它相似函数的功能
 >- ftell () 函数用于得到文件位置指针当前位置相对于文件首的偏移字节数；
 >- fseek()函数用于设置文件指针的位置；
@@ -112,6 +112,47 @@ int main() {
 }
 ```
 
-### 内存操作
+## 内存操作
 
-#### `memset() ` 函数
+### `memset() ` 函数
+
+1. 判断以下代码的输出：
+```cpp
+#include <iostream>
+#include <cstring> 
+using namespace std;
+ 
+class Parent {
+public:
+    virtual void output();
+};
+ 
+void Parent::output() {
+    printf("Parent!");
+}
+ 
+class Son : public Parent {
+public:
+    virtual void output();
+};
+ 
+void Son::output() {
+    printf("Son!");
+}
+ 
+int main() {
+ 
+    Son s;
+    memset(&s, 0, sizeof(s));
+    Parent& p = s;
+    p.output();
+ 
+    return 0;
+}
+```
+A. Parent!
+B. Son!
+C. 编译出错
+D. 没有输出结果，程序运行出错
+
+实际结果是 D
