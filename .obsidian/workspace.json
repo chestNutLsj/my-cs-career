@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/15-打印乘法表.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/17-计算小球反弹与路径长度.md",
                 "mode": "source",
                 "source": false
               }
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/15-打印乘法表.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/17-计算小球反弹与路径长度.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/15-打印乘法表.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/17-计算小球反弹与路径长度.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/15-打印乘法表.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/17-计算小球反弹与路径长度.md"
               }
             }
           }
@@ -178,6 +178,8 @@
   },
   "active": "32b6041feb93b88c",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/15-打印乘法表.md",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/17-计算小球反弹与路径长度.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/14-水仙花数.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/13-阶乘.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/12-求`1-n`之间偶数的和.md",
@@ -186,7 +188,6 @@
     "5-Tools/Dev-Tools/Git/Git小结.md",
     "5-Tools/Dev-Tools/Git/Git常用操作.md",
     "7-OS/Linux/universal/AppImage 介绍.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/15-打印乘法表.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/multiply-table.gif",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/multiply-table.gif.crdownload",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/Pasted image 20230717152935.png",
@@ -217,7 +218,6 @@
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/use-$_siginfo-variable.md",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/use-$_exitcode.md",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/use-$_-$__-variables.md",
-    "5-Tools/Dev-Tools/GDB/100-gdb-tips/up-down-select-frame.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/derived_class_constructor.png",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/inheritance.png",
     "7-OS/Linux/WSL/assets/Pasted image 20230714104958.png",
