@@ -170,6 +170,7 @@
   },
   "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
+    "1-Theory/2-DataStruct/dsa-deng",
     "5-Tools/Shell/zsh/zim配置框架.md",
     "5-Tools/Shell/zsh",
     "5-Tools/Shell/zsh/zsh配置conda补全.md",
@@ -209,7 +210,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/cs106l/lecture13_move_semantics_s23.pdf",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/10-info-function.md",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/05-set-pagination-off.md",
-    "5-Tools/Dev-Tools/GDB/100-gdb-tips/04-quit-gdb-silently.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/derived_class_constructor.png",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/inheritance.png",
     "7-OS/Linux/WSL/assets/Pasted image 20230714104958.png",
