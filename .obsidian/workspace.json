@@ -11,8 +11,12 @@
             "id": "3c3b8a3ad502e0fe",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "5-Tools/Shell/zsh配置conda补全.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -90,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "5-Tools/Shell/zsh配置conda补全.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,6 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "5-Tools/Shell/zsh配置conda补全.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -143,7 +149,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "5-Tools/Shell/zsh配置conda补全.md"
+              }
             }
           }
         ]
@@ -170,6 +178,7 @@
   },
   "active": "3c3b8a3ad502e0fe",
   "lastOpenFiles": [
+    "5-Tools/Shell/zsh配置conda补全.md",
     "5-Tools/Dev-Tools/Conda/报错及解决办法.md",
     "5-Tools/Dev-Tools/Conda/什么是Conda？.md",
     "5-Tools/Dev-Tools/Conda/Conda常用命令.md",
@@ -209,7 +218,6 @@
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/05-set-pagination-off.md",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/04-quit-gdb-silently.md",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/03-start-gdb-silently.md",
-    "5-Tools/Dev-Tools/GDB/100-gdb-tips/02-show-copying-warranty.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/derived_class_constructor.png",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/inheritance.png",
     "7-OS/Linux/WSL/assets/Pasted image 20230714104958.png",
