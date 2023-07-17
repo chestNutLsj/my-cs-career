@@ -1,0 +1,15 @@
+{
+  "showInlineTitle": true,
+  "newFileLocation": "current",
+  "attachmentFolderPath": "./assets",
+  "alwaysUpdateLinks": true,
+  "promptDelete": false,
+  "trashOption": "local",
+  "showFrontmatter": true,
+  "showLineNumber": false,
+  "autoConvertHtml": true,
+  "autoPairBrackets": false,
+  "autoPairMarkdown": false,
+  "useMarkdownLinks": false,
+  "spellcheck": false
+}
