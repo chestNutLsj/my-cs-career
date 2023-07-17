@@ -11,8 +11,12 @@
             "id": "e941462f70d006e9",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -90,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,6 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -143,7 +149,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md"
+              }
             }
           }
         ]
@@ -170,6 +178,7 @@
   },
   "active": "e941462f70d006e9",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/18-判断质数.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/17-计算小球反弹与路径长度.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/15-打印乘法表.md",
@@ -209,7 +218,6 @@
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/use-short-command.md",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/use-$_thread-variable.md",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/use-$_siginfo-variable.md",
-    "5-Tools/Dev-Tools/GDB/100-gdb-tips/use-$_exitcode.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/derived_class_constructor.png",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/inheritance.png",
     "7-OS/Linux/WSL/assets/Pasted image 20230714104958.png",
