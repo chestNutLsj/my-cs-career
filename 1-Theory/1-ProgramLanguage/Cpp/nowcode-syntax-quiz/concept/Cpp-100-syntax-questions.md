@@ -84,3 +84,34 @@ Size of Derived: 16 bytes
 
 ### 文件 IO
 1. 使文件指针重新定位到文件读写的首地址的函数是：
+
+`rewind()`：用于将文件内部的位置指针重新指向一个流(数据流/文件)的开头；
+>[! note] 其它相似函数的功能
+>- ftell () 函数用于得到文件位置指针当前位置相对于文件首的偏移字节数；
+>- fseek()函数用于设置文件指针的位置；
+>- ferror ()函数可以用于检查调用输入输出函数时出现的错误。
+
+实际上 `fseek()` 也可以设置到文件开头，而且对错误处理的扩展性更好，但是使用比较复杂：[[60-IO-files#^9c9960]]
+
+```cpp
+#include <iostream>
+#include <fstream>
+
+int main() {
+    std::fstream file("example.txt", std::ios::in); // 打开文件，以只读方式
+
+    if (file.is_open()) {
+        file.seekg(0, std::ios::beg); // 将文件指针移动到文件开头
+        // 在这里进行读取操作...
+        file.close(); // 关闭文件
+    } else {
+        std::cout << "Failed to open the file." << std::endl;
+    }
+
+    return 0;
+}
+```
+
+### 内存操作
+
+#### `memset() ` 函数
