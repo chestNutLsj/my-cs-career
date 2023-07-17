@@ -11,5 +11,12 @@
   "autoPairBrackets": false,
   "autoPairMarkdown": false,
   "useMarkdownLinks": false,
-  "spellcheck": false
+  "spellcheck": false,
+  "pdfExportSettings": {
+    "includeName": false,
+    "pageSize": "Letter",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  }
 }
