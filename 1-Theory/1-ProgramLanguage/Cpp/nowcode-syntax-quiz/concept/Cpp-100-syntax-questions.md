@@ -33,3 +33,51 @@ int main() {
 
 ### 继承
 1. 派生类对象不会建立基类的私有数据成员，所以不能访问基类的私有数据成员（❌）
+
+>[!error] 派生类究竟继承了基类的私有成员了吗？
+>一开始我以为这个题是个因果逻辑的错误，但是转念一想可以动手实例化两个派生了和基类，分别比较对象的内存占用，这样就能确定是否真正继承了。因此可以编写如下代码，实际验证内存占用：
+
+```cpp 
+#include <iostream>
+
+class Base {
+private:
+    int privateVar;
+protected:
+    int protectedVar;
+public:
+    int publicVar;
+};
+
+class Derived : public Base {
+public:
+    int derivedVar;
+};
+
+int main() {
+    Base baseObj;
+    Derived derivedObj;
+
+    std::cout << "Size of Base: " << sizeof(baseObj) << " bytes" << std::endl;
+    std::cout << "Size of Derived: " << sizeof(derivedObj) << " bytes" << std::endl;
+
+    return 0;
+}
+```
+
+运行这段代码，将会输出两个类对象的内存占用大小。如果派生类继承了基类的私有成员，那么派生类的对象的内存大小应该比基类的对象的内存大小要大，因为派生类对象包含了基类的成员。
+
+而运行结果是：
+```
+Size of Base: 12 bytes
+Size of Derived: 16 bytes
+```
+
+让我们分析这个结果：
+
+1. `Size of Base: 12 bytes`: 基类 `Base` 包含一个私有成员 `privateVar` 和一个保护成员 `protectedVar`，以及一个公有成员 `publicVar`。由于大多数系统的 `int` 类型占用 4 个字节，这里的大小为 12 字节。
+    
+2. `Size of Derived: 16 bytes`: 派生类 `Derived` 继承了基类 `Base` 的成员，包括私有成员 `privateVar` 、保护成员 `protectedVar`，并且还有自己的成员 `derivedVar`。由于继承了基类的私有成员，导致派生类的对象大小增加。因此，大小为 8 字节（基类的大小） + 4 字节（派生类新增的成员）= 12 字节。
+    
+
+这证实了派生类确实继承了基类的私有成员，只是不能直接访问这些私有成员而已。当您在派生类中定义了成员函数或使用基类的公有/保护成员函数来访问基类的私有成员时，您可以间接地操作这些私有成员。
