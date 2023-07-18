@@ -11,8 +11,12 @@
             "id": "f3b6670d22398bc2",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -90,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,6 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -143,7 +149,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md"
+              }
             }
           }
         ]
@@ -168,9 +176,10 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "f3b6670d22398bc2",
   "lastOpenFiles": [
-    "1-Theory/4-Compose-Principle/CSAPP",
+    "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md",
+    "1-Theory/4-Computer-Architecture/CSAPP",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-本章结构.md",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718172357.png",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/636d8a8d-cc48-4e87-8911-4b610feaf35b.png",
@@ -204,7 +213,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/40-Class(I).md",
     "5-Tools/Obsidian/Callout.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/42-Special-members.md",
-    "1-Theory/5-OperatingSystem/tsinghua-chyyuu",
     "5-Tools/Shell/zsh/zim配置框架.md",
     "5-Tools/Shell/zsh/zsh配置conda补全.md",
     "5-Tools/Dev-Tools/Conda/报错及解决办法.md",
