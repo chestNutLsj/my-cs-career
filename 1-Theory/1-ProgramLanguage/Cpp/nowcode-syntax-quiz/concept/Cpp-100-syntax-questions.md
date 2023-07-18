@@ -259,6 +259,41 @@ MyParameters* my = dynamic_cast<MyParameters*>(pars);
 >
 >类比：相当于建房子，构造：先打基脚，在往上建，析构：从上面往下拆
 
+### 虚函数
+1. 包含虚函数的类有 this 指针。（✅）
+> [! done] 虚函数的 this 指针
+> 包含虚函数的类可以使用 `this` 指针。在 C++ 中，每个非静态成员函数都有一个隐式的指向当前对象的指针，即 `this` 指针。`this` 指针指向调用该成员函数的对象的地址。
+> 当你调用一个包含虚函数的类的成员函数时，该函数被绑定到正确的虚函数表中，并且 `this` 指针会被自动传递给该函数，指向调用函数的对象。这样，函数就能正确地操作属于该对象的成员变量和虚函数。
+
+例如，考虑以下包含虚函数的简单类：
+
+```cpp
+#include <iostream>
+
+class Base {
+public:
+    virtual void print() {
+        std::cout << "Base::print() called. this = " << this << std::endl;
+    }
+};
+
+int main() {
+    Base obj;
+    obj.print();
+    return 0;
+}
+```
+
+输出结果可能类似于：
+
+```
+Base::print() called. this = 0x7ffdbf7ca6df
+```
+
+在上面的例子中，创建了一个 `Base` 类的对象 `obj` 并调用了 `print()` 成员函数。在 `print()` 函数中，我们打印了 `this` 指针的值，它指向了 `obj` 对象的地址。
+
+所以，包含虚函数的类是支持使用 `this` 指针的，并且这使得类的成员函数能够正确地与对象交互。
+
 ## 运算符
 ### sizeof
 1. sizeof 与 strlen 的区别？
@@ -274,3 +309,7 @@ MyParameters* my = dynamic_cast<MyParameters*>(pars);
 ## 变量
 ### 标识符
 1. 标识符命名规则
+>[! done] 作为变量名的标识符命名规则
+>1. 第一个字符必须是字母或下划线，除此外可以由字符、数字、下划线组成；
+>2. 不能是关键词；
+
