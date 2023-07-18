@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/57-创建二维动态数组.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/30-数组元素处理.md",
                 "mode": "source",
                 "source": false
               }
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/57-创建二维动态数组.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/30-数组元素处理.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/57-创建二维动态数组.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/30-数组元素处理.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/57-创建二维动态数组.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/30-数组元素处理.md"
               }
             }
           }
@@ -178,8 +178,9 @@
   },
   "active": "ecdfd672c91b9c62",
   "lastOpenFiles": [
-    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/33-Dynamic-memory.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/57-创建二维动态数组.md",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/30-数组元素处理.md",
+    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/33-Dynamic-memory.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/1-Basic/12-Constants.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/34-Data-Structures.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/22-选择排序.md",
@@ -209,7 +210,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/13-阶乘.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/12-求`1-n`之间偶数的和.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/06-交换两个变量的值.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/01-浮点数四舍五入.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/multiply-table.gif",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/multiply-table.gif.crdownload",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/Pasted image 20230717152935.png",
