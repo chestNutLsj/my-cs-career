@@ -271,3 +271,6 @@ MyParameters* my = dynamic_cast<MyParameters*>(pars);
 >1. `c = a + b; //implicitly using operator` 这样是隐式地直接使用重载后的运算符
 >2. `c = a.operatpr+(b); //explicitly using its function name` 这样是运用运算符函数的调用格式
 
+## 变量
+### 标识符
+1. 标识符命名规则
