@@ -265,3 +265,9 @@ MyParameters* my = dynamic_cast<MyParameters*>(pars);
 >[! done] sizeof 是函数吗？
 >sizeof 是操作符，在编译阶段就获得结果，strlen 是函数调用，在运行阶段才获得值。
 
+### 运算符重载
+1. 调用重载后运算符的方法
+>[! done] 调用重载运算符的两种方法
+>1. `c = a + b; //implicitly using operator` 这样是隐式地直接使用重载后的运算符
+>2. `c = a.operatpr+(b); //explicitly using its function name` 这样是运用运算符函数的调用格式
+

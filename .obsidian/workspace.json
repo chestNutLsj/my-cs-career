@@ -20,12 +20,12 @@
             }
           },
           {
-            "id": "7e56015203d0a46d",
+            "id": "45388b8c71bbd0c4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "5-Tools/Obsidian/Callout.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/41-Class(II).md",
                 "mode": "source",
                 "source": false
               }
@@ -60,7 +60,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "析构函数",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -190,8 +190,10 @@
   },
   "active": "1a0f7cd7aa2e2027",
   "lastOpenFiles": [
-    "5-Tools/Obsidian/Callout.md",
+    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/41-Class(II).md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
+    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/40-Class(I).md",
+    "5-Tools/Obsidian/Callout.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/42-Special-members.md",
     "1-Theory/5-OperatingSystem/未命名",
     "1-Theory/5-OperatingSystem/Leetbook",
@@ -228,8 +230,6 @@
     "1-Theory/1-ProgramLanguage/Python/番外篇/Python数据分析师面试题.md",
     "1-Theory/1-ProgramLanguage/Cpp/cs106l/lecture1_welcome_s23.pdf",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz",
-    "5-Tools/Dev-Tools/GDB/100-gdb-tips/00-index.md",
-    "5-Tools/Dev-Tools/GDB/100-gdb-tips/10-info-function.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/derived_class_constructor.png",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/inheritance.png",
     "7-OS/Linux/WSL/assets/Pasted image 20230714104958.png",
