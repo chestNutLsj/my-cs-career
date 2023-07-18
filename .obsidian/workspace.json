@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "7d61b526c3f70b91",
+        "id": "67e27f87606658c2",
         "type": "tabs",
         "children": [
           {
-            "id": "ecdfd672c91b9c62",
+            "id": "1b8e19c542e21108",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/30-数组元素处理.md",
+                "file": "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-.md",
                 "mode": "source",
                 "source": false
               }
@@ -77,7 +77,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 234.5
+    "width": 200.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/30-数组元素处理.md",
+                "file": "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/30-数组元素处理.md",
+                "file": "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/30-数组元素处理.md"
+                "file": "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-.md"
               }
             }
           }
@@ -176,12 +176,23 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "ecdfd672c91b9c62",
+  "active": "1b8e19c542e21108",
   "lastOpenFiles": [
+    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718170403.png",
+    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-.md",
+    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718170222.png",
+    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/1612231971-KeEFGA-overall.png",
+    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718170236.png",
+    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/1612231971-KeEFGA-overall.png.crdownload",
+    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets",
+    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门",
+    "1-Theory/5-OperatingSystem/sjtu-ipads",
+    "1-Theory/5-OperatingSystem/xmu-zhengw",
+    "1-Theory/5-OperatingSystem/nju-jyy",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/30-数组元素处理.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/double-pointer.gif",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/double-pointer.gif.crdownload",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/57-创建二维动态数组.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/30-数组元素处理.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/33-Dynamic-memory.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/1-Basic/12-Constants.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/34-Data-Structures.md",
@@ -195,11 +206,9 @@
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/40-Class(I).md",
     "5-Tools/Obsidian/Callout.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/42-Special-members.md",
-    "1-Theory/5-OperatingSystem/未命名",
+    "1-Theory/5-OperatingSystem/tsinghua-chyyuu",
     "1-Theory/5-OperatingSystem/Leetbook",
-    "1-Theory/2-DataStruct/dsa-deng",
     "5-Tools/Shell/zsh/zim配置框架.md",
-    "5-Tools/Shell/zsh",
     "5-Tools/Shell/zsh/zsh配置conda补全.md",
     "5-Tools/Dev-Tools/Conda/报错及解决办法.md",
     "5-Tools/Dev-Tools/Conda/什么是Conda？.md",
@@ -210,20 +219,10 @@
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/15-打印乘法表.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/14-水仙花数.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/13-阶乘.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/12-求`1-n`之间偶数的和.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/multiply-table.gif",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/multiply-table.gif.crdownload",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/Pasted image 20230717152935.png",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/factorial-recursion.png",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/even-number-law.png",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding",
-    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/derived_class_constructor.png",
-    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/inheritance.png",
-    "7-OS/Linux/WSL/assets/Pasted image 20230714104958.png",
-    "7-OS/Linux/WSL/assets/Pasted image 20230714104946.png",
-    "7-OS/Linux/WSL/assets/Pasted image 20230714103320.png",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
