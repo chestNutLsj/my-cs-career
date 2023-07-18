@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "aee2ce9b6a05f713",
+        "id": "7d61b526c3f70b91",
         "type": "tabs",
         "children": [
           {
-            "id": "2d2759172f753a60",
+            "id": "ecdfd672c91b9c62",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/33-Dynamic-memory.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -44,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "dynamic",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -90,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/33-Dynamic-memory.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,6 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/33-Dynamic-memory.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -143,7 +149,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/33-Dynamic-memory.md"
+              }
             }
           }
         ]
@@ -168,8 +176,9 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "2d2759172f753a60",
+  "active": "ecdfd672c91b9c62",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/1-Basic/12-Constants.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/33-Dynamic-memory.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/34-Data-Structures.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/22-选择排序.md",
@@ -201,7 +210,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/06-交换两个变量的值.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/01-浮点数四舍五入.md",
     "5-Tools/Dev-Tools/Git/Git小结.md",
-    "5-Tools/Dev-Tools/Git/Git常用操作.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/multiply-table.gif",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/multiply-table.gif.crdownload",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/Pasted image 20230717152935.png",
