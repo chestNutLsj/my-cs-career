@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "67e27f87606658c2",
+        "id": "940995ba741556db",
         "type": "tabs",
         "children": [
           {
-            "id": "1b8e19c542e21108",
+            "id": "f3b6670d22398bc2",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-.md",
+                "file": "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-本章结构.md",
                 "mode": "source",
                 "source": false
               }
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-.md",
+                "file": "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-本章结构.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-.md",
+                "file": "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-本章结构.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-.md"
+                "file": "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-本章结构.md"
               }
             }
           }
@@ -176,10 +176,15 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "1b8e19c542e21108",
+  "active": "f3b6670d22398bc2",
   "lastOpenFiles": [
+    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/636d8a8d-cc48-4e87-8911-4b610feaf35b.png",
+    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-本章结构.md",
+    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/636d8a8d-cc48-4e87-8911-4b610feaf35b.png.crdownload",
+    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718171128.png",
+    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718170655.png",
+    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718170607.png",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718170403.png",
-    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-.md",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718170222.png",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/1612231971-KeEFGA-overall.png",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718170236.png",
@@ -207,7 +212,6 @@
     "5-Tools/Obsidian/Callout.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/42-Special-members.md",
     "1-Theory/5-OperatingSystem/tsinghua-chyyuu",
-    "1-Theory/5-OperatingSystem/Leetbook",
     "5-Tools/Shell/zsh/zim配置框架.md",
     "5-Tools/Shell/zsh/zsh配置conda补全.md",
     "5-Tools/Dev-Tools/Conda/报错及解决办法.md",
@@ -219,10 +223,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/15-打印乘法表.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/14-水仙花数.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/13-阶乘.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/multiply-table.gif",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/Pasted image 20230717152935.png",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/factorial-recursion.png",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/even-number-law.png",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
