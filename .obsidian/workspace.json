@@ -11,8 +11,12 @@
             "id": "1a0f7cd7aa2e2027",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -44,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "析构函数",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -73,7 +77,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 234.5
+    "width": 234.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -90,6 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,6 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -143,15 +150,16 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md"
+              }
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -168,8 +176,9 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "1a0f7cd7aa2e2027",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/42-Special-members.md",
     "1-Theory/5-OperatingSystem/未命名",
     "1-Theory/5-OperatingSystem/Leetbook",
     "1-Theory/2-DataStruct/dsa-deng",
@@ -207,7 +216,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/cs106l/lecture1_welcome_s23.pdf",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/00-index.md",
-    "1-Theory/1-ProgramLanguage/Cpp/cs106l/lecture16_special_topics_s23.pdf",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/10-info-function.md",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/05-set-pagination-off.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/derived_class_constructor.png",

@@ -246,4 +246,9 @@ BaseParameters* pars = &my_pars;
 
 MyParameters* my = dynamic_cast<MyParameters*>(pars);
 ```
-程序运行到dynamic_cast时发生异常。原因其实也很容易发现，我们的目的是为了初始化数据结构MyParameters里的data和buf，正常来说需要初始化的内存空间是sizeof(int) * 3 * 2 = 24字节，但是使用memset直接初始化MyParameters类型的数据结构时，sizeof(my_pars)却是28字节，因为为了实现多态机制，C++对有虚函数的对象会包含一个指向虚函数表(V-Table)的指针，当使用memset时，会把该虚函数表的指针也初始化为0，而dynamic_cast也使用RTTI技术，运行时会使用到V-Table，**可此时由于与V-Table的链接已经被破坏，导致程序发生异常。**
+程序运行到 dynamic_cast 时发生异常。原因其实也很容易发现，我们的目的是为了初始化数据结构 MyParameters 里的 data 和 buf，正常来说需要初始化的内存空间是 sizeof(int) * 3 * 2 = 24字节，但是使用 memset 直接初始化 MyParameters 类型的数据结构时，sizeof(my_pars)却是28字节，因为为了实现多态机制，C++对有虚函数的对象会包含一个指向虚函数表(V-Table)的指针，当使用 memset 时，会把该虚函数表的指针也初始化为0，而 dynamic_cast 也使用 RTTI 技术，运行时会使用到 V-Table，**可此时由于与 V-Table 的链接已经被破坏，导致程序发生异常。**
+
+## 类与成员
+### 构造函数与析构函数调用顺序
+
+1. 假设ClassY:publicX，即类Y是类X的派生类，则说明一个Y类的对象时和删Y类对象时，调用构造函数和析构函数的次序分别为（）
