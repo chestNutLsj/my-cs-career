@@ -11,8 +11,12 @@
             "id": "31679b0ab577fcac",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/21-冒泡排序.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -90,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/21-冒泡排序.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,6 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/21-冒泡排序.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -143,7 +149,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/21-冒泡排序.md"
+              }
             }
           }
         ]
@@ -170,6 +178,9 @@
   },
   "active": "31679b0ab577fcac",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/bubble-sort-sample.gif",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/bubble-sort-sample.gif.crdownload",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/21-冒泡排序.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/memset初始化的异常结果分析.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/41-Class(II).md",
@@ -206,10 +217,7 @@
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/1-Basic/13-Operators.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding",
-    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/1-Basic/11-Variables.md",
-    "1-Theory/1-ProgramLanguage/Python/番外篇/Python数据分析师面试题.md",
     "1-Theory/1-ProgramLanguage/Cpp/cs106l/lecture1_welcome_s23.pdf",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/derived_class_constructor.png",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/assets/inheritance.png",
     "7-OS/Linux/WSL/assets/Pasted image 20230714104958.png",
