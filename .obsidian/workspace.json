@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/31-字符串比较大小.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/13-阶乘.md",
                 "mode": "source",
                 "source": false
               }
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/31-字符串比较大小.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/13-阶乘.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/31-字符串比较大小.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/13-阶乘.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/31-字符串比较大小.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/13-阶乘.md"
               }
             }
           }
