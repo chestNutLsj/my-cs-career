@@ -90,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -107,7 +106,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -145,9 +143,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -174,8 +170,14 @@
   },
   "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
-    "1-Theory/5-OS-principle-design/hit-lzj",
+    "1-Theory/1-ProgramLanguage/Assembly/X86/x86-real-to-protect",
+    "1-Theory/1-ProgramLanguage/Assembly/X86/dos-wangsh",
     "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md",
+    "1-Theory/1-ProgramLanguage/Assembly/WebAssembly",
+    "1-Theory/1-ProgramLanguage/Assembly/ARM",
+    "1-Theory/1-ProgramLanguage/Assembly/X86",
+    "1-Theory/1-ProgramLanguage/Assembly",
+    "1-Theory/5-OS-principle-design/hit-lzj",
     "1-Theory/4-Computer-Architecture/CSAPP",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-本章结构.md",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718172357.png",
@@ -190,20 +192,14 @@
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718170236.png",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/1612231971-KeEFGA-overall.png.crdownload",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets",
-    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门",
-    "1-Theory/5-OS-principle-design/sjtu-ipads",
-    "1-Theory/5-OperatingSystem/xmu-zhengw",
-    "1-Theory/5-OS-principle-design/nju-jyy",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/30-数组元素处理.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/double-pointer.gif",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/double-pointer.gif.crdownload",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/57-创建二维动态数组.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/33-Dynamic-memory.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/1-Basic/12-Constants.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/34-Data-Structures.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/22-选择排序.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/21-冒泡排序.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/bubble-sort-sample.gif.crdownload",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/memset初始化的异常结果分析.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/41-Class(II).md",

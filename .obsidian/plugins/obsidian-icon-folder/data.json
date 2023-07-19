@@ -5,11 +5,11 @@
     "fontSize": 16,
     "iconColor": null,
     "recentlyUsedIcons": [
+      "TiAssembly",
       "LiGdbArcher",
       "TiBooks",
       "TiTerminal2",
-      "TiServer",
-      "LiServer"
+      "TiServer"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -71,5 +71,6 @@
   "7-OS-application/Windows": "SiWindows",
   "7-OS-application/Linux/Arch": "SiArchlinux",
   "7-OS-application/Linux/Debian": "SiDebian",
-  "7-OS-application/Linux/Kali": "SiKalilinux"
+  "7-OS-application/Linux/Kali": "SiKalilinux",
+  "1-Theory/1-ProgramLanguage/Assembly": "TiAssembly"
 }
