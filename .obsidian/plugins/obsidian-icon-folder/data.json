@@ -52,12 +52,6 @@
   "2-Develop/3-BackEnd": "TiServer",
   "2-Develop/3-BackEnd/Flask": "SiFlask",
   "1-Theory": "TiBooks",
-  "7-OS": "FasLaptopCode",
-  "7-OS/Linux": "FabLinux",
-  "7-OS/Windows": "SiWindows",
-  "7-OS/Linux/Arch": "SiArchlinux",
-  "7-OS/Linux/Debian": "SiDebian",
-  "7-OS/Linux/Kali": "SiKalilinux",
   "3-AI": "SiMachineLearning",
   "4-Secure": "FasShield",
   "6-Scholar": "SiGooglescholar",
@@ -71,5 +65,11 @@
   "1-Theory/8-Compiler/Codon": "LiCodon",
   "1-Theory/8-Compiler/GCC": "LiGcc",
   "1-Theory/8-Compiler/LLVM": "SiLlvm",
-  "5-Tools/Dev-Tools/GDB": "LiGdbArcher"
+  "5-Tools/Dev-Tools/GDB": "LiGdbArcher",
+  "7-OS-application": "FasLaptopCode",
+  "7-OS-application/Linux": "FabLinux",
+  "7-OS-application/Windows": "SiWindows",
+  "7-OS-application/Linux/Arch": "SiArchlinux",
+  "7-OS-application/Linux/Debian": "SiDebian",
+  "7-OS-application/Linux/Kali": "SiKalilinux"
 }

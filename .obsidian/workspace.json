@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "940995ba741556db",
+        "id": "3d3ad46db49f52a6",
         "type": "tabs",
         "children": [
           {
-            "id": "f3b6670d22398bc2",
+            "id": "056b29f458399f94",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -178,7 +174,7 @@
   },
   "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
-    "1-Theory/5-OperatingSystem/hit-lzj",
+    "1-Theory/5-OS-principle-design/hit-lzj",
     "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md",
     "1-Theory/4-Computer-Architecture/CSAPP",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-本章结构.md",
@@ -195,9 +191,9 @@
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/1612231971-KeEFGA-overall.png.crdownload",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门",
-    "1-Theory/5-OperatingSystem/sjtu-ipads",
+    "1-Theory/5-OS-principle-design/sjtu-ipads",
     "1-Theory/5-OperatingSystem/xmu-zhengw",
-    "1-Theory/5-OperatingSystem/nju-jyy",
+    "1-Theory/5-OS-principle-design/nju-jyy",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/30-数组元素处理.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/double-pointer.gif",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/double-pointer.gif.crdownload",
