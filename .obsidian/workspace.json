@@ -77,8 +77,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200.5,
-    "collapsed": true
+    "width": 208.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -178,6 +177,11 @@
   },
   "active": "5295fec3616f054b",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/41-Class(II).md",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
+    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/40-Class(I).md",
+    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/32-Pointers.md",
+    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/1-Basic/11-Variables.md",
     "1-Theory/1-ProgramLanguage/Assembly/X86/dos-wangsh/00-搭建环境.md",
     "1-Theory/1-ProgramLanguage/Assembly/Linux汇编开发指南.md",
     "1-Theory/1-ProgramLanguage/Assembly/X86/x86-on-linux",
@@ -210,9 +214,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/22-选择排序.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/21-冒泡排序.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/memset初始化的异常结果分析.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
-    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/41-Class(II).md",
-    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/40-Class(I).md",
     "5-Tools/Obsidian/Callout.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/42-Special-members.md",
     "5-Tools/Shell/zsh/zim配置框架.md",
@@ -222,8 +223,6 @@
     "5-Tools/Dev-Tools/Conda/Conda常用命令.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/44-Polymorphism.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/18-判断质数.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/17-计算小球反弹与路径长度.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/15-打印乘法表.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
