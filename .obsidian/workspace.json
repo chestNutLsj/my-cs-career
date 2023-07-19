@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "9ba5250d954da891",
+        "id": "fc72f1507d9fbce9",
         "type": "tabs",
         "children": [
           {
-            "id": "5295fec3616f054b",
+            "id": "4863175e35611b64",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -48,7 +44,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "inline",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -73,8 +69,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -95,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -112,7 +106,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,9 +143,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -176,10 +167,10 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "dc96c4984a9ef34e",
+  "active": "4863175e35611b64",
   "lastOpenFiles": [
-    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/41-Class(II).md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
+    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/41-Class(II).md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/40-Class(I).md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/32-Pointers.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/1-Basic/11-Variables.md",
