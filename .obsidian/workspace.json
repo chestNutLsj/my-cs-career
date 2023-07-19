@@ -11,8 +11,12 @@
             "id": "3eeb34f8e5100f27",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "5-Tools/Dev-Tools/CMake/Official-tutorial/1A-Step10-Selecting-Static-or-Shared-Libraries.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -90,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "5-Tools/Dev-Tools/CMake/Official-tutorial/1A-Step10-Selecting-Static-or-Shared-Libraries.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,6 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "5-Tools/Dev-Tools/CMake/Official-tutorial/1A-Step10-Selecting-Static-or-Shared-Libraries.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -143,7 +149,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "5-Tools/Dev-Tools/CMake/Official-tutorial/1A-Step10-Selecting-Static-or-Shared-Libraries.md"
+              }
             }
           }
         ]
@@ -170,6 +178,14 @@
   },
   "active": "3eeb34f8e5100f27",
   "lastOpenFiles": [
+    "5-Tools/Dev-Tools/CMake/Official-tutorial/00-Concept-Overall.md",
+    "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/15-Execute-Other-Program.md",
+    "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/14-Organize-Project.md",
+    "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/13-Interaction.md",
+    "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/12-Programming.md",
+    "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/11-Variable-Cache.md",
+    "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/10-Basic.md",
+    "5-Tools/Dev-Tools/CMake/LLVM-doc/CMake Primer.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/35-兔子繁殖问题（FIBONACCI).md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/fibonacci.png",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/13-阶乘.md",
@@ -208,13 +224,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/1-Basic/12-Constants.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/3-Compound-Types/34-Data-Structures.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/22-选择排序.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/21-冒泡排序.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/memset初始化的异常结果分析.md",
-    "5-Tools/Obsidian/Callout.md",
-    "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/42-Special-members.md",
-    "5-Tools/Shell/zsh/zim配置框架.md",
-    "5-Tools/Shell/zsh/zsh配置conda补全.md",
-    "5-Tools/Dev-Tools/Conda/报错及解决办法.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
