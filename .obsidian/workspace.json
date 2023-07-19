@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "3d3ad46db49f52a6",
+        "id": "265355770ccc9ef6",
         "type": "tabs",
         "children": [
           {
-            "id": "056b29f458399f94",
+            "id": "fee96660fe649917",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Assembly/Linux汇编开发指南.md",
+                "file": "1-Theory/1-ProgramLanguage/Assembly/X86/dos-wangsh/00-搭建环境.md",
                 "mode": "source",
                 "source": false
               }
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Assembly/Linux汇编开发指南.md",
+                "file": "1-Theory/1-ProgramLanguage/Assembly/X86/dos-wangsh/00-搭建环境.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Assembly/Linux汇编开发指南.md",
+                "file": "1-Theory/1-ProgramLanguage/Assembly/X86/dos-wangsh/00-搭建环境.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +137,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       },
       {
         "id": "2aabb86f31957f99",
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Assembly/Linux汇编开发指南.md"
+                "file": "1-Theory/1-ProgramLanguage/Assembly/X86/dos-wangsh/00-搭建环境.md"
               }
             }
           }
@@ -176,8 +176,9 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "056b29f458399f94",
+  "active": "fee96660fe649917",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Assembly/X86/dos-wangsh/00-搭建环境.md",
     "1-Theory/1-ProgramLanguage/Assembly/Linux汇编开发指南.md",
     "1-Theory/1-ProgramLanguage/Assembly/X86/x86-on-linux",
     "1-Theory/1-ProgramLanguage/Assembly/X86/x86-real-to-protect",
@@ -223,7 +224,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/18-判断质数.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/17-计算小球反弹与路径长度.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/15-打印乘法表.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/14-水仙花数.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
