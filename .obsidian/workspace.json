@@ -11,8 +11,12 @@
             "id": "6cff6ac487862b93",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/42-Special-members.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -73,7 +77,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -90,6 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/42-Special-members.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,6 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/42-Special-members.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -143,7 +150,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/42-Special-members.md"
+              }
             }
           }
         ]
