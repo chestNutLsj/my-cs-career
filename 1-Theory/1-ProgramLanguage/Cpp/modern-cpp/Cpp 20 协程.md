@@ -13,11 +13,12 @@ C++ 20 有一个新玩意，**协程**。这玩意对 C++ 的未来可能是重�
 
 首先再次强调，C++ 20 的协程是一个**特殊函数**。只是这个函数具有**挂起**和**恢复**的能力，可以被挂起（挂起后调用代码继续向后执行），而后可以继续恢复其执行。如下图：
 
-![](https://pic3.zhimg.com/v2-42e90ed7bb4d1a194f58a5b5ef222472_r.jpg)
+![[coroutine-flow.png]]
+<center>Fig 1. Cpp coroutine flow chart</center>
 
 如图所示，协程并没有一次执行完成，可以被反复挂起，挂起后可以恢复到挂起的点继续运行。
 
-**C++ 20 协程的特点**
+## C++ 20 协程的特点
 ----------------
 
 那我们来看看 C++ 20 协程的一些特点和用途。
@@ -32,12 +33,12 @@ C++ 20 的协程可以用来干啥呢？和大部分协程用途类似，就是*
 
 如果 C++ 20 的协程周边更加完整，也许 C++ 又能在服务器编程这块能重新面对 Go 这类语言的威胁。
 
-**C++ 协程的是三个关键字**
+## C++ 协程的是三个关键字
 -----------------
 
 C++ 的协程（协程函数）内部可以用 **co_await** , **co_yield**. 两个关键字挂起协程，**co_return**, 关键字进行返回。
 
-### **co_await**
+### co_await
 
 `co_await` 调用一个 awaiter 对象（可以认为是一个接口），根据其内部定义决定其操作是挂起，还是继续，以及挂起，恢复时的行为。其呈现形式为
 
@@ -49,7 +50,7 @@ cw_ret 记录调用的返回值，其是 awaiter 的 await_resume 接口返回�
 
 `co_await` 相对比较复杂，后面开一章详细讲。
 
-### **co_yield**
+### co_yield
 
 挂起协程。其出现形式是
 
@@ -59,7 +60,7 @@ co_yield  cy_ret;
 
 cy_ret 会保存在 promise 承诺对象中（通过 `yield_value` 函数）。在协程外部可以通过 promise 得到。
 
-### **co_return**
+### co_return
 
 协程返回。其出现形式是
 
@@ -69,45 +70,30 @@ co_return cr_ret;
 
 cr_ret 会保存在 promise 承诺对象中（通过 `return_value` 函数）。在协程外部可以通过 promise 得到。要注意，cr_ret 并不是协程的返回值。这个是有区别的。
 
-**相关视频推荐**
-
-[4 个小时搞定 C++ 协程，从协程原理到实现](https://www.bilibili.com/video/BV1Mo4y1i7o4/)
-
-[【C++ 开发】程序性能优化 - 异步解决 80% 的问题](https://www.bilibili.com/video/BV18D4y1p7zi/)
-
-[6 种 epoll 的设计方法（单线程 epoll、多线程 epoll、多进程 epoll）及每种 epoll 的应用场景](https://www.bilibili.com/video/BV178411J788/)
-
-[C/C++Linux 服务器开发 / 后台架构师免费学习地址](https://ke.qq.com/course/417774?flowToken=1013300)
-
-需要 C/C++ Linux 服务器架构师学习资料加 qun**[579733396](https://jq.qq.com/?_wv=1027&k=D3DfEul4)** 获取（资料包括 **C/C++，Linux，golang 技术，Nginx，ZeroMQ，MySQL，Redis，fastdfs，MongoDB，ZK，流媒体，CDN，P 2 P，K 8 S，Docker，TCP/IP，协程，DPDK，ffmpeg** 等），免费分享
-
-![](https://pic4.zhimg.com/v2-04af3abacf5f65064c157e7467d918f3_r.jpg)
-
-**C++ 协程的重要概念**
+## C ++ 协程的重要概念
 ---------------
 
 C++ 的编译器如何识别协程函数呢？是通过函数返回值。C++ 协程函数的返回类型有要求，返回类型是`result` ，而`result`里面必须有一个子类型**承诺对象**（promise），呈现为 Result:: promise_type。承诺对象（promise）是一个接口，里面实现 get_return_object 等接口。而通过 std::coroutine_handle<promise_type>:: from_promise ( promise& p ) 这个静态函数，我们可以得到**协程句柄**（coroutine handle）。而协程的运行状态 ，协程函数的形参，内部变量，临时变量，挂起暂停在什么点，被保存在**协程状态** (coroutine state) 中。
 
 好了上面的描述，我们可以看出协程的几个重要概念。
 
-*   **协程状态** (`coroutine state`)，记录协程状态，是分配于堆的内部对象：
+* **协程状态** (`coroutine state`)，记录协程状态，是分配于堆的内部对象：
+	- 承诺对象
+	- 形参（协程函数的参数）
+	* 协程挂起的点
+	* 临时变量
 
-*   承诺对象
-*   形参（协程函数的参数）
-*   协程挂起的点
-*   临时变量
+* **承诺对象**（`promise`），从协程内部操纵。协程通过此对象提交其结果或异常。
+* **协程句柄**（`coroutine handle`），协程的唯一标示。用于恢复协程执行或销毁协程帧。
+* **等待体**（`awaiter`），co_await 关键字调用的对象。
 
-*   **承诺对象**（`promise`），从协程内部操纵。协程通过此对象提交其结果或异常。
-*   **协程句柄**（`coroutine handle`），协程的唯一标示。用于恢复协程执行或销毁协程帧。
-*   **等待体**（`awaiter`），co_await 关键字调用的对象。
-
-### **协程状态（coroutine state）**
+### 协程状态（coroutine state）
 
 协程状态（`coroutine state`）是协程启动开始时，new 空间存放协程状态，协程状态记录协程函数的参数，协程的运行状态，变量。挂起时的断点。
 
 注意，协程状态 (`coroutine state`) 并不是就是协程函数的返回值 RET。虽然我们设计的 RET 一般里面也有`promise`和`coroutine handle`，大家一般也是通过 RET 去操作协程的恢复，获取返回值。但`coroutine state`理论上还应该包含协程运行参数，断点等信息。而**协程状态** (`coroutine state`) 应该是协程句柄（`coroutine handle`）对应的一个数据，而由系统管理的。
 
-### **承诺对象（promise）**
+### 承诺对象（promise）
 
 承诺对象的表现形式必须是`result::promise_type`，`result`为协程函数的返回值。
 
@@ -121,7 +107,7 @@ C++ 的编译器如何识别协程函数呢？是通过函数返回值。C++ 协
 
 前面我们提到在协程创建的时候，会 new 协程状态（`coroutine state`）。你可以通过可以在 `promise_type` 中重载 `operator new` 和 `operator delete`，使用自己的内存分配接口。
 
-### **协程句柄（coroutine handle）**
+### 协程句柄（coroutine handle）
 
 协程句柄（`coroutine handle`）是一个协程的标示，用于操作协程恢复，销毁的句柄。
 
@@ -135,7 +121,7 @@ C++ 的编译器如何识别协程函数呢？是通过函数返回值。C++ 协
 *   `std::coroutine_handle<promise_type>::from_promise` ： 这是一个静态函数，可以从承诺对象（promise）得到相应句柄。
 *   `std::coroutine_handle<promise_type>:: promise ()` 函数可以从协程句柄`coroutine handle`得到对应的承诺对象（`promise`）
 
-### **等待体（awaiter）**
+### 等待体（awaiter）
 
 co_wait 关键字会调用一个等待体对象 (`awaiter`)。这个对象内部也有 3 个接口。根据接口 co_wait 决定进行什么操作。
 
@@ -155,7 +141,7 @@ co_wait 关键字会调用一个等待体对象 (`awaiter`)。这个对象内部
 
 前面不少接口已经用了这 2 个特化的类，同时也可以明白其实协程内部不少地方其实也在使用`co_wait` 关键字。
 
-**例子，“七进七出” 的协程。**
+## 例子 ，“七进七出” 的协程。
 ------------------
 
 好了。所有概念我们介绍基本完成了。先来段代码吧。否则实在憋屈。
@@ -328,7 +314,7 @@ int main (int argc, char* argv[])
 }
 ```
 
-**co_await awaiter 的用途？**
+### co_await awaiter 的用途？
 -------------------------
 
 明确说 C++20 的协程大部分概念还算清晰，就是 yeild，然后外部利用句柄`resume`。对协程这个概念有了解的不应该有什么特别难以理解的地方。
@@ -347,7 +333,7 @@ int main (int argc, char* argv[])
 
 `co_await awaiter`的在未来应该会有很多种等待体，比如 AIO，异步网络，异步读写数据库等。这也应该是未来 C++ 协程重点反正发展地方。
 
-**await_suspend 的参数**
+### await_suspend 的参数
 ---------------------
 
 这个问题先提前说一下，我曾经疑惑过。`await_suspend`接口的参数，其是调用其的外部协程的句柄。
@@ -360,7 +346,7 @@ void await_suspend (std::coroutine_handle<result::promise_type> awaiting)
 
 后面我发现，如果只要你不使用对应的承诺对象，`std::coroutine_handle<promise_type>:: promise ()` 。参数类型写成`std::coroutine_handle<>`也没有问题（<> 中为空，默认为 void）。这样也可以适配各种协程。
 
-**co_await 的呈现形式**
+### co_await 的呈现形式
 ------------------
 
 co_await 可以呈现出不少形式，如果你才开始学你会比较疑惑。
@@ -377,7 +363,7 @@ co_ret = co_await  fun ();
 
 fun () 函数返回值是 awaiter 对象，co_ret 是从 awaiter 里面的 await_resume 接口的返回值。
 
-**例子：尝试异步 IO（有缺陷）**
+## 例子 ：尝试异步 IO（有缺陷）
 -------------------
 
 我们尝试一些一个异步的读取文件的操作，封装在 awaiter 对象`await_read_file`里面，在其`await_suspend`接口中，我们尝试使用`std::async`发起了一个异步操作。然后等待返回结果。
@@ -645,7 +631,7 @@ void await_suspend (std::coroutine_handle<> awaiting)
 
 你可以认为虽然他发起了异步操作，整个主线程还是阻塞的，没有任何异步效果。
 
-**例子：再次尝试异步 IO（有 bug，多线程的危险）**
+## 例子 ：再次尝试异步 IO（有 bug，多线程的危险）
 ------------------------------
 
 在部分文章例子代码中，他们会提出一些异步思路。
@@ -703,7 +689,7 @@ End coroutine_await ()
 
 为什么？？？这儿又是因为**可恶的多线程陷阱了**。我们贴个时序图，您就会更加理解。
 
-![](https://pic1.zhimg.com/v2-f14d7c504dc95ccf66f9000c33303544_r.jpg)
+![[thread-coroutine.png]]
 
 您**不能在另外一个线程中去恢复协程的运行。**，切记，切记。
 

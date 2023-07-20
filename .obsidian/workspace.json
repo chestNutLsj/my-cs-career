@@ -178,6 +178,9 @@
   },
   "active": "3eeb34f8e5100f27",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/assets/thread-coroutine.png",
+    "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/assets/coroutine-flow.png",
+    "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/assets",
     "1-Theory/5-OS-principle-design/internal&principle/进程、线程与协程.md",
     "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/Cpp 20 协程.md",
     "1-Theory/1-ProgramLanguage/Cpp/modern-cpp",
@@ -212,7 +215,6 @@
     "1-Theory/1-ProgramLanguage/Assembly/WebAssembly",
     "1-Theory/1-ProgramLanguage/Assembly/ARM",
     "1-Theory/1-ProgramLanguage/Assembly/X86",
-    "1-Theory/1-ProgramLanguage/Assembly",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-本章结构.md",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718172357.png",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/636d8a8d-cc48-4e87-8911-4b610feaf35b.png",
@@ -222,8 +224,6 @@
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718170403.png",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718170222.png",
     "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/1612231971-KeEFGA-overall.png",
-    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/assets/Pasted image 20230718170236.png",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/30-数组元素处理.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
