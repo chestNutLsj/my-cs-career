@@ -4,11 +4,23 @@
     "type": "split",
     "children": [
       {
-        "id": "023bdf4badf3c693",
+        "id": "f3447e729171a395",
         "type": "tabs",
         "children": [
           {
-            "id": "1e4b8d59010dc3db",
+            "id": "fc32a77550dfe80d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "c345e6f47ef73a3e",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -77,7 +89,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -94,7 +107,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +124,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +163,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md"
               }
             }
           }
@@ -176,10 +189,10 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "1e4b8d59010dc3db",
+  "active": "fc32a77550dfe80d",
   "lastOpenFiles": [
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
     "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md",
     "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
     "1-Theory/5-OS-principle-design/hit-lzj/assets/1689843862774.png",
