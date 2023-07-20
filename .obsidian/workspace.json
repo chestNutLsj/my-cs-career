@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/未命名.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/44-子类调用父类的构造.md",
                 "mode": "source",
                 "source": false
               }
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/未命名.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/44-子类调用父类的构造.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/未命名.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/44-子类调用父类的构造.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/未命名.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/44-子类调用父类的构造.md"
               }
             }
           }
@@ -158,7 +158,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -177,7 +178,8 @@
   },
   "active": "c311d71dd2d6ebe3",
   "lastOpenFiles": [
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/未命名.md",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/derived-inherit.png",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/44-子类调用父类的构造.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/43-Friendship-and-inheritance.md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/41-Class(II).md",
     "1-Theory/1-ProgramLanguage/Cpp/official-tutorial/4-Classes/40-Class(I).md",
@@ -222,7 +224,6 @@
     "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/10-Basic.md",
     "5-Tools/Dev-Tools/CMake/LLVM-doc/CMake Primer.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/35-兔子繁殖问题（FIBONACCI).md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/13-阶乘.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
