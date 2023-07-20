@@ -693,7 +693,7 @@ End coroutine_await ()
 
 您**不能在另外一个线程中去恢复协程的运行。**，切记，切记。
 
-**吐槽一下 C++ 11 的异步操作设计**
+## 吐槽一下 C++ 11 的异步操作设计
 -----------------------
 
 那应该如何修正，能异步操作，有能唤醒协程呢？方法还是有的，在我们发起 std:: aysnc 操作，得到一个 std:: future 时，我们可以在主循环里面去等待`std::future`，因为`future`可以等待很短的时间，也可以反复尝试。这样我们的代码主循环就一边等待（反复尝试），一边干点别的事情。
@@ -706,7 +706,7 @@ End coroutine_await ()
 
 个人用不太惯，有高人指点一下？在服务器里面怎么
 
-**异步协程 co_await awaiter 接口设计**
+## 异步协程 co_await awaiter 接口设计
 ------------------------------
 
 上面那个例子很初步，真正用起来很不爽，那么怎么设计能更加好的设计协程的异步 IO。
@@ -719,7 +719,7 @@ End coroutine_await ()
 
 做一个简单的时序图给大家。
 
-![](https://pic4.zhimg.com/v2-2bb0cd690877a5d138f5d9f3b91ac90b_r.jpg)
+![[coroutine-timing-diagram.png]]
 
 而如果你想用`libuv`封装，我估计还是改造一下 libuv 的代码。毕竟如果寄希望协程句柄透传回填回来。也需要消息结构进行改变。
 
@@ -805,21 +805,21 @@ await_aiofs co_read_file (zce::aio::Worker* worker,
 
 最后，我们来剖析一下协程的过程。通过这个剖析，希望达到梳理协程几个重要概念的关系，把这些点串起来。所以在概念参考我们列出了相应的概念文字。
 
-**协程的创建**
+## 协程的创建
 ---------
 
 C++20 协程在启动前，开始会 new 一个协程状态（`coroutine state`）。然后构造协程的承诺对象（`promise`)。承诺对象（`promise`) 通过`get_return_object ()`构造协程的返回值`result`。这个返回值在协程第一次挂起时，赋值给调用者。然后通过`co_await promise. initial_suspend ()`，决定协程初试完成后的行为。如果返回`std::suspend_always`，初始化就挂起，如果返回`std::suspend_never` ，初始化后就继续运行。(注意 initial_suspend 也可以返回其他协程体)
 
-![](https://pic3.zhimg.com/v2-aa7314c8b4ab6a634b7bbd68c1477c66_r.jpg)
+![[Pasted image 20230720135414.png]]
 
-**协程的 co_await**
+### 协程的 co_await
 ----------------
 
 `cw_ret = co_await awaiter` 或者`cw_ret = co_await fun ()`，先计算表达式 fun，fun 返回结果，就是一个等待体`awaiter`。系统先调用`awaiter. await_ready ()`接口，看等待体是否准备好了，没准备好（`return false`）就调用`awaiter. await_suspend ()`。`await_suspend`根据参数可以记录调用其的协程的的句柄。`await_suspend`的返回值为`return true` ，或者 `return void` 就会挂起协程。
 
 后面在外部如果恢复了协程的运行，`awaiter. await_resume ()`接口被调用。其返回结果，作为`co_await`的返回值。
 
-![](https://pic2.zhimg.com/v2-1e44e54bf766f7edff5e7365d9485fa9_r.jpg)
+![[Pasted image 20230720135429.png]]
 
 **协程的 co_yield**
 ----------------
@@ -828,27 +828,28 @@ C++20 协程在启动前，开始会 new 一个协程状态（`coroutine state`�
 
 ![](https://pic4.zhimg.com/v2-c134d45be8f1a5c05426488eb01fe803_r.jpg)
 
-**协程的 co_return**
+### 协程的 co_return
 -----------------
 
 `co_yield cr_ret;`，调用`promise. retun_value (cr_ret)`，如果没有返回值相当于`promise. retun_viod ()`，你可以在`retun_value`中记录参数`cr_ret`后面使用。然后调用`co_await promise. final_suspend (void)`，如果返回值是`std::suspend_always`，你需要自己手动青清理`coroutine handle`，调用`handle.destroy ()`。
 
-![](https://pic3.zhimg.com/v2-7f57434e182a161f8de61126ca7a5df2_r.jpg)
+![[Pasted image 20230720135451.png]]
 
-> 这儿存在一个疑问，`final_suspend`，并没有真正挂起协程。看 C++ 参考, 里面说的也是`calls promise. final_suspend () and co_awaits the result.`。按说如果返回应该要挂起。但用 VS 2022 测试是不会挂起的，再探 C++20 协程文章中说的是如果返回`std::suspend_always`，需要你自己清理`coroutine handle`。存疑吧。
+> [! question]
+ 这儿存在一个疑问，`final_suspend`，并没有真正挂起协程。看 C++ 参考, 里面说的也是 `calls promise. final_suspend () and co_awaits the result.`。按说如果返回应该要挂起。但用 VS 2022 测试是不会挂起的，再探 C++20 协程文章中说的是如果返回 `std::suspend_always`，需要你自己清理 `coroutine handle`。存疑吧。
 
-**概念参考附录：**
+## 概念参考附录
 -----------
 
 这些概念在原文第一章都有，附录在此仅供您方便参考。
 
-### **协程状态（coroutine state）**
+### 协程状态（coroutine state）
 
 协程状态（`coroutine state`）是协程启动开始时，new 空间存放协程状态，协程状态记录协程函数的参数，协程的运行状态，变量。挂起时的断点。
 
 注意，协程状态 (`coroutine state`) 并不是就是协程函数的返回值 RET。虽然我们设计的 RET 一般里面也有`promise`和`coroutine handle`，大家一般也是通过 RET 去操作协程的恢复，获取返回值。但`coroutine state`理论上还应该包含协程运行参数，断点等信息。而**协程状态** (`coroutine state`) 应该是协程句柄（`coroutine handle`）对应的一个数据，而由系统管理的。
 
-### **承诺对象（promise）**
+### 承诺对象（promise）
 
 承诺对象的表现形式必须是`result::promise_type`，`result`为协程函数的返回值。
 
@@ -862,7 +863,7 @@ C++20 协程在启动前，开始会 new 一个协程状态（`coroutine state`�
 
 前面我们提到在协程创建的时候，会 new 协程状态（`coroutine state`）。你可以通过可以在 `promise_type` 中重载 `operator new` 和 `operator delete`，使用自己的内存分配接口。
 
-### **协程句柄（coroutine handle）**
+### 协程句柄（coroutine handle）
 
 协程句柄（`coroutine handle`）是一个协程的标示，用于操作协程恢复，销毁的句柄。
 
@@ -876,7 +877,7 @@ C++20 协程在启动前，开始会 new 一个协程状态（`coroutine state`�
 *   `std::coroutine_handle<promise_type>::from_promise` ：这是一个静态函数，可以从承诺对象（promise）得到相应句柄。
 *   `std::coroutine_handle<promise_type>:: promise ()` 函数可以从协程句柄`coroutine handle`得到对应的承诺对象（`promise`）
 
-### **等待体（awaiter）**
+### 等待体（awaiter）
 
 co_wait 关键字会调用一个等待体对象 (`awaiter`)。这个对象内部也有 3 个接口。根据接口 co_wait 决定进行什么操作。
 
