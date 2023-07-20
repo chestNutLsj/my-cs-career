@@ -72,5 +72,5 @@
   "7-OS-application/Linux/Debian": "SiDebian",
   "7-OS-application/Linux/Kali": "SiKalilinux",
   "1-Theory/1-ProgramLanguage/Assembly": "TiAssembly",
-  "0-Assets/SimpRead": "IbWebsiteWithText"
+  "8-SimpRead": "IbWebsiteWithText"
 }
