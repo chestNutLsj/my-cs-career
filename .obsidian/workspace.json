@@ -4,31 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "f3447e729171a395",
+        "id": "867f67a63ae8848b",
         "type": "tabs",
         "children": [
           {
-            "id": "fc32a77550dfe80d",
+            "id": "6cff6ac487862b93",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "c345e6f47ef73a3e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -89,8 +73,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -107,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -124,7 +106,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,9 +143,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -188,10 +167,10 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "fc32a77550dfe80d",
+  "active": "6cff6ac487862b93",
   "lastOpenFiles": [
-    "1-Theory/2-DataStruct/错题本/排序算法.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
+    "1-Theory/2-DataStruct/错题本/排序算法.md",
     "1-Theory/2-DataStruct/错题本",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/assets/struct-memory-occupy.png",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/assets",
