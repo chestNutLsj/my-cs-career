@@ -11,8 +11,12 @@
             "id": "24f501553eb720d8",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/Queue.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -90,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/Queue.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,6 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/Queue.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -142,7 +148,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/Queue.md"
+              }
             }
           }
         ]
@@ -166,8 +174,10 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "24f501553eb720d8",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/STL/Vector.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/Queue.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/标准模板库（STL）.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/assets/STL.png",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/47-迭代器遍历容器.md",
@@ -212,7 +222,6 @@
     "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/13-Interaction.md",
     "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/12-Programming.md",
     "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/11-Variable-Cache.md",
-    "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/10-Basic.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
