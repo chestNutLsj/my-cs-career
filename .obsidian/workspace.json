@@ -11,8 +11,12 @@
             "id": "ef94bd80b0969b4d",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -90,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/进程、线程与协程.md",
+                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -107,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/进程、线程与协程.md",
+                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/进程、线程与协程.md"
+                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md"
               }
             }
           }
@@ -171,8 +175,10 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "ef94bd80b0969b4d",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle-design/internal&principle/进程、线程与协程.md",
+    "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
     "1-Theory/5-OS-principle-design/internal&principle/assets/coroutine-controller.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/coroutine-stack.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/coroutine-switch.png",
@@ -183,11 +189,9 @@
     "1-Theory/5-OS-principle-design/internal&principle/assets/light-weight-thread.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/kernel-thread.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/user-thread.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/thread-switch-call.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets",
     "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/Cpp 20 协程.md",
     "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/assets",
-    "1-Theory/5-OS-principle-design/internal&principle/进程、线程与协程.md",
     "1-Theory/1-ProgramLanguage/Cpp/modern-cpp",
     "1-Theory/5-OS-principle-design/408&912/错题本.md",
     "0-Assets/Excalidraw/Drawing 2023-07-20 11.17.01.excalidraw.md",
