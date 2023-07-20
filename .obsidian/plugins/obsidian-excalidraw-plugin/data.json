@@ -14,11 +14,13 @@
   "drawingFilenameDateTime": "YYYY-MM-DD HH.mm.ss",
   "useExcalidrawExtension": true,
   "displaySVGInPreview": true,
+  "allowImageCache": true,
   "displayExportedImageIfAvailable": false,
   "previewMatchObsidianTheme": false,
   "width": "400",
   "dynamicStyling": "colorful",
   "isLeftHanded": false,
+  "iframeMatchExcalidrawTheme": true,
   "matchTheme": true,
   "matchThemeAlways": true,
   "matchThemeTrigger": true,
@@ -69,7 +71,7 @@
   "library2": {
     "type": "excalidrawlib",
     "version": 2,
-    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/1.9.2",
+    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/1.9.8",
     "libraryItems": []
   },
   "imageElementNotice": true,
