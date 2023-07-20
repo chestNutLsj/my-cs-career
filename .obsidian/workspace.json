@@ -175,8 +175,9 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "ef94bd80b0969b4d",
+  "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
+    "0-Assets/SimpRead-get",
     "1-Theory/5-OS-principle-design/internal&principle/进程、线程与协程.md",
     "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
     "1-Theory/5-OS-principle-design/internal&principle/assets/coroutine-controller.png",
@@ -222,7 +223,6 @@
     "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md",
     "1-Theory/1-ProgramLanguage/Assembly/WebAssembly",
     "1-Theory/1-ProgramLanguage/Assembly/ARM",
-    "1-Theory/5-OperatingSystem/Leetbook/操作系统入门/00-本章结构.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]

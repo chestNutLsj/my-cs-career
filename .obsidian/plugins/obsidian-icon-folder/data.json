@@ -24,7 +24,6 @@
   },
   "0-Assets": "SiDatabricks",
   "0-Assets/Excalidraw": "RiFlowChart",
-  "0-Assets/Web-Capture": "IbWebsiteWithText",
   "5-Tools": "RiToolsFill",
   "5-Tools/Dev-Tools": "FasToolbox",
   "5-Tools/Dev-Tools/CMake": "SiCmake",
@@ -72,5 +71,6 @@
   "7-OS-application/Linux/Arch": "SiArchlinux",
   "7-OS-application/Linux/Debian": "SiDebian",
   "7-OS-application/Linux/Kali": "SiKalilinux",
-  "1-Theory/1-ProgramLanguage/Assembly": "TiAssembly"
+  "1-Theory/1-ProgramLanguage/Assembly": "TiAssembly",
+  "0-Assets/SimpRead": "IbWebsiteWithText"
 }
