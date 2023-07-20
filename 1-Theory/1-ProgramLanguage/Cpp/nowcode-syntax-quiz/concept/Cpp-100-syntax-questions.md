@@ -42,7 +42,7 @@ Struct A{
 	Char k : 4; 
 	Unsigned short i : 8; 
 	Unsigned long m;
-	};
+};
 ```
 
 >[! note]
@@ -70,6 +70,22 @@ Struct A{
 >1. 对于结构体的各个成员，第一个成员的偏移量是 0，排列在后面的成员其当前偏移量必须是当前成员类型的整数倍
 >2. 结构体内所有数据成员各自内存对齐后，结构体本身还要进行一次内存对齐，保证整个结构体占用内存大小是结构体内最大数据成员的最小整数倍
 >3. 如程序中有#pragma pack(n)预编译指令，则所有成员对齐以n字节为准(即偏移量是n的整数倍)，不再考虑当前类型以及最大结构体内类型
+
+2. 趁热打铁，另一个关于对齐的问题：判断下面语句中 sz 变量的值
+```cpp
+struct _THUNDER {
+	int iVersion;
+	char cTag;
+	char cAdv;
+	int iUser;
+	char cEnd;
+} Nowcoder;
+int sz = sizeof(Nowcoder);
+```
+
+答案是：16
+
+![[struct-memory-occupy.png]]
 
 ## 运算符
 ### sizeof
@@ -493,4 +509,5 @@ D 子类的内存大小等于父类的内存大小加上子类独有成员变量
 
 ![[Cpp 11前后 静态成员的定义与初始化问题#为什么非要在类外定义和初始化？]]
 
-[[
+![[Cpp 11前后 静态成员的定义与初始化问题#Cpp 11 修改了什么？]]
+
