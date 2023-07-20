@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
+                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md",
                 "mode": "source",
                 "source": false
               }
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
+                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
+                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md"
+                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md"
               }
             }
           }
@@ -158,7 +158,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -175,21 +176,24 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "ef94bd80b0969b4d",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
+    "1-Theory/5-OS-principle-design/hit-lzj/assets/1689843862774.png",
+    "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md",
+    "1-Theory/5-OS-principle-design/hit-lzj/assets/1689843862416.png",
+    "1-Theory/5-OS-principle-design/hit-lzj/assets/1689843861311.png",
+    "1-Theory/5-OS-principle-design/hit-lzj/assets/1689843860942.png",
+    "1-Theory/5-OS-principle-design/hit-lzj/assets/1689843859453.png",
+    "1-Theory/5-OS-principle-design/hit-lzj/assets",
+    "8-SimpRead/(25 条消息) x86 保护模式——全局描述符表 GDT 详解_gdt 字符_A__Plus 的博客 - CSDN 博客",
     "0-Assets/SimpRead-get",
     "1-Theory/5-OS-principle-design/internal&principle/进程、线程与协程.md",
-    "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
     "1-Theory/5-OS-principle-design/internal&principle/assets/coroutine-controller.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/coroutine-stack.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/coroutine-switch.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/user-thread-switch.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/call-coroutine.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/coroutine.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/pstack-pid.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/light-weight-thread.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/kernel-thread.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/user-thread.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets",
     "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/Cpp 20 协程.md",
     "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/assets",
@@ -219,10 +223,6 @@
     "1-Theory/1-ProgramLanguage/Assembly/Linux汇编开发指南.md",
     "1-Theory/1-ProgramLanguage/Assembly/X86/x86-on-linux",
     "1-Theory/1-ProgramLanguage/Assembly/X86/x86-real-to-protect",
-    "1-Theory/1-ProgramLanguage/Assembly/X86/dos-wangsh",
-    "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md",
-    "1-Theory/1-ProgramLanguage/Assembly/WebAssembly",
-    "1-Theory/1-ProgramLanguage/Assembly/ARM",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
