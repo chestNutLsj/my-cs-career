@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "2c884a86d8cc7a72",
+        "id": "023bdf4badf3c693",
         "type": "tabs",
         "children": [
           {
-            "id": "ef94bd80b0969b4d",
+            "id": "1e4b8d59010dc3db",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "mode": "source",
                 "source": false
               }
@@ -77,7 +77,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -94,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +151,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md"
               }
             }
           }
@@ -158,8 +159,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -176,11 +176,11 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "ef94bd80b0969b4d",
+  "active": "1e4b8d59010dc3db",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md",
     "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
     "1-Theory/5-OS-principle-design/hit-lzj/assets/1689843862774.png",
-    "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md",
     "1-Theory/5-OS-principle-design/hit-lzj/assets/1689843862416.png",
     "1-Theory/5-OS-principle-design/hit-lzj/assets/1689843861311.png",
     "1-Theory/5-OS-principle-design/hit-lzj/assets/1689843860942.png",
