@@ -4,47 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "f8449fe021505702",
+        "id": "068c2684c0b0c6f9",
         "type": "tabs",
         "children": [
           {
-            "id": "3181945d77aaaa08",
+            "id": "a554bd2eb4405ad5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/Vector.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b848790e093f4e7a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/Queue.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "896e69ded0c9232a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/Deque.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Vector.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -119,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/Deque.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Vector.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/Deque.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Vector.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/Deque.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Vector.md"
               }
             }
           }
@@ -200,38 +175,38 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "896e69ded0c9232a",
+  "active": "a554bd2eb4405ad5",
   "lastOpenFiles": [
-    "1-Theory/1-ProgramLanguage/Cpp/STL/container/Queue.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/container/Vector.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/README.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/assosiative-container.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/sequence-container.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/container.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Vector.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Queue.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Deque.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/associative",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/container/Deque.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/functor-function-obj",
     "1-Theory/1-ProgramLanguage/Cpp/STL/allocator",
     "1-Theory/1-ProgramLanguage/Cpp/STL/adapter",
     "1-Theory/1-ProgramLanguage/Cpp/STL/iterator",
     "1-Theory/1-ProgramLanguage/Cpp/STL/algorithm",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/1689862671937.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/assets/1689862671937.png",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
     "1-Theory/5-OS-principle-design/408&912/错题本.md",
     "1-Theory/5-OS-principle-design/408&912/assets/io-software-hierachy.png",
     "1-Theory/5-OS-principle-design/408&912/assets",
     "1-Theory/1-ProgramLanguage/Cpp/STL/标准模板库（STL）.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/STL.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/assets/STL.png",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/47-迭代器遍历容器.md",
-    "1-Theory/1-ProgramLanguage/Cpp/未命名",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/1689862672285.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/1689862672246.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/1689862672219.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/vector.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/1689862672120.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/assets/1689862672008.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/assets/1689862672285.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/assets/1689862672246.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/assets/1689862672219.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/assets/vector.png",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/44-子类调用父类的构造.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/derived-inherit.png",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/43-Friendship-and-inheritance.md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/41-Class(II).md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/40-Class(I).md",
