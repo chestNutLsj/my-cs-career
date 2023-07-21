@@ -77,7 +77,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 259.5
+    "width": 214.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -177,6 +177,8 @@
   },
   "active": "59bf8f6841fbffa5",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle-design/408&912/assets/io-software-hierachy.png",
+    "1-Theory/5-OS-principle-design/408&912/assets",
     "1-Theory/1-ProgramLanguage/Cpp/STL/Queue.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/Vector.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/标准模板库（STL）.md",
@@ -212,7 +214,6 @@
     "8-SimpRead/(25 条消息) x86 保护模式——全局描述符表 GDT 详解_gdt 字符_A__Plus 的博客 - CSDN 博客",
     "0-Assets/SimpRead-get",
     "1-Theory/5-OS-principle-design/internal&principle/进程、线程与协程.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets",
     "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/Cpp 20 协程.md",
     "1-Theory/5-OS-principle-design/408&912/错题本.md",
     "0-Assets/Excalidraw/Drawing 2023-07-20 11.17.01.excalidraw.md",
@@ -222,7 +223,6 @@
     "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/14-Organize-Project.md",
     "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/13-Interaction.md",
     "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/12-Programming.md",
-    "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/11-Variable-Cache.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
