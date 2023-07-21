@@ -91,7 +91,7 @@ ForwardIt uninitialized_copy( InputIt first, InputIt last, ForwardIt d_first );
 - first, last - 要复制的元素范围
 - d_first - 目标范围的起始
 
-#### [](https://github.com/steveLauwh/SGI-STL/tree/master/The%20Annotated%20STL%20Sources%20V3.3/container/sequence%20container/vector#uninitialized_fill-%E5%8A%9F%E8%83%BD)uninitialized_fill 功能
+### uninitialized_fill 功能
 
 ```c
 template< class ForwardIt, class T >
@@ -105,7 +105,7 @@ void uninitialized_fill( ForwardIt first, ForwardIt last, const T& value );
 - first, last - 要初始化的元素的范围
 - value - 构造元素所用的值
 
-#### [](https://github.com/steveLauwh/SGI-STL/tree/master/The%20Annotated%20STL%20Sources%20V3.3/container/sequence%20container/vector#copy-%E5%8A%9F%E8%83%BD)copy 功能
+### copy 功能
 
 ```c
 template< class InputIt, class OutputIt >
@@ -119,7 +119,7 @@ OutputIt copy( InputIt first, InputIt last, OutputIt d_first );
 - first, last - 要复制的元素范围
 - d_first - 目标范围的起始
 
-#### [](https://github.com/steveLauwh/SGI-STL/tree/master/The%20Annotated%20STL%20Sources%20V3.3/container/sequence%20container/vector#vector-insert-%E5%BD%A2%E5%BC%8F)vector insert 形式
+### vector insert 形式
 
 ```c
 // 在 pos 前插入 value，底层实现 _M_insert_aux

@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Vector.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/README.md",
                 "mode": "source",
                 "source": false
               }
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Vector.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Vector.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Vector.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/README.md"
               }
             }
           }
@@ -157,8 +157,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -177,8 +176,9 @@
   },
   "active": "b93846dbcb9420f7",
   "lastOpenFiles": [
-    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/assets/vector-elem.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Vector.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/README.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/assets/vector-elem.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/README.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/assosiative-container.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/sequence-container.png",
@@ -206,7 +206,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/assets/1689862672285.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/assets/1689862672246.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/assets/1689862672219.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/assets/vector.png",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/44-子类调用父类的构造.md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/43-Friendship-and-inheritance.md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/41-Class(II).md",
