@@ -4,34 +4,47 @@
     "type": "split",
     "children": [
       {
-        "id": "730ed2ca38e25505",
+        "id": "f8449fe021505702",
         "type": "tabs",
         "children": [
           {
-            "id": "8a72376fb6f2e635",
+            "id": "3181945d77aaaa08",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/Vector.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "54cb7e81cd5b867d",
+            "id": "b848790e093f4e7a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/Queue.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "896e69ded0c9232a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/Deque.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -89,8 +102,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 214.5,
-    "collapsed": true
+    "width": 214.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -107,7 +119,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/Deque.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -124,7 +136,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/Deque.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/container/Deque.md"
               }
             }
           }
@@ -170,7 +182,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -187,44 +200,46 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "8a72376fb6f2e635",
+  "active": "896e69ded0c9232a",
   "lastOpenFiles": [
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/Queue.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/Vector.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/README.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/associative",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/Deque.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/functor-function-obj",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/allocator",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/adapter",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/iterator",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/algorithm",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/1689862671937.png",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
     "1-Theory/5-OS-principle-design/408&912/错题本.md",
     "1-Theory/5-OS-principle-design/408&912/assets/io-software-hierachy.png",
     "1-Theory/5-OS-principle-design/408&912/assets",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/Queue.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/Vector.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/标准模板库（STL）.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/assets/STL.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/STL.png",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/47-迭代器遍历容器.md",
     "1-Theory/1-ProgramLanguage/Cpp/未命名",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/assets/1689862672285.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/assets/1689862672246.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/assets/1689862672219.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/assets/1689862672176.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/assets/1689862672120.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/1689862672285.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/1689862672246.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/1689862672219.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/vector.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/1689862672120.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/assets/1689862672008.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/assets/1689862671937.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/assets",
-    "1-Theory/1-ProgramLanguage/Cpp/STL",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/44-子类调用父类的构造.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/derived-inherit.png",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/43-Friendship-and-inheritance.md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/41-Class(II).md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/40-Class(I).md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/41-拷贝构造函数-深拷贝.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/assets",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/42-Special-members.md",
     "1-Theory/2-DataStruct/错题本/排序算法.md",
-    "1-Theory/2-DataStruct/错题本",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/assets",
     "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md",
     "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
-    "1-Theory/5-OS-principle-design/hit-lzj/assets",
-    "8-SimpRead/(25 条消息) x86 保护模式——全局描述符表 GDT 详解_gdt 字符_A__Plus 的博客 - CSDN 博客",
-    "0-Assets/SimpRead-get",
     "1-Theory/5-OS-principle-design/internal&principle/进程、线程与协程.md",
     "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/Cpp 20 协程.md",
     "0-Assets/Excalidraw/Drawing 2023-07-20 11.17.01.excalidraw.md",
@@ -232,8 +247,6 @@
     "5-Tools/Dev-Tools/CMake/Official-tutorial/00-Concept-Overall.md",
     "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/15-Execute-Other-Program.md",
     "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/14-Organize-Project.md",
-    "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/13-Interaction.md",
-    "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/12-Programming.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
