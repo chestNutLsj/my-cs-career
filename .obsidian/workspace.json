@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "068c2684c0b0c6f9",
+        "id": "f10a28f466d8f16d",
         "type": "tabs",
         "children": [
           {
-            "id": "a554bd2eb4405ad5",
+            "id": "b93846dbcb9420f7",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -175,14 +175,15 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "a554bd2eb4405ad5",
+  "active": "b93846dbcb9420f7",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/assets/vector-elem.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Vector.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/README.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/assosiative-container.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/sequence-container.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets/container.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/assets",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Vector.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Queue.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/sequence/Deque.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/container/associative",
