@@ -11,8 +11,12 @@
             "id": "8a72376fb6f2e635",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -90,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,6 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -142,7 +148,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md"
+              }
             }
           }
         ]
@@ -169,6 +177,7 @@
   },
   "active": "8a72376fb6f2e635",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
     "1-Theory/5-OS-principle-design/408&912/错题本.md",
     "1-Theory/5-OS-principle-design/408&912/assets/io-software-hierachy.png",
     "1-Theory/5-OS-principle-design/408&912/assets",
@@ -199,7 +208,6 @@
     "1-Theory/2-DataStruct/错题本/排序算法.md",
     "1-Theory/2-DataStruct/错题本",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/assets",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
     "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md",
     "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
     "1-Theory/5-OS-principle-design/hit-lzj/assets",
