@@ -11,8 +11,12 @@
             "id": "e0a12dc2adfb0989",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-deng/00-VS项目如何转为CMake的CLion项目.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -90,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/README.md",
+                "file": "1-Theory/2-DataStruct/dsa-deng/00-VS项目如何转为CMake的CLion项目.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -107,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/README.md",
+                "file": "1-Theory/2-DataStruct/dsa-deng/00-VS项目如何转为CMake的CLion项目.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -145,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/README.md"
+                "file": "1-Theory/2-DataStruct/dsa-deng/00-VS项目如何转为CMake的CLion项目.md"
               }
             }
           }
@@ -171,10 +175,12 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "e0a12dc2adfb0989",
   "lastOpenFiles": [
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/README.md",
+    "1-Theory/2-DataStruct/错题本/排序算法.md",
+    "1-Theory/2-DataStruct/dsa-deng/00-VS项目如何转为CMake的CLion项目.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/README.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/README.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/assets",
     "1-Theory/1-ProgramLanguage/Cpp/STL/README.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/assets/stl-headers.png",
@@ -210,7 +216,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/40-Class(I).md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/41-拷贝构造函数-深拷贝.md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/42-Special-members.md",
-    "1-Theory/2-DataStruct/错题本/排序算法.md",
     "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md",
     "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
     "1-Theory/5-OS-principle-design/internal&principle/进程、线程与协程.md",
@@ -218,7 +223,6 @@
     "0-Assets/Excalidraw/Drawing 2023-07-20 11.17.01.excalidraw.md",
     "5-Tools/Dev-Tools/CMake/Official-tutorial/1A-Step10-Selecting-Static-or-Shared-Libraries.md",
     "5-Tools/Dev-Tools/CMake/Official-tutorial/00-Concept-Overall.md",
-    "5-Tools/Dev-Tools/CMake/Modern-CMake/1-Basic/15-Execute-Other-Program.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
