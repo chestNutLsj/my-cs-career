@@ -77,7 +77,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 214.5
+    "width": 214.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -86,7 +87,7 @@
       {
         "id": "e5810eded0ce3a81",
         "type": "tabs",
-        "dimension": 20.242914979757085,
+        "dimension": 36.65987780040733,
         "children": [
           {
             "id": "866a4e016d81b567",
@@ -137,12 +138,12 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       },
       {
         "id": "2aabb86f31957f99",
         "type": "tabs",
-        "dimension": 79.75708502024291,
+        "dimension": 63.34012219959266,
         "children": [
           {
             "id": "5402e2346c010391",
@@ -158,8 +159,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -176,7 +176,7 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "d09bc9f761ff2d4d",
+  "active": "f889e9cb41656fa9",
   "lastOpenFiles": [
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/README.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/README.md",
