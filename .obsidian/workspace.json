@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "ee0b55f6a2997a69",
+        "id": "ae1e17c68ec3eb47",
         "type": "tabs",
         "children": [
           {
-            "id": "6f9734fbd33a9c8d",
+            "id": "8f3778c6eedb2826",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "5-Tools/Dev-Tools/Git/Git小结.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -94,7 +90,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "5-Tools/Dev-Tools/Git/Git小结.md",
+                "file": "5-Tools/Dev-Tools/CMake/modern-cmake.pdf",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +107,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "5-Tools/Dev-Tools/Git/Git小结.md",
+                "file": "5-Tools/Dev-Tools/CMake/modern-cmake.pdf",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "5-Tools/Dev-Tools/Git/Git小结.md"
+                "file": "5-Tools/Dev-Tools/CMake/modern-cmake.pdf"
               }
             }
           }
@@ -175,8 +171,14 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "6f9734fbd33a9c8d",
+  "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
+    "5-Tools/Dev-Tools/Conda/Conda常用命令.md",
+    "5-Tools/Dev-Tools/Conda/Mamba.md",
+    "5-Tools/Dev-Tools/Conda/报错及解决办法.md",
+    "5-Tools/Dev-Tools/Conda/什么是Conda？.md",
+    "5-Tools/Dev-Tools/Git/github-git-cheat-sheet.pdf",
+    "5-Tools/Dev-Tools/Git/Git小结.md",
     "5-Tools/Dev-Tools/Git/Git常用操作.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/vector-visit.png",
@@ -213,16 +215,10 @@
     "1-Theory/1-ProgramLanguage/Cpp/STL/6-allocator",
     "1-Theory/1-ProgramLanguage/Cpp/STL/5-adapter",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
     "1-Theory/5-OS-principle-design/408&912/错题本.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/标准模板库（STL）.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/47-迭代器遍历容器.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/44-子类调用父类的构造.md",
-    "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/43-Friendship-and-inheritance.md",
-    "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/41-Class(II).md",
-    "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/40-Class(I).md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/41-拷贝构造函数-深拷贝.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]

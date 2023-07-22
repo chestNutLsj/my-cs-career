@@ -720,15 +720,15 @@ IDEA、Maven等软件中存在一些特定文件，这些文件需要忽略。
 
 当前目录下有一个`pom.xml`文件，并且被标红，这表示它在工作区还未被添加。
 
-右键项目，找到Git$\rarr$添加，此时文件被标绿。
+右键项目，找到 Git $\rightarrow$ 添加，此时文件被标绿。
 
-我们可以在src$\rarr$main$\rarr$java$\rarr$新建IDEA_git$\rarr$新建GitTest.java文件，并随便写点什么。
+我们可以在 src $\rightarrow$ main $\rightarrow$ java $\rightarrow$ 新建 IDEA_git $\rightarrow$ 新建 GitTest.java 文件，并随便写点什么。
 
 对于多个文件的改动，可以直接点击工程根目录进行上述流程的添加，之后所有文件都会保存在暂存区，并标记为绿色。
 
 ### 7.5 提交到本地库
 
-右键Git$\rarr$提交，记得添加描述信息
+右键 Git $\rightarrow$ 提交，记得添加描述信息
 
 ### 7.6 切换版本
 
