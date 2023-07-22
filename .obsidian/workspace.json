@@ -11,8 +11,12 @@
             "id": "8f3778c6eedb2826",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -73,7 +77,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -90,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "5-Tools/Dev-Tools/CMake/modern-cmake.pdf",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -107,7 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "5-Tools/Dev-Tools/CMake/modern-cmake.pdf",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +151,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "5-Tools/Dev-Tools/CMake/modern-cmake.pdf"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md"
               }
             }
           }
@@ -171,8 +176,9 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "8f3778c6eedb2826",
   "lastOpenFiles": [
+    "5-Tools/Dev-Tools/CMake/modern-cmake.pdf",
     "5-Tools/Dev-Tools/Conda/Conda常用命令.md",
     "5-Tools/Dev-Tools/Conda/Mamba.md",
     "5-Tools/Dev-Tools/Conda/报错及解决办法.md",
@@ -218,7 +224,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
     "1-Theory/5-OS-principle-design/408&912/错题本.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/标准模板库（STL）.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/47-迭代器遍历容器.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
