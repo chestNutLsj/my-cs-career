@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "0b17927e28ab94de",
+        "id": "156e795e7541c26e",
         "type": "tabs",
         "children": [
           {
-            "id": "e0a12dc2adfb0989",
+            "id": "b21751352f4735aa",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/Windows、Unix、Linux、Android内核结构介绍.md",
+                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md",
                 "mode": "source",
                 "source": false
               }
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/Windows、Unix、Linux、Android内核结构介绍.md",
+                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/Windows、Unix、Linux、Android内核结构介绍.md",
+                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/Windows、Unix、Linux、Android内核结构介绍.md"
+                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md"
               }
             }
           }
@@ -175,27 +175,29 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "e0a12dc2adfb0989",
+  "active": "b21751352f4735aa",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle-design/internal&principle/assets/two-status-shift.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722123459.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722123137.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722123125.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722123115.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722122942.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722122910.png",
+    "1-Theory/5-OS-principle-design/internal&principle/进程.md",
+    "1-Theory/5-OS-principle-design/internal&principle/Windows、Unix、Linux、Android内核结构介绍.md",
     "1-Theory/5-OS-principle-design/internal&principle/assets/android-software-architecture.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722120646.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/linux-kernel-components.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/contemporary-unix-kernel.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/tradition-unix-kernel-hierarchy.png",
     "1-Theory/2-DataStruct/dsa-deng/00-VS项目如何转为CMake的CLion项目.md",
-    "1-Theory/5-OS-principle-design/internal&principle/Windows、Unix、Linux、Android内核结构介绍.md",
     "1-Theory/2-DataStruct/错题本/排序算法.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/README.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/README.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/assets",
     "1-Theory/1-ProgramLanguage/Cpp/STL/README.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/assets/stl-headers.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/assets",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/Vector.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/vector-elem.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/assets/assosiative-container.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/assets/sequence-container.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/assets/container.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/assets",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/Queue.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/Deque.md",
@@ -206,7 +208,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/STL/5-adapter",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator",
     "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/1689862671937.png",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
     "1-Theory/5-OS-principle-design/408&912/错题本.md",
@@ -222,7 +223,6 @@
     "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
     "1-Theory/5-OS-principle-design/internal&principle/进程、线程与协程.md",
     "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/Cpp 20 协程.md",
-    "0-Assets/Excalidraw/Drawing 2023-07-20 11.17.01.excalidraw.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
