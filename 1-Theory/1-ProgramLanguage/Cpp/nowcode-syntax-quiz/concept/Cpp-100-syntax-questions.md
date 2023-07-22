@@ -125,6 +125,52 @@ D. 一个参数不可以既是 const 又是 volatile ❌
 > - 对于一般变量：为提高存取速度，编译器优化时有时会先把变量读取到一个寄存器中。以后再取变量值时，就直接从寄存器中取值。
 > - 一个参数既可以是const也可以是volatile：一个例子是只读的状态寄存器。它是volatile因为它可能被意想不到地改变。它是const因为程序不应该试图去修改它。（简单点就是该程序代码不能试图去修改它，但不排除硬件方面修改了它，我们每次都得重新读取它的值。） 
 
+## 类型转换
+### 动态类型转换
+[[50-Type-conversions#dynamic_cast|Dynamic_Cast]]
+
+1. 判断下列代码的输出：
+```cpp
+#include <iostream>
+using namespace std;
+class Base {
+public:
+    void virtual Func() {
+        cout << "Base" << endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    void virtual Func() {
+        cout << "Derived " << endl;
+    }
+};
+
+int main() {
+    Base *pBase = new Base();
+    pBase->Func();
+    Derived *pDerived = (Derived *) pBase;
+    pDerived->Func();
+    delete pBase;
+
+    pDerived = new Derived();
+    pBase = pDerived;
+    pBase->Func();
+
+    delete pDerived;
+    return 0;
+}
+```
+
+output: `Base -> Base -> Derived`
+
+由于 func 是一个虚函数，所以将指针赋值给基类或者派生类对象不会对虚函数调用造成影响。pBase 是一个 Base 对象，前两次 func 会调用 Base 对应的 func 函数，输出两次 Base。而 pDerived 是一个 Derived 对象，因此是输出 Derived。B 选项正确。
+
+>[! warning] 强制类型转换与指针
+> 强制类型转换时会将 Base 类型的数据所在的内存按照 Derived 类型格式解析和转换。pDerived 解析得到的是 pBase 的虚函数表，相当于 pDerived 的 vtbl 虚函数表指针指向了 pBase 的虚函数表，故得到 Base;
+> 
+> 但这种强制转换比较危险，当访问某虚函数时子类存在而父类不存在时，就可能导致运行时出现访问错误，程序崩溃，而此时编译是正常的，因为指针的虚函数表是动态链接的。
 
 ## 运算符
 ### sizeof

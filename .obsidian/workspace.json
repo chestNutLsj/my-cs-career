@@ -13,13 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/5-Other-features/50-Type-conversions.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "707cc00f6d798e49",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -48,7 +61,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "dynamic",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -94,7 +107,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +124,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md"
               }
             }
           }
@@ -157,8 +170,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -175,12 +187,15 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "b21751352f4735aa",
+  "active": "707cc00f6d798e49",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/5-Other-features/50-Type-conversions.md",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/1-Basic/11-Variables.md",
+    "1-Theory/5-OS-principle-design/internal&principle/进程.md",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722125935.png",
     "1-Theory/5-OS-principle-design/internal&principle/进程、线程与协程.md",
     "1-Theory/5-OS-principle-design/internal&principle/Windows、Unix、Linux、Android内核结构介绍.md",
-    "1-Theory/5-OS-principle-design/internal&principle/进程.md",
     "1-Theory/5-OS-principle-design/internal&principle/assets/two-status-shift-queue-diagram.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722123746.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/two-status-shift.png",
@@ -190,7 +205,6 @@
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722123115.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722122942.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722122910.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/android-software-architecture.png",
     "1-Theory/2-DataStruct/dsa-deng/00-VS项目如何转为CMake的CLion项目.md",
     "1-Theory/2-DataStruct/错题本/排序算法.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/README.md",
@@ -209,7 +223,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/STL/5-adapter",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator",
     "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
     "1-Theory/5-OS-principle-design/408&912/错题本.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/标准模板库（STL）.md",
@@ -222,7 +235,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/42-Special-members.md",
     "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md",
     "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
-    "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/Cpp 20 协程.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
