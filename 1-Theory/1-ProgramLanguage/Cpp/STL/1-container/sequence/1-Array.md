@@ -1,4 +1,4 @@
-## 介绍
+## array 介绍
 
 array 容器是 [C++](http://c.biancheng.net/cplus/) 11 标准中新增的序列容器，简单地理解，它就是在 C++ 普通数组的基础上，添加了一些成员函数和全局函数。在使用上，它比普通数组更安全（原因后续会讲），且效率并没有因此变差。
 
@@ -288,9 +288,15 @@ values.at (4) = values.at(3) + 2.O*values.at(1);
 
 > 读者可能有这样一个疑问，即为什么 array 容器在重载 [] 运算符时，没有实现边界检查的功能呢？答案很简单，因为性能。如果每次访问元素，都去检查索引值，无疑会产生很多开销。当不存在越界访问的可能时，就能避免这种开销。
 
-除此之外，array 容器还提供了 get<n> 模板函数，它是一个辅助函数，能够获取到容器的第 n 个元素。需要注意的是，该模板函数中，参数的实参必须是一个在编译时可以确定的常量表达式，所以它不能是一个循环变量。也就是说，它只能访问模板参数指定的元素，编译器在编译时会对它进行检查。
+除此之外，array 容器还提供了 get\<n\> 模板函数，它是一个辅助函数，能够获取到容器的第 n 个元素。需要注意的是，该模板函数中，参数的实参必须是一个在编译时可以确定的常量表达式，所以它不能是一个循环变量。也就是说，它只能访问模板参数指定的元素，编译器在编译时会对它进行检查。
 
-下面代码展示了如何使用 get<n> 模板函数：
+>[! note] at 访问元素和 get 访问元素有什么区别？
+>1. `at` 访问元素： `at` 是 `array` 容器的成员函数，用于访问容器中的元素。它提供了越界检查功能，如果访问的索引超出容器的有效范围，会抛出 `std::out_of_range` 异常。
+>2. `get` 访问元素： `get` 是 `array` 容器的非成员函数，用于访问容器中的元素。它与 `at` 不同的地方在于，`get` 不提供越界检查功能，而是直接通过索引访问元素。如果访问的索引超出容器的有效范围，行为是未定义的，这意味着可能会导致程序崩溃或产生不可预测的结果。
+>
+> 综上所述，`at` 和 `get` 在访问 `array` 容器元素时的主要区别在于越界处理。`at` 提供了安全的越界检查，并在越界时抛出异常，而 `get` 不进行越界检查，可能导致未定义的行为。因此，建议在访问 `array` 容器元素时，优先考虑使用 `at`，以提高代码的健壮性。
+
+下面代码展示了如何使用 get\<n\> 模板函数：
 
 ```
 #include <iostream>
@@ -307,9 +313,9 @@ int main ()
 ```
 
 运行结果为：
-
+```
 four
-
+```
 另外，array 容器提供了 data () 成员函数，通过调用该函数可以得到指向容器首个元素的[指针](http://c.biancheng.net/c/80/)。通过该指针，我们可以获得容器中的各个元素，例如：
 
 ```
@@ -325,10 +331,11 @@ int main ()
 ```
 
 运行结果为：
-
+```
 2
+```
 
-访问 array 容器中多个元素
+### 访问 array 容器中多个元素
 ----------------
 
 我们知道，array 容器提供的 size () 函数能够返回容器中元素的个数（函数返回值为 size_t 类型），所以能够像下面这样去逐个提取容器中的元素，并计算它们的和：
@@ -407,8 +414,147 @@ int main ()
 
 运行结果为：
 
+```
 values 1[0] is : 0  
 values 1[1] is : 1  
 values 1[2] is : 2  
 Values 1 is : 0 1 2 3 4  
 Values 2 is : 10 11 12 13 14
+```
+
+## array 容器是数组的升级版
+
+和 C++ 普通数组存储数据的方式一样，C++ 标准库保证使用 array 容器存储的所有元素一定会位于连续且相邻的内存中，通过如下代码也可以验证这一点：
+
+```
+#include <iostream>
+#include <array>
+using namespace std;
+int main()
+{
+    array<int, 5>a{1,2,3};
+    cout << &a[2] << " " << &a[0] + 2 << endl;
+    return 0;
+}
+```
+
+输出结果为：
+```
+004 FFD 58 004 FFD 58
+```
+可以看到，a 容器中 `&a[2]` 和 `&a[0] + 2` 是相等的。因此在实际编程过程中，我们完全有理由去尝试，在原本使用普通数组的位置，改由 array 容器去实现。
+
+> 用 array 容器替换普通数组的好处是，array 模板类中已经封装好了大量实用的方法，在提高开发效率的同时，代码的运行效率也会大幅提高。
+
+举个例子，我们完全可以使用 array 容器去存储 `char*` 或 `const char*` 类型的字符串：
+
+```
+#include <iostream>
+#include <array>
+using namespace std;
+int main()
+{
+    array<char, 50>a{1,2,3};
+    strcpy(&a[0], "http://www.cdsy.xyz/computer/programme/stl/");
+    printf("%s", &a[0]);
+    return 0;
+}
+```
+
+输出结果为：
+```
+http://www.cdsy.xyz/computer/programme/stl/
+```
+注意，array 容器的大小必须保证能够容纳复制进来的数据，而且如果是存储字符串的话，还要保证在存储整个字符串的同时，在其最后放置一个 \0 作为字符串的结束符。此程序中，strcpy () 在拷贝字符串的同时，会自动在最后添加 \0。
+
+其实，代码中的 &a[0] 还可以用 array 模板类提供的 data () 成员函数来替换：
+
+```
+#include <iostream>
+#include <array>
+using namespace std;
+int main()
+{
+    array<char, 50>a{1,2,3};
+    strcpy(a.data(), "http://www.cdsy.xyz/computer/programme/stl/");
+    printf("%s", a.data());
+    return 0;
+}
+```
+
+此程序和上面程序的输出结果完全相同。
+
+> 注意，容器的迭代器和指针是不能混用的，即上面代码中不能用 a.begin () 来代替 &a[0] 或者 a.data[]，这可能会引发错误。
+
+文章前面提到，使用 array 容器代替普通数组，最直接的好处就是 array 模板类中已经为我们写好了很多实用的方法，可以大大提高我们编码效率。例如，array 容器提供的 at () 成员函数，可以有效防止越界操纵数组的情况；fill () 函数可以实现数组的快速初始化；swap () 函数可以轻松实现两个相同数组（类型相同，大小相同）中元素的互换。
+
+```
+#include <iostream>
+#include <array>
+using namespace std;
+int main()
+{
+    array<char, 50>addr1{"http://www.cdsy.xyz"};
+    array<char, 50>addr2{ "http://www.cdsy.xyz/computer/programme/stl/" };
+    addr1.swap(addr2);
+    printf("addr1 is：%s\n", addr1.data());
+    printf("addr2 is：%s\n", addr2.data());
+    return 0;
+}
+```
+
+运行结果为：
+
+addr 1 is： http://www.cdsy.xyz/computer/programme/stl/  
+addr 2 is： http://www.cdsy.xyz
+
+另外，当两个 array 容器满足大小相同并且保存元素的类型相同时，两个 array 容器可以直接直接做赋值操作，即将一个容器中的元素赋值给另一个容器。比如：
+
+```
+#include <iostream>
+#include <array>
+using namespace std;
+int main()
+{
+    array<char, 50>addr1{ "http://www.cdsy.xyz" };
+    array<char, 50>addr2{ "http://www.cdsy.xyz/computer/programme/stl/" };
+    addr1 = addr2;
+    printf("%s", addr1.data());
+    return 0;
+}
+```
+
+运行结果为：
+
+http://www.cdsy.xyz/computer/programme/stl/
+
+不仅如此，在满足以上 2 个条件的基础上，如果其保存的元素也支持比较运算符，就可以用任何比较运算符直接比较两个 array 容器。示例如下：
+
+```
+#include <iostream>
+#include <array>
+using namespace std;
+int main()
+{
+    array<char, 50>addr1{ "http://www.cdsy.xyz" };
+    array<char, 50>addr2{ "http://www.cdsy.xyz/computer/programme/stl/" };
+    if (addr1 == addr2) {
+        std::cout << "addr1 == addr2" << std::endl;
+    }
+    if (addr1 < addr2) {
+        std::cout << "addr1 < addr2" << std::endl;
+    }
+    if (addr1 > addr2) {
+        std::cout << "addr1 > addr2" << std::endl;
+    }
+    return 0;
+}
+```
+
+运行结果为：
+
+addr 1 < addr 2
+
+两个容器比较大小的原理，和两个字符串比较大小是一样的，即从头开始，逐个取两容器中的元素进行大小比较（根据 ASCII 码表），直到遇到两个不相同的元素，那个元素的值大，则该容器就大。
+
+总之，读者可以这样认为，array 容器就是普通数组的 “升级版”，使用普通数组能实现的，使用 array 容器都可以实现，而且无论是代码功能的实现效率，还是程序执行效率，都比普通数组更高。
