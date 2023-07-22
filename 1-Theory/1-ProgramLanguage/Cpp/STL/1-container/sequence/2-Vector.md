@@ -521,9 +521,6 @@ int main()
 
 注意，这里不要使用 capacity () 成员函数，因为它返回的是 vector 容器的容量，而不是实际存储元素的个数，这两者是有差别的。
 
-#### vector capacity 与 size 的区别
-
-
 或者也可以使用基于范围的循环，此方式将会逐个遍历容器中的元素。比如：
 
 ```
@@ -540,8 +537,9 @@ int main()
 ```
 
 运行结果为：
-
+```
 1 2 3 4 5
+```
 
 另外还可以使用 vector 迭代器遍历 vector 容器，这里以 begin ()/end () 为例：
 
@@ -560,10 +558,141 @@ int main()
 ```
 
 运行结果为：
-
+```
 1 2 3 4 5
+```
 
-> 当然，这里也可以使用 rbegin ()/rend ()、cbegin ()/cend ()、crbegin ()/crend () 以及全局函数 begin ()/end () ，它们都可以实现对容器中元素的访问。
+## vector capacity 与 size 的区别
+
+很多初学者分不清楚 vector 容器的容量（capacity）和大小（size）之间的区别，甚至有人认为它们表达的是一个意思。本节将对 vector 容量和大小各自的含义做一个详细的介绍。
+
+vector 容器的容量（用 capacity 表示），指的是在不分配更多内存的情况下，容器可以保存的最多元素个数；而 vector 容器的大小（用 size 表示），指的是它实际所包含的元素个数。
+
+对于一个 vector 对象来说，通过该模板类提供的 capacity () 成员函数，可以获得当前容器的容量；通过 size () 成员函数，可以获得容器当前的大小。例如：
+
+```
+#include <iostream>
+#include <vector>
+using namespace std;
+int main()
+{
+    std::vector<int>value{ 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47 };
+    value.reserve(20);
+    cout << "value 容量是：" << value.capacity() << endl;
+    cout << "value 大小是：" << value.size() << endl;
+    return 0;
+}
+```
+
+程序输出结果为：
+```
+value 容量是：20  
+value 大小是：15
+```
+
+结合该程序的输出结果，下图可以更好的说明 vector 容器容量和大小之间的关系。
+
+![[vector-size-capacity.png]]
+
+显然，vector 容器的大小不能超出它的容量，在大小等于容量的基础上，只要增加一个元素，就必须分配更多的内存。注意，这里的 “更多” 并不是 1 个。换句话说，当 vector 容器的大小和容量相等时，如果再向其添加（或者插入）一个元素，vector 往往会申请多个存储空间，而不仅仅只申请 1 个。
+
+>一旦 vector 容器的内存被重新分配，则和 vector 容器中元素相关的所有引用、指针以及迭代器，都可能会失效，最稳妥的方法就是重新生成。
+
+举个例子：
+
+```
+#include <iostream>
+#include <vector>
+using namespace std;
+int main()
+{
+    vector<int>value{ 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47 };
+    cout << "value 容量是：" << value.capacity() << endl;
+    cout << "value 大小是：" << value.size() << endl;
+    printf("value首地址：%p\n", value.data());
+    value.push_back(53);
+    cout << "value 容量是(2)：" << value.capacity() << endl;
+    cout << "value 大小是(2)：" << value.size() << endl;
+    printf("value首地址： %p", value.data());
+    return 0;
+}
+```
+
+运行结果为：
+```
+value 容量是：15  
+value 大小是：15  
+value 首地址：01254 D 40  
+value 容量是 (2)：22  
+value 大小是 (2)：16  
+value 首地址： 01254 E 80
+```
+
+可以看到，向 “已满” 的 vector 容器再添加一个元素，整个 value 容器的存储位置发生了改变，同时 vector 会一次性申请多个存储空间（具体多少，取决于底层算法的实现）。这样做的好处是，可以很大程度上减少 vector 申请空间的次数，当后续再添加元素时，就可以节省申请空间耗费的时间。
+
+> 因此，对于 vector 容器而言，当增加新的元素时，有可能很快完成（即直接存在预留空间中）；也有可能会慢一些（扩容之后再放新元素）。
+
+### 修改 vector 容器的容量和大小
+------------------
+
+另外，通过前面的学习我们知道，可以调用 reserve () 成员函数来增加容器的容量（但并不会改变存储元素的个数）；而通过调用成员函数 resize () 可以改变容器的大小，并且该函数也可能会导致 vector 容器容量的增加。比如说：
+
+```
+#include <iostream>
+#include <vector>
+using namespace std;
+int main()
+{
+    vector<int>value{ 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47 };
+    cout << "value 容量是：" << value.capacity() << endl;
+    cout << "value 大小是：" << value.size() << endl;
+    value.reserve(20);
+    cout << "value 容量是(2)：" << value.capacity() << endl;
+    cout << "value 大小是(2)：" << value.size() << endl;
+    //将元素个数改变为 21 个，所以会增加 6 个默认初始化的元素
+    value.resize(21);
+    //将元素个数改变为 21 个，新增加的 6 个元素默认值为 99。
+    //value.resize(21,99);
+    //当需要减小容器的大小时，会移除多余的元素。
+    //value.resize(20);
+    cout << "value 容量是(3)：" << value.capacity() << endl;
+    cout << "value 大小是(3)：" << value.size() << endl;
+    return 0;
+}
+```
+
+运行结果为：
+```
+value 容量是：15  
+value 大小是：15  
+value 容量是 (2)：20  
+value 大小是 (2)：15  
+value 容量是 (3)：30  
+value 大小是 (3)：21
+```
+
+> 程序中给出了关于 resize () 成员函数的 3 种不同的用法，有兴趣的读者可自行查看不同用法的运行结果。
+
+可以看到，仅通过 reserve () 成员函数增加 value 容器的容量，其大小并没有改变；但通过 resize () 成员函数改变 value 容器的大小，它的容量可能会发生改变。另外需要注意的是，通过 resize () 成员函数减少容器的大小（多余的元素会直接被删除），不会影响容器的容量。
+
+### vector 容器容量和大小的数据类型
+-------------------
+
+在实际场景中，我们可能需要将容器的容量和大小保存在变量中，要知道 vector\<T\> 对象的容量和大小类型都是 vector\<T\>:: size_type 类型。因此，当定义一个变量去保存这些值时，可以如下所示：
+
+```
+vector<int>:: size_type cap = value.capacity ();
+vector<int>:: size_type size = value.size ();
+```
+
+size_type 类型是定义在由 vector 类模板生成的 vecotr 类中的，它表示的真实类型和操作系统有关，在 32 位架构下普遍表示的是 unsigned int 类型，而在 64 位架构下普通表示 unsigned long 类型。
+
+当然，我们还可以使用 auto 关键字代替 vector\<int\>:: size_type，比如：
+
+```
+auto cap = value.capacity ();
+auto size = value.size ();
+```
 
 ## 底层实现原理
 
