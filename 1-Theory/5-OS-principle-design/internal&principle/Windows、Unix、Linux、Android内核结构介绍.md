@@ -17,3 +17,4 @@
 ![[contemporary-unix-kernel.png]]
 
 ## Linux
+![[linux-kernel-components.png]]
