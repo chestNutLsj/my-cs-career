@@ -178,6 +178,8 @@
   },
   "active": "375dcc5ceba100a6",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/array-operate.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/array-init.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/1-Array.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/序列式容器介绍.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/sequence-container-operator.png",
@@ -199,7 +201,6 @@
     "1-Theory/5-OS-principle-design/internal&principle/assets/two-status-queue.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722123137.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722123125.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722123115.png",
     "1-Theory/2-DataStruct/dsa-deng/00-VS项目如何转为CMake的CLion项目.md",
     "1-Theory/2-DataStruct/错题本/排序算法.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/assets",
@@ -223,7 +224,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/41-Class(II).md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/40-Class(I).md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/41-拷贝构造函数-深拷贝.md",
-    "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/42-Special-members.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
