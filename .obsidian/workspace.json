@@ -11,8 +11,12 @@
             "id": "6f9734fbd33a9c8d",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "5-Tools/Dev-Tools/Git/Git小结.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -90,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md",
+                "file": "5-Tools/Dev-Tools/Git/Git小结.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -107,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md",
+                "file": "5-Tools/Dev-Tools/Git/Git小结.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md"
+                "file": "5-Tools/Dev-Tools/Git/Git小结.md"
               }
             }
           }
@@ -171,8 +175,10 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "6f9734fbd33a9c8d",
   "lastOpenFiles": [
+    "5-Tools/Dev-Tools/Git/Git常用操作.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/vector-visit.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/0-Intro.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/1-Array.md",
@@ -182,7 +188,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/Pasted image 20230722200023.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/STL背景知识介绍.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/容器及其分类.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/README.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/5-Other-features/50-Type-conversions.md",
@@ -195,7 +200,6 @@
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722123746.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/two-status-shift.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/two-status-queue.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722123137.png",
     "1-Theory/2-DataStruct/dsa-deng/00-VS项目如何转为CMake的CLion项目.md",
     "1-Theory/2-DataStruct/错题本/排序算法.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/assets",
