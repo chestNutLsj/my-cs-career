@@ -464,13 +464,13 @@ int main()
 ```
 
 输出结果为：
-
+```
 values 首元素为：1  
 values 尾元素为：5  
 values 新的首元素为：10  
 values 新的尾元素为：20
-
-另外，vector 容器还提供了 data () 成员函数，该函数的功能是返回指向容器中首个元素的[指针](http://c.biancheng.net/c/80/)。通过该指针也可以访问甚至修改容器中的元素。比如：
+```
+另外，vector 容器还提供了 data () 成员函数，该函数的功能是返回指向容器中首个元素的[指针](http://c.biancheng.net/c/80/)。通过该指针也可以访问以及修改容器中的元素。比如：
 
 ```
 #include <iostream>
@@ -489,11 +489,12 @@ int main()
 ```
 
 运行结果为：
-
+```
 3  
 10
+```
 
-## 访问 vector 容器中多个元素
+### 访问 vector 容器中多个元素
 -----------------
 
 如果想访问 vector 容器中多个元素，可以借助 size () 成员函数，该函数可以返回 vector 容器中实际存储的元素个数。例如：
@@ -514,12 +515,14 @@ int main()
 ```
 
 运行结果为：
-
+```
 1 2 3 4 5
+```
 
 注意，这里不要使用 capacity () 成员函数，因为它返回的是 vector 容器的容量，而不是实际存储元素的个数，这两者是有差别的。
 
-> 关于 vector 容器 capacity () 和 size () 的差别，可以阅读 《[STL vector 容量（capacity）和大小（size）的区别](http://c.biancheng.net/view/6770.html)》一文。
+#### vector capacity 与 size 的区别
+
 
 或者也可以使用基于范围的循环，此方式将会逐个遍历容器中的元素。比如：
 
