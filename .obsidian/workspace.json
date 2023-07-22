@@ -77,7 +77,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 226.5,
+    "width": 200,
     "collapsed": true
   },
   "right": {
@@ -176,8 +176,9 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "375dcc5ceba100a6",
+  "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/vector-visit.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/0-Intro.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/1-Array.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/array-operate.png",
