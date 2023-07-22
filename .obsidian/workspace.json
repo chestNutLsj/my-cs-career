@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "0a6e7bd906ba8c73",
+        "id": "77f0c748054705ed",
         "type": "tabs",
         "children": [
           {
-            "id": "f889e9cb41656fa9",
+            "id": "375dcc5ceba100a6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/序列式容器介绍.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/1-Array.md",
                 "mode": "source",
                 "source": false
               }
@@ -77,7 +77,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 214.5
+    "width": 226.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/序列式容器介绍.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/1-Array.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/序列式容器介绍.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/1-Array.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/序列式容器介绍.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/1-Array.md"
               }
             }
           }
@@ -176,11 +176,13 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "f889e9cb41656fa9",
+  "active": "375dcc5ceba100a6",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/1-Array.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/序列式容器介绍.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/sequence-container-operator.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/Pasted image 20230722200023.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/STL背景知识介绍.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/序列式容器介绍.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/容器及其分类.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/Vector.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/README.md",
@@ -198,8 +200,6 @@
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722123137.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722123125.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722123115.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722122942.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722122910.png",
     "1-Theory/2-DataStruct/dsa-deng/00-VS项目如何转为CMake的CLion项目.md",
     "1-Theory/2-DataStruct/错题本/排序算法.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/assets",
