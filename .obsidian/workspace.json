@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/README.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/序列式容器介绍.md",
                 "mode": "source",
                 "source": false
               }
@@ -77,8 +77,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 214.5,
-    "collapsed": true
+    "width": 214.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -95,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/README.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/序列式容器介绍.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -112,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/README.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/序列式容器介绍.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -151,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/README.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/序列式容器介绍.md"
               }
             }
           }
@@ -178,8 +177,11 @@
   },
   "active": "f889e9cb41656fa9",
   "lastOpenFiles": [
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/README.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/README.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/STL背景知识介绍.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/序列式容器介绍.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/容器及其分类.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/Vector.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/README.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/5-Other-features/50-Type-conversions.md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/1-Basic/11-Variables.md",
@@ -198,10 +200,8 @@
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722122910.png",
     "1-Theory/2-DataStruct/dsa-deng/00-VS项目如何转为CMake的CLion项目.md",
     "1-Theory/2-DataStruct/错题本/排序算法.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/README.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/assets",
     "1-Theory/1-ProgramLanguage/Cpp/STL/assets",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/Vector.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/assets",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/Queue.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/Deque.md",
@@ -223,7 +223,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/41-拷贝构造函数-深拷贝.md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/4-Classes/42-Special-members.md",
     "1-Theory/5-OS-principle-design/hit-lzj/x86 保护模式——全局描述符表 GDT 详解.md",
-    "1-Theory/5-OS-principle-design/hit-lzj/x86保护模式-GDT详解.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]

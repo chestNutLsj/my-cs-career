@@ -119,25 +119,25 @@ int main()
 ```
   
 再举一个例子，我们知道，list 容器的迭代器是双向迭代器。假设 v 和 i 的定义如下：
-
-1. //创建一个 v list容器
-2. list<int> v;
-3. //创建一个常量正向迭代器，同样，list也支持其他三种定义迭代器的方式。
-4. list<int>::const_iterator i;
-
+```
+//创建一个 v list容器
+list<int> v;
+//创建一个常量正向迭代器，同样，list也支持其他三种定义迭代器的方式。
+list<int>::const_iterator i;
+```
 则以下代码是合法的：
-
-1. for(i = v.begin(); i != v.end(); ++i)
-2.     cout << *i;
-
+```
+for(i = v.begin(); i != v.end(); ++i)
+   cout << *i;
+```
 以下代码则不合法，因为双向迭代器不支持用“<”进行比较：
-
-1. for(i = v.begin(); i < v.end(); ++i)
-2.     cout << *i;
-
+```
+for(i = v.begin(); i < v.end(); ++i)
+   cout << *i;
+```
 以下代码也不合法，因为双向迭代器不支持用下标随机访问元素：
-
-1. for(int i=0; i<v.size(); ++i)
-2.     cout << v[i];
-
+```
+for(int i=0; i<v.size(); ++i)
+   cout << v[i];
+```
 > 其实在 C++ 中，数组也是容器。数组的迭代器就是指针，而且是随机访问迭代器。例如，对于数组 int a[10]，int * 类型的指针就是其迭代器。则 a、a+1、a+2 都是 a 的迭代器。另外，以上有关 vector、list 容器的具体用法，后续章节会做详细讲解。
