@@ -706,18 +706,6 @@ auto size = value.size ();
 - 将原内容拷贝过去
 - 释放原空间
 
-### vector 的基本操作
-
-`push_back()`：插入操作(末尾)
-
-`pop_back()`：删除操作(末尾)
-
-`erase()`：清除某范围 `[first, last)` 元素，或删除某个位置上的元素
-
-`insert()`：从某个位置，插入 n 个元素，元素初值为x
-
-`clear()`：清除所有元素
-
 ### uninitialized_fill_n 功能
 
 ```c
