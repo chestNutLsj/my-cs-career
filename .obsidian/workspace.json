@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "c6e5fa56bda24974",
+        "id": "1656596486e6a691",
         "type": "tabs",
         "children": [
           {
-            "id": "eeefffcf97d1d9ae",
+            "id": "2ef9236ff06bedc6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md",
                 "mode": "source",
                 "source": false
               }
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md"
               }
             }
           }
@@ -175,8 +175,9 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "eeefffcf97d1d9ae",
+  "active": "2ef9236ff06bedc6",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle-design/internal&principle/进程.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/5-Forward_List.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/4-Queue.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/3-Deque.md",
@@ -203,7 +204,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/5-Other-features/50-Type-conversions.md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/1-Basic/11-Variables.md",
-    "1-Theory/5-OS-principle-design/internal&principle/进程.md",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230722125935.png",
     "1-Theory/5-OS-principle-design/internal&principle/进程、线程与协程.md",
     "1-Theory/5-OS-principle-design/internal&principle/Windows、Unix、Linux、Android内核结构介绍.md",
