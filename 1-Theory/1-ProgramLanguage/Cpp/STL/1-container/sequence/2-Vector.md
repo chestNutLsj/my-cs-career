@@ -562,201 +562,6 @@ int main()
 1 2 3 4 5
 ```
 
-## vector capacity 与 size 的区别
-
-很多初学者分不清楚 vector 容器的容量（capacity）和大小（size）之间的区别，甚至有人认为它们表达的是一个意思。本节将对 vector 容量和大小各自的含义做一个详细的介绍。
-
-vector 容器的容量（用 capacity 表示），指的是在不分配更多内存的情况下，容器可以保存的最多元素个数；而 vector 容器的大小（用 size 表示），指的是它实际所包含的元素个数。
-
-对于一个 vector 对象来说，通过该模板类提供的 capacity () 成员函数，可以获得当前容器的容量；通过 size () 成员函数，可以获得容器当前的大小。例如：
-
-```
-#include <iostream>
-#include <vector>
-using namespace std;
-int main()
-{
-    std::vector<int>value{ 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47 };
-    value.reserve(20);
-    cout << "value 容量是：" << value.capacity() << endl;
-    cout << "value 大小是：" << value.size() << endl;
-    return 0;
-}
-```
-
-程序输出结果为：
-```
-value 容量是：20  
-value 大小是：15
-```
-
-结合该程序的输出结果，下图可以更好的说明 vector 容器容量和大小之间的关系。
-
-![[vector-size-capacity.png]]
-
-显然，vector 容器的大小不能超出它的容量，在大小等于容量的基础上，只要增加一个元素，就必须分配更多的内存。注意，这里的 “更多” 并不是 1 个。换句话说，当 vector 容器的大小和容量相等时，如果再向其添加（或者插入）一个元素，vector 往往会申请多个存储空间，而不仅仅只申请 1 个。
-
->一旦 vector 容器的内存被重新分配，则和 vector 容器中元素相关的所有引用、指针以及迭代器，都可能会失效，最稳妥的方法就是重新生成。
-
-举个例子：
-
-```
-#include <iostream>
-#include <vector>
-using namespace std;
-int main()
-{
-    vector<int>value{ 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47 };
-    cout << "value 容量是：" << value.capacity() << endl;
-    cout << "value 大小是：" << value.size() << endl;
-    printf("value首地址：%p\n", value.data());
-    value.push_back(53);
-    cout << "value 容量是(2)：" << value.capacity() << endl;
-    cout << "value 大小是(2)：" << value.size() << endl;
-    printf("value首地址： %p", value.data());
-    return 0;
-}
-```
-
-运行结果为：
-```
-value 容量是：15  
-value 大小是：15  
-value 首地址：01254 D 40  
-value 容量是 (2)：22  
-value 大小是 (2)：16  
-value 首地址： 01254 E 80
-```
-
-可以看到，向 “已满” 的 vector 容器再添加一个元素，整个 value 容器的存储位置发生了改变，同时 vector 会一次性申请多个存储空间（具体多少，取决于底层算法的实现）。这样做的好处是，可以很大程度上减少 vector 申请空间的次数，当后续再添加元素时，就可以节省申请空间耗费的时间。
-
-> 因此，对于 vector 容器而言，当增加新的元素时，有可能很快完成（即直接存在预留空间中）；也有可能会慢一些（扩容之后再放新元素）。
-
-### 修改 vector 容器的容量和大小
-------------------
-
-另外，通过前面的学习我们知道，可以调用 reserve () 成员函数来增加容器的容量（但并不会改变存储元素的个数）；而通过调用成员函数 resize () 可以改变容器的大小，并且该函数也可能会导致 vector 容器容量的增加。比如说：
-
-```
-#include <iostream>
-#include <vector>
-using namespace std;
-int main()
-{
-    vector<int>value{ 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47 };
-    cout << "value 容量是：" << value.capacity() << endl;
-    cout << "value 大小是：" << value.size() << endl;
-    value.reserve(20);
-    cout << "value 容量是(2)：" << value.capacity() << endl;
-    cout << "value 大小是(2)：" << value.size() << endl;
-    //将元素个数改变为 21 个，所以会增加 6 个默认初始化的元素
-    value.resize(21);
-    //将元素个数改变为 21 个，新增加的 6 个元素默认值为 99。
-    //value.resize(21,99);
-    //当需要减小容器的大小时，会移除多余的元素。
-    //value.resize(20);
-    cout << "value 容量是(3)：" << value.capacity() << endl;
-    cout << "value 大小是(3)：" << value.size() << endl;
-    return 0;
-}
-```
-
-运行结果为：
-```
-value 容量是：15  
-value 大小是：15  
-value 容量是 (2)：20  
-value 大小是 (2)：15  
-value 容量是 (3)：30  
-value 大小是 (3)：21
-```
-
-> 程序中给出了关于 resize () 成员函数的 3 种不同的用法，有兴趣的读者可自行查看不同用法的运行结果。
-
-可以看到，仅通过 reserve () 成员函数增加 value 容器的容量，其大小并没有改变；但通过 resize () 成员函数改变 value 容器的大小，它的容量可能会发生改变。另外需要注意的是，通过 resize () 成员函数减少容器的大小（多余的元素会直接被删除），不会影响容器的容量。
-
-### vector 容器容量和大小的数据类型
--------------------
-
-在实际场景中，我们可能需要将容器的容量和大小保存在变量中，要知道 vector\<T\> 对象的容量和大小类型都是 vector\<T\>:: size_type 类型。因此，当定义一个变量去保存这些值时，可以如下所示：
-
-```
-vector<int>:: size_type cap = value.capacity ();
-vector<int>:: size_type size = value.size ();
-```
-
-size_type 类型是定义在由 vector 类模板生成的 vecotr 类中的，它表示的真实类型和操作系统有关，在 32 位架构下普遍表示的是 unsigned int 类型，而在 64 位架构下普通表示 unsigned long 类型。
-
-当然，我们还可以使用 auto 关键字代替 vector\<int\>:: size_type，比如：
-
-```
-auto cap = value.capacity ();
-auto size = value.size ();
-```
-
-## 底层实现原理
-
-STL 众多容器中，vector 是最常用的容器之一，其底层所采用的数据结构非常简单，就只是一段连续的线性内存空间。
-
-通过分析 vector 容器的源代码不难发现，它就是使用 3 个迭代器（可以理解成指针）来表示的：
-
-```
-//_Alloc 表示内存分配器，此参数几乎不需要我们关心
-template <class _Ty, class _Alloc = allocator<_Ty>>
-class vector{
-    ...
-protected:
-    pointer _Myfirst;
-    pointer _Mylast;
-    pointer _Myend;
-};
-```
-
-其中，`_Myfirst` 指向的是 vector 容器对象的起始字节位置；`_Mylast` 指向当前最后一个元素的末尾字节；`_Myend` 指向整个 vector 容器所占用内存空间的末尾字节。
-
-![[vector-base-pointer.png]]
-
-如上图所示，通过这 3 个迭代器，就可以表示出一个已容纳 2 个元素，容量为 5 的 vector 容器。
-
-在此基础上，将 3 个迭代器两两结合，还可以表达不同的含义，例如：
-* `_Myfirst` 和 `_Mylast` 可以用来表示 vector 容器中目前已被使用的内存空间；
-* `_Mylast` 和 `_Myend` 可以用来表示 vector 容器目前空闲的内存空间；
-* `_Myfirst` 和 `_Myend` 可以用表示 vector 容器的容量。
-
-> 对于空的 vector 容器，由于没有任何元素的空间分配，因此 `_Myfirst`、`_Mylast` 和 `_Myend` 均为 null。
-
-通过灵活运用这 3 个迭代器，vector 容器可以轻松的实现诸如首尾标识、大小、容器、空容器判断等几乎所有的功能，比如：
-
-```
-template <class _Ty, class _Alloc = allocator<_Ty>>
-class vector{
-public：
-    iterator begin() {return _Myfirst;}
-    iterator end() {return _Mylast;}
-    size_type size() const {return size_type(end() - begin());}
-    size_type capacity() const {return size_type(_Myend - begin());}
-    bool empty() const {return begin() == end();}
-    reference operator[] (size_type n) {return *(begin() + n);}
-    reference front() { return *begin();}
-    reference back() {return *(end()-1);}
-    ...
-};
-```
-
-### vector 扩大容量的本质
---------------
-
-另外需要指明的是，当 vector 的大小和容量相等（`size==capacity`）也就是满载时，如果再向其添加元素，那么 vector 就需要扩容。vector 容器扩容的过程需要经历以下 3 步：
-1. 完全弃用现有的内存空间，重新申请更大的内存空间；
-2. 将旧内存空间中的数据，按原有顺序移动到新的内存空间中；
-3. 最后将旧的内存空间释放。
-
-> 这也就解释了，为什么 vector 容器在进行扩容后，与其相关的指针、引用以及迭代器可能会失效的原因。
-
-由此可见，vector 扩容是非常耗时的。为了降低再次分配内存空间时的成本，每次扩容时 vector 都会申请比用户需求量更多的内存空间（这也就是 vector 容量的由来，即 capacity>=size），以便后期使用。
-
-> vector 容器扩容时，不同的编译器申请更多内存空间的量是不同的。以 VS 为例，它会扩容现有容器容量的 50%。
-
 ## 添加元素
 
 要知道，向 vector 容器中添加元素的唯一方式就是使用它的成员函数，如果不调用成员函数，非成员函数既不能添加也不能删除元素。这意味着，vector 容器对象必须通过它所允许的函数去访问，迭代器显然不行。
@@ -1250,7 +1055,6 @@ using namespace std;
 int main()
 {
     vector<int>demo{ 1,3,3,4,3,5 };
-    //交换要删除元素和最后一个元素的位置
     auto iter = std::remove(demo.begin(), demo.end(), 3);
     demo.erase(iter, demo.end());
     cout << "size is :" << demo.size() << endl;
@@ -1264,13 +1068,15 @@ int main()
 ```
 
 运行结果为：
-
+```
 size is : 3  
 capacity is : 6  
 1 4 5
+```
 
 > remove () 用于删除容器中指定元素时，常和 erase () 成员函数搭配使用。
 
+### clear
 如果想删除容器中所有的元素，则可以使用 clear () 成员函数，例如：
 
 ```
@@ -1291,6 +1097,257 @@ int main()
 ```
 
 运行结果为：
-
+```
 size is : 0  
-capacity is :6
+capacity is : 6
+```
+
+## vector capacity 与 size 的区别
+
+很多初学者分不清楚 vector 容器的容量（capacity）和大小（size）之间的区别，甚至有人认为它们表达的是一个意思。本节将对 vector 容量和大小各自的含义做一个详细的介绍。
+
+vector 容器的容量（用 capacity 表示），指的是在不分配更多内存的情况下，容器可以保存的最多元素个数；而 vector 容器的大小（用 size 表示），指的是它实际所包含的元素个数。
+
+对于一个 vector 对象来说，通过该模板类提供的 capacity () 成员函数，可以获得当前容器的容量；通过 size () 成员函数，可以获得容器当前的大小。例如：
+
+```
+#include <iostream>
+#include <vector>
+using namespace std;
+int main()
+{
+    std::vector<int>value{ 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47 };
+    value.reserve(20);
+    cout << "value 容量是：" << value.capacity() << endl;
+    cout << "value 大小是：" << value.size() << endl;
+    return 0;
+}
+```
+
+程序输出结果为：
+```
+value 容量是：20  
+value 大小是：15
+```
+
+结合该程序的输出结果，下图可以更好的说明 vector 容器容量和大小之间的关系。
+
+![[vector-size-capacity.png]]
+
+显然，vector 容器的大小不能超出它的容量，在大小等于容量的基础上，只要增加一个元素，就必须分配更多的内存。注意，这里的 “更多” 并不是 1 个。换句话说，当 vector 容器的大小和容量相等时，如果再向其添加（或者插入）一个元素，vector 往往会申请多个存储空间，而不仅仅只申请 1 个。
+
+>一旦 vector 容器的内存被重新分配，则和 vector 容器中元素相关的所有引用、指针以及迭代器，都可能会失效，最稳妥的方法就是重新生成。
+
+举个例子：
+
+```
+#include <iostream>
+#include <vector>
+using namespace std;
+int main()
+{
+    vector<int>value{ 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47 };
+    cout << "value 容量是：" << value.capacity() << endl;
+    cout << "value 大小是：" << value.size() << endl;
+    printf("value首地址：%p\n", value.data());
+    value.push_back(53);
+    cout << "value 容量是(2)：" << value.capacity() << endl;
+    cout << "value 大小是(2)：" << value.size() << endl;
+    printf("value首地址： %p", value.data());
+    return 0;
+}
+```
+
+运行结果为：
+```
+value 容量是：15  
+value 大小是：15  
+value 首地址：01254 D 40  
+value 容量是 (2)：22  
+value 大小是 (2)：16  
+value 首地址： 01254 E 80
+```
+
+可以看到，向 “已满” 的 vector 容器再添加一个元素，整个 value 容器的存储位置发生了改变，同时 vector 会一次性申请多个存储空间（具体多少，取决于底层算法的实现）。这样做的好处是，可以很大程度上减少 vector 申请空间的次数，当后续再添加元素时，就可以节省申请空间耗费的时间。
+
+> 因此，对于 vector 容器而言，当增加新的元素时，有可能很快完成（即直接存在预留空间中）；也有可能会慢一些（扩容之后再放新元素）。
+
+### 修改 vector 容器的容量和大小
+------------------
+
+另外，通过前面的学习我们知道，可以调用 reserve () 成员函数来增加容器的容量（但并不会改变存储元素的个数）；而通过调用成员函数 resize () 可以改变容器的大小，并且该函数也可能会导致 vector 容器容量的增加。比如说：
+
+```
+#include <iostream>
+#include <vector>
+using namespace std;
+int main()
+{
+    vector<int>value{ 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47 };
+    cout << "value 容量是：" << value.capacity() << endl;
+    cout << "value 大小是：" << value.size() << endl;
+    value.reserve(20);
+    cout << "value 容量是(2)：" << value.capacity() << endl;
+    cout << "value 大小是(2)：" << value.size() << endl;
+    //将元素个数改变为 21 个，所以会增加 6 个默认初始化的元素
+    value.resize(21);
+    //将元素个数改变为 21 个，新增加的 6 个元素默认值为 99。
+    //value.resize(21,99);
+    //当需要减小容器的大小时，会移除多余的元素。
+    //value.resize(20);
+    cout << "value 容量是(3)：" << value.capacity() << endl;
+    cout << "value 大小是(3)：" << value.size() << endl;
+    return 0;
+}
+```
+
+运行结果为：
+```
+value 容量是：15  
+value 大小是：15  
+value 容量是 (2)：20  
+value 大小是 (2)：15  
+value 容量是 (3)：30  
+value 大小是 (3)：21
+```
+
+> 程序中给出了关于 resize () 成员函数的 3 种不同的用法，有兴趣的读者可自行查看不同用法的运行结果。
+
+可以看到，仅通过 reserve () 成员函数增加 value 容器的容量，其大小并没有改变；但通过 resize () 成员函数改变 value 容器的大小，它的容量可能会发生改变。另外需要注意的是，通过 resize () 成员函数减少容器的大小（多余的元素会直接被删除），不会影响容器的容量。
+
+### vector 容器容量和大小的数据类型
+-------------------
+
+在实际场景中，我们可能需要将容器的容量和大小保存在变量中，要知道 vector\<T\> 对象的容量和大小类型都是 vector\<T\>:: size_type 类型。因此，当定义一个变量去保存这些值时，可以如下所示：
+
+```
+vector<int>:: size_type cap = value.capacity ();
+vector<int>:: size_type size = value.size ();
+```
+
+size_type 类型是定义在由 vector 类模板生成的 vecotr 类中的，它表示的真实类型和操作系统有关，在 32 位架构下普遍表示的是 unsigned int 类型，而在 64 位架构下普通表示 unsigned long 类型。
+
+当然，我们还可以使用 auto 关键字代替 vector\<int\>:: size_type，比如：
+
+```
+auto cap = value.capacity ();
+auto size = value.size ();
+```
+
+## 底层实现原理
+
+STL 众多容器中，vector 是最常用的容器之一，其底层所采用的数据结构非常简单，就只是一段连续的线性内存空间。
+
+通过分析 vector 容器的源代码不难发现，它就是使用 3 个迭代器（可以理解成指针）来表示的：
+
+```
+//_Alloc 表示内存分配器，此参数几乎不需要我们关心
+template <class _Ty, class _Alloc = allocator<_Ty>>
+class vector{
+    ...
+protected:
+    pointer _Myfirst;
+    pointer _Mylast;
+    pointer _Myend;
+};
+```
+
+其中，`_Myfirst` 指向的是 vector 容器对象的起始字节位置；`_Mylast` 指向当前最后一个元素的末尾字节；`_Myend` 指向整个 vector 容器所占用内存空间的末尾字节。
+
+![[vector-base-pointer.png]]
+
+如上图所示，通过这 3 个迭代器，就可以表示出一个已容纳 2 个元素，容量为 5 的 vector 容器。
+
+在此基础上，将 3 个迭代器两两结合，还可以表达不同的含义，例如：
+* `_Myfirst` 和 `_Mylast` 可以用来表示 vector 容器中目前已被使用的内存空间；
+* `_Mylast` 和 `_Myend` 可以用来表示 vector 容器目前空闲的内存空间；
+* `_Myfirst` 和 `_Myend` 可以用表示 vector 容器的容量。
+
+> 对于空的 vector 容器，由于没有任何元素的空间分配，因此 `_Myfirst`、`_Mylast` 和 `_Myend` 均为 null。
+
+通过灵活运用这 3 个迭代器，vector 容器可以轻松的实现诸如首尾标识、大小、容器、空容器判断等几乎所有的功能，比如：
+
+```
+template <class _Ty, class _Alloc = allocator<_Ty>>
+class vector{
+public：
+    iterator begin() {return _Myfirst;}
+    iterator end() {return _Mylast;}
+    size_type size() const {return size_type(end() - begin());}
+    size_type capacity() const {return size_type(_Myend - begin());}
+    bool empty() const {return begin() == end();}
+    reference operator[] (size_type n) {return *(begin() + n);}
+    reference front() { return *begin();}
+    reference back() {return *(end()-1);}
+    ...
+};
+```
+
+### vector 扩大容量的本质
+--------------
+
+另外需要指明的是，当 vector 的大小和容量相等（`size==capacity`）也就是满载时，如果再向其添加元素，那么 vector 就需要扩容。vector 容器扩容的过程需要经历以下 3 步：
+1. 完全弃用现有的内存空间，重新申请更大的内存空间；
+2. 将旧内存空间中的数据，按原有顺序移动到新的内存空间中；
+3. 最后将旧的内存空间释放。
+
+> 这也就解释了，为什么 vector 容器在进行扩容后，与其相关的指针、引用以及迭代器可能会失效的原因。
+
+由此可见，vector 扩容是非常耗时的。为了降低再次分配内存空间时的成本，每次扩容时 vector 都会申请比用户需求量更多的内存空间（这也就是 vector 容量的由来，即 capacity>=size），以便后期使用。
+
+> vector 容器扩容时，不同的编译器申请更多内存空间的量是不同的。以 VS 为例，它会扩容现有容器容量的 50%。
+
+## 如何避免 vector 进行不必要的扩容？
+
+前面提到，我们可以将 vector 容器看做是一个动态数组。换句话说，在不超出 vector 最大容量限制（max_size () 成员方法的返回值）的前提下，该类型容器可以自行扩充容量来满足用户存储更多元素的需求。
+
+值得一提的是，vector 容器扩容的整个过程，和 realloc () 函数的实现方法类似，大致分为以下 4 个步骤：
+
+1. 分配一块大小是当前 vector 容量几倍的新存储空间。注意，多数 STL 版本中的 vector 容器，其容器都会以 2 的倍数增长，也就是说，每次 vector 容器扩容，它们的容量都会提高到之前的 2 倍；
+2. 将 vector 容器存储的所有元素，依照原有次序从旧的存储空间复制到新的存储空间中；
+3. 析构掉旧存储空间中存储的所有元素；
+4. 释放旧的存储空间。
+
+通过以上分析不难看出，vector 容器的扩容过程是非常耗时的，并且当容器进行扩容后，之前和该容器相关的所有指针、迭代器以及引用都会失效。因此在使用 vector 容器过程中，我们应尽量避免执行不必要的扩容操作。
+
+要实现这个目标，可以借助 vector 模板类中提供的 reserve () 成员方法。不过在讲解如何用 reserve () 方法避免 vector 容器进行不必要的扩容操作之前，vector 模板类中还提供有几个和 reserve () 功能类似的成员方法，很容易混淆，这里有必要为读者梳理一下，如下表所示。
+
+| 成员方法        | 功能                                                                                                                                                                                            |
+|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| size ()     | 告诉我们当前 vector 容器中已经存有多少个元素，但仅通过此方法，无法得知 vector 容器有多少存储空间。                                                                                                                                     |
+| capacity () | 告诉我们当前 vector 容器总共可以容纳多少个元素。如果想知道当前 vector 容器有多少未被使用的存储空间，可以通过 capacity ()-size () 得知。注意，如果 size () 和 capacity () 返回的值相同，则表明当前 vector 容器中没有可用存储空间了，这意味着，下一次向 vector 容器中添加新元素，将导致 vector 容器扩容。 |
+| resize (n)  | 强制 vector 容器必须存储 n 个元素，注意，如果 n 比 size () 的返回值小，则容器尾部多出的元素将会被析构（删除）；如果 n 比 size () 大，则 vector 会借助默认构造函数创建出更多的默认值元素，并将它们存储到容器末尾；如果 n 比 capacity () 的返回值还要大，则 vector 会先扩增，在添加一些默认值元素。            |
+| reserve (n) | 强制 vector 容器的容量至少为 n。注意，如果 n 比当前 vector 容器的容量小，则该方法什么也不会做；反之如果 n 比当前 vector 容器的容量大，则 vector 容器就会扩容。                                                                                           |
+
+通过对以上几个成员方法功能的分析，我们可以总结出一点，即只要有新元素要添加到 vector 容器中而恰好此时 vector 容器的容量不足时，该容器就会自动扩容。
+
+因此，避免 vector 容器执行不必要的扩容操作的关键在于，在使用 vector 容器初期，就要将其容量设为足够大的值。换句话说，在 vector 容器刚刚构造出来的那一刻，就应该借助 reserve () 成员方法为其扩充足够大的容量。
+
+举个例子，假设我们想创建一个包含 1~1000 的 vector\<int\>，通常会这样实现：
+
+```
+vector<int>myvector;
+for (int i = 1; i <= 1000; i++) {
+    myvector. push_back (i);
+}
+```
+
+值得一提的是，上面代码的整个循环过程中，vector 容器会进行 2~10 次自动扩容（多数的 STL 标准库版本中，vector 容器通常会扩容至当前容量的 2 倍，而这里 1000≈ $2^{10}$），程序的执行效率可想而知。
+
+在上面程序的基础上，下面代码演示了如何使用 reserve () 成员方法尽量避免 vector 容器执行不必要的扩容操作：
+
+```
+vector<int>myvector;
+myvector.reserve (1000);
+cout << myvector.capacity ();
+for (int i = 1; i <= 1000; i++) {
+    myvector. push_back (i);
+}
+```
+
+相比前面的代码实现，整段程序在运行过程中，vector 容器的容量仅扩充了 1 次，执行效率大大提高。
+
+当然在实际场景中，我们可能并不知道 vector 容器到底要存储多少个元素。这种情况下，可以先预留出足够大的空间，当所有元素都存储到 vector 容器中之后，再去除多余的容量。
+
+> 关于怎样去除 vector 容器多余的容量，可以借助该容器模板类提供的 shrink_to_fit () 成员方法，另外后续还会讲解如何使用 swap () 成员方法去除 vector 容器多余的容量，两种方法都可以。
+
