@@ -757,4 +757,276 @@ public：
 
 > vector 容器扩容时，不同的编译器申请更多内存空间的量是不同的。以 VS 为例，它会扩容现有容器容量的 50%。
 
-## 添加元素 `push_back()`
+## 添加元素
+
+要知道，向 vector 容器中添加元素的唯一方式就是使用它的成员函数，如果不调用成员函数，非成员函数既不能添加也不能删除元素。这意味着，vector 容器对象必须通过它所允许的函数去访问，迭代器显然不行。
+
+在前文已经列出了 vector 容器提供的所有成员函数，在这些成员函数中，可以用来给容器中添加元素的函数有 2 个，分别是 push_back () 和 emplace_back () 函数。
+
+> 有读者可能认为还有 insert () 和 emplace () 成员函数，严格意义上讲，这 2 个成员函数的功能是向容器中的指定位置插入元素，后续章节会对它们做详细的介绍。
+
+### push_back ()
+-----------
+
+该成员函数的功能是在 vector 容器尾部添加一个元素，用法也非常简单，比如：
+
+```
+#include <iostream>
+#include <vector>
+using namespace std;
+int main()
+{
+    vector<int> values{};
+    values.push_back(1);
+    values.push_back(2);
+    for (int i = 0; i < values.size(); i++) {
+        cout << values[i] << " ";
+    }
+    return 0;
+}
+```
+
+程序中，第 7 行代码表示向 values 容器尾部添加一个元素，但由于当前 values 容器是空的，因此新添加的元素 1 无疑成为了容器中首个元素；第 8 行代码实现的功能是在现有元素 1 的后面，添加元素 2。
+
+运行程序，输出结果为：
+```
+1 2
+```
+
+### emplace_back ()
+--------------
+
+该函数是 [C++](http://c.biancheng.net/cplus/) 11 新增加的，其功能和 push_back () 相同，都是在 vector 容器的尾部添加一个元素。
+
+emplace_back () 成员函数的用法也很简单，这里直接举个例子：
+
+```
+#include <iostream>
+#include <vector>
+using namespace std;
+int main()
+{
+    vector<int> values{};
+    values.emplace_back(1);
+    values.emplace_back(2);
+    for (int i = 0; i < values.size(); i++) {
+        cout << values[i] << " ";
+    }
+    return 0;
+}
+```
+
+运行结果为：
+```
+1 2
+```
+读者可能会发现，以上 2 段代码，只是用 emplace_back () 替换了 push_back ()，既然它们实现的功能是一样的，那么 C++ 11 标准中为什么要多此一举呢？
+
+>[! note] emplace_back () 和 push_back () 的区别
+>emplace_back () 和 push_back () 的区别，就在于底层实现的机制不同。
+>- push_back () 向容器尾部添加元素时，首先会创建这个元素，然后再将这个元素拷贝或者移动到容器中（如果是拷贝的话，事后会自行销毁先前创建的这个元素）；
+>- 而 emplace_back () 在实现时，则是直接在容器尾部创建这个元素，省去了拷贝或移动元素的过程。
+
+为了让大家清楚的了解它们之间的区别，我们创建一个包含类对象的 vector 容器，如下所示：
+
+```
+#include <vector> 
+#include <iostream> 
+using namespace std;
+class testDemo
+{
+public:
+    testDemo(int num):num(num){
+        std::cout << "调用构造函数" << endl;
+    }
+    testDemo(const testDemo& other) :num(other.num) {
+        std::cout << "调用拷贝构造函数" << endl;
+    }
+    testDemo(testDemo&& other) :num(other.num) {
+        std::cout << "调用移动构造函数" << endl;
+    }
+private:
+    int num;
+};
+
+int main()
+{
+    cout << "emplace_back:" << endl;
+    std::vector<testDemo> demo1;
+    demo1.emplace_back(2);  
+
+    cout << "push_back:" << endl;
+    std::vector<testDemo> demo2;
+    demo2.push_back(2);
+}
+```
+
+运行结果为：
+```
+emplace_back:  
+调用构造函数  
+push_back:  
+调用构造函数  
+调用移动构造函数
+```
+
+在此基础上，读者可尝试将 testDemo 类中的移动构造函数注释掉，再运行程序会发现，运行结果变为：
+```
+emplace_back:  
+调用构造函数  
+push_back:  
+调用构造函数  
+调用拷贝构造函数
+```
+
+由此可以看出，push_back () 在底层实现时，会优先选择调用移动构造函数，如果没有才会调用拷贝构造函数。
+
+显然完成同样的操作，push_back () 的底层实现过程比 emplace_back () 更繁琐，换句话说，emplace_back () 的执行效率比 push_back () 高。因此，在实际使用时，建议大家优先选用 emplace_back ()。
+
+> 由于 emplace_back () 是 C++ 11 标准新增加的，如果程序要兼顾之前的版本，还是应该使用 push_back ()。
+
+## 插入元素
+
+vector 容器提供了 insert () 和 emplace () 这 2 个成员函数，用来实现在容器指定位置处插入元素，本节将对它们的用法做详细的讲解。
+
+### insert ()
+--------
+
+insert () 函数的功能是在 vector 容器的指定位置插入一个或多个元素。该函数的语法格式有多种，如表 1 所示。
+
+| 语法格式                                 | 用法说明                                                                                                                                          |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| iterator insert (pos, elem)              | 在迭代器 pos 指定的位置之前插入一个新元素 elem，并返回表示新插入元素位置的迭代器。                                                                |
+| iterator insert (pos, n, elem)           | 在迭代器 pos 指定的位置之前插入 n 个元素 elem，并返回表示第一个新插入元素位置的迭代器。                                                           |
+| iterator insert (pos, first, last)&nbsp; | 在迭代器 pos 指定的位置之前，插入其他容器（不仅限于 vector）中位于 \[first, last) 区域的所有元素，并返回表示第一个新插入元素位置的迭代器。         |
+| iterator insert (pos, initlist)          | 在迭代器 pos 指定的位置之前，插入初始化列表（用大括号 {} 括起来的多个元素，中间有逗号隔开）中所有的元素，并返回表示第一个新插入元素位置的迭代器。 |
+
+下面的例子，演示了如何使用 insert () 函数向 vector 容器中插入元素。
+
+```
+#include <iostream> 
+#include <vector> 
+#include <array> 
+using namespace std;
+int main()
+{
+    std::vector<int> demo{1,2};
+    //第一种格式用法
+    demo.insert(demo.begin() + 1, 3);//{1,3,2}
+
+    //第二种格式用法
+    demo.insert(demo.end(), 2, 5);//{1,3,2,5,5}
+
+    //第三种格式用法
+    std::array<int,3>test{ 7,8,9 };
+    demo.insert(demo.end(), test.begin(), test.end());//{1,3,2,5,5,7,8,9}
+
+    //第四种格式用法
+    demo.insert(demo.end(), { 10,11 });//{1,3,2,5,5,7,8,9,10,11}
+
+    for (int i = 0; i < demo.size(); i++) {
+        cout << demo[i] << " ";
+    }
+    return 0;
+}
+```
+
+运行结果为：
+```
+1 3 2 5 5 7 8 9 10 11
+```
+
+### emplace ()
+---------
+
+emplace () 是 [C++](http://c.biancheng.net/cplus/) 11 标准新增加的成员函数，用于在 vector 容器指定位置之前插入一个新的元素。
+
+> 再次强调，emplace () 每次只能插入一个元素，而不是多个。
+
+该函数的语法格式如下：
+```
+iterator emplace (const_iterator pos, args...);
+```
+
+其中，pos 为指定插入位置的迭代器；args... 表示与新插入元素的构造函数相对应的多个参数；该函数会返回表示新插入元素位置的迭代器。
+
+> 简单的理解 args...，即被插入元素的构造函数需要多少个参数，那么在 emplace () 的第一个参数的后面，就需要传入相应数量的参数。
+
+举个例子：
+
+```
+#include <vector>
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    std::vector<int> demo1{1,2};
+    //emplace() 每次只能插入一个 int 类型元素
+    demo1.emplace(demo1.begin(), 3);
+    for (int i = 0; i < demo1.size(); i++) {
+        cout << demo1[i] << " ";
+    }
+    return 0;
+}
+```
+
+运行结果为：
+```
+3 1 2
+```
+
+既然 emplace () 和 insert () 都能完成向 vector 容器中插入新元素，那么谁的运行效率更高呢？答案是 emplace ()。在说明原因之前，通过下面这段程序，就可以直观看出两者运行效率的差异：
+
+```
+#include <vector>
+#include <iostream>
+using namespace std;
+class testDemo
+{
+public:
+    testDemo(int num) :num(num) {
+        std::cout << "调用构造函数" << endl;
+    }
+    testDemo(const testDemo& other) :num(other.num) {
+        std::cout << "调用拷贝构造函数" << endl;
+    }
+    testDemo(testDemo&& other) :num(other.num) {
+        std::cout << "调用移动构造函数" << endl;
+    }
+
+    testDemo& operator=(const testDemo& other);
+private:
+    int num;
+};
+testDemo& testDemo::operator=(const testDemo& other) {
+    this->num = other.num;
+    return *this;
+}
+int main()
+{
+    cout << "insert:" << endl;
+    std::vector<testDemo> demo2{};
+    demo2.insert(demo2.begin(), testDemo(1));
+
+    cout << "emplace:" << endl;
+    std::vector<testDemo> demo1{};
+    demo1.emplace(demo1.begin(), 1);
+    return 0;
+}
+```
+
+运行结果为：
+```
+insert:  
+调用构造函数  
+调用移动构造函数  
+emplace:  
+调用构造函数
+```
+
+> 注意，当拷贝构造函数和移动构造函数同时存在时，insert () 会优先调用移动构造函数。
+
+可以看到，通过 insert () 函数向 vector 容器中插入 testDemo 类对象，需要调用类的构造函数和移动构造函数（或拷贝构造函数）；而通过 emplace () 函数实现同样的功能，只需要调用构造函数即可。
+
+简单的理解，就是 emplace () 在插入元素时，是在容器的指定位置直接构造元素，而不是先单独生成，再将其复制（或移动）到容器中。因此，在实际使用中，推荐大家优先使用 emplace ()。
