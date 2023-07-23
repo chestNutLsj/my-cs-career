@@ -405,9 +405,7 @@ protected:
 
 因此，deque 容器的底层实现如图 2 所示。
 
-![[Pasted image 20230723233533.png]]
-
-​deque 容器的底层实现
+![[deque-bottom-iter.png]]
 
 借助 start 和 finish，以及 deque 迭代器中重载的诸多运算符，就可以实现 deque 容器提供的大部分成员函数，比如：
 
@@ -430,16 +428,119 @@ size_type size() const{return finish - start;}//deque迭代器重载了 - 运算
 bool empty() const{return finish == start;}
 ```
 
-### 参考资料
+## 访问 deque 元素
+> 本文由 [简悦 SimpRead](http://ksria.com/simpread/) 转码， 原文地址 [c.biancheng.net](http://c.biancheng.net/view/6869.html)
 
-![](https://img-bc.icode.best/img_convert/fbae0963f339133f0ecae6788c16bf18.jpeg)
+> 通过《 STL deque 容器 》一节，详细介绍了如何创建一个 deque 容器，本节继续讲解如何访问（甚至修改）deque 容器存储的元素。
 
-​
+通过《[STL deque 容器](http://c.biancheng.net/view/6860.html)》一节，详细介绍了如何创建一个 deque 容器，本节继续讲解如何访问（甚至修改）deque 容器存储的元素。
 
-编辑切换为居中
+和 array、vector 容器一样，可以采用普通数组访问存储元素的方式，访问 deque 容器中的元素，比如：
 
-添加图片注释，不超过 140 字（可选）
+```
+#include <iostream>
+#include <deque>
+using namespace std;
+int main()
+{
+    deque<int>d{ 1,2,3,4 };
+    cout << d[1] << endl;
+    //修改指定下标位置处的元素
+    d[1] = 5;
+    cout << d[1] << endl;
+    return 0;
+}
+```
 
-推荐一个零声教育 C/C++ 后台开发的免费公开课程，个人觉得老师讲得不错，分享给大家：[C/C++ 后台开发高级架构师，内容包括 Linux，Nginx，ZeroMQ，MySQL，Redis，fastdfs，MongoDB，ZK，流媒体，CDN，P 2 P，K 8 S，Docker，TCP/IP，协程，DPDK 等技术内容，立即学习]( https://icode.best/go?go=aHR0cHM6Ly9rZS5xcS5jb20vY291cnNlLzQxNzc3ND9mbG93VG9rZW49MTAxMzE4OQ== "C/C++后台开发高级架构师，内容包括 Linux，Nginx，ZeroMQ，MySQL，Redis，fastdfs，MongoDB，ZK，流媒体，CDN，P 2 P，K 8 S，Docker，TCP/IP，协程，DPDK 等技术内容，立即学习")
+运行结果为：
 
-原文：[C++ STL deque 容器底层实现原理（深度剖析）]( https://mp.weixin.qq.com/s?__biz=MzIwNTIwMzAzNg==&mid=2654171934&idx=1&sn=3081d579df5f65110fb11f5e262504e5&chksm=8cf3a02dbb84293b700f10eea0db9fa5f74db6757da19a5c23217e687a3bf7cd34d1bd47d8d4&mpshare=1&scene=23&srcid=0909HOSnUoxJoy1bZKTODLRP&sharer_sharetime=1662706252577&sharer_shareid=e72d8588c0d41a3fcd82ae49add0d4e0#rd "C++ STL deque 容器底层实现原理（深度剖析）")
+2  
+5
+
+可以看到，`容器名[n]` 的这种方式，不仅可以访问容器中的元素，还可以对其进行修改。但需要注意的是，使用此方法需确保下标 n 的值不会超过容器中存储元素的个数，否则会发生越界访问的错误。
+
+如果想有效地避免越界访问，可以使用 deque 模板类提供的 at () 成员函数，由于该函数会返回容器中指定位置处元素的引用形式，因此利用该函数的返回值，既可以访问指定位置处的元素，如果需要还可以对其进行修改。
+
+不仅如此，at () 成员函数会自行判定访问位置是否越界，如果越界则抛出 `std::out_of_range` 异常。例如：
+
+```
+#include <iostream>
+#include <deque>
+using namespace std;
+int main()
+{
+    deque<int>d{ 1,2,3,4 };
+    cout << d.at(1) << endl;
+    d.at(1) = 5;
+    cout << d.at(1) << endl;
+    //下面这条语句会抛出 out_of_range 异常
+    //cout << d.at(10) << endl;
+    return 0;
+}
+```
+
+运行结果为：
+
+2  
+5
+
+> 读者可能有这样一个疑问，即为什么 deque 容器在重载 [] 运算符时，没有实现边界检查的功能呢？答案很简单，因为性能。如果每次访问元素，都去检查索引值，无疑会产生很多开销。当不存在越界访问的可能时，就能避免这种开销。
+
+除此之外，deque 容器还提供了 2 个成员函数，即 front () 和 back ()，它们分别返回 vector 容器中第一个和最后一个元素的引用，通过利用它们的返回值，可以访问（甚至修改）容器中的首尾元素。
+
+举个例子：
+
+```
+#include <iostream>
+#include <deque>
+using namespace std;
+int main()
+{
+    deque<int> d{ 1,2,3,4,5 };
+    cout << "deque 首元素为：" << d.front() << endl;
+    cout << "deque 尾元素为：" << d.back() << endl;
+    //修改首元素
+    d.front() = 10;
+    cout << "deque 新的首元素为：" << d.front() << endl;
+    //修改尾元素
+    d.back() = 20;
+    cout << "deque 新的尾元素为：" << d.back() << endl;
+    return 0;
+}
+```
+
+运行结果为：
+
+deque 首元素为：1  
+deque 尾元素为：5  
+deque 新的首元素为：10  
+deque 新的尾元素为：20
+
+注意，和 vector 容器不同，deque 容器没有提供 data () 成员函数，同时 deque 容器在存储元素时，也无法保证其会将元素存储在连续的内存空间中，因此尝试使用[指针](http://c.biancheng.net/c/80/)去访问 deque 容器中指定位置处的元素，是非常危险的。
+
+另外，结合 deque 模板类中和迭代器相关的成员函数，可以实现遍历 deque 容器中指定区域元素的方法。例如：
+
+```
+#include <iostream>
+#include <deque>
+using namespace std;
+int main()
+{
+    deque<int> d{ 1,2,3,4,5 };
+    //从元素 2 开始遍历
+    auto first = d.begin() + 1;
+    //遍历至 5 结束（不包括 5）
+    auto end = d.end() - 1;
+    while (first < end) {
+        cout << *first << " ";
+        ++first;
+    }
+    return 0;
+}
+```
+
+运行结果为：
+
+2 3 4
+
+> 当然，deque 模板类中和迭代器相关的成员函数，还有很多，大家可以阅读《[STL deque 容器迭代器](http://c.biancheng.net/view/6866.html)》做详细了解。
