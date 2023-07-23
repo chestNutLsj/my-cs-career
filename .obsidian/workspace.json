@@ -77,7 +77,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -177,6 +178,7 @@
   },
   "active": "2ef9236ff06bedc6",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/vector-base-pointer.png",
     "1-Theory/5-OS-principle-design/internal&principle/进程.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/5-Forward_List.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/4-Queue.md",
@@ -222,7 +224,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/STL/5-adapter",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
     "1-Theory/5-OS-principle-design/408&912/错题本.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/标准模板库（STL）.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]

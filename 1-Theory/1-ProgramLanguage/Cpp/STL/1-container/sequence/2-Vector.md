@@ -696,83 +696,65 @@ auto size = value.size ();
 
 ## 底层实现原理
 
-### 动态增加大小： `M_insert_aux ` 函数
+STL 众多容器中，vector 是最常用的容器之一，其底层所采用的数据结构非常简单，就只是一段连续的线性内存空间。
 
-所谓动态增加大小，并不是在原空间之后接续新空间(因为无法保证原空间之后尚有可供配置的空间)，而是以原大小的两倍另外配置一块较大空间，然后将原内容拷贝过来， 然后才开始在原内容之后构造新元素，并释放原空间。因此，对 vector 的任何操作，一旦引起空间重新配置，指向原 vector 的所有迭代器就都失效了。
+通过分析 vector 容器的源代码不难发现，它就是使用 3 个迭代器（可以理解成指针）来表示的：
 
-**vector 只能尾端增加空间，三部曲：**
-
-- 配置一块更大空间
-- 将原内容拷贝过去
-- 释放原空间
-
-### uninitialized_fill_n 功能
-
-```c
-template< class ForwardIt, class Size, class T >
-ForwardIt uninitialized_fill_n( ForwardIt first, Size count, const T& value );
+```
+//_Alloc 表示内存分配器，此参数几乎不需要我们关心
+template <class _Ty, class _Alloc = allocator<_Ty>>
+class vector{
+    ...
+protected:
+    pointer _Myfirst;
+    pointer _Mylast;
+    pointer _Myend;
+};
 ```
 
-函数功能是：从 first 起始，将 value 的值复制 count 个。
+其中，`_Myfirst` 指向的是 vector 容器对象的起始字节位置；`_Mylast` 指向当前最后一个元素的末尾字节；`_Myend` 指向整个 vector 容器所占用内存空间的末尾字节。
 
-函数的参数：
+![[vector-base-pointer.png]]
 
-- first - 要初始化的元素范围起始
-- count - 要构造的元素数量
-- value - 构造元素所用的值
+如上图所示，通过这 3 个迭代器，就可以表示出一个已容纳 2 个元素，容量为 5 的 vector 容器。
 
-### uninitialized_copy 功能
+在此基础上，将 3 个迭代器两两结合，还可以表达不同的含义，例如：
+* `_Myfirst` 和 `_Mylast` 可以用来表示 vector 容器中目前已被使用的内存空间；
+* `_Mylast` 和 `_Myend` 可以用来表示 vector 容器目前空闲的内存空间；
+* `_Myfirst` 和 `_Myend` 可以用表示 vector 容器的容量。
 
-```c
-template< class InputIt, class ForwardIt >
-ForwardIt uninitialized_copy( InputIt first, InputIt last, ForwardIt d_first );
+> 对于空的 vector 容器，由于没有任何元素的空间分配，因此 `_Myfirst`、`_Mylast` 和 `_Myend` 均为 null。
+
+通过灵活运用这 3 个迭代器，vector 容器可以轻松的实现诸如首尾标识、大小、容器、空容器判断等几乎所有的功能，比如：
+
+```
+template <class _Ty, class _Alloc = allocator<_Ty>>
+class vector{
+public：
+    iterator begin() {return _Myfirst;}
+    iterator end() {return _Mylast;}
+    size_type size() const {return size_type(end() - begin());}
+    size_type capacity() const {return size_type(_Myend - begin());}
+    bool empty() const {return begin() == end();}
+    reference operator[] (size_type n) {return *(begin() + n);}
+    reference front() { return *begin();}
+    reference back() {return *(end()-1);}
+    ...
+};
 ```
 
-函数的功能：复制来自范围 `[first, last)` 的元素到始于 d_first 的未初始化内存。
+### vector 扩大容量的本质
+--------------
 
-函数的参数：
+另外需要指明的是，当 vector 的大小和容量相等（`size==capacity`）也就是满载时，如果再向其添加元素，那么 vector 就需要扩容。vector 容器扩容的过程需要经历以下 3 步：
+1. 完全弃用现有的内存空间，重新申请更大的内存空间；
+2. 将旧内存空间中的数据，按原有顺序移动到新的内存空间中；
+3. 最后将旧的内存空间释放。
 
-- first, last - 要复制的元素范围
-- d_first - 目标范围的起始
+> 这也就解释了，为什么 vector 容器在进行扩容后，与其相关的指针、引用以及迭代器可能会失效的原因。
 
-### uninitialized_fill 功能
+由此可见，vector 扩容是非常耗时的。为了降低再次分配内存空间时的成本，每次扩容时 vector 都会申请比用户需求量更多的内存空间（这也就是 vector 容量的由来，即 capacity>=size），以便后期使用。
 
-```c
-template< class ForwardIt, class T >
-void uninitialized_fill( ForwardIt first, ForwardIt last, const T& value );
-```
+> vector 容器扩容时，不同的编译器申请更多内存空间的量是不同的。以 VS 为例，它会扩容现有容器容量的 50%。
 
-函数的功能：复制给定的 value 到以 `[first, last)` 定义的未初始化内存区域。
-
-函数的参数：
-
-- first, last - 要初始化的元素的范围
-- value - 构造元素所用的值
-
-### copy 功能
-
-```c
-template< class InputIt, class OutputIt >
-OutputIt copy( InputIt first, InputIt last, OutputIt d_first );
-```
-
-函数的功能：复制 `[first, last)` 所定义的范围中的元素到始于 d_first 的另一范围。
-
-函数的参数：
-
-- first, last - 要复制的元素范围
-- d_first - 目标范围的起始
-
-### vector insert 形式
-
-```c
-// 在 pos 前插入 value，底层实现 _M_insert_aux
-iterator insert( iterator pos, const T& value );
-
-// 在 pos 前插入 value 的 count 个副本，底层实现 _M_fill_insert
-void insert( iterator pos, size_type count, const T& value );
-
-// 在 pos 前插入来自范围 `[first, last)` 的元素，底层实现 _M_range_insert
-template< class InputIt >
-void insert( iterator pos, InputIt first, InputIt last);
-```
+## 添加元素 `push_back()`
