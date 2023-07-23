@@ -1351,3 +1351,233 @@ for (int i = 1; i <= 1000; i++) {
 
 > 关于怎样去除 vector 容器多余的容量，可以借助该容器模板类提供的 shrink_to_fit () 成员方法，另外后续还会讲解如何使用 swap () 成员方法去除 vector 容器多余的容量，两种方法都可以。
 
+## 去除 vector 多余容量
+
+上一节中，遗留了一个问题，即如何借助 swap () 成员方法去除 vector 容器中多余的容量？本节将就此问题给读者做详细的讲解。
+
+我们知道，在使用 vector 容器的过程中，其容器会根据需要自行扩增。比如，使用 push_back ()、insert ()、emplace () 等成员方法向 vector 容器中添加新元素时，如果当前容器已满（即 size () == capacity ()），则它会自行扩容以满足添加新元素的需求。当然，还可以调用 reserve () 成员方法来手动提升当前 vector 容器的容量。
+
+举个例子（程序一）：
+
+```
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+    vector<int>myvector;
+    cout << "1、当前 myvector 拥有 " << myvector.size() << " 个元素，容量为 " << myvector.capacity() << endl;
+    //利用 myvector 容器存储 10 个元素
+    for (int i = 1; i <= 10; i++) {
+        myvector.push_back(i);
+    }
+    cout << "2、当前 myvector 拥有 " << myvector.size() << " 个元素，容量为 " << myvector.capacity() << endl;
+    //手动为 myvector 扩容
+    myvector.reserve(1000);
+    cout << "3、当前 myvector 拥有 " << myvector.size() << " 个元素，容量为 " << myvector.capacity() << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+1、当前 myvector 拥有 0 个元素，容量为 0  
+2、当前 myvector 拥有 10 个元素，容量为 13  
+3、当前 myvector 拥有 10 个元素，容量为 1000
+```
+
+除了可以添加元素外，vector 模板类中还提供了 pop_back ()、erase ()、clear () 等成员方法，可以轻松实现删除容器中已存储的元素。但需要注意得是，借助这些成员方法只能删除指定的元素，容器的容量并不会因此而改变。
+
+例如在程序一的基础上，末尾（return 0 之前）添加如下语句：
+
+```
+myvector.erase(myvector.begin());
+cout << "4、当前 myvector 拥有 " << myvector.size() << " 个元素，容量为 " << myvector.capacity() << endl;
+
+myvector.pop_back();
+cout << "5、当前 myvector 拥有 " << myvector.size() << " 个元素，容量为 " << myvector.capacity() << endl;
+
+myvector.clear();
+cout << "6、当前 myvector 拥有 " << myvector.size() << " 个元素，容量为 " << myvector.capacity() << endl;
+```
+
+此段代码的执行结果为：
+```
+4、当前 myvector 拥有 9 个元素，容量为 1000  
+5、当前 myvector 拥有 8 个元素，容量为 1000  
+6、当前 myvector 拥有 0 个元素，容量为 1000
+```
+
+显然，myvector 容器存储的元素个数在减少，但容量并不会减小。
+
+### shrink_to_fit
+幸运的是，myvector 模板类中提供有一个 shrink_to_fit () 成员方法，该方法的功能是将当前 vector 容器的容量缩减至和实际存储元素的个数相等。例如，在程序一的基础上，添加如下语句：
+
+```
+myvector.shrink_to_fit();
+cout << "7、当前 myvector 拥有 " << myvector.size() << " 个元素，容量为 " << myvector.capacity() << endl;
+```
+
+该语句的执行结果为：
+```
+7、当前 myvector 拥有 10 个元素，容量为 10
+```
+
+显然，myvector 容器的容量由 1000 缩减到了 10。
+
+### swap
+除此之外，vector 模板类中还提供有 swap () 成员方法，该方法的基础功能是交换 2 个相同类型的 vector 容器（交换容量和存储的所有元素），但其也能用于去除 vector 容器多余的容量。
+
+如果想用 swap () 成员方法去除当前 vector 容器多余的容量时，可以套用如下的语法格式：
+```
+vector\<T\>(x).swap (x);
+```
+其中，x 指当前要操作的容器，T 为该容器存储元素的类型。
+
+下面程序演示了此语法格式的 swap () 方法的用法和功能：
+
+```
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main ()
+{
+    vector<int>myvector;
+    //手动为 myvector 扩容
+    myvector.reserve (1000);
+    cout << "1、当前 myvector 拥有 " << myvector.size () << " 个元素，容量为 " << myvector.capacity () << endl;
+    //利用 myvector 容器存储 10 个元素
+    for (int i = 1; i <= 10; i++) {
+        myvector. push_back (i);
+    }
+    //将 myvector 容量缩减至 10
+    vector<int>(myvector).swap (myvector);
+    cout << "2、当前 myvector 拥有 " << myvector.size () << " 个元素，容量为 " << myvector.capacity () << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+1、当前 myvector 拥有 0 个元素，容量为 1000  
+2、当前 myvector 拥有 10 个元素，容量为 10
+```
+
+显然，第 16 行代码成功将 myvector 容器的容量 1000 修改为 10，此行代码的执行流程可细分为以下 3 步：
+
+1) 先执行 vector\<int\>(myvector)，此表达式会调用 vector 模板类中的拷贝构造函数，从而创建出一个临时的 vector 容器（后续称其为 temp vector）。
+
+值得一提的是，tempvector 临时容器并不为空，因为我们将 myvector 作为参数传递给了复制构造函数，该函数会将 myvector 容器中的所有元素拷贝一份，并存储到 tempvector 临时容器中。
+
+> 注意，vector 模板类中的拷贝构造函数只会为拷贝的元素分配存储空间。换句话说，tempvector 临时容器中没有空闲的存储空间，其容量等于存储元素的个数。
+
+2) 然后借助 swap () 成员方法对 temp vector 临时容器和 myvector 容器进行调换，此过程不仅会交换 2 个容器存储的元素，还会交换它们的容量。换句话说经过 swap () 操作，myvetor 容器具有了 tempvector 临时容器存储的所有元素和容量，同时 tempvector 也具有了原 myvector 容器存储的所有元素和容量。
+
+3) 当整条语句执行结束时，临时的 tempvector 容器会被销毁，其占据的存储空间都会被释放。注意，这里释放的其实是原 myvector 容器占用的存储空间。
+
+经过以上 3 个步骤，就成功的将 myvector 容器的容量由 100 缩减至 10。
+
+#### 利用 swap () 方法清空 vector 容器
+
+在以上内容的学习过程中，如果读者善于举一反三，应该不难想到，swap () 方法还可以用来清空 vector 容器。
+
+当 swap () 成员方法用于清空 vector 容器时，可以套用如下的语法格式：
+```
+vector\<T\>().swap (x);
+```
+其中，x 指当前要操作的容器，T 为该容器存储元素的类型。
+
+注意，和上面语法格式唯一的不同之处在于，这里没有为 vector\<T\>() 表达式传递任何参数。这意味着，此表达式将调用 vector 模板类的默认构造函数，而不再是复制构造函数。也就是说，此格式会先生成一个空的 vector 容器，再借助 swap () 方法将空容器交换给 x，从而达到清空 x 的目的。
+
+下面程序演示了此语法格式的 swap () 方法的用法和功能：
+
+```
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main ()
+{
+    vector<int>myvector;
+    //手动为 myvector 扩容
+    myvector.reserve (1000);
+    cout << "1、当前 myvector 拥有 " << myvector.size () << " 个元素，容量为 " << myvector.capacity () << endl;
+    //利用 myvector 容器存储 10 个元素
+    for (int i = 1; i <= 10; i++) {
+        myvector. push_back (i);
+    }
+    //清空 myvector 容器
+    vector<int>(). swap (myvector);
+    cout << "2、当前 myvector 拥有 " << myvector.size () << " 个元素，容量为 " << myvector.capacity () << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+1、当前 myvector 拥有 0 个元素，容量为 1000  
+2、当前 myvector 拥有 0 个元素，容量为 0
+```
+
+## vector\<bool\> 不是存储 bool 类型的容器
+
+前面章节中，已经详细介绍了 vector\<T\> 容器的功能和用法。特别需要提醒的是，在使用 vector 容器时，要尽量避免使用该容器存储 bool 类型的元素，即避免使用 vector\<bool\>。
+
+具体来讲，不推荐使用 vector\<bool\> 的原因有以下 2 个：
+1.  严格意义上讲，vector\<bool\> 并不是一个 STL 容器；
+2.  vector\<bool\> 底层存储的并不是 bool 类型值。
+
+读者可能会感到有些困惑，别着急，继续往下读。
+
+### vector \<bool\> 不是容器
+-----------------
+
+值得一提的是，对于是否为 STL 容器，C++ 标准库中有明确的判断条件，其中一个条件是：如果 cont 是包含对象 T 的 STL 容器，且该容器中重载了 [] 运算符（即支持 operator[]），则以下代码必须能够被编译：
+
+```
+T *p = &cont[0];
+```
+
+此行代码的含义是，借助 operator[] 获取一个 cont<T> 容器中存储的 T 对象，同时将这个对象的地址赋予给一个 T 类型的指针。
+
+这就意味着，如果 vector<bool> 是一个 STL 容器，则下面这段代码是可以通过编译的：
+
+```
+//创建一个 vector<bool> 容器
+vector<bool>cont{0,1};
+//试图将指针 p 指向 cont 容器中第一个元素
+bool *p = &cont[0];
+```
+
+但不幸的是，此段代码不能通过编译。原因在于 vector<bool> 底层采用了独特的存储机制。
+
+实际上，为了节省空间，vector<bool> 底层在存储各个 bool 类型值时，每个 bool 值都只使用一个比特位（二进制位）来存储。也就是说在 vector<bool> 底层，一个字节可以存储 8 个 bool 类型值。在这种存储机制的影响下，operator[ ] 势必就需要返回一个指向单个比特位的引用，但显然这样的引用是不存在的。
+
+> C++ 标准中解决这个问题的方案是，令 operator[] 返回一个代理对象（proxy object）。有关代理对象，由于不是本节重点，这里不再做描述，有兴趣的读者可自行查阅相关资料。
+
+同样对于指针来说，其指向的最小单位是字节，无法另其指向单个比特位。综上所述可以得出一个结论，即上面第 2 行代码中，用 = 赋值号连接 bool *p 和 &cont[0] 是矛盾的。
+
+由于 vector<bool> 并不完全满足 C++ 标准中对容器的要求，所以严格意义上来说它并不是一个 STL 容器。可能有读者会问，既然 vector<bool> 不完全是一个容器，为什么还会出现在 C++ 标准中呢？
+
+这和一个雄心勃勃的试验有关，还要从前面提到的代理对象开始说起。由于代理对象在 C++ 软件开发中很受欢迎，引起了 C++ 标准委员会的注意，他们决定以开发 vector<bool> 作为一个样例，来演示 STL 中的容器如何通过代理对象来存取元素，这样当用户想自己实现一个基于代理对象的容器时，就会有一个现成的参考模板。
+
+然而开发人员在实现 vector<bool> 的过程中发现，既要创建一个基于代理对象的容器，同时还要求该容器满足 C++ 标准中对容器的所有要求，是不可能的。由于种种原因，这个试验最终失败了，但是他们所做过的尝试（即开发失败的 vector<bool>）遗留在了 C++ 标准中。
+
+> 至于将 vector<bool> 遗留到 C++ 标准中，是无心之作，还是有意为之，这都无关紧要，重要的是让读者明白，vector<bool> 不完全满足 C++ 标准中对容器的要求，尽量避免在实际场景中使用它！
+
+如何避免使用 vector<bool>
+-------------------
+
+那么，如果在实际场景中需要使用 vector<bool> 这样的存储结构，该怎么办呢？很简单，可以选择使用 deque<bool> 或者 bitset 来替代 vector<bool>。
+
+要知道，deque 容器几乎具有 vecotr 容器全部的功能（拥有的成员方法也仅差 reserve () 和 capacity ()），而且更重要的是，deque 容器可以正常存储 bool 类型元素。
+
+> 有关 deque 容器的具体用法，后续章节会做详细讲解。
+
+还可以考虑用 bitset 代替 vector<bool>，其本质是一个模板类，可以看做是一种类似数组的存储结构。和后者一样，bitset 只能用来存储 bool 类型值，且底层存储机制也采用的是用一个比特位来存储一个 bool 值。
+
+和 vector 容器不同的是，bitset 的大小在一开始就确定了，因此不支持插入和删除元素；另外 bitset 不是容器，所以不支持使用迭代器。
+
+> 有关 bitset 的用法，感兴趣的读者可查阅 C++ 官方提供的 [bitset 使用手册](http://www.cplusplus.com/reference/bitset/bitset/)。
