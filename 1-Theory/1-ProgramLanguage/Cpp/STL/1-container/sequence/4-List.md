@@ -588,6 +588,203 @@ mylist2:1 10 20 30 3 4 2
 
 ## 删除元素
 
+对 list 容器存储的元素执行删除操作，需要借助该容器模板类提供的成员函数。幸运的是，相比其它 STL 容器模板类，list 模板类提供了更多用来实现此操作的成员函数（如表所示）。
+
+| 成员函数         | 功能                                              |
+|--------------|-------------------------------------------------|
+| pop_front () | 删除位于 list 容器头部的一个元素。                            |
+| pop_back ()  | 删除位于 list 容器尾部的一个元素。                            |
+| erase ()     | 该成员函数既可以删除 list 容器中指定位置处的元素，也可以删除容器中某个区域内的多个元素。 |
+| clear ()     | 删除 list 容器存储的所有元素。                              |
+| remove (val) | 删除容器中所有等于 val 的元素。                              |
+| unique ()    | 删除容器中相邻的重复元素，只保留一份。                             |
+| remove_if () | 删除容器中满足条件的元素。                                   |
+
+其中，pop_front ()、pop_back () 和 clear () 的用法非常简单，这里仅给出一个样例，不再过多解释：
+
+```
+#include <iostream>
+#include <list>
+using namespace std;
+int main()
+{
+    list<int>values{ 1,2,3,4 };
+   
+    //删除当前容器中首个元素
+    values.pop_front();//{2,3,4}
+   
+    //删除当前容器最后一个元素
+    values.pop_back();//{2,3}
+   
+    //清空容器，删除容器中所有的元素
+    values.clear(); //{}
+   
+    for (auto begin = values.begin(); begin != values.end(); ++begin)
+    {
+        cout << *begin << " ";
+    }
+    return 0;
+}
+```
+
+运行程序，可以看到输出结果为 “空”。
+
+erase () 成员函数有以下 2 种语法格式：
+```
+iterator erase (iterator position);  
+iterator erase (iterator first, iterator last);
+```
+
+利用第一种语法格式，可实现删除 list 容器中 position 迭代器所指位置处的元素，例如：
+
+```
+#include <iostream>
+#include <list>
+using namespace std;
+int main()
+{
+    list<int>values{ 1,2,3,4,5 };
+    //指向元素 1 的迭代器
+    auto del = values.begin();
+    //迭代器右移，改为指向元素 2
+    ++del;
+    values.erase(del); //{1,3,4,5}
+
+    for (auto begin = values.begin(); begin != values.end(); ++begin)
+    {
+        cout << *begin << " ";
+    }
+    return 0;
+}
+```
+
+运行结果为：
+```
+1 3 4 5
+```
+
+利用第二种语法格式，可实现删除 list 容器中 first 迭代器和 last 迭代器限定区域内的所有元素（包括 first 指向的元素，但不包括 last 指向的元素）。例如：
+
+```
+#include <iostream>
+#include <list>
+using namespace std;
+int main()
+{
+    list<int>values{ 1,2,3,4,5 };
+    //指定删除区域的左边界
+    auto first = values.begin();
+    ++first;//指向元素 2
+
+    //指向删除区域的右边界
+    auto last = values.end();
+    --last;//指向元素 5
+
+    //删除 2、3 和 4
+    values.erase(first, last);
+
+    for (auto begin = values.begin(); begin != values.end(); ++begin)
+    {
+        cout << *begin << " ";
+    }
+    return 0;
+}
+```
+
+运行结果为：
+```
+1 5
+```
+
+erase () 成员函数是按照被删除元素所在的位置来执行删除操作，如果想根据元素的值来执行删除操作，可以使用 remove () 成员函数。例如：
+
+```
+#include <iostream>
+#include <list>
+using namespace std;
+int main()
+{
+    list<char>values{'a','b','c','d'};
+    values.remove('c');
+    for (auto begin = values.begin(); begin != values.end(); ++begin)
+    {
+        cout << *begin << " ";
+    }
+    return 0;
+}
+```
+
+运行结果为：
+```
+a b d
+```
+unique () 函数也有以下 2 种语法格式：
+```
+void unique ()  
+void unique（BinaryPredicate）// 传入一个二元谓词函数
+`
+以上 2 种格式都能实现去除 list 容器中相邻重复的元素，仅保留一份。但第 2 种格式的优势在于，我们能自定义去重的规则，例如：
+
+```
+#include <iostream>
+#include <list>
+using namespace std;
+//二元谓词函数
+bool demo(double first, double second)
+{
+    return (int(first) == int(second));
+}
+
+int main()
+{
+    list<double> mylist{ 1,1.2,1.2,3,4,4.5,4.6 };
+    //删除相邻重复的元素，仅保留一份
+    mylist.unique();//{1, 1.2, 3, 4, 4.5, 4.6}
+
+    for (auto it = mylist.begin(); it != mylist.end(); ++it)
+        cout << *it << ' ';
+    cout << endl;
+    //demo 为二元谓词函数，是我们自定义的去重规则
+    mylist.unique(demo);
+
+    for (auto it = mylist.begin(); it != mylist.end(); ++it)
+        std::cout << *it << ' ';
+    return 0;
+}
+```
+
+运行结果为：
+
+1 1.2 3 4 4.5 4.6  
+1 3 4
+
+> 注意，除了以上一定谓词函数的方式，还可以使用 [lamba 表达式](http://c.biancheng.net/view/433.html)以及[函数对象](http://c.biancheng.net/view/354.html)的方式定义。
+
+可以看到，通过调用无参的 unique ()，仅能删除相邻重复（也就是相等）的元素，而通过我们自定义去重的规则，可以更好的满足在不同场景下去重的需求。
+
+除此之外，通过将自定义的谓词函数（不限定参数个数）传给 remove_if () 成员函数，list 容器中能使谓词函数成立的元素都会被删除。举个例子：
+
+```
+#include <iostream>
+#include <list>
+using namespace std;
+
+int main()
+{
+    std::list<int> mylist{ 15, 36, 7, 17, 20, 39, 4, 1 };
+    //删除 mylist 容器中能够使 lamba 表达式成立的所有元素。
+    mylist.remove_if([](int value) {return (value < 10); }); //{15 36 17 20 39}
+
+    for (auto it = mylist.begin(); it != mylist.end(); ++it)
+        std::cout << ' ' << *it;
+
+    return 0;
+}
+```
+
+运行结果为：
+
+15 36 17 20 39
 
 ## 问题：empty 和 size 都可以用来判空，哪个更好？
 
