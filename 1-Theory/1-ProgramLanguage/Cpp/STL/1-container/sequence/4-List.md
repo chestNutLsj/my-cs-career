@@ -348,14 +348,12 @@ void empty_initialize()
 显然，即便是创建空的 list 容器，它也包含有 1 个节点。
 
 除此之外，list 模板类中还提供有带参的构造函数，它们的实现过程大致分为以下 2 步：
+* 调用 empty_initialize () 函数，构造带有头节点的空 list 容器链表；
+* 将各个参数按照次序插入到空的 list 容器链表中。
 
-*   调用 empty_initialize () 函数，构造带有头节点的空 list 容器链表；
-*   将各个参数按照次序插入到空的 list 容器链表中。
+由此可以总结出，list 容器实际上就是一个带有头节点的双向循环链表。如图所示，此为存有 2 个元素的 list 容器：
 
-由此可以总结出，list 容器实际上就是一个带有头节点的双向循环链表。如图 2 所示，此为存有 2 个元素的 list 容器：
-
-![](https://www.cdsy.xyz/d/file/computer/programme/stl/2021-04-22/858630200d451db3a6327762ecb951ed.gif)  
-图 1 list 容器底层存储示意图
+![[list-with-two-nodes.png]]
 
 在此基础上，通过借助 node 头节点，就可以实现 list 容器中的所有成员函数，比如：
 
@@ -373,4 +371,217 @@ T& back() {return *(--end();)}
 //...
 ```
 
-> 以上也只是罗列了 list 容器中一部分成员函数的实现方法，其它成员函数的具体实现，这里不再具体描述，感兴趣的读者，可下载 list 容器的实现源码。
+## list 访问元素
+
+不同于之前学过的 [STL](http://c.biancheng.net/stl/) 容器，访问 list 容器中存储元素的方式很有限，即要么使用 front () 和 back () 成员函数，要么使用 list 容器迭代器。
+
+> list 容器不支持随机访问，未提供下标操作符 \[\] 和 at () 成员函数，也没有提供 data () 成员函数。
+
+通过 front () 和 back () 成员函数，可以分别获得 list 容器中第一个元素和最后一个元素的引用形式。举个例子：
+
+```
+#include <iostream>
+#include <list>
+using namespace std;
+
+int main()
+{
+    std::list<int> mylist{ 1,2,3,4 };
+    int &first = mylist.front();
+    int &last = mylist.back();
+    cout << first << " " << last << endl;
+    first = 10;
+    last = 20;
+    cout << mylist.front() << " " << mylist.back() << endl;
+    return 0;
+}
+```
+
+输出结果为：
+```
+1 4  
+10 20
+```
+
+可以看到，通过 front () 和 back () 的返回值，我们不仅能分别获取当前 list 容器中的首尾元素，必要时还能修改它们的值。
+
+除此之外，如果想访问 list 容存储的其他元素，就只能使用 list 容器的迭代器。例如：
+
+```
+#include <iostream>
+#include <list>
+using namespace std;
+int main()
+{
+    const std::list<int> mylist{1,2,3,4,5};
+    auto it = mylist.begin();
+    cout << *it << " ";
+    ++it;
+    while (it!=mylist.end())
+    {
+        cout << *it << " ";
+        ++it;  
+    }
+    return 0;
+}
+```
+
+运行结果为：
+```
+1 2 3 4 5
+```
+
+值得一提的是，对于非 const 类型的 list 容器，迭代器不仅可以访问容器中的元素，也可以对指定元素的值进行修改。
+
+> 当然，对于修改容器指定元素的值，list 模板类提供有专门的成员函数 assign ()
+
+## 添加元素
+
+前面章节介绍了如何创建 list 容器，在此基础上，本节继续讲解如何向现有 list 容器中添加或插入新的元素。
+
+list 模板类中，与 “添加或插入新元素” 相关的成员方法有如下几个：
+* push_front ()：向 list 容器首个元素前添加新元素；
+* push_back ()：向 list 容器最后一个元素后添加新元素；
+* emplace_front ()：在容器首个元素前直接生成新的元素；
+* emplace_back ()：在容器最后一个元素后直接生成新的元素；
+* emplace ()：在容器的指定位置直接生成新的元素；
+* insert ()：在指定位置插入新元素；
+* splice ()：将其他 list 容器存储的多个元素添加到当前 list 容器的指定位置处。
+
+以上这些成员方法中，除了 insert () 和 splice () 方法有多种语法格式外，其它成员方法都仅有 1 种语法格式，下面程序演示了它们的具体用法。
+
+```
+#include <iostream>
+#include <list>
+using namespace std;
+
+int main()
+{
+    std::list<int> values{1,2,3};
+    values.push_front(0);//{0,1,2,3}
+    values.push_back(4); //{0,1,2,3,4}
+
+    values.emplace_front(-1);//{-1,0,1,2,3,4}
+    values.emplace_back(5);  //{-1,0,1,2,3,4,5}
+   
+    //emplace(pos,value),其中 pos 表示指明位置的迭代器，value为要插入的元素值
+    values.emplace(values.end(), 6);//{-1,0,1,2,3,4,5,6}
+    for (auto p = values.begin(); p != values.end(); ++p) {
+        cout << *p << " ";
+    }
+    return 0;
+}
+```
+
+输出结果为：
+```
+-1,0,1,2,3,4,5,6
+```
+### list insert () 成员方法
+------------------
+
+insert () 成员方法的语法格式有 4 种，如表所示。
+
+| 语法格式                                     | 用法说明                                                                                                 |
+|------------------------------------------|------------------------------------------------------------------------------------------------------|
+| iterator insert (pos, elem)              | 在迭代器 pos 指定的位置之前插入一个新元素 elem，并返回表示新插入元素位置的迭代器。                                                       |
+| iterator insert (pos, n, elem)           | 在迭代器 pos 指定的位置之前插入 n 个元素 elem，并返回表示第一个新插入元素位置的迭代器。                                                   |
+| iterator insert (pos, first, last)&nbsp; | 在迭代器 pos 指定的位置之前，插入其他容器（例如&nbsp; array、vector、deque 等）中位于 \[first, last) 区域的所有元素，并返回表示第一个新插入元素位置的迭代器。 |
+| iterator insert (pos, initlist)          | 在迭代器 pos 指定的位置之前，插入初始化列表（用大括号 { } 括起来的多个元素，中间有逗号隔开）中所有的元素，并返回表示第一个新插入元素位置的迭代器。                       |
+
+下面的程序演示了如何使用 insert () 方法向 list 容器中插入元素。
+
+```
+#include <iostream>
+#include <list>
+#include <array>
+using namespace std;
+int main()
+{
+    std::list<int> values{ 1,2 };
+    //第一种格式用法
+    values.insert(values.begin() , 3);//{3,1,2}
+
+    //第二种格式用法
+    values.insert(values.end(), 2, 5);//{3,1,2,5,5}
+
+    //第三种格式用法
+    std::array<int, 3>test{ 7,8,9 };
+    values.insert(values.end(), test.begin(), test.end());//{3,1,2,5,5,7,8,9}
+
+    //第四种格式用法
+    values.insert(values.end(), { 10,11 });//{3,1,2,5,5,7,8,9,10,11}
+
+    for (auto p = values.begin(); p != values.end(); ++p)
+    {
+        cout << *p << " ";
+    }
+    return 0;
+}
+```
+
+输出结果为：
+```
+3 1 2 5 5 7 8 9 10 11
+```
+
+学到这里，读者有没有发现，同样是实现插入元素的功能，无论是 push_front ()、push_back () 还是 insert ()，都有以 emplace 为名且功能和前者相同的成员函数。这是因为，后者是 [C++](http://c.biancheng.net/cplus/) 11 标准新添加的，在大多数场景中，都可以完全替代前者实现同样的功能。更重要的是，实现同样的功能，emplace 系列方法的执行效率更高。
+
+### list splice () 成员方法
+------------------
+
+和 insert () 成员方法相比，splice () 成员方法的作用对象是其它 list 容器，其功能是将其它 list 容器中的元素添加到当前 list 容器中指定位置处。
+
+splice () 成员方法的语法格式有 3 种，如表所示。
+
+| 语法格式                                                                         | 功能                                                                                                                                                               |
+|------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| void splice (iterator position, list&amp; x);                                | position 为迭代器，用于指明插入位置；x 为另一个 list 容器。此格式的 splice () 方法的功能是，将 x 容器中存储的所有元素全部移动当前 list 容器中 position 指明的位置处。                                                       |
+| void splice (iterator position, list&amp; x, iterator i);                    | position 为迭代器，用于指明插入位置；x 为另一个 list 容器；i 也是一个迭代器，用于指向 x 容器中某个元素。此格式的 splice () 方法的功能是将 x 容器中 i 指向的元素移动到当前容器中 position 指明的位置处。                                     |
+| void splice (iterator position, list&amp; x, iterator first, iterator last); | position 为迭代器，用于指明插入位置；x 为另一个 list 容器；first 和 last 都是迭代器，[fist, last) 用于指定 x 容器中的某个区域。此格式的 splice () 方法的功能是将 x 容器 [first, last) 范围内所有的元素移动到当前容器 position 指明的位置处。 |
+
+
+我们知道，list 容器底层使用的是链表存储结构，splice () 成员方法移动元素的方式是，将存储该元素的节点从 list 容器底层的链表中摘除，然后再链接到当前 list 容器底层的链表中。这意味着，当使用 splice () 成员方法将 x 容器中的元素添加到当前容器的同时，该元素会从 x 容器中删除。
+
+下面程序演示了 splice () 成员方法的用法：
+
+```
+#include <iostream>
+#include <list>
+using namespace std;
+int main()
+{
+    //创建并初始化 2 个 list 容器
+    list<int> mylist1{ 1,2,3,4 }, mylist2{10,20,30};
+    list<int>::iterator it = ++mylist1.begin(); //指向 mylist1 容器中的元素 2
+   
+    //调用第一种语法格式
+    mylist1.splice(it, mylist2); // mylist1: 1 10 20 30 2 3 4
+                                 // mylist2:
+                                 // it 迭代器仍然指向元素 2，只不过容器变为了 mylist1
+
+    //调用第二种语法格式，将 it 指向的元素 2 移动到 mylist2.begin() 位置处
+    mylist2.splice(mylist2.begin(), mylist1, it);   // mylist1: 1 10 20 30 3 4
+                                                    // mylist2: 2
+                                                    // it 仍然指向元素 2
+   
+    //调用第三种语法格式，将 [mylist1.begin(),mylist1.end())范围内的元素移动到 mylist.begin() 位置处                  
+    mylist2.splice(mylist2.begin(), mylist1, mylist1.begin(), mylist1.end());//mylist1:
+                                                                             //mylist2:1 10 20 30 3 4 2
+   
+    cout << "mylist1 包含 " << mylist1.size() << "个元素" << endl;
+    cout << "mylist2 包含 " << mylist2.size() << "个元素" << endl;
+    //输出 mylist2 容器中存储的数据
+    cout << "mylist2:";
+    for (auto iter = mylist2.begin(); iter != mylist2.end(); ++iter) {
+        cout << *iter << " ";
+    }
+    return 0;
+}
+```
+
+程序执行结果为：
+
+mylist 1 包含 0 个元素  
+mylist 2 包含 7 个元素  
+mylist2:1 10 20 30 3 4 2
