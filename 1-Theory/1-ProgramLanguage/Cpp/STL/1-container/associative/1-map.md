@@ -568,6 +568,7 @@ STL 教程 http://c.biancheng.net/stl/
 
 自 C++ 11 标准后，insert () 成员方法的用法大致有以下 4 种。
 
+#### 不指定插入位置
 1) 无需指定插入位置，直接将键值对添加到 map 容器中。insert () 方法的语法格式有以下 2 种：
 ```
 //1、引用传递一个键值对  
@@ -617,15 +618,15 @@ int main ()
 ```
 
 程序执行结果为：
-
+```
 ret. iter = <{STL 教程, http://c.biancheng.net/stl/}, 1>  
 ret. iter = <{C 语言教程, http://c.biancheng.net/c/}, 1>  
 ret. iter = <{STL 教程, http://c.biancheng.net/stl/}, 0>
-
+```
 从执行结果中不难看出，程序中共执行了 3 次插入操作，其中成功了 2 次，失败了 1 次：
 
-*   对于插入成功的 insert () 方法，其返回的 pair 对象中包含一个指向新插入键值对的迭代器和值为 1 的 bool 变量
-*   对于插入失败的 insert () 方法，同样会返回一个 pair 对象，其中包含一个指向 map 容器中键为 "STL 教程" 的键值对和值为 0 的 bool 变量。
+* 对于插入成功的 insert () 方法，其返回的 pair 对象中包含一个指向新插入键值对的迭代器和值为 1 的 bool 变量
+* 对于插入失败的 insert () 方法，同样会返回一个 pair 对象，其中包含一个指向 map 容器中键为 "STL 教程" 的键值对和值为 0 的 bool 变量。
 
 另外，在程序中的第 21 行代码，还可以使用如下 2 种方式创建临时的键值对变量，它们是等价的：
 
@@ -636,18 +637,19 @@ ret = mymap.insert (pair<string,string>{ "C 语言教程"," http://c.biancheng.n
 ret = mymap.insert (make_pair ("C 语言教程", " http://c.biancheng.net/c/" ));
 ```
 
+#### 指定插入位置
 2) 除此之外，insert () 方法还支持向 map 容器的指定位置插入新键值对，该方法的语法格式如下：
-
+```
 // 以普通引用的方式传递 val 参数  
 iterator insert (const_iterator position, const value_type& val);  
 // 以右值引用的方式传递 val 键值对参数  
 template <class P>  
     iterator insert (const_iterator position, P&& val);
-
+```
 其中 val 为要插入的键值对变量。注意，和第 1 种方式的语法格式不同，这里 insert () 方法返回的是迭代器，而不再是 pair 对象：
 
-*   如果插入成功，insert () 方法会返回一个指向 map 容器中已插入键值对的迭代器；
-*   如果插入失败，insert () 方法同样会返回一个迭代器，该迭代器指向 map 容器中和 val 具有相同键的那个键值对。
+* 如果插入成功，insert () 方法会返回一个指向 map 容器中已插入键值对的迭代器；
+* 如果插入失败，insert () 方法同样会返回一个迭代器，该迭代器指向 map 容器中和 val 具有相同键的那个键值对。
 
 举个例子：
 
@@ -681,18 +683,19 @@ int main ()
 ```
 
 程序执行结果为：
-
+```
 STL 教程 http://c.biancheng.net/stl/  
 C 语言教程 http://c.biancheng.net/c/  
 STL 教程 http://c.biancheng.net/stl/
-
+```
 再次强调，即便指定了新键值对的插入位置，map 容器仍会对存储的键值对进行排序。也可以说，决定新插入键值对位于 map 容器中位置的，不是 insert () 方法中传入的迭代器，而是新键值对中键的值。
 
+#### 插入其它 map 容器指定键值对
 3) insert () 方法还支持向当前 map 容器中插入其它 map 容器指定区域内的所有键值对，该方法的语法格式如下：
-
+```
 template <class InputIterator>  
   void insert (InputIterator first, InputIterator last);
-
+```
 其中 first 和 last 都是迭代器，它们的组合`<first,last>`可以表示某 map 容器中的指定区域。
 
 举个例子：
@@ -724,16 +727,17 @@ int main ()
 ```
 
 程序执行结果为：
-
+```
 Java 教程 http://c.biancheng.net/java/  
 STL 教程 http://c.biancheng.net/stl/
-
+```
 此程序中，<first,last> 指定的区域是从 mumap 容器第 2 个键值对开始，之后所有的键值对，所以 copymap 容器中包含有 2 个键值对。
 
+#### 单次插入多个键值对
 4) 除了以上一种格式外，insert () 方法还允许一次向 map 容器中插入多个键值对，其语法格式为：
-
+```
 void insert ({val 1, val 2, ...});
-
+```
 其中，vali 都表示的是键值对变量。
 
 举个例子：
@@ -760,9 +764,114 @@ int main ()
 ```
 
 程序执行结果为：
-
+```
 C 语言教程 http://c.biancheng.net/c/  
 Java 教程 http://c.biancheng.net/java/  
 STL 教程 http://c.biancheng.net/stl/
+```
+值得一提的是，除了 insert () 方法，map 类模板还提供 emplace () 和 emplace_hint () 方法，它们也可以完成向 map 容器中插入键值对的操作，且效率还会 insert () 方法高。
 
-值得一提的是，除了 insert () 方法，map 类模板还提供 emplace () 和 emplace_hint () 方法，它们也可以完成向 map 容器中插入键值对的操作，且效率还会 insert () 方法高。关于这 2 个方法，会在下一节做详细介绍。
+### 重载运算符 `[]` 和 insert()的效率对比
+
+通过前面的学习我们知道，map 容器模板类中提供有 operator\[\] 和 insert () 这 2 个成员方法，而值得一提的是，这 2 个方法具有相同的功能，它们既可以实现向 map 容器中添加新的键值对元素，也可以实现更新（修改）map 容器已存储键值对的值。
+
+举个例子（程序一）：
+
+```
+#include <iostream>
+#include <map>  //map
+#include <string> //string
+using namespace std;
+int main()
+{
+    std::map<string, string> mymap;
+    //借用 operator[] 添加新键值对
+    mymap["STL教程"] = "http://www.cdsy.xyz/computer/programme/java/";
+    cout << "old mymap：" << mymap["STL教程"] << endl;
+    //借用 operator[] 更新某个键对应的值
+    mymap["STL教程"] = "http://www.cdsy.xyz/computer/programme/stl/";
+    cout << "new mymap：" << mymap["STL教程"] << endl;
+
+    //借用insert()添加新键值对
+    std::pair<string, string> STL = { "Java教程","http://www.cdsy.xyz/computer/programme/Python/" };
+    std::pair<std::map<string, string>::iterator, bool> ret;
+    ret = mymap.insert(STL);
+    cout << "old ret.iter = <{" << ret.first->first << ", " << ret.first->second << "}, " << ret.second << ">" << endl;
+    //借用 insert() 更新键值对
+    mymap.insert(STL).first->second = "http://www.cdsy.xyz/computer/programme/java/";
+    cout << "new ret.iter = <" << ret.first->first << ", " << ret.first->second << ">" << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+old mymap： http://www.cdsy.xyz/computer/programme/java/  
+new mymap： http://www.cdsy.xyz/computer/programme/stl/  
+old ret. iter = <{Java 教程, http://www.cdsy.xyz/computer/programme/Python/}, 1>  
+new ret. iter = <Java 教程, http://www.cdsy.xyz/computer/programme/java/>
+```
+
+显然，map 模板类中 operator\[\] 和 insert () 的功能发生了重叠，这就产生了一个问题，谁的执行效率更高呢？
+
+总的来说，读者可记住这样一条结论：
+- 当实现 “向 map 容器中添加新键值对元素” 的操作时，insert () 成员方法的执行效率更高；
+- 而在实现 “更新 map 容器指定键值对的值” 的操作时，operator\[\] 的效率更高。
+
+至于为什么，有兴趣的读者可继续往下阅读。
+
+#### 向 map 容器中增添元素，insert () 效率更高
+---------------------------
+
+首先解释一下，为什么实现向 map 容器中添加新键值对元素，insert () 方法的执行效率比 operator\[\] 更高？回顾程序一中，如下语句完成了向空 mymap 容器添加新的键值对元素：
+
+```
+mymap["STL教程"] = "http://www.cdsy.xyz/computer/programme/java/";
+```
+
+此行代码中，mymap\["STL 教程"\] 实际上是 mymap. operator[ ](“STL 教程”) 的缩写（底层调用的 operator[ ] 方法），该方法会返回一个指向 “STL 教程” 对应的 value 值的引用。
+
+但需要注意的是，由于此时 mymap 容器是空的，并没有 "STL 教程" 对应的 value 值。这种情况下，operator\[\] 方法会默认构造一个 string 对象，并将其作为 "STL 教程" 对应的 value 值，然后返回一个指向此 string 对象的引用。在此基础上，代码还会将 `http://www.cdsy.xyz/computer/programme/java/` 赋值给这个 string 对象。
+
+也就是说，上面这行代码的执行流程，可以等效为如下程序：
+
+```
+typedef map<string, string> mstr;
+//创建要添加的默认键值对元素
+pair<mstr::iterator, bool>res = mymap.insert(mstr::value_type("STL教程", string()));
+//将新键值对的值赋值为指定的值
+res.first->second = "http://www.cdsy.xyz/computer/programme/java/";
+```
+
+> 注意，这里的 value_type (K, T) 指的是 map 容器中存储元素的类型，其实际上就等同于 pair<K,T>。
+
+可以看到，使用 operator\[\] 添加新键值对元素的流程是先构造一个有默认值的键值对，然后再为其 value 赋值。
+
+那么，为什么不直接构造一个要添加的键值对元素呢，比如：
+
+```
+mymap.insert(mstr::value_type("STL教程", "http://www.cdsy.xyz/computer/programme/java/"));
+```
+
+此行代码和上面程序的执行效果完全相同，但它省略了创建临时 string 对象的过程以及析构该对象的过程，同时还省略了调用 string 类重载的赋值运算符。由于可见，同样是完成向 map 容器添加新键值对，insert () 方法比 operator\[\] 的执行效率更高。
+
+#### 更新map 容器中的键值对，operator\[\]效率更高
+------------------------------
+
+仍以程序一中的代码为例，如下分别是 operator\[\] 和 insert () 实现更新 mymap 容器中指定键对应的值的代码：
+
+```
+//operator[]
+mymap["STL教程"] = "http://www.cdsy.xyz/computer/programme/stl/";
+//insert()
+std::pair<string, string> STL = { "Java教程","http://www.cdsy.xyz/computer/programme/Python/" };
+mymap.insert(STL).first->second = "http://www.cdsy.xyz/computer/programme/java/";
+```
+
+仅仅从语法形式本身来考虑，或许已经促使很多读者选择 operator\[\] 了。接下来，我们再从执行效率的角度对比以上 2 种实现方式。
+
+从上面代码可以看到，insert () 方法在进行更新操作之前，需要有一个 pair 类型（也就是 map:: value_type 类型）元素做参数。这意味着，该方法要多构造一个 pair 对象（附带要构造 2 个 string 对象），并且事后还要析构此 pair 对象（附带 2 个 string 对象的析构）。
+
+而和 insert () 方法相比，operator\[\] 就不需要使用 pair 对象，自然不需要构造（并析构）任何 pair 对象或者 string 对象。因此，对于更新已经存储在 map 容器中键值对的值，应优先使用 operator\[\] 方法。
+
+### emplace/emplace_hint
