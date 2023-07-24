@@ -111,20 +111,44 @@ multimap<char, int, std::greater<char>>mymultimap{ {'a', 1},{'b', 2} };
 <b,2>  
 <a,1>
 ```
+
 > 在某些特定场景中，我们还可以为 multimap 容器自定义排序规则，此部分知识后续将利用整整一节做重点讲解。
 
-C++ multimap 容器包含的成员方法
+## C ++ multimap 容器包含的成员方法
 ----------------------
 
-表 1 列出了 multimap 类模板提供的常用成员方法及各自的功能。
+下表列出了 multimap 类模板提供的常用成员方法及各自的功能。
 
-<table><caption>表 1 C++ multimap 容器常用成员方法</caption><tbody><tr><th>成员方法</th><th>功能</th></tr><tr><td>begin ()</td><td>返回指向容器中第一个（注意，是已排好序的第一个）键值对的双向迭代器。如果 multimap 容器用 const 限定，则该方法返回的是 const 类型的双向迭代器。</td></tr><tr><td>end ()</td><td>返回指向容器最后一个元素（注意，是已排好序的最后一个）所在位置后一个位置的双向迭代器，通常和 begin () 结合使用。如果 multimap 容器用 const 限定，则该方法返回的是 const 类型的双向迭代器。</td></tr><tr><td>rbegin ()</td><td>返回指向最后一个（注意，是已排好序的最后一个）元素的反向双向迭代器。如果 multimap 容器用 const 限定，则该方法返回的是 const 类型的反向双向迭代器。</td></tr><tr><td>rend ()</td><td>返回指向第一个（注意，是已排好序的第一个）元素所在位置前一个位置的反向双向迭代器。如果 multimap 容器用 const 限定，则该方法返回的是 const 类型的反向双向迭代器。</td></tr><tr><td>cbegin ()</td><td>和 begin () 功能相同，只不过在其基础上，增加了 const 属性，不能用于修改容器内存储的键值对。</td></tr><tr><td>cend ()</td><td>和 end () 功能相同，只不过在其基础上，增加了 const 属性，不能用于修改容器内存储的键值对。</td></tr><tr><td>crbegin ()</td><td>和 rbegin () 功能相同，只不过在其基础上，增加了 const 属性，不能用于修改容器内存储的键值对。</td></tr><tr><td>crend ()</td><td>和 rend () 功能相同，只不过在其基础上，增加了 const 属性，不能用于修改容器内存储的键值对。</td></tr><tr><td>find (key)</td><td>在 multimap 容器中查找首个键为 key 的键值对，如果成功找到，则返回指向该键值对的双向迭代器；反之，则返回和 end () 方法一样的迭代器。另外，如果 multimap 容器用 const 限定，则该方法返回的是 const 类型的双向迭代器。</td></tr><tr><td>lower_bound (key)</td><td>返回一个指向当前 multimap 容器中第一个大于或等于 key 的键值对的双向迭代器。如果 multimap 容器用 const 限定，则该方法返回的是 const 类型的双向迭代器。</td></tr><tr><td>upper_bound (key)</td><td>返回一个指向当前 multimap 容器中第一个大于 key 的键值对的迭代器。如果 multimap 容器用 const 限定，则该方法返回的是 const 类型的双向迭代器。</td></tr><tr><td>equal_range (key)</td><td>该方法返回一个 pair 对象（包含 2 个双向迭代器），其中 pair. first 和 lower_bound () 方法的返回值等价，pair. second 和 upper_bound () 方法的返回值等价。也就是说，该方法将返回一个范围，该范围中包含的键为 key 的键值对。</td></tr><tr><td>empty ()&nbsp;</td><td>若容器为空，则返回 true；否则 false。</td></tr><tr><td>size ()</td><td>返回当前 multimap&nbsp; 容器中存有键值对的个数。</td></tr><tr><td>max_size ()</td><td>返回 multimap 容器所能容纳键值对的最大个数，不同的操作系统，其返回值亦不相同。</td></tr><tr><td>insert ()</td><td>向 multimap 容器中插入键值对。</td></tr><tr><td>erase ()</td><td>删除 multimap 容器指定位置、指定键（key）值或者指定区域内的键值对。</td></tr><tr><td>swap ()</td><td>交换 2 个 multimap 容器中存储的键值对，这意味着，操作的 2 个键值对的类型必须相同。</td></tr><tr><td>clear ()</td><td>清空 multimap 容器中所有的键值对，使 multimap 容器的 size () 为 0。</td></tr><tr><td>emplace ()</td><td>在当前 multimap 容器中的指定位置处构造新键值对。其效果和插入键值对一样，但效率更高。</td></tr><tr><td>emplace_hint ()</td><td>在本质上和 emplace () 在 multimap 容器中构造新键值对的方式是一样的，不同之处在于，使用者必须为该方法提供一个指示键值对生成位置的迭代器，并作为该方法的第一个参数。</td></tr><tr><td>count (key)</td><td>在当前 multimap 容器中，查找键为 key 的键值对的个数并返回。</td></tr></tbody></table>
+| 成员方法              | 功能                                                                                                                                               |
+|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| begin ()          | 返回指向容器中第一个（注意，是已排好序的第一个）键值对的双向迭代器。如果 multimap 容器用 const 限定，则该方法返回的是 const 类型的双向迭代器。                                                              |
+| end ()            | 返回指向容器最后一个元素（注意，是已排好序的最后一个）所在位置后一个位置的双向迭代器，通常和 begin () 结合使用。如果 multimap 容器用 const 限定，则该方法返回的是 const 类型的双向迭代器。                                   |
+| rbegin ()         | 返回指向最后一个（注意，是已排好序的最后一个）元素的反向双向迭代器。如果 multimap 容器用 const 限定，则该方法返回的是 const 类型的反向双向迭代器。                                                            |
+| rend ()           | 返回指向第一个（注意，是已排好序的第一个）元素所在位置前一个位置的反向双向迭代器。如果 multimap 容器用 const 限定，则该方法返回的是 const 类型的反向双向迭代器。                                                     |
+| cbegin ()         | 和 begin () 功能相同，只不过在其基础上，增加了 const 属性，不能用于修改容器内存储的键值对。                                                                                           |
+| cend ()           | 和 end () 功能相同，只不过在其基础上，增加了 const 属性，不能用于修改容器内存储的键值对。                                                                                             |
+| crbegin ()        | 和 rbegin () 功能相同，只不过在其基础上，增加了 const 属性，不能用于修改容器内存储的键值对。                                                                                          |
+| crend ()          | 和 rend () 功能相同，只不过在其基础上，增加了 const 属性，不能用于修改容器内存储的键值对。                                                                                            |
+| find (key)        | 在 multimap 容器中查找首个键为 key 的键值对，如果成功找到，则返回指向该键值对的双向迭代器；反之，则返回和 end () 方法一样的迭代器。另外，如果 multimap 容器用 const 限定，则该方法返回的是 const 类型的双向迭代器。                |
+| lower_bound (key) | 返回一个指向当前 multimap 容器中第一个大于或等于 key 的键值对的双向迭代器。如果 multimap 容器用 const 限定，则该方法返回的是 const 类型的双向迭代器。                                                   |
+| upper_bound (key) | 返回一个指向当前 multimap 容器中第一个大于 key 的键值对的迭代器。如果 multimap 容器用 const 限定，则该方法返回的是 const 类型的双向迭代器。                                                        |
+| equal_range (key) | 该方法返回一个 pair 对象（包含 2 个双向迭代器），其中 pair. first 和 lower_bound () 方法的返回值等价，pair. second 和 upper_bound () 方法的返回值等价。也就是说，该方法将返回一个范围，该范围中包含的键为 key 的键值对。 |
+| empty ()&nbsp;    | 若容器为空，则返回 true；否则 false。                                                                                                                         |
+| size ()           | 返回当前 multimap&nbsp; 容器中存有键值对的个数。                                                                                                                 |
+| max_size ()       | 返回 multimap 容器所能容纳键值对的最大个数，不同的操作系统，其返回值亦不相同。                                                                                                     |
+| insert ()         | 向 multimap 容器中插入键值对。                                                                                                                             |
+| erase ()          | 删除 multimap 容器指定位置、指定键（key）值或者指定区域内的键值对。                                                                                                         |
+| swap ()           | 交换 2 个 multimap 容器中存储的键值对，这意味着，操作的 2 个键值对的类型必须相同。                                                                                                |
+| clear ()          | 清空 multimap 容器中所有的键值对，使 multimap 容器的 size () 为 0。                                                                                                |
+| emplace ()        | 在当前 multimap 容器中的指定位置处构造新键值对。其效果和插入键值对一样，但效率更高。                                                                                                  |
+| emplace_hint ()   | 在本质上和 emplace () 在 multimap 容器中构造新键值对的方式是一样的，不同之处在于，使用者必须为该方法提供一个指示键值对生成位置的迭代器，并作为该方法的第一个参数。                                                     |
+| count (key)       | 在当前 multimap 容器中，查找键为 key 的键值对的个数并返回。                                                                                                            |
 
-和 map 容器相比，multimap 未提供 at () 成员方法，也没有重载 [] 运算符。这意味着，map 容器中通过指定键获取指定指定键值对的方式，将不再适用于 multimap 容器。其实这很好理解，因为 multimap 容器中指定的键可能对应多个键值对，而不再是 1 个。
+和 map 容器相比，multimap 未提供 at () 成员方法，也没有重载 \[\] 运算符。这意味着，map 容器中通过指定键获取指定指定键值对的方式，将不再适用于 multimap 容器。其实这很好理解，因为 multimap 容器中指定的键可能对应多个键值对，而不再是 1 个。
 
-> 另外值的一提的是，由于 multimap 容器可存储多个具有相同键的键值对，因此表 1 中的 lower_bound ()、upper_bound ()、equal_range () 以及 count () 成员方法会经常用到。
+> 另外值的一提的是，由于 multimap 容器可存储多个具有相同键的键值对，因此表中的 lower_bound ()、upper_bound ()、equal_range () 以及 count () 成员方法会经常用到。
 
-下面例子演示了表 1 中部分成员方法的用法：
+下面例子演示了部分成员方法的用法：
 
 ```
 #include <iostream>
@@ -148,12 +172,11 @@ int main ()
 ```
 
 程序执行结果为：
-
+```
 4  
 2  
 a 10  
 b 20  
 b 15  
 c 30
-
-> 注意，只要是 multimap 容器提供的成员方法，map 容器都提供，并且它们的用法是相同的。前面章节中已经对 map 容器提供的成员方法做了详细的讲解，因此这里不再对表 1 中其它的成员方法做详细的介绍。
+```
