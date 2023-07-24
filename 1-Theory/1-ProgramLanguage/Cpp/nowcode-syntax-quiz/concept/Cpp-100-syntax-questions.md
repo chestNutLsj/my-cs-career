@@ -150,6 +150,70 @@ struct Property{
 >
 >而在后来的 C++语言中引入了类的概念，结构体和类的语法开始逐渐融合。为了保持向后兼容性，C++保留了早期结构体的特性：结构体的第一个成员不能缺省。而对于普通类，C++则引入了更为灵活的语法规则，允许成员的声明顺序不必按照定义顺序排列。
 
+### 数组
+1. `char *str[3]={}` 和 `char (*str)[3] = {}` 有什么区别？
+
+- `char *str[3] = {}`:
+   This is an array of pointers to characters. It is an array with 3 elements, and each element is a pointer to a character (i.e., a C-style string). When you initialize it with `{}`, it sets all the pointers to nullptr (i.e., the pointers are pointing to nothing initially).
+
+   ```
+   +---+      +---+---+---+
+   |   | ---> |   |   |   |
+   +---+      +---+---+---+
+   |   | ---> |   |   |   |
+   +---+      +---+---+---+
+   |   | ---> |   |   |   |
+   +---+      +---+---+---+
+   str[0]     str[1]  str[2]
+   ```
+
+- `char (*str)[3] = {}`:
+   This is a pointer to an array of characters with a fixed size of 3. When you initialize it with `{}`, it sets the pointer to nullptr (i.e., it is pointing to nothing initially).
+
+   ```
+   +---+
+   |   |
+   +---+
+   str
+   ```
+
+In summary, the main difference lies in the types and the memory layout they represent:
+
+- `char *str[3]` is an array of 3 pointers to characters (3 C-style strings).
+- `char (*str)[3]` is a pointer to an array of characters with a fixed size of 3 (like a 2 D array with 1 row and 3 columns).
+
+Here's a small example to demonstrate the usage of each:
+
+```cpp
+#include <iostream>
+
+int main() {
+    // char *str[3]
+    char *strings[3] = { "Hello", "World", "Cpp" };
+    for (int i = 0; i < 3; ++i) {
+        std::cout << strings[i] << std::endl;
+    }
+
+    // char (*str)[3]
+    char chars[3] = { 'a', 'b', 'c' };
+    char (*ptr)[3] = &chars;
+    for (int i = 0; i < 3; ++i) {
+        std::cout << (*ptr)[i] << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
+```
+
+Output:
+```
+Hello
+World
+Cpp
+a b c
+```
+
 ## 类型转换
 ### 动态类型转换
 [[50-Type-conversions#dynamic_cast|Dynamic_Cast]]
