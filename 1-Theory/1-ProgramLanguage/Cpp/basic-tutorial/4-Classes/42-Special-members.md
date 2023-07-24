@@ -277,7 +277,7 @@ MyClass (MyClass&&);             // move-constructor
 MyClass& operator= (MyClass&&);  // move-assignment
 ```
 
-An _rvalue reference_ is specified by following the type with two ampersands (`&&`). As a parameter, an _rvalue reference_ matches arguments of temporaries of this type.（右值引用通过在类型后添加 `&&` 来指定，作为参数，右值引用使用这一类型的临时变量的作为参数）
+An _rvalue reference_ is specified by following the type with two ampersands (`&&`). As a parameter, an _rvalue reference_ matches arguments of temporaries of this type.（右值引用通过在类型后添加 `&&` 来指定，作为参数，右值引用使用这一类型的临时变量的作为参数） ^d293e1
 
 The concept of moving is most useful for objects that manage the storage they use, such as objects that allocate storage with new and delete. In such objects, copying and moving are really different operations:  
 - Copying from A to B means that new memory is allocated to B and then the entire content of A is copied to this new memory allocated for B.  
