@@ -64,18 +64,45 @@ std::array<int, 5>arr{ 11,12,13,14,15 };
 std::forward_list<int>values (arr.begin ()+2, arr.end ());//拷贝 arr 容器中的{13,14,15}
 ```
 
-forward_list 容器支持的成员函数
+## forward_list 容器支持的成员函数
 ----------------------
 
-表 2 中罗列出了 forward_list 模板类提供的所有成员函数以及各自的功能。
+下表罗列出了 forward_list 模板类提供的所有成员函数以及各自的功能。
 
-<table><caption>表 2 forward_list 容器可用的成员函数</caption><tbody><tr><th>成员函数</th><th>功能</th></tr><tr><td>before_begin ()</td><td>返回一个前向迭代器，其指向容器中第一个元素之前的位置。</td></tr><tr><td>begin ()</td><td>返回一个前向迭代器，其指向容器中第一个元素的位置。</td></tr><tr><td>end ()</td><td>返回一个前向迭代器，其指向容器中最后一个元素之后的位置。</td></tr><tr><td>cbefore_begin ()</td><td>和 before_begin () 功能相同，只不过在其基础上，增加了 const 属性，不能用于修改元素。</td></tr><tr><td>cbegin ()</td><td>和 begin () 功能相同，只不过在其基础上，增加了 const 属性，不能用于修改元素。</td></tr><tr><td>cend ()</td><td>和 end () 功能相同，只不过在其基础上，增加了 const 属性，不能用于修改元素。</td></tr><tr><td>empty ()</td><td>判断容器中是否有元素，若无元素，则返回 true；反之，返回 false。</td></tr><tr><td>max_size ()</td><td>返回容器所能包含元素个数的最大值。这通常是一个很大的值，一般是 2<sup>32</sup>-1，所以我们很少会用到这个函数。</td></tr><tr><td>front ()</td><td>返回第一个元素的引用。</td></tr><tr><td>assign ()</td><td>用新元素替换容器中原有内容。</td></tr><tr><td>push_front ()</td><td>在容器头部插入一个元素。</td></tr><tr><td>emplace_front ()</td><td>在容器头部生成一个元素。该函数和 push_front () 的功能相同，但效率更高。</td></tr><tr><td>pop_front ()</td><td>删除容器头部的一个元素。</td></tr><tr><td>emplace_after ()</td><td>在指定位置之后插入一个新元素，并返回一个指向新元素的迭代器。和 insert_after () 的功能相同，但效率更高。</td></tr><tr><td>insert_after ()</td><td>在指定位置之后插入一个新元素，并返回一个指向新元素的迭代器。</td></tr><tr><td>erase_after ()</td><td>删除容器中某个指定位置或区域内的所有元素。</td></tr><tr><td>swap ()</td><td>交换两个容器中的元素，必须保证这两个容器中存储的元素类型是相同的。</td></tr><tr><td>resize ()</td><td>调整容器的大小。</td></tr><tr><td>clear ()</td><td>删除容器存储的所有元素。</td></tr><tr><td>splice_after ()</td><td>将某个 forward_list 容器中指定位置或区域内的元素插入到另一个容器的指定位置之后。</td></tr><tr><td>remove (val)</td><td>删除容器中所有等于 val 的元素。</td></tr><tr><td>remove_if ()</td><td>删除容器中满足条件的元素。</td></tr><tr><td>unique ()</td><td>删除容器中相邻的重复元素，只保留一个。</td></tr><tr><td>merge ()</td><td>合并两个事先已排好序的 forward_list 容器，并且合并之后的 forward_list 容器依然是有序的。</td></tr><tr><td>sort ()</td><td>通过更改容器中元素的位置，将它们进行排序。</td></tr><tr><td>reverse ()</td><td>反转容器中元素的顺序。</td></tr></tbody></table>
+| 成员函数             | 功能                                                           |
+|------------------|--------------------------------------------------------------|
+| before_begin ()  | 返回一个前向迭代器，其指向容器中第一个元素之前的位置。                                  |
+| begin ()         | 返回一个前向迭代器，其指向容器中第一个元素的位置。                                    |
+| end ()           | 返回一个前向迭代器，其指向容器中最后一个元素之后的位置。                                 |
+| cbefore_begin () | 和 before_begin () 功能相同，只不过在其基础上，增加了 const 属性，不能用于修改元素。       |
+| cbegin ()        | 和 begin () 功能相同，只不过在其基础上，增加了 const 属性，不能用于修改元素。              |
+| cend ()          | 和 end () 功能相同，只不过在其基础上，增加了 const 属性，不能用于修改元素。                |
+| empty ()         | 判断容器中是否有元素，若无元素，则返回 true；反之，返回 false。                        |
+| max_size ()      | 返回容器所能包含元素个数的最大值。这通常是一个很大的值，一般是 232-1，所以我们很少会用到这个函数。         |
+| front ()         | 返回第一个元素的引用。                                                  |
+| assign ()        | 用新元素替换容器中原有内容。                                               |
+| push_front ()    | 在容器头部插入一个元素。                                                 |
+| emplace_front () | 在容器头部生成一个元素。该函数和 push_front () 的功能相同，但效率更高。                  |
+| pop_front ()     | 删除容器头部的一个元素。                                                 |
+| emplace_after () | 在指定位置之后插入一个新元素，并返回一个指向新元素的迭代器。和 insert_after () 的功能相同，但效率更高。 |
+| insert_after ()  | 在指定位置之后插入一个新元素，并返回一个指向新元素的迭代器。                               |
+| erase_after ()   | 删除容器中某个指定位置或区域内的所有元素。                                        |
+| swap ()          | 交换两个容器中的元素，必须保证这两个容器中存储的元素类型是相同的。                            |
+| resize ()        | 调整容器的大小。                                                     |
+| clear ()         | 删除容器存储的所有元素。                                                 |
+| splice_after ()  | 将某个 forward_list 容器中指定位置或区域内的元素插入到另一个容器的指定位置之后。              |
+| remove (val)     | 删除容器中所有等于 val 的元素。                                           |
+| remove_if ()     | 删除容器中满足条件的元素。                                                |
+| unique ()        | 删除容器中相邻的重复元素，只保留一个。                                          |
+| merge ()         | 合并两个事先已排好序的 forward_list 容器，并且合并之后的 forward_list 容器依然是有序的。   |
+| sort ()          | 通过更改容器中元素的位置，将它们进行排序。                                        |
+| reverse ()       | 反转容器中元素的顺序。                                                  |
 
 除此之外，C++ 11 标准库还新增加了 begin () 和 end () 这 2 个函数，和 forward_list 容器包含的 begin () 和 end () 成员函数不同，标准库提供的这 2 个函数的操作对象，既可以是容器，还可以是普通数组。当操作对象是容器时，它和容器包含的 begin () 和 end () 成员函数的功能完全相同；如果操作对象是普通数组，则 begin () 函数返回的是指向数组第一个元素的指针，同样 end () 返回指向数组中最后一个元素之后一个位置的指针（注意不是最后一个元素）。
 
 forward_list 容器还有一个`std:: swap (x , y)`非成员函数（其中 x 和 y 是存储相同类型元素的 forward_list 容器），它和 swap () 成员函数的功能完全相同，仅使用语法上有差异。
 
-下面的样例演示了表 2 中部分成员函数的用法：
+下面的样例演示了部分成员函数的用法：
 
 ```
 #include <iostream>
@@ -97,15 +124,14 @@ int main ()
 ```
 
 运行结果为：
-
+```
 3 2 1 4 5
+```
 
-> 表 2 中这些成员函数的具体用法，后续学习用到时会具体讲解，感兴趣的读者，也可以通过查阅 [STL 手册](http://www.cplusplus.com/reference/stl/)做详细了解。
-
-和使用 forward_list 容器相关的函数
+## 使用 forward_list 容器相关的函数
 ------------------------
 
-通过表 2 我们知道，forward_list 容器中是不提供 size () 函数的，但如果想要获取 forward_list 容器中存储元素的个数，可以使用头文件 <iterator> 中的 dis [tan](http://c.biancheng.net/ref/tan.html) ce () 函数。举个例子：
+通过表 2 我们知道，forward_list 容器中是不提供 size () 函数的，但如果想要获取 forward_list 容器中存储元素的个数，可以使用头文件 \<iterator\> 中的 distance() 函数。举个例子：
 
 ```
 #include <iostream>
@@ -123,8 +149,9 @@ int main ()
 ```
 
 运行结果为：
-
+```
 4
+```
 
 并且，forward_list 容器迭代器的移动除了使用 ++ 运算符单步移动，还能使用 advance () 函数，比如：
 
@@ -148,5 +175,6 @@ int main ()
 ```
 
 运行结果为：
-
+```
 3 4
+```
