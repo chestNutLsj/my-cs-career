@@ -771,6 +771,102 @@ STL 教程 http://c.biancheng.net/stl/
 ```
 值得一提的是，除了 insert () 方法，map 类模板还提供 emplace () 和 emplace_hint () 方法，它们也可以完成向 map 容器中插入键值对的操作，且效率还会 insert () 方法高。
 
+### emplace/emplace_hint
+
+学习 map insert () 方法时提到，Cpp STL map 类模板中还提供了 emplace () 和 emplace_hint () 成员函数，也可以实现向 map 容器中插入新的键值对。本节就来讲解这 2 个成员方法的用法。
+
+值得一提的是，实现相同的插入操作，无论是用 emplace () 还是 emplace_hint ()，都比 insert () 方法的效率高（后续章节会详细讲解）。
+
+和 insert () 方法相比，emplace () 和 emplace_hint () 方法的使用要简单很多，因为它们各自只有一种语法格式。其中，emplace () 方法的语法格式如下：
+```
+template <class... Args>  
+  pair<iterator,bool> emplace (Args&&... args);
+```
+参数 (Args&&... args) 指的是，这里只需要将创建新键值对所需的数据作为参数直接传入即可，此方法可以自行利用这些数据构建出指定的键值对。另外，该方法的返回值也是一个 pair 对象，其中 pair.first 为一个迭代器，pair.second 为一个 bool 类型变量：
+
+* 当该方法将键值对成功插入到 map 容器中时，其返回的迭代器指向该新插入的键值对，同时 bool 变量的值为 true；
+* 当插入失败时，则表明 map 容器中存在具有相同键的键值对，此时返回的迭代器指向此具有相同键的键值对，同时 bool 变量的值为 false。
+
+下面程序演示 emplace () 方法的具体用法：
+
+```
+#include <iostream>
+#include <map>  //map
+#include <string> //string
+using namespace std;
+
+int main()
+{
+    //创建并初始化 map 容器
+    std::map<string, string>mymap;
+    //插入键值对
+    pair<map<string, string>::iterator, bool> ret = mymap.emplace("STL教程", "http://c.biancheng.net/stl/");
+    cout << "1、ret.iter = <{" << ret.first->first << ", " << ret.first->second << "}, " << ret.second << ">" << endl;
+    //插入新键值对
+    ret = mymap.emplace("C语言教程", "http://c.biancheng.net/c/");
+    cout << "2、ret.iter = <{" << ret.first->first << ", " << ret.first->second << "}, " << ret.second << ">" << endl;
+
+    //失败插入的样例
+    ret = mymap.emplace("STL教程", "http://c.biancheng.net/java/");
+    cout << "3、ret.iter = <{" << ret.first->first << ", " << ret.first->second << "}, " << ret.second << ">" << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+1、ret. iter = <{STL 教程, http://c.biancheng.net/stl/}, 1>  
+2、ret. iter = <{C 语言教程, http://c.biancheng.net/c/}, 1>  
+3、ret. iter = <{STL 教程, http://c.biancheng.net/stl/}, 0>
+```
+
+可以看到，程序中共执行了 3 次向 map 容器插入键值对的操作，其中前 2 次都成功了，第 3 次由于要插入的键值对的键和 map 容器中已存在的键值对的键相同，因此插入失败。
+
+emplace_hint () 方法的功能和 emplace () 类似，其语法格式如下：
+```
+template <class... Args>  
+  iterator emplace_hint (const_iterator position, Args&&... args);
+```
+显然和 emplace () 语法格式相比，有以下 2 点不同：
+
+1. 该方法不仅要传入创建键值对所需要的数据，还需要传入一个迭代器作为第一个参数，指明要插入的位置（新键值对键会插入到该迭代器指向的键值对的前面）；
+2. 该方法的返回值是一个迭代器，而不再是 pair 对象。当成功插入新键值对时，返回的迭代器指向新插入的键值对；反之，如果插入失败，则表明 map 容器中存有相同键的键值对，返回的迭代器就指向这个键值对。
+
+下面程序演示 emplace_hint () 方法的用法：
+
+```
+#include <iostream>
+#include <map>  //map
+#include <string> //string
+using namespace std;
+
+int main()
+{
+    //创建并初始化 map 容器
+    std::map<string, string>mymap;
+    //指定在 map 容器插入键值对
+    map<string, string>::iterator iter = mymap.emplace_hint(mymap.begin(),"STL教程", "http://c.biancheng.net/stl/");
+    cout << iter->first << " " << iter->second << endl;
+
+    iter = mymap.emplace_hint(mymap.begin(), "C语言教程", "http://c.biancheng.net/c/");
+    cout << iter->first << " " << iter->second << endl;
+
+    //插入失败样例
+    iter = mymap.emplace_hint(mymap.begin(), "STL教程", "http://c.biancheng.net/java/");
+    cout << iter->first << " " << iter->second << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+STL 教程 http://c.biancheng.net/stl/  
+C 语言教程 http://c.biancheng.net/c/  
+STL 教程 http://c.biancheng.net/stl/
+```
+
+注意，和 insert () 方法一样，虽然 emplace_hint () 方法指定了插入键值对的位置，但 map 容器为了保持存储键值对的有序状态，可能会移动其位置。
+
 ### 重载运算符 `[]` 和 insert()的效率对比
 
 通过前面的学习我们知道，map 容器模板类中提供有 operator\[\] 和 insert () 这 2 个成员方法，而值得一提的是，这 2 个方法具有相同的功能，它们既可以实现向 map 容器中添加新的键值对元素，也可以实现更新（修改）map 容器已存储键值对的值。
@@ -874,4 +970,78 @@ mymap.insert(STL).first->second = "http://www.cdsy.xyz/computer/programme/java/"
 
 而和 insert () 方法相比，operator\[\] 就不需要使用 pair 对象，自然不需要构造（并析构）任何 pair 对象或者 string 对象。因此，对于更新已经存储在 map 容器中键值对的值，应优先使用 operator\[\] 方法。
 
-### emplace/emplace_hint
+### emplace 系列效率高的原因
+
+原因很简单，它们向 map 容器插入键值对时，底层的实现方式不同：
+
+* 使用 insert () 向 map 容器中插入键值对的过程是，先创建该键值对，然后再将该键值对复制或者移动到 map 容器中的指定位置；
+* 使用 emplace () 或 emplace_hint () 插入键值对的过程是，直接在 map 容器中的指定位置构造该键值对。
+
+也就是说，向 map 容器中插入键值对时，emplace () 和 emplace_hint () 方法都省略了移动键值对的过程，因此执行效率更高。下面程序提供了有利的证明：
+
+```
+#include <iostream>
+#include <map>  //map
+#include <string> //string
+using namespace std;
+
+class testDemo
+{
+public:
+    testDemo(int num) :num(num) {
+        std::cout << "调用构造函数" << endl;
+    }
+    testDemo(const testDemo& other) :num(other.num) {
+        std::cout << "调用拷贝构造函数" << endl;
+    }
+    testDemo(testDemo&& other) :num(other.num) {
+        std::cout << "调用移动构造函数" << endl;
+    }
+private:
+    int num;
+};
+
+int main()
+{
+    //创建空 map 容器
+    std::map<std::string, testDemo>mymap;
+
+    cout << "insert():" << endl;
+    mymap.insert({ "http://www.cdsy.xyz/computer/programme/stl/", testDemo(1) });
+   
+    cout << "emplace():" << endl;
+    mymap.emplace( "http://www.cdsy.xyz/computer/programme/stl/:", 1);
+
+    cout << "emplace_hint():" << endl;
+    mymap.emplace_hint(mymap.begin(), "http://www.cdsy.xyz/computer/programme/stl/", 1);
+    return 0;
+}
+```
+
+程序输出结果为：
+```
+insert ():  
+调用构造函数  
+调用移动构造函数  
+调用移动构造函数  
+emplace ():  
+调用构造函数  
+emplace_hint ():  
+调用构造函数
+```
+分析一下这个程序。首先，我们创建了一个存储 <string,tempDemo> 类型键值对的空 map 容器，接下来分别用 insert ()、emplace () 和 emplace_hint () 方法向该 map 容器中插入相同的键值对。
+
+从输出结果可以看出，在使用 insert () 方法向 map 容器插入键值对时，整个插入过程调用了 1 次 tempDemo 类的构造函数，同时还调用了 2 次移动构造函数。实际上，程序第 28 行代码底层的执行过程，可以分解为以下 3 步：
+
+```
+//构造类对象
+testDemo val = testDemo(1); //调用 1 次构造函数
+//构造键值对
+auto pai = make_pair("http://www.cdsy.xyz/computer/programme/stl/", val); //调用 1 次移动构造函数
+//完成插入操作
+mymap.insert(pai); //调用 1 次移动构造函数
+```
+
+而完成同样的插入操作，emplace () 和 emplace_hint () 方法都只调用了 1 次构造函数，这足以证明，这 2 个方法是在 map 容器内部直接构造的键值对。
+
+因此，在实现向 map 容器中插入键值对时，应优先考虑使用 emplace () 或者 emplace_hint ()。
