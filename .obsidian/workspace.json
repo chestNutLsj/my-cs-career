@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/undetermined/关于原子性、可见性、有序性的分析.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "右值引用",
+                "query": "comma expression",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -73,11 +73,13 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -94,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/undetermined/关于原子性、可见性、有序性的分析.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/undetermined/关于原子性、可见性、有序性的分析.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +152,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/undetermined/关于原子性、可见性、有序性的分析.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md"
               }
             }
           }
@@ -177,10 +179,10 @@
   },
   "active": "5605921bac4202a9",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/undetermined/关于原子性、可见性、有序性的分析.md",
     "1-Theory/1-ProgramLanguage/Cpp/undetermined/assets/thread-volatile.png",
     "1-Theory/1-ProgramLanguage/Cpp/undetermined/assets",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
-    "1-Theory/1-ProgramLanguage/Cpp/undetermined/关于原子性、可见性、有序性的分析.md",
     "1-Theory/1-ProgramLanguage/Cpp/undetermined/什么是虚继承？.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/0-Intro.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/associative/2-multiset.md",
@@ -204,7 +206,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/deque-address.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/deque-iter.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/vector-base-pointer.png",
     "1-Theory/5-OS-principle-design/internal&principle/进程.md",
     "5-Tools/Dev-Tools/CMake/modern-cmake.pdf",
     "5-Tools/Dev-Tools/Conda/Conda常用命令.md",
