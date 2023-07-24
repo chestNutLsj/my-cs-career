@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "6520fce906fc3948",
+        "id": "8187fd36606121e5",
         "type": "tabs",
         "children": [
           {
-            "id": "cb2211761267d799",
+            "id": "2996c85114080df4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/4-List.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/5-Forward_List.md",
                 "mode": "source",
                 "source": false
               }
@@ -95,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/4-List.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/5-Forward_List.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -112,7 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/4-List.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/5-Forward_List.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -151,7 +151,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/4-List.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/5-Forward_List.md"
               }
             }
           }
@@ -176,8 +176,12 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "cb2211761267d799",
+  "active": "2996c85114080df4",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/forward_list.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/4-List.md",
+    "1-Theory/1-ProgramLanguage/Cpp/undetermined/什么是Cpp的谓词函数？.md",
+    "1-Theory/1-ProgramLanguage/Cpp/undetermined",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/list-with-two-nodes.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/list-node-composition.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/list-iter.png",
@@ -186,7 +190,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/deque-bottom-iter.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/deque-address.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/deque-iter.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/4-List.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/vector-base-pointer.png",
     "1-Theory/5-OS-principle-design/internal&principle/进程.md",
@@ -203,7 +206,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/vector-visit.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/0-Intro.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/1-Array.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/array-operate.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/STL背景知识介绍.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/容器及其分类.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/README.md",
@@ -221,9 +223,7 @@
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence",
     "1-Theory/1-ProgramLanguage/Cpp/STL/4-function-obj",
     "1-Theory/1-ProgramLanguage/Cpp/STL/6-allocator",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/5-adapter",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp 11前后 静态成员的定义与初始化问题.md",
-    "1-Theory/5-OS-principle-design/408&912/错题本.md",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
