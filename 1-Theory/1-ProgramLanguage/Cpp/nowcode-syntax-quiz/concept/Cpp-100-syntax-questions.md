@@ -236,6 +236,10 @@ int main()
 - stra tra ra    (✅)
 - s s s          (❌)
 
+1. p 是 `char*` 类型，每次++，后移一位（char）字符，而不是数组元素，因为 str 数组本质是一个元素为字符指针的数组，可以理解为指针的指针，因此要使用双重解引用才可以；
+2. `char *p=str[0]` 相当于 `char *p="stra"`，p 被赋值为指向字符串 `stra` 的首字符的指针，即指向 s，p++后，指向 t，然后 printf 输出遇到空字符停止；
+3. `char **p=str` 相当于
+
 ## 类型转换
 ### 动态类型转换
 [[50-Type-conversions#dynamic_cast|Dynamic_Cast]]
