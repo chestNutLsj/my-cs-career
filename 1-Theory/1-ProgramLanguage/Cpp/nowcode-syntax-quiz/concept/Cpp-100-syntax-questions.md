@@ -214,6 +214,28 @@ Cpp
 a b c
 ```
 
+**趁热打铁一道练习题：**
+```C++
+#include <stdio.h>
+int main()
+{
+    char *str[3] ={"stra", "strb", "strc"};
+    char *p =str[0];
+    int i = 0;
+    while(i < 3)
+    {
+        printf("%s ",p++);
+        i++;
+    }
+    return 0;
+}
+```
+这段代码的输出是：
+- stra strb strc (❌)
+- s t r          (❌)
+- stra tra ra    (✅)
+- s s s          (❌)
+
 ## 类型转换
 ### 动态类型转换
 [[50-Type-conversions#dynamic_cast|Dynamic_Cast]]
