@@ -573,6 +573,44 @@ Base::print() called. this = 0x7ffdbf7ca6df
 >[! note] 基类析构函数为什么要设置为虚函数？
 >因为子类的析构需求不一致，用统一的父类析构函数可能造成析构不完全，因此一般设置父类析构函数为虚函数，然后在子类中具体实现。在父类指针下，根据对象所属子类动态地加载子类析构函数
 
+If a class is intended to be used as a base class and it has virtual functions (including the destructor), then when a derived class object is destroyed, its destructor will be called, followed by the destructor of the base class. This is known as "virtual destructor" behavior, and it ensures that the proper destructors are called in the correct order, allowing for proper cleanup and deallocation of resources, including memory.
+
+Here's an example to illustrate the concept:
+
+```cpp
+#include <iostream>
+
+class Base {
+public:
+    virtual ~Base() {
+        std::cout << "Base destructor called." << std::endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    ~Derived() override {
+        std::cout << "Derived destructor called." << std::endl;
+    }
+};
+
+int main() {
+    Base* obj = new Derived();
+    delete obj;
+    
+    return 0;
+}
+```
+
+Output:
+```
+Derived destructor called.
+Base destructor called.
+```
+
+In this example, the `Base` class has a virtual destructor, and the `Derived` class overrides the destructor. When `delete obj;` is called in the `main` function, it first calls the `Derived` destructor and then the `Base` destructor due to the virtual destructor mechanism. This ensures that the destructors of both classes are called in the correct order, allowing proper cleanup.
+
+Without a virtual destructor, if the destructor is not virtual in the base class, then only the base class's destructor would be called, and the derived class's destructor might not be executed, leading to potential memory leaks or improper cleanup. Therefore, when designing a class hierarchy where polymorphism and inheritance are involved, it's crucial to make the base class's destructor virtual to ensure proper destruction of derived class objects.
 
 ### 抽象类
 1. 判断关于抽象类说法的正误：
