@@ -5,10 +5,8 @@
 
 总的来说，为关联式容器自定义排序规则，有以下 2 种方法。
 
-1) 使用函数对象自定义排序规则
+## 使用函数对象自定义排序规则
 ----------------
-
-> 在掌握此方法之前，读者必须对函数对象有基本的了解，可阅读《[C++ 函数对象](http://www.cdsy.xyz/computer/programme/vc/20210307/cd161510745111888.html)》一节。
 
 无论关联式容器中存储的是基础类型（如 int、double、float 等）数据，还是自定义的结构体变量或类对象（包括 string 类），都可以使用函数对象的方式为该容器自定义排序规则。
 
@@ -43,16 +41,17 @@ int main() {
 ```
 
 程序执行结果为：
-
+```
 http://www.cdsy.xyz/computer/programme/stl/  
 http://www.cdsy.xyz/computer/programme/java/  
 http://www.cdsy.xyz/computer/programme/Python/
+```
 
 重点分析一下 6~13 行代码，其定义了一个函数对象类，并在其重载 () 运算符的方法中自定义了新的排序规则，即按照字符串的长度做升序排序。在此基础上，程序第 17 行代码中，通过将函数对象类的类名 cmp 通过 set 类模板的第 2 个参数传递给 myset 容器，该容器内部排序数据的规则，就改为了以字符串的长度为标准做升序排序。
 
-> 需要注意的是，此程序中创建的 myset 容器，由于是以字符串的长度为准进行排序，因此其无法存储相同长度的多个字符串。
+> 需要注意的是，此程序中创建的 myset 容器，*由于是以字符串的长度为准进行排序，因此其无法存储相同长度的多个字符串*。
 
-另外，C++ 中的 struct 和 class 非常类似（有关两者区别，可阅读《[C++ struct 和 class 到底有什么区别](http://www.cdsy.xyz/computer/programme/vc/20210105/cd16098262037562.html)》一文），前者也可以包含成员变量和成员函数。因此上面程序中，函数对象类 cmp 也可以使用 struct 关键字创建：
+另外，C++ 中的 struct 和 class 非常类似，因此上面程序中，函数对象类 cmp 也可以使用 struct 关键字创建：
 
 ```
 //定义函数对象类
@@ -82,14 +81,19 @@ public:
 
 > 注意，此方式必须保证 T 类型元素可以直接使用关系运算符（比如这里的 < 运算符）做比较。
 
-2) 重载关系运算符实现自定义排序
+## 重载关系运算符实现自定义排序
 -----------------
 
-其实在 STL 标准库中，本就包含几个可供关联式容器使用的排序规则，如表 1 表示。 
+其实在 STL 标准库中，本就包含几个可供关联式容器使用的排序规则，如表表示。 
 
-<table><caption>表 1 C++ STL 标准库适用于关联式容器的排序规则</caption><tbody><tr><th scope="col">排序规则</th><th scope="col">功能</th></tr><tr><td>std::less&lt; T&gt;&nbsp; &nbsp;</td><td>底层采用 &lt; 运算符实现升序排序，各关联式容器默认采用的排序规则。</td></tr><tr><td>std::greater&lt; T&gt;</td><td>底层采用 &gt; 运算符实现降序排序，同样适用于各个关联式容器。</td></tr><tr><td>std::less_equal&lt; T&gt;</td><td>底层采用 &lt;= 运算符实现升序排序，多用于 multimap 和 multiset 容器。</td></tr><tr><td>std::greater_equal&lt; T&gt;</td><td>底层采用 &gt;= 运算符实现降序排序，多用于 multimap 和 multiset 容器。</td></tr></tbody></table>
+| 排序规则                             | 功能                                               |
+|----------------------------------|--------------------------------------------------|
+| std::less&lt; T&gt;&nbsp; &nbsp; | 底层采用 &lt; 运算符实现升序排序，各关联式容器默认采用的排序规则。             |
+| std::greater&lt; T&gt;           | 底层采用 &gt; 运算符实现降序排序，同样适用于各个关联式容器。                |
+| std::less_equal&lt; T&gt;        | 底层采用 &lt;= 运算符实现升序排序，多用于 multimap 和 multiset 容器。 |
+| std::greater_equal&lt; T&gt;     | 底层采用 &gt;= 运算符实现降序排序，多用于 multimap 和 multiset 容器。 |
 
-值得一提的是，表 1 中的这些排序规则，其底层也是采用函数对象的方式实现的。以 std::less<T> 为例，其底层实现为：
+值得一提的是，表 1 中的这些排序规则，其底层也是采用函数对象的方式实现的。以 std::less\<T\> 为例，其底层实现为：
 
 ```
 template <typename T>
@@ -148,12 +152,13 @@ int main () {
 ```
 
 程序执行结果为：
-
-http://www.cdsy.xyz/computer/programme/C_language/  
+```
+http://www.cdsy.xyz/computer/programme/C_language/ 
 http://www.cdsy.xyz/computer/programme/stl/  
 http://www.cdsy.xyz/computer/programme/Python/
+```
 
-在这个程序中，虽然 myset 容器表面仍采用默认的 std::less<T> 排序规则，但由于我们对其所用的 < 运算符进行了重载，使得 myset 容器内部实则是以字符串的长度为基准，对各个 mystring 类对象进行排序。
+在这个程序中，虽然 myset 容器表面仍采用默认的 std::less\<T\> 排序规则，但由于我们对其所用的 < 运算符进行了重载，使得 myset 容器内部实则是以字符串的长度为基准，对各个 mystring 类对象进行排序。
 
 另外，上面程序以全局函数的形式实现对 < 运算符的重载，还可以使用成员函数或者友元函数的形式实现。其中，当以成员函数的方式重载 < 运算符时，该成员函数必须声明为 const 类型，且参数也必须为 const 类型：
 
