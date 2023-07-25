@@ -583,7 +583,7 @@ int main()
 ```
 
 程序执行结果为：
-
+```
 myset size = 5  
 1、myset size = 4  
 num = 1  
@@ -591,11 +591,11 @@ num = 1
 iter->3  
 3、myset size = 1  
 iter 2->5
-
+```
 如果需要删除 set 容器中存储的所有元素，可以使用 clear () 成员方法。该方法的语法格式如下：
-
+```
 void clear ();
-
+```
 显然，该方法不需要传入任何参数，也没有任何返回值。
 
 举个例子：
@@ -618,6 +618,8 @@ int main()
 ```
 
 程序执行结果为：
-
+```
 1、myset size = 5  
 2、myset size = 0
+```
+
