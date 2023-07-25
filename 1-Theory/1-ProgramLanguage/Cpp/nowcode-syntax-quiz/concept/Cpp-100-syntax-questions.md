@@ -288,6 +288,12 @@ char a[n]="hello"; // It's false, the error info is: `Variable-sized object may 
 
 第二行只是声明了数组 a，即在程序中引入了一个变量名而不分配内存以及对变量进行初始化。这是由于传入的参数 n 是一个变量（即使它已经被赋值，但仍可能由于某些操作而改变），因此并不能在此为其分配内存空间。
 
+In C++, variable-length arrays (VLA) are not allowed. Variable-length arrays are those where the size of the array is determined at runtime rather than compile-time. This feature is available in some other programming languages, but it is not a standard feature in C++.
+
+In the example, the second line `char a[n];` is not standard C++ but is allowed as a compiler extension in some C++ compilers. This is called a Variable-Length Array (VLA) extension, which is not part of the official C++ standard.
+
+However, the third line `char a[n]="hello";` is not allowed in standard C++ or with VLA extensions. In C++, when you define an array, you can either omit the size (in which case the size is inferred from the initializer) or provide a constant size. The size must be known at compile-time.
+
 ### 共用体 union
 1. 下列关于联合的描述中，错误的是？
 
