@@ -178,6 +178,8 @@
   },
   "active": "912e4610dfede8b9",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-hash/assets/hash_table.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-hash/assets",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-hash/1-unordered_map.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-hash/0-Intro.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/2-associative/如何修改关联式容器中键值对的键？.md",
@@ -221,9 +223,7 @@
     "5-Tools/Dev-Tools/Conda/Conda常用命令.md",
     "5-Tools/Dev-Tools/Conda/Mamba.md",
     "5-Tools/Dev-Tools/Conda/报错及解决办法.md",
-    "5-Tools/Dev-Tools/Conda/什么是Conda？.md",
     "5-Tools/Dev-Tools/Git/github-git-cheat-sheet.pdf",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/assets",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
