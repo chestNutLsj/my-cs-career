@@ -178,23 +178,33 @@ C++ STL 标准库中，不仅是 unordered_map 容器，所有无序容器的底
 2. 将 H 和无序容器拥有桶的数量 n 做整除运算（即 H % n），该结果即表示应将此键值对存储到的桶的编号；
 3. 建立一个新节点存储此键值对，同时将该节点链接到相应编号的桶上。
 
-另外值得一提的是，哈希表存储结构还有一个重要的属性，称为负载因子（load factor）。该属性同样适用于无序容器，用于衡量容器存储键值对的空 / 满程序，即负载因子越大，意味着容器越满，即各链表中挂载着越多的键值对，这无疑会降低容器查找目标键值对的效率；反之，负载因子越小，容器肯定越空，但并不一定各个链表中挂载的键值对就越少。
+另外值得一提的是，哈希表存储结构还有一个重要的属性，称为*负载因子（load factor）*。该属性同样适用于无序容器，用于衡量容器存储键值对的空 / 满程度，即负载因子越大，意味着容器越满，即各链表中挂载着越多的键值对，这无疑会降低容器查找目标键值对的效率；反之，负载因子越小，容器肯定越空，但并不一定各个链表中挂载的键值对就越少。
 
-举个例子，如果设计的哈希函数不合理，使得各个键值对的键带入该函数得到的哈希值始终相同（所有键值对始终存储在同一链表上）。这种情况下，即便增加桶数是的负载因子减小，该容器的查找效率依旧很差。
+举个例子，如果设计的哈希函数不合理，使得各个键值对的键带入该函数得到的哈希值始终相同（所有键值对始终存储在同一链表上）。*这种情况下，即便增加桶数是的负载因子减小，该容器的查找效率依旧很差*。
 
 无序容器中，负载因子的计算方法为：
 
-负载因子 = 容器存储的总键值对 / 桶数
+$$负载因子 = 容器存储的总键值对 \div 桶数$$
 
-默认情况下，无序容器的最大负载因子为 1.0。如果操作无序容器过程中，使得最大复杂因子超过了默认值，则容器会自动增加桶数，并重新进行哈希，以此来减小负载因子的值。需要注意的是，此过程会导致容器迭代器失效，但指向单个键值对的引用或者指针仍然有效。
+默认情况下，无序容器的最大负载因子为 1.0。如果操作无序容器过程中，使得**最大复杂因子超过了默认值，则容器会自动增加桶数，并重新进行哈希**，以此来减小负载因子的值。需要注意的是，此过程会导致容器迭代器失效，但指向单个键值对的引用或者指针仍然有效。
 
 > 这也就解释了，为什么我们在操作无序容器过程中，键值对的存储顺序有时会 “莫名” 的发生变动。
 
-C++ STL 标准库为了方便用户更好地管控无序容器底层使用的哈希表存储结构，各个无序容器的模板类中都提供表 2 所示的成员方法。
+C++ STL 标准库为了方便用户更好地管控无序容器底层使用的哈希表存储结构，各个无序容器的模板类中都提供下表所示的成员方法。
 
-<table><caption>表 2 无序容器管理哈希表的成员方法</caption><tbody><tr><th scope="col">成员方法</th><th scope="col">功能</th></tr><tr><td>bucket_count ()</td><td>返回当前容器底层存储键值对时，使用桶的数量。</td></tr><tr><td>max_bucket_count ()</td><td>返回当前系统中，unordered_map 容器底层最多可以使用多少个桶。</td></tr><tr><td>bucket_size (n)</td><td>返回第 n 个桶中存储键值对的数量。</td></tr><tr><td>bucket (key)</td><td>返回以 key 为键的键值对所在桶的编号。</td></tr><tr><td>load_factor ()</td><td>返回 unordered_map 容器中当前的负载因子。</td></tr><tr><td>max_load_factor ()</td><td>返回或者设置当前 unordered_map 容器的最大负载因子。</td></tr><tr><td>rehash (n)</td><td>尝试重新调整桶的数量为等于或大于 n 的值。如果 n 大于当前容器使用的桶数，则该方法会是容器重新哈希，该容器新的桶数将等于或大于 n。反之，如果 n 的值小于当前容器使用的桶数，则调用此方法可能没有任何作用。</td></tr><tr><td>reserve (n)</td><td>将容器使用的桶数（bucket_count () 方法的返回值）设置为最适合存储 n 个元素的桶数。</td></tr><tr><td>hash_function ()</td><td>返回当前容器使用的哈希函数对象。</td></tr></tbody></table>
+| 成员方法                | 功能                                                                                                        |
+|---------------------|-----------------------------------------------------------------------------------------------------------|
+| bucket_count ()     | 返回当前容器底层存储键值对时，使用桶的数量。                                                                                    |
+| max_bucket_count () | 返回当前系统中，unordered_map 容器底层最多可以使用多少个桶。                                                                     |
+| bucket_size (n)     | 返回第 n 个桶中存储键值对的数量。                                                                                        |
+| bucket (key)        | 返回以 key 为键的键值对所在桶的编号。                                                                                     |
+| load_factor ()      | 返回 unordered_map 容器中当前的负载因子。                                                                              |
+| max_load_factor ()  | 返回或者设置当前 unordered_map 容器的最大负载因子。                                                                         |
+| rehash (n)          | 尝试重新调整桶的数量为等于或大于 n 的值。如果 n 大于当前容器使用的桶数，则该方法会是容器重新哈希，该容器新的桶数将等于或大于 n。反之，如果 n 的值小于当前容器使用的桶数，则调用此方法可能没有任何作用。 |
+| reserve (n)         | 将容器使用的桶数（bucket_count () 方法的返回值）设置为最适合存储 n 个元素的桶数。                                                        |
+| hash_function ()    | 返回当前容器使用的哈希函数对象。                                                                                          |
 
-下面的程序以学过的 unordered_map 容器为例，演示了表 2 中部分成员方法的用法：
+下面的程序以学过的 unordered_map 容器为例，演示了表中部分成员方法的用法：
 
 ```
 #include <iostream>
@@ -229,7 +239,7 @@ int main()
 ```
 
 程序执行结果为：
-
+```
 umap 初始桶数: 8  
 umap 初始负载因子: 0  
 umap 最大负载因子: 1  
@@ -238,11 +248,280 @@ umap 新桶数: 16
 umap 新负载因子: 0  
 以 "Python 教程" 为键的键值对，位于桶的编号为: 9  
 计算以 "Python 教程" 为键的键值对，位于桶的编号为：9
+```
 
-从输出结果可以看出，对于空的 umap 容器，初始状态下会分配 8 个桶，并且默认最大负载因子为 1.0，但由于其为存储任何键值对，因此负载因子值为 0。
+从输出结果可以看出，对于空的 umap 容器，初始状态下会分配 8 个桶，并且默认最大负载因子为 1.0，但由于其未存储任何键值对，因此负载因子值为 0。
 
-与此同时，程序中调用 reverse () 成员方法，是 umap 容器的桶数改为了 16，其最适合存储 9 个键值对。从侧面可以看出，一旦负载因子大于 1.0（9/8> 1.0），则容器所使用的桶数就会翻倍式（8、16、32、...）的增加。
+与此同时，程序中调用 reverse () 成员方法，是 umap 容器的桶数改为了 16，其最适合存储 9 个键值对。从侧面可以看出，一旦负载因子大于 1.0（9/8> 1.0），则容器所使用的桶数就会**翻倍式**（8、16、32、...）的增加。
 
 程序最后还演示了如何手动计算出指定键值对存储的桶的编号，其计算结果和使用 bucket () 成员方法得到的结果是一致的。
 
-> 关于表 2 中成员方法的具体语法和用法，都很简单，不再过多赘述，感兴趣的读者可自行翻阅 [C++ STL 手册](http://www.cplusplus.com/reference/unordered_map/unordered_map/)。
+## unordered_map 的迭代器
+
+C++ STL 标准库中，unordered_map 容器迭代器的类型为前向迭代器（又称正向迭代器）。这意味着，假设 p 是一个前向迭代器，则其只能进行 `*p`、`p++`、`++p` 操作，且 2 个前向迭代器之间只能用 == 和 != 运算符做比较。
+
+在 unordered_map 容器模板中，提供了下表所示的成员方法，可用来获取指向指定位置的前向迭代器。
+
+| 成员方法              | 功能                                                                                      |
+|-------------------|-----------------------------------------------------------------------------------------|
+| begin ()          | 返回指向容器中第一个键值对的正向迭代器。                                                                    |
+| end ()&nbsp;      | 返回指向容器中最后一个键值对之后位置的正向迭代器。                                                               |
+| cbegin ()         | 和 begin () 功能相同，只不过在其基础上增加了 const 属性，即该方法返回的迭代器不能用于修改容器内存储的键值对。                         |
+| cend ()           | 和 end () 功能相同，只不过在其基础上，增加了 const 属性，即该方法返回的迭代器不能用于修改容器内存储的键值对。                          |
+| find (key)        | 查找以 key 为键的键值对，如果找到，则返回一个指向该键值对的正向迭代器；反之，则返回一个指向容器中最后一个键值对之后位置的迭代器（如果 end () 方法返回的迭代器）。 |
+| equal_range (key) | 返回一个 pair 对象，其包含 2 个迭代器，用于表明当前容器中键为 key 的键值对所在的范围。                                      |
+
+> 值得一提的是，equal_range (key) 很少用于 unordered_map 容器，因为该容器中存储的都是键不相等的键值对，即便调用该成员方法，得到的 2 个迭代器所表示的范围中，最多只包含 1 个键值对。事实上，该成员方法更适用于 unordered_multimap 容器（该容器后续章节会做详细讲解）。
+
+下面的程序演示了表中部分成员方法的用法。
+
+```
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main()
+{
+    //创建 umap 容器
+    unordered_map<string, string> umap{
+        {"Python教程","http://c.biancheng.net/python/"},
+        {"Java教程","http://c.biancheng.net/java/"},
+        {"Linux教程","http://c.biancheng.net/linux/"} };
+
+    cout << "umap 存储的键值对包括：" << endl;
+    //遍历输出 umap 容器中所有的键值对
+    for (auto iter = umap.begin(); iter != umap.end(); ++iter) {
+        cout << "<" << iter->first << ", " << iter->second << ">" << endl;
+    }
+    //获取指向指定键值对的前向迭代器
+    unordered_map<string, string>::iterator iter = umap.find("Java教程");
+    cout <<"umap.find(\"Java教程\") = " << "<" << iter->first << ", " << iter->second << ">" << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+umap 存储的键值对包括：  
+<Python 教程, http://c.biancheng.net/python/>  
+<Linux 教程, http://c.biancheng.net/linux/>  
+<Java 教程, http://c.biancheng.net/java/>  
+umap.find ("Java 教程") = <Java 教程, http://c.biancheng.net/java/>
+```
+
+需要注意的是，在操作 unordered_map 容器过程（尤其是向容器中添加新键值对）中，一旦当前容器的负载因子超过最大负载因子（默认值为 1.0），该容器就会适当增加桶的数量（通常是翻一倍），并自动执行 rehash () 成员方法，重新调整各个键值对的存储位置（此过程又称 “重哈希”），此过程很可能导致之前创建的迭代器失效。
+
+> 所谓*迭代器失效，针对的是那些用于表示容器内某个范围的迭代器，由于重哈希会重新调整每个键值对的存储位置，所以容器重哈希之后，之前表示特定范围的迭代器很可能无法再正确表示该范围*。但是，重哈希并不会影响那些指向单个键值对元素的迭代器。
+
+举个例子：
+
+```
+#include <iostream>
+#include <unordered_map>
+using namespace std;
+int main()
+{
+    //创建 umap 容器
+    unordered_map<int, int> umap;
+    //向 umap 容器添加 50 个键值对
+    for (int i = 1; i <= 50; i++) {
+        umap.emplace(i, i);
+    }
+    //获取键为 49 的键值对所在的范围
+    auto pair = umap.equal_range(49);
+    //输出 pair 范围内的每个键值对的键的值
+    for (auto iter = pair.first; iter != pair.second; ++iter) {
+        cout << iter->first <<" ";
+    }
+    cout << endl;
+    //手动调整最大负载因子数
+    umap.max_load_factor(3.0);
+    //手动调用 rehash() 函数重哈希
+    umap.rehash(10);
+    //重哈希之后，pair 的范围可能会发生变化
+    for (auto iter = pair.first; iter != pair.second; ++iter) {
+        cout << iter->first << " ";
+    }
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+49  
+49 17
+```
+
+观察输出结果不难发现，之前用于表示键为 49 的键值对所在范围的 2 个迭代器，重哈希之后表示的范围发生了改变。
+
+> 经测试，用于遍历整个容器的 begin ()/end () 和 cbegin ()/cend () 迭代器对，重哈希只会影响遍历容器内键值对的顺序，整个遍历的操作仍然可以顺利完成。
+
+## 获取元素
+
+通过前面的学习我们知道，unordered_map 容器以键值对的方式存储数据。为了方便用户快速地从该类型容器提取出目标元素（也就是某个键值对的值），unordered_map 容器类模板中提供了以下几种方法。
+
+### 重载 `[]` 运算符
+1) unordered_map 容器类模板中，实现了对 [] 运算符的重载，使得我们可以像 “利用下标访问普通数组中元素” 那样，通过目标键值对的键获取到该键对应的值。
+
+举个例子：
+
+```
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main()
+{
+    //创建 umap 容器
+    unordered_map<string, string> umap{
+        {"Python教程","http://c.biancheng.net/python/"},
+        {"Java教程","http://c.biancheng.net/java/"},
+        {"Linux教程","http://c.biancheng.net/linux/"} };
+    //获取 "Java教程" 对应的值
+    string str = umap["Java教程"];
+    cout << str << endl;
+    return 0;
+}
+```
+
+程序输出结果为：
+```
+http://c.biancheng.net/java/
+```
+需要注意的是，如果当前容器中并没有存储以 `[]` 运算符内指定的元素作为键的键值对，则此时 `[]` 运算符的**功能将转变为：向当前容器中添加以目标元素为键的键值对**。举个例子：
+
+```
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main()
+{
+    //创建空 umap 容器
+    unordered_map<string, string> umap;
+    //[] 运算符在 = 右侧
+    string str = umap["STL教程"];
+    //[] 运算符在 = 左侧
+    umap["C教程"] = "http://c.biancheng.net/c/";
+   
+    for (auto iter = umap.begin(); iter != umap.end(); ++iter) {
+        cout << iter->first << " " << iter->second << endl;
+    }
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+C 教程 http://c.biancheng.net/c/  
+STL 教程
+```
+可以看到，当使用 [ ] 运算符向 unordered_map 容器中添加键值对时，分为 2 种情况：
+
+1. 当 [] 运算符位于赋值号（=）右侧时，则新添加键值对的键为 [] 运算符内的元素，其值为键值对要求的值类型的默认值（string 类型默认值为空字符串）；
+2. 当 [] 运算符位于赋值号（=）左侧时，则新添加键值对的键为 [] 运算符内的元素，其值为赋值号右侧的元素。
+
+### at 成员方法
+2) unordered_map 类模板中，还提供有 at () 成员方法，和使用 [] 运算符一样，at () 成员方法也需要根据指定的键，才能从容器中找到该键对应的值；不同之处在于，如果在当前容器中查找失败，该方法不会向容器中添加新的键值对，而是直接抛出 `out_of_range` 异常。
+
+举个例子：
+
+```
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main()
+{
+    //创建 umap 容器
+    unordered_map<string, string> umap{
+        {"Python教程","http://c.biancheng.net/python/"},
+        {"Java教程","http://c.biancheng.net/java/"},
+        {"Linux教程","http://c.biancheng.net/linux/"} };
+    //获取指定键对应的值
+    string str = umap.at("Python教程");
+    cout << str << endl;
+
+    //执行此语句会抛出 out_of_range 异常
+    //cout << umap.at("GO教程");
+    return 0;
+}
+```
+
+程序执行结果为：
+
+http://c.biancheng.net/python/
+
+此程序中，第 13 行代码用于获取 umap 容器中键为 “Python 教程” 对应的值，由于 umap 容器确实有符合条件的键值对，因此可以成功执行；而第 17 行代码，由于当前 umap 容器没有存储以 “Go 教程” 为键的键值对，因此执行此语句会抛出 out_of_range 异常。
+
+3) [] 运算符和 at () 成员方法基本能满足大多数场景的需要。除此之外，还可以借助 unordered_map 模板中提供的 find () 成员方法。
+
+和前面方法不同的是，通过 find () 方法得到的是一个正向迭代器，该迭代器的指向分以下 2 种情况：
+
+1.  当 find () 方法成功找到以指定元素作为键的键值对时，其返回的迭代器就指向该键值对；
+2.  当 find () 方法查找失败时，其返回的迭代器和 end () 方法返回的迭代器一样，指向容器中最后一个键值对之后的位置。
+
+举个例子：
+
+```
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main()
+{
+    //创建 umap 容器
+    unordered_map<string, string> umap{
+        {"Python教程","http://c.biancheng.net/python/"},
+        {"Java教程","http://c.biancheng.net/java/"},
+        {"Linux教程","http://c.biancheng.net/linux/"} };
+    //查找成功
+    unordered_map<string, string>::iterator iter = umap.find("Python教程");
+    cout << iter->first << " " << iter->second << endl;
+    //查找失败
+    unordered_map<string, string>::iterator iter2 = umap.find("GO教程");
+    if (iter2 == umap.end()) {
+        cout << "当前容器中没有以\"GO教程\"为键的键值对";
+    }
+    return 0;
+}
+```
+
+程序执行结果为：
+
+Python 教程 http://c.biancheng.net/python/  
+当前容器中没有以 "GO 教程" 为键的键值对
+
+4) 除了 find () 成员方法之外，甚至可以借助 begin ()/end () 或者 cbegin ()/cend ()，通过遍历整个容器中的键值对来找到目标键值对。
+
+举个例子：
+
+```
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main()
+{
+    //创建 umap 容器
+    unordered_map<string, string> umap{
+        {"Python教程","http://c.biancheng.net/python/"},
+        {"Java教程","http://c.biancheng.net/java/"},
+        {"Linux教程","http://c.biancheng.net/linux/"} };
+    //遍历整个容器中存储的键值对
+    for (auto iter = umap.begin(); iter != umap.end(); ++iter) {
+        //判断当前的键值对是否就是要找的
+        if (!iter->first.compare("Java教程")) {
+            cout << iter->second << endl;
+            break;
+        }
+    }
+    return 0;
+}
+```
+
+程序执行结果为：
+
+http://c.biancheng.net/java/
+
+> 以上 4 种方法中，前 2 种方法基本能满足多数场景的需要，建议初学者首选 at () 成员方法！
