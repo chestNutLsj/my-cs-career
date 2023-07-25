@@ -280,3 +280,344 @@ http://c.biancheng.net/stl/
 > 值得一提的是，虽然 C++ STL 标准中，set 类模板中包含 lower_bound ()、upper_bound ()、equal_range () 这 3 个成员函数，但它们更适用于 multiset 容器，几乎不会用于操作 set 容器。
 
 ## set 中插入元素
+
+通过前面的学习，我们已经学会如何创建一个 set 容器。在此基础上，如果想向 set 容器中继续添加元素，可以借助 set 类模板提供的 insert () 方法。
+
+为满足不同场景的需要，C++11 标准的 set 类模板中提供了多种不同语法格式的 insert () 成员方法，它们各自的功能和用法如下所示。
+
+### insert 直接插入一个值
+1) 只要给定目标元素的值，insert () 方法即可将该元素添加到 set 容器中，其语法格式如下：
+```
+// 普通引用方式传参  
+pair<iterator,bool> insert (const value_type& val);  
+// 右值引用方式传参  
+pair<iterator,bool> insert (value_type&& val);
+```
+其中，val 表示要添加的新元素，该方法的返回值为 pair 类型。
+
+可以看到，以上 2 种语法格式的 insert () 方法，返回的都是 pair 类型的值，其包含 2 个数据，一个迭代器和一个 bool 值：
+* 当向 set 容器添加元素成功时，该迭代器指向 set 容器新添加的元素，bool 类型的值为 true；
+* 如果添加失败，即证明原 set 容器中已存有相同的元素，此时返回的迭代器就指向容器中相同的此元素，同时 bool 类型的值为 false。
+
+举个例子：
+
+```
+#include <iostream>
+#include <set>
+#include <string>
+using namespace std;
+
+int main()
+{
+    //创建并初始化set容器
+    std::set<std::string> myset;
+    //准备接受 insert() 的返回值
+    pair<set<string>::iterator, bool> retpair;
+    //采用普通引用传值方式
+    string str = "http://c.biancheng.net/stl/";
+    retpair = myset.insert(str);
+    cout << "iter->" << *(retpair.first) << " " << "bool = " << retpair.second << endl;
+    //采用右值引用传值方式
+    retpair = myset.insert("http://c.biancheng.net/python/");
+    cout << "iter->" << *(retpair.first) << " " << "bool = " << retpair.second << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+iter-> http://c.biancheng.net/stl/ bool = 1  
+iter-> http://c.biancheng.net/python/ bool = 1
+```
+通过观察输出结果不难看出，程序中两次借助 insert () 方法向 set 容器中添加元素，都成功了。
+
+### insert 插入到具体位置
+2) insert () 还可以指定将新元素插入到 set 容器中的具体位置，其语法格式如下：
+```
+// 以普通引用的方式传递 val 值  
+iterator insert (const_iterator position, const value_type& val);  
+// 以右值引用的方式传递 val 值  
+iterator insert (const_iterator position, value_type&& val);
+```
+
+以上 2 种语法格式中，insert () 函数的返回值为迭代器：
+* 当向 set 容器添加元素成功时，该迭代器指向容器中新添加的元素；
+* 当添加失败时，证明原 set 容器中已有相同的元素，*该迭代器就指向 set 容器中相同的这个元素*。
+
+举个例子：
+```
+#include <iostream>
+#include <set>
+#include <string>
+using namespace std;
+
+int main()
+{
+    //创建并初始化set容器
+    std::set<std::string> myset;
+    //准备接受 insert() 的返回值
+    set<string>::iterator iter;
+
+    //采用普通引用传值方式
+    string str = "http://c.biancheng.net/stl/";
+    iter = myset.insert(myset.begin(),str);
+    cout << "myset size =" << myset.size() << endl;
+
+    //采用右值引用传值方式
+    iter = myset.insert(myset.end(),"http://c.biancheng.net/python/");
+    cout << "myset size =" << myset.size() << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+myset size =1  
+myset size =2
+```
+
+> 注意，使用 insert () 方法将目标元素插入到 set 容器指定位置后，如果该元素破坏了容器内部的有序状态，set 容器还会自行对新元素的位置做进一步调整。也就是说，insert () 方法中指定新元素插入的位置，并不一定就是该元素最终所处的位置。
+
+### insert 其它 set 指定区域
+3) insert () 方法支持向当前 set 容器中插入其它 set 容器指定区域内的所有元素，只要这 2 个 set 容器存储的元素类型相同即可。
+
+insert () 方法的语法格式如下：
+```
+template <class InputIterator>  
+  void insert (InputIterator first, InputIterator last);
+```
+其中 first 和 last 都是迭代器，它们的组合 `[first, last)` 可以表示另一 set 容器中的一块区域，该区域包括 first 迭代器指向的元素，但不包含 last 迭代器指向的元素。
+
+举个例子：
+```
+#include <iostream>
+#include <set>
+#include <string>
+using namespace std;
+
+int main ()
+{
+    //创建并初始化 set 容器
+    std::set<std::string> myset{ " http://c.biancheng.net/stl/" ,
+                                " http://c.biancheng.net/python/" ,
+                                " http://c.biancheng.net/java/" };
+    //创建一个同类型的空 set 容器
+    std::set<std::string> otherset;
+    //利用 myset 初始化 otherset
+    otherset.insert (++myset.begin (), myset.end ());
+    //输出 otherset 容器中的元素
+    for (auto iter = otherset.begin (); iter != otherset.end (); ++iter) {
+        cout << *iter << endl;
+    }
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+http://c.biancheng.net/python/  
+http://c.biancheng.net/stl/
+```
+注意，程序第 15 行在初始化 otherset 容器时，选取的是 myset 容器中从第 2 个元素开始（包括此元素）直到容器末尾范围内的所有元素，所以程序输出结果中只有 2 个字符串。
+
+### insert 多个元素
+4) 采用如下格式的 insert () 方法，可实现一次向 set 容器中添加多个元素：
+```
+void insert ( {E 1, E 2,..., En} );
+```
+其中，Ei 表示新添加的元素。
+
+举个例子：
+```
+#include <iostream>
+#include <set>
+#include <string>
+using namespace std;
+
+int main ()
+{
+    //创建并初始化 set 容器
+    std::set<std::string> myset;
+    //向 myset 中添加多个元素
+    myset.insert ({ " http://c.biancheng.net/stl/" ,
+        " http://c.biancheng.net/python/" ,
+        " http://c.biancheng.net/java/" });
+
+    for (auto iter = myset.begin (); iter != myset.end (); ++iter) {
+        cout << *iter << endl;
+    }
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+http://c.biancheng.net/java/  
+http://c.biancheng.net/python/  
+http://c.biancheng.net/stl/
+```
+以上的讲解，即为 set 类模板中 insert () 成员方法的全部用法。指的一提的是，C++ 11 标准的 set 类模板中，还提供有另外 2 个成员方法，分别为 emplace () 和 emplace_hint () 方法，借助它们不但能实现向 set 容器添加新元素的功能，其实现效率也比 insert () 成员方法更高。
+
+> 有关 set 类模板中 emplace () 和 emplace_hint () 方法的用法，后续章节会做详细介绍。
+
+### emplace 插入值
+
+emplace() 方法的语法格式如下：
+```
+template <class... Args>  
+  pair<iterator,bool> emplace (Args&&... args);
+```
+其中，参数 (Args&&... args) 指的是，只需要传入构建新元素所需的数据即可，该方法可以自行利用这些数据构建出要添加的元素。比如，若 set 容器中存储的元素类型为自定义的结构体或者类，则在使用 emplace() 方法向容器中添加新元素时，构造新结构体变量（或者类对象）需要多少个数据，就需要为该方法传入相应个数的数据。  
+  
+另外，该方法的返回值类型为 pair 类型，其包含 2 个元素，一个迭代器和一个 bool 值：
+- 当该方法将目标元素成功添加到 set 容器中时，其返回的迭代器指向新插入的元素，同时 bool 值为 true；
+- 当添加失败时，则表明原 set 容器中已存在相同值的元素，此时返回的迭代器指向容器中具有相同键的这个元素，同时 bool 值为 false。
+
+下面程序演示 emplace() 方法的具体用法：
+```
+#include <iostream>
+#include <set>
+#include <string>
+u[sin](http://c.biancheng.net/ref/sin.html)g namespace std;
+int main()
+{
+    //创建并初始化 set 容器
+    std::set<string>myset;
+    //向 myset 容器中添加元素
+    pair<set<string, string>::iterator, bool> ret = myset.emplace("http://c.biancheng.net/stl/");
+    cout << "myset size = " << myset.size() << endl;
+    cout << "ret.iter = <" << *(ret.first) << ", " << ret.second << ">" << endl;
+    return 0;
+}
+```
+程序执行结果为：
+
+```
+myset size = 1  
+ret.iter = <http://c.biancheng.net/stl/, 1>
+```
+显然，从执行结果可以看出，通过调用 emplace() 方法，成功向空 myset 容器中添加了一个元素，并且该方法的返回值中就包含指向新添加元素的迭代器。
+
+### emplace_hint 插入元素
+emplace_hint() 方法的功能和 emplace() 类似，其语法格式如下：
+```
+template <class... Args>  
+  iterator emplace_hint (const_iterator position, Args&&... args);
+```
+
+和 emplace() 方法相比，有以下 2 点不同：
+- 该方法需要额外传入一个迭代器，用来指明新元素添加到 set 容器的具体位置（新元素会添加到该迭代器指向元素的前面）；
+- 返回值是一个迭代器，而不再是 pair 对象。当成功添加元素时，返回的迭代器指向新添加的元素；反之，如果添加失败，则迭代器就指向 set 容器和要添加元素的值相同的元素。
+
+下面程序演示 emplace_hint() 方法的用法：
+```
+#include <iostream>
+#include <set>
+#include <string>
+using namespace std;
+int main()
+{
+    //创建并初始化 set 容器
+    std::set<string>myset;
+    //在 set 容器的指定位置添加键值对
+    set<string>::iterator iter = myset.emplace_hint(myset.begin(), "http://c.biancheng.net/stl/");
+    cout << "myset size = " << myset.size() << endl;
+    cout << *iter << endl;
+    return 0;
+}
+```
+程序执行结果为：
+
+```
+myset size = 1  
+http://c.biancheng.net/stl/
+```
+注意，和 insert() 方法一样，虽然 emplace_hint() 方法中指定了添加新元素的位置，但 set 容器为了保持数据的有序状态，可能会移动其位置。
+
+## 删除元素
+
+如果想删除 set 容器存储的元素，可以选择用 erase () 或者 clear () 成员方法。
+
+set 类模板中，erase () 方法有 3 种语法格式，分别如下：
+```
+// 删除 set 容器中值为 val 的元素  
+size_type erase (const value_type& val);  
+// 删除 position 迭代器指向的元素  
+iterator  erase (const_iterator position);  
+// 删除 [first, last) 区间内的所有元素  
+iterator  erase (const_iterator first, const_iterator last);
+```
+其中，第 1 种格式的 erase () 方法，其返回值为一个整数，表示成功删除的元素个数；后 2 种格式的 erase () 方法，返回值都是迭代器，其指向的是 set 容器中删除元素之后的第一个元素。
+
+> 注意，如果要删除的元素就是 set 容器最后一个元素，则 erase () 方法返回的迭代器就指向新 set 容器中最后一个元素之后的位置（等价于 end () 方法返回的迭代器）。
+
+下面程序演示了以上 3 种 erase () 方法的用法：
+
+```
+#include <iostream>
+#include <set>
+#include <string>
+using namespace std;
+int main()
+{
+    //创建并初始化 set 容器
+    std::set<int>myset{1,2,3,4,5};
+    cout << "myset size = " << myset.size() << endl;
+   
+    //1) 调用第一种格式的 erase() 方法
+    int num = myset.erase(2); //删除元素 2，myset={1,3,4,5}
+    cout << "1、myset size = " << myset.size() << endl;
+    cout << "num = " << num << endl;
+
+    //2) 调用第二种格式的 erase() 方法
+    set<int>::iterator iter = myset.erase(myset.begin()); //删除元素 1，myset={3,4,5}
+    cout << "2、myset size = " << myset.size() << endl;
+    cout << "iter->" << *iter << endl;
+
+    //3) 调用第三种格式的 erase() 方法
+    set<int>::iterator iter2 = myset.erase(myset.begin(), --myset.end());//删除元素 3,4，myset={5}
+    cout << "3、myset size = " << myset.size() << endl;
+    cout << "iter2->" << *iter2 << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+
+myset size = 5  
+1、myset size = 4  
+num = 1  
+2、myset size = 3  
+iter->3  
+3、myset size = 1  
+iter 2->5
+
+如果需要删除 set 容器中存储的所有元素，可以使用 clear () 成员方法。该方法的语法格式如下：
+
+void clear ();
+
+显然，该方法不需要传入任何参数，也没有任何返回值。
+
+举个例子：
+
+```
+#include <iostream>
+#include <set>
+#include <string>
+using namespace std;
+int main()
+{
+    //创建并初始化 set 容器
+    std::set<int>myset{1,2,3,4,5};
+    cout << "1、myset size = " << myset.size() << endl;
+    //清空 myset 容器
+    myset.clear();
+    cout << "2、myset size = " << myset.size() << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+
+1、myset size = 5  
+2、myset size = 0
