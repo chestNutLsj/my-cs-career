@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "e62acb9c62eb4ff6",
+        "id": "4a1228780832947f",
         "type": "tabs",
         "children": [
           {
-            "id": "6f641c83066001c0",
+            "id": "50d482f13204bdc1",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "mode": "source",
                 "source": false
               }
@@ -77,7 +77,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -94,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md",
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +151,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/进程.md"
+                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md"
               }
             }
           }
@@ -158,8 +159,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -176,8 +176,9 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "50d482f13204bdc1",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle-design/internal&principle/进程.md",
     "1-Theory/5-OS-principle-design/internal&principle/homework",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/associative/3-set.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
@@ -206,7 +207,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/deque-bottom-iter.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/assets/deque-address.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence/2-Vector.md",
-    "1-Theory/5-OS-principle-design/internal&principle/进程.md",
     "5-Tools/Dev-Tools/CMake/modern-cmake.pdf",
     "5-Tools/Dev-Tools/Conda/Conda常用命令.md",
     "5-Tools/Dev-Tools/Conda/Mamba.md",
@@ -223,7 +223,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/STL/assets",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/assets",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/associative",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/sequence",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
