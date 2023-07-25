@@ -279,6 +279,14 @@ while(i < 3)
     } 
 ```
 
+2. 判断：使用变量定义数组时，不能在定义时初始化，只能是声明（✅）
+```cpp
+int n=10;
+char a[n]; // It's right.
+chat a[n]="hello"; // It's false, the error info is: `Variable-sized object may not be initialized`
+```
+
+
 ### 共用体 union
 1. 下列关于联合的描述中，错误的是？
 
