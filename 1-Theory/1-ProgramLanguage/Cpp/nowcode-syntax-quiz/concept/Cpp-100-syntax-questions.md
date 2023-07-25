@@ -283,9 +283,10 @@ while(i < 3)
 ```cpp
 int n=10;
 char a[n]; // It's right.
-chat a[n]="hello"; // It's false, the error info is: `Variable-sized object may not be initialized`
+char a[n]="hello"; // It's false, the error info is: `Variable-sized object may not be initialized`
 ```
 
+第二行只是声明了数组 a，即在程序中引入了一个变量名而不分配内存以及对变量进行初始化。这是由于传入的参数 n 是一个变量（即使它已经被赋值，但仍可能由于某些操作而改变），因此并不能在此为其分配内存空间。
 
 ### 共用体 union
 1. 下列关于联合的描述中，错误的是？
