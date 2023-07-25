@@ -1,10 +1,7 @@
-> 本文由 [简悦 SimpRead](http://ksria.com/simpread/) 转码， 原文地址 [www.cdsy.xyz](https://www.cdsy.xyz/computer/programme/stl/20210307/cd161510782812005.html)
-
-> 如何自定义 C++ STL 关联式容器的排序规则？
 
 前面在讲解如何创建 map、multimap、set 以及 multiset 容器时，遗留了一个问题，即如何自定义关联式容器中的排序规则？
 
-> 实际上，为关联式容器自定义排序规则的方法，已经在 《[STL priority_queue 自定义排序方法](http://www.cdsy.xyz/computer/programme/stl/20210307/cd161510785212026.html)》一节中做了详细的讲解。换句话说，为 Priority_queue 容器适配器自定义排序规则的方法，同样适用于所有关联式容器。
+> 实际上，为关联式容器自定义排序规则的方法，已经在 [STL priority_queue 自定义排序方法](http://www.cdsy.xyz/computer/programme/stl/20210307/cd161510785212026.html)一节中做了详细的讲解。换句话说，为 Priority_queue 容器适配器自定义排序规则的方法，同样适用于所有关联式容器。
 
 总的来说，为关联式容器自定义排序规则，有以下 2 种方法。
 
