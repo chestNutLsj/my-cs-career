@@ -152,7 +152,7 @@ main:
 
 符号 = `symbols`，重定位 = `relocations`  
 该阶段使用链接器将目标文件链接到一个可执行文件或共享库中，该可执行文件将可以由操作系统或者加载器加载到内存中执行。命令为 `g++ -std=c++11 -o main main.o`，如果不指定 `-o` 参数，则默认为输出文件名为 `a.out`  
-该阶段的实质是链接器通过符号（`symbols`）和重定位（`relocations`）将多个可重定位的目标程序中相应的节（section）合并到一个二进制文件中。此处如何合并就要涉及到内存布局的问题，参见[[Cpp内存布局]]
+该阶段的实质是链接器通过符号（`symbols`）和重定位（`relocations`）将多个可重定位的目标程序中相应的节（section）合并到一个二进制文件中。此处如何合并就要涉及到内存布局的问题，参见[[实例分析 C++ 内存布局]]
 
 关于 symbols 和 relocations 的详细介绍：
 ### symbols
@@ -175,6 +175,7 @@ main:
 
 可以通过`g++ -std=c++11 -o main main. cpp`一次性编译并生成可执行的目标程序，如果希望一个命令编译并链接生成可执行程序的同时保留上面四个步骤中的临时文件，可以通过添加`--save-temps`参数，如`g++ -std=c++11 --save-temps -o main main. cpp`。  
 以图说话：  
-![](http://notes.maxwi.com/2016/06/05/source-to-program/compile_cpp.png)
+
+![[cpp-srcfile-to-exec.png]]
 
 关于可重定位的目标文件与可执行文件的实质区别，以及内存布局，section (节) 与 segment（段）的区别，详见[实例分析 C++ 内存布局](http://notes.maxwi.com/2016/06/11/cpp-memory-layout/)
