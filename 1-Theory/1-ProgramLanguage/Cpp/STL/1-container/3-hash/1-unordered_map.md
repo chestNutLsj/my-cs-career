@@ -14,8 +14,6 @@ unordered_map 容器，直译过来就是 "无序 map 容器" 的意思。所谓
 using namespace std;
 ```
 
-> 注意，第二行代码不是必需的，但如果不用，则后续程序中在使用此容器时，需手动注明 std 命名空间（强烈建议初学者使用）。
-
 unordered_map 容器模板的定义如下所示：
 
 ```
@@ -29,32 +27,32 @@ template < class Key,                        //键值对中键的类型
 
 以上 5 个参数中，必须显式给前 2 个参数传值，并且除特殊情况外，最多只需要使用前 4 个参数，各自的含义和功能如表 1 所示。
 
-<table><caption>表 1 unordered_map 容器模板类的常用参数</caption><tbody><tr><th>参数</th><th>含义</th></tr><tr><td>&lt; key, T&gt;</td><td>前 2 个参数分别用于确定键值对中键和值的类型，也就是存储键值对的类型。</td></tr><tr><td>Hash = hash&lt; Key&gt;</td><td>用于指明容器在存储各个键值对时要使用的哈希函数，默认使用 STL 标准库提供的 hash&lt; key&gt; 哈希函数。注意，默认哈希函数只适用于基本数据类型（包括 string 类型），而不适用于自定义的结构体或者类。</td></tr><tr><td>Pred = equal_to&lt; Key&gt;</td><td>要知道，unordered_map 容器中存储的各个键值对的键是不能相等的，而判断是否相等的规则，就由此参数指定。默认情况下，使用 STL 标准库中提供的 equal_to&lt; key&gt; 规则，该规则仅支持可直接用 == 运算符做比较的数据类型。</td></tr></tbody></table>
+| 参数                          | 含义                                                                                                                               |
+|-----------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| &lt; key, T&gt;             | 前 2 个参数分别用于确定键值对中键和值的类型，也就是存储键值对的类型。                                                                                             |
+| Hash = hash&lt; Key&gt;     | 用于指明容器在存储各个键值对时要使用的哈希函数，默认使用 STL 标准库提供的 hash&lt; key&gt; 哈希函数。注意，默认哈希函数只适用于基本数据类型（包括 string 类型），而不适用于自定义的结构体或者类。                 |
+| Pred = equal_to&lt; Key&gt; | 要知道，unordered_map 容器中存储的各个键值对的键是不能相等的，而判断是否相等的规则，就由此参数指定。默认情况下，使用 STL 标准库中提供的 equal_to&lt; key&gt; 规则，该规则仅支持可直接用 == 运算符做比较的数据类型。 |
 
 > 总的来说，当无序容器中存储键值对的键为自定义类型时，默认的哈希函数 hash 以及比较函数 equal_to 将不再适用，只能自己设计适用该类型的哈希函数和比较函数，并显式传递给 Hash 参数和 Pred 参数。至于如何实现自定义，后续章节会做详细讲解。
 
-创建 C++ unordered_map 容器的方法
+## 创建 unordered_map 容器
 --------------------------
 
 常见的创建 unordered_map 容器的方法有以下几种。
 
 1) 通过调用 unordered_map 模板类的默认构造函数，可以创建空的 unordered_map 容器。比如：
-
 ```
 std::unordered_map<std::string, std::string> umap;
 ```
-
 由此，就创建好了一个可存储 <string,string> 类型键值对的 unordered_map 容器。
 
 2) 当然，在创建 unordered_map 容器的同时，可以完成初始化操作。比如：
-
 ```
 std::unordered_map<std::string, std::string> umap{
     {"Python教程","http://c.biancheng.net/python/"},
     {"Java教程","http://c.biancheng.net/java/"},
     {"Linux教程","http://c.biancheng.net/linux/"} };
 ```
-
 通过此方法创建的 umap 容器中，就包含有 3 个键值对元素。
 
 3) 另外，还可以调用 unordered_map 模板中提供的复制（拷贝）构造函数，将现有 unordered_map 容器中存储的键值对，复制给新建 unordered_map 容器。
