@@ -532,4 +532,182 @@ http://c.biancheng.net/java/
 
 ## 插入元素
 
+### insert
+为了方便用户向已建 unordered_map 容器中添加新的键值对，该容器模板中提供了 insert () 方法，本节就对此方法的用法做详细的讲解。
+
+unordered_map 模板类中，提供了多种语法格式的 insert () 方法，根据功能的不同，可划分为以下几种用法。
+
+1) insert () 方法可以将 pair 类型的键值对元素添加到 unordered_map 容器中，其语法格式有 2 种：
+```
+// 以普通方式传递参数  
+pair<iterator,bool> insert ( const value_type& val );  
+// 以右值引用的方式传递参数  
+template <class P>  
+    pair<iterator,bool> insert ( P&& val );
+```
+
+以上 2 种格式中，参数 val 表示要添加到容器中的目标键值对元素；该方法的返回值为 pair 类型值，内部包含一个 iterator 迭代器和 bool 变量：
+
+*   当 insert () 将 val 成功添加到容器中时，返回的迭代器指向新添加的键值对，bool 值为 True；
+*   当 insert () 添加键值对失败时，意味着当前容器中本就存储有和要添加键值对的键相等的键值对，这种情况下，返回的迭代器将指向这个导致插入操作失败的迭代器，bool 值为 False。
+
+举个例子：
+
+```
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main ()
+{
+    //创建空 umap 容器
+    unordered_map<string, string> umap;
+    //构建要添加的键值对
+    std::pair<string, string>mypair ("STL 教程", " http://c.biancheng.net/stl/" );
+    //创建接收 insert () 方法返回值的 pair 类型变量
+    std::pair<unordered_map<string, string>:: iterator, bool> ret;
+    //调用 insert () 方法的第一种语法格式
+    ret = umap.insert (mypair);
+    cout << "bool = " << ret. second << endl;
+    cout << "iter -> " << ret.first->first <<" " << ret.first->second << endl;
+   
+    //调用 insert () 方法的第二种语法格式
+    ret = umap.insert (std:: make_pair ("Python 教程"," http://c.biancheng.net/python/" ));
+    cout << "bool = " << ret. second << endl;
+    cout << "iter -> " << ret.first->first << " " << ret.first->second << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+
+bool = 1  
+iter -> STL 教程 http://c.biancheng.net/stl/  
+bool = 1  
+iter -> Python 教程 http://c.biancheng.net/python/
+
+从输出结果很容易看出，两次添加键值对的操作，insert () 方法返回值中的 bool 变量都为 1，表示添加成功，此时返回的迭代器指向的是添加成功的键值对。
+
+2) 除此之外，insert () 方法还可以指定新键值对要添加到容器中的位置，其语法格式如下：
+
+// 以普通方式传递 val 参数  
+iterator insert (const_iterator hint, const value_type& val);  
+// 以右值引用方法传递 val 参数  
+template <class P>  
+    iterator insert (const_iterator hint, P&& val);
+
+以上 2 种语法格式中，hint 参数为迭代器，用于指定新键值对要添加到容器中的位置；val 参数指的是要添加容器中的键值对；方法的返回值为迭代器：
+
+*   如果 insert () 方法成功添加键值对，该迭代器指向新添加的键值对；
+*   如果 insert () 方法添加键值对失败，则表示容器中本就包含有相同键的键值对，该方法返回的迭代器就指向容器中键相同的键值对；
+
+> 注意，以上 2 种语法格式中，虽然通过 hint 参数指定了新键值对添加到容器中的位置，但该键值对真正存储的位置，并不是 hint 参数说了算，最终的存储位置仍取决于该键值对的键的值。
+
+```
+举个例子：
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main ()
+{
+    //创建空 umap 容器
+    unordered_map<string, string> umap;
+    //构建要添加的键值对
+    std::pair<string, string>mypair ("STL 教程", " http://c.biancheng.net/stl/" );
+    //创建接收 insert () 方法返回值的迭代器类型变量
+    unordered_map<string, string>:: iterator iter;
+    //调用第一种语法格式
+    iter = umap.insert (umap.begin (), mypair);
+    cout << "iter -> " << iter->first <<" " << iter->second << endl;
+   
+    //调用第二种语法格式
+    iter = umap.insert (umap.begin (), std:: make_pair ("Python 教程", " http://c.biancheng.net/python/" ));
+    cout << "iter -> " << iter->first << " " << iter->second << endl;
+    return 0;
+}
+```
+
+程序输出结果为：
+
+iter -> STL 教程 http://c.biancheng.net/stl/  
+iter -> Python 教程 http://c.biancheng.net/python/
+
+3) insert () 方法还支持将某一个 unordered_map 容器中指定区域内的所有键值对，复制到另一个 unordered_map 容器中，其语法格式如下：
+
+template <class InputIterator>  
+    void insert (InputIterator first, InputIterator last);
+
+其中 first 和 last 都为迭代器，`[first, last)`表示复制其它 unordered_map 容器中键值对的区域。
+
+举个例子：
+
+```
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main ()
+{
+    //创建并初始化 umap 容器
+    unordered_map<string, string> umap{ {"STL 教程"," http://c.biancheng.net/stl/" },
+    {"Python 教程"," http://c.biancheng.net/python/" },
+    {"Java 教程"," http://c.biancheng.net/java/" } };
+    //创建一个空的 unordered_map 容器
+    unordered_map<string, string> otherumap;
+    //指定要拷贝 umap 容器中键值对的范围
+    unordered_map<string, string>:: iterator first = ++umap.begin ();
+    unordered_map<string, string>:: iterator last = umap.end ();
+    //将指定 umap 容器中 [first, last) 区域内的键值对复制给 otherumap 容器
+    otherumap.insert (first, last);
+    //遍历 otherumap 容器中存储的键值对
+    for (auto iter = otherumap.begin (); iter != otherumap.end (); ++iter){
+        cout << iter->first << " " << iter->second << endl;
+    }
+    return 0;
+}
+```
+
+程序输出结果为：
+
+Python 教程 http://c.biancheng.net/python/  
+Java 教程 http://c.biancheng.net/java/
+
+4) 除了以上 3 种方式，insert () 方法还支持一次向 unordered_map 容器添加多个键值对，其语法格式如下：
+
+void insert (initializer_list<value_type> il );
+
+其中，il 参数指的是可以用初始化列表的形式指定多个键值对元素。
+
+举个例子：
+
+```
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main ()
+{
+    //创建空的 umap 容器
+    unordered_map<string, string> umap;
+
+    //向 umap 容器同时添加多个键值对
+    umap.insert ({ {"STL 教程"," http://c.biancheng.net/stl/" },
+    {"Python 教程"," http://c.biancheng.net/python/" },
+    {"Java 教程"," http://c.biancheng.net/java/" } });
+    //遍历输出 umap 容器中存储的键值对
+    for (auto iter = umap.begin (); iter != umap.end (); ++iter){
+        cout << iter->first << " " << iter->second << endl;
+    }
+    return 0;
+}
+```
+
+程序输出结果为：
+
+STL 教程 http://c.biancheng.net/stl/  
+Python 教程 http://c.biancheng.net/python/  
+Java 教程 http://c.biancheng.net/java/
+
+总的来说，unordered_map 模板类提供的 insert () 方法，有以上 4 种用法，读者可以根据实际场景的需要自行选择使用哪一种。
 ## 删除元素
