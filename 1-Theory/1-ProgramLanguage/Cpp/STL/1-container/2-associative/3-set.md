@@ -1,5 +1,5 @@
 
-前面章节讲解了 map 容器和 multimap 容器的用法，类似地，[C++](http://c.biancheng.net/cplus/) [STL](http://c.biancheng.net/stl/) 标准库中还提供有 set 和 multiset 这 2 个容器，它们也属于关联式容器。不过，本节先讲解 set 容器，后续章节再讲解 multiset 容器。
+前面章节讲解了 map 容器和 multimap 容器的用法，类似地，STL 标准库中还提供有 set 和 multiset 这 2 个容器，它们也属于关联式容器。不过，本节先讲解 set 容器，后续章节再讲解 multiset 容器。
 
 和 map、multimap 容器不同，使用 set 容器存储的各个键值对，要求**键 key 和值 value 必须相等**。
 
@@ -478,7 +478,7 @@ template <class... Args>
 #include <iostream>
 #include <set>
 #include <string>
-u[sin](http://c.biancheng.net/ref/sin.html)g namespace std;
+using namespace std;
 int main()
 {
     //创建并初始化 set 容器

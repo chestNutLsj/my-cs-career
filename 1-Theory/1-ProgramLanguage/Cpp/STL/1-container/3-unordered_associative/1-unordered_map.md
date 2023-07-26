@@ -537,6 +537,7 @@ http://c.biancheng.net/java/
 
 unordered_map 模板类中，提供了多种语法格式的 insert () 方法，根据功能的不同，可划分为以下几种用法。
 
+#### 添加 pair 键值对元素
 1) insert () 方法可以将 pair 类型的键值对元素添加到 unordered_map 容器中，其语法格式有 2 种：
 ```
 // 以普通方式传递参数  
@@ -547,12 +548,10 @@ template <class P>
 ```
 
 以上 2 种格式中，参数 val 表示要添加到容器中的目标键值对元素；该方法的返回值为 pair 类型值，内部包含一个 iterator 迭代器和 bool 变量：
-
-*   当 insert () 将 val 成功添加到容器中时，返回的迭代器指向新添加的键值对，bool 值为 True；
-*   当 insert () 添加键值对失败时，意味着当前容器中本就存储有和要添加键值对的键相等的键值对，这种情况下，返回的迭代器将指向这个导致插入操作失败的迭代器，bool 值为 False。
+* 当 insert () 将 val 成功添加到容器中时，返回的迭代器指向新添加的键值对，bool 值为 True；
+* 当 insert () 添加键值对失败时，意味着当前容器中本就存储有和要添加键值对的键相等的键值对，这种情况下，返回的迭代器将指向这个导致插入操作失败的迭代器，bool 值为 False。
 
 举个例子：
-
 ```
 #include <iostream>
 #include <string>
@@ -580,31 +579,33 @@ int main ()
 ```
 
 程序执行结果为：
-
+```
 bool = 1  
 iter -> STL 教程 http://c.biancheng.net/stl/  
 bool = 1  
 iter -> Python 教程 http://c.biancheng.net/python/
+```
 
 从输出结果很容易看出，两次添加键值对的操作，insert () 方法返回值中的 bool 变量都为 1，表示添加成功，此时返回的迭代器指向的是添加成功的键值对。
 
+#### 指定新键值对添加到容器中的位置
 2) 除此之外，insert () 方法还可以指定新键值对要添加到容器中的位置，其语法格式如下：
-
+```
 // 以普通方式传递 val 参数  
 iterator insert (const_iterator hint, const value_type& val);  
 // 以右值引用方法传递 val 参数  
 template <class P>  
     iterator insert (const_iterator hint, P&& val);
+```
 
 以上 2 种语法格式中，hint 参数为迭代器，用于指定新键值对要添加到容器中的位置；val 参数指的是要添加容器中的键值对；方法的返回值为迭代器：
-
-*   如果 insert () 方法成功添加键值对，该迭代器指向新添加的键值对；
-*   如果 insert () 方法添加键值对失败，则表示容器中本就包含有相同键的键值对，该方法返回的迭代器就指向容器中键相同的键值对；
+* 如果 insert () 方法成功添加键值对，该迭代器指向新添加的键值对；
+* 如果 insert () 方法添加键值对失败，则表示容器中本就包含有相同键的键值对，该方法返回的迭代器就指向容器中键相同的键值对；
 
 > 注意，以上 2 种语法格式中，虽然通过 hint 参数指定了新键值对添加到容器中的位置，但该键值对真正存储的位置，并不是 hint 参数说了算，最终的存储位置仍取决于该键值对的键的值。
 
-```
 举个例子：
+```
 #include <iostream>
 #include <string>
 #include <unordered_map>
@@ -629,19 +630,20 @@ int main ()
 ```
 
 程序输出结果为：
-
+```
 iter -> STL 教程 http://c.biancheng.net/stl/  
 iter -> Python 教程 http://c.biancheng.net/python/
+```
 
+#### 复制另一个 umap 容器中指定区域的元素
 3) insert () 方法还支持将某一个 unordered_map 容器中指定区域内的所有键值对，复制到另一个 unordered_map 容器中，其语法格式如下：
-
+```
 template <class InputIterator>  
     void insert (InputIterator first, InputIterator last);
-
+```
 其中 first 和 last 都为迭代器，`[first, last)`表示复制其它 unordered_map 容器中键值对的区域。
 
 举个例子：
-
 ```
 #include <iostream>
 #include <string>
@@ -669,18 +671,19 @@ int main ()
 ```
 
 程序输出结果为：
-
+```
 Python 教程 http://c.biancheng.net/python/  
 Java 教程 http://c.biancheng.net/java/
+```
 
+#### 一次添加多个键值对
 4) 除了以上 3 种方式，insert () 方法还支持一次向 unordered_map 容器添加多个键值对，其语法格式如下：
-
+```
 void insert (initializer_list<value_type> il );
-
+```
 其中，il 参数指的是可以用初始化列表的形式指定多个键值对元素。
 
 举个例子：
-
 ```
 #include <iostream>
 #include <string>
@@ -704,10 +707,278 @@ int main ()
 ```
 
 程序输出结果为：
-
+```
 STL 教程 http://c.biancheng.net/stl/  
 Python 教程 http://c.biancheng.net/python/  
 Java 教程 http://c.biancheng.net/java/
-
+```
 总的来说，unordered_map 模板类提供的 insert () 方法，有以上 4 种用法，读者可以根据实际场景的需要自行选择使用哪一种。
+
+### emplace
+和前面学的 map、set 等容器一样，C++ 11 标准也为 unordered_map 容器新增了 emplace () 和 emplace_hint () 成员方法，本节将对它们的用法做详细的介绍。
+
+我们知道，实现向已有 unordered_map 容器中添加新键值对，可以通过调用 insert () 方法，但其实还有更好的方法，即使用 emplace () 或者 emplace_hint () 方法，它们完成 “向容器中添加新键值对” 的效率，要比 insert () 方法高。
+
+emplace () 方法的用法很简单，其语法格式如下：
+```
+template <class... Args>  
+    pair<iterator, bool> emplace ( Args&&... args );
+```
+其中，参数 args 表示可直接向该方法传递创建新键值对所需要的 2 个元素的值，其中第一个元素将作为键值对的键，另一个作为键值对的值。也就是说，该方法无需我们手动创建键值对，其内部会自行完成此工作。
+
+另外需要注意的是，该方法的返回值为 pair 类型值，其包含一个迭代器和一个 bool 类型值：
+* 当 emplace () 成功添加新键值对时，返回的迭代器指向新添加的键值对，bool 值为 True；
+* 当 emplace () 添加新键值对失败时，说明容器中本就包含一个键相等的键值对，此时返回的迭代器指向的就是容器中键相同的这个键值对，bool 值为 False。
+
+举个例子：
+```
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main()
+{
+    //创建 umap 容器
+    unordered_map<string, string> umap;
+    //定义一个接受 emplace() 方法的 pair 类型变量
+    pair<unordered_map<string, string>::iterator, bool> ret;
+    //调用 emplace() 方法
+    ret = umap.emplace("STL教程", "http://c.biancheng.net/stl/");
+    //输出 ret 中包含的 2 个元素的值
+    cout << "bool =" << ret.second << endl;
+    cout << "iter ->" << ret.first->first << " " << ret.first->second << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+bool =1  
+iter ->STL 教程 http://c.biancheng.net/stl/
+```
+通过执行结果中 bool 变量的值为 1 可以得知，emplace () 方法成功将新键值对添加到了 umap 容器中。
+
+### emplace_hint () 方法
+emplace_hint () 方法的语法格式如下：
+```
+template <class... Args>  
+    iterator emplace_hint (const_iterator position, Args&&... args);
+```
+
+和 emplace () 方法相同，emplace_hint () 方法内部会自行构造新键值对，因此我们只需向其传递构建该键值对所需的 2 个元素（第一个作为键，另一个作为值）即可。不同之处在于：
+* emplace_hint () 方法的返回值仅是一个迭代器，而不再是 pair 类型变量。当该方法将新键值对成功添加到容器中时，返回的迭代器指向新添加的键值对；反之，如果添加失败，该迭代器指向的是容器中和要添加键值对键相同的那个键值对。
+* emplace_hint () 方法还需要传递一个迭代器作为第一个参数，该迭代器表明将新键值对添加到容器中的位置。需要注意的是，新键值对添加到容器中的位置，并不是此迭代器说了算，最终仍取决于该键值对的键的值。
+
+> 可以这样理解，emplace_hint () 方法中传入的迭代器，仅是给 unordered_map 容器提供一个建议，并不一定会被容器采纳。
+
+举个例子：
+```
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main()
+{
+    //创建 umap 容器
+    unordered_map<string, string> umap;
+    //定义一个接受 emplace_hint() 方法的迭代器
+    unordered_map<string,string>::iterator iter;
+    //调用 empalce_hint() 方法
+    iter = umap.emplace_hint(umap.begin(),"STL教程", "http://c.biancheng.net/stl/");
+    //输出 emplace_hint() 返回迭代器 iter 指向的键值对的内容
+    cout << "iter ->" << iter->first << " " << iter->second << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+iter ->STL 教程 http://c.biancheng.net/stl/
+```
+
 ## 删除元素
+
+C++ STL 标准库为了方便用户可以随时删除 unordered_map 容器中存储的键值对，unordered_map 容器类模板中提供了以下 2 个成员方法：
+* erase ()：删除 unordered_map 容器中指定的键值对；
+* clear ()：删除 unordered_map 容器中所有的键值对，即清空容器。
+
+本节就对以上 2 个成员方法的用法做详细的讲解。
+
+### unordered_map erase ()
+为了满足不同场景删除 unordered_map 容器中键值对的需要，此容器的类模板中提供了 3 种语法格式的 erase () 方法。
+
+#### 删除正向迭代器指向的键值对
+1) erase () 方法可以接受一个正向迭代器，并删除该迭代器指向的键值对。该方法的语法格式如下：
+```
+iterator erase (const_iterator position);
+```
+其中 position 为指向容器中某个键值对的迭代器，该方法会返回一个指向被删除键值对之后位置的迭代器。
+
+举个例子：
+```
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main()
+{
+    //创建 umap 容器
+    unordered_map<string, string> umap{
+        {"STL教程", "http://c.biancheng.net/stl/"},
+        {"Python教程", "http://c.biancheng.net/python/"},
+        {"Java教程", "http://c.biancheng.net/java/"} };
+    //输出 umap 容器中存储的键值对
+    for (auto iter = umap.begin(); iter != umap.end(); ++iter) {
+        cout << iter->first << " " << iter->second << endl;
+    }
+
+    cout << "erase:" << endl;
+    //定义一个接收 erase() 方法的迭代器
+    unordered_map<string,string>::iterator ret;
+    //删除容器中第一个键值对
+    ret = umap.erase(umap.begin());
+    //输出 umap 容器中存储的键值对
+    for (auto iter = umap.begin(); iter != umap.end(); ++iter) {
+        cout << iter->first << " " << iter->second << endl;
+    }
+    cout << "ret = " << ret->first << " " << ret->second << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+STL 教程 http://c.biancheng.net/stl/  
+Python 教程 http://c.biancheng.net/python/  
+Java 教程 http://c.biancheng.net/java/  
+erase:  
+Python 教程 http://c.biancheng.net/python/  
+Java 教程 http://c.biancheng.net/java/  
+ret = Python 教程 http://c.biancheng.net/python/
+```
+可以看到，通过给 erase () 方法传入指向容器中第一个键值对的迭代器，该方法可以将容器中第一个键值对删除，同时返回一个指向被删除键值对之后位置的迭代器。
+
+> 注意，如果 erase () 方法删除的是容器存储的最后一个键值对，则该方法返回的迭代器，将指向容器中最后一个键值对之后的位置（等同于 end () 方法返回的迭代器）。
+
+#### 删除指定的键
+2) 我们还可以直接将要删除键值对的键作为参数直接传给 erase () 方法，该方法会自行去 unordered_map 容器中找和给定键相同的键值对，将其删除。erase () 方法的语法格式如下：
+```
+size_type erase (const key_type& k);
+```
+其中，k 表示目标键值对的键的值；该方法会返回一个整数，其表示成功删除的键值对的数量。
+
+举个例子：
+```
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main()
+{
+    //创建 umap 容器
+    unordered_map<string, string> umap{
+        {"STL教程", "http://c.biancheng.net/stl/"},
+        {"Python教程", "http://c.biancheng.net/python/"},
+        {"Java教程", "http://c.biancheng.net/java/"} }; 
+    //输出 umap 容器中存储的键值对
+    for (auto iter = umap.begin(); iter != umap.end(); ++iter) {
+        cout << iter->first << " " << iter->second << endl;
+    }
+    int delNum = umap.erase("Python教程");
+    cout << "delNum = " << delNum << endl;
+    //再次输出 umap 容器中存储的键值对
+    for (auto iter = umap.begin(); iter != umap.end(); ++iter) {
+        cout << iter->first << " " << iter->second << endl;
+    }
+    return 0;
+}
+```
+
+程序执行结 果为：
+```
+STL 教程 http://c.biancheng.net/stl/  
+Python 教程 http://c.biancheng.net/python/  
+Java 教程 http://c.biancheng.net/java/  
+delNum = 1  
+STL 教程 http://c.biancheng.net/stl/  
+Java 教程 http://c.biancheng.net/java/
+```
+通过输出结果可以看到，通过将 "Python 教程" 传给 erase () 方法，就成功删除了 umap 容器中键为 "Python 教程" 的键值对。
+
+#### 删除指定范围所有键值对
+3) 除了支持删除 unordered_map 容器中指定的某个键值对，erase () 方法还支持一次删除指定范围内的所有键值对，其语法格式如下：
+```
+iterator erase (const_iterator first, const_iterator last);
+```
+其中 first 和 last 都是正向迭代器，\[first, last\) 范围内的所有键值对都会被 erase () 方法删除；同时，该方法会返回一个指向被删除的最后一个键值对之后一个位置的迭代器。
+
+举个例子：
+
+```
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main()
+{
+    //创建 umap 容器
+    unordered_map<string, string> umap{
+        {"STL教程", "http://c.biancheng.net/stl/"},
+        {"Python教程", "http://c.biancheng.net/python/"},
+        {"Java教程", "http://c.biancheng.net/java/"} };
+    //first 指向第一个键值对
+    unordered_map<string, string>::iterator first = umap.begin();
+    //last 指向最后一个键值对
+    unordered_map<string, string>::iterator last = umap.end();
+    //删除[fist,last)范围内的键值对
+    auto ret = umap.erase(first, last);
+    //输出 umap 容器中存储的键值对
+    for (auto iter = umap.begin(); iter != umap.end(); ++iter) {
+        cout << iter->first << " " << iter->second << endl;
+    }
+    return 0;
+}
+```
+
+执行程序会发现，没有输出任何数据，因为 erase () 方法删除了 umap 容器中 \[begin (), end ()\) 范围内所有的元素。
+
+### unordered_map clear ()
+在个别场景中，可能需要一次性删除 unordered_map 容器中存储的所有键值对，可以使用 clear () 方法，其语法格式如下：
+```
+void clear ()
+```
+
+举个例子：
+```
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+int main()
+{
+    //创建 umap 容器
+    unordered_map<string, string> umap{
+        {"STL教程", "http://c.biancheng.net/stl/"},
+        {"Python教程", "http://c.biancheng.net/python/"},
+        {"Java教程", "http://c.biancheng.net/java/"} };
+    //输出 umap 容器中存储的键值对
+    for (auto iter = umap.begin(); iter != umap.end(); ++iter) {
+        cout << iter->first << " " << iter->second << endl;
+    }
+    //删除容器内所有键值对
+    umap.clear();
+    cout << "umap size = " << umap.size() << endl;
+    return 0;
+}
+```
+
+程序执行结果为：
+```
+STL 教程 http://c.biancheng.net/stl/  
+Python 教程 http://c.biancheng.net/python/  
+Java 教程 http://c.biancheng.net/java/  
+umap size = 0
+```
+显然，通过调用 clear () 方法，原本包含 3 个键值对的 umap 容器，变成了空容器。
+
+> 注意，虽然使用 erase () 方法的第 3 种语法格式，可能实现删除 unordered_map 容器内所有的键值对，但更推荐使用 clear () 方法。

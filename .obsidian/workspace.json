@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "fc6800e31327b787",
+        "id": "9ec39af43a0a9c29",
         "type": "tabs",
         "children": [
           {
-            "id": "912e4610dfede8b9",
+            "id": "673cd4f0ce72fa41",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-hash/1-unordered_map.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -77,7 +73,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 216.5,
+    "width": 208.5,
     "collapsed": true
   },
   "right": {
@@ -95,7 +91,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-hash/1-unordered_map.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -112,7 +107,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-hash/1-unordered_map.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,9 +144,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-hash/1-unordered_map.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -176,17 +168,37 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "912e4610dfede8b9",
+  "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-hash/assets/hash_table.png",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-hash/assets",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-hash/1-unordered_map.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-hash/0-Intro.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/2-associative/1-map.md",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/50-map容器统计字符串中字母种类的个数.md",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/49-set容器去除字符串中重复字符.md",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/set-insert-string.gif",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/set-insert-string.gif.crdownload",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/2-associative/3-set.md",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/5-adapter/1-container-adapter/2-queue.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/5-adapter/1-container-adapter/1-stack.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/5-adapter/1-container-adapter/assets/queue.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/5-adapter/1-container-adapter/assets/stl-stack.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/5-adapter/1-container-adapter/assets",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/5-adapter/STL容器适配器介绍.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/5-adapter/1-container-adapter",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/迭代器介绍.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/容器及其分类.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-unordered_associative/如何选择合适的STL容器？.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-unordered_associative/如何自定义STL无序容器的哈希函数和比较规则？.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-unordered_associative/4-unordered_multiset.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-unordered_associative/3-unordered_set.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-unordered_associative/2-unordered_multimap.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-unordered_associative/1-unordered_map.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-unordered_associative/0-Intro.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-unordered_associative/assets/hash_table.png",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-unordered_associative/assets",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/2-associative/如何修改关联式容器中键值对的键？.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-hash",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/3-unordered_associative",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/2-associative/如何自定义STL关联式容器的排序规则？.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/2-associative/4-multiset.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/2-associative/3-set.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/2-associative/assets/set-iterator.png",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/2-associative/2-multimap.md",
     "1-Theory/1-ProgramLanguage/Cpp/undetermined/实例分析 C++ 内存布局.md",
@@ -197,33 +209,13 @@
     "1-Theory/1-ProgramLanguage/Cpp/undetermined/assets/1690276737311.png",
     "1-Theory/1-ProgramLanguage/Cpp/undetermined/assets/1690276735663.png",
     "1-Theory/1-ProgramLanguage/Cpp/undetermined/assets/1690276735150.png",
-    "1-Theory/1-ProgramLanguage/Cpp/undetermined/assets/1690276734443.png",
-    "1-Theory/1-ProgramLanguage/Cpp/undetermined/assets/1690276733102.png",
     "1-Theory/1-ProgramLanguage/Cpp/undetermined/assets 1",
     "8-SimpRead/实例分析 C++ 内存布局 _ blueyi's notes",
-    "1-Theory/1-ProgramLanguage/Cpp/undetermined/assets/cpp-srcfile-to-exec.png",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
     "1-Theory/5-OS-principle-design/internal&principle/进程.md",
     "1-Theory/5-OS-principle-design/internal&principle/homework",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/assets/real-params-virtual-params.png",
     "1-Theory/1-ProgramLanguage/Cpp/undetermined/关于原子性、可见性、有序性的分析.md",
     "1-Theory/1-ProgramLanguage/Cpp/undetermined/assets",
-    "1-Theory/1-ProgramLanguage/Cpp/undetermined/什么是虚继承？.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/3-iterator/0-Intro.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/2-associative/1-map.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/2-associative/assets",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/2-associative/0-Intro.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/1-sequence/5-Forward_List.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/1-sequence/4-List.md",
-    "1-Theory/1-ProgramLanguage/Cpp/undetermined/什么是Cpp的谓词函数？.md",
-    "1-Theory/1-ProgramLanguage/Cpp/undetermined",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/1-sequence/3-Deque.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/1-container/1-sequence/2-Vector.md",
-    "5-Tools/Dev-Tools/CMake/modern-cmake.pdf",
-    "5-Tools/Dev-Tools/Conda/Conda常用命令.md",
-    "5-Tools/Dev-Tools/Conda/Mamba.md",
-    "5-Tools/Dev-Tools/Conda/报错及解决办法.md",
-    "5-Tools/Dev-Tools/Git/github-git-cheat-sheet.pdf",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
