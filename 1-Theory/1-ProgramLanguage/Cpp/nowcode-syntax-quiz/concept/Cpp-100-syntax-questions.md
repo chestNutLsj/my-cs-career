@@ -294,6 +294,39 @@ In the example, the second line `char a[n];` is not standard C++ but is allowed 
 
 However, the third line `char a[n]="hello";` is not allowed in standard C++ or with VLA extensions. In C++, when you define an array, you can either omit the size (in which case the size is inferred from the initializer) or provide a constant size. The size must be known at compile-time.
 
+3. 计算下列代码的结果
+```cpp
+#include<stdio.h>
+main() { 
+    int a[5] = {1, 2, 3, 4, 5}; 
+    int *ptr = (int *)(&a + 1); 
+    printf("%d,%d", *(a + 1), *(ptr - 1)); 
+}
+```
+
+**ANSWER**: 2, 4
+
+![[Pasted image 20230727194242.png]]
+
+>[! note] 对数组使用取地址符会发生什么？
+>对数组使用取地址符 (&)会得到整个数组的地址。
+>
+>举个例子:
+>```cpp
+>int arr[5] = {1, 2, 3, 4, 5}; 
+>int* ptr = &arr; // ptr 指向整个 arr 数组
+>```
+>数组的数组名 arr 本质上就是指向数组首元素的指针常量, 不能被改变。
+>
+>使用&arr 会取得整个数组的地址, 赋值给指针 ptr。
+>此时 ptr 指向了整个数组, 它可以当作指向数组首元素的指针来使用, 比如:
+>```cpp
+>cout << ptr[0] << endl; // 输出数组第一个元素 
+>cout << *ptr << endl;  // 也是输出数组第一个元素
+>```
+>但我们不能通过 ptr 来改变数组的地址或数组名 arr 的值。
+>所以对数组名取地址, 会得到整个数组的起始地址, 这个地址被赋值给指针后, 可以通过该指针访问数组元素。
+
 ### 共用体 union
 1. 下列关于联合的描述中，错误的是？
 
@@ -379,6 +412,18 @@ output: `Base -> Base -> Derived`
 > (2) 逗号表达式作为一个整体，它的值为最后一个表达式（也即表达式 n）的值。
 > (3) 逗号运算符的优先级别在所有运算符中最低。
 
+### 优先级
+1. 判断以下语句的输出
+```C++
+int x=1,y=2,z=3;
+z += x > y ? ++x : ++y;
+printf("%d",z);
+```
+
+>[! note] 考查运算符的优先级
+>赋值运算符<逻辑运算符<关系运算符<算数运算符
+
+
 ## 函数
 ### 返回值
 
@@ -411,6 +456,136 @@ int main() {
 上述代码使用 `std::tuple` 来将多个值打包在一起并返回，然后在 `main` 函数中使用 `std::get` 来获取每个返回值的具体值。
 
 除了 `std::tuple`，你还可以使用 `std::pair` 或自定义的结构体或类或指针或引用等数据结构来返回多个参数。这些方法都能实现在函数返回时返回多个值的目的。在选择返回多个值的方法时，需要考虑代码的可读性、维护性以及对不同类型返回值的支持。
+
+### 虚函数、继承等综合调用问题
+1. 分析下列代码中哪个函数调用会出问题？
+```cpp
+using namespace std;
+ 
+class A {
+public:
+    void FunctionA() {cout << "FunctionA" << endl;}
+    virtual void FunctionB() {cout << "FunctionB" << endl;}
+    static void FunctionC() {cout << "FunctionC" << endl;}
+};
+ 
+class B : public A {
+public:
+    void FunctionB() {cout << "FunctionB" << endl;}
+    int FunctionD() {cout << "FunctionD" << endl;}
+};
+ 
+int main() {
+    B *b = nullptr;
+    b->FunctionA();
+    b->FunctionB();
+    b->FunctionC();
+    b->FunctionD();
+    return 0;
+}
+```
+
+在 Cpp 20，Clang++的环境中实际运行，结果是：
+```
+FunctionA
+
+Process finished with exit code 139 (interrupted by signal 11: SIGSEGV)
+```
+
+这表明程序确实是在运行到 FunctionB 时出现了错误，这一原因是因为 b 是一个 null 指针，而不是一个对象，在调用非虚成员函数时必须要对象才能绑定 V-table。
+
+根据运行结果，程序在调用 `b->FunctionB()` 后崩溃并报告了 `SIGSEGV` 信号，这是由于对空指针进行成员函数调用引起的。具体原因如下：
+1. `b` 是一个指向 `B` 类对象的空指针，没有指向任何有效的对象。
+2. 调用 `b->FunctionB()` 时，它试图调用 `B` 类的非虚函数 `FunctionB()`，这是一个在类 `B` 中重写的函数。然而，由于 `b` 是空指针，它并不指向任何对象，所以无法调用非静态成员函数，包括 `FunctionB()`。
+3. 空指针调用非虚函数是未定义的行为，这可能会导致程序崩溃或产生其他不确定的结果。
+
+要解决这个问题，应该在调用成员函数之前确保指针 `b` 指向了一个有效的对象。例如，可以通过使用 `new` 运算符为 `b` 动态分配内存，或者将 `b` 指向一个已经存在的有效对象。
+
+以下是对代码进行修改的示例：
+```cpp
+#include <iostream>
+using namespace std;
+
+class A {
+public:
+    void FunctionA() { cout << "FunctionA" << endl; }
+    virtual void FunctionB() { cout << "FunctionB" << endl; }
+    static void FunctionC() { cout << "FunctionC" << endl; }
+};
+
+class B : public A {
+public:
+    void FunctionB() override { cout << "FunctionB in B" << endl; }
+    int FunctionD() { cout << "FunctionD" << endl; }
+};
+
+int main() {
+    B* b = new B; // 为b分配内存，使其指向有效对象
+
+    b->FunctionA();
+    b->FunctionB();
+    A::FunctionC(); // 静态成员函数使用类名调用
+
+    delete b; // 记得释放动态分配的内存
+
+    return 0;
+}
+```
+
+请注意，在修改后的代码中，我们为 `b` 使用了 `new` 运算符来动态分配内存，然后通过 `delete` 运算符释放了这些内存，以避免内存泄漏。同时，`FunctionB` 和 `FunctionC` 分别输出不同的内容，以便区分调用的版本。
+
+### 指针函数
+1. 阅读代码并填写横线处合适的函数，使程序结果是`123`：
+```cpp
+#include <iostream>
+using namespace std;
+_______________________
+void One(float one)
+{
+    cout<<"1"<<endl;    
+}
+void Two(float two)
+{
+    cout<<"2"<<endl;
+}
+void Three(float three)
+{
+    cout<<"3"<<endl;
+}
+int main() 
+{  
+    float i=1,j=2,k=3;
+   function = One;
+   function(i);
+   function= Two;
+   function(j);
+   function = Three;
+   function(k);
+}
+```
+
+**ANSWER**：`void (*function)(float); `
+
+>[!note] 函数指针
+>1. 函数指针
+>	- 函数指针是一个指向函数的指针变量, 可以像普通函数一样调用。
+>	- 声明格式为: 返回值类型 ` (*函数指针名)(参数);`
+>	- 作用是动态绑定和调用函数, 可以实现回调函数和函数接口等功能。
+>	- 使用步骤：
+>		- 声明函数指针变量
+>		- 赋值, 使函数指针指向某个函数的地址
+>		- 通过函数指针调用函数
+>2. 返回指针的函数
+>	- 返回指针的函数是一种普通函数, 只不过它的返回值类型是一个指针。
+>	- 声明格式为: 返回值指针类型 函数名 (参数) 
+>	- 这种函数执行后, 返回一个指向某块内存的指针, 而不是直接返回内存块中的数据。
+>	- 调用该函数后需要接收返回的指针, 并 PROPERLY 释放指针指向的内存。
+>3. 区别
+>	- 函数指针是一个指针变量, 而返回指针的函数是一个普通函数。
+>	- 函数指针需要赋值与解引用, 返回指针的函数直接调用返回指针。
+>	- 函数指针可以更动态改变调用的函数, 返回指针的函数调用固定的。
+>
+>简单来说, 函数指针代表一个函数的入口地址, 而返回指针代表一个数据空间的起始地址。
 
 ### 内联函数
 1. 内联函数在编译时是否进行参数类型检查？
@@ -930,6 +1105,10 @@ D 子类的内存大小等于父类的内存大小加上子类独有成员变量
 
 ![[Cpp 11前后 静态成员的定义与初始化问题#Cpp 11 修改了什么？]]
 
+2. static 类型的变量，默认初始化的值是？
+>[!note] 静态类型初始化
+>静态变量在没有显式初始化的时候会被初始化为0或者null
+
 ### 类型安全
 1. MFC 中 CString 是类型安全的类吗？
 
@@ -976,6 +1155,27 @@ D 子类的内存大小等于父类的内存大小加上子类独有成员变量
 
 ##是一种分隔连接方式，它的作用是**先分隔，然后进行强制连接**。
 “`name`”和第一个“` _ `”之间被分隔了，所以预处理器会把 ` name##_##type##_type ` 解释成4段：“` name `”、“` _ `”、“` type `”以及“` _type `”，name 和 type 会被替换，而_type 不会被替换
+
+## 模板
+### 声明和定义
+1. 在 C++里，同一个模板的声明和定义是不能在不同文件中分别放置的，否则会报编译错误。为了解决这个问题，可以采取以下办法有（）
+A. 模板的声明和定义都放在一个.h 文件中。
+B. 模板的声明和定义可以分别放在.h 和.cpp 文件中，在使用的地方，引用定义该模板的 cpp 文件。
+C. 使用 export 使模板的声明实现分离。
+D. 以上说法都不对
+
+>[!note] 各选项解释
+>A. 
+>B. 模板的声明和定义不能分别单独的放在. h 和. cpp 文件中的原因是**当实例化一个模板时，编译器必须看到模板确切的定义，而不仅仅是它的声明**。若在 main ()函数中包含. h 文件，则编译器无法知道模板的确切定义，**所以要在 main ()中包含. cpp 文件，. cpp 文件中又会包含. h 文件，这样一来通过在 main 函数中包含. cpp 文件就会将类的定义和声明都包含进来，编译器自然能找到模板的确切定义。**（在 main 函数中引用）
+>
+>《C++ Template》第六章讲过这个问题  
+> 组织模板代码有三种方式  
+> 1. 包含模型（常规写法 将实现写在头文件中）  
+> 2. 显式实例化（实现写在 cpp 文件中，使用 template class 语法进行显式实例化）  
+> 3. 分离模型（使用 C++ export 关键字声明导出）
+> 
+> 第三种方式理论最优，但是实际从C++标准提出之后主流编译器没有支持过，并且在最新的C++11标准中已经废除此特性，export关键字保留待用。那么实际上能够使用的实现分离也就只有显式实例化
+
 
 ## 数据结构
 
