@@ -1,0 +1,13 @@
+{
+	"nodes":[
+		{"type":"text","text":"设备控制器或其他系统硬件产生一个中断","id":"88ddb5f5b22511e5","x":-320,"y":-260,"width":250,"height":90},
+		{"type":"text","text":"处理器结束当前指令的执行","id":"55d63955d22ab0d4","x":-320,"y":-100,"width":250,"height":60},
+		{"type":"text","text":"根据中断，处理器加载新 PC 值","id":"9b90c94cac4df11c","x":-320,"y":180,"width":250,"height":60},
+		{"type":"text","text":"保存剩余的处理状态信息","id":"c689a26093346926","x":220,"y":-245,"width":250,"height":60},
+		{"id":"ce3fdd208a0a7ee7","x":263,"y":-87,"width":207,"height":67,"type":"text","text":"处理中断"}
+	],
+	"edges":[
+		{"id":"95cbeb1a47798e3c","fromNode":"88ddb5f5b22511e5","fromSide":"bottom","toNode":"55d63955d22ab0d4","toSide":"top"},
+		{"id":"bb169d5f645609a4","fromNode":"9b90c94cac4df11c","fromSide":"right","toNode":"c689a26093346926","toSide":"left"}
+	]
+}

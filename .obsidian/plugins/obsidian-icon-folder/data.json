@@ -5,11 +5,11 @@
     "fontSize": 16,
     "iconColor": null,
     "recentlyUsedIcons": [
+      "RiFlowChart",
       "TiAssembly",
       "LiGdbArcher",
       "TiBooks",
-      "TiTerminal2",
-      "TiServer"
+      "TiTerminal2"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -23,7 +23,6 @@
     "iconInTabsEnabled": false
   },
   "0-Assets": "SiDatabricks",
-  "0-Assets/Excalidraw": "RiFlowChart",
   "5-Tools": "RiToolsFill",
   "5-Tools/Dev-Tools": "FasToolbox",
   "5-Tools/Dev-Tools/CMake": "SiCmake",
@@ -72,5 +71,6 @@
   "7-OS-application/Linux/Debian": "SiDebian",
   "7-OS-application/Linux/Kali": "SiKalilinux",
   "1-Theory/1-ProgramLanguage/Assembly": "TiAssembly",
-  "8-SimpRead": "IbWebsiteWithText"
+  "8-SimpRead": "IbWebsiteWithText",
+  "0-Assets/Excalidraw": "RiFlowChart"
 }
