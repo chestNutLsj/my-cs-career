@@ -4,12 +4,12 @@
   "historyPriority": true,
   "historyLimit": 100,
   "history": [
-    ":1st_place_medal:",
-    ":x:",
     ":white_check_mark:",
+    ":warning:",
+    ":x:",
+    ":1st_place_medal:",
     ":clock6:",
     ":a:",
-    ":100:",
-    ":warning:"
+    ":100:"
   ]
 }

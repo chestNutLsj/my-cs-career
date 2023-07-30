@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "67ca32e8c02fc7e1",
+        "id": "56d8cbc5f64a1ddb",
         "type": "tabs",
         "children": [
           {
-            "id": "96e9e98ee4fb27e4",
+            "id": "e418b01f0dee48b3",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/51-for_each打印排序后的vector.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -48,7 +44,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "函数对象",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -94,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/51-for_each打印排序后的vector.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +106,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/51-for_each打印排序后的vector.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,7 +130,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "2aabb86f31957f99",
@@ -148,16 +143,15 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/51-for_each打印排序后的vector.md"
-              }
+              "state": {}
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -174,55 +168,55 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "96e9e98ee4fb27e4",
+  "active": "e418b01f0dee48b3",
   "lastOpenFiles": [
-    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/1-sort-algo.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/51-for_each打印排序后的vector.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/能用STL算法就不要自己实现.md",
+    "1-Theory/5-OS-principle-design/internal&principle/3-并发.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-tutorial/0-Intro/00-Compilers.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/6-binary-search.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/4-search.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/5-partition.md",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/62-拷贝构造函数-数组类.md",
     "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/concept/Cpp-100-syntax-questions.md",
-    "1-Theory/1-ProgramLanguage/Cpp/undetermined/什么是虚继承、虚基类？.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/STL算法和容器的同名成员方法如何选择？.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/3-search.md",
+    "1-Theory/5-OS-principle-design/internal&principle/2-进程与线程.md",
+    "1-Theory/5-OS-principle-design/internal&principle/1-概述.md",
+    "1-Theory/5-OS-principle-design/internal&principle/8-虚拟机.md",
+    "1-Theory/5-OS-principle-design/internal&principle/7-文件系统.md",
+    "1-Theory/5-OS-principle-design/internal&principle/6-IO管理与磁盘.md",
+    "1-Theory/5-OS-principle-design/internal&principle/5-CPU调度.md",
+    "1-Theory/5-OS-principle-design/internal&principle/4-内存与虚存.md",
+    "1-Theory/5-OS-principle-design/internal&principle/homework/3-线程.md",
+    "1-Theory/5-OS-principle-design/internal&principle/homework/2-进程.md",
+    "1-Theory/5-OS-principle-design/internal&principle/homework/1-概述.md",
+    "1-Theory/5-OS-principle-design/internal&principle/进程、线程、纤程与协程.md",
+    "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/Cpp 20 协程.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/3-find.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/4-function-obj/什么是函数对象？.md",
+    "1-Theory/1-ProgramLanguage/Cpp/STL/STL背景知识介绍.md",
+    "1-Theory/1-ProgramLanguage/Cpp/undetermined/什么是Cpp的谓词函数？.md",
     "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/2-merge.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/4-partition.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/自定义STL算法规则应优先使用函数对象.md",
-    "0-Assets/Excalidraw/backward.md",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/55-进制转换.md",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/decimal-to-hex.png",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/54-字符串分割-简单计算器.md",
+    "1-Theory/1-ProgramLanguage/Cpp/coding-exp/string-opt",
+    "1-Theory/1-ProgramLanguage/Cpp/coding-exp",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/split-string-by-space.gif",
+    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/split-string-by-space.gif.crdownload",
     "1-Theory/4-Computer-Architecture/408&&912",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
-    "0-Assets/Excalidraw/Drawing 2023-07-20 11.17.01.excalidraw.md",
-    "0-Assets/Excalidraw/Drawing 2023-07-28 10.49.36.excalidraw.md",
-    "0-Assets/Excalidraw/Drawing 2023-07-28 08.51.19.excalidraw.md",
-    "0-Assets/Excalidraw/jupyter-interaction-arch.md",
-    "0-Assets/Excalidraw/single-layer-nn.md",
-    "0-Assets/Excalidraw/multi-layers-nn.md",
-    "1-Theory/5-OS-principle-design/408&&912/错题本.md",
-    "0-Assets/Excalidraw/Drawing 2023-07-28 10.48.51.excalidraw.md",
-    "0-Assets/Excalidraw/Drawing 2023-07-28 10.49.12.excalidraw.md",
-    "1-Theory/5-OS-principle-design/408&&912/中断处理流程.md",
     "0-Assets/Excalidraw/Scripts/Downloaded/Uniform size.svg",
-    "0-Assets/Excalidraw/Scripts/Downloaded/Uniform size.md",
     "0-Assets/Excalidraw/Scripts/Downloaded/Normalize Selected Arrows.svg",
-    "0-Assets/Excalidraw/Scripts/Downloaded/Normalize Selected Arrows.md",
     "0-Assets/Excalidraw/Scripts/Downloaded/Modify background color opacity.svg",
-    "0-Assets/Excalidraw/Scripts/Downloaded/Modify background color opacity.md",
     "0-Assets/Excalidraw/Scripts/Downloaded/Mindmap format.svg",
-    "0-Assets/Excalidraw/Scripts/Downloaded/Mindmap format.md",
     "0-Assets/Excalidraw/Scripts/Downloaded/Expand rectangles horizontally keep text centered.svg",
-    "0-Assets/Excalidraw/Scripts/Downloaded/Expand rectangles horizontally keep text centered.md",
     "0-Assets/Excalidraw/Scripts/Downloaded/Ellipse Selected Elements.svg",
     "0-Assets/Excalidraw/Scripts/Downloaded/Elbow connectors.svg",
     "0-Assets/Excalidraw/Scripts/Downloaded/Connect elements.svg",
-    "0-Assets/Excalidraw/Scripts/Downloaded/Box Selected Elements.svg",
-    "0-Assets/Excalidraw/Scripts/Downloaded/Auto Layout.svg",
     "0-Assets/Excalidraw/Scripts/Downloaded",
     "0-Assets/Excalidraw/Scripts",
     "0-Assets/Excalidraw",
     "1-Theory/1-ProgramLanguage/Cpp/cpp-operator-priority.pdf",
     "5-Tools/Dev-Tools/Vcpkg",
     "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/modern-cpp-tutorial-zh-cn.pdf",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/5-adapter/2-iterator-adapter/assets",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/5-adapter/2-iterator-adapter",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-syntax-quiz/coding/assets/set-insert-string.gif.crdownload",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]
