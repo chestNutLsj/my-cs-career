@@ -1,5 +1,5 @@
 ## Windows
-
+![[Pasted image 20230731224557.png]]
 
 ## Unix
 

@@ -224,6 +224,8 @@ This is because the empty set of parentheses would make of `rectc` a function de
 >默认构造函数是不带参数的构造函数，要调用它只需要声明一个对象，切记不要带参数，即使是空也不行；
 >声明对象时如果添加了空括号，这将构成函数声明而不是对象声明，即一个不带参数而返回类型是 Rectangle（或者其他类）的函数。
 
+^00dfc6
+
 ## Uniform initialization
 
 The way of calling constructors by enclosing their arguments in parentheses, as shown above, is known as _functional form_. But constructors can also be called with other syntaxes:（构造函数可以通过括号内的参数进行调用，这称为函数形式；也可以通过变量初始化调用具有单个参数的构造函数；还可以通过统一初始化调用构造函数，使用 `{}`）

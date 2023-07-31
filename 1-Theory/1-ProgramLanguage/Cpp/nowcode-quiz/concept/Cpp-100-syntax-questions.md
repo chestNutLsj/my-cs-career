@@ -52,6 +52,34 @@ class T{
 >[! note] 指针大小与指针所指空间大小无关
 >这里将一个字符串字面量赋值给指针 p。在64位机器上，指针的大小仍然是 8 字节（64 位），不管它指向的是什么类型的数据。字符串字面量是以 null 终止的字符数组，该数组的大小是 12（包括终止的 null 字符）。所以 `sizeof(p)` 返回的是指针的大小，而不是所指向的数据大小，因此是 8。
 
+#### 多重指针
+1. 判断以下程序的输出：
+```cpp
+#include <stdio.h>
+void fun(char **p) {
+    int i;
+    for (i = 0; i < 4; i++)
+        printf("%s", p[i]);
+}
+main() {
+    char *s[6] = {"ABCD", "EFGH", "IJKL", "MNOP", "QRST", "UVWX"};
+    fun(s);
+    printf("\n");
+}
+```
+
+**ANSWER**：ABCDEFGHIJKLMNOP
+
+`char *s[6]={ "ABCD", "EFGH", "IJKL", "MNOP", "QRST", "UVWX" };`
+以上语句定义了一个指针数组 `s`。首先这是一个数组，这个数组里存储的是指针，也就是说`s[1], s[2] ...`等存储的都是指针，类型是 `char*`。
+
+而数组名是指向第一个元素的常量指针，因此 `s` 是指向指针的指针，所以函数 `fun` 的形参定义是 `char **`。
+
+`fun(s)` 将指针 `s` 的值传递给形参 `p`，所以 `p = s`，因此`for(i=0;i<4;i + + )printf("% s",p[i]);`中 `printf("% s",p[i])` 等价于 `printf("% s",s[i])`。
+
+注意，虽然 `s[i]` 中存储的不是字符串，而是 `char *` 类型的指针，但是 `printf` 还是会输出 `s[i]` 存储的指针指向的字符串。所以最后输出为 D。
+
+
 #### 指针杂谈
 1. 判断以下说法正误：
 - 即使不进行强制类型转换，在进行指针赋值运算时，指针变量的基类型也可以不同 ❌
@@ -344,6 +372,14 @@ main() {
 >```
 >但我们不能通过 ptr 来改变数组的地址或数组名 arr 的值。
 >所以对数组名取地址, 会得到整个数组的起始地址, 这个地址被赋值给指针后, 可以通过该指针访问数组元素。
+
+4. 判断下列字符数组声明的正误：
+A. `char szData[3] = “ab”`   ✅
+B. `char szData[2] = “ab”`   ❌
+C. `char szData[] = “abc”`   ✅
+D. `char szData[] = {“abc”}` ✅
+
+这是因为用数组定义字符串，会在末尾隐含一个 `'\0'` 字符，B 中产生了数组越界。
 
 ### 共用体 union
 1. 下列关于联合的描述中，错误的是？
@@ -1351,6 +1387,73 @@ D 子类的内存大小等于父类的内存大小加上子类独有成员变量
 > - 友元函数可以像普通函数一样直接调用，不需要通过对象或指针；
 > - 元函数不是成员函数，所以不能被继承，也同样没有 this 指针；
 > - 由于友元函数和普通函数的区别仅仅是具有访问类成员的权利，和继承性机制没有关系
+
+### 类的实例化
+1. 判断下面语句执行后，在内存中创建了多少个对象：
+```cpp
+CSomething a();
+CSomething b(2);
+CSomething c[3];
+CSomething &ra = b;
+CSomething d = b;
+CSomething *pA = c;
+CSomething *p = new CSomething(4);
+```
+
+**ANSWER**：6
+
+- `CSomething a ();` 没有创建对象，这里不是使用默认构造函数，而是声明了一个函数，[[40-Class(I)#^00dfc6|默认构造函数如何调用？]]。
+- `CSomething b (2);` 使用一个参数的构造函数，创建了一个对象。 
+- `CSomething c[3];` 使用无参构造函数，创建了 3 个对象。
+- `CSomething &ra=b;` ra 引用 b，没有创建新对象。
+- `CSomething d=b;` 使用拷贝构造函数，创建了一个新的对象 d。 
+- `CSomething *pA = c;` 创建指针，指向对象 c，没有构造新对象。 
+- `CSomething *p = new CSomething(4);` 新建一个对象。 
+
+综上，一共创建了6个对象。
+
+### 常对象
+1. 判断以下程序的输出：
+```cpp
+#include<iostream>
+using namespace std;
+class R
+{
+public:
+    R(int r1,int r2)
+    {
+        R1=r1;
+        R2=r2;
+    }
+    void print()
+    void print() const;
+private:
+    int R1,R2;
+};
+void R::print()
+{
+    cout<<R2<<","<<R1<<endl;
+}
+void R::print() const
+{
+    cout<<R1<<","<<R2<<endl;
+}
+int main()
+{
+    R a(6,8);
+    const R b(56,88);
+    b.print();
+    return 0;
+}
+```
+
+**ANSWER**：56,88
+
+1) 有 const 修饰的成员函数（指 const 放在函数参数表的后面，而不是在函数前面或者参数表内），只能读取数据成员，不能改变数据成员；没有 const 修饰的成员函数，对数据成员则是可读可写的。
+2) 常量（即 const）对象可以调用 const 成员函数，而不能调用非const修饰的函数。
+
+综上： `const R b(56,88)`，是常对象，只能调用 const 修饰的常成员函数，即调用
+`voidR::print() const{cout<<R1<<","<<R2<<endl;}`
 
 
 ## 面向对象
