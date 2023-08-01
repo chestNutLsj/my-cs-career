@@ -81333,7 +81333,9 @@
   "latexBoilerplate": "\\color{blue}",
   "taskboneEnabled": false,
   "taskboneAPIkey": "",
-  "pinnedScripts": [],
+  "pinnedScripts": [
+    "0-Assets/Excalidraw/Scripts/Downloaded/Mindmap format.md"
+  ],
   "customPens": [
     {
       "type": "default",

@@ -4,7 +4,7 @@ Before getting any deeper into this chapter, you should have a proper understand
 | Statement:              | Explained in:                     |
 | ----------------------- | --------------------------------- |
 | `int A:: b (int c) { }` | [[40-Class(I)]]                   |
-| `a-> b`                 | [[34-Data-Structures]]            |
+| `a-> b`                 | [[40-Data-Structures]]            |
 | `class A: public B {};` | [[43-Friendship-and-inheritance]] | 
 
 ## Pointers to base class

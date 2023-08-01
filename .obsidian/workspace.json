@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "22875d680007f1f4",
+        "id": "2d0c4396b2ed09d7",
         "type": "tabs",
         "children": [
           {
-            "id": "c61a63d290cc59c9",
+            "id": "6200a4d69f7917e0",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -16,16 +16,6 @@
                 "file": "1-Theory/5-OS-principle-design/internal&principle/2-进程与线程.md",
                 "mode": "source",
                 "source": false
-              }
-            }
-          },
-          {
-            "id": "d4e7427fe90aa4b9",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "0-Assets/Excalidraw/Drawing 2023-07-31 23.15.15.excalidraw.md"
               }
             }
           }
@@ -58,12 +48,12 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "函数对象",
+                "query": "alias",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
-                "sortOrder": "alphabetical"
+                "sortOrder": "byModifiedTime"
               }
             }
           },
@@ -87,7 +77,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 254.5,
+    "width": 233.5,
     "collapsed": true
   },
   "right": {
@@ -148,7 +138,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       },
       {
         "id": "2aabb86f31957f99",
@@ -169,8 +159,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -187,45 +176,46 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "c61a63d290cc59c9",
+  "active": "6200a4d69f7917e0",
   "lastOpenFiles": [
-    "0-Assets/Excalidraw/Drawing 2023-07-31 23.15.15.excalidraw.md",
-    "0-Assets/Excalidraw/assets/Pasted Image 20230731231530_192.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801220249.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801215127.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801211852.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801194109.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801184219.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801180711.png",
+    "0-Assets/Excalidraw/OS-如何管理进程.md",
     "1-Theory/5-OS-principle-design/internal&principle/2-进程与线程.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230731231250.png",
-    "0-Assets/Excalidraw/process-and-resources.md",
-    "0-Assets/Excalidraw/assets/Pasted Image 20230731231118_616.png",
-    "0-Assets/Excalidraw/assets/Pasted Image 20230731231048_615.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230731230654.png",
-    "0-Assets/Excalidraw/PCB.md",
-    "0-Assets/Excalidraw/assets/Pasted Image 20230731225351_121.png",
-    "0-Assets/Excalidraw/assets",
-    "1-Theory/5-OS-principle-design/internal&principle/Windows、Unix、Linux、Android内核结构介绍.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230731224557.png",
-    "1-Theory/5-OS-principle-design/internal&principle/1-操作系统概述.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230731223855.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230731223731.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230731223453.png",
-    "1-Theory/5-OS-principle-design/internal&principle/0-计算机系统概述.md",
-    "0-Assets/Excalidraw/Drawing 2023-07-31 21.25.31.excalidraw.md",
-    "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/quickly-start-since-cpp11/20-Language-Usability-Enhancements.md",
-    "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/quickly-start-since-cpp11/10-Towards-Modern-Cpp.md",
-    "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/quickly-start-since-cpp11/00-Intro.md",
-    "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/quickly-start-since-cpp11",
-    "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/Cpp 20 协程.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-quiz/coding/72-k选取问题-找到数组里第k大的数.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/1-sort-algo.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/5-partition.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/4-search.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/3-find.md",
-    "1-Theory/1-ProgramLanguage/Cpp/nowcode-quiz/concept/Cpp-100-syntax-questions.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801174644.png",
+    "0-Assets/Excalidraw/进程的物理表示.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801173105.png",
+    "0-Assets/Excalidraw/OS-control-table.md",
+    "1-Theory/5-OS-principle-design/internal&principle/3-并发.md",
+    "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/Introduction-cpp11-and-later/20-Language-Usability-Enhancements.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/2-Program-Structure/40-Name-visibility.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/2-Program-Structure/22-Lambda.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/2-Program-Structure/30-Overloads-and-templates.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/2-Program-Structure/21-Code-splitting.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/2-Program-Structure/20-Functions.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/2-Program-Structure/10-Statement-and-flow-control.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/3-Compound-Types/50-Other-data-types.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/3-Compound-Types/40-Data-Structures.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/3-Compound-Types/31-Smart-pointers.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/3-Compound-Types/34-Lifetime-of-Objects.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/3-Compound-Types/33-Dynamic-memory.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/3-Compound-Types/32-Memory-model.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/3-Compound-Types/30-Pointers.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/3-Compound-Types/20-Character-sequences.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/3-Compound-Types/10-Arrays.md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/4-Classes/40-Class(I).md",
-    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/1-Basic/16-RTTI.md",
-    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/1-Basic/15-Dynamic-Typing.md",
-    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/1-Basic/11-Variables.md",
-    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/1-Basic/10-Structure-of-Program.md",
-    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/2-Program-Structure/24-Lambda.md",
-    "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/11-replace.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/4-Classes/41-Class(II).md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/4-Classes/44-Polymorphism.md",
+    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/4-Classes/43-Friendship-and-inheritance.md",
+    "0-Assets/Excalidraw/assets/Pasted Image 20230731231530_192.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230731231250.png",
+    "0-Assets/Excalidraw/assets/Pasted Image 20230731231118_616.png",
+    "0-Assets/Excalidraw/assets",
+    "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/Introduction-cpp11-and-later",
     "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/assets",
     "1-Theory/1-ProgramLanguage/Cpp/coding-exp/string-opt",
     "1-Theory/1-ProgramLanguage/Cpp/coding-exp",

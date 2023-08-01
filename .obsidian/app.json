@@ -18,5 +18,7 @@
     "landscape": false,
     "margin": "0",
     "downscalePercent": 100
-  }
+  },
+  "smartIndentList": true,
+  "showIndentGuide": true
 }

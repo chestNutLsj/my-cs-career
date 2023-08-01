@@ -91,6 +91,20 @@ main() {
 3️⃣中， `p=NULL;` 和 `p=0;` 、`p='\0'` 是等价的；
 4️⃣中，指向同一数组的两指针变量进行关系运算可表示它们所值数组元素之间的关系。
 
+#### 指针数组与数组指针
+1. 判断以下定义的含义：
+A `int (*p)[5]`：p 指针，指向容量为 5 的数组的开头；
+B `int *p[5]`：p 数组，容量为 5，元素是整型指针；
+C `(int*)p[5]`：强制类型转换
+D `int *p[]`：错误定义，Definition of variable with array type needs an explicit size or an initializer。
+
+>[! note] 区分 `int *p[n]` 和 ` int (*p)[n]` 的关键
+>在于运算符的优先级，`[]` 是优先于 `*` 的。
+>- `int *p[n];` 中，运算符 `[]` 优先级高，先与 p 结合成为一个数组，再由 `int*` 说明这是一个整型指针数组。  
+>
+>- `int (*p)[n];` 中 `()` 优先级高，首先说明 p 是一个指针，指向一个整型的一维数组。  
+  
+
 ### 位域 (`bit field`)
 1. 在 32 位机上，有一个结构体如下，请计算 sizeof (A)的结果。
 ```
@@ -469,7 +483,7 @@ $-232 + *a =  0n30 ··· n0 = n30*230 +  n29*229 + ··· + n0*20 = *a$
 
 ## 类型转换
 ### 动态类型转换
-[[50-Type-conversions#dynamic_cast|Dynamic_Cast]]
+[[10-Type-conversions#dynamic_cast|Dynamic_Cast]]
 
 1. 判断下列代码的输出：
 ```cpp
@@ -536,7 +550,7 @@ int main()
 ```
 
 **ANSWER**：L1 编译通过，L2 编译失败。
-[[50-Type-conversions#static_cast|static_cast]]
+[[10-Type-conversions#static_cast|static_cast]]
 
 >[! note] 静态转换和动态转换的区别
 >1. static_cast           
@@ -802,7 +816,7 @@ int main()
 1. 内联函数在编译时是否进行参数类型检查？
 答：做类型检查。内联函数在程序编译时，编译器将程序中出现的内联函数的调用表达式用内联函数的函数体代替。
 
-[[21-Functions#Inline functions|Inline function]]
+[[20-Functions#Inline functions|Inline function]]
 
 >[!note] 内联函数与宏定义的联系与区别
 >联系：

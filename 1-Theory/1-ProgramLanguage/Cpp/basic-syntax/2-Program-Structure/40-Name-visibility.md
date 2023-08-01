@@ -1,11 +1,17 @@
 
 ## Scopes
 
-Named entities, such as variables, functions, and compound types need to be declared before being used in C++. The point in the program where this declaration happens influences its visibility:
+Named entities, such as variables, functions, and compound types need to be declared before being used in C++.
 
+**Scope** refers to the visibility and accessibility of variables, functions, classes, and other identifiers in a C++ program. It determines the lifetime and extent of these identifiers. In C++, there are four types of scope:
+
+### global scope
 An entity declared outside any block has _global scope_, meaning that its name is valid anywhere in the code. While an entity declared within a block, such as a function or a selective statement, has _block scope_, and is only visible within the specific block in which it is declared, but not outside it.（在块之外声明的命名实体具有全局范围，可以再代码的任何位置有效使用；在块内声明的实体则只有局部范围，只能在块内使用，无论是函数块、选择分支块）
 
-Variables with block scope are known as _local variables_.
+The lifetime of a global identifier is the entire duration of the program.
+
+### local scope
+Variables with block scope are known as _local variables_.They can be accessed only within the function or the block they were declared in. Their lifetime is limited to the duration of the function/block execution.
 
 For example, a variable declared in the body of a function is a _local variable_ that extends until the end of the the function (i.e., until the brace `}` that closes the function definition), but not outside it:
 
@@ -69,6 +75,46 @@ int main () {
 Note that `y` is not hidden in the inner block, and thus accessing `y` still accesses the outer variable.
 
 Variables declared in declarations that introduce a block, such as function parameters and variables declared in loops and conditions (such as those declared on a `for` or an `if`) are local to the block they introduce.
+
+### namespace scope
+A namespace is a named scope that groups related identifiers together. Identifiers declared within a namespace have the namespace scope. They can be accessed using the namespace name and the scope resolution operator `::`.
+
+```
+#include <iostream>
+
+namespace MyNamespace {
+    int namespaceVar = 42;
+}
+
+int main() {
+    std::cout << "Namespace variable: " << MyNamespace::namespaceVar << std::endl;
+}
+```
+
+### class scope
+Identifiers declared within a class have a class scope. They can be accessed using the class name and the scope resolution operator `::` or, for non-static members, an object of the class and the dot `.` or arrow `->` operator.
+
+```
+#include <iostream>
+
+class MyClass {
+public:
+    static int staticMember;
+    int nonStaticMember;
+
+    MyClass(int value) : nonStaticMember(value) {}
+};
+
+int MyClass::staticMember = 7;
+
+int main() {
+    MyClass obj(10);
+    std::cout << "Static member: " << MyClass::staticMember << std::endl;
+    std::cout << "Non-static member: " << obj.nonStaticMember << std::endl;
+}
+```
+
+Understanding various types of scope in C++ is essential for effective code structuring and management of resources in a codebase.
 
 ## Namespaces
 
@@ -144,6 +190,28 @@ namespace foo { int c; }
 ```
 
 This declares three variables: `a` and `c` are in namespace `foo`, while `b` is in namespace `bar`. Namespaces can even extend across different translation units (i.e., across different files of source code).  (命名空间可以拆分，甚至可以跨越不同的翻译单元，即不同的源文件)
+
+### nesing namespace
+Namespaces can be nested within other namespaces:
+
+```
+#include <iostream>
+
+namespace outer {
+    int x = 10;
+
+    namespace inner {
+        int y = 20;
+    }
+}
+
+int main() {
+    std::cout << "Outer x: " << outer::x << std::endl;
+    std::cout << "Inner y: " << outer::inner::y << std::endl;
+
+    return 0;
+}
+```
 
 ## using
 
