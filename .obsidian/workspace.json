@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "2d0c4396b2ed09d7",
+        "id": "455eaf432a000adc",
         "type": "tabs",
         "children": [
           {
-            "id": "6200a4d69f7917e0",
+            "id": "3f7b0bcd807f8450",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/2-进程与线程.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -77,8 +73,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 233.5,
-    "collapsed": true
+    "width": 233.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -95,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/2-进程与线程.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -112,7 +106,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/2-进程与线程.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,16 +143,15 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/2-进程与线程.md"
-              }
+              "state": {}
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -176,21 +168,25 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "6200a4d69f7917e0",
+  "active": "3f7b0bcd807f8450",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle-design/internal&principle/3-并发.md",
+    "1-Theory/5-OS-principle-design/internal&principle/2-进程与线程.md",
+    "0-Assets/Excalidraw/performance-effect-of-multiple-cores.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230802190400.png",
+    "0-Assets/Excalidraw/assets/Pasted Image 20230802190251_228.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230802185724.png",
+    "0-Assets/Excalidraw/threads-processes-quantity-relationship.md",
+    "0-Assets/Excalidraw/assets/Pasted Image 20230802185303_799.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230802184614.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230802183952.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230802182539.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230802182156.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801220249.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801215127.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801211852.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801194109.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801184219.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801180711.png",
     "0-Assets/Excalidraw/OS-如何管理进程.md",
-    "1-Theory/5-OS-principle-design/internal&principle/2-进程与线程.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801174644.png",
     "0-Assets/Excalidraw/进程的物理表示.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230801173105.png",
     "0-Assets/Excalidraw/OS-control-table.md",
-    "1-Theory/5-OS-principle-design/internal&principle/3-并发.md",
     "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/Introduction-cpp11-and-later/20-Language-Usability-Enhancements.md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/2-Program-Structure/40-Name-visibility.md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/2-Program-Structure/22-Lambda.md",
@@ -209,11 +205,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/3-Compound-Types/10-Arrays.md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/4-Classes/40-Class(I).md",
     "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/4-Classes/41-Class(II).md",
-    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/4-Classes/44-Polymorphism.md",
-    "1-Theory/1-ProgramLanguage/Cpp/basic-syntax/4-Classes/43-Friendship-and-inheritance.md",
-    "0-Assets/Excalidraw/assets/Pasted Image 20230731231530_192.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230731231250.png",
-    "0-Assets/Excalidraw/assets/Pasted Image 20230731231118_616.png",
     "0-Assets/Excalidraw/assets",
     "1-Theory/1-ProgramLanguage/Cpp/modern-cpp/Introduction-cpp11-and-later",
     "1-Theory/1-ProgramLanguage/Cpp/STL/2-algorithm/assets",
