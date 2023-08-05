@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "a634d6d313ee1f6f",
+        "id": "5921eac12d88afc2",
         "type": "tabs",
         "children": [
           {
-            "id": "989c5bfef63d4ad9",
+            "id": "5f2e834e6178a809",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -27,6 +27,7 @@
       {
         "id": "b59937020c8d4ec4",
         "type": "tabs",
+        "dimension": 64.32212028542304,
         "children": [
           {
             "id": "3d3d978ac964e0aa",
@@ -66,6 +67,40 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
+              "state": {}
+            }
+          },
+          {
+            "id": "5019e4a770c657c5",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "7eee83ecdff3a44e",
+        "type": "tabs",
+        "dimension": 35.67787971457696,
+        "children": [
+          {
+            "id": "9a1b83d038959284",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {}
+            }
+          },
+          {
+            "id": "861ddfd9d475fb1c",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
               "state": {}
             }
           }
@@ -110,28 +145,9 @@
                 "unlinkedCollapsed": true
               }
             }
-          },
-          {
-            "id": "5019e4a770c657c5",
-            "type": "leaf",
-            "state": {
-              "type": "tag",
-              "state": {
-                "sortOrder": "frequency",
-                "useHierarchy": true
-              }
-            }
-          },
-          {
-            "id": "861ddfd9d475fb1c",
-            "type": "leaf",
-            "state": {
-              "type": "advanced-tables-toolbar",
-              "state": {}
-            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       },
       {
         "id": "2aabb86f31957f99",
@@ -150,7 +166,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -167,8 +184,39 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "5f2e834e6178a809",
   "lastOpenFiles": [
+    "0-Assets/Diary/2023/8月-5日.md",
+    "0-Assets/Diary/2023/12月-23日.md",
+    "0-Assets/Diary/2023/8月-6日.md",
+    "0-Assets/Diary/Templates/study-one-day.md",
+    "0-Assets/Diary/2023/8月_5日.md",
+    "0-Assets/Diary/2023/12月_23日.md",
+    "0-Assets/Diary/2023",
+    "0-Assets/Diary/Templates",
+    "0-Assets/Diary/未命名.canvas",
+    "0-Assets/Diary",
+    "2023-08-05.md",
+    "1-Theory/5-OS-principle-design/internal&principle/10-操作系统概述.md",
+    "1-Theory/5-OS-principle-design/internal&principle/31-Dekker-algo-implementation.md",
+    "1-Theory/5-OS-principle-design/internal&principle/30-并发.md",
+    "1-Theory/5-OS-principle-design/internal&principle/00-计算机系统概述.md",
+    "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
+    "1-Theory/5-OS-principle-design/internal&principle/80-虚拟机.md",
+    "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md",
+    "1-Theory/5-OS-principle-design/internal&principle/60-IO管理与磁盘.md",
+    "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
+    "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+    "1-Theory/5-OS-principle-design/internal&principle/Windows、Unix、Linux、Android内核结构介绍.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230805171115.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230805171101.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230805170855.png",
+    "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
+    "1-Theory/1-ProgramLanguage/C/LinuxC.pdf",
+    "1-Theory/1-ProgramLanguage/Haskell",
+    "1-Theory/1-ProgramLanguage/C/10-程序的基本概念.md",
+    "1-Theory/1-ProgramLanguage/C/00-Intro.md",
+    "1-Theory/1-ProgramLanguage/C",
     "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/operator-priority.pdf",
     "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/A2-Practice.md",
     "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/80-File_system.md",
@@ -177,44 +225,15 @@
     "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/90-other.md",
     "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/modern-cpp-tutorial-zh-cn.pdf",
     "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/70-Parallelism-and-concurrency.md",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/60-Regular-expression.md",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/50-Smart-pointer-and-memory-management.md",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Cpp 20 协程.md",
-    "1-Theory/2-DataStruct/错题本/排序算法.md",
     "1-Theory/7-DataBase/PostgreSQL",
     "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/assets/solution-weak-ptr.png",
     "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/assets/destruct-shared-ptr-problem.png",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/30-Language-Runtime-Enhancements.md",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/40-Container.md",
-    "1-Theory/5-OS-principle-design/internal&principle/3-并发.md",
     "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/assets/thread-coroutine.png",
     "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/assets",
     "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/assets/Pasted image 20230720135451.png",
     "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/assets/Pasted image 20230720135429.png",
     "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/assets/Pasted image 20230720135414.png",
     "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/assets/coroutine-timing-diagram.png",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/assets/coroutine-flow.png",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/20-Language-Usability-Enhancements.md",
-    "1-Theory/1-ProgramLanguage/Cpp/1-synatx-quiz/concept/Cpp-100-syntax-questions.md",
-    "5-Tools/Dev-Tools/Git/assets/git-workspace-index-version.png",
-    "5-Tools/Dev-Tools/Git/assets/git-operate.png",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/9-toolchain/60-Frameworks.md",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/9-toolchain/50-Libraries.md",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/9-toolchain/40-Package-managers.md",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/9-toolchain/30-Build-systems.md",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/9-toolchain/20-Compilers.md",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/9-toolchain/10-Debugger.md",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/8-Idioms/41-Copy-on-write.md",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/9-toolchain",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/8-Idioms/40-Copy-and-swap.md",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/8-Idioms/30-Erase-remove.md",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/8-Idioms/20-Non-copyable.md",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/8-Idioms",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/7-Templates",
-    "0-Assets/Excalidraw/assets",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later",
-    "1-Theory/1-ProgramLanguage/Cpp/2-STL/2-algorithm/assets",
-    "1-Theory/1-ProgramLanguage/Cpp/coding-exp/string-opt",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"

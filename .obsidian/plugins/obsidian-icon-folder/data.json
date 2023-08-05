@@ -5,11 +5,11 @@
     "fontSize": 16,
     "iconColor": null,
     "recentlyUsedIcons": [
-      "RiFlowChart",
-      "TiAssembly",
-      "LiGdbArcher",
-      "TiBooks",
-      "TiTerminal2"
+      "TiSunMoon",
+      "TiBrandTypescript",
+      "TiBrandRust",
+      "TiBrandPython",
+      "TiBrandKotlin"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -53,13 +53,13 @@
   "3-AI": "SiMachineLearning",
   "4-Secure": "FasShield",
   "6-Scholar": "SiGooglescholar",
-  "1-Theory/1-ProgramLanguage/Cpp": "SiCplusplus",
+  "1-Theory/1-ProgramLanguage/Cpp": "TiBrandCpp",
   "1-Theory/1-ProgramLanguage/Golang": "SiGo",
-  "1-Theory/1-ProgramLanguage/JavaScript": "SiJavascript",
-  "1-Theory/1-ProgramLanguage/Kotlin": "SiKotlin",
-  "1-Theory/1-ProgramLanguage/Python": "SiPython",
-  "1-Theory/1-ProgramLanguage/Rust": "SiRust",
-  "1-Theory/1-ProgramLanguage/TypeScript": "SiTypescript",
+  "1-Theory/1-ProgramLanguage/JavaScript": "TiBrandJavascript",
+  "1-Theory/1-ProgramLanguage/Kotlin": "TiBrandKotlin",
+  "1-Theory/1-ProgramLanguage/Python": "TiBrandPython",
+  "1-Theory/1-ProgramLanguage/Rust": "TiBrandRust",
+  "1-Theory/1-ProgramLanguage/TypeScript": "TiBrandTypescript",
   "1-Theory/8-Compiler/Codon": "LiCodon",
   "1-Theory/8-Compiler/GCC": "LiGcc",
   "1-Theory/8-Compiler/LLVM": "SiLlvm",
@@ -72,5 +72,8 @@
   "7-OS-application/Linux/Kali": "SiKalilinux",
   "1-Theory/1-ProgramLanguage/Assembly": "TiAssembly",
   "8-SimpRead": "IbWebsiteWithText",
-  "0-Assets/Excalidraw": "RiFlowChart"
+  "0-Assets/Excalidraw": "RiFlowChart",
+  "1-Theory/1-ProgramLanguage/C": "FasC",
+  "1-Theory/1-ProgramLanguage/Haskell": "SiHaskell",
+  "0-Assets/Diary": "TiSunMoon"
 }
