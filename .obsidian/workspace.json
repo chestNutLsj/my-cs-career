@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "5921eac12d88afc2",
+        "id": "66a46a8079431f61",
         "type": "tabs",
         "children": [
           {
-            "id": "5f2e834e6178a809",
+            "id": "952fb4b0fa81385f",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "0-Assets/Diary/2023/8月-7日.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -27,7 +31,6 @@
       {
         "id": "b59937020c8d4ec4",
         "type": "tabs",
-        "dimension": 64.32212028542304,
         "children": [
           {
             "id": "3d3d978ac964e0aa",
@@ -82,12 +85,67 @@
             }
           }
         ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 237.5
+  },
+  "right": {
+    "id": "1516a4ce828ea6b6",
+    "type": "split",
+    "children": [
+      {
+        "id": "e5810eded0ce3a81",
+        "type": "tabs",
+        "dimension": 20.38735983690112,
+        "children": [
+          {
+            "id": "866a4e016d81b567",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "0-Assets/Diary/2023/8月-7日.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "d09bc9f761ff2d4d",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "0-Assets/Diary/2023/8月-7日.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ],
+        "currentTab": 1
       },
       {
-        "id": "7eee83ecdff3a44e",
+        "id": "2aabb86f31957f99",
         "type": "tabs",
-        "dimension": 35.67787971457696,
+        "dimension": 79.61264016309887,
         "children": [
+          {
+            "id": "5402e2346c010391",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "0-Assets/Diary/2023/8月-7日.md"
+              }
+            }
+          },
           {
             "id": "9a1b83d038959284",
             "type": "leaf",
@@ -108,66 +166,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 241.5
-  },
-  "right": {
-    "id": "1516a4ce828ea6b6",
-    "type": "split",
-    "children": [
-      {
-        "id": "e5810eded0ce3a81",
-        "type": "tabs",
-        "dimension": 36.65987780040733,
-        "children": [
-          {
-            "id": "866a4e016d81b567",
-            "type": "leaf",
-            "state": {
-              "type": "backlink",
-              "state": {
-                "collapseAll": false,
-                "extraContext": false,
-                "sortOrder": "alphabetical",
-                "showSearch": false,
-                "searchQuery": "",
-                "backlinkCollapsed": false,
-                "unlinkedCollapsed": true
-              }
-            }
-          },
-          {
-            "id": "d09bc9f761ff2d4d",
-            "type": "leaf",
-            "state": {
-              "type": "outgoing-link",
-              "state": {
-                "linksCollapsed": false,
-                "unlinkedCollapsed": true
-              }
-            }
-          }
-        ],
-        "currentTab": 1
-      },
-      {
-        "id": "2aabb86f31957f99",
-        "type": "tabs",
-        "dimension": 63.34012219959266,
-        "children": [
-          {
-            "id": "5402e2346c010391",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {}
-            }
-          }
-        ]
-      }
-    ],
-    "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -184,12 +183,28 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "5f2e834e6178a809",
+  "active": "952fb4b0fa81385f",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/0-basic/0-Intro/00-Cpp-vs-C.md",
+    "1-Theory/1-ProgramLanguage/Cpp/0-basic/0-Intro/10-Compilers.md",
+    "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/10-Structure-of-Program.md",
+    "1-Theory/1-ProgramLanguage/Cpp/0-basic/roadmap.pdf",
+    "1-Theory/1-ProgramLanguage/Cpp/2-STL/Cpp20 STL Cookbook note.md",
+    "1-Theory/1-ProgramLanguage/Cpp/2-STL/STL背景知识介绍.md",
+    "1-Theory/1-ProgramLanguage/Cpp/1-synatx-quiz/Cpp-100-syntax-questions.md",
+    "1-Theory/1-ProgramLanguage/Cpp/1-synatx-quiz/Cpp 11前后 静态成员的定义与初始化问题.md",
+    "0-Assets/Diary/2023/8月-7日.md",
+    "0-Assets/Diary/Templates/study-one-day.md",
+    "1-Theory/4-Computer-Architecture/CSAPP/10-Tour-of-computer-system.md",
+    "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md",
+    "1-Theory/5-OS-principle-design/internal&principle/31-Dekker-algo-implementation.md",
+    "1-Theory/5-OS-principle-design/internal&principle/32-Peterson-algo-impl.md",
+    "0-Assets/Diary/2023/8月-6日.md",
+    "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
+    "1-Theory/5-OS-principle-design/internal&principle/30-并发.md",
+    "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
     "0-Assets/Diary/2023/8月-5日.md",
     "0-Assets/Diary/2023/12月-23日.md",
-    "0-Assets/Diary/2023/8月-6日.md",
-    "0-Assets/Diary/Templates/study-one-day.md",
     "0-Assets/Diary/2023/8月_5日.md",
     "0-Assets/Diary/2023/12月_23日.md",
     "0-Assets/Diary/2023",
@@ -198,42 +213,26 @@
     "0-Assets/Diary",
     "2023-08-05.md",
     "1-Theory/5-OS-principle-design/internal&principle/10-操作系统概述.md",
-    "1-Theory/5-OS-principle-design/internal&principle/31-Dekker-algo-implementation.md",
-    "1-Theory/5-OS-principle-design/internal&principle/30-并发.md",
     "1-Theory/5-OS-principle-design/internal&principle/00-计算机系统概述.md",
-    "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
     "1-Theory/5-OS-principle-design/internal&principle/80-虚拟机.md",
     "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md",
-    "1-Theory/5-OS-principle-design/internal&principle/60-IO管理与磁盘.md",
-    "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
-    "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
-    "1-Theory/5-OS-principle-design/internal&principle/Windows、Unix、Linux、Android内核结构介绍.md",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230805171115.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230805171101.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230805170855.png",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
     "1-Theory/1-ProgramLanguage/C/LinuxC.pdf",
     "1-Theory/1-ProgramLanguage/Haskell",
-    "1-Theory/1-ProgramLanguage/C/10-程序的基本概念.md",
-    "1-Theory/1-ProgramLanguage/C/00-Intro.md",
     "1-Theory/1-ProgramLanguage/C",
     "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/operator-priority.pdf",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/A2-Practice.md",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/80-File_system.md",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/A1-Further-learning.md",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/A0-Cpp20-outlook.md",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/90-other.md",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/modern-cpp-tutorial-zh-cn.pdf",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/70-Parallelism-and-concurrency.md",
+    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/Introduction-cpp11-and-later/modern-cpp-tutorial-zh-cn.pdf",
     "1-Theory/7-DataBase/PostgreSQL",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/assets/solution-weak-ptr.png",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/assets/destruct-shared-ptr-problem.png",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/assets/thread-coroutine.png",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/Introduction-cpp11-and-later/assets",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/assets/Pasted image 20230720135451.png",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/assets/Pasted image 20230720135429.png",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/assets/Pasted image 20230720135414.png",
-    "1-Theory/1-ProgramLanguage/Cpp/4-modern-cpp/assets/coroutine-timing-diagram.png",
+    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/Introduction-cpp11-and-later/assets/solution-weak-ptr.png",
+    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/Introduction-cpp11-and-later/assets/destruct-shared-ptr-problem.png",
+    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/assets/thread-coroutine.png",
+    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/assets/Pasted image 20230720135451.png",
+    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/assets/Pasted image 20230720135429.png",
+    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/assets/Pasted image 20230720135414.png",
+    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/assets/coroutine-timing-diagram.png",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
