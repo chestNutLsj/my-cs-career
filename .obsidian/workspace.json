@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "66a46a8079431f61",
+        "id": "8b0e4a45bd236951",
         "type": "tabs",
         "children": [
           {
-            "id": "952fb4b0fa81385f",
+            "id": "c3cf66bb4cf89902",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "0-Assets/Diary/2023/8月-7日.md",
+                "file": "1-Theory/4-Computer-Architecture/CSAPP/10-Tour-of-computer-system.md",
                 "mode": "source",
                 "source": false
               }
@@ -88,7 +88,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 237.5
+    "width": 237.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -105,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "0-Assets/Diary/2023/8月-7日.md",
+                "file": "1-Theory/4-Computer-Architecture/CSAPP/10-Tour-of-computer-system.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "0-Assets/Diary/2023/8月-7日.md",
+                "file": "1-Theory/4-Computer-Architecture/CSAPP/10-Tour-of-computer-system.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -142,16 +143,8 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "0-Assets/Diary/2023/8月-7日.md"
+                "file": "1-Theory/4-Computer-Architecture/CSAPP/10-Tour-of-computer-system.md"
               }
-            }
-          },
-          {
-            "id": "9a1b83d038959284",
-            "type": "leaf",
-            "state": {
-              "type": "calendar",
-              "state": {}
             }
           },
           {
@@ -175,7 +168,6 @@
       "canvas:新建白板": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
-      "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
       "markdown-importer:打开 Markdown 格式转换器": false,
@@ -183,8 +175,24 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "952fb4b0fa81385f",
+  "active": "c3cf66bb4cf89902",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle-design/internal&principle/30-并发.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230810195428.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230810195221.png",
+    "1-Theory/5-OS-principle-design/internal&principle/32-Peterson-algo-impl.md",
+    "1-Theory/5-OS-principle-design/internal&principle/31-Dekker-algo-implementation.md",
+    "0-Assets/Excalidraw/dekker-and-peterson.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230810171652.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230810171522.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230810171518.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230810171247.png",
+    "0-Assets/Excalidraw/assets/Pasted Image 20230810162908_710.png",
+    "0-Assets/Excalidraw/assets/Pasted Image 20230810162908_664.png",
+    "0-Assets/Diary/2023/8月-10日.md",
+    "0-Assets/Diary/2023/8月-9日.md",
+    "0-Assets/Diary/2023/8月-8日.md",
+    "0-Assets/Diary/2023/8月-7日.md",
     "1-Theory/1-ProgramLanguage/Cpp/0-basic/0-Intro/00-Cpp-vs-C.md",
     "1-Theory/1-ProgramLanguage/Cpp/0-basic/0-Intro/10-Compilers.md",
     "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/10-Structure-of-Program.md",
@@ -193,15 +201,11 @@
     "1-Theory/1-ProgramLanguage/Cpp/2-STL/STL背景知识介绍.md",
     "1-Theory/1-ProgramLanguage/Cpp/1-synatx-quiz/Cpp-100-syntax-questions.md",
     "1-Theory/1-ProgramLanguage/Cpp/1-synatx-quiz/Cpp 11前后 静态成员的定义与初始化问题.md",
-    "0-Assets/Diary/2023/8月-7日.md",
     "0-Assets/Diary/Templates/study-one-day.md",
     "1-Theory/4-Computer-Architecture/CSAPP/10-Tour-of-computer-system.md",
     "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md",
-    "1-Theory/5-OS-principle-design/internal&principle/31-Dekker-algo-implementation.md",
-    "1-Theory/5-OS-principle-design/internal&principle/32-Peterson-algo-impl.md",
     "0-Assets/Diary/2023/8月-6日.md",
     "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
-    "1-Theory/5-OS-principle-design/internal&principle/30-并发.md",
     "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
     "0-Assets/Diary/2023/8月-5日.md",
     "0-Assets/Diary/2023/12月-23日.md",
@@ -211,14 +215,8 @@
     "0-Assets/Diary/Templates",
     "0-Assets/Diary/未命名.canvas",
     "0-Assets/Diary",
-    "2023-08-05.md",
-    "1-Theory/5-OS-principle-design/internal&principle/10-操作系统概述.md",
-    "1-Theory/5-OS-principle-design/internal&principle/00-计算机系统概述.md",
-    "1-Theory/5-OS-principle-design/internal&principle/80-虚拟机.md",
-    "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230805171115.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230805171101.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230805170855.png",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
     "1-Theory/1-ProgramLanguage/C/LinuxC.pdf",
     "1-Theory/1-ProgramLanguage/Haskell",
@@ -226,13 +224,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/operator-priority.pdf",
     "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/Introduction-cpp11-and-later/modern-cpp-tutorial-zh-cn.pdf",
     "1-Theory/7-DataBase/PostgreSQL",
-    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/Introduction-cpp11-and-later/assets/solution-weak-ptr.png",
-    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/Introduction-cpp11-and-later/assets/destruct-shared-ptr-problem.png",
-    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/assets/thread-coroutine.png",
-    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/assets/Pasted image 20230720135451.png",
-    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/assets/Pasted image 20230720135429.png",
-    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/assets/Pasted image 20230720135414.png",
-    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/assets/coroutine-timing-diagram.png",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
