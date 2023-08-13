@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "f26b4f78d429d168",
+        "id": "17f7c40d07599358",
         "type": "tabs",
         "children": [
           {
-            "id": "bce3db760feb6b7b",
+            "id": "a774c825f48cef46",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -84,7 +84,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 237.5
+    "width": 237.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -167,22 +168,26 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "a774c825f48cef46",
   "lastOpenFiles": [
-    "1-Theory/1-ProgramLanguage/Cpp/4- coding/coding/06-交换两个变量的值.md",
+    "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230813183742.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230813183452.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230813183408.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230813181754.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230813181429.png",
+    "1-Theory/5-OS-principle-design/internal&principle/36-Coffman-algorithm.md",
+    "1-Theory/5-OS-principle-design/internal&principle/37-Philosopher-dining.md",
     "1-Theory/5-OS-principle-design/internal&principle/30-并发.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230812211015.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230812210342.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230812210134.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230812210043.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230812193656.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230813163931.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230813162859.png",
+    "1-Theory/5-OS-principle-design/internal&principle/35-Banker-algorithm.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230813154611.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230813150141.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230813144741.png",
+    "1-Theory/1-ProgramLanguage/Cpp/4- coding/coding/06-交换两个变量的值.md",
     "1-Theory/5-OS-principle-design/internal&principle/34-读写者问题.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230812193624.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230812191521.png",
     "1-Theory/5-OS-principle-design/internal&principle/33-生产者消费者问题.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230812174521.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230812174002.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230812173739.png",
     "1-Theory/4-Computer-Architecture/CSAPP/20-Representing-and-manipulating-information.md",
     "1-Theory/4-Computer-Architecture/CSAPP/10-Tour-of-computer-system.md",
     "1-Theory/5-OS-principle-design/internal&principle/32-Peterson-algo-impl.md",
@@ -201,11 +206,6 @@
     "1-Theory/1-ProgramLanguage/Cpp/1-synatx-quiz/Cpp-100-syntax-questions.md",
     "1-Theory/1-ProgramLanguage/Cpp/1-synatx-quiz/Cpp 11前后 静态成员的定义与初始化问题.md",
     "0-Assets/Diary/Templates/study-one-day.md",
-    "1-Theory/4-Computer-Architecture/CSAPP/00-课程准备与介绍.md",
-    "0-Assets/Diary/2023/8月-6日.md",
-    "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
-    "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
-    "0-Assets/Diary/2023/8月-5日.md",
     "0-Assets/Diary/2023",
     "0-Assets/Diary/Templates",
     "0-Assets/Diary/未命名.canvas",
