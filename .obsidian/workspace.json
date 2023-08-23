@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "02bedf7fd4f5f304",
+        "id": "3bdf3600ff3d0065",
         "type": "tabs",
         "children": [
           {
-            "id": "4d5f3cdd40df2616",
+            "id": "544598f37432a020",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -84,7 +88,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 237.5
+    "width": 237.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -93,7 +98,7 @@
       {
         "id": "e5810eded0ce3a81",
         "type": "tabs",
-        "dimension": 20.38735983690112,
+        "dimension": 48.16700610997963,
         "children": [
           {
             "id": "866a4e016d81b567",
@@ -101,6 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -117,33 +123,28 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
-          },
-          {
-            "id": "97b855d149f81565",
-            "type": "leaf",
-            "state": {
-              "type": "mermaid-toolbar-view",
-              "state": {}
-            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       },
       {
         "id": "2aabb86f31957f99",
         "type": "tabs",
-        "dimension": 79.61264016309887,
+        "dimension": 51.83299389002036,
         "children": [
           {
             "id": "5402e2346c010391",
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md"
+              }
             }
           },
           {
@@ -179,19 +180,29 @@
       "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "544598f37432a020",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
+    "1-Theory/5-OS-principle-design/internal&principle/30-并发.md",
     "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230821172708.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230821172534.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230821172420.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230821172252.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230821172225.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230821172109.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230821171952.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230821171716.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230821171650.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230821171449.png",
+    "5-Tools/Mermaid/01-Flowchart.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823185748.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823173730.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823173657.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823162110.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823161914.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823150210.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823145857.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823145615.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823143657.png",
+    "1-Theory/4-Architecture/CSAPP/31-GCC的使用.md",
+    "5-Tools/Mermaid/0-About-mermaid.md",
+    "5-Tools/Mermaid",
+    "5-Tools/Visualize/Mermaid.md",
+    "1-Theory/1-ProgramLanguage/Assembly/X86/X86-64-csapp/为什么使用div指令前exd需要为0？.md",
+    "5-Tools/Visualize",
+    "1-Theory/1-ProgramLanguage/Assembly/X86/X86-64-csapp",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230822163616.png",
     "1-Theory/5-OS-principle-design/internal&principle/43-加载和链接.md",
     "0-Assets/Excalidraw/Drawing 2023-08-21 16.18.16.excalidraw.md",
     "9-Others/Health/Skin/毛周角化症.md",
@@ -201,22 +212,15 @@
     "1-Theory/5-OS-principle-design/internal&principle/homework/1-概述.md",
     "1-Theory/5-OS-principle-design/internal&principle/42-Paging.md",
     "1-Theory/5-OS-principle-design/internal&principle/41-Buddy-system.md",
-    "1-Theory/4-Architecture/CSAPP/31-GCC的使用.md",
     "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
-    "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
     "1-Theory/4-Architecture/CSAPP/20-Representing-and-manipulating-information.md",
     "5-Tools/Obsidian/公式块换行.md",
     "5-Tools/Obsidian/assets",
-    "1-Theory/5-OS-principle-design/internal&principle/30-并发.md",
     "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
     "1-Theory/5-OS-principle-design/internal&principle/10-操作系统概述.md",
     "1-Theory/5-OS-principle-design/internal&principle/00-计算机系统概述.md",
     "1-Theory/5-OS-principle-design/internal&principle/31-Dekker-algo-implementation.md",
     "1-Theory/5-OS-principle-design/internal&principle/36-Coffman-algorithm.md",
-    "1-Theory/5-OS-principle-design/internal&principle/37-Philosopher-dining.md",
-    "1-Theory/5-OS-principle-design/internal&principle/35-Banker-algorithm.md",
-    "1-Theory/1-ProgramLanguage/Cpp/4- coding/coding/06-交换两个变量的值.md",
-    "1-Theory/5-OS-principle-design/internal&principle/34-读写者问题.md",
     "1-Theory/1-ProgramLanguage/Cpp/0-basic/roadmap.pdf",
     "0-Assets/Diary/2023",
     "0-Assets/Diary/Templates",
@@ -225,9 +229,6 @@
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
     "1-Theory/1-ProgramLanguage/C/LinuxC.pdf",
     "1-Theory/1-ProgramLanguage/Haskell",
-    "1-Theory/1-ProgramLanguage/C",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/operator-priority.pdf",
-    "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/Introduction-cpp11-and-later/modern-cpp-tutorial-zh-cn.pdf",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
