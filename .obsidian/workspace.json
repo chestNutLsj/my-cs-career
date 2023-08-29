@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "ea6ef65ddb4f5eef",
+        "id": "387672a88e7234b0",
         "type": "tabs",
         "children": [
           {
-            "id": "34e9fc35205c9014",
+            "id": "33b2b2ea59325608",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
+                "file": "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md",
                 "mode": "source",
                 "source": false
               }
@@ -88,7 +88,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 237.5
+    "width": 200
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -105,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
+                "file": "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
+                "file": "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -142,7 +142,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md"
+                "file": "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md"
               }
             }
           },
@@ -179,8 +179,22 @@
       "file-tree-alternative:File Tree Alternative Plugin": false
     }
   },
-  "active": "34e9fc35205c9014",
+  "active": "33b2b2ea59325608",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle-design/internal&principle/60-IO管理与磁盘.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829211826.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829204342.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829201321.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829195443.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829195312.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829192950.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829191641.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829191342.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829191246.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829185904.png",
+    "5-Tools/Obsidian/公式块换行.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B0-Sort.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A0-String.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/90-Priority_Queue.md",
@@ -191,21 +205,10 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/30-List.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/20-Vector.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
     "1-Theory/2-DataStruct/dsa-c-yan/91-静态最优查找树.md",
-    "1-Theory/5-OS-principle-design/internal&principle/60-IO管理与磁盘.md",
     "5-Tools/Mermaid/20-Sequence-diagram.md",
     "5-Tools/Mermaid/10-Flowchart.md",
     "5-Tools/Mermaid/00-About-mermaid.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828185108.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828184248.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828180759.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828180610.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828175149.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828175008.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828173716.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828172150.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828172114.png",
     "1-Theory/5-OS-principle-design/internal&principle/61-SPOOLing.md",
     "1-Theory/5-OS-principle-design/internal&principle/62-SSD.md",
     "1-Theory/5-OS-principle-design/internal&principle/21-进程、线程、纤程与协程.md",
@@ -215,10 +218,7 @@
     "1-Theory/2-DataStruct/dsa-c-yan",
     "1-Theory/5-OS-principle-design/internal&principle/71-BTree的应用.md",
     "7-OS-application/Linux/Arch/Wayland/wayland与fcitx5兼容问题.md",
-    "7-OS-application/Linux/Arch/Wayland/assets/Pasted image 20230824105448.png",
     "7-OS-application/Linux/Arch/Wayland/assets",
-    "7-OS-application/Linux/Arch/Wayland/wayland下chromium内核浏览器缩放异常问题.md",
-    "7-OS-application/Linux/Arch/Wayland/wayland使用.md",
     "7-OS-application/Linux/Arch/Wayland",
     "5-Tools/Mermaid",
     "5-Tools/Visualize",
@@ -226,7 +226,6 @@
     "5-Tools/Obsidian/assets",
     "1-Theory/1-ProgramLanguage/Cpp/0-basic/roadmap.pdf",
     "0-Assets/Diary/2023",
-    "0-Assets/Diary/Templates",
     "0-Assets/Diary/未命名.canvas",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
