@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "3bdf3600ff3d0065",
+        "id": "ea6ef65ddb4f5eef",
         "type": "tabs",
         "children": [
           {
-            "id": "544598f37432a020",
+            "id": "34e9fc35205c9014",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
                 "mode": "source",
                 "source": false
               }
@@ -77,7 +77,7 @@
             }
           },
           {
-            "id": "77798684d99e0ca0",
+            "id": "4edefe4f666e83b0",
             "type": "leaf",
             "state": {
               "type": "file-tree-view",
@@ -88,8 +88,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 237.5,
-    "collapsed": true
+    "width": 237.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -106,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -143,7 +142,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md"
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md"
               }
             }
           },
@@ -174,61 +173,62 @@
       "markdown-importer:打开 Markdown 格式转换器": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "omnisearch:Omnisearch": false,
-      "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false,
-      "file-tree-alternative:File Tree Alternative Plugin": false,
       "oz-clear-unused-images:Clear Unused Images": false,
-      "mermaid-tools:Open Mermaid Toolbar": false
+      "mermaid-tools:Open Mermaid Toolbar": false,
+      "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false,
+      "file-tree-alternative:File Tree Alternative Plugin": false
     }
   },
-  "active": "544598f37432a020",
+  "active": "34e9fc35205c9014",
   "lastOpenFiles": [
-    "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
-    "1-Theory/5-OS-principle-design/internal&principle/30-并发.md",
-    "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
-    "5-Tools/Mermaid/01-Flowchart.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823185748.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823173730.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823173657.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823162110.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823161914.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823150210.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823145857.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823145615.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230823143657.png",
-    "1-Theory/4-Architecture/CSAPP/31-GCC的使用.md",
-    "5-Tools/Mermaid/0-About-mermaid.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B0-Sort.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A0-String.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/90-Priority_Queue.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/80-Graph.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/70-Hash.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/60-Binary_Search_Tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/30-List.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/20-Vector.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
+    "1-Theory/2-DataStruct/dsa-c-yan/91-静态最优查找树.md",
+    "1-Theory/5-OS-principle-design/internal&principle/60-IO管理与磁盘.md",
+    "5-Tools/Mermaid/20-Sequence-diagram.md",
+    "5-Tools/Mermaid/10-Flowchart.md",
+    "5-Tools/Mermaid/00-About-mermaid.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828185108.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828184248.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828180759.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828180610.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828175149.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828175008.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828173716.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828172150.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230828172114.png",
+    "1-Theory/5-OS-principle-design/internal&principle/61-SPOOLing.md",
+    "1-Theory/5-OS-principle-design/internal&principle/62-SSD.md",
+    "1-Theory/5-OS-principle-design/internal&principle/21-进程、线程、纤程与协程.md",
+    "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
+    "1-Theory/2-DataStruct/dsa-c-yan/92-次优查找树.md",
+    "1-Theory/5-OS-principle-design/internal&principle/72-符号链接与硬链接.md",
+    "1-Theory/2-DataStruct/dsa-c-yan",
+    "1-Theory/5-OS-principle-design/internal&principle/71-BTree的应用.md",
+    "7-OS-application/Linux/Arch/Wayland/wayland与fcitx5兼容问题.md",
+    "7-OS-application/Linux/Arch/Wayland/assets/Pasted image 20230824105448.png",
+    "7-OS-application/Linux/Arch/Wayland/assets",
+    "7-OS-application/Linux/Arch/Wayland/wayland下chromium内核浏览器缩放异常问题.md",
+    "7-OS-application/Linux/Arch/Wayland/wayland使用.md",
+    "7-OS-application/Linux/Arch/Wayland",
     "5-Tools/Mermaid",
-    "5-Tools/Visualize/Mermaid.md",
-    "1-Theory/1-ProgramLanguage/Assembly/X86/X86-64-csapp/为什么使用div指令前exd需要为0？.md",
     "5-Tools/Visualize",
     "1-Theory/1-ProgramLanguage/Assembly/X86/X86-64-csapp",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230822163616.png",
-    "1-Theory/5-OS-principle-design/internal&principle/43-加载和链接.md",
-    "0-Assets/Excalidraw/Drawing 2023-08-21 16.18.16.excalidraw.md",
-    "9-Others/Health/Skin/毛周角化症.md",
-    "9-Others/Health/Posture/骨盆前倾 or 前移.md",
-    "1-Theory/5-OS-principle-design/internal&principle/homework/3-线程.md",
-    "1-Theory/5-OS-principle-design/internal&principle/homework/2-进程.md",
-    "1-Theory/5-OS-principle-design/internal&principle/homework/1-概述.md",
-    "1-Theory/5-OS-principle-design/internal&principle/42-Paging.md",
-    "1-Theory/5-OS-principle-design/internal&principle/41-Buddy-system.md",
-    "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
-    "1-Theory/4-Architecture/CSAPP/20-Representing-and-manipulating-information.md",
-    "5-Tools/Obsidian/公式块换行.md",
     "5-Tools/Obsidian/assets",
-    "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
-    "1-Theory/5-OS-principle-design/internal&principle/10-操作系统概述.md",
-    "1-Theory/5-OS-principle-design/internal&principle/00-计算机系统概述.md",
-    "1-Theory/5-OS-principle-design/internal&principle/31-Dekker-algo-implementation.md",
-    "1-Theory/5-OS-principle-design/internal&principle/36-Coffman-algorithm.md",
     "1-Theory/1-ProgramLanguage/Cpp/0-basic/roadmap.pdf",
     "0-Assets/Diary/2023",
     "0-Assets/Diary/Templates",
     "0-Assets/Diary/未命名.canvas",
-    "0-Assets/Diary",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
-    "1-Theory/1-ProgramLanguage/C/LinuxC.pdf",
-    "1-Theory/1-ProgramLanguage/Haskell",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
