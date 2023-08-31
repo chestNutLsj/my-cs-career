@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "387672a88e7234b0",
+        "id": "10748fe80530b814",
         "type": "tabs",
         "children": [
           {
-            "id": "33b2b2ea59325608",
+            "id": "5f8b1f62c13dabb6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md",
+                "file": "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
                 "mode": "source",
                 "source": false
               }
@@ -75,20 +75,13 @@
                 "useHierarchy": true
               }
             }
-          },
-          {
-            "id": "4edefe4f666e83b0",
-            "type": "leaf",
-            "state": {
-              "type": "file-tree-view",
-              "state": {}
-            }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -105,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md",
+                "file": "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md",
+                "file": "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -142,7 +135,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md"
+                "file": "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md"
               }
             }
           },
@@ -175,25 +168,32 @@
       "omnisearch:Omnisearch": false,
       "oz-clear-unused-images:Clear Unused Images": false,
       "mermaid-tools:Open Mermaid Toolbar": false,
-      "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false,
-      "file-tree-alternative:File Tree Alternative Plugin": false
+      "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "33b2b2ea59325608",
+  "active": "5f8b1f62c13dabb6",
   "lastOpenFiles": [
-    "1-Theory/5-OS-principle-design/internal&principle/60-IO管理与磁盘.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829211826.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829204342.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829201321.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829195443.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829195312.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829192950.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829191641.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829191342.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829191246.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/Pasted image 20230829185904.png",
-    "5-Tools/Obsidian/公式块换行.md",
+    "1-Theory/5-OS-principle-design/internal&principle/21-进程、线程、纤程与协程.md",
+    "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/20-进程与线程-process-terminate.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/20-进程与线程-process-creation.png",
+    "1-Theory/5-OS-principle-design/internal&principle/11-宏内核结构举例.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/11-宏内核结构举例-linux-syscall2.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/11-宏内核结构举例-linux-syscall2.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/11-宏内核结构举例-linux-syscall.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/11-宏内核结构举例-linux-signal.png",
+    "1-Theory/5-OS-principle-design/internal&principle/10-操作系统概述.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/10-操作系统概述-mttf-mttr.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/10-操作系统概述-multiprogramming.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/10-操作系统概述-SMP.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/10-操作系统概述-分层式OS.png",
+    "1-Theory/5-OS-principle-design/internal&principle/00-计算机系统概述.md",
+    "1-Theory/5-OS-principle-design/internal&principle/71-BTree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
+    "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md",
+    "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+    "1-Theory/5-OS-principle-design/internal&principle/60-IO管理与磁盘.md",
+    "5-Tools/Obsidian/公式块换行.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B0-Sort.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A0-String.md",
@@ -210,14 +210,7 @@
     "5-Tools/Mermaid/10-Flowchart.md",
     "5-Tools/Mermaid/00-About-mermaid.md",
     "1-Theory/5-OS-principle-design/internal&principle/61-SPOOLing.md",
-    "1-Theory/5-OS-principle-design/internal&principle/62-SSD.md",
-    "1-Theory/5-OS-principle-design/internal&principle/21-进程、线程、纤程与协程.md",
-    "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
-    "1-Theory/2-DataStruct/dsa-c-yan/92-次优查找树.md",
-    "1-Theory/5-OS-principle-design/internal&principle/72-符号链接与硬链接.md",
     "1-Theory/2-DataStruct/dsa-c-yan",
-    "1-Theory/5-OS-principle-design/internal&principle/71-BTree的应用.md",
-    "7-OS-application/Linux/Arch/Wayland/wayland与fcitx5兼容问题.md",
     "7-OS-application/Linux/Arch/Wayland/assets",
     "7-OS-application/Linux/Arch/Wayland",
     "5-Tools/Mermaid",
