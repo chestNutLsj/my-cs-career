@@ -7,7 +7,7 @@
   "blue-topaz-theme@@color-scheme-options": "color-scheme-options-chocolate-topaz",
   "blue-topaz-theme@@background-image-settings-switch": false,
   "blue-topaz-theme@@background-image-settings-command-palette-switch": false,
-  "blue-topaz-theme@@left-ribbon-style": "default-left-ribbon-style",
+  "blue-topaz-theme@@left-ribbon-style": "hide-left-ribbon-retention-drawer",
   "blue-topaz-theme@@layout-style-options": "layout-style-options-default",
   "blue-topaz-theme@@hide-vault-name": false,
   "blue-topaz-theme@@search-bar-style-option": "default-search-bar",

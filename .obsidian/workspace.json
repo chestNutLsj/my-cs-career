@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "10748fe80530b814",
+        "id": "c7cd88973e9ef4a1",
         "type": "tabs",
         "children": [
           {
-            "id": "5f8b1f62c13dabb6",
+            "id": "18433fd2569fca05",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
                 "mode": "source",
                 "source": false
               }
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +135,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md"
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md"
               }
             }
           },
@@ -151,8 +151,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -171,25 +170,28 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "5f8b1f62c13dabb6",
+  "active": "18433fd2569fca05",
   "lastOpenFiles": [
-    "1-Theory/5-OS-principle-design/internal&principle/21-进程、线程、纤程与协程.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-reverse-csl.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/11-深入递归.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/12-动态规划.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-fib(k).png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-recursion-LCS-dp.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-recursion-LCS-analyse.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-recursion-LCS-impl.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-recursion-LCS.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-dp-fib.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-fib(n)-complexity.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-gsLS.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-gsDC.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-gsIC.png",
     "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/20-进程与线程-process-terminate.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/20-进程与线程-process-creation.png",
+    "1-Theory/5-OS-principle-design/internal&principle/21-进程、线程、纤程与协程.md",
     "1-Theory/5-OS-principle-design/internal&principle/11-宏内核结构举例.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/11-宏内核结构举例-linux-syscall2.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/11-宏内核结构举例-linux-syscall2.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/11-宏内核结构举例-linux-syscall.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/11-宏内核结构举例-linux-signal.png",
     "1-Theory/5-OS-principle-design/internal&principle/10-操作系统概述.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/10-操作系统概述-mttf-mttr.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/10-操作系统概述-multiprogramming.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/10-操作系统概述-SMP.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/10-操作系统概述-分层式OS.png",
     "1-Theory/5-OS-principle-design/internal&principle/00-计算机系统概述.md",
     "1-Theory/5-OS-principle-design/internal&principle/71-BTree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
     "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md",
     "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
     "1-Theory/5-OS-principle-design/internal&principle/60-IO管理与磁盘.md",
@@ -207,9 +209,6 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/20-Vector.md",
     "1-Theory/2-DataStruct/dsa-c-yan/91-静态最优查找树.md",
     "5-Tools/Mermaid/20-Sequence-diagram.md",
-    "5-Tools/Mermaid/10-Flowchart.md",
-    "5-Tools/Mermaid/00-About-mermaid.md",
-    "1-Theory/5-OS-principle-design/internal&principle/61-SPOOLing.md",
     "1-Theory/2-DataStruct/dsa-c-yan",
     "7-OS-application/Linux/Arch/Wayland/assets",
     "7-OS-application/Linux/Arch/Wayland",
