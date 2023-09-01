@@ -1,0 +1,25 @@
+{
+  "items": [
+    {
+      "type": "group",
+      "ctime": 1693565175684,
+      "items": [
+        {
+          "type": "file",
+          "ctime": 1693562860341,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
+          "subpath": "#**完整的进程切换步骤**",
+          "title": "20-进程与线程#完整的进程切换步骤"
+        },
+        {
+          "type": "file",
+          "ctime": 1693565148772,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
+          "subpath": "#^93a1bf",
+          "title": "套管 jacketing"
+        }
+      ],
+      "title": "OS-principle"
+    }
+  ]
+}
