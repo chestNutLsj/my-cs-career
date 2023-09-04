@@ -1,0 +1,2 @@
+Implement [Merge Sort](https://www.geeksforgeeks.org/merge-sort/) i.e. standard implementation keeping the sorting algorithm as in-place.   
+In-place means it does not occupy extra memory for merge operation as in the standard case.

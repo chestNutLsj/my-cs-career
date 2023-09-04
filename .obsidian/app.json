@@ -20,5 +20,6 @@
     "downscalePercent": 100
   },
   "smartIndentList": true,
-  "showIndentGuide": true
+  "showIndentGuide": true,
+  "focusNewTab": false
 }

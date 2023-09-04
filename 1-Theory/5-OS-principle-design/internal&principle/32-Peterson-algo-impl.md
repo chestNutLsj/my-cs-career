@@ -34,7 +34,7 @@ PetersonMutex::PetersonMutex() {
 void PetersonMutex::lock(int threadId) {  
     int otherThreadId = 1 - threadId;  
     flag[threadId].store(true);  
-    turn.store(otherThreadId, std::memory_order_relaxed);  
+    turn.store(otherThreadId, std::memory_order_relaxed);  //指定了内存顺序为`std::memory_order_relaxed`，这表示不需要特定的内存顺序，仅确保写操作是原子的
     while (flag[otherThreadId].load() && turn.load(std::memory_order_relaxed) == otherThreadId) {  
         // busy waiting  
     }  
@@ -91,3 +91,6 @@ int main() {
     return 0;  
 }
 ```
+
+## 输出结果
+![[32-Peterson-algo-impl.png]]

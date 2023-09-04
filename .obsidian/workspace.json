@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "b64cb4a7f529ffa7",
+        "id": "7d3718d21521a091",
         "type": "tabs",
         "children": [
           {
-            "id": "d72a9e2a23b674fe",
+            "id": "267c60d762e222d8",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
+                "file": "1-Theory/5-OS-principle-design/internal&principle/38-并发进阶.md",
                 "mode": "source",
                 "source": false
               }
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
+                "file": "1-Theory/5-OS-principle-design/internal&principle/38-并发进阶.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
+                "file": "1-Theory/5-OS-principle-design/internal&principle/38-并发进阶.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +135,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md"
+                "file": "1-Theory/5-OS-principle-design/internal&principle/38-并发进阶.md"
               }
             }
           },
@@ -151,7 +151,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -170,45 +171,46 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false
     }
   },
-  "active": "d72a9e2a23b674fe",
+  "active": "267c60d762e222d8",
   "lastOpenFiles": [
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-double-circular.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-reduction-example.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-reduction.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-decision-tree.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-power-logn.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-power_an.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-shift-reverse.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-shift-iterate.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/10-Introduction-shift-bf.jpg",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/20-Vector.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/23-Bitmap.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/23-Bitmap-O1-remove-2.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/23-Bitmap-O1-remove.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/23-Bitmap-O1-set.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/23-Bitmap-O1-reset.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/23-Bitmap-check-ring.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/23-Bitmap-sifter-outcome.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/23-Bitmap-sifter.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/23-Bitmap.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/21-多路归并.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/22-in-place-mergeSort.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/20-Vector-mergesort-2way-opt.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/20-Vector-mergesort-2way.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/11-深入递归.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/12-Dynamic-programming.md",
+    "1-Theory/5-OS-principle-design/internal&principle/38-并发进阶.md",
+    "1-Theory/5-OS-principle-design/internal&principle/37-Philosopher-dining.md",
+    "1-Theory/5-OS-principle-design/internal&principle/36-Coffman-algo.md",
+    "1-Theory/5-OS-principle-design/internal&principle/35-Banker-algo.md",
+    "1-Theory/5-OS-principle-design/internal&principle/34-读写者问题.md",
+    "1-Theory/5-OS-principle-design/internal&principle/33-生产者消费者问题.md",
+    "1-Theory/5-OS-principle-design/internal&principle/32-Peterson-algo-impl.md",
+    "1-Theory/5-OS-principle-design/internal&principle/31-Dekker-algo-impl.md",
+    "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+    "1-Theory/5-OS-principle-design/internal&principle/42-加载和链接.md",
+    "1-Theory/5-OS-principle-design/internal&principle/41-Buddy-system.md",
+    "1-Theory/5-OS-principle-design/internal&principle/30-并发.md",
+    "1-Theory/5-OS-principle-design/internal&principle/paper/CARR01.pdf",
+    "1-Theory/5-OS-principle-design/internal&principle/paper",
+    "1-Theory/5-OS-principle-design/internal&principle/未命名.md",
     "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
     "1-Theory/5-OS-principle-design/internal&principle/21-进程、线程、纤程与协程.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/user-space-stack-heap.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/20-进程与线程-unix-process-status.png",
     "0-Assets/Excalidraw/OS-如何管理进程.md",
     "3-AI/simpread-超全汇总！机器学习常用术语词汇表——上篇（建议收藏）.md",
     "1-Theory/5-OS-principle-design/internal&principle/10-操作系统概述.md",
-    "1-Theory/5-OS-principle-design/internal&principle/11-宏内核结构举例.md",
-    "9-Others/ComputerCulture/what is the meaning of foo in computer coding.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/11-深入递归.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/12-动态规划.md",
-    "1-Theory/5-OS-principle-design/internal&principle/00-计算机系统概述.md",
-    "1-Theory/5-OS-principle-design/internal&principle/71-BTree.md",
-    "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md",
-    "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
-    "1-Theory/5-OS-principle-design/internal&principle/60-IO管理与磁盘.md",
-    "5-Tools/Obsidian/公式块换行.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/assets",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B0-Sort.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A0-String.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/90-Priority_Queue.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/80-Graph.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/70-Hash.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/60-Binary_Search_Tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/30-List.md",
     "1-Theory/2-DataStruct/dsa-c-yan",
     "7-OS-application/Linux/Arch/Wayland/assets",
     "7-OS-application/Linux/Arch/Wayland",
@@ -216,8 +218,6 @@
     "5-Tools/Visualize",
     "1-Theory/1-ProgramLanguage/Assembly/X86/X86-64-csapp",
     "5-Tools/Obsidian/assets",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/roadmap.pdf",
-    "0-Assets/Diary/2023",
     "0-Assets/Diary/未命名.canvas",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",

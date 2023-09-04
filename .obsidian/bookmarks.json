@@ -17,6 +17,20 @@
           "path": "1-Theory/5-OS-principle-design/internal&principle/20-进程与线程.md",
           "subpath": "#^93a1bf",
           "title": "套管 jacketing"
+        },
+        {
+          "type": "file",
+          "ctime": 1693663468664,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/30-并发.md",
+          "subpath": "#资源分配拒绝(银行家算法)",
+          "title": "银行家算法"
+        },
+        {
+          "type": "file",
+          "ctime": 1693663596445,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/30-并发.md",
+          "subpath": "#死锁检测算法(coffman 算法)",
+          "title": "Coffman算法"
         }
       ],
       "title": "OS-principle"
