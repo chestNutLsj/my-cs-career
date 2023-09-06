@@ -1,9 +1,9 @@
 {
   "accentColor": "",
   "cssTheme": "Blue Topaz",
-  "baseFontSize": 22,
+  "baseFontSize": 24,
   "monospaceFontFamily": "FiraCode Nerd Font Mono",
-  "textFontFamily": "Noto Sans CJK SC",
+  "textFontFamily": "CodeNewRoman Nerd Font Mono",
   "interfaceFontFamily": "FiraCode Nerd Font Mono",
   "theme": "moonstone"
 }

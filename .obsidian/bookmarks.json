@@ -31,9 +31,99 @@
           "path": "1-Theory/5-OS-principle-design/internal&principle/30-并发.md",
           "subpath": "#死锁检测算法(coffman 算法)",
           "title": "Coffman算法"
+        },
+        {
+          "type": "file",
+          "ctime": 1693985635590,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+          "subpath": "#^57a318",
+          "title": "静态重定位"
+        },
+        {
+          "type": "file",
+          "ctime": 1693985646613,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+          "subpath": "#^4f8ce9",
+          "title": "动态重定位"
+        },
+        {
+          "type": "file",
+          "ctime": 1693985701846,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+          "subpath": "#^55c770",
+          "title": "基址寄存器、界限寄存器实现内存保护"
+        },
+        {
+          "type": "file",
+          "ctime": 1693986551100,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+          "subpath": "#^18bf0a",
+          "title": "抖动thrashing"
+        },
+        {
+          "type": "file",
+          "ctime": 1693986865631,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+          "subpath": "#^6d9569",
+          "title": "二级虚拟页表的计算方式"
+        },
+        {
+          "type": "file",
+          "ctime": 1693988404370,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+          "subpath": "#置换策略",
+          "title": "虚拟分页-置换策略"
+        },
+        {
+          "type": "file",
+          "ctime": 1693989041904,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+          "subpath": "#工作集策略",
+          "title": "工作集策略及PFF、VSWS"
         }
       ],
       "title": "OS-principle"
+    },
+    {
+      "type": "group",
+      "ctime": 1693927604603,
+      "items": [
+        {
+          "type": "file",
+          "ctime": 1693927661594,
+          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/20-Vector.md",
+          "subpath": "#2-15 CBA 算法详析",
+          "title": "CBA算法下界"
+        },
+        {
+          "type": "file",
+          "ctime": 1694008072838,
+          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
+          "subpath": "#^78966e",
+          "title": "比较树"
+        },
+        {
+          "type": "file",
+          "ctime": 1694008090285,
+          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
+          "subpath": "#^7c47ca",
+          "title": "代数判定树ADT"
+        },
+        {
+          "type": "file",
+          "ctime": 1694013820245,
+          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/21-Exercise.md",
+          "subpath": "#2-21 指数查找 expSearch",
+          "title": "指数查找"
+        }
+      ],
+      "title": "DSA-考点重点"
+    },
+    {
+      "type": "group",
+      "ctime": 1693927625420,
+      "items": [],
+      "title": "ALGO-principle"
     }
   ]
 }
