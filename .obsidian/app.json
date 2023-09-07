@@ -21,5 +21,6 @@
   },
   "smartIndentList": true,
   "showIndentGuide": true,
-  "focusNewTab": false
+  "focusNewTab": false,
+  "newLinkFormat": "shortest"
 }
