@@ -22,5 +22,6 @@
   "smartIndentList": true,
   "showIndentGuide": true,
   "focusNewTab": false,
-  "newLinkFormat": "shortest"
+  "newLinkFormat": "shortest",
+  "propertiesInDocument": "visible"
 }

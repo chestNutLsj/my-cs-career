@@ -4,47 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "e16be26c4ee2b344",
+        "id": "1c71ca3002a35b25",
         "type": "tabs",
         "children": [
           {
-            "id": "d53ed745cae0ec34",
+            "id": "bc48bbea7e6f47d1",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/21-Exercise.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "7475dfbdbf6cec9e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/41-Buddy-system.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b7098cf2c6138288",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/43-Unix_Linux内存管理.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -105,7 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 322.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -122,7 +93,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/41-Buddy-system.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +109,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/41-Buddy-system.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -158,9 +127,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/5-OS-principle-design/internal&principle/41-Buddy-system.md"
-              }
+              "state": {}
             }
           },
           {
@@ -195,28 +162,29 @@
       "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "7475dfbdbf6cec9e",
+  "active": "bc48bbea7e6f47d1",
   "lastOpenFiles": [
-    "1-Theory/5-OS-principle-design/internal&principle/42-加载和链接.md",
-    "1-Theory/5-OS-principle-design/internal&principle/43-Unix_Linux内存管理.md",
-    "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
     "1-Theory/5-OS-principle-design/internal&principle/60-IO管理与磁盘.md",
+    "1-Theory/5-OS-principle-design/internal&principle/39-Unix_Linux并发机制.md",
+    "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+    "1-Theory/5-OS-principle-design/internal&principle/mindmap/50-CPU调度-mindmap.png",
+    "1-Theory/5-OS-principle-design/internal&principle/42-加载和链接.md",
+    "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
+    "1-Theory/5-OS-principle-design/internal&principle/mindmap/50-CPU调度-mindmap-compressed.png",
+    "1-Theory/5-OS-principle-design/internal&principle/mindmap",
+    "1-Theory/5-OS-principle-design/internal&principle/43-Unix_Linux内存管理.md",
+    "1-Theory/5-OS-principle-design/internal&principle/41-Buddy-system.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/21-Exercise.md",
+    "1-Theory/5-OS-principle-design/internal&principle/mindmap/39-Unix_Linux并发机制-mindmap.png",
+    "1-Theory/5-OS-principle-design/internal&principle/mindmap/42-加载和链接-mindmap.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/42-加载和链接-Mindmap.png",
     "1-Theory/5-OS-principle-design/internal&principle/61-SPOOLing.md",
     "1-Theory/5-OS-principle-design/internal&principle/38-并发进阶.md",
-    "1-Theory/5-OS-principle-design/internal&principle/39-Unix_Linux并发机制.md",
-    "1-Theory/5-OS-principle-design/internal&principle/41-Buddy-system.md",
     "1-Theory/5-OS-principle-design/internal&principle/assets/42-加载和链接-linking-function.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/42-加载和链接-relocate-modules.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/21-Exercise.md",
-    "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
     "1-Theory/5-OS-principle-design/internal&principle/assets/39-Unix_Linux并发机制-linux-barrier.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/39-Unix_Linux并发机制-linux-semaphores.png",
     "1-Theory/5-OS-principle-design/internal&principle/assets/39-Unix_Linux并发机制-reader-writer-spinlock.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/39-Unix_Linux并发机制-spinlock.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/39-Unix_Linux并发机制-spinlock.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/39-Unix_Linux并发机制-linux-atomic-bitmap.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/39-Unix_Linux并发机制-linux-atomic-int.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/39-Unix_Linux并发机制-linux-atomic.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/14-Lowerbound-analyze.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/00-Info.md",
@@ -237,12 +205,10 @@
     "1-Theory/5-OS-principle-design/internal&principle/35-Banker-algo.md",
     "1-Theory/5-OS-principle-design/internal&principle/34-读写者问题.md",
     "1-Theory/5-OS-principle-design/internal&principle/33-生产者消费者问题.md",
-    "1-Theory/5-OS-principle-design/internal&principle/32-Peterson-algo-impl.md",
     "1-Theory/5-OS-principle-design/internal&principle/paper/CARR01.pdf",
     "1-Theory/5-OS-principle-design/internal&principle/paper",
     "1-Theory/2-DataStruct/dsa-cpp-deng/assets",
     "1-Theory/2-DataStruct/dsa-c-yan",
-    "7-OS-application/Linux/Arch/Wayland/assets",
     "0-Assets/Diary/未命名.canvas",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",

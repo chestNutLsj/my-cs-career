@@ -80,6 +80,48 @@
           "path": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
           "subpath": "#工作集策略",
           "title": "工作集策略及PFF、VSWS"
+        },
+        {
+          "type": "file",
+          "ctime": 1694156253307,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
+          "subpath": "#^a7452f",
+          "title": "处理器抖动"
+        },
+        {
+          "type": "file",
+          "ctime": 1694156263515,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
+          "subpath": "#^f60129",
+          "title": "处理器碎片"
+        },
+        {
+          "type": "file",
+          "ctime": 1694158306205,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
+          "subpath": "#最早 deadline 优先策略",
+          "title": "最早ddl优先策略"
+        },
+        {
+          "type": "file",
+          "ctime": 1694158513562,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
+          "subpath": "#^a93108",
+          "title": "自愿空闲时间的最早ddl策略"
+        },
+        {
+          "type": "file",
+          "ctime": 1694159199390,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
+          "subpath": "#优先级反转",
+          "title": "优先级反转"
+        },
+        {
+          "type": "file",
+          "ctime": 1694158548693,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
+          "subpath": "#速率单调调度",
+          "title": "速率单调调度"
         }
       ],
       "title": "OS-principle"
