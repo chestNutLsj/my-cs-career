@@ -71,9 +71,21 @@ void Eratosthenes( Rank n, char * file ) {
 
 ![[23-Bitmap-sifter-outcome.png]]
 
-不计内循环，外循环自身每次仅一次加法、两次判断，累计  内循环每趟迭代 步，由素数定理外循环至多 趟，累计耗时
+不计内循环，外循环自身每次仅一次加法、两次判断，累计 O (n)
+内循环每趟迭代 O (n/i) 步，由素数定理外循环至多 n/lnn 趟，累计耗时
+$$
+\begin{aligned}
+&\frac{n}{2} + \frac{n}{3} + \frac{n}{5} + ... \\
+&< \frac{n}{2} + \frac{n}{3} + \frac{n}{4} + ... + \frac{n}{\frac{n}{\ln n}}\\
+&=O(n(\ln(\frac{n}{\ln}n)-1))\\
+&=O(n\ln n-n\ln (\ln(n)))\\
+&=O(n\log n)
+\end{aligned}
+$$
 
-内循环的起点“2*i”可改作“i*i”；外循环的终止条件“i < n”可改作“i*i < n” //为什么？ 内循环每趟迭代 步，外循环至多 趟，耗时减少 //从渐近角度看呢？
+内循环的起点“2 * i”可改作“i * i”；外循环的终止条件“i < n”可改作“i * i < n” //为什么？ 
+
+内循环每趟迭代 O (max (1, n/i-i)) 步，外循环至多 √n/ln√n 趟，耗时减少 //从渐近角度看呢？
 
 ## 快速初始化
 Bitmap 的构造函数中，通过 memset(M,0,N) 统一清零
