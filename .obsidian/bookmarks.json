@@ -111,6 +111,13 @@
         },
         {
           "type": "file",
+          "ctime": 1694244815185,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/60-IO管理与磁盘.md",
+          "subpath": "#DMA 工作流程",
+          "title": "DMA工作流程"
+        },
+        {
+          "type": "file",
           "ctime": 1694159199390,
           "path": "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
           "subpath": "#优先级反转",
