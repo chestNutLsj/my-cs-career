@@ -1,3 +1,4 @@
+![[71-BTree-mindmap.png]]
 ## Concept
 
 B-tree is a special type of self-balancing search tree in which each node can contain more than one key and can have more than two children. It is a generalized form of the [binary search tree](https://www.programiz.com/dsa/binary-search-tree).
@@ -696,15 +697,11 @@ int main() {
 
 ### Complexity
 
-Worst case Time complexity: `Θ(log n)`
-
-Average case Time complexity: `Θ(log n)`
-
-Best case Time complexity: `Θ(log n)`
-
-Average case Space complexity: `Θ(n)`
-
-Worst case Space complexity: `Θ(n)`
+- Worst case Time complexity: `Θ(log n)`
+- Average case Time complexity: `Θ(log n)`
+- Best case Time complexity: `Θ(log n)`
+- Average case Space complexity: `Θ(n)`
+- Worst case Space complexity: `Θ(n)`
 
 ## Insert
 Inserting an element on a B-tree consists of two events: **searching the appropriate node** to insert the element and **splitting the node** if required.Insertion operation always takes place in the bottom-up approach.
@@ -1364,17 +1361,17 @@ int main() {
 ```
 
 ### Complexity
-Best case Time complexity: `Θ(log n)`，
-- 查找每个节点开头就能确定去向： $O(\log n)$，
-- 且不需要上溢修复 $O(1)$
+- Best case Time complexity: `Θ(log n)`，
+	- 查找每个节点开头就能确定去向： $O(\log n)$，
+	- 且不需要上溢修复 $O(1)$
 
-Average case Space complexity: `Θ(n)`
-- 查找时在节点中间才能确定去向： $O(\frac{n}{2})$，
-- 上溢修复 $O(h)=O(\log n)$
+- Average case Space complexity: `Θ(n)`
+	- 查找时在节点中间才能确定去向： $O(\frac{n}{2})$，
+	- 上溢修复 $O(h)=O(\log n)$
 
-Worst case Space complexity: `Θ(n)`
-- 查找时在节点最后才能确定去向： $O(n)$，
-- 上溢修复 $O(h)=O(\log n)$
+- Worst case Space complexity: `Θ(n)`
+	- 查找时在节点最后才能确定去向： $O(n)$，
+	- 上溢修复 $O(h)=O(\log n)$
 
 ## Delete
 Deleting an element on a B-tree consists of three main events: **searching the node where the key to be deleted exists**, deleting the key and balancing the tree if required.
@@ -2739,9 +2736,7 @@ int main () {
 ```
 
 ### Complexity
-Best case Time complexity: `Θ(log n)`
-
-Average case Space complexity: `Θ(n)`
-
-Worst case Space complexity: `Θ(n)`
+- Best case Time complexity: `Θ(log n)`
+- Average case Space complexity: `Θ(n)`
+- Worst case Space complexity: `Θ(n)`
 

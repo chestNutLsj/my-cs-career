@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "ba366075bee7d04f",
+        "id": "29359ae1b1c4a005",
         "type": "tabs",
         "children": [
           {
-            "id": "f4c16f563e1a83d1",
+            "id": "f266b0c0a236d51f",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -76,8 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 263.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -163,28 +162,31 @@
       "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "f4c16f563e1a83d1",
+  "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle-design/internal&principle/mindmap/72-符号链接与硬链接-mindmap.png",
+    "1-Theory/5-OS-principle-design/internal&principle/mindmap/71-BTree-mindmap.png",
+    "1-Theory/5-OS-principle-design/internal&principle/mindmap/70-文件系统-mindmap.png",
+    "1-Theory/5-OS-principle-design/internal&principle/mindmap/70-文件系统-mindmap-compress.png",
+    "1-Theory/5-OS-principle-design/internal&principle/62-SSD.md",
+    "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md",
+    "1-Theory/5-OS-principle-design/internal&principle/71-BTree.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/71-BTree-mindmap.png",
+    "1-Theory/5-OS-principle-design/internal&principle/72-符号链接与硬链接.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/72-符号链接与硬链接-mindmap.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/72-符号链接与硬链接-dir-circular.png",
+    "5-Tools/Shell/shell-script-learn/Linux Shell 学习笔记.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/72-符号链接与硬链接-visualize-hard-vs-soft-link.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/70-文件系统-mindmap-compress.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/70-文件系统-mindmap.png",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/62-SSD-die.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/31-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/30-List.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/30-List-cursor-instance2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/30-List-cursor-instance1.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/30-List-cursor.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/30-List-inversion-counts.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/30-List-mergeSort-illustration.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/21-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/30-List-insertionSort-idea.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/30-List-repetend.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/30-List-repetend-instance.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/15-small-o-notation.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/30-List-selectionSort-stability.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/30-List-selectionSort-situation2.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/20-Vector.md",
     "1-Theory/5-OS-principle-design/internal&principle/11-宏内核结构的OS举例.md",
     "1-Theory/5-OS-principle-design/internal&principle/60-IO管理与磁盘.md",
-    "1-Theory/5-OS-principle-design/internal&principle/62-SSD.md",
-    "1-Theory/5-OS-principle-design/internal&principle/72-符号链接与硬链接.md",
-    "1-Theory/5-OS-principle-design/internal&principle/71-BTree.md",
     "1-Theory/5-OS-principle-design/internal&principle/61-SPOOLing.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/14-Lowerbound-analyze.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/24-Bitmap.md",
@@ -199,8 +201,6 @@
     "1-Theory/5-OS-principle-design/internal&principle/38-并发进阶.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/00-Info.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/13-Dynamic-programming.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/12-Instances-of-recursion.md",
     "1-Theory/5-OS-principle-design/internal&principle/paper/ZHUR12.pdf",
     "1-Theory/5-OS-principle-design/internal&principle/paper/HALD91.pdf",
     "1-Theory/5-OS-principle-design/internal&principle/paper/DIJK71.pdf",
