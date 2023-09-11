@@ -148,6 +148,7 @@ void hailstone( int n ) { //O(1)空间
 ![[40-Stack_Queue-fac-recursion-to-recurrence.png]]
 
 ## 进制转换
+### 数制转换原理
 λ进制的数可以表示为：
 $n=(d_{m}...d_{2}d_{1}d_{0})_{\lambda}=d_{m}\cdot\lambda^{m}+...+d_{2}\cdot\lambda^{2}+d_{1}\cdot\lambda^{1}+d_{0}\cdot\lambda^{0}$
 
@@ -155,14 +156,356 @@ $n=(d_{m}...d_{2}d_{1}d_{0})_{\lambda}=d_{m}\cdot\lambda^{m}+...+d_{2}\cdot\lamb
 
 有：$n_{i+1}=n_{i}/\lambda$ 和 $d_{i}=n_{i} \% \lambda$
 如此对λ反复整除、取余，即可自低而高得出λ进制的各位。
-## 栈混洗
+![[40-Stack_Queue-decimal2octal.png]]
 
-## 中缀表达式
+![[40-Stack_Queue-numeral-conversion.png]]
+
+### 实现
+原数的位数并不确定，因此不适合使用向量存储原数，并且浪费严重：
+- 若使用向量，则扩容策略必须得当；
+- 若使用列表，则多数接口均被闲置。
+
+另外，运算的顺序与输出顺序相反——数位从低到高运算获得，但是输出却由高到低。这种相反的顺序非常符合栈的思想：
+![[40-Stack_Queue-numerical-in-stack.png]]
+
+```
+void convert( Stack<char> & S, __int64 n, int base ) {
+	char digit[] = "0123456789ABCDEF"; //数位符号，如有必要可相应扩充
+	while ( n > 0 ) //由低到高，逐一计算出新进制下的各数位
+		{ S.push( digit[ n % base ] ); n /= base; } //余数入栈，n更新为除商
+} //新进制下由高到低的各数位，自顶而下保存于栈S中
+
+int main() {
+	Stack<char> S; convert( S, n, base ); //用栈记录转换得到的各数位
+	while ( ! S.empty() ) printf( "%c", S.pop() ); //逆序输出
+}
+
+```
+
+## 括号匹配
+### 思路尝试
+![[40-Stack_Queue-parenthesis-match.png]]
+- ==核心思想==：在括号串内部，消去一对紧邻的括号，不会影响全局的匹配判断。
+
+### 实现：一种括号
+```
+bool paren( const char exp[], Rank lo, Rank hi ) { //exp[lo, hi)
+	Stack<char> S; //使用栈记录已发现但尚未匹配的左括号
+	for ( Rank i = lo; i < hi; i++ ) //逐一检查当前字符
+		if ( '(' == exp[i] ) S.push( exp[i] ); //遇左括号：则进栈
+		else if ( ! S.empty() ) S.pop(); //遇右括号：若栈非空，则弹出对应的左括号
+		else return false; //否则（遇右括号时栈已空），必不匹配
+	return S.empty(); //最终栈空，当且仅当匹配
+}
+```
+
+![[40-Stack_Queue-paren-match-(.png]]
+
+### 扩展：多类括号
+![[40-Stack_Queue-paren-match-multi.png]]
+- 推广时要做括号类型的判断，直接根据左右是不能实现的；
+
+## 栈混洗
+### 问题描述
+对栈 A=<a1, a2, a3,.., an]，另有空栈 S 作中转、B 作转存处。A 只能弹出元素，B 只能压入元素，S 可以压入或弹出。经过一系列操作后，A 中所有元素转入 B 中，则 B 的当前从栈底到栈顶的序列称为对 A 的一次栈混洗：
+
+![[40-Stack_Queue-permutation.png]]
+
+### 栈混洗总数
+同一输入序列有多种栈混洗，那么对长度为 n 的序列，栈混洗总数记作 SP (n)
+
+显然，SP (1)=1
+考察当 S 变空时，即 A 的栈顶元素从 S 中弹出时，显然有 n 种情况：
+$$
+\begin{aligned}
+SP(n)&=\sum\limits_{k=1}^{n}SP(k-1)\cdot SP(n-k)\\
+&=catalan(n)=\frac{(2n)!}{(n+1)!\cdot n!}
+\end{aligned}
+$$
+![[40-Stack_Queue-catalan.png]]
+
+#### catalan 数应用
+- 栈混洗：catalan (n)
+- 括号匹配 n 对：catalan (n)
+- 二叉树形态 n 节点：catalan (n)
+- 互异 BST 的数量 n 节点：catalan (n)
+- n 个叶节点的真二叉树数量：catalan (n-1)
+
+### 禁形及其判断
+若要判断输入序列的任一排列是否为栈混洗，则本质是判断相对次序是否符合栈的运算规律。
+
+可以观察到并推广——任意三个元素能否按某相对次序出现于混洗中，与其它元素无关，即：
+对任何 1<=i<j<k<=n, `[..., k,..., i,..., j,...>` 一定不是栈混洗，这就是一个禁形。
+
+![[40-Stack_Queue-permutation-forbidden.png]]
+- O (n^3)算法：逐个判断；
+- O (n^2)算法：只需考虑 i<j 情况下，是否有 `[...,j+1,...,i,...,j,...`
+- O (n)算法：借助栈直接模拟栈混洗的过程，每次 pop 栈 S 时检查是否已空，或需弹出的元素在栈 S 中却不是栈顶，则必为禁形。
+### 栈混洗与括号匹配
+每一栈混洗，都对应于栈 S 的 n 次 push 和 pop 操作的一组序列，由括号匹配中的推广，push 和 pop 就是一对括号操作。因此 n 个元素的栈混洗，等价于 n 对括号的匹配：
+![[40-Stack_Queue-permutation-parenMatch.png]]
+
+## 中缀表达式求值
+### 问题描述
+中缀表达式：就是运算符在两个操作数中间的计算式，如 1+1=2
+
+自然地，中缀表达式求值的规则是基于优先级的局部计算，然后逐渐减治到全局——运算符逐渐减少，局部运算代以数值，最终得到结果。
+
+设表达式 $S=S_{L}+S_{0}+S_{R}$，对 $S_{0}$ 可以优先计算（优先级局部最高）且 $val(S_{0})=v_{0}$，则可以递推得化简式：$val(S)=val(S_{L}+str(v_{0})+S_{R}$
+
+### 思路
+由于运算符优先级多样，并且还有括号可以改变局部运算的优先级——仅根据表达式的前缀，不足以确定各运算符的计算次序，只有获得足够的后续信息才能确定哪些运算符可以执行。
+
+![[40-Stack_Queue-infix-expression.png]]
+
+很自然地，这种读取顺序和运算顺序相反的情况，也适合用栈。栈在这里的作用，是缓冲了运算的及时需求：
+- 自左向右扫描表达式，用栈记录已扫描的部分以及中间结果；
+- 栈内最后所剩值（若非值，亦可判断表达式非法），就是表达式的正确结果。
+![[40-Stack_Queue-infix-calc.png]]
+
+### 算法实现
+```
+//主算法
+double evaluate( char* S, char* RPN ) { //S保证语法正确
+	Stack<double> opnd; Stack<char> optr; //运算数栈、运算符栈
+	optr.push('\0'); //哨兵
+	while ( ! optr.empty() ) { //逐个处理各字符，直至运算符栈空
+		if ( isdigit( *S ) ) //若为操作数（可能多位、小数），则
+			readNumber( S, opnd ); //读入
+		else //若为运算符，则视其与栈顶运算符之间优先级的高低
+			switch( priority( optr.top(), *S ) ) { /* 分别处理 */ }
+	}
+	return opnd.pop(); //弹出并返回最后的计算结果
+}
+
+//优先级表
+const char pri[N_OPTR][N_OPTR] = { //运算符优先等级 [栈顶][当前]
+/* -- + */ '>', '>', '<', '<', '<', '<', '<', '>', '>',
+/* |  - */ '>', '>', '<', '<', '<', '<', '<', '>', '>',
+/* 栈 * */ '>', '>', '>', '>', '<', '<', '<', '>', '>',
+/* 顶 / */ '>', '>', '>', '>', '<', '<', '<', '>', '>',
+/* 运 ^ */ '>', '>', '>', '>', '>', '<', '<', '>', '>',
+/* 算 ! */ '>', '>', '>', '>', '>', '>', ' ', '>', '>',
+/* 符 ( */ '<', '<', '<', '<', '<', '<', '<', '=', ' ',
+/* |  ) */ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+/* -- \0 */ '<', '<', '<', '<', '<', '<', '<', ' ', '='
+//           +    -    *    /    ^    !    (    )    \0
+// |-------------- 当前运算符 --------------|
+};
+
+// 根据不同的优先级切换到不同的运算情形
+switch( priority( optr.top(), *S ) ) {
+	case '<': //栈顶运算符优先级更低
+		optr.push( *S ); S++; break; //计算推迟，当前运算符进栈
+		
+	case ' =': //优先级相等（当前运算符为右括号，或尾部哨兵'\0'） 
+		optr.pop(); S++; break; //脱括号并接收下一个字符
+		
+	case '>': {
+		char op = optr.pop();
+		if ( '!' == op ) opnd.push( calcu( op, opnd.pop() ) ); //一元运算符
+		else { double opnd2 = opnd.pop(), opnd1 = opnd.pop(); //二元运算符
+			opnd.push( calcu( opnd1, op, opnd2 ) ); //实施计算，结果入栈
+		} //为何不直接：opnd.push( calcu( opnd.pop(), op, opnd.pop() ) )？
+		break;
+	} //case '>'
+} //switch
+
+```
+
+![[40-Stack_Queue-infix-pri<.png]]
+
+![[40-Stack_Queue-infix-pri->.png]]
+
+![[40-Stack_Queue-infix-pri-=.png]]
+
+![[40-Stack_Queue-infix-operator-pri-1.png]]
+![[40-Stack_Queue-infix-pri-2.png]]
+
+### 实例
+![[40-Stack_Queue-infix-instance1.png]]
+![[40-Stack_Queue-infix-instance2.png]]
 
 ## 逆波兰表达式
+### 定义
+逆波兰表达式——后缀表达式：运算符在操作数之后，且不需要括号就可以表示优先级运算关系。
+![[40-Stack_Queue-postfix-expression.png]]
+
+### 栈式求值
+对后缀表达式：0! 123 + 4 5 6 ! * 7 ! 8 / + * 9 / +
+计算方式如下：
+- 引入栈 S 存放操作数：
+- 逐个处理后缀表达式中下一元素 x，
+	- 若 x 是操作数，则压入栈 S，
+	- 否则弹出运算符 x 所需要的目的操作数，执行计算后再压入栈中
+- 最后返回栈顶。
+
+![[40-Stack_Queue-postfix-instance.png]]
+
+### 中缀表达式转后缀表达式
+#### 手动
+![[40-Stack_Queue-infix2postfix-manual.png]]
+- 每遇到一个运算符，
+	- 若是一元运算符则与前面紧邻的操作数括起来，
+	- 若是二元运算符且后面的操作数满足与前面操作数的运行需求，则括起来；
+- 最后将运算符移到最近的右括号之外；
+- 脱去括号即可。
+
+$$
+\begin{aligned}
+&0!+123+4*(5*6!+7!/8)/9\\
+&=((0!)+123)+4*((5*(6!))+((7!)/8))/9\\
+&=((0!)+123)+((4*((5*(6!))+((7!)/8)))/9)\\
+&=(((0!)+123)+((4*((5*(6!))+((7!)/8)))/9))\\
+&=(((0)!123)+((4((5(6)!)*((7)!8)/)+)*9)/)+\\
+&=0!123+4\ 5\ 6\ !*7!8/+*9/+
+\end{aligned}
+$$
+
+#### 自动
+```
+double evaluate ( char* S, char* RPN ) { 
+	//对（已剔除白空格的）表达式S求值，并转换为逆波兰式RPN
+	Stack<double> opnd; Stack<char> optr; //运算数栈、运算符栈
+	optr.push ( '\0' ); //尾哨兵'\0'也作为头哨兵首先入栈
+	while ( !optr.empty() ) { //在运算符栈非空之前，逐个处理表达式中各字符
+		if ( isdigit ( *S ) ) { //若当前字符为操作数，则
+			readNumber ( S, opnd );
+			append ( RPN, opnd.top() ); //读入操作数，并将其接至RPN末尾
+		} else //若当前字符为运算符，则
+			switch ( priority ( optr.top(), *S ) ) { //视其与栈顶运算符之间优先级高低分别处理
+				case '<': //栈顶运算符优先级更低时
+					optr.push ( *S ); S++; //计算推迟，当前运算符进栈
+					break;
+				case '=': //优先级相等（当前运算符为右括号或者尾部哨兵'\0'）时
+					optr.pop(); S++; //脱括号并接收下一个字符
+					break;
+				case '>': { //栈顶运算符优先级更高时，可实施相应的计算，并将结果重新入栈
+					char op = optr.pop(); append ( RPN, op ); //栈顶运算符出栈并续接至RPN末尾
+					if ( '!' == op ) //若属于一元运算符
+						opnd.push ( calcu ( op, opnd.pop() ) ); //则取一个操作数，计算结果入栈
+					else { //对于其它（二元）运算符
+						double opnd2 = opnd.pop(), opnd1 = opnd.pop(); //取出后、前操作数
+						opnd.push ( calcu ( opnd1, op, opnd2 ) ); //实施二元计算，结果入栈
+					}
+					break;
+				}
+				default : exit ( -1 ); //逢语法错误，不做处理直接退出
+			}//switch
+	}//while
+	return opnd.pop(); //弹出并返回最后的计算结果
+}
+```
 
 ## Queue ADT
+### 特点
+队列（queue）也是受限的序列：
+- 只能在队尾插入（查询）：
+	- enqueue() / rear() 
+- 只能在队头删除（查询）：
+	- dequeue() / front()
+- 先进先出（FIFO）、后进后出（LILO）
+![[40-Stack_Queue-queue.png]]
+### 扩展接口 ：getMax()
+```
+class MaxQueue {
+public:
+    MaxQueue() {
+        // 初始化数据队列和辅助队列
+    }
+
+    void enqueue(int value) {
+        // 将元素插入数据队列
+        dataQueue.push(value);
+
+        // 将辅助队列中小于等于新元素的元素全部出队
+        while (!maxQueue.empty() && maxQueue.back() < value) {
+            maxQueue.pop_back();
+        }
+
+        // 将新元素插入辅助队列
+        maxQueue.push_back(value);
+    }
+
+    int dequeue() {
+        if (dataQueue.empty()) {
+            return -1; // 队列为空
+        }
+
+        int front = dataQueue.front();
+        dataQueue.pop();
+
+        // 如果出队的元素是最大值，同时也出队辅助队列中的最大值
+        if (front == maxQueue.front()) {
+            maxQueue.pop_front();
+        }
+
+        return front;
+    }
+
+    int getMax() {
+        if (maxQueue.empty()) {
+            return -1; // 队列为空
+        }
+
+        return maxQueue.front();
+    }
+
+private:
+    queue<int> dataQueue;      // 数据队列
+    deque<int> maxQueue;       // 辅助队列，存储当前最大值
+};
+
+int main() {
+    MaxQueue mq;
+    mq.enqueue(1);
+    mq.enqueue(3);
+    mq.enqueue(2);
+
+    cout << "Max: " << mq.getMax() << endl; // 输出最大值，应为3
+
+    mq.dequeue();
+    cout << "Max: " << mq.getMax() << endl; // 输出最大值，应为3
+
+    mq.dequeue();
+    cout << "Max: " << mq.getMax() << endl; // 输出最大值，应为2
+
+    return 0;
+}
+
+```
 
 ## 直方图最大矩形
+### 问题描述
+![[40-Stack_Queue-largest-rectangle-in-histogram.png]]
+在非负整数值的直方图区间 `H[0, n)` 中，如何找到最大的竖直矩形？
+显然求最大矩形面积的公式为：$maxRect(r)=H[r]\cdot(t(r)-s(r))$
+这里 
+- s (r)表示区间 `[0,r]` 上小于 `H[r]` 的最大值的坐标：
+	- $s(r)=max\{k|0\le k\le r\ and\ H[k-1]<H[r]\}$
+- t (r)表示区间 `[r,n]` 上小于 `H[r]` 的最小值的坐标：
+	- $t(r)=min\{k|r<k\le n\ and\ H[r]>H[k]\}$
+
+### 暴力法
+一一测试所有可能的 r 值，时间复杂度是 O (n^2)，因为每一个 r 都要确定 s (r)和 t (r)
+```
+using Rank = unsigned int;
+
+// 按定义蛮力地计算直方图H[]中的最大矩形（多个并列时取最靠左侧者）
+int mr_BRUTE( int H[], Rank n, Rank& mr_r, Rank& mr_s, Rank& mr_t ) {
+   int maxRect = 0;
+   for ( Rank r = 0, s = 0, t = 0; r < n; r++, s = t = r ) {
+      do s--; while ( (-1 != s) && (H[s] >= H[r]) ); s++;
+      do t++; while ( (t < n) && (H[r] <= H[t]) );
+      int rect = (int) H[r] * ( t - s );
+      if ( maxRect < rect )
+         { maxRect = rect; mr_r = r; mr_s = s; mr_t = t; }
+   }
+   return maxRect;
+} //每个极大矩形耗时O(n)，累计O(n^2)
+```
+
+### 使用栈
+
 
 ## 双栈当队

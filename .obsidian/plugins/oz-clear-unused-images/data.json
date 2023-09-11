@@ -1,7 +1,7 @@
 {
   "deleteOption": ".trash",
   "logsModal": true,
-  "excludedFolders": "0-Assets/,\n",
+  "excludedFolders": "0-Assets/,\n1-Theory/5-OS-principle/mindmap",
   "ribbonIcon": true,
   "excludeSubfolders": false
 }

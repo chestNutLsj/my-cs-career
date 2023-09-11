@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "34084a92591c99f3",
+        "id": "2fed49f05d0688a3",
         "type": "tabs",
         "children": [
           {
-            "id": "1d1dd0f12c4fb8b5",
+            "id": "211b633f7c93121a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md",
+                "file": "1-Theory/4-Architecture/CSAPP/32-GDB简单使用.md",
                 "mode": "source",
                 "source": false
               }
@@ -80,8 +80,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 210.5,
-    "collapsed": true
+    "width": 210.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -98,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md",
+                "file": "1-Theory/4-Architecture/CSAPP/32-GDB简单使用.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md",
+                "file": "1-Theory/4-Architecture/CSAPP/32-GDB简单使用.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +134,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md"
+                "file": "1-Theory/4-Architecture/CSAPP/32-GDB简单使用.md"
               }
             }
           },
@@ -151,7 +150,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -170,8 +170,29 @@
       "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "1d1dd0f12c4fb8b5",
+  "active": "211b633f7c93121a",
   "lastOpenFiles": [
+    "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
+    "1-Theory/4-Architecture/CSAPP/32-GDB简单使用.md",
+    "1-Theory/4-Architecture/CSAPP/assets/1694444063654.png",
+    "1-Theory/4-Architecture/CSAPP/assets/1694444062421.png",
+    "1-Theory/4-Architecture/CSAPP/assets/1694444054646.png",
+    "1-Theory/4-Architecture/CSAPP/assets/1694444053002.png",
+    "1-Theory/4-Architecture/CSAPP/assets/1694444050991.png",
+    "1-Theory/4-Architecture/CSAPP/assets/1694444049752.png",
+    "1-Theory/4-Architecture/CSAPP/assets/1694444048286.png",
+    "1-Theory/4-Architecture/CSAPP/assets/1694444046271.png",
+    "1-Theory/4-Architecture/CSAPP/assets/1694444045289.png",
+    "1-Theory/4-Architecture/CSAPP/assets/1694444043166.png",
+    "1-Theory/4-Architecture/CSAPP/assets",
+    "8-SimpRead/第 03 章：程序的机器级表示 - CSAPP 重点解读",
+    "1-Theory/4-Architecture/CSAPP/31-GCC的使用.md",
+    "1-Theory/5-OS-principle-design/408&&912/中断处理流程.md",
+    "1-Theory/5-OS-principle-design/408&&912/错题本.md",
+    "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
+    "1-Theory/5-OS-principle-design/OSTEP",
+    "1-Theory/4-Architecture/Hardware-software-interface-riscv",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md",
     "1-Theory/5-OS-principle-design/internal&principle/30-并发.md",
     "1-Theory/5-OS-principle-design/internal&principle/35-Banker-algo.md",
     "1-Theory/5-OS-principle-design/internal&principle/36-Coffman-algo.md",
@@ -180,7 +201,6 @@
     "1-Theory/5-OS-principle-design/internal&principle/39-Unix_Linux并发机制.md",
     "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
     "1-Theory/5-OS-principle-design/internal&principle/41-Buddy-system-impl-in-cpp.md",
-    "1-Theory/5-OS-principle-design/internal&principle/mindmap/62-SSD-mindmap.png",
     "1-Theory/5-OS-principle-design/internal&principle/42-加载和链接.md",
     "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
     "1-Theory/5-OS-principle-design/internal&principle/60-IO管理与磁盘.md",
@@ -189,38 +209,17 @@
     "1-Theory/5-OS-principle-design/internal&principle/72-符号链接与硬链接.md",
     "1-Theory/5-OS-principle-design/internal&principle/71-BTree.md",
     "1-Theory/5-OS-principle-design/internal&principle/62-SSD.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/62-SSD-mindmap.png",
     "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/operator-priority.pdf",
     "1-Theory/2-DataStruct/dsa-cpp-deng/31-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-fac-recursion-to-recurrence.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-recursion-types.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-hailstone.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-fib.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-factorial.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-func-call-stack.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-func-call-stack1.png",
     "1-Theory/3-Algorithm/topk problem.md",
-    "1-Theory/3-Algorithm/assets/topk problem-illustration.png",
     "1-Theory/3-Algorithm/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/30-List.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/60-Binary_Search_Tree.md",
-    "1-Theory/5-OS-principle-design/internal&principle/73-他山之石-文件系统总结.md",
     "1-Theory/5-OS-principle-design/internal&principle/一口气搞懂「文件系统」，就靠这 25 张图了/assets",
     "1-Theory/5-OS-principle-design/internal&principle/一口气搞懂「文件系统」，就靠这 25 张图了",
-    "5-Tools/Shell/shell-script-learn/Linux Shell 学习笔记.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/21-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/15-small-o-notation.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/20-Vector.md",
     "1-Theory/5-OS-principle-design/internal&principle/mindmap",
     "1-Theory/5-OS-principle-design/internal&principle/paper/ZHUR12.pdf",
-    "1-Theory/5-OS-principle-design/internal&principle/paper/HALD91.pdf",
-    "1-Theory/5-OS-principle-design/internal&principle/paper/DIJK71.pdf",
-    "1-Theory/5-OS-principle-design/internal&principle/paper/DENN68.pdf",
-    "1-Theory/5-OS-principle-design/internal&principle/paper/COFF71.pdf",
     "0-Assets/Diary/未命名.canvas",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
-    "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "2-Develop/3-BackEnd/未命名.canvas",
     "FrontEnd/未命名.canvas"
   ]

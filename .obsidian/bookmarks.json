@@ -187,6 +187,13 @@
       "ctime": 1693927625420,
       "items": [],
       "title": "ALGO-principle"
+    },
+    {
+      "type": "file",
+      "ctime": 1694436283432,
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md",
+      "subpath": "#catalan 数应用",
+      "title": "catalan(n)"
     }
   ]
 }
