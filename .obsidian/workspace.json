@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "29359ae1b1c4a005",
+        "id": "34084a92591c99f3",
         "type": "tabs",
         "children": [
           {
-            "id": "f266b0c0a236d51f",
+            "id": "1d1dd0f12c4fb8b5",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -76,7 +80,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 263.5
+    "width": 210.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -93,6 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -109,6 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -127,7 +134,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md"
+              }
             }
           },
           {
@@ -142,8 +151,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -162,54 +170,54 @@
       "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "1d1dd0f12c4fb8b5",
   "lastOpenFiles": [
-    "1-Theory/5-OS-principle-design/internal&principle/mindmap/72-符号链接与硬链接-mindmap.png",
-    "1-Theory/5-OS-principle-design/internal&principle/mindmap/71-BTree-mindmap.png",
-    "1-Theory/5-OS-principle-design/internal&principle/mindmap/70-文件系统-mindmap.png",
-    "1-Theory/5-OS-principle-design/internal&principle/mindmap/70-文件系统-mindmap-compress.png",
-    "1-Theory/5-OS-principle-design/internal&principle/62-SSD.md",
+    "1-Theory/5-OS-principle-design/internal&principle/30-并发.md",
+    "1-Theory/5-OS-principle-design/internal&principle/35-Banker-algo.md",
+    "1-Theory/5-OS-principle-design/internal&principle/36-Coffman-algo.md",
+    "1-Theory/5-OS-principle-design/internal&principle/37-Philosopher-dining.md",
+    "1-Theory/5-OS-principle-design/internal&principle/38-竞争条件与理发师问题.md",
+    "1-Theory/5-OS-principle-design/internal&principle/39-Unix_Linux并发机制.md",
+    "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+    "1-Theory/5-OS-principle-design/internal&principle/41-Buddy-system-impl-in-cpp.md",
+    "1-Theory/5-OS-principle-design/internal&principle/mindmap/62-SSD-mindmap.png",
+    "1-Theory/5-OS-principle-design/internal&principle/42-加载和链接.md",
+    "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
+    "1-Theory/5-OS-principle-design/internal&principle/60-IO管理与磁盘.md",
+    "1-Theory/5-OS-principle-design/internal&principle/61-SPOOLing.md",
     "1-Theory/5-OS-principle-design/internal&principle/70-文件系统.md",
-    "1-Theory/5-OS-principle-design/internal&principle/71-BTree.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/71-BTree-mindmap.png",
     "1-Theory/5-OS-principle-design/internal&principle/72-符号链接与硬链接.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/72-符号链接与硬链接-mindmap.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/72-符号链接与硬链接-dir-circular.png",
-    "5-Tools/Shell/shell-script-learn/Linux Shell 学习笔记.md",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/72-符号链接与硬链接-visualize-hard-vs-soft-link.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/70-文件系统-mindmap-compress.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/70-文件系统-mindmap.png",
-    "1-Theory/5-OS-principle-design/internal&principle/assets/62-SSD-die.png",
+    "1-Theory/5-OS-principle-design/internal&principle/71-BTree.md",
+    "1-Theory/5-OS-principle-design/internal&principle/62-SSD.md",
+    "1-Theory/5-OS-principle-design/internal&principle/assets/62-SSD-mindmap.png",
+    "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/operator-priority.pdf",
     "1-Theory/2-DataStruct/dsa-cpp-deng/31-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-fac-recursion-to-recurrence.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-recursion-types.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-hailstone.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-fib.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-factorial.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-func-call-stack.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-func-call-stack1.png",
+    "1-Theory/3-Algorithm/topk problem.md",
+    "1-Theory/3-Algorithm/assets/topk problem-illustration.png",
+    "1-Theory/3-Algorithm/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/30-List.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/60-Binary_Search_Tree.md",
+    "1-Theory/5-OS-principle-design/internal&principle/73-他山之石-文件系统总结.md",
+    "1-Theory/5-OS-principle-design/internal&principle/一口气搞懂「文件系统」，就靠这 25 张图了/assets",
+    "1-Theory/5-OS-principle-design/internal&principle/一口气搞懂「文件系统」，就靠这 25 张图了",
+    "5-Tools/Shell/shell-script-learn/Linux Shell 学习笔记.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/21-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/15-small-o-notation.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/20-Vector.md",
-    "1-Theory/5-OS-principle-design/internal&principle/11-宏内核结构的OS举例.md",
-    "1-Theory/5-OS-principle-design/internal&principle/60-IO管理与磁盘.md",
-    "1-Theory/5-OS-principle-design/internal&principle/61-SPOOLing.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/14-Lowerbound-analyze.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/24-Bitmap.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/11-Exercise.md",
-    "1-Theory/5-OS-principle-design/internal&principle/39-Unix_Linux并发机制.md",
-    "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
-    "1-Theory/5-OS-principle-design/internal&principle/42-加载和链接.md",
-    "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
     "1-Theory/5-OS-principle-design/internal&principle/mindmap",
-    "1-Theory/5-OS-principle-design/internal&principle/43-Unix_Linux内存管理.md",
-    "1-Theory/5-OS-principle-design/internal&principle/41-Buddy-system.md",
-    "1-Theory/5-OS-principle-design/internal&principle/38-并发进阶.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/10-Introduction.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/00-Info.md",
     "1-Theory/5-OS-principle-design/internal&principle/paper/ZHUR12.pdf",
     "1-Theory/5-OS-principle-design/internal&principle/paper/HALD91.pdf",
     "1-Theory/5-OS-principle-design/internal&principle/paper/DIJK71.pdf",
     "1-Theory/5-OS-principle-design/internal&principle/paper/DENN68.pdf",
     "1-Theory/5-OS-principle-design/internal&principle/paper/COFF71.pdf",
-    "1-Theory/5-OS-principle-design/internal&principle/paper/CARR01.pdf",
-    "1-Theory/5-OS-principle-design/internal&principle/paper",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets",
-    "1-Theory/2-DataStruct/dsa-c-yan",
     "0-Assets/Diary/未命名.canvas",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",

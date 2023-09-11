@@ -3,7 +3,7 @@ url_1: https://www.cnblogs.com/liyaaixuexi/p/17352046.html
 url_2: https://www.javatpoint.com/spooling-vs-buffering
 url_3: https://www.geeksforgeeks.org/what-exactly-spooling-is-all-about/
 ---
-## Mindmap
+
 ![[61-SPOOLing-mindmap.png]]
 
 ## 脱机技术
@@ -22,9 +22,9 @@ url_3: https://www.geeksforgeeks.org/what-exactly-spooling-is-all-about/
 
 SPOOLing 的意思是同时外设联机操作（Simultaneous Peripheral Operation On-Line），又称为假脱机输入/输出操作。  
 
-**SPOOLing是操作系统中采用的一种将独占设备改造为共享设备的技术，所以SPOOLing系统必须使用独占设备。** 它有效减少了进程等待读入/读出信息的时间，**加快了作业执行的速度。**  
+**SPOOLing 是操作系统中采用的一种将独占设备改造为共享设备的技术，所以 SPOOLing 系统必须使用独占设备。** 它有效减少了进程等待读入/读出信息的时间，**加快了作业执行的速度。**  
 
-SPOOLing技术是**用软件的方式实现了数据的预输入和缓输出**。
+SPOOLing 技术是**用软件的方式实现了数据的预输入和缓输出**。
 
 ![[61-SPOOLing-spooling-software.png]]
 

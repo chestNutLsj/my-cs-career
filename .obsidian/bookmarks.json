@@ -34,20 +34,6 @@
         },
         {
           "type": "file",
-          "ctime": 1693985635590,
-          "path": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
-          "subpath": "#^57a318",
-          "title": "静态重定位"
-        },
-        {
-          "type": "file",
-          "ctime": 1693985646613,
-          "path": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
-          "subpath": "#^4f8ce9",
-          "title": "动态重定位"
-        },
-        {
-          "type": "file",
           "ctime": 1693985701846,
           "path": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
           "subpath": "#^55c770",
@@ -129,6 +115,27 @@
           "path": "1-Theory/5-OS-principle-design/internal&principle/50-CPU调度.md",
           "subpath": "#速率单调调度",
           "title": "速率单调调度"
+        },
+        {
+          "type": "file",
+          "ctime": 1694425936340,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+          "subpath": "#^6b6500",
+          "title": "静态重定位"
+        },
+        {
+          "type": "file",
+          "ctime": 1694430319599,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+          "subpath": "#^e36fc3",
+          "title": "Clock算法与Belady现象"
+        },
+        {
+          "type": "file",
+          "ctime": 1694425953443,
+          "path": "1-Theory/5-OS-principle-design/internal&principle/40-内存与虚存.md",
+          "subpath": "#^f55749",
+          "title": "动态重定位"
         }
       ],
       "title": "OS-principle"
@@ -164,6 +171,13 @@
           "path": "1-Theory/2-DataStruct/dsa-cpp-deng/14-Lowerbound-analyze.md",
           "subpath": "#比较树",
           "title": "比较树"
+        },
+        {
+          "type": "file",
+          "ctime": 1694350318696,
+          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/31-Exercise.md",
+          "subpath": "#3-19 Josephus 环问题",
+          "title": "Josephus problem"
         }
       ],
       "title": "DSA-考点重点"

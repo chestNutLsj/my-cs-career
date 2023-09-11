@@ -159,6 +159,8 @@ template <typename T> void List<T>::mergeSort( ListNodePosi<T> & p, Rank n ) {
 } //若归并可在线性时间内完成，则总体运行时间亦为O(nlogn)
 ```
 
+^da908a
+
 #### 二路归并
 ```
 template <typename T> ListNodePosi<T> //this.[p +n) & L.[q +m)：归并排序时，L == this

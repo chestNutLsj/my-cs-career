@@ -191,17 +191,17 @@ public class BTree {
     };
   }
 
-  public BTree(int t) {
+  public BTree (int t) {
     T = t;
-    root = new Node();
-    root.n = 0;
-    root.leaf = true;
+    root = new Node ();
+    root. n = 0;
+    root. leaf = true;
   }
 
   private Node root;
 
   // Search key
-  private Node Search(Node x, int key) {
+  private Node Search (Node x, int key) {
     int i = 0;
     if (x == null)
       return x;
@@ -216,13 +216,13 @@ public class BTree {
     if (x.leaf) {
       return null;
     } else {
-      return Search(x.child[i], key);
+      return Search (x.child[i], key);
     }
   }
 
   // Splitting the node
-  private void Split(Node x, int pos, Node y) {
-    Node z = new Node();
+  private void Split (Node x, int pos, Node y) {
+    Node z = new Node ();
     z.leaf = y.leaf;
     z.n = T - 1;
     for (int j = 0; j < T - 1; j++) {
@@ -247,23 +247,23 @@ public class BTree {
   }
 
   // Inserting a value
-  public void Insert(final int key) {
+  public void Insert (final int key) {
     Node r = root;
     if (r.n == 2 * T - 1) {
-      Node s = new Node();
+      Node s = new Node ();
       root = s;
       s.leaf = false;
       s.n = 0;
       s.child[0] = r;
-      Split(s, 0, r);
-      insertValue(s, key);
+      Split (s, 0, r);
+      insertValue (s, key);
     } else {
-      insertValue(r, key);
+      insertValue (r, key);
     }
   }
 
   // Insert the node
-  final private void insertValue(Node x, int k) {
+  final private void insertValue (Node x, int k) {
 
     if (x.leaf) {
       int i = 0;
@@ -279,59 +279,59 @@ public class BTree {
       ;
       i++;
       Node tmp = x.child[i];
-      if (tmp.n == 2 * T - 1) {
-        Split(x, i, tmp);
+      if (tmp. n == 2 * T - 1) {
+        Split (x, i, tmp);
         if (k > x.key[i]) {
           i++;
         }
       }
-      insertValue(x.child[i], k);
+      insertValue (x.child[i], k);
     }
 
   }
 
-  public void Show() {
-    Show(root);
+  public void Show () {
+    Show (root);
   }
 
   // Display
-  private void Show(Node x) {
+  private void Show (Node x) {
     assert (x == null);
     for (int i = 0; i < x.n; i++) {
-      System.out.print(x.key[i] + " ");
+      System.out.print (x.key[i] + " ");
     }
     if (!x.leaf) {
       for (int i = 0; i < x.n + 1; i++) {
-        Show(x.child[i]);
+        Show (x.child[i]);
       }
     }
   }
 
   // Check if present
-  public boolean Contain(int k) {
-    if (this.Search(root, k) != null) {
+  public boolean Contain (int k) {
+    if (this.Search (root, k) != null) {
       return true;
     } else {
       return false;
     }
   }
 
-  public static void main(String[] args) {
-    BTree b = new BTree(3);
-    b.Insert(8);
-    b.Insert(9);
-    b.Insert(10);
-    b.Insert(11);
-    b.Insert(15);
-    b.Insert(20);
-    b.Insert(17);
+  public static void main (String[] args) {
+    BTree b = new BTree (3);
+    b.Insert (8);
+    b.Insert (9);
+    b.Insert (10);
+    b.Insert (11);
+    b.Insert (15);
+    b.Insert (20);
+    b.Insert (17);
 
-    b.Show();
+    b.Show ();
 
-    if (b.Contain(12)) {
-      System.out.println("\nfound");
+    if (b.Contain (12)) {
+      System.out.println ("\nfound");
     } else {
-      System.out.println("\nnot found");
+      System.out.println ("\nnot found");
     }
     ;
   }
@@ -356,9 +356,9 @@ struct BTreeNode {
 struct BTreeNode *root;
 
 // Create a node
-struct BTreeNode *createNode(int val, struct BTreeNode *child) {
+struct BTreeNode *createNode (int val, struct BTreeNode *child) {
   struct BTreeNode *newNode;
-  newNode = (struct BTreeNode *)malloc(sizeof(struct BTreeNode));
+  newNode = (struct BTreeNode *) malloc (sizeof (struct BTreeNode));
   newNode->val[1] = val;
   newNode->count = 1;
   newNode->link[0] = root;
@@ -367,7 +367,7 @@ struct BTreeNode *createNode(int val, struct BTreeNode *child) {
 }
 
 // Insert node
-void insertNode(int val, int pos, struct BTreeNode *node,
+void insertNode (int val, int pos, struct BTreeNode *node,
         struct BTreeNode *child) {
   int j = node->count;
   while (j > pos) {
@@ -381,7 +381,7 @@ void insertNode(int val, int pos, struct BTreeNode *node,
 }
 
 // Split node
-void splitNode(int val, int *pval, int pos, struct BTreeNode *node,
+void splitNode (int val, int *pval, int pos, struct BTreeNode *node,
          struct BTreeNode *child, struct BTreeNode **newNode) {
   int median, j;
 
@@ -390,7 +390,7 @@ void splitNode(int val, int *pval, int pos, struct BTreeNode *node,
   else
     median = MIN;
 
-  *newNode = (struct BTreeNode *)malloc(sizeof(struct BTreeNode));
+  *newNode = (struct BTreeNode *) malloc (sizeof (struct BTreeNode));
   j = median + 1;
   while (j <= MAX) {
     (*newNode)->val[j - median] = node->val[j];
@@ -401,9 +401,9 @@ void splitNode(int val, int *pval, int pos, struct BTreeNode *node,
   (*newNode)->count = MAX - median;
 
   if (pos <= MIN) {
-    insertNode(val, pos, node, child);
+    insertNode (val, pos, node, child);
   } else {
-    insertNode(val, pos - median, *newNode, child);
+    insertNode (val, pos - median, *newNode, child);
   }
   *pval = node->val[node->count];
   (*newNode)->link[0] = node->link[node->count];
@@ -411,10 +411,10 @@ void splitNode(int val, int *pval, int pos, struct BTreeNode *node,
 }
 
 // Set the value
-int setValue(int val, int *pval,
+int setValue (int val, int *pval,
            struct BTreeNode *node, struct BTreeNode **child) {
   int pos;
-  if (!node) {
+  if (! node) {
     *pval = val;
     *child = NULL;
     return 1;
@@ -427,15 +427,15 @@ int setValue(int val, int *pval,
        (val < node->val[pos] && pos > 1); pos--)
       ;
     if (val == node->val[pos]) {
-      printf("Duplicates are not permitted\n");
+      printf ("Duplicates are not permitted\n");
       return 0;
     }
   }
-  if (setValue(val, pval, node->link[pos], child)) {
+  if (setValue (val, pval, node->link[pos], child)) {
     if (node->count < MAX) {
-      insertNode(*pval, pos, node, *child);
+      insertNode (*pval, pos, node, *child);
     } else {
-      splitNode(*pval, pval, pos, node, *child, child);
+      splitNode (*pval, pval, pos, node, *child, child);
       return 1;
     }
   }
@@ -443,18 +443,18 @@ int setValue(int val, int *pval,
 }
 
 // Insert the value
-void insert(int val) {
+void insert (int val) {
   int flag, i;
   struct BTreeNode *child;
 
-  flag = setValue(val, &i, root, &child);
+  flag = setValue (val, &i, root, &child);
   if (flag)
-    root = createNode(i, child);
+    root = createNode (i, child);
 }
 
 // Search node
-void search(int val, int *pos, struct BTreeNode *myNode) {
-  if (!myNode) {
+void search (int val, int *pos, struct BTreeNode *myNode) {
+  if (! myNode) {
     return;
   }
 
@@ -465,45 +465,45 @@ void search(int val, int *pos, struct BTreeNode *myNode) {
        (val < myNode->val[*pos] && *pos > 1); (*pos)--)
       ;
     if (val == myNode->val[*pos]) {
-      printf("%d is found", val);
+      printf ("%d is found", val);
       return;
     }
   }
-  search(val, pos, myNode->link[*pos]);
+  search (val, pos, myNode->link[*pos]);
 
   return;
 }
 
 // Traverse then nodes
-void traversal(struct BTreeNode *myNode) {
+void traversal (struct BTreeNode *myNode) {
   int i;
   if (myNode) {
     for (i = 0; i < myNode->count; i++) {
-      traversal(myNode->link[i]);
-      printf("%d ", myNode->val[i + 1]);
+      traversal (myNode->link[i]);
+      printf ("%d ", myNode->val[i + 1]);
     }
-    traversal(myNode->link[i]);
+    traversal (myNode->link[i]);
   }
 }
 
-int main() {
+int main () {
   int val, ch;
 
-  insert(8);
-  insert(9);
-  insert(10);
-  insert(11);
-  insert(15);
-  insert(16);
-  insert(17);
-  insert(18);
-  insert(20);
-  insert(23);
+  insert (8);
+  insert (9);
+  insert (10);
+  insert (11);
+  insert (15);
+  insert (16);
+  insert (17);
+  insert (18);
+  insert (20);
+  insert (23);
 
-  traversal(root);
+  traversal (root);
 
-  printf("\n");
-  search(11, &ch, root);
+  printf ("\n");
+  search (11, &ch, root);
 }
 ```
 
@@ -522,13 +522,13 @@ class TreeNode {
   bool leaf;
 
    public:
-  TreeNode(int temp, bool bool_leaf);
+  TreeNode (int temp, bool bool_leaf);
 
-  void insertNonFull(int k);
-  void splitChild(int i, TreeNode *y);
-  void traverse();
+  void insertNonFull (int k);
+  void splitChild (int i, TreeNode *y);
+  void traverse ();
 
-  TreeNode *search(int k);
+  TreeNode *search (int k);
 
   friend class BTree;
 };
@@ -538,24 +538,24 @@ class BTree {
   int t;
 
    public:
-  BTree(int temp) {
+  BTree (int temp) {
     root = NULL;
     t = temp;
   }
 
-  void traverse() {
+  void traverse () {
     if (root != NULL)
-      root->traverse();
+      root->traverse ();
   }
 
-  TreeNode *search(int k) {
-    return (root == NULL) ? NULL : root->search(k);
+  TreeNode *search (int k) {
+    return (root == NULL) ? NULL : root->search (k);
   }
 
-  void insert(int k);
+  void insert (int k);
 };
 
-TreeNode::TreeNode(int t1, bool leaf1) {
+TreeNode:: TreeNode (int t1, bool leaf1) {
   t = t1;
   leaf = leaf1;
 
@@ -565,19 +565,19 @@ TreeNode::TreeNode(int t1, bool leaf1) {
   n = 0;
 }
 
-void TreeNode::traverse() {
+void TreeNode:: traverse () {
   int i;
   for (i = 0; i < n; i++) {
     if (leaf == false)
-      C[i]->traverse();
+      C[i]->traverse ();
     cout << " " << keys[i];
   }
 
   if (leaf == false)
-    C[i]->traverse();
+    C[i]->traverse ();
 }
 
-TreeNode *TreeNode::search(int k) {
+TreeNode *TreeNode:: search (int k) {
   int i = 0;
   while (i < n && k > keys[i])
     i++;
@@ -588,34 +588,34 @@ TreeNode *TreeNode::search(int k) {
   if (leaf == true)
     return NULL;
 
-  return C[i]->search(k);
+  return C[i]->search (k);
 }
 
-void BTree::insert(int k) {
+void BTree:: insert (int k) {
   if (root == NULL) {
-    root = new TreeNode(t, true);
+    root = new TreeNode (t, true);
     root->keys[0] = k;
     root->n = 1;
   } else {
     if (root->n == 2 * t - 1) {
-      TreeNode *s = new TreeNode(t, false);
+      TreeNode *s = new TreeNode (t, false);
 
       s->C[0] = root;
 
-      s->splitChild(0, root);
+      s->splitChild (0, root);
 
       int i = 0;
       if (s->keys[0] < k)
         i++;
-      s->C[i]->insertNonFull(k);
+      s->C[i]->insertNonFull (k);
 
       root = s;
     } else
-      root->insertNonFull(k);
+      root->insertNonFull (k);
   }
 }
 
-void TreeNode::insertNonFull(int k) {
+void TreeNode:: insertNonFull (int k) {
   int i = n - 1;
 
   if (leaf == true) {
@@ -631,17 +631,17 @@ void TreeNode::insertNonFull(int k) {
       i--;
 
     if (C[i + 1]->n == 2 * t - 1) {
-      splitChild(i + 1, C[i + 1]);
+      splitChild (i + 1, C[i + 1]);
 
       if (keys[i + 1] < k)
         i++;
     }
-    C[i + 1]->insertNonFull(k);
+    C[i + 1]->insertNonFull (k);
   }
 }
 
-void TreeNode::splitChild(int i, TreeNode *y) {
-  TreeNode *z = new TreeNode(y->t, y->leaf);
+void TreeNode:: splitChild (int i, TreeNode *y) {
+  TreeNode *z = new TreeNode (y->t, y->leaf);
   z->n = t - 1;
 
   for (int j = 0; j < t - 1; j++)
@@ -665,30 +665,30 @@ void TreeNode::splitChild(int i, TreeNode *y) {
   n = n + 1;
 }
 
-int main() {
-  BTree t(3);
-  t.insert(8);
-  t.insert(9);
-  t.insert(10);
-  t.insert(11);
-  t.insert(15);
-  t.insert(16);
-  t.insert(17);
-  t.insert(18);
-  t.insert(20);
-  t.insert(23);
+int main () {
+  BTree t (3);
+  t.insert (8);
+  t.insert (9);
+  t.insert (10);
+  t.insert (11);
+  t.insert (15);
+  t.insert (16);
+  t.insert (17);
+  t.insert (18);
+  t.insert (20);
+  t.insert (23);
 
   cout << "The B-tree is: ";
-  t.traverse();
+  t.traverse ();
 
   int k = 10;
-  (t.search(k) != NULL) ? cout << endl
+  (t.search (k) != NULL) ? cout << endl
                  << k << " is found"
               : cout << endl
                  << k << " is not Found";
 
   k = 2;
-  (t.search(k) != NULL) ? cout << endl
+  (t.search (k) != NULL) ? cout << endl
                  << k << " is found"
               : cout << endl
                  << k << " is not Found\n";
@@ -704,7 +704,7 @@ int main() {
 - Worst case Space complexity: `Θ(n)`
 
 ## Insert
-Inserting an element on a B-tree consists of two events: **searching the appropriate node** to insert the element and **splitting the node** if required.Insertion operation always takes place in the bottom-up approach.
+Inserting an element on a B-tree consists of two events: **searching the appropriate node** to insert the element and **splitting the node** if required. Insertion operation always takes place in the bottom-up approach.
 
 Let us understand these events below.
 
@@ -734,34 +734,34 @@ If not, insert it:
 # Create a node
 class BTreeNode:
     def __init__(self, leaf=False):
-        self.leaf = leaf
-        self.keys = []
-        self.child = []
+        self. leaf = leaf
+        self. keys = []
+        self. child = []
 
 
 # Tree
 class BTree:
     def __init__(self, t):
-        self.root = BTreeNode(True)
-        self.t = t
+        self. root = BTreeNode (True)
+        self. t = t
 
     # Insert node
-    def insert(self, k):
-        root = self.root
-        if len(root.keys) == (2 * self.t) - 1:
-            temp = BTreeNode()
-            self.root = temp
-            temp.child.insert(0, root)
-            self.split_child(temp, 0)
-            self.insert_non_full(temp, k)
+    def insert (self, k):
+        root = self. root
+        if len (root. keys) == (2 * self. t) - 1:
+            temp = BTreeNode ()
+            self. root = temp
+            temp. child. insert (0, root)
+            self. split_child (temp, 0)
+            self. insert_non_full (temp, k)
         else:
-            self.insert_non_full(root, k)
+            self. insert_non_full (root, k)
 
     # Insert nonfull
-    def insert_non_full(self, x, k):
-        i = len(x.keys) - 1
+    def insert_non_full (self, x, k):
+        i = len (x.keys) - 1
         if x.leaf:
-            x.keys.append((None, None))
+            x.keys. append ((None, None))
             while i >= 0 and k[0] < x.keys[i][0]:
                 x.keys[i + 1] = x.keys[i]
                 i -= 1
@@ -770,19 +770,19 @@ class BTree:
             while i >= 0 and k[0] < x.keys[i][0]:
                 i -= 1
             i += 1
-            if len(x.child[i].keys) == (2 * self.t) - 1:
-                self.split_child(x, i)
+            if len (x.child[i]. keys) == (2 * self. t) - 1:
+                self. split_child (x, i)
                 if k[0] > x.keys[i][0]:
                     i += 1
-            self.insert_non_full(x.child[i], k)
+            self. insert_non_full (x.child[i], k)
 
     # Split the child
-    def split_child(self, x, i):
-        t = self.t
+    def split_child (self, x, i):
+        t = self. t
         y = x.child[i]
-        z = BTreeNode(y.leaf)
-        x.child.insert(i + 1, z)
-        x.keys.insert(i, y.keys[t - 1])
+        z = BTreeNode (y.leaf)
+        x.child. insert (i + 1, z)
+        x.keys. insert (i, y.keys[t - 1])
         z.keys = y.keys[t: (2 * t) - 1]
         y.keys = y.keys[0: t - 1]
         if not y.leaf:
@@ -790,28 +790,28 @@ class BTree:
             y.child = y.child[0: t - 1]
 
     # Print the tree
-    def print_tree(self, x, l=0):
-        print("Level ", l, " ", len(x.keys), end=":")
+    def print_tree (self, x, l=0):
+        print ("Level ", l, " ", len (x.keys), end=": ")
         for i in x.keys:
-            print(i, end=" ")
-        print()
+            print (i, end=" ")
+        print ()
         l += 1
-        if len(x.child) > 0:
+        if len (x.child) > 0:
             for i in x.child:
-                self.print_tree(i, l)
+                self. print_tree (i, l)
 
 
-def main():
-    B = BTree(3)
+def main ():
+    B = BTree (3)
 
-    for i in range(10):
-        B.insert((i, 2 * i))
+    for i in range (10):
+        B.insert ((i, 2 * i))
 
-    B.print_tree(B.root)
+    B.print_tree (B.root)
 
 
 if __name__ == '__main__':
-    main()
+    main ()
 ```
 
 #### Java
@@ -829,9 +829,9 @@ public class BTree {
     Node child[] = new Node[2 * T];
     boolean leaf = true;
 
-    public int Find(int k) {
-      for (int i = 0; i < this.n; i++) {
-        if (this.key[i] == k) {
+    public int Find (int k) {
+      for (int i = 0; i < this. n; i++) {
+        if (this. key[i] == k) {
           return i;
         }
       }
@@ -839,18 +839,18 @@ public class BTree {
     };
   }
 
-  public BTree(int t) {
+  public BTree (int t) {
     T = t;
-    root = new Node();
-    root.n = 0;
-    root.leaf = true;
+    root = new Node ();
+    root. n = 0;
+    root. leaf = true;
   }
 
   private Node root;
 
   // split
-  private void split(Node x, int pos, Node y) {
-    Node z = new Node();
+  private void split (Node x, int pos, Node y) {
+    Node z = new Node ();
     z.leaf = y.leaf;
     z.n = T - 1;
     for (int j = 0; j < T - 1; j++) {
@@ -875,23 +875,23 @@ public class BTree {
   }
 
   // insert key
-  public void insert(final int key) {
+  public void insert (final int key) {
     Node r = root;
     if (r.n == 2 * T - 1) {
-      Node s = new Node();
+      Node s = new Node ();
       root = s;
       s.leaf = false;
       s.n = 0;
       s.child[0] = r;
-      split(s, 0, r);
-      _insert(s, key);
+      split (s, 0, r);
+      _insert (s, key);
     } else {
-      _insert(r, key);
+      _insert (r, key);
     }
   }
 
   // insert node
-  final private void _insert(Node x, int k) {
+  final private void _insert (Node x, int k) {
 
     if (x.leaf) {
       int i = 0;
@@ -907,42 +907,42 @@ public class BTree {
       ;
       i++;
       Node tmp = x.child[i];
-      if (tmp.n == 2 * T - 1) {
-        split(x, i, tmp);
+      if (tmp. n == 2 * T - 1) {
+        split (x, i, tmp);
         if (k > x.key[i]) {
           i++;
         }
       }
-      _insert(x.child[i], k);
+      _insert (x.child[i], k);
     }
 
   }
 
-  public void display() {
-    display(root);
+  public void display () {
+    display (root);
   }
 
   // Display the tree
-  private void display(Node x) {
+  private void display (Node x) {
     assert (x == null);
     for (int i = 0; i < x.n; i++) {
-      System.out.print(x.key[i] + " ");
+      System. out. print (x.key[i] + " ");
     }
     if (!x.leaf) {
       for (int i = 0; i < x.n + 1; i++) {
-        display(x.child[i]);
+        display (x.child[i]);
       }
     }
   }
 
-  public static void main(String[] args) {
-    BTree b = new BTree(3);
-    b.insert(8);
-    b.insert(9);
-    b.insert(10);
-    b.insert(11);
-    b.insert(15);
-    b.insert(20);
+  public static void main (String[] args) {
+    BTree b = new BTree (3);
+    b.insert (8);
+    b.insert (9);
+    b.insert (10);
+    b.insert (11);
+    b.insert (15);
+    b.insert (20);
     b.insert (17);
 
     b.display ();
@@ -968,9 +968,9 @@ struct btreeNode {
 struct btreeNode *root;
 
 // Node creation
-struct btreeNode *createNode(int item, struct btreeNode *child) {
+struct btreeNode *createNode (int item, struct btreeNode *child) {
   struct btreeNode *newNode;
-  newNode = (struct btreeNode *)malloc(sizeof(struct btreeNode));
+  newNode = (struct btreeNode *) malloc (sizeof (struct btreeNode));
   newNode->item[1] = item;
   newNode->count = 1;
   newNode->link[0] = root;
@@ -979,7 +979,7 @@ struct btreeNode *createNode(int item, struct btreeNode *child) {
 }
 
 // Insert
-void insertValue(int item, int pos, struct btreeNode *node,
+void insertValue (int item, int pos, struct btreeNode *node,
           struct btreeNode *child) {
   int j = node->count;
   while (j > pos) {
@@ -993,7 +993,7 @@ void insertValue(int item, int pos, struct btreeNode *node,
 }
 
 // Split node
-void splitNode(int item, int *pval, int pos, struct btreeNode *node,
+void splitNode (int item, int *pval, int pos, struct btreeNode *node,
          struct btreeNode *child, struct btreeNode **newNode) {
   int median, j;
 
@@ -1002,7 +1002,7 @@ void splitNode(int item, int *pval, int pos, struct btreeNode *node,
   else
     median = MIN;
 
-  *newNode = (struct btreeNode *)malloc(sizeof(struct btreeNode));
+  *newNode = (struct btreeNode *) malloc (sizeof (struct btreeNode));
   j = median + 1;
   while (j <= MAX) {
     (*newNode)->item[j - median] = node->item[j];
@@ -1013,9 +1013,9 @@ void splitNode(int item, int *pval, int pos, struct btreeNode *node,
   (*newNode)->count = MAX - median;
 
   if (pos <= MIN) {
-    insertValue(item, pos, node, child);
+    insertValue (item, pos, node, child);
   } else {
-    insertValue(item, pos - median, *newNode, child);
+    insertValue (item, pos - median, *newNode, child);
   }
   *pval = node->item[node->count];
   (*newNode)->link[0] = node->link[node->count];
@@ -1023,10 +1023,10 @@ void splitNode(int item, int *pval, int pos, struct btreeNode *node,
 }
 
 // Set the value of node
-int setNodeValue(int item, int *pval,
+int setNodeValue (int item, int *pval,
            struct btreeNode *node, struct btreeNode **child) {
   int pos;
-  if (!node) {
+  if (! node) {
     *pval = item;
     *child = NULL;
     return 1;
@@ -1039,15 +1039,15 @@ int setNodeValue(int item, int *pval,
        (item < node->item[pos] && pos > 1); pos--)
       ;
     if (item == node->item[pos]) {
-      printf("Duplicates not allowed\n");
+      printf ("Duplicates not allowed\n");
       return 0;
     }
   }
-  if (setNodeValue(item, pval, node->link[pos], child)) {
+  if (setNodeValue (item, pval, node->link[pos], child)) {
     if (node->count < MAX) {
-      insertValue(*pval, pos, node, *child);
+      insertValue (*pval, pos, node, *child);
     } else {
-      splitNode(*pval, pval, pos, node, *child, child);
+      splitNode (*pval, pval, pos, node, *child, child);
       return 1;
     }
   }
@@ -1055,17 +1055,17 @@ int setNodeValue(int item, int *pval,
 }
 
 // Insert the value
-void insertion(int item) {
+void insertion (int item) {
   int flag, i;
   struct btreeNode *child;
 
-  flag = setNodeValue(item, &i, root, &child);
+  flag = setNodeValue (item, &i, root, &child);
   if (flag)
-    root = createNode(i, child);
+    root = createNode (i, child);
 }
 
 // Copy the successor
-void copySuccessor(struct btreeNode *myNode, int pos) {
+void copySuccessor (struct btreeNode *myNode, int pos) {
   struct btreeNode *dummy;
   dummy = myNode->link[pos];
 
@@ -1075,7 +1075,7 @@ void copySuccessor(struct btreeNode *myNode, int pos) {
 }
 
 // Do rightshift
-void rightShift(struct btreeNode *myNode, int pos) {
+void rightShift (struct btreeNode *myNode, int pos) {
   struct btreeNode *x = myNode->link[pos];
   int j = x->count;
 
@@ -1095,7 +1095,7 @@ void rightShift(struct btreeNode *myNode, int pos) {
 }
 
 // Do leftshift
-void leftShift(struct btreeNode *myNode, int pos) {
+void leftShift (struct btreeNode *myNode, int pos) {
   int j = 1;
   struct btreeNode *x = myNode->link[pos - 1];
 
@@ -1117,7 +1117,7 @@ void leftShift(struct btreeNode *myNode, int pos) {
 }
 
 // Merge the nodes
-void mergeNodes(struct btreeNode *myNode, int pos) {
+void mergeNodes (struct btreeNode *myNode, int pos) {
   int j = 1;
   struct btreeNode *x1 = myNode->link[pos], *x2 = myNode->link[pos - 1];
 
@@ -1139,64 +1139,64 @@ void mergeNodes(struct btreeNode *myNode, int pos) {
     j++;
   }
   myNode->count--;
-  free(x1);
+  free (x1);
 }
 
 // Adjust the node
-void adjustNode(struct btreeNode *myNode, int pos) {
-  if (!pos) {
+void adjustNode (struct btreeNode *myNode, int pos) {
+  if (! pos) {
     if (myNode->link[1]->count > MIN) {
-      leftShift(myNode, 1);
+      leftShift (myNode, 1);
     } else {
-      mergeNodes(myNode, 1);
+      mergeNodes (myNode, 1);
     }
   } else {
     if (myNode->count != pos) {
       if (myNode->link[pos - 1]->count > MIN) {
-        rightShift(myNode, pos);
+        rightShift (myNode, pos);
       } else {
         if (myNode->link[pos + 1]->count > MIN) {
-          leftShift(myNode, pos + 1);
+          leftShift (myNode, pos + 1);
         } else {
-          mergeNodes(myNode, pos);
+          mergeNodes (myNode, pos);
         }
       }
     } else {
       if (myNode->link[pos - 1]->count > MIN)
-        rightShift(myNode, pos);
+        rightShift (myNode, pos);
       else
-        mergeNodes(myNode, pos);
+        mergeNodes (myNode, pos);
     }
   }
 }
 
 // Traverse the tree
-void traversal(struct btreeNode *myNode) {
+void traversal (struct btreeNode *myNode) {
   int i;
   if (myNode) {
     for (i = 0; i < myNode->count; i++) {
-      traversal(myNode->link[i]);
-      printf("%d ", myNode->item[i + 1]);
+      traversal (myNode->link[i]);
+      printf ("%d ", myNode->item[i + 1]);
     }
-    traversal(myNode->link[i]);
+    traversal (myNode->link[i]);
   }
 }
 
-int main() {
+int main () {
   int item, ch;
 
-  insertion(8);
-  insertion(9);
-  insertion(10);
-  insertion(11);
-  insertion(15);
-  insertion(16);
-  insertion(17);
-  insertion(18);
-  insertion(20);
-  insertion(23);
+  insertion (8);
+  insertion (9);
+  insertion (10);
+  insertion (11);
+  insertion (15);
+  insertion (16);
+  insertion (17);
+  insertion (18);
+  insertion (20);
+  insertion (23);
 
-  traversal(root);
+  traversal (root);
 }
 ```
 
@@ -1215,11 +1215,11 @@ class Node {
   bool leaf;
 
    public:
-  Node(int _t, bool _leaf);
+  Node (int _t, bool _leaf);
 
-  void insertNonFull(int k);
-  void splitChild(int i, Node *y);
-  void traverse();
+  void insertNonFull (int k);
+  void splitChild (int i, Node *y);
+  void traverse ();
 
   friend class BTree;
 };
@@ -1229,20 +1229,20 @@ class BTree {
   int t;
 
    public:
-  BTree(int _t) {
+  BTree (int _t) {
     root = NULL;
     t = _t;
   }
 
-  void traverse() {
+  void traverse () {
     if (root != NULL)
-      root->traverse();
+      root->traverse ();
   }
 
-  void insert(int k);
+  void insert (int k);
 };
 
-Node::Node(int t1, bool leaf1) {
+Node:: Node (int t1, bool leaf1) {
   t = t1;
   leaf = leaf1;
 
@@ -1253,45 +1253,45 @@ Node::Node(int t1, bool leaf1) {
 }
 
 // Traverse the nodes
-void Node::traverse() {
+void Node:: traverse () {
   int i;
   for (i = 0; i < n; i++) {
     if (leaf == false)
-      C[i]->traverse();
+      C[i]->traverse ();
     cout << " " << keys[i];
   }
 
   if (leaf == false)
-    C[i]->traverse();
+    C[i]->traverse ();
 }
 
 // Insert the node
-void BTree::insert(int k) {
+void BTree:: insert (int k) {
   if (root == NULL) {
-    root = new Node(t, true);
+    root = new Node (t, true);
     root->keys[0] = k;
     root->n = 1;
   } else {
     if (root->n == 2 * t - 1) {
-      Node *s = new Node(t, false);
+      Node *s = new Node (t, false);
 
       s->C[0] = root;
 
-      s->splitChild(0, root);
+      s->splitChild (0, root);
 
       int i = 0;
       if (s->keys[0] < k)
         i++;
-      s->C[i]->insertNonFull(k);
+      s->C[i]->insertNonFull (k);
 
       root = s;
     } else
-      root->insertNonFull(k);
+      root->insertNonFull (k);
   }
 }
 
 // Insert non full condition
-void Node::insertNonFull(int k) {
+void Node:: insertNonFull (int k) {
   int i = n - 1;
 
   if (leaf == true) {
@@ -1307,18 +1307,18 @@ void Node::insertNonFull(int k) {
       i--;
 
     if (C[i + 1]->n == 2 * t - 1) {
-      splitChild(i + 1, C[i + 1]);
+      splitChild (i + 1, C[i + 1]);
 
       if (keys[i + 1] < k)
         i++;
     }
-    C[i + 1]->insertNonFull(k);
+    C[i + 1]->insertNonFull (k);
   }
 }
 
 // split the child
-void Node::splitChild(int i, Node *y) {
-  Node *z = new Node(y->t, y->leaf);
+void Node:: splitChild (int i, Node *y) {
+  Node *z = new Node (y->t, y->leaf);
   z->n = t - 1;
 
   for (int j = 0; j < t - 1; j++)
@@ -1342,36 +1342,36 @@ void Node::splitChild(int i, Node *y) {
   n = n + 1;
 }
 
-int main() {
-  BTree t(3);
-  t.insert(8);
-  t.insert(9);
-  t.insert(10);
-  t.insert(11);
-  t.insert(15);
-  t.insert(16);
-  t.insert(17);
-  t.insert(18);
-  t.insert(20);
-  t.insert(23);
+int main () {
+  BTree t (3);
+  t.insert (8);
+  t.insert (9);
+  t.insert (10);
+  t.insert (11);
+  t.insert (15);
+  t.insert (16);
+  t.insert (17);
+  t.insert (18);
+  t.insert (20);
+  t.insert (23);
 
   cout << "The B-tree is: ";
-  t.traverse();
+  t.traverse ();
 }
 ```
 
 ### Complexity
 - Best case Time complexity: `Θ(log n)`，
-	- 查找每个节点开头就能确定去向： $O(\log n)$，
-	- 且不需要上溢修复 $O(1)$
+	- 查找每个节点开头就能确定去向： $O (\log n)$，
+	- 且不需要上溢修复 $O (1)$
 
 - Average case Space complexity: `Θ(n)`
-	- 查找时在节点中间才能确定去向： $O(\frac{n}{2})$，
-	- 上溢修复 $O(h)=O(\log n)$
+	- 查找时在节点中间才能确定去向： $O (\frac{n}{2})$，
+	- 上溢修复 $O (h)=O (\log n)$
 
 - Worst case Space complexity: `Θ(n)`
-	- 查找时在节点最后才能确定去向： $O(n)$，
-	- 上溢修复 $O(h)=O(\log n)$
+	- 查找时在节点最后才能确定去向： $O (n)$，
+	- 上溢修复 $O (h)=O (\log n)$
 
 ## Delete
 Deleting an element on a B-tree consists of three main events: **searching the node where the key to be deleted exists**, deleting the key and balancing the tree if required.
@@ -1417,7 +1417,7 @@ After merging if the parent node has less than the minimum number of keys then, 
 
 #### Case III - shrink height
 
-In this case, the height of the tree shrinks. If the target key lies in an internal node, and the deletion of the key leads to a fewer number of keys in the node (i.e. less than the minimum required), then look for the inorder predecessor and the inorder successor. If both the children contain a minimum number of keys then, borrowing cannot take place. This leads to Case II(3) i.e. merging the children.
+In this case, the height of the tree shrinks. If the target key lies in an internal node, and the deletion of the key leads to a fewer number of keys in the node (i.e. less than the minimum required), then look for the inorder predecessor and the inorder successor. If both the children contain a minimum number of keys then, borrowing cannot take place. This leads to Case II (3) i.e. merging the children.
 
 Again, look for the sibling to borrow a key. But, if the sibling also has only a minimum number of keys then, merge the node with the sibling along with the parent. Arrange the children accordingly (increasing order).
 
@@ -1433,33 +1433,33 @@ Again, look for the sibling to borrow a key. But, if the sibling also has only a
 # Btree node
 class BTreeNode:
     def __init__(self, leaf=False):
-        self.leaf = leaf
-        self.keys = []
-        self.child = []
+        self. leaf = leaf
+        self. keys = []
+        self. child = []
 
 
 class BTree:
     def __init__(self, t):
-        self.root = BTreeNode(True)
-        self.t = t
+        self. root = BTreeNode (True)
+        self. t = t
 
     # Insert a key
-    def insert(self, k):
-        root = self.root
-        if len(root.keys) == (2 * self.t) - 1:
-            temp = BTreeNode()
-            self.root = temp
-            temp.child.insert(0, root)
-            self.split_child(temp, 0)
-            self.insert_non_full(temp, k)
+    def insert (self, k):
+        root = self. root
+        if len (root. keys) == (2 * self. t) - 1:
+            temp = BTreeNode ()
+            self. root = temp
+            temp. child. insert (0, root)
+            self. split_child (temp, 0)
+            self. insert_non_full (temp, k)
         else:
-            self.insert_non_full(root, k)
+            self. insert_non_full (root, k)
 
     # Insert non full
-    def insert_non_full(self, x, k):
-        i = len(x.keys) - 1
+    def insert_non_full (self, x, k):
+        i = len (x.keys) - 1
         if x.leaf:
-            x.keys.append((None, None))
+            x.keys. append ((None, None))
             while i >= 0 and k[0] < x.keys[i][0]:
                 x.keys[i + 1] = x.keys[i]
                 i -= 1
@@ -1468,19 +1468,19 @@ class BTree:
             while i >= 0 and k[0] < x.keys[i][0]:
                 i -= 1
             i += 1
-            if len(x.child[i].keys) == (2 * self.t) - 1:
-                self.split_child(x, i)
+            if len (x.child[i]. keys) == (2 * self. t) - 1:
+                self. split_child (x, i)
                 if k[0] > x.keys[i][0]:
                     i += 1
-            self.insert_non_full(x.child[i], k)
+            self. insert_non_full (x.child[i], k)
 
     # Split the child
-    def split_child(self, x, i):
-        t = self.t
+    def split_child (self, x, i):
+        t = self. t
         y = x.child[i]
-        z = BTreeNode(y.leaf)
-        x.child.insert(i + 1, z)
-        x.keys.insert(i, y.keys[t - 1])
+        z = BTreeNode (y.leaf)
+        x.child. insert (i + 1, z)
+        x.keys. insert (i, y.keys[t - 1])
         z.keys = y.keys[t: (2 * t) - 1]
         y.keys = y.keys[0: t - 1]
         if not y.leaf:
@@ -1488,29 +1488,29 @@ class BTree:
             y.child = y.child[0: t - 1]
 
     # Delete a node
-    def delete(self, x, k):
-        t = self.t
+    def delete (self, x, k):
+        t = self. t
         i = 0
         while i < len(x.keys) and k[0] > x.keys[i][0]:
             i += 1
         if x.leaf:
-            if i < len(x.keys) and x.keys[i][0] == k[0]:
-                x.keys.pop(i)
+            if i < len (x.keys) and x.keys[i][0] == k[0]:
+                x.keys. pop (i)
                 return
             return
 
-        if i < len(x.keys) and x.keys[i][0] == k[0]:
-            return self.delete_internal_node(x, k, i)
-        elif len(x.child[i].keys) >= t:
-            self.delete(x.child[i], k)
+        if i < len (x.keys) and x.keys[i][0] == k[0]:
+            return self. delete_internal_node (x, k, i)
+        elif len (x.child[i]. keys) >= t:
+            self. delete (x.child[i], k)
         else:
-            if i != 0 and i + 2 < len(x.child):
-                if len(x.child[i - 1].keys) >= t:
-                    self.delete_sibling(x, i, i - 1)
-                elif len(x.child[i + 1].keys) >= t:
-                    self.delete_sibling(x, i, i + 1)
+            if i != 0 and i + 2 < len (x.child):
+                if len (x.child[i - 1]. keys) >= t:
+                    self. delete_sibling (x, i, i - 1)
+                elif len (x.child[i + 1]. keys) >= t:
+                    self. delete_sibling (x, i, i + 1)
                 else:
-                    self.delete_merge(x, i, i + 1)
+                    self. delete_merge (x, i, i + 1)
             elif i == 0:
                 if len (x.child[i + 1]. keys) >= t:
                     self. delete_sibling (x, i, i + 1)
@@ -1521,14 +1521,14 @@ class BTree:
                     self. delete_sibling (x, i, i - 1)
                 else:
                     self. delete_merge (x, i, i - 1)
-            self.delete (x.child[i], k)
+            self. delete (x.child[i], k)
 
     # Delete internal node
     def delete_internal_node (self, x, k, i):
         t = self. t
         if x.leaf:
             if x.keys[i][0] == k[0]:
-                x.keys.pop (i)
+                x.keys. pop (i)
                 return
             return
 
@@ -1556,7 +1556,7 @@ class BTree:
     # Delete the successor
     def delete_successor (self, x):
         if x.leaf:
-            return x.keys.pop (0)
+            return x.keys. pop (0)
         if len (x.child[1]. keys) >= self. t:
             self. delete_sibling (x, 0, 1)
         else:
@@ -1569,28 +1569,28 @@ class BTree:
 
         if j > i:
             rsnode = x.child[j]
-            cnode.keys.append (x.keys[i])
+            cnode. keys. append (x.keys[i])
             for k in range (len (rsnode. keys)):
-                cnode.keys.append (rsnode. keys[k])
+                cnode. keys. append (rsnode. keys[k])
                 if len (rsnode. child) > 0:
-                    cnode.child.append (rsnode. child[k])
+                    cnode. child. append (rsnode. child[k])
             if len (rsnode. child) > 0:
-                cnode.child.append (rsnode.child.pop ())
+                cnode. child. append (rsnode. child. pop ())
             new = cnode
-            x.keys.pop (i)
-            x.child.pop (j)
+            x.keys. pop (i)
+            x.child. pop (j)
         else:
             lsnode = x.child[j]
-            lsnode.keys.append (x.keys[j])
+            lsnode. keys. append (x.keys[j])
             for i in range (len (cnode. keys)):
-                lsnode.keys.append (cnode. keys[i])
+                lsnode. keys. append (cnode. keys[i])
                 if len (lsnode. child) > 0:
-                    lsnode.child.append (cnode. child[i])
+                    lsnode. child. append (cnode. child[i])
             if len (lsnode. child) > 0:
-                lsnode.child.append (cnode.child.pop ())
+                lsnode. child. append (cnode. child. pop ())
             new = lsnode
-            x.keys.pop (j)
-            x.child.pop (i)
+            x.keys. pop (j)
+            x.child. pop (i)
 
         if x == self. root and len (x.keys) == 0:
             self. root = new
@@ -1600,18 +1600,18 @@ class BTree:
         cnode = x.child[i]
         if i < j:
             rsnode = x.child[j]
-            cnode.keys.append (x.keys[i])
+            cnode. keys. append (x.keys[i])
             x.keys[i] = rsnode. keys[0]
             if len (rsnode. child) > 0:
-                cnode.child.append (rsnode. child[0])
-                rsnode.child.pop (0)
-            rsnode.keys.pop (0)
+                cnode. child. append (rsnode. child[0])
+                rsnode. child. pop (0)
+            rsnode. keys. pop (0)
         else:
             lsnode = x.child[j]
-            cnode.keys.insert (0, x.keys[i - 1])
-            x.keys[i - 1] = lsnode.keys.pop ()
+            cnode. keys. insert (0, x.keys[i - 1])
+            x.keys[i - 1] = lsnode. keys. pop ()
             if len (lsnode. child) > 0:
-                cnode.child.insert (0, lsnode.child.pop ())
+                cnode. child. insert (0, lsnode. child. pop ())
 
     # Print the tree
     def print_tree (self, x, l=0):
@@ -1642,7 +1642,7 @@ B.print_tree (B.root)
 ```java
 // Inserting a key on a B-tree in Java
 
-import java.util.Stack;
+import java. util. Stack;
 
 public class BTree {
 
@@ -1654,9 +1654,9 @@ public class BTree {
     Node child[] = new Node[2 * T];
     boolean leaf = true;
 
-    public int Find(int k) {
-      for (int i = 0; i < this.n; i++) {
-        if (this.key[i] == k) {
+    public int Find (int k) {
+      for (int i = 0; i < this. n; i++) {
+        if (this. key[i] == k) {
           return i;
         }
       }
@@ -1664,17 +1664,17 @@ public class BTree {
     };
   }
 
-  public BTree(int t) {
+  public BTree (int t) {
     T = t;
-    root = new Node();
-    root.n = 0;
-    root.leaf = true;
+    root = new Node ();
+    root. n = 0;
+    root. leaf = true;
   }
 
   private Node root;
 
   // Search the key
-  private Node Search(Node x, int key) {
+  private Node Search (Node x, int key) {
     int i = 0;
     if (x == null)
       return x;
@@ -1689,13 +1689,13 @@ public class BTree {
     if (x.leaf) {
       return null;
     } else {
-      return Search(x.child[i], key);
+      return Search (x.child[i], key);
     }
   }
 
   // Split function
-  private void Split(Node x, int pos, Node y) {
-    Node z = new Node();
+  private void Split (Node x, int pos, Node y) {
+    Node z = new Node ();
     z.leaf = y.leaf;
     z.n = T - 1;
     for (int j = 0; j < T - 1; j++) {
@@ -1720,23 +1720,23 @@ public class BTree {
   }
 
   // Insert the key
-  public void Insert(final int key) {
+  public void Insert (final int key) {
     Node r = root;
     if (r.n == 2 * T - 1) {
-      Node s = new Node();
+      Node s = new Node ();
       root = s;
       s.leaf = false;
       s.n = 0;
       s.child[0] = r;
-      Split(s, 0, r);
-      _Insert(s, key);
+      Split (s, 0, r);
+      _Insert (s, key);
     } else {
-      _Insert(r, key);
+      _Insert (r, key);
     }
   }
 
   // Insert the node
-  final private void _Insert(Node x, int k) {
+  final private void _Insert (Node x, int k) {
 
     if (x.leaf) {
       int i = 0;
@@ -1752,23 +1752,23 @@ public class BTree {
       ;
       i++;
       Node tmp = x.child[i];
-      if (tmp.n == 2 * T - 1) {
-        Split(x, i, tmp);
+      if (tmp. n == 2 * T - 1) {
+        Split (x, i, tmp);
         if (k > x.key[i]) {
           i++;
         }
       }
-      _Insert(x.child[i], k);
+      _Insert (x.child[i], k);
     }
 
   }
 
-  public void Show() {
-    Show(root);
+  public void Show () {
+    Show (root);
   }
 
-  private void Remove(Node x, int key) {
-    int pos = x.Find(key);
+  private void Remove (Node x, int key) {
+    int pos = x.Find (key);
     if (pos != -1) {
       if (x.leaf) {
         int i = 0;
@@ -1787,48 +1787,48 @@ public class BTree {
 
         Node pred = x.child[pos];
         int predKey = 0;
-        if (pred.n >= T) {
+        if (pred. n >= T) {
           for (;;) {
-            if (pred.leaf) {
-              System.out.println(pred.n);
-              predKey = pred.key[pred.n - 1];
+            if (pred. leaf) {
+              System. out. println (pred. n);
+              predKey = pred. key[pred. n - 1];
               break;
             } else {
-              pred = pred.child[pred.n];
+              pred = pred. child[pred. n];
             }
           }
-          Remove(pred, predKey);
+          Remove (pred, predKey);
           x.key[pos] = predKey;
           return;
         }
 
         Node nextNode = x.child[pos + 1];
-        if (nextNode.n >= T) {
-          int nextKey = nextNode.key[0];
-          if (!nextNode.leaf) {
-            nextNode = nextNode.child[0];
+        if (nextNode. n >= T) {
+          int nextKey = nextNode. key[0];
+          if (! nextNode. leaf) {
+            nextNode = nextNode. child[0];
             for (;;) {
-              if (nextNode.leaf) {
-                nextKey = nextNode.key[nextNode.n - 1];
+              if (nextNode. leaf) {
+                nextKey = nextNode. key[nextNode. n - 1];
                 break;
               } else {
-                nextNode = nextNode.child[nextNode.n];
+                nextNode = nextNode. child[nextNode. n];
               }
             }
           }
-          Remove(nextNode, nextKey);
+          Remove (nextNode, nextKey);
           x.key[pos] = nextKey;
           return;
         }
 
-        int temp = pred.n + 1;
-        pred.key[pred.n++] = x.key[pos];
-        for (int i = 0, j = pred.n; i < nextNode.n; i++) {
-          pred.key[j++] = nextNode.key[i];
-          pred.n++;
+        int temp = pred. n + 1;
+        pred. key[pred. n++] = x.key[pos];
+        for (int i = 0, j = pred. n; i < nextNode. n; i++) {
+          pred. key[j++] = nextNode. key[i];
+          pred. n++;
         }
-        for (int i = 0; i < nextNode.n + 1; i++) {
-          pred.child[temp++] = nextNode.child[i];
+        for (int i = 0; i < nextNode. n + 1; i++) {
+          pred. child[temp++] = nextNode. child[i];
         }
 
         x.child[pos] = pred;
@@ -1849,7 +1849,7 @@ public class BTree {
           }
           x = x.child[0];
         }
-        Remove(pred, key);
+        Remove (pred, key);
         return;
       }
     } else {
@@ -1859,47 +1859,47 @@ public class BTree {
         }
       }
       Node tmp = x.child[pos];
-      if (tmp.n >= T) {
-        Remove(tmp, key);
+      if (tmp. n >= T) {
+        Remove (tmp, key);
         return;
       }
       if (true) {
         Node nb = null;
         int devider = -1;
 
-        if (pos != x.n && x.child[pos + 1].n >= T) {
+        if (pos != x.n && x.child[pos + 1]. n >= T) {
           devider = x.key[pos];
           nb = x.child[pos + 1];
-          x.key[pos] = nb.key[0];
-          tmp.key[tmp.n++] = devider;
-          tmp.child[tmp.n] = nb.child[0];
-          for (int i = 1; i < nb.n; i++) {
-            nb.key[i - 1] = nb.key[i];
+          x.key[pos] = nb. key[0];
+          tmp. key[tmp. n++] = devider;
+          tmp. child[tmp. n] = nb. child[0];
+          for (int i = 1; i < nb. n; i++) {
+            nb. key[i - 1] = nb. key[i];
           }
-          for (int i = 1; i <= nb.n; i++) {
-            nb.child[i - 1] = nb.child[i];
+          for (int i = 1; i <= nb. n; i++) {
+            nb. child[i - 1] = nb. child[i];
           }
-          nb.n--;
-          Remove(tmp, key);
+          nb. n--;
+          Remove (tmp, key);
           return;
-        } else if (pos != 0 && x.child[pos - 1].n >= T) {
+        } else if (pos != 0 && x.child[pos - 1]. n >= T) {
 
           devider = x.key[pos - 1];
           nb = x.child[pos - 1];
-          x.key[pos - 1] = nb.key[nb.n - 1];
-          Node child = nb.child[nb.n];
-          nb.n--;
+          x.key[pos - 1] = nb. key[nb. n - 1];
+          Node child = nb. child[nb. n];
+          nb. n--;
 
-          for (int i = tmp.n; i > 0; i--) {
-            tmp.key[i] = tmp.key[i - 1];
+          for (int i = tmp. n; i > 0; i--) {
+            tmp. key[i] = tmp. key[i - 1];
           }
-          tmp.key[0] = devider;
-          for (int i = tmp.n + 1; i > 0; i--) {
-            tmp.child[i] = tmp.child[i - 1];
+          tmp. key[0] = devider;
+          for (int i = tmp. n + 1; i > 0; i--) {
+            tmp. child[i] = tmp. child[i - 1];
           }
-          tmp.child[0] = child;
-          tmp.n++;
-          Remove(tmp, key);
+          tmp. child[0] = child;
+          tmp. n++;
+          Remove (tmp, key);
           return;
         } else {
           Node lt = null;
@@ -1923,60 +1923,60 @@ public class BTree {
             x.child[i] = x.child[i + 1];
           }
           x.n--;
-          lt.key[lt.n++] = devider;
+          lt. key[lt. n++] = devider;
 
-          for (int i = 0, j = lt.n; i < rt.n + 1; i++, j++) {
-            if (i < rt.n) {
-              lt.key[j] = rt.key[i];
+          for (int i = 0, j = lt. n; i < rt. n + 1; i++, j++) {
+            if (i < rt. n) {
+              lt. key[j] = rt. key[i];
             }
-            lt.child[j] = rt.child[i];
+            lt. child[j] = rt. child[i];
           }
-          lt.n += rt.n;
+          lt. n += rt. n;
           if (x.n == 0) {
             if (x == root) {
               root = x.child[0];
             }
             x = x.child[0];
           }
-          Remove(lt, key);
+          Remove (lt, key);
           return;
         }
       }
     }
   }
 
-  public void Remove(int key) {
-    Node x = Search(root, key);
+  public void Remove (int key) {
+    Node x = Search (root, key);
     if (x == null) {
       return;
     }
-    Remove(root, key);
+    Remove (root, key);
   }
 
-  public void Task(int a, int b) {
+  public void Task (int a, int b) {
     Stack<Integer> st = new Stack<>();
-    FindKeys(a, b, root, st);
-    while (st.isEmpty() == false) {
-      this.Remove(root, st.pop());
+    FindKeys (a, b, root, st);
+    while (st. isEmpty () == false) {
+      this. Remove (root, st. pop ());
     }
   }
 
-  private void FindKeys(int a, int b, Node x, Stack<Integer> st) {
+  private void FindKeys (int a, int b, Node x, Stack<Integer> st) {
     int i = 0;
     for (i = 0; i < x.n && x.key[i] < b; i++) {
       if (x.key[i] > a) {
-        st.push(x.key[i]);
+        st. push (x.key[i]);
       }
     }
     if (!x.leaf) {
       for (int j = 0; j < i + 1; j++) {
-        FindKeys(a, b, x.child[j], st);
+        FindKeys (a, b, x.child[j], st);
       }
     }
   }
 
-  public boolean Contain(int k) {
-    if (this.Search(root, k) != null) {
+  public boolean Contain (int k) {
+    if (this. Search (root, k) != null) {
       return true;
     } else {
       return false;
@@ -1984,33 +1984,33 @@ public class BTree {
   }
 
   // Show the node
-  private void Show(Node x) {
+  private void Show (Node x) {
     assert (x == null);
     for (int i = 0; i < x.n; i++) {
-      System.out.print(x.key[i] + " ");
+      System. out. print (x.key[i] + " ");
     }
     if (!x.leaf) {
       for (int i = 0; i < x.n + 1; i++) {
-        Show(x.child[i]);
+        Show (x.child[i]);
       }
     }
   }
 
-  public static void main(String[] args) {
-    BTree b = new BTree(3);
-    b.Insert(8);
-    b.Insert(9);
-    b.Insert(10);
-    b.Insert(11);
-    b.Insert(15);
-    b.Insert(20);
-    b.Insert(17);
+  public static void main (String[] args) {
+    BTree b = new BTree (3);
+    b.Insert (8);
+    b.Insert (9);
+    b.Insert (10);
+    b.Insert (11);
+    b.Insert (15);
+    b.Insert (20);
+    b.Insert (17);
 
-    b.Show();
+    b.Show ();
 
-    b.Remove(10);
-    System.out.println();
-    b.Show();
+    b.Remove (10);
+    System. out. println ();
+    b.Show ();
   }
 }
 ```
@@ -2033,9 +2033,9 @@ struct BTreeNode {
 struct BTreeNode *root;
 
 // Node creation
-struct BTreeNode *createNode(int item, struct BTreeNode *child) {
+struct BTreeNode *createNode (int item, struct BTreeNode *child) {
   struct BTreeNode *newNode;
-  newNode = (struct BTreeNode *)malloc(sizeof(struct BTreeNode));
+  newNode = (struct BTreeNode *) malloc (sizeof (struct BTreeNode));
   newNode->item[1] = item;
   newNode->count = 1;
   newNode->linker[0] = root;
@@ -2044,7 +2044,7 @@ struct BTreeNode *createNode(int item, struct BTreeNode *child) {
 }
 
 // Add value to the node
-void addValToNode(int item, int pos, struct BTreeNode *node,
+void addValToNode (int item, int pos, struct BTreeNode *node,
           struct BTreeNode *child) {
   int j = node->count;
   while (j > pos) {
@@ -2058,7 +2058,7 @@ void addValToNode(int item, int pos, struct BTreeNode *node,
 }
 
 // Split the node
-void splitNode(int item, int *pval, int pos, struct BTreeNode *node,
+void splitNode (int item, int *pval, int pos, struct BTreeNode *node,
          struct BTreeNode *child, struct BTreeNode **newNode) {
   int median, j;
 
@@ -2067,7 +2067,7 @@ void splitNode(int item, int *pval, int pos, struct BTreeNode *node,
   else
     median = MIN;
 
-  *newNode = (struct BTreeNode *)malloc(sizeof(struct BTreeNode));
+  *newNode = (struct BTreeNode *) malloc (sizeof (struct BTreeNode));
   j = median + 1;
   while (j <= MAX) {
     (*newNode)->item[j - median] = node->item[j];
@@ -2078,9 +2078,9 @@ void splitNode(int item, int *pval, int pos, struct BTreeNode *node,
   (*newNode)->count = MAX - median;
 
   if (pos <= MIN) {
-    addValToNode(item, pos, node, child);
+    addValToNode (item, pos, node, child);
   } else {
-    addValToNode(item, pos - median, *newNode, child);
+    addValToNode (item, pos - median, *newNode, child);
   }
   *pval = node->item[node->count];
   (*newNode)->linker[0] = node->linker[node->count];
@@ -2088,10 +2088,10 @@ void splitNode(int item, int *pval, int pos, struct BTreeNode *node,
 }
 
 // Set the value in the node
-int setValueInNode(int item, int *pval,
+int setValueInNode (int item, int *pval,
            struct BTreeNode *node, struct BTreeNode **child) {
   int pos;
-  if (!node) {
+  if (! node) {
     *pval = item;
     *child = NULL;
     return 1;
@@ -2104,15 +2104,15 @@ int setValueInNode(int item, int *pval,
        (item < node->item[pos] && pos > 1); pos--)
       ;
     if (item == node->item[pos]) {
-      printf("Duplicates not allowed\n");
+      printf ("Duplicates not allowed\n");
       return 0;
     }
   }
-  if (setValueInNode(item, pval, node->linker[pos], child)) {
+  if (setValueInNode (item, pval, node->linker[pos], child)) {
     if (node->count < MAX) {
-      addValToNode(*pval, pos, node, *child);
+      addValToNode (*pval, pos, node, *child);
     } else {
-      splitNode(*pval, pval, pos, node, *child, child);
+      splitNode (*pval, pval, pos, node, *child, child);
       return 1;
     }
   }
@@ -2120,17 +2120,17 @@ int setValueInNode(int item, int *pval,
 }
 
 // Insertion operation
-void insertion(int item) {
+void insertion (int item) {
   int flag, i;
   struct BTreeNode *child;
 
-  flag = setValueInNode(item, &i, root, &child);
+  flag = setValueInNode (item, &i, root, &child);
   if (flag)
-    root = createNode(i, child);
+    root = createNode (i, child);
 }
 
 // Copy the successor
-void copySuccessor(struct BTreeNode *myNode, int pos) {
+void copySuccessor (struct BTreeNode *myNode, int pos) {
   struct BTreeNode *dummy;
   dummy = myNode->linker[pos];
 
@@ -2140,7 +2140,7 @@ void copySuccessor(struct BTreeNode *myNode, int pos) {
 }
 
 // Remove the value
-void removeVal(struct BTreeNode *myNode, int pos) {
+void removeVal (struct BTreeNode *myNode, int pos) {
   int i = pos + 1;
   while (i <= myNode->count) {
     myNode->item[i - 1] = myNode->item[i];
@@ -2151,7 +2151,7 @@ void removeVal(struct BTreeNode *myNode, int pos) {
 }
 
 // Do right shift
-void rightShift(struct BTreeNode *myNode, int pos) {
+void rightShift (struct BTreeNode *myNode, int pos) {
   struct BTreeNode *x = myNode->linker[pos];
   int j = x->count;
 
@@ -2171,7 +2171,7 @@ void rightShift(struct BTreeNode *myNode, int pos) {
 }
 
 // Do left shift
-void leftShift(struct BTreeNode *myNode, int pos) {
+void leftShift (struct BTreeNode *myNode, int pos) {
   int j = 1;
   struct BTreeNode *x = myNode->linker[pos - 1];
 
@@ -2368,22 +2368,22 @@ class BTreeNode {
   bool leaf;
 
    public:
-  BTreeNode(int _t, bool _leaf);
+  BTreeNode (int _t, bool _leaf);
 
-  void traverse();
+  void traverse ();
 
-  int findKey(int k);
-  void insertNonFull(int k);
-  void splitChild(int i, BTreeNode *y);
-  void deletion(int k);
-  void removeFromLeaf(int idx);
-  void removeFromNonLeaf(int idx);
-  int getPredecessor(int idx);
-  int getSuccessor(int idx);
-  void fill(int idx);
-  void borrowFromPrev(int idx);
-  void borrowFromNext(int idx);
-  void merge(int idx);
+  int findKey (int k);
+  void insertNonFull (int k);
+  void splitChild (int i, BTreeNode *y);
+  void deletion (int k);
+  void removeFromLeaf (int idx);
+  void removeFromNonLeaf (int idx);
+  int getPredecessor (int idx);
+  int getSuccessor (int idx);
+  void fill (int idx);
+  void borrowFromPrev (int idx);
+  void borrowFromNext (int idx);
+  void merge (int idx);
   friend class BTree;
 };
 
@@ -2392,23 +2392,23 @@ class BTree {
   int t;
 
    public:
-  BTree(int _t) {
+  BTree (int _t) {
     root = NULL;
     t = _t;
   }
 
-  void traverse() {
+  void traverse () {
     if (root != NULL)
-      root->traverse();
+      root->traverse ();
   }
 
-  void insertion(int k);
+  void insertion (int k);
 
-  void deletion(int k);
+  void deletion (int k);
 };
 
 // B tree node
-BTreeNode::BTreeNode(int t1, bool leaf1) {
+BTreeNode:: BTreeNode (int t1, bool leaf1) {
   t = t1;
   leaf = leaf1;
 
@@ -2419,7 +2419,7 @@ BTreeNode::BTreeNode(int t1, bool leaf1) {
 }
 
 // Find the key
-int BTreeNode::findKey(int k) {
+int BTreeNode:: findKey (int k) {
   int idx = 0;
   while (idx < n && keys[idx] < k)
     ++idx;
@@ -2427,14 +2427,14 @@ int BTreeNode::findKey(int k) {
 }
 
 // Deletion operation
-void BTreeNode::deletion(int k) {
-  int idx = findKey(k);
+void BTreeNode:: deletion (int k) {
+  int idx = findKey (k);
 
   if (idx < n && keys[idx] == k) {
     if (leaf)
-      removeFromLeaf(idx);
+      removeFromLeaf (idx);
     else
-      removeFromNonLeaf(idx);
+      removeFromNonLeaf (idx);
   } else {
     if (leaf) {
       cout << "The key " << k << " is does not exist in the tree\n";
@@ -2444,18 +2444,18 @@ void BTreeNode::deletion(int k) {
     bool flag = ((idx == n) ? true : false);
 
     if (C[idx]->n < t)
-      fill(idx);
+      fill (idx);
 
     if (flag && idx > n)
-      C[idx - 1]->deletion(k);
+      C[idx - 1]->deletion (k);
     else
-      C[idx]->deletion(k);
+      C[idx]->deletion (k);
   }
   return;
 }
 
 // Remove from the leaf
-void BTreeNode::removeFromLeaf(int idx) {
+void BTreeNode:: removeFromLeaf (int idx) {
   for (int i = idx + 1; i < n; ++i)
     keys[i - 1] = keys[i];
 
@@ -2465,17 +2465,17 @@ void BTreeNode::removeFromLeaf(int idx) {
 }
 
 // Delete from non leaf node
-void BTreeNode::removeFromNonLeaf(int idx) {
+void BTreeNode:: removeFromNonLeaf (int idx) {
   int k = keys[idx];
 
   if (C[idx]->n >= t) {
-    int pred = getPredecessor(idx);
+    int pred = getPredecessor (idx);
     keys[idx] = pred;
-    C[idx]->deletion(pred);
+    C[idx]->deletion (pred);
   }
 
   else if (C[idx + 1]->n >= t) {
-    int succ = getSuccessor(idx);
+    int succ = getSuccessor (idx);
     keys[idx] = succ;
     C[idx + 1]->deletion (succ);
   }
