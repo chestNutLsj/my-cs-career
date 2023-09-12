@@ -58,6 +58,9 @@ private:
 
 ```
 
+#### 使用 steap 结构
+[[40-Stack_Queue#Steap]]
+
 ## 函数调用栈
 ### 原理
 ![[40-Stack_Queue-func-call-stack1.png]]
@@ -268,16 +271,39 @@ $$
 //主算法
 double evaluate( char* S, char* RPN ) { //S保证语法正确
 	Stack<double> opnd; Stack<char> optr; //运算数栈、运算符栈
-	optr.push('\0'); //哨兵
+	optr.push('\0'); //哨兵首先入栈
 	while ( ! optr.empty() ) { //逐个处理各字符，直至运算符栈空
 		if ( isdigit( *S ) ) //若为操作数（可能多位、小数），则
 			readNumber( S, opnd ); //读入
+			append(RPN,opnd.top());//读入操作数并接至RPN末尾
 		else //若为运算符，则视其与栈顶运算符之间优先级的高低
-			switch( priority( optr.top(), *S ) ) { /* 分别处理 */ }
-	}
+			// 根据不同的优先级切换到不同的运算情形
+			switch( priority( optr.top(), *S ) ) {
+				case '<': //栈顶运算符优先级更低
+					optr.push( *S ); S++; break; //计算推迟，当前运算符进栈
+		
+				case ' =': //优先级相等（当前运算符为右括号，或尾部哨兵'\0'） 
+					optr.pop(); S++; break; //脱括号并接收下一个字符
+		
+				case '>': {
+					char op = optr.pop();
+					append(RPN,op);
+					if ( '!' == op ) opnd.push( calcu( op, opnd.pop() ) ); //一元运算符
+					else { double opnd2 = opnd.pop(), opnd1 = opnd.pop(); //二元运算符
+						opnd.push( calcu( opnd1, op, opnd2 ) ); //实施计算，结果入栈
+					} //为何不直接：opnd.push( calcu( opnd.pop(), op, opnd.pop() ) )？
+					break;
+				} //case '>'
+			} //switch
+	}//while
 	return opnd.pop(); //弹出并返回最后的计算结果
 }
 
+```
+
+^7e7a8b
+
+```
 //优先级表
 const char pri[N_OPTR][N_OPTR] = { //运算符优先等级 [栈顶][当前]
 /* -- + */ '>', '>', '<', '<', '<', '<', '<', '>', '>',
@@ -292,26 +318,9 @@ const char pri[N_OPTR][N_OPTR] = { //运算符优先等级 [栈顶][当前]
 //           +    -    *    /    ^    !    (    )    \0
 // |-------------- 当前运算符 --------------|
 };
-
-// 根据不同的优先级切换到不同的运算情形
-switch( priority( optr.top(), *S ) ) {
-	case '<': //栈顶运算符优先级更低
-		optr.push( *S ); S++; break; //计算推迟，当前运算符进栈
-		
-	case ' =': //优先级相等（当前运算符为右括号，或尾部哨兵'\0'） 
-		optr.pop(); S++; break; //脱括号并接收下一个字符
-		
-	case '>': {
-		char op = optr.pop();
-		if ( '!' == op ) opnd.push( calcu( op, opnd.pop() ) ); //一元运算符
-		else { double opnd2 = opnd.pop(), opnd1 = opnd.pop(); //二元运算符
-			opnd.push( calcu( opnd1, op, opnd2 ) ); //实施计算，结果入栈
-		} //为何不直接：opnd.push( calcu( opnd.pop(), op, opnd.pop() ) )？
-		break;
-	} //case '>'
-} //switch
-
 ```
+
+^ad5a5d
 
 ![[40-Stack_Queue-infix-pri<.png]]
 
@@ -381,7 +390,8 @@ double evaluate ( char* S, char* RPN ) {
 					optr.pop(); S++; //脱括号并接收下一个字符
 					break;
 				case '>': { //栈顶运算符优先级更高时，可实施相应的计算，并将结果重新入栈
-					char op = optr.pop(); append ( RPN, op ); //栈顶运算符出栈并续接至RPN末尾
+					char op = optr.pop(); 
+					append ( RPN, op ); //栈顶运算符出栈并续接至RPN末尾
 					if ( '!' == op ) //若属于一元运算符
 						opnd.push ( calcu ( op, opnd.pop() ) ); //则取一个操作数，计算结果入栈
 					else { //对于其它（二元）运算符
@@ -475,6 +485,9 @@ int main() {
 
 ```
 
+#### 使用 queap 结构
+[[40-Stack_Queue#Queap]]
+
 ## 直方图最大矩形
 ### 问题描述
 ![[40-Stack_Queue-largest-rectangle-in-histogram.png]]
@@ -506,6 +519,107 @@ int mr_BRUTE( int H[], Rank n, Rank& mr_r, Rank& mr_s, Rank& mr_t ) {
 ```
 
 ### 使用栈
+```
+int mr_STACK( int H[], Rank n, Rank& mr_r, Rank& mr_s, Rank& mr_t ) { //除末项-1哨兵，H[]皆非负
+	Rank* s = new Rank[n]; Stack<Rank> S; //自右可见项的秩
+	for( Rank r = 0; r < n; r++ ) { //依次计算出
+		while ( !S.empty() && ( H[S.top()] >= H[r] ) ) S.pop(); //每一个s(r)
+		s[r] = S.empty() ? 0 : 1 + S.top();
+		S.push(r); // S总是处于递增状态
+	}
+	while( !S.empty() ) S.pop();
 
+	Rank* t = new Rank[n]; Stack<Rank> T; //自左可见项的秩
+	for( Rank r = n-1; -1 != r; r-- ) { //依次计算出
+		while ( !T.empty() && H[r] <= H[T.top()] ) T.pop(); //每一个t(r)
+		t[r] = T.empty() ? n : T.top();
+		T.push(r);
+	}
+	while( !T.empty() ) T.pop();
+
+	int maxRect = 0;
+	for( Rank r = 0; r < n; r++ ) {
+		int mR = H[r] * (t[r] - s[r]);
+		if ( maxRect < mR )
+		{ maxRect = mR; mr_r = r; mr_s = s[r]; mr_t = t[r]; }
+		}
+	delete [] s; delete [] t;
+	return maxRect;
+} //每项进栈、出栈不过常数次，累计成本O(n)
+```
+
+![[40-Stack_Queue-maxRect-stack.png]]
+每一轮循环的结束，S 都会存储一串 `s[]`，有如下关系：
+$S[S.size()-1]=S.top()=r$ 并且 $\forall 0\le k<S.size(), S[k-1]+1=s[S[k]]$
+
+### One-pass
+对于 t(r)而言，只有当输入完全结束后才能开始，不是一个在线算法。若要改进到 s(r)和 t (r)都只是一轮扫描确定：
+```
+int mr_STACK( int H[], Rank n, Rank& mr_r, Rank& mr_s, Rank& mr_t ) { //H[]皆非负
+	Stack<Rank> SR; //次栈顶、栈顶总是s[r]-1与r，当前的t = t[r]
+	int maxRect = 0;
+	for (Rank t = 0; t <= n; t++ ) { //逐个尝试以t为右边界的
+		while ( !SR.empty() && ( t == n || H[SR.top()] > H[t] ) ) { //每一个极大矩形
+			Rank r = SR.pop(), s = SR.empty() ? 0 : SR.top() + 1;
+			int mR = H[r] * ( t - s );
+			if ( maxRect < mR )
+			{ maxRect = mR; mr_r = r; mr_s = s; mr_t = t; }
+		}
+		if ( t < n ) SR.push( t ); //栈中只记录所有的H[s] = min{ H[k] | s <= k <= t }
+	} //assert: SR is empty at exit
+	return maxRect;
+} //每项进栈、出栈不过常数次，累计成本O(n)
+```
+
+![[40-Stack_Queue-maxRect-onePass.png]]
+
+每一次外部循环中，总有：
+$\forall 0\le k>SR.size(), SR[k-1]+1=s[SR[k]]$
+对每个内层循环中弹出的 r，有：
+$t(r)=t$ 并且 $s[r]=SR.top()+1$
+
+## 栈堆与队列堆
+### Steap
+==Steap = Stack + Heap = push + pop + getMax==
+
+使用两个栈 S 和 P，S 存储数据，P 则存储 S 中对应后缀的最大者（即 S.getMax ()）
+![[40-Stack_Queue-steap.png]]
+![[40-Stack_Queue-steap2.png]]
+
+ADT:
+- `Steap::getMax(){return P.top();}`
+- `Steap::pop(){P.pop(); return S.pop();}//O(1)`
+- `Steap::push(){P.push(max(e,P.top()));S.push(e);}//O(1)`
+
+### Queap
+==Queap = Queue + Heap = enqueue + dequeue + getMax==
+
+使用两个队列 Q 和 P，Q 存储数据并且是单进单出；P 存放 Q 的后缀的最大值，并且允许队尾插入和删除两种操作，即单进双出：
+![[40-Stack_Queue-queap.png]]
+![[40-Stack_Queue-queap2.png]]
+
+ADT：
+- `Queap::getMax(){return P.front();}`
+- `Queap::dequeue(){P.dequeue();return Q.dequeue();}//O(1)`
+-  `Queap::enqueue(e){Q.enqueue(e);P.enqueue(e);for(x=P.rear();x && (x->key <=e);x=x->pred) x->key=e;} // 最坏O(n)`
 
 ## 双栈当队
+### ADT
+![[40-Stack_Queue-stack2queue.png]]
+```
+def Q.enqueue(e)
+	R.push(e)
+
+def Q.dequeue()
+	if(F.empty())
+		while(!R.empty())
+			F.push(R.pop());
+	return F.pop();
+```
+
+### 复杂度（均摊）
+最好情况：O (1)
+最坏情况：O (n)
+
+![[40-Stack_Queue-stack2queue-amortization.png]]
+![[40-Stack_Queue-stack2queue-amortization2.png]]

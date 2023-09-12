@@ -1,1 +1,13 @@
-{}
+{
+  "editor:save-file": [],
+  "easy-typing-obsidian:easy-typing-format-article": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "S"
+    }
+  ],
+  "easy-typing-obsidian:easy-typing-insert-codeblock": []
+}

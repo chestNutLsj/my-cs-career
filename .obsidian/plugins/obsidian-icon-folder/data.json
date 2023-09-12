@@ -5,11 +5,11 @@
     "fontSize": 16,
     "iconColor": null,
     "recentlyUsedIcons": [
+      "TiTemplate",
       "TiChartArea",
       "🧜‍♀️",
       "RiFlowChart",
-      "TiSunMoon",
-      "TiBrandTypescript"
+      "TiSunMoon"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -76,5 +76,6 @@
   "1-Theory/1-ProgramLanguage/C": "FasC",
   "1-Theory/1-ProgramLanguage/Haskell": "SiHaskell",
   "0-Assets/Diary": "TiSunMoon",
-  "5-Tools/Mermaid": "TiChartArea"
+  "5-Tools/Mermaid": "TiChartArea",
+  "0-Assets/Templates": "TiTemplate"
 }
