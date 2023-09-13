@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "b0775691fa409098",
+        "id": "f5d545aed6d7d563",
         "type": "tabs",
         "children": [
           {
-            "id": "b78acf25aed96440",
+            "id": "f53ed5cbf2c900b7",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -80,8 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 243.5,
-    "collapsed": true
+    "width": 439.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -98,7 +93,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +109,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -144,9 +137,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md"
-              }
+              "state": {}
             }
           },
           {
@@ -161,8 +152,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -181,8 +171,26 @@
       "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "b78acf25aed96440",
+  "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle/internal&principle/mindmap/20-进程与线程-mindmap.png",
+    "1-Theory/5-OS-principle/internal&principle/mindmap/30-并发-mindmap.png",
+    "1-Theory/5-OS-principle/internal&principle/mindmap/50-CPU调度-mindmap.png",
+    "1-Theory/5-OS-principle/internal&principle/mindmap/60-IO管理与磁盘-mindmap.png",
+    "1-Theory/5-OS-principle/internal&principle/mindmap/70-文件系统-mindmap.png",
+    "1-Theory/5-OS-principle/internal&principle/mindmap/40-内存与虚存-mindmap.png",
+    "1-Theory/5-OS-principle/internal&principle/10-操作系统概述.md",
+    "1-Theory/5-OS-principle/internal&principle/00-计算机系统概述.md",
+    "1-Theory/5-OS-principle/internal&principle/11-宏内核结构的OS举例.md",
+    "1-Theory/5-OS-principle/internal&principle/20-进程与线程.md",
+    "1-Theory/5-OS-principle/internal&principle/mindmap/20-进程与线程-mindmap-compress.png",
+    "1-Theory/5-OS-principle/internal&principle/assets/20-进程与线程-mindmap.png",
+    "1-Theory/5-OS-principle/internal&principle/21-进程、线程、纤程与协程.md",
+    "1-Theory/5-OS-principle/internal&principle/mindmap/21-进程线程纤程与协程-mindmap.png",
+    "1-Theory/5-OS-principle/internal&principle/30-并发.md",
+    "1-Theory/5-OS-principle/internal&principle/mindmap/30-并发-mindmap-compress.png",
+    "1-Theory/5-OS-principle/internal&principle/assets/30-并发-mindmap.png",
+    "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
     "1-Theory/4-Architecture/CSAPP/32-GDB简单使用.md",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/break-on-entry.md",
     "5-Tools/Dev-Tools/GDB/100-gdb-tips/04-quit-gdb-silently.md",
@@ -192,20 +200,8 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/42-Catalan.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/43-Probing-backtracking.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/41-Exercise-evaluate()-exception.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/41-Exercise-infix-paren-counts.png",
     "8-SimpRead/Catalan number/assets",
     "8-SimpRead/Catalan number",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-stack2queue-amortization2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-stack2queue-amortization.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-stack2queue.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-queap2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-queap.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-steap2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-steap.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/40-Stack_Queue-maxRect-onePass.png",
-    "1-Theory/5-OS-principle/internal&principle/30-并发.md",
-    "1-Theory/5-OS-principle/internal&principle/21-进程、线程、纤程与协程.md",
     "1-Theory/5-OS-principle/internal&principle/32-Peterson-algo-impl.md",
     "1-Theory/5-OS-principle/internal&principle/34-Reader-writer-impl.md",
     "1-Theory/5-OS-principle/internal&principle/33-Producer-consume-impl.md",
@@ -215,15 +211,9 @@
     "1-Theory/5-OS-principle/internal&principle/38-竞争条件与理发师问题.md",
     "1-Theory/5-OS-principle/internal&principle/41-Buddy-system-impl.md",
     "1-Theory/5-OS-principle/internal&principle/39-Unix_Linux并发机制.md",
-    "1-Theory/5-OS-principle/internal&principle/40-内存与虚存.md",
-    "1-Theory/5-OS-principle/internal&principle/43-PFF-VSWS-impl.md",
-    "1-Theory/5-OS-principle/internal&principle/42-加载和链接.md",
     "0-Assets/Templates",
-    "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
     "1-Theory/4-Architecture/CSAPP/assets",
     "8-SimpRead/第 03 章：程序的机器级表示 - CSAPP 重点解读",
-    "1-Theory/4-Architecture/CSAPP/31-GCC的使用.md",
-    "1-Theory/5-OS-principle/408&&912/中断处理流程.md",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "1-Theory/5-OS-principle/OSTEP",
     "1-Theory/4-Architecture/Hardware-software-interface-riscv",
