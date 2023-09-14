@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "f5d545aed6d7d563",
+        "id": "b709f336f72157b5",
         "type": "tabs",
         "children": [
           {
-            "id": "f53ed5cbf2c900b7",
+            "id": "7afbac87b7808eea",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -76,7 +80,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 439.5
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -93,6 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -109,6 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +144,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md"
+              }
             }
           },
           {
@@ -152,7 +161,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -167,59 +177,60 @@
       "oz-clear-unused-images:Clear Unused Images": false,
       "obsidian-wordnet-plugin:WordNet Dictionary": false,
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false,
-      "omnisearch:Omnisearch": false,
-      "mermaid-tools:Open Mermaid Toolbar": false
+      "mermaid-tools:Open Mermaid Toolbar": false,
+      "obsidian-importer:Open Importer": false,
+      "omnisearch:Omnisearch": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "7afbac87b7808eea",
   "lastOpenFiles": [
-    "1-Theory/5-OS-principle/internal&principle/mindmap/20-进程与线程-mindmap.png",
-    "1-Theory/5-OS-principle/internal&principle/mindmap/30-并发-mindmap.png",
-    "1-Theory/5-OS-principle/internal&principle/mindmap/50-CPU调度-mindmap.png",
-    "1-Theory/5-OS-principle/internal&principle/mindmap/60-IO管理与磁盘-mindmap.png",
-    "1-Theory/5-OS-principle/internal&principle/mindmap/70-文件系统-mindmap.png",
-    "1-Theory/5-OS-principle/internal&principle/mindmap/40-内存与虚存-mindmap.png",
-    "1-Theory/5-OS-principle/internal&principle/10-操作系统概述.md",
-    "1-Theory/5-OS-principle/internal&principle/00-计算机系统概述.md",
-    "1-Theory/5-OS-principle/internal&principle/11-宏内核结构的OS举例.md",
-    "1-Theory/5-OS-principle/internal&principle/20-进程与线程.md",
-    "1-Theory/5-OS-principle/internal&principle/mindmap/20-进程与线程-mindmap-compress.png",
-    "1-Theory/5-OS-principle/internal&principle/assets/20-进程与线程-mindmap.png",
-    "1-Theory/5-OS-principle/internal&principle/21-进程、线程、纤程与协程.md",
-    "1-Theory/5-OS-principle/internal&principle/mindmap/21-进程线程纤程与协程-mindmap.png",
-    "1-Theory/5-OS-principle/internal&principle/30-并发.md",
-    "1-Theory/5-OS-principle/internal&principle/mindmap/30-并发-mindmap-compress.png",
-    "1-Theory/5-OS-principle/internal&principle/assets/30-并发-mindmap.png",
-    "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
-    "1-Theory/4-Architecture/CSAPP/32-GDB简单使用.md",
-    "5-Tools/Dev-Tools/GDB/100-gdb-tips/break-on-entry.md",
-    "5-Tools/Dev-Tools/GDB/100-gdb-tips/04-quit-gdb-silently.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/00-Info.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/41-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/44-Histogram-MaxRectangle-impl.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/42-Catalan.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/40-Stack_Queue.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/41-Exercise.md",
+    "1-Theory/3-Algorithm/将整数分解为 0~9(每个数字只出现一次) 之间的算术运算.md",
+    "1-Theory/3-Algorithm/迷宫问题.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/41-Exercise-laby.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/43-Probing-backtracking.md",
-    "8-SimpRead/Catalan number/assets",
-    "8-SimpRead/Catalan number",
-    "1-Theory/5-OS-principle/internal&principle/32-Peterson-algo-impl.md",
-    "1-Theory/5-OS-principle/internal&principle/34-Reader-writer-impl.md",
-    "1-Theory/5-OS-principle/internal&principle/33-Producer-consume-impl.md",
-    "1-Theory/5-OS-principle/internal&principle/35-Banker-algo-impl.md",
-    "1-Theory/5-OS-principle/internal&principle/36-Coffman-algo-impl.md",
-    "1-Theory/5-OS-principle/internal&principle/37-Dining-philosopher-impl.md",
-    "1-Theory/5-OS-principle/internal&principle/38-竞争条件与理发师问题.md",
-    "1-Theory/5-OS-principle/internal&principle/41-Buddy-system-impl.md",
-    "1-Theory/5-OS-principle/internal&principle/39-Unix_Linux并发机制.md",
-    "0-Assets/Templates",
-    "1-Theory/4-Architecture/CSAPP/assets",
-    "8-SimpRead/第 03 章：程序的机器级表示 - CSAPP 重点解读",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/43-Probing-backtracking-labyrinth-instance.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/43-Probing-backtracking-4-queens-instance.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/43-Probing-backtracking-n-queens.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/43-Probing-backtracking-pruning.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/42-Catalan-formula-3.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/42-Catalan-formula-2.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/42-Catalan-formula1.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/42-Catalan-pascal-triangle.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/1694691919912.png",
+    "8-SimpRead/Applications of Catalan Numbers - GeeksforGeeks/assets",
+    "8-SimpRead/Applications of Catalan Numbers - GeeksforGeeks",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/44-Histogram-MaxRectangle-impl.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/paper/Some New Methods and Results in Tree Enumeration.pdf",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/paper",
+    "1-Theory/5-OS-principle/thu-chyyuu/10-OS-intro.md",
+    "1-Theory/5-OS-principle/internal&principle/30-并发.md",
+    "1-Theory/5-OS-principle/Knowledge-Fragment/CoW.md",
+    "wiki/Memory_allocation.md",
+    "wiki",
+    "1-Theory/5-OS-principle/Knowledge-Fragment/cow.md",
+    "wiki/Allocate-on-flush.md",
+    "1-Theory/5-OS-principle/Knowledge-Fragment/Btrfs-wiki.md",
+    "8-SimpRead/Btrfs/Btrfs.md",
+    "1-Theory/5-OS-principle/Knowledge-Fragment/assets",
+    "1-Theory/5-OS-principle/collections/10-BTRFS.md",
+    "8-SimpRead/Btrfs/assets",
+    "8-SimpRead/Btrfs",
+    "1-Theory/5-OS-principle/Knowledge-Fragment",
+    "1-Theory/6-Network/Data-communication-and-network/10-绪论.md",
+    "1-Theory/6-Network/Data-communication-and-network/期末复习（5）.md",
+    "1-Theory/6-Network/Data-communication-and-network/期末复习（4）.md",
+    "1-Theory/6-Network/Data-communication-and-network/期末复习（3）.md",
+    "1-Theory/6-Network/Data-communication-and-network/期末复习（2）.md",
+    "1-Theory/6-Network/Data-communication-and-network/期末复习（1）.md",
+    "1-Theory/6-Network/Data-communication-and-network/第27章+万维网与超文本传输协议.md",
+    "1-Theory/6-Network/Data-communication-and-network/第26章+远程登陆、电子邮件与文件传输.md",
+    "1-Theory/6-Network/Data-communication-and-network/第25章+域名系统.md",
+    "1-Theory/6-Network/Data-communication-and-network/第24章+拥塞控制和服务质量.md",
+    "1-Theory/6-Network/Top-to-down",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
-    "1-Theory/5-OS-principle/OSTEP",
-    "1-Theory/4-Architecture/Hardware-software-interface-riscv",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/operator-priority.pdf",
-    "1-Theory/3-Algorithm/assets",
-    "1-Theory/5-OS-principle-design/internal&principle/一口气搞懂「文件系统」，就靠这 25 张图了/assets",
     "0-Assets/Diary/未命名.canvas",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
     "2-Develop/3-BackEnd/未命名.canvas",

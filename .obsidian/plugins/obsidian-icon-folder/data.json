@@ -1,15 +1,15 @@
 {
   "settings": {
-    "migrated": true,
+    "migrated": 2,
     "iconPacksPath": ".obsidian/plugins/obsidian-icon-folder/icons",
     "fontSize": 16,
     "iconColor": null,
     "recentlyUsedIcons": [
+      "TiFileExport",
+      "LiImport",
       "TiTemplate",
       "TiChartArea",
-      "🧜‍♀️",
-      "RiFlowChart",
-      "TiSunMoon"
+      "🧜‍♀️"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -77,5 +77,7 @@
   "1-Theory/1-ProgramLanguage/Haskell": "SiHaskell",
   "0-Assets/Diary": "TiSunMoon",
   "5-Tools/Mermaid": "TiChartArea",
-  "0-Assets/Templates": "TiTemplate"
+  "0-Assets/Templates": "TiTemplate",
+  "0-Assets/Import": "LiImport",
+  "0-Assets/Export": "TiFileExport"
 }

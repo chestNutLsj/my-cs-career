@@ -1,25 +1,84 @@
 ## 4-1 列表实现栈
 ```
 #include "../List/List.h" //以列表为基类，派生出栈模板类
-	template <typename T> class Stack: public List<T> { //将列表的首/末端作为栈底/顶
-	public: //size()、empty()以及其它开放接口，均可直接沿用
-		void push ( T const& e ) { insertAsLast ( e ); } //入栈：等效于将新元素作为列表的末元素插入
-		T pop() { return remove ( last() ); } //出栈：等效于删除列表的末元素
-		T& top() { return last()->data; } //取顶：直接返回列表的末元素
+template <typename T> class Stack: public List<T> { //将列表的首/末端作为栈底/顶
+public: //size()、empty()以及其它开放接口，均可直接沿用
+	void push ( T const& e ) { insertAsLast ( e ); } //入栈：等效于将新元素作为列表的末元素插入
+	T pop() { return remove ( last() ); } //出栈：等效于删除列表的末元素
+	T& top() { return last()->data; } //取顶：直接返回列表的末元素
 };
 ```
 
-这里直接将列表结构视作栈结构，并借助List类已有的操作接口，实现Stack类所需的操作接口。具体地，列表的头部对应于栈底，尾部对应于栈顶。于是，栈顶元素总是与列表的末节点相对应；为将某个元素压入栈中，只需将其作为末节点加至列表尾部；反之，为弹出栈顶元素，只需删除末节点，并返回其中存放的元素。
+这里直接将列表结构视作栈结构，并借助List类已有的操作接口，实现Stack类所需的操作接口。具体地，==列表的头部对应于栈底，尾部对应于栈顶==。于是，栈顶元素总是与列表的末节点相对应；为将某个元素压入栈中，只需将其作为末节点加至列表尾部；反之，为弹出栈顶元素，只需删除末节点，并返回其中存放的元素。
 
 请注意，这里还同时默认地继承了List类的其它开放接口，但它们的语义与Vector类所提供的同名操作接口可能不尽相同。比如查找操作，List::find()通过返回值（位置）为NULL来表示查找失败，而Vector()则是通过返回值（秩）小于零来表示查找失败。因此在同时还使用了这些接口的算法中，需要相应地就此调整代码实现。
 
-比如，在基于栈结构实现的八皇后算法placeQueens()中，（局部）解存放于栈solu中，一旦经过solu.find(q)操作确认没有冲突，即加入一个皇后。教材中所实现版本中的栈结构派生自Vector类，故可通过检查find()所返回的秩是否非负来判定查找是否成功。若改由List类派生出栈结构，则需相应地调整此句我们将此留给读者独立完成。
+比如，在基于栈结构实现的八皇后算法 placeQueens()中，（局部）解存放于栈 solu 中，一旦经过 solu.find(q)操作确认没有冲突，即加入一个皇后。教材中所实现版本中的栈结构派生自 Vector 类，故可通过检查 find()所返回的秩是否非负来判定查找是否成功。若改由 List 类派生出栈结构，则需相应地调整此句。
 
-另外，将列表节点与栈元素之间的对应次序颠倒过来，从原理上讲也是可行的。但是，同样出于以上考虑，我们还是更加倾向于采用以上的对应次序。如此，栈中元素的逻辑次序与它们在向量或列表中的逻辑次序一致，从而使得栈的标准接口之外的接口具有更好的兼容性。
+另外，将列表节点与栈元素之间的对应次序颠倒过来，从原理上讲也是可行的。但是，同样出于以上考虑，我们还是更加==倾向于采用以上的对应次序。如此，栈中元素的逻辑次序与它们在向量或列表中的逻辑次序一致，从而使得栈的标准接口之外的接口具有更好的兼容性。==
 
-以hanoi()算法为例，为了显示盘子移动的过程，必须反复地遍历栈中的元素（盘子）。若采用与代码x4.1相反的对应次序，则针对栈基于Vector和List的两种实现，需要分别更改显示部分的代码；反之，则可以共享同一份代码。
+以 hanoi()算法为例，为了显示盘子移动的过程，必须反复地遍历栈中的元素（盘子）。若采用与前文相反的次序，则针对栈基于 Vector 和 List 的两种实现，需要分别更改显示部分的代码；反之，则可以共享同一份代码。
 
 ## 4-2 向量实现队列
+```
+class MyCircularQueue {
+private:
+    int front;
+    int rear;
+    int capacity;
+    vector<int> elements;
+
+public:
+    MyCircularQueue(int k) {
+        this->capacity = k + 1;
+        this->elements = vector<int>(capacity);
+        rear = front = 0;
+    }
+
+    bool enQueue(int value) {
+        if (isFull()) {
+            return false;
+        }
+        elements[rear] = value;
+        rear = (rear + 1) % capacity;
+        return true;
+    }
+
+    bool deQueue() {
+        if (isEmpty()) {
+            return false;
+        }
+        front = (front + 1) % capacity;
+        return true;
+    }
+
+    int Front() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return elements[front];
+    }
+
+    int Rear() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return elements[(rear - 1 + capacity) % capacity];
+    }
+
+    bool isEmpty() {
+        return rear == front;
+    }
+
+    bool isFull() {
+        return ((rear + 1) % capacity) == front;
+    }
+};
+```
+- 来自 leetcode 构造循环队列的一道题：[设计循环队列-leetcode官方题解](https://leetcode.cn/problems/design-circular-queue/solutions/1713181/she-ji-xun-huan-dui-lie-by-leetcode-solu-1w0a/)
+- 向量实现队列思路类似，只是考虑扩容问题，并且仍然建议使用循环队列的模式
+- 一个可行的思路是以向量低位作队头，向量高位作队尾，插入时元素追加到队尾，删除时直接移出队头元素，因此插入删除的时间复杂度是 O (1)
+- 当队尾添加元素超出当前向量规模，则循环填充到向量低位（如果已有出队）；若没有元素出队，则需要向量扩容，并且仍然是倍增扩容策略
 
 ## 4-3 栈混洗与禁形
 设 B 为 A={1,2,3,..., n}的任一排列。
@@ -154,13 +213,87 @@ void append ( char*& rpn, char optr ) { //将运算符接至RPN末尾
 反观上例也可看出，巧合的原因在于，在该“表达式”的求值过程中，每当需要执行某一运 算时，在操作数栈中至少存有足够多操作数可供弹出并参与运算。
 
 ### 改进
-就最低的标准而言，改进后的算法应该能够判定表达式是否合法。为此，除了需要检查括号的匹配，以及在每次试图执行运算时核对操作数栈的规模足够大，还需要确认每个操作符与其所对应操作数之间的相对位置关系符合中缀表达式（infix）的语法。最后一项检查的准则并不复杂：在每个操作符即将入栈时，操作数栈的规模应比操作符栈的规模恰好大一。
+就最低的标准而言，改进后的算法应该能够判定表达式是否合法。为此，除了需要检查括号的匹配，以及在每次试图执行运算时核对操作数栈的规模足够大，还需要确认每个操作符与其所对应操作数之间的相对位置关系符合中缀表达式（infix）的语法。最后一项检查的准则并不复杂：==在每个操作符即将入栈时，操作数栈的规模应比操作符栈的规模恰好大一==。
 
 ## 4-17 迷宫寻径
+[[43-Probing-backtracking#迷宫寻径]]
+1. ==试举例说明，即使 nxn 迷宫内没有任何障碍格点，且起始与目标格点紧邻，也可能需要在搜索过所有 (n-2)^2 个可用格点后才能找出一条长度为 (n-2)^2 的通路。==
+![[41-Exercise-laby.png]]
+根据该算法的控制流程，在每个格点都是固定地按照东、南、西、北的次序，逐个地试探相邻的格点。因此，尽管在此例中目标终点就紧邻于起始点的西侧，也只有在按照如图所示的路线，遍历过所有的(n - 2)2个格点之后，才能抵达终点。
+
+2. ==尝试改进，使访问格点尽可能少、路径尽可能短。==
+一种简便而行之有效的策略是，每次都是按随机次序试探相邻格点。
 
 ## 4-18 费马-拉格朗日分解
+**描述**：任何一个自然数都可以表示为 4 个整数的平方和，这种表示形式称作费马-拉格朗日分解，比如：30 = 1^2 + 2^2 + 3^2 + 4^2。试采用试探回溯策略，实现以下算法：
+- 对任一自然数 n，找出一个费马-拉格朗日分解；
+- 对任一自然数 n，找出所有费马-拉格朗日分解（同一组数的不同排列规作等同）；
+- 对于不超过 n 的每一自然数，给出其费马-拉格朗日分解的总数。
 
-## 4-19 将整数分解为 0~9 之间的 +,* 运算
+**实现**：
+```
+#include <iostream>
+#include <vector>
+
+// 定义全局变量，存储分解结果
+std::vector<std::vector<int>> decompositions;
+
+// 计算 n 的费马-拉格朗日分解
+bool fermatLagrangeDecomposition(int n, std::vector<int> currentDecomposition) {
+    if (n == 0) {
+        // 如果 n 等于 0，表示找到了一种分解方式
+        decompositions.push_back(currentDecomposition);
+        return true;
+    }
+
+    for (int i = 1; i * i <= n; ++i) {
+        if (currentDecomposition.size() == 4) {
+            // 如果当前分解中已经有 4 个数，则终止分解
+            return false;
+        }
+        currentDecomposition.push_back(i * i);
+        if (fermatLagrangeDecomposition(n - i * i, currentDecomposition)) {
+            // 递归寻找下一个分解
+            currentDecomposition.pop_back();
+        } else {
+            // 如果无法找到下一个分解，则回溯
+            currentDecomposition.pop_back();
+        }
+    }
+    return false;
+}
+
+int main() {
+    int n;
+    std::cout << "请输入一个自然数 n: ";
+    std::cin >> n;
+
+    // 寻找 n 的费马-拉格朗日分解
+    std::vector<int> currentDecomposition;
+    fermatLagrangeDecomposition(n, currentDecomposition);
+
+    // 输出所有分解
+    std::cout << n << " 的费马-拉格朗日分解为：" << std::endl;
+    for (const std::vector<int>& decomposition : decompositions) {
+        for (int i = 0; i < decomposition.size(); ++i) {
+            std::cout << decomposition[i];
+            if (i < 3) {
+                std::cout << " + ";
+            }
+        }
+        std::cout << std::endl;
+    }
+
+    // 输出费马-拉格朗日分解的总数
+    std::cout << n << " 的费马-拉格朗日分解总数为：" << decompositions.size() << std::endl;
+
+    return 0;
+}
+
+```
+
+![[将整数分解为 0~9(每个数字只出现一次) 之间的算术运算|4-19 将整数分解为 0~9(每个数字只出现一次) 之间的算术运算]]
+
 
 ## 4-23 使用队列接口实现二路归并
 无论 Vector::merge() 还是 List::merge()，所用到的操作无非两类：从两个输入序列的前端删除元素，将元素插入至输出序列的后端
@@ -175,3 +308,75 @@ void append ( char*& rpn, char optr ) { //将运算符接至RPN末尾
 **描述**：基于向量模板类 Vector 实现栈结构时，为了进一步提高空间的利用率，可以考虑在一个向量内同时维护两个栈。它们分别以向量的首、末元素为栈底，并相向生长。为此，对外的入栈和出栈操作接口都需要增加一个标志位，用一个比特来区分实施操作癿的栈。具体地，入栈接口形式为 push(0, e)和 push(1, e)，出栈接口形式为 pop(0)和 pop(1)。
 
 **实现**：
+```
+#include <vector>
+
+class TwinStack {
+private:
+  std::vector<int> data;
+  int size1 = 0; 
+  int size2 = 0;
+
+  // 扩容函数
+  void expand() {
+    std::vector<int> new_data(data.size() * 2);
+
+    for(int i = 0; i < size1; i++) {
+      new_data[i] = data[i];
+    }
+    
+    for(int i = 0; i < size2; i++) {
+      new_data[new_data.size()-size2+i] = data[data.size()-size2+i];
+    }
+    
+    data = new_data;
+  }
+
+public:
+  TwinStack() {
+    data.resize(1);
+  }
+
+  // 在栈1顶部插入元素
+  void push1(int val) {
+    if (size1 + size2 == data.size()) {
+      expand();
+    }
+    
+    data.insert(data.begin() + size1, val);
+    size1++;
+  }
+
+  // 在栈2顶部插入元素
+  void push2(int val) {
+    if (size1 + size2 == data.size()) {
+      expand();
+    }
+    
+    data.insert(data.end() - size2 - 1, val);
+    size2++;
+  }
+
+  // 删除栈1顶部元素
+  int pop1() {
+    if (size1 == 0) return -1; // 栈为空
+
+    int top = data[size1-1];
+    data.erase(data.begin() + size1-1);
+    size1--;
+    return top;
+  }
+
+  // 删除栈2顶部元素
+  int pop2() {
+    if (size2 == 0) return -1;
+    
+    int top = data[data.size()-size2];
+    data.erase(data.end()-size2-1);
+    size2--;
+    return top; 
+  }
+};
+```
+
+这个实现利用一个vector来存储两个栈的数据,一个栈从头部开始向后增长,另一个栈从尾部向前增长,并记录每个栈的大小。通过插入和删除元素来实现入栈和出栈操作。这样可以充分利用vector的空间,实现双栈的需求。
