@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "b709f336f72157b5",
+        "id": "2e70521ffd0e446d",
         "type": "tabs",
         "children": [
           {
-            "id": "7afbac87b7808eea",
+            "id": "1ace7eeaf47c0146",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
+                "file": "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
                 "mode": "source",
                 "source": false
               }
@@ -80,8 +80,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -98,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
+                "file": "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
+                "file": "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -145,7 +144,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md"
+                "file": "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md"
               }
             }
           },
@@ -182,24 +181,24 @@
       "omnisearch:Omnisearch": false
     }
   },
-  "active": "7afbac87b7808eea",
+  "active": "1ace7eeaf47c0146",
   "lastOpenFiles": [
-    "1-Theory/2-DataStruct/dsa-cpp-deng/42-Catalan.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
+    "1-Theory/5-OS-principle/internal&principle/mindmap/20-进程与线程-mindmap.png",
+    "1-Theory/5-OS-principle/internal&principle/mindmap/30-并发-mindmap.png",
+    "1-Theory/5-OS-principle/internal&principle/mindmap/50-CPU调度-mindmap.png",
+    "1-Theory/5-OS-principle/internal&principle/mindmap/60-IO管理与磁盘-mindmap.png",
+    "1-Theory/5-OS-principle/internal&principle/mindmap/70-文件系统-mindmap.png",
+    "1-Theory/5-OS-principle/internal&principle/mindmap/40-内存与虚存-mindmap.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/图05-06.多叉树的“长子+兄弟”表示法（在(b)中，长子和兄弟指针分别以垂直实线和水平虚线示意）.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/图05-05.多叉树的“父节点+孩子节点”表示法.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/图05-03.多叉树的“父节点”表示法.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/图05-04.多叉树的“孩子节点”表示法.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/42-Catalan.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/41-Exercise.md",
     "1-Theory/3-Algorithm/将整数分解为 0~9(每个数字只出现一次) 之间的算术运算.md",
     "1-Theory/3-Algorithm/迷宫问题.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/41-Exercise-laby.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/43-Probing-backtracking.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/43-Probing-backtracking-labyrinth-instance.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/43-Probing-backtracking-4-queens-instance.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/43-Probing-backtracking-n-queens.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/43-Probing-backtracking-pruning.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/42-Catalan-formula-3.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/42-Catalan-formula-2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/42-Catalan-formula1.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/42-Catalan-pascal-triangle.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/1694691919912.png",
     "8-SimpRead/Applications of Catalan Numbers - GeeksforGeeks/assets",
     "8-SimpRead/Applications of Catalan Numbers - GeeksforGeeks",
     "1-Theory/2-DataStruct/dsa-cpp-deng/44-Histogram-MaxRectangle-impl.md",
@@ -228,7 +227,6 @@
     "1-Theory/6-Network/Data-communication-and-network/第27章+万维网与超文本传输协议.md",
     "1-Theory/6-Network/Data-communication-and-network/第26章+远程登陆、电子邮件与文件传输.md",
     "1-Theory/6-Network/Data-communication-and-network/第25章+域名系统.md",
-    "1-Theory/6-Network/Data-communication-and-network/第24章+拥塞控制和服务质量.md",
     "1-Theory/6-Network/Top-to-down",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",
