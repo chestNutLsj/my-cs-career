@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "2e70521ffd0e446d",
+        "id": "b7bac59bffbd0be0",
         "type": "tabs",
         "children": [
           {
-            "id": "1ace7eeaf47c0146",
+            "id": "f58684271f4cc089",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
                 "mode": "source",
                 "source": false
               }
@@ -97,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -144,7 +144,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md"
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md"
               }
             }
           },
@@ -181,19 +181,41 @@
       "omnisearch:Omnisearch": false
     }
   },
-  "active": "1ace7eeaf47c0146",
+  "active": "f58684271f4cc089",
   "lastOpenFiles": [
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/图05-32.先序遍历过程：先沿左侧通路自顶而下访问沿途节点，再自底而上依次遍历这些节点的右子树.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-preorder.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-traverse.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-insert-subtree.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-insert-node.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-insertBinNode.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-binnode.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-proper-binary-tree.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-edge-node-num-relation.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/00-OS-overview.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/practice/0-操作系统概述.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/practice",
+    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/2-Program-guess-game/1-A-guess-number-game.md",
+    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/11-Hello-cargo.md",
+    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/2-Program-guess-game",
+    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started",
+    "1-Theory/1-ProgramLanguage/Rust/Cargo/How-to-use-Cargo?.md",
+    "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/12-Constants.md",
+    "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/10-Structure-of-Program.md",
+    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/10-Hello-rust.md",
+    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/01-Installation.md",
+    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/00-Introduction.md",
+    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/assets/00-Introduction-ferris-work-undesired.png",
+    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/assets/00-Introduction-ferris-panics.png",
+    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/assets",
+    "1-Theory/1-ProgramLanguage/Rust/Learn-rust-in-Y-minutes.md",
+    "1-Theory/1-ProgramLanguage/Rust/30-Rustlings/安装与报错解决.md",
+    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book",
+    "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
+    "8-SimpRead/第 04 章：处理器体系结构 - CSAPP 重点解读/assets",
+    "8-SimpRead/第 04 章：处理器体系结构 - CSAPP 重点解读",
+    "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
-    "1-Theory/5-OS-principle/internal&principle/mindmap/20-进程与线程-mindmap.png",
-    "1-Theory/5-OS-principle/internal&principle/mindmap/30-并发-mindmap.png",
-    "1-Theory/5-OS-principle/internal&principle/mindmap/50-CPU调度-mindmap.png",
-    "1-Theory/5-OS-principle/internal&principle/mindmap/60-IO管理与磁盘-mindmap.png",
-    "1-Theory/5-OS-principle/internal&principle/mindmap/70-文件系统-mindmap.png",
-    "1-Theory/5-OS-principle/internal&principle/mindmap/40-内存与虚存-mindmap.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/图05-06.多叉树的“长子+兄弟”表示法（在(b)中，长子和兄弟指针分别以垂直实线和水平虚线示意）.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/图05-05.多叉树的“父节点+孩子节点”表示法.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/图05-03.多叉树的“父节点”表示法.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/图05-04.多叉树的“孩子节点”表示法.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/42-Catalan.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/41-Exercise.md",
     "1-Theory/3-Algorithm/将整数分解为 0~9(每个数字只出现一次) 之间的算术运算.md",
@@ -203,31 +225,10 @@
     "8-SimpRead/Applications of Catalan Numbers - GeeksforGeeks",
     "1-Theory/2-DataStruct/dsa-cpp-deng/44-Histogram-MaxRectangle-impl.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/paper/Some New Methods and Results in Tree Enumeration.pdf",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/paper",
-    "1-Theory/5-OS-principle/thu-chyyuu/10-OS-intro.md",
     "1-Theory/5-OS-principle/internal&principle/30-并发.md",
     "1-Theory/5-OS-principle/Knowledge-Fragment/CoW.md",
     "wiki/Memory_allocation.md",
-    "wiki",
     "1-Theory/5-OS-principle/Knowledge-Fragment/cow.md",
-    "wiki/Allocate-on-flush.md",
-    "1-Theory/5-OS-principle/Knowledge-Fragment/Btrfs-wiki.md",
-    "8-SimpRead/Btrfs/Btrfs.md",
-    "1-Theory/5-OS-principle/Knowledge-Fragment/assets",
-    "1-Theory/5-OS-principle/collections/10-BTRFS.md",
-    "8-SimpRead/Btrfs/assets",
-    "8-SimpRead/Btrfs",
-    "1-Theory/5-OS-principle/Knowledge-Fragment",
-    "1-Theory/6-Network/Data-communication-and-network/10-绪论.md",
-    "1-Theory/6-Network/Data-communication-and-network/期末复习（5）.md",
-    "1-Theory/6-Network/Data-communication-and-network/期末复习（4）.md",
-    "1-Theory/6-Network/Data-communication-and-network/期末复习（3）.md",
-    "1-Theory/6-Network/Data-communication-and-network/期末复习（2）.md",
-    "1-Theory/6-Network/Data-communication-and-network/期末复习（1）.md",
-    "1-Theory/6-Network/Data-communication-and-network/第27章+万维网与超文本传输协议.md",
-    "1-Theory/6-Network/Data-communication-and-network/第26章+远程登陆、电子邮件与文件传输.md",
-    "1-Theory/6-Network/Data-communication-and-network/第25章+域名系统.md",
-    "1-Theory/6-Network/Top-to-down",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",

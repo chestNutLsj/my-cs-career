@@ -88,3 +88,25 @@ rustc 1.64.0-beta.3 (82bf34178 2022-08-18)
 $ cargo --version
 cargo 1.64.0-beta.3 (ded089921 2022-08-11)
 ```
+
+If you don’t see this information, check that Rust is in your %PATH% system variable as follows.
+
+In Windows CMD, use:
+> echo %PATH%
+
+In PowerShell, use:
+> echo $env:Path
+
+In Linux and macOS, use:
+> $ echo $PATH
+
+If that’s all correct and Rust still isn’t working, there are a number of places you can get help. Find out how to get in touch with other Rustaceans (a silly nickname we call ourselves) on the community page.
+
+## 卸载 rustup
+To uninstall Rust and rustup, run the following uninstall script from your shell:
+> $ rustup self uninstall
+
+## Local Documentation
+The installation of Rust also includes a local copy of the documentation so that you can read it offline. Run `rustup doc` to open the local documentation in your browser.
+
+Any time a type or function is provided by the standard library and you’re not sure what it does or how to use it, use the application programming interface (API) documentation to find out!

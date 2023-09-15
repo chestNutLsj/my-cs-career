@@ -26,7 +26,6 @@
   "5-Tools": "RiToolsFill",
   "5-Tools/Dev-Tools": "FasToolbox",
   "5-Tools/Dev-Tools/CMake": "SiCmake",
-  "5-Tools/Dev-Tools/Cargo": "SiCargo",
   "5-Tools/Dev-Tools/Conda": "SiAnaconda",
   "5-Tools/Dev-Tools/Docker": "SiDocker",
   "5-Tools/Dev-Tools/Git": "SiGit",
@@ -79,5 +78,6 @@
   "5-Tools/Mermaid": "TiChartArea",
   "0-Assets/Templates": "TiTemplate",
   "0-Assets/Import": "LiImport",
-  "0-Assets/Export": "TiFileExport"
+  "0-Assets/Export": "TiFileExport",
+  "1-Theory/1-ProgramLanguage/Rust/Cargo": "SiCargo"
 }
