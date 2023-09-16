@@ -222,6 +222,27 @@
       "ctime": 1693927625420,
       "items": [],
       "title": "ALGO-principle"
+    },
+    {
+      "type": "group",
+      "ctime": 1694869807484,
+      "items": [
+        {
+          "type": "file",
+          "ctime": 1694869858991,
+          "path": "1-Theory/5-OS-principle/thu-rCore-tutorial/030-OS-abstraction.md",
+          "subpath": "#普通控制流",
+          "title": "Common Control Flow"
+        },
+        {
+          "type": "file",
+          "ctime": 1694870055231,
+          "path": "1-Theory/5-OS-principle/thu-rCore-tutorial/030-OS-abstraction.md",
+          "subpath": "#异常控制流",
+          "title": "Exceptional Control Flow"
+        }
+      ],
+      "title": "rCore-tips"
     }
   ]
 }

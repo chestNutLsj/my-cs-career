@@ -26,5 +26,7 @@
   "blue-topaz-theme@@background-code-2@@light": "#E5E5E5",
   "blue-topaz-theme@@text-color-code@@light": "#7B7B7B",
   "blue-topaz-theme@@background-settings-workplace-background-image": false,
-  "blue-topaz-theme@@background-settings-workplace-theme-light": "background-settings-workplace-theme-light-blue-mountain"
+  "blue-topaz-theme@@background-settings-workplace-theme-light": "background-settings-workplace-theme-light-blue-mountain",
+  "blue-topaz-theme@@highlight-style": "all-rounded-corners-highlight",
+  "blue-topaz-theme@@text-highlight@@light": "#000000"
 }

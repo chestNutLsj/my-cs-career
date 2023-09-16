@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "b7bac59bffbd0be0",
+        "id": "1736966bf584cc4a",
         "type": "tabs",
         "children": [
           {
-            "id": "f58684271f4cc089",
+            "id": "4c0f001018d46d22",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
+                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
                 "mode": "source",
                 "source": false
               }
@@ -90,7 +90,7 @@
       {
         "id": "e5810eded0ce3a81",
         "type": "tabs",
-        "dimension": 48.16700610997963,
+        "dimension": 35.98369011213048,
         "children": [
           {
             "id": "866a4e016d81b567",
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
+                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
+                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +137,7 @@
       {
         "id": "2aabb86f31957f99",
         "type": "tabs",
-        "dimension": 51.83299389002036,
+        "dimension": 64.01630988786951,
         "children": [
           {
             "id": "5402e2346c010391",
@@ -145,7 +145,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md"
+                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md"
               }
             }
           },
@@ -181,20 +181,25 @@
       "omnisearch:Omnisearch": false
     }
   },
-  "active": "f58684271f4cc089",
+  "active": "4c0f001018d46d22",
   "lastOpenFiles": [
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-travLevel-instance.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-expression-tree-rpn.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-expression-tree.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-postorder-instance-1.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-postorder-leftmost-leaf.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-postorder-instance.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-inorder-succ-pre.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-inorder-recurrence.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/图05-33.中序遍历过程：顺着左侧通路，自底而上依次访问沿途各节点及其右子树.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-inorder.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-prefix-visit-along-vine.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/00-OS-overview.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/030-OS-abstraction.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/020-OS-syscall-interface.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/010-What-is-OS?.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/000-Course-overview.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/021-Linux虚存系统调用函数.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-computer-arch.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-file-to-disk.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-address-space.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-process-context-switch.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-process-context.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-prog-illusion.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-syscall.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-exception.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-interrupt.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-complex-exec-env.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/practice/0-操作系统概述.md",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/practice",
     "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/2-Program-guess-game/1-A-guess-number-game.md",
@@ -215,7 +220,6 @@
     "8-SimpRead/第 04 章：处理器体系结构 - CSAPP 重点解读/assets",
     "8-SimpRead/第 04 章：处理器体系结构 - CSAPP 重点解读",
     "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/42-Catalan.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/41-Exercise.md",
     "1-Theory/3-Algorithm/将整数分解为 0~9(每个数字只出现一次) 之间的算术运算.md",
@@ -224,11 +228,6 @@
     "8-SimpRead/Applications of Catalan Numbers - GeeksforGeeks/assets",
     "8-SimpRead/Applications of Catalan Numbers - GeeksforGeeks",
     "1-Theory/2-DataStruct/dsa-cpp-deng/44-Histogram-MaxRectangle-impl.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/paper/Some New Methods and Results in Tree Enumeration.pdf",
-    "1-Theory/5-OS-principle/internal&principle/30-并发.md",
-    "1-Theory/5-OS-principle/Knowledge-Fragment/CoW.md",
-    "wiki/Memory_allocation.md",
-    "1-Theory/5-OS-principle/Knowledge-Fragment/cow.md",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
