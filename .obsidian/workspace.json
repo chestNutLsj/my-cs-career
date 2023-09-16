@@ -80,7 +80,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -160,8 +161,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -183,15 +183,17 @@
   },
   "active": "f58684271f4cc089",
   "lastOpenFiles": [
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/图05-32.先序遍历过程：先沿左侧通路自顶而下访问沿途节点，再自底而上依次遍历这些节点的右子树.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-preorder.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-traverse.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-insert-subtree.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-insert-node.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-insertBinNode.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-binnode.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-proper-binary-tree.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-edge-node-num-relation.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-travLevel-instance.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-expression-tree-rpn.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-expression-tree.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-postorder-instance-1.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-postorder-leftmost-leaf.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-postorder-instance.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-inorder-succ-pre.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-inorder-recurrence.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/图05-33.中序遍历过程：顺着左侧通路，自底而上依次访问沿途各节点及其右子树.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-inorder.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/50-Tree-prefix-visit-along-vine.png",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/00-OS-overview.md",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/practice/0-操作系统概述.md",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/practice",
@@ -205,8 +207,6 @@
     "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/10-Hello-rust.md",
     "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/01-Installation.md",
     "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/00-Introduction.md",
-    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/assets/00-Introduction-ferris-work-undesired.png",
-    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/assets/00-Introduction-ferris-panics.png",
     "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/assets",
     "1-Theory/1-ProgramLanguage/Rust/Learn-rust-in-Y-minutes.md",
     "1-Theory/1-ProgramLanguage/Rust/30-Rustlings/安装与报错解决.md",

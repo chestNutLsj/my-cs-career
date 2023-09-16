@@ -184,7 +184,7 @@ template <typename T> void BinTree<T>::updateHeightAbove( BinNodePosi<T> x ) //�
 } //从x出发，覆盖历代祖先。可优化
 ```
 
-### Secede subtree
+### Split subtree
 ```
 template <typename T> BinTree<T>* BinTree<T>::secede( BinNodePosi<T> x ) {
 	FromParentTo( * x ) = NULL; updateHeightAbove( x->parent );
@@ -208,6 +208,9 @@ Rank BinNode<T>::size() { //后代总数,亦为子树规模
 	return s;
 } //懒惰策略，O( n = |size| )
 ```
+
+^b9085a
+
 ### 先序遍历
 #### 递归版
 ```
@@ -252,3 +255,273 @@ template <typename T, typename VST> static void visitAlongVine
 	} //只有右孩子、NULL可能入栈——增加判断以剔除后者，是否值得？
 }
 ```
+![[50-Tree-prefix-visit-along-vine.png]]
+
+#### 分析
+- 正确性：
+	- 无遗漏：
+	- 根优先：任一子树中，只有根被访问后才会访问其他节点；
+	- 先左后右：同一节点的左子树先于右子树被访问；
+- 复杂度 O (n)
+	- 每步迭代都有一个节点出栈并被访问；
+	- 每个节点入/出栈一次且仅一次
+	- 每步迭代只需要 O (1)时间
+- 遗憾：
+	- 这种用栈消除尾递归的方式难以推广到其它递归形式
+
+### 中序遍历
+#### 递归版
+```
+template <typename T, typename VST>
+void traverse( BinNodePosi<T> x, VST & visit ) {
+	if ( !x ) return;
+	traverse( x->lc, visit );
+	visit( x->data );
+	traverse( x->rc, visit ); //tail
+}
+```
+
+时间复杂度：$T (n)=T (a)+O (1)+T (n-a-1)=O (n)$
+
+![[50-Tree-inorder.png]]
+
+#### 中序遍历特点
+- 右子树的递归遍历是尾递归，但左子树不是；因此不能直接套用先序遍历中使用栈直接消除尾递归的思路；
+- 因此中序遍历的递归转迭代的解决思路是：找到第一个被访问的节点，将其祖先用栈保存，于是化问题为依次对若干棵右子树的遍历问题（依从最"左"节点向上的次）
+- 于是问题关键在于，中序遍历任一二叉树 T 时，首先被访问的节点是哪个？如何找到它？
+
+![[图05-33.中序遍历过程：顺着左侧通路，自底而上依次访问沿途各节点及其右子树.png]]
+- 沿着左侧藤，遍历可自底向上分解为 d+1 步迭代：每访问藤上一个节点，再遍历其右子树
+- 各右子树的遍历彼此独立，自成子任务；
+
+#### 迭代版
+```
+template <typename T, typename V> 
+void travIn_I1( BinNodePosi<T> x, V& visit ) {
+	Stack < BinNodePosi<T> > S; //辅助栈
+	while ( true ) { //反复地
+		goAlongVine( x, S ); //从当前节点出发，逐批入栈
+		if ( S.empty() ) break; //直至所有节点处理完毕
+		x = S.pop(); //x的左子树或为空，或已遍历（等效于空），故可以
+		visit( x->data ); //立即访问之
+		x = x->rc; //再转向其右子树（可能为空，留意处理手法）
+	}
+}
+
+template <typename T> //从当前节点出发，沿左分支不断深入，直至没有左分支
+static void goAlongVine(BinNodePosi<T> x,Stack < BinNodePosi<T>> & S){
+	while(x){ //当前节点入栈后随即向左侧分支深入，迭代直到无左孩子
+		s.push(x);
+		x=x->lc;
+	}
+}
+```
+
+![[50-Tree-inorder-recurrence.png]]
+
+#### 分析
+1. 每个节点出栈时，其左子树或不存在，或已完全遍历，而右子树尚未入栈；
+2. 于是每当节点出栈，只需访问它，然后从其右孩子出发继续按先左后右子树的次序访问；
+3. `goAlongVine()` 最多需要调用Ω(n)次，单次调用最多需要最多Ω(n)次 push 入栈。纵观整个遍历过程中所有对 `goAlongVine()` 的调用，实质的操作只有辅助栈的 push 和 pop：
+	1. 每次调用 `goAlongVine()` 都恰有一次 pop，全程不超过 O (n)次
+	2. `goAlongVine()` 过程中尽管 push 次数不定，但累计应于 pop 一个量级；
+
+#### 更多递归实现
+```
+//travIn_I2
+template <typename T, typename VST> //元素类型、操作器
+void travIn_I2( BinNodePosi<T> x, VST& visit ) { //二叉树中序遍历算法（迭代版#2）
+   Stack<BinNodePosi<T>> S; //辅助栈
+   while ( true )
+      if ( x ) {
+         S.push( x ); //根节点进栈
+         x = x->lc; //深入遍历左子树
+      } else if ( !S.empty() ) {
+         x = S.pop(); //尚未访问的最低祖先节点退栈
+         visit( x->data ); //访问该祖先节点
+         x = x->rc; //遍历祖先的右子树
+      } else
+         break; //遍历完成
+}
+```
+
+```
+//travIn_I3
+template <typename T, typename VST> //元素类型、操作器
+void travIn_I3( BinNodePosi<T> x, VST& visit ) { //二叉树中序遍历算法（迭代版#3，无需辅助栈）
+   bool backtrack = false; //前一步是否刚从左子树回溯――省去栈，仅O(1)辅助空间
+   while ( true )
+      if ( !backtrack && HasLChild( *x ) ) //若有左子树且不是刚刚回溯，则
+         x = x->lc; //深入遍历左子树
+      else { //否则――无左子树或刚刚回溯（相当于无左子树）
+         visit( x->data ); //访问该节点
+         if ( HasRChild( *x ) ) { //若其右子树非空，则
+            x = x->rc; //深入右子树继续遍历
+            backtrack = false; //并关闭回溯标志
+         } else { //若右子树空，则
+            if ( !( x = x->succ() ) ) break; //回溯（含抵达末节点时的退出返回）
+            backtrack = true; //并设置回溯标志
+         }
+      }
+}
+```
+
+```
+//travIn_I4
+template <typename T, typename VST> //元素类型、操作器
+void travIn_I4( BinNodePosi<T> x, VST& visit ) { //二叉树中序遍历（迭代版#4，无需栈或标志位）
+   while ( true )
+      if ( HasLChild( *x ) ) //若有左子树，则
+         x = x->lc; //深入遍历左子树
+      else { //否则
+         visit ( x->data ); //访问当前节点，并
+         while ( !HasRChild( *x ) ) //不断地在无右分支处
+            if ( ! ( x = x->succ() ) ) return; //回溯至直接后继（在没有后继的末节点处，直接退出）
+            else visit ( x->data ); //访问新的当前节点
+         x = x->rc; //（直至有右分支处）转向非空的右子树
+      }
+}
+```
+
+#### 后继与前驱
+![[50-Tree-inorder-succ-pre.png]]
+- 直接后继：最靠左的右后代，或最低的左祖先（将节点包含于其左子树中的最低祖先）
+```
+template <typename T> BinNodePosi<T> BinNode<T>::succ() { //定位节点v的直接后继
+   BinNodePosi<T> s = this; //记录后继的临时变量
+   if ( rc ) { //若有右孩子，则直接后继必在右子树中，具体地就是
+      s = rc; //右子树中
+      while ( HasLChild( *s ) ) s = s->lc; //最靠左（最小）的节点
+   } else { //否则，直接后继应是“将当前节点包含于其左子树中的最低祖先”，具体地就是
+      while ( IsRChild( *s ) ) s = s->parent; //逆向地沿右向分支，不断朝左上方移动
+      s = s->parent; //最后再朝右上方移动一步，即抵达直接后继（如果存在）
+   }
+   return s;
+}// 两种情况下运行时间分别为当前节点的高度和深度，总和不超过O(h)
+```
+
+### 后序遍历
+#### 应用
+```
+//子树删除
+template <typename T> //删除二叉树中位置x处的节点及其后代，返回被删除节点的数值
+Rank BinTree<T>::remove( BinNodePosi<T> x ) { // assert: x为二叉树中的合法位置
+   FromParentTo( *x ) = NULL; //切断来自父节点的指针
+   updateHeightAbove( x->parent ); //更新祖先高度
+   Rank n = removeAt( x ); 
+   _size -= n;
+   return n; //删除子树x，更新规模，返回删除节点总数
+}
+
+template <typename T> //删除二叉树中位置x处的节点及其后代，返回被删除节点的数值
+static Rank removeAt( BinNodePosi<T> x ) { // assert: x为二叉树中的合法位置
+   if ( !x ) return 0; //递归基：空树
+   Rank n = 1 + removeAt( x->lc ) + removeAt( x->rc ); //递归释放左、右子树
+   release( x->data ); release( x ); return n; //释放被摘除节点，并返回删除节点总数
+} // release()负责释放复杂结构，与算法无直接关系，具体实现详见代码包
+
+```
+
+事实上，之前提到的更新高度的函数 [[50-Tree#Update height|updateHeight]] 、更新节点的后代规模的函数 [[50-Tree#^b9085a|size]] 也是后序遍历。
+
+#### 递归版
+```
+template <typename T, typename VST>
+void traverse( BinNodePosi<T> x, VST & visit ) {
+	if ( ! x ) return;
+	traverse( x->lc, visit );
+	traverse( x->rc, visit );
+	visit( x->data );
+}
+
+```
+
+- 时间复杂度：$T (n)=T (a)+T (n-a-1)+O (1)=O(n)$
+
+![[50-Tree-postorder-instance.png]]
+
+#### 后序遍历特点
+- 左右子树的递归遍历都不是尾递归，因此解决办法是找到第一个被访问的节点，将其祖先及右兄弟用栈保存；
+- 于是后序遍历分解为依次对若干棵右子树遍历的问题，此处次序是沿左侧藤最底部左节点向上的次序。此时问题的关键是找到首先被访问的节点；
+- 从根出发下行，尽可能沿左分支前进，实不得以再沿右分支，左右分支都不存在，才返回；
+- 第一个找到的节点，是每个子树的叶子，并且是其中序遍历次序的最靠左者；
+
+![[50-Tree-postorder-leftmost-leaf.png]]
+
+#### 迭代版
+```
+template <typename T, typename V> 
+void travPost_I( BinNodePosi<T> x, V & visit ) {
+	Stack < BinNodePosi<T> > S; //辅助栈
+	if ( x ) S.push( x ); //根节点首先入栈
+	while ( ! S.empty() ) { //x始终为当前节点
+		if ( S.top() != x->parent ) //若栈顶非x之父（而为右兄），则
+			gotoLeftmostLeaf( S ); //在其右兄子树中找到最靠左的叶子
+		x = S.pop(); //弹出栈顶（即前一节点之后继）以更新x
+		visit( x->data ); //并随即访问之
+	}
+}
+
+template <typename T> //在以S栈顶节点为根的子树中，找到最高左侧可见叶节点
+static void gotoLeftmostLeaf( Stack <BinNodePosi<T>> & S ) { //沿途所遇节点依次入栈
+	while ( BinNodePosi<T> x = S.top() ) //自顶而下反复检查栈顶节点
+		if ( HasLChild( * x ) ) { //尽可能向左。在此之前
+			if ( HasRChild( * x ) ) //若有右孩子，则
+				S.push( x->rc ); //优先入栈
+			S.push( x->lc ); //然后转向左孩子
+		} else //实不得已
+			S.push( x->rc ); //才转向右孩子
+	S.pop(); //返回之前，弹出栈顶的空节点
+}
+```
+
+#### 实例
+![[50-Tree-postorder-instance-1.png]]
+
+#### 分析
+- 正确性：
+	- 每个节点出栈后，以其为根的子树已经完全遍历，并且如果其右兄弟存在，则必恰为栈顶；
+	- 后续继续遍历子树r
+- 效率：
+	- 分摊分析与中序遍历类似，时间是 O (n)
+	- 空间是 O (height)
+
+#### 应用：表达式树
+![[50-Tree-expression-tree.png]]
+- 运算符一定是分支节点，操作数一定是叶子节点；
+- 上图先是对原运算式添加括号，隔离运算符的优先级；
+- 之后将操作数摘出，作为运算树的叶节点，将每对括号与运算符匹配；
+- 最后根据深度决定优先级，去除括号，得到的就是 RPN 式，即对表达式树的后序遍历就是正确的运算：
+
+![[50-Tree-expression-tree-rpn.png]]
+
+### 层次遍历
+#### 迭代版
+```
+template <typename T> template <typename VST>
+void BinNode<T>::travLevel( VST & visit ) { //二叉树层次遍历
+	Queue< BinNodePosi<T> > Q; Q.enqueue( this ); //引入辅助队列，根节点入队
+	while ( ! Q.empty() ) { //在队列再次变空之前，反复迭代
+		BinNodePosi<T> x = Q.dequeue(); visit( x->data ); //取出队首节点并随即访问
+		if ( HasLChild( *x ) ) Q.enqueue( x->lc ); //左孩子入队
+		if ( HasRChild( *x ) ) Q.enqueue( x->rc ); //右孩子入队
+	}
+}
+```
+
+#### 实例
+![[50-Tree-travLevel-instance.png]]
+
+#### 分析
+- 正确性：
+	- 实质上是树的广度优先遍历；
+		- 每次迭代，入队节点都是出队节点的孩子，深度增加一层；
+		- 任何时刻，队列中各节点按照深度单调排列，并且相邻节点的深度相差不超过 1 层；
+		- 所有节点都迟早会入队，越高、靠左的节点，越早入队；
+		- 每个节点都入队、出队恰好一次，故总时间为 O (n)
+	- 先序、中序、后续遍历都是树的深度优先遍历；
+- 
+
+#### 完全二叉树
+- 特点：
+	- 完全二叉树是二叉树的紧凑表示
