@@ -595,4 +595,8 @@ A
 ![[50-Tree-augment-sequence.png]]
 
 ## Huffman 树
+文件编码时，字符通过二进制编码
+### PFC 编码
+
+
 ## 二叉树应用

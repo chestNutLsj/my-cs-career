@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "1736966bf584cc4a",
+        "id": "f6ad598e3408629c",
         "type": "tabs",
         "children": [
           {
-            "id": "4c0f001018d46d22",
+            "id": "2c5740146fb5385c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -98,7 +94,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +110,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -144,9 +138,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md"
-              }
+              "state": {}
             }
           },
           {
@@ -181,26 +173,35 @@
       "omnisearch:Omnisearch": false
     }
   },
-  "active": "4c0f001018d46d22",
+  "active": "2c5740146fb5385c",
   "lastOpenFiles": [
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/030-OS-abstraction.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/020-OS-syscall-interface.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/010-What-is-OS?.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/000-Course-overview.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/021-Linux虚存系统调用函数.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-computer-arch.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-file-to-disk.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-address-space.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-process-context-switch.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-process-context.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-prog-illusion.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-syscall.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-exception.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-interrupt.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets/03-OS-abstraction-complex-exec-env.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/10-Exec-env-and-Rust.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/assets/10-Exec-env-and-Rust-ee-stack.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/00-Overview.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/assets/00-Overview-libos-detail.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/assets",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/50-rCore-env-config.md",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/practice/0-操作系统概述.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/40-OS-features.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/30-OS-abstraction.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/20-OS-syscall-interface.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/21-Linux虚存系统调用函数.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/21-Linux虚存系统调用函数-mem-alloc2.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/21-Linux虚存系统调用函数-mem-alloc.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/01-What-is-OS?-computer-hardware-software.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/21-Linux虚存系统调用函数-mem-allocation.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/10-What-is-OS?.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/00-Course-overview.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview",
+    "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/03-OS-abstraction-computer-arch.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/03-OS-abstraction-file-to-disk.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/03-OS-abstraction-address-space.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/03-OS-abstraction-process-context-switch.png",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/assets",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/practice",
     "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/2-Program-guess-game/1-A-guess-number-game.md",
     "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/11-Hello-cargo.md",
@@ -216,18 +217,9 @@
     "1-Theory/1-ProgramLanguage/Rust/Learn-rust-in-Y-minutes.md",
     "1-Theory/1-ProgramLanguage/Rust/30-Rustlings/安装与报错解决.md",
     "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book",
-    "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
-    "8-SimpRead/第 04 章：处理器体系结构 - CSAPP 重点解读/assets",
-    "8-SimpRead/第 04 章：处理器体系结构 - CSAPP 重点解读",
     "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/42-Catalan.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/41-Exercise.md",
-    "1-Theory/3-Algorithm/将整数分解为 0~9(每个数字只出现一次) 之间的算术运算.md",
-    "1-Theory/3-Algorithm/迷宫问题.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/43-Probing-backtracking.md",
-    "8-SimpRead/Applications of Catalan Numbers - GeeksforGeeks/assets",
-    "8-SimpRead/Applications of Catalan Numbers - GeeksforGeeks",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/44-Histogram-MaxRectangle-impl.md",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
