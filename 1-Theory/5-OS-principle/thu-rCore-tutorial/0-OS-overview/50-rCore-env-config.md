@@ -206,16 +206,15 @@ rustup component add rust-src
 
 至于 Rust 开发环境，推荐 JetBrains Clion + Rust 插件 或者 Visual Studio Code 搭配 rust-analyzer 和 RISC-V Support 插件。
 
-注解
 
-*   JetBrains Clion 是付费商业软件，但对于学生和教师，只要在 JetBrains 网站注册账号，可以享受一定期限（半年左右）的免费使用的福利。
-    
-*   Visual Studio Code 是开源软件，不用付费就可使用。
-    
-*   当然，采用 VIM，Emacs 等传统的编辑器也是没有问题的。
-    
+* JetBrains Clion 是付费商业软件，但对于学生和教师，只要在 JetBrains 网站注册账号，可以享受一定期限（半年左右）的免费使用的福利。
 
-#### QEMU 模拟器安装[#]( #qemu "永久链接至标题")
+* Visual Studio Code 是开源软件，不用付费就可使用。
+
+* 当然，采用 VIM，Emacs 等传统的编辑器也是没有问题的。
+
+
+#### QEMU 模拟器安装
 
 我们需要使用 QEMU 7.0 版本进行实验，低版本的 QEMU 可能导致框架代码不能正常运行。而很多 Linux 发行版的软件包管理器默认软件源中的 QEMU 版本过低，因此我们需要从源码手动编译安装 QEMU 模拟器软件。下面以 Ubuntu 18.04/20.04 上的安装流程为例进行说明：
 
@@ -276,7 +275,7 @@ qemu-riscv64 --version
 
 另外，我们仅在 Qemu 7.0.0 版本上进行了测试，请尽量不要切换到其他版本。
 
-#### K210 真机串口通信[#]( #k210 "永久链接至标题")
+#### K210 真机串口通信
 
 为了能在 K210 真机上运行 Tutorial，我们还需要安装基于 Python 的串口通信库和简易的串口终端。
 
@@ -313,8 +312,7 @@ debug = true
 
 此外，参考 `os/Makefile` ，还可以先打开一个终端页面 `make gdbserver` 启动 QEMU ，此后另开一个终端页面在同目录下 `make gdbclient` 将 GDB 客户端连接到 QEMU 进行调试。我们推荐使用 [gdb-dashboard](https://github.com/cyrus-and/gdb-dashboard) 插件，可以大大提升调试体验。在本节的评论区已有同学提供了基于各种 IDE 的调试方法，也可参考。
 
-运行 rCore-Tutorial-v3[#]( #rcore -tutorial-v3 "永久链接至标题")
------------------------------------------------------
+## 运行 rCore-Tutorial-v3
 
 ### 在 QEMU 模拟器上运行[#]( #id12 "永久链接至标题")
 

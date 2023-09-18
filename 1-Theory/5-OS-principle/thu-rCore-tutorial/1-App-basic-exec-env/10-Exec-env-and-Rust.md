@@ -50,6 +50,8 @@ Hello, world!
 
 <center>应用程序执行环境栈</center>
 
+^e56b35
+
 我们的应用位于最上层，它可以通过调用编程语言提供的标准库或者其他三方库对外提供的函数接口，使得仅需少量的源代码就能完成复杂的功能。但是这些库的功能不仅限于此，事实上它们属于应用程序 **执行环境** (Execution Environment) 的一部分。==在我们通常不会注意到的地方，这些软件库还会在执行应用之前完成一些初始化工作，并在应用程序执行的时候对它进行监控。==我们在打印 `Hello, world!` 时使用的 `println!` 宏正是由 Rust 标准库 std 提供的。
 
 从操作系统内核的角度看来，它上面的一切都属于用户态软件，而它自身属于内核态软件。无论用户态应用如何编写，是手写汇编代码，还是基于某种高级编程语言调用其标准库或三方库，某些功能总要直接或间接的通过操作系统内核提供的 **系统调用** (System Call) 来实现。因此==系统调用充当了用户和内核之间的边界。内核作为用户态软件的执行环境，它不仅要提供系统调用接口，还需要对用户态软件的执行进行监控和管理。==
@@ -73,6 +75,9 @@ Hello, world!
 
 >[! Note] 计算机科学中遇到的所有问题都可通过增加一层抽象来解决。
 >All problems in computer science can be solved by another level of indirection。– 计算机科学家 David Wheeler
+>
+>进一步的可以扩展这句话的内涵：
+>计算机科学中遇到的所有问题都可以通过增删抽象层来解决。
 
 >[! note] **多层执行环境都是必需的吗？**
 >
@@ -121,17 +126,16 @@ $ strace ./donothing
 ## 目标平台与目标三元组
 
 >[! note] 现代编译器工具集（以 C 或 Rust 编译器为例）的主要工作流程如下：
->1. 预处理阶段：源代码（source code） –> 预处理器（preprocessor） –> 宏展开的源代码   
->2. 编译阶段：宏展开的源代码 –> 编译器（compiler） –> 汇编程序    
->3. 汇编阶段：汇编程序 –> 汇编器（assembler）–> 目标代码（object code）    
->4. 链接阶段：目标代码 –> 链接器（linker） –> 可执行文件（executables）    
+>1. ==预处理阶段==：源代码（source code） –> 预处理器（preprocessor） –> 宏展开的源代码   
+>2. ==编译阶段==：宏展开的源代码 –> 编译器（compiler） –> 汇编程序    
+>3. ==汇编阶段==：汇编程序 –> 汇编器（assembler）–> 目标代码（object code）    
+>4. ==链接阶段==：目标代码 –> 链接器（linker） –> 可执行文件（executables）    
 
-对于一份用某种编程语言实现的应用程序源代码而言，编译器在将其通过编译、链接得到可执行文件的时候需要知道程序要在哪个 **平台** (Platform) 上运行。这里平台主要是指 CPU 类型、操作系统类型和标准运行时库的组合。从上面给出的 [应用程序执行环境栈](#app-software-stack) 可以看出：
+对于一份用某种编程语言实现的应用程序源代码而言，编译器在将其通过编译、链接得到可执行文件的时候需要知道程序要在哪个 **平台** (Platform) 上运行。这里平台主要是指 CPU 类型、操作系统类型和标准运行时库的组合。从上面给出的 [[10-Exec-env-and-Rust#^e56b35|应用程序执行环境栈]] 可以看出：
 
-*   如果用户态基于的内核不同，会导致系统调用接口不同或者语义不一致；
-    
-*   如果底层硬件不同，对于硬件资源的访问方式会有差异。特别是如果 ISA 不同，则向软件提供的指令集和寄存器都不同。
-    
+* 如果用户态基于的内核不同，会导致系统调用接口不同或者语义不一致；
+
+* 如果底层硬件不同，对于硬件资源的访问方式会有差异。==特别是如果 ISA 不同，则向软件提供的指令集和寄存器都不同==。
 
 它们都会导致最终生成的可执行文件有很大不同。需要指出的是，某些编译器支持同一份源代码无需修改就可编译到多个不同的目标平台并在上面运行。这种情况下，源代码是 **跨平台** 的。而另一些编译器则已经预设好了一个固定的目标平台。
 
@@ -139,13 +143,25 @@ Rust 编译器通过 **目标三元组** (Target Triplet) 来描述一个软件�
 
 ```
 $ rustc --version --verbose
-   rustc 1.57.0-nightly (e1e9319d9 2021-10-14)
-   binary: rustc
-   commit-hash: e1e9319d93aea755c444c8f8ff863b0936d7a4b6
-   commit-date: 2021-10-14
-   host: x86_64-unknown-linux-gnu
-   release: 1.57.0-nightly
-   LLVM version: 13.0.0
+rustc 1.57.0-nightly (e1e9319d9 2021-10-14)
+binary: rustc
+commit-hash: e1e9319d93aea755c444c8f8ff863b0936d7a4b6
+commit-date: 2021-10-14
+host: x86_64-unknown-linux-gnu
+release: 1.57.0-nightly
+LLVM version: 13.0.0
+```
+
+```
+# My device
+❯ rustc --version --verbose  
+rustc 1.70.0 (90c541806 2023-05-31)  
+binary: rustc  
+commit-hash: 90c541806f23a127002de5b4038be731ba1458ca  
+commit-date: 2023-05-31  
+host: x86_64-unknown-linux-gnu  
+release: 1.70.0  
+LLVM version: 16.0.2
 ```
 
 从其中的 host 一项可以看出默认的目标平台是 `x86_64-unknown-linux-gnu`，其中 CPU 架构是 x86_64，CPU 厂商是 unknown，操作系统是 linux，运行时库是 GNU libc（封装了 Linux 系统调用，并提供 POSIX 接口为主的函数库）。这种无论编译器还是其生成的可执行文件都在我们当前所处的平台运行是一种最简单也最普遍的情况。但是很快我们就将遇到另外一种情况。
@@ -165,29 +181,45 @@ riscv64gc-unknown-none-elf
 riscv64imac-unknown-none-elf
 ```
 
-这里我们选择 `riscv64gc-unknown-none-elf` 目标平台。这其中的 CPU 架构是 riscv64gc ，CPU 厂商是 unknown ，操作系统是 none ， elf 表示没有标准的运行时库（表明没有任何系统调用的封装支持），但可以生成 ELF 格式的执行程序。这里我们之所以不选择有 linux-gnu 系统调用支持的目标平台 `riscv64gc-unknown-linux-gnu`，是因为我们只是想跑一个在裸机环境上运行的 `Hello, world!` 应用程序，没有必要使用 Linux 操作系统提供的那么高级的抽象和多余的操作系统服务。而且我们很清楚后续我们要开发的是一个操作系统内核，它必须直面底层物理硬件（bare-metal）来提供精简的操作系统服务功能，通用操作系统（如 Linux）提供的很多系统调用服务对这个内核而言是多余的。
+```
+# in 2023-09
+❯ rustc --print target-list | grep riscv  
+riscv32gc-unknown-linux-gnu  
+riscv32gc-unknown-linux-musl  
+riscv32i-unknown-none-elf  
+riscv32im-unknown-none-elf  
+riscv32imac-unknown-none-elf  
+riscv32imac-unknown-xous-elf  
+riscv32imc-esp-espidf  
+riscv32imc-unknown-none-elf  
+riscv64gc-unknown-freebsd  
+riscv64gc-unknown-fuchsia  
+riscv64gc-unknown-linux-gnu  
+riscv64gc-unknown-linux-musl  
+riscv64gc-unknown-none-elf  
+riscv64gc-unknown-openbsd  
+riscv64imac-unknown-none-elf
+```
 
-注解
+这里我们选择 `riscv64gc-unknown-none-elf` 目标平台。这其中的 CPU 架构是 riscv64gc ，CPU 厂商是 unknown ，操作系统是 none ， elf 表示没有标准的运行时库（表明没有任何系统调用的封装支持），但可以生成 ELF 格式的执行程序。
 
-**RISC-V 指令集拓展**
+这里我们之所以不选择有 linux-gnu 系统调用支持的目标平台 `riscv64gc-unknown-linux-gnu`，是因为我们只是想跑一个在裸机环境上运行的 `Hello, world!` 应用程序，没有必要使用 Linux 操作系统提供的那么高级的抽象和多余的操作系统服务。而且我们很清楚后续我们要开发的是一个操作系统内核，它必须直面底层物理硬件（bare-metal）来提供精简的操作系统服务功能，通用操作系统（如 Linux）提供的很多系统调用服务对这个内核而言是多余的。
 
-由于基于 RISC-V 架构的处理器可能用于嵌入式场景或是通用计算场景，因此指令集规范将指令集划分为最基本的 RV32/64I 以及若干标准指令集拓展。每款处理器只需按照其实际应用场景按需实现指令集拓展即可。
+>[! note] **RISC-V 指令集拓展**
+>
+>由于基于 RISC-V 架构的处理器可能用于嵌入式场景或是通用计算场景，因此指令集规范将指令集划分为最基本的 RV32/64I 以及若干标准指令集拓展。每款处理器只需按照其实际应用场景按需实现指令集拓展即可。
+>
+>* RV32/64I：每款处理器都必须实现的基本整数指令集。
+>	* 在 RV32I 中，每个通用寄存器的位宽为 32 位；在 RV64I 中则为 64 位。它可以用来模拟绝大多数标准指令集拓展中的指令，除了比较特殊的 A 拓展，因为它需要特别的硬件支持。
+>* M 拓展：提供整数乘除法相关指令。
+>* A 拓展：提供原子指令和一些相关的内存同步机制，这个后面会展开。
+>* F/D 拓展：提供单 / 双精度浮点数运算支持。
+>* C 拓展：提供压缩指令拓展。
+>* G 拓展是基本整数指令集 I 再加上标准指令集拓展 MAFD 的总称，
+>
+>因此 riscv64gc 也就等同于 riscv64imafdc。我们剩下的内容都基于该处理器架构完成。除此之外 RISC-V 架构还有很多标准指令集拓展，有一些还在持续更新中尚未稳定，有兴趣的同学可以浏览最新版的 RISC-V 指令集规范。
 
-*   RV32/64I：每款处理器都必须实现的基本整数指令集。在 RV32I 中，每个通用寄存器的位宽为 32 位；在 RV64I 中则为 64 位。它可以用来模拟绝大多数标准指令集拓展中的指令，除了比较特殊的 A 拓展，因为它需要特别的硬件支持。
-    
-*   M 拓展：提供整数乘除法相关指令。
-    
-*   A 拓展：提供原子指令和一些相关的内存同步机制，这个后面会展开。
-    
-*   F/D 拓展：提供单 / 双精度浮点数运算支持。
-    
-*   C 拓展：提供压缩指令拓展。
-    
-
-G 拓展是基本整数指令集 I 再加上标准指令集拓展 MAFD 的总称，因此 riscv64gc 也就等同于 riscv64imafdc。我们剩下的内容都基于该处理器架构完成。除此之外 RISC-V 架构还有很多标准指令集拓展，有一些还在持续更新中尚未稳定，有兴趣的同学可以浏览最新版的 RISC-V 指令集规范。
-
-Rust 标准库与核心库[#]( #rust "永久链接至标题")
---------------------------------
+## Rust 标准库与核心库
 
 我们尝试一下将当前的 `Hello, world!` 程序的目标平台换成 riscv64gc-unknown-none-elf 看看会发生什么事情：
 
@@ -199,14 +231,89 @@ error[E0463]: can't find crate for `std`
   = note: the `riscv64gc-unknown-none-elf` target may not be installed
 ```
 
+```
+# on my device
+❯ cargo run --target riscv64gc-unknown-none-elf  
+  Compiling hello_rcore v0.1.0 (/home/senjl/MyLearning/computer_science/operating_system/thu-rcore-202  
+3/demo/hello_rcore)  
+error[E0463]: can't find crate for `std`  
+ |  
+ = note: the `riscv64gc-unknown-none-elf` target may not be installed  
+ = help: consider downloading the target with `rustup target add riscv64gc-unknown-none-elf`  
+  
+error: cannot find macro `println` in this scope  
+--> src/main.rs:2:5  
+ |  
+2 |     println!("Hello, world!");  
+ |     ^^^^^^^  
+  
+error: requires `sized` lang_item  
+  
+For more information about this error, try `rustc --explain E0463`.  
+error: could not compile `hello_rcore` (bin "hello_rcore") due to 3 previous errors
+
+❯ rustup install nightly
+❯ rustup default nightly
+❯ rustup target add riscv64gc-unknown-none-elf
+❯ cargo install cargo-binutils
+❯ rustup component add llvm-tools-preview
+❯ rustup component add rust-src
+
+❯ cargo run --target riscv64gc-unknown-none-elf
+   Compiling hello_rcore v0.1.0 (/home/senjl/MyLearning/computer_science/operating_system/thu-rcore-2023/demo/hello_rcore)
+error[E0463]: can't find crate for `std`
+  |
+  = note: the `riscv64gc-unknown-none-elf` target may not support the standard library
+  = note: `std` is required by `hello_rcore` because it does not declare `#![no_std]`
+  = help: consider building the standard library from source with `cargo build -Zbuild-std`
+
+error: cannot find macro `println` in this scope
+ --> src/main.rs:2:5
+  |
+2 |     println!("Hello, world!");
+  |     ^^^^^^^
+
+error: `#[panic_handler]` function required, but not found
+
+For more information about this error, try `rustc --explain E0463`.
+error: could not compile `hello_rcore` (bin "hello_rcore") due to 3 previous errors
+
+```
+
 在之前的开发环境配置中，我们已经在 rustup 工具链中安装了这个目标平台支持，因此并不是该目标平台未安装的问题。这个问题只是单纯的表示在这个目标平台上找不到 Rust 标准库 std。我们之前曾经提到过，编程语言的标准库或三方库的某些功能会直接或间接的用到操作系统提供的系统调用。但目前我们所选的目标平台不存在任何操作系统支持，于是 Rust 并没有为这个目标平台支持完整的标准库 std。类似这样的平台通常被我们称为 **裸机平台** (bare-metal)。这意味着在裸机平台上的软件没有传统操作系统支持。
 
-注解
+>[! note] **Rust Tips：Rust 语言标准库 std 和核心库 core**
+>
+>1. std 库：
+>	- Rust 语言标准库–std 是让 Rust 语言开发的软件具备可移植性的基础，类似于 C 语言的 LibC 标准库。它是一组小巧的、经过实践检验的共享抽象，适用于更广泛的 Rust 生态系统开发。它提供了核心类型，如 Vec 和 Option、类库定义的语言原语操作、标准宏、I/O 和多线程等。默认情况下，我们可以使用 Rust 语言标准库来支持 Rust 应用程序的开发。
+>	- 但 Rust 语言标准库的一个限制是，它需要有操作系统的支持。所以，如果你要实现的软件是运行在裸机上的操作系统，就不能直接用 Rust 语言标准库了。
+>
+>2. core 库：
+>	- 幸运的是，Rust 有一个对 Rust 语言标准库–std 裁剪过后的 Rust 语言核心库 core。
+>	- core 库是不需要任何操作系统支持的，它的功能也比较受限，但是也包含了 Rust 语言相当一部分的核心机制，可以满足我们的大部分功能需求。Rust 语言是一种面向系统（包括操作系统）开发的语言，所以在 Rust 语言生态中，有很多三方库也不依赖标准库 std 而仅仅依赖核心库 core。
+>	- 对它们的使用可以很大程度上减轻我们的编程负担。它们是我们能够在裸机平台挣扎求生的最主要倚仗，也是大部分运行在没有操作系统支持的 Rust 嵌入式软件的必备。
+>	- 于是，我们知道==在裸机平台上我们要将对于标准库 std 的引用换成核心库 core==。但是实际做起来其实还要有一些琐碎的事情需要解决。
 
-**Rust Tips：Rust 语言标准库 std 和核心库 core**
+## 评论区的问题
+Q: 想问一下，程序不是可以直接编译成汇编语言吗？直接根据目标平台生成对应的汇编不可以吗？即使是调用了系统函数也是可以直接在裸机上运行吧？
 
-Rust 语言标准库–std 是让 Rust 语言开发的软件具备可移植性的基础，类似于 C 语言的 LibC 标准库。它是一组小巧的、经过实践检验的共享抽象，适用于更广泛的 Rust 生态系统开发。它提供了核心类型，如 Vec 和 Option、类库定义的语言原语操作、标准宏、I/O 和多线程等。默认情况下，我们可以使用 Rust 语言标准库来支持 Rust 应用程序的开发。但 Rust 语言标准库的一个限制是，它需要有操作系统的支持。所以，如果你要实现的软件是运行在裸机上的操作系统，就不能直接用 Rust 语言标准库了。
+A: 在编写系统级软件之前需要确定它将会被运行在处理器的哪一特权级。就 RV 而言，如果是运行在 M 特权级的裸机应用的话，就可以直接执行；如果运行在 S/U 特权级的话，它们通常都需要以或直接（比如系统调用或 sbi call 需要通过 `ecall` 指令）、或间接的方式调用更高特权级软件提供的服务并被监管。事实上 M 特权级是必须存在的，取决于应用需求的不同可以有 M 或者 M+U 或者 M+S+U 这几种不同的特权级组合。
 
-幸运的是，Rust 有一个对 Rust 语言标准库–std 裁剪过后的 Rust 语言核心库 core。core 库是不需要任何操作系统支持的，它的功能也比较受限，但是也包含了 Rust 语言相当一部分的核心机制，可以满足我们的大部分功能需求。Rust 语言是一种面向系统（包括操作系统）开发的语言，所以在 Rust 语言生态中，有很多三方库也不依赖标准库 std 而仅仅依赖核心库 core。对它们的使用可以很大程度上减轻我们的编程负担。它们是我们能够在裸机平台挣扎求生的最主要倚仗，也是大部分运行在没有操作系统支持的 Rust 嵌入式软件的必备。
+Q: 特权级的机制应该是操作系统实现的吧？对 CPU 而言，它看到的是源源不断的指令。如果是实现了特权级转换的话，那么一些系统调用应该也是已经实现了吧？那么再这种情况下直接调用系统函数也是可以的呀。据原文所述：
+> 但目前我们所选的目标平台不存在任何操作系统支持，于是 Rust 并没有为这个目标平台支持完整的标准库 std。类似这样的平台通常被我们称为 裸机平台 (bare-metal)。
 
-于是，我们知道在裸机平台上我们要将对于标准库 std 的引用换成核心库 core。但是实际做起来其实还要有一些琐碎的事情需要解决。
+那么既然没有操作系统的支持，也就不存在特权级的转换吧？
+
+A: 请阅读一下 CPU 手册吧。特权级别是 CPU 内置的实现，它通过识别指定寄存器上的标志位，来确定当前应该处于何种特权级别，而从硬件电路的实现上，就可以使某些机器指令失效或生效。
+
+在某级别发生的异常、中断，只可以在该级别，或该级别更高的级别中去处理，比如U-mode的异常和中断可以在U-mode下自己解决，自己解决不了就可以交给S-mode下的操作系统去解决。而操作系统级别发生的异常和中断，只可以在S-mode和M-mode中解决。
+
+再回答一下你更前面的疑问：
+
+> 想问一下，程序不是可以直接编译成汇编语言吗？直接根据目标平台生成对应的汇编不可以吗？即使是调用了系统函数也是可以直接在裸机上运行吧？
+
+既然是裸机，那根本不存在操作系统，也就不存在系统函数，所以也就没有“即使调用了系统函数也可以在裸机上直接运行”的说法。
+
+Rust、C等编程语言的编译器，是可以把源代码经过编译、汇编、链接然后生成目标平台的机器码的（注意，是机器码，不是汇编程序）。只有01二进制的纯机器码才可以直接被高低电平表示，然后输入CPU，CPU内的电路就根据这些高低电平开始工作了。
+
+真正从0编写操作系统，是少不了要写汇编代码的，要把系统的启动引导过程都实现（就不止是CPU自己上电了这么单一的事情），然后才是把控制权移交到OS层。

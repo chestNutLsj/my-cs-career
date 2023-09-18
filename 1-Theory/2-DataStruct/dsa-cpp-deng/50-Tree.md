@@ -366,6 +366,8 @@ void travIn_I3( BinNodePosi<T> x, VST& visit ) { //二叉树中序遍历算法�
 }
 ```
 
+^22637f
+
 ```
 //travIn_I4
 template <typename T, typename VST> //元素类型、操作器
@@ -383,6 +385,8 @@ void travIn_I4( BinNodePosi<T> x, VST& visit ) { //二叉树中序遍历（迭�
 }
 ```
 
+^de0c39
+
 #### 后继与前驱
 ![[50-Tree-inorder-succ-pre.png]]
 - 直接后继：最靠左的右后代，或最低的左祖先（将节点包含于其左子树中的最低祖先）
@@ -399,6 +403,8 @@ template <typename T> BinNodePosi<T> BinNode<T>::succ() { //定位节点v的直�
    return s;
 }// 两种情况下运行时间分别为当前节点的高度和深度，总和不超过O(h)
 ```
+
+^8c941b
 
 ### 后序遍历
 #### 应用
@@ -421,6 +427,8 @@ static Rank removeAt( BinNodePosi<T> x ) { // assert: x为二叉树中的合法�
 } // release()负责释放复杂结构，与算法无直接关系，具体实现详见代码包
 
 ```
+
+^bdee4c
 
 事实上，之前提到的更新高度的函数 [[50-Tree#Update height|updateHeight]] 、更新节点的后代规模的函数 [[50-Tree#^b9085a|size]] 也是后序遍历。
 
@@ -541,6 +549,8 @@ void BinNode<T>::travLevel( VST & visit ) { //二叉树层次遍历
 	- 最大规模可能出现 2 次
 		- 单分支时会出现两次，即上图中考查 j 节点，j 出队时会使 i 入队，队内节点数相当于没变；
 
+[[51-Exercise#5-18 层次遍历辅助队列容量问题]]
+
 ![[50-Tree-full-complete-tree.png]]
 
 ## 二叉树重构
@@ -594,9 +604,6 @@ A
 
 ![[50-Tree-augment-sequence.png]]
 
-## Huffman 树
-文件编码时，字符通过二进制编码
-### PFC 编码
+[[50A-Huffman 树]]
 
-
-## 二叉树应用
+[[50B-二叉树应用]]

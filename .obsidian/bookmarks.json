@@ -213,6 +213,20 @@
           "path": "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
           "subpath": "#^b26f71",
           "title": "二叉树度数、节点数、边数的关系"
+        },
+        {
+          "type": "file",
+          "ctime": 1695034666607,
+          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/51-Exercise.md",
+          "subpath": "#5-16 分析 travIn_I3 的时间复杂度",
+          "title": "分析travIn_I3的时间复杂度"
+        },
+        {
+          "type": "file",
+          "ctime": 1695037210155,
+          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/51-Exercise.md",
+          "subpath": "#5-30 键树 Trie",
+          "title": "Trie键树"
         }
       ],
       "title": "DSA-考点重点"

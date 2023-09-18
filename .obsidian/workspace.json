@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "f6ad598e3408629c",
+        "id": "5eb489d31aac3777",
         "type": "tabs",
         "children": [
           {
-            "id": "2c5740146fb5385c",
+            "id": "bd7206fad85b8f53",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -76,8 +80,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -94,6 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,6 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +143,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md"
+              }
             }
           },
           {
@@ -153,7 +160,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -173,34 +181,44 @@
       "omnisearch:Omnisearch": false
     }
   },
-  "active": "2c5740146fb5385c",
+  "active": "bd7206fad85b8f53",
   "lastOpenFiles": [
+    "1-Theory/2-DataStruct/dsa-cpp-deng/51-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/50-Tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/51-Exercise-trie-compressed.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/51-Exercise-trie.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/图10-02.按照层次遍历序列对完全二叉树节点的编号（其中圆形表示内部节点，方形表示外部节点）.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/51-Exercise-5-18.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/51-Exercise-5-16.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/50A-Huffman 树.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/50B-二叉树应用.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/30-First-instruction-of-kernel.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/20-Remove-std-dependency.md",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/10-Exec-env-and-Rust.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/assets/10-Exec-env-and-Rust-ee-stack.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/00-Overview.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/assets/00-Overview-libos-detail.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/assets",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/50-rCore-env-config.md",
+    "5-Tools/Dev-Tools/Docker/10-Official-getting-started.md",
+    "5-Tools/Dev-Tools/Docker/assets/10-Official-getting-started-run-in-playdocker.png",
+    "5-Tools/Dev-Tools/Docker/assets/10-Official-getting-started-play-docker.png",
+    "5-Tools/Dev-Tools/Docker/assets/10-Official-getting-started-create-repo.png",
+    "5-Tools/Dev-Tools/Docker/assets/10-Usage-todo-app.png",
+    "5-Tools/Dev-Tools/Docker/20-Config.md",
+    "5-Tools/Dev-Tools/Docker/00-Install.md",
+    "5-Tools/Dev-Tools/Docker/在ArchLinux上安装docker.md",
+    "5-Tools/Dev-Tools/Docker/为WSL 2 安装docker.md",
+    "5-Tools/Dev-Tools/Docker/assets/在ArchLinux上安装docker.png",
+    "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/00-Overview.md",
+    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/assets",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/practice/0-操作系统概述.md",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/40-OS-features.md",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/30-OS-abstraction.md",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/20-OS-syscall-interface.md",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/21-Linux虚存系统调用函数.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/21-Linux虚存系统调用函数-mem-alloc2.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/21-Linux虚存系统调用函数-mem-alloc.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/01-What-is-OS?-computer-hardware-software.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/21-Linux虚存系统调用函数-mem-allocation.png",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/10-What-is-OS?.md",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/00-Course-overview.md",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview",
-    "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/03-OS-abstraction-computer-arch.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/03-OS-abstraction-file-to-disk.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/03-OS-abstraction-address-space.png",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets/03-OS-abstraction-process-context-switch.png",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/assets",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/practice",
     "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/2-Program-guess-game/1-A-guess-number-game.md",
@@ -208,18 +226,8 @@
     "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/2-Program-guess-game",
     "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started",
     "1-Theory/1-ProgramLanguage/Rust/Cargo/How-to-use-Cargo?.md",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/12-Constants.md",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/10-Structure-of-Program.md",
-    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/10-Hello-rust.md",
-    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/01-Installation.md",
-    "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/00-Introduction.md",
     "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book/1-Getting-started/assets",
-    "1-Theory/1-ProgramLanguage/Rust/Learn-rust-in-Y-minutes.md",
-    "1-Theory/1-ProgramLanguage/Rust/30-Rustlings/安装与报错解决.md",
     "1-Theory/1-ProgramLanguage/Rust/10-The-rust-book",
-    "1-Theory/4-Architecture/CSAPP/30-Machine-level-representation-of-program.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/42-Catalan.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/41-Exercise.md",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
