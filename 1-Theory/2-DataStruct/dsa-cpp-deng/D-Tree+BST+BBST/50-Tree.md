@@ -166,7 +166,7 @@ BinNodePosi<T> BinTree<T>::attach( BinNodePosi<T> x, BinTree<T>* &S ) { //接入
 ```
 ![[50-Tree-insert-subtree.png]]
 
-### Update height
+#### Update height
 ```
 // 更新高度
 #define stature(p) ((int)((p)?(p)-height:-1)) //空树高度为-1
@@ -184,7 +184,7 @@ template <typename T> void BinTree<T>::updateHeightAbove( BinNodePosi<T> x ) //�
 } //从x出发，覆盖历代祖先。可优化
 ```
 
-### Split subtree
+#### Split subtree
 ```
 template <typename T> BinTree<T>* BinTree<T>::secede( BinNodePosi<T> x ) {
 	FromParentTo( * x ) = NULL; updateHeightAbove( x->parent );
@@ -603,7 +603,3 @@ A
 - 增强序列就成为了真二叉树，此时只需要通过先序和后序就能确定树，之后去掉增强节点即可；
 
 ![[50-Tree-augment-sequence.png]]
-
-[[50A-Huffman 树]]
-
-[[50B-二叉树应用]]

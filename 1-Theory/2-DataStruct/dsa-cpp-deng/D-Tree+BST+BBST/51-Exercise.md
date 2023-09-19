@@ -329,9 +329,152 @@ bool isSumGreater(TreeNode* root) {
 2. 这样，按照后序遍历的次序，只要当前节点的左、右子树均已遍历（左、右孩子的数据项均已更新），即可从二者当中取其更大者，并相应地更新当前节点的数据项，最后再返回更新后的数据项。
 同样地，以上扩充既不致增加递归实例的数量，亦不会增加各递归实例的渐进执行时间，故总体的时间复杂度依然为 O(n)。
 
-### 改进为递归版
+```
+#include <iostream>
+#include <algorithm> // 使用std::max
 
+template <typename T>
+struct BinNode {
+    BinNode* parent;
+    BinNode* lc;
+    BinNode* rc;
+    T data;
+
+    // 其他成员函数和数据成员...
+
+    // 插入左孩子和右孩子等成员函数...
+};
+
+// 后序遍历修改每个节点的值
+template <typename T>
+T updateMaxDescendant(BinNode<T>* x) {
+    if (!x) {
+        return std::numeric_limits<T>::min(); // 空节点返回最小值
+    }
+
+    // 递归后序遍历左子树和右子树，并获取左右子树的最大值
+    T leftMax = updateMaxDescendant(x->lc);
+    T rightMax = updateMaxDescendant(x->rc);
+
+    // 更新当前节点的数据项为左右子树的最大值和当前节点的值的较大者
+    x->data = std::max(x->data, std::max(leftMax, rightMax));
+
+    return x->data; // 返回当前节点的数据项
+}
+
+int main() {
+    // 构建一个示例树
+    BinNode<int>* root = new BinNode<int>{10};
+    BinNode<int>* child1 = new BinNode<int>{5};
+    BinNode<int>* child2 = new BinNode<int>{15};
+    BinNode<int>* child3 = new BinNode<int>{20};
+
+    root->lc = child1;
+    root->rc = child2;
+    child2->rc = child3;
+
+    // 调用updateMaxDescendant函数修改每个节点的值
+    updateMaxDescendant(root);
+
+    // 打印修改后的树
+    std::cout << "Modified Tree:" << std::endl;
+    // 编写打印树的代码或遍历树的其他方式...
+
+    // 释放内存（假设没有其他指向这些节点的引用）
+    delete root;
+    delete child1;
+    delete child2;
+    delete child3;
+
+    return 0;
+}
+
+```
+
+### 改进为迭代版
+```
+#include <iostream>
+#include <stack>
+#include <algorithm> // 使用std::max
+
+template <typename T>
+struct BinNode {
+    BinNode* parent;
+    BinNode* lc;
+    BinNode* rc;
+    T data;
+
+    // 其他成员函数和数据成员...
+
+    // 插入左孩子和右孩子等成员函数...
+};
+
+// 后序遍历修改每个节点的值
+template <typename T>
+void updateMaxDescendantIterative(BinNode<T>* root) {
+    if (!root) {
+        return;
+    }
+
+    std::stack<BinNode<T>*> nodeStack;
+    BinNode<T>* current = root;
+    BinNode<T>* lastVisited = nullptr;
+
+    while (current || !nodeStack.empty()) {
+        if (current) {
+            nodeStack.push(current);
+            current = current->lc;
+        } else {
+            BinNode<T>* topNode = nodeStack.top();
+            if (topNode->rc && topNode->rc != lastVisited) {
+                current = topNode->rc;
+            } else {
+                // 访问节点并更新其值为后代中的最大值
+                T leftMax = (topNode->lc) ? topNode->lc->data : std::numeric_limits<T>::min();
+                T rightMax = (topNode->rc) ? topNode->rc->data : std::numeric_limits<T>::min();
+                topNode->data = std::max(topNode->data, std::max(leftMax, rightMax));
+
+                lastVisited = topNode;
+                nodeStack.pop();
+            }
+        }
+    }
+}
+
+int main() {
+    // 构建一个示例树
+    BinNode<int>* root = new BinNode<int>{10};
+    BinNode<int>* child1 = new BinNode<int>{5};
+    BinNode<int>* child2 = new BinNode<int>{15};
+    BinNode<int>* child3 = new BinNode<int>{20};
+
+    root->lc = child1;
+    root->rc = child2;
+    child2->rc = child3;
+
+    // 调用updateMaxDescendantIterative函数修改每个节点的值
+    updateMaxDescendantIterative(root);
+
+    // 打印修改后的树
+    std::cout << "Modified Tree:" << std::endl;
+    // 编写打印树的代码或遍历树的其他方式...
+
+    // 释放内存（假设没有其他指向这些节点的引用）
+    delete root;
+    delete child1;
+    delete child2;
+    delete child3;
+
+    return 0;
+}
+
+```
 ### 迭代版需要多少空间？
+对于迭代版的实现，需要使用一个栈来辅助遍历树的节点，其空间复杂度取决于树的高度和树中节点的数量。在最坏情况下，如果树是一个完全二叉树，栈的最大大小将达到树的高度，即 O (log n)，其中 n 是树中节点的数量。
+
+除了栈之外，还需要一些额外的辅助空间来存储变量和临时值，但这些额外空间的大小与树的规模无关，通常可以忽略不计。
+
+因此，迭代版的实现需要的辅助空间为 O (log n)，其中 n 是树中节点的数量，这是由树的高度决定的。
 
 ## 5-26 O (n)时间内为每个节点设置适当的数值
 **要求**：1.树根为 0 ；2.对于数值为 k 的节点，其左孩子数值为 2k + 1，右孩子数值为 2k + 2
@@ -340,12 +483,79 @@ bool isSumGreater(TreeNode* root) {
 
 具体地，在根节点首先入队之前，将其数据项置为0。此后的每一步迭代中，若出队节点的编号为 k，则入队的左、右孩子节点（若存在）的数值，可分别取作2k + 1、2k + 2。
 
+```
+#include <iostream>
+#include <queue>
+
+template <typename T>
+struct BinNode {
+    BinNode* lc;
+    BinNode* rc;
+    T data;
+
+    // 构造函数...
+};
+
+// 为每个节点设置适当的数值
+template <typename T>
+void setNodeValues(BinNode<T>* root) {
+    if (!root) {
+        return;
+    }
+
+    std::queue<BinNode<T>*> nodeQueue;
+    root->data = 0; // 根节点的数值为0
+    nodeQueue.push(root);
+
+    while (!nodeQueue.empty()) {
+        BinNode<T>* current = nodeQueue.front();
+        nodeQueue.pop();
+
+        if (current->lc) {
+            current->lc->data = current->data * 2 + 1;
+            nodeQueue.push(current->lc);
+        }
+
+        if (current->rc) {
+            current->rc->data = current->data * 2 + 2;
+            nodeQueue.push(current->rc);
+        }
+    }
+}
+
+int main() {
+    // 构建一个示例二叉树
+    BinNode<int>* root = new BinNode<int>{nullptr, nullptr, 0};
+    BinNode<int>* leftChild = new BinNode<int>{nullptr, nullptr, 0};
+    BinNode<int>* rightChild = new BinNode<int>{nullptr, nullptr, 0};
+
+    root->lc = leftChild;
+    root->rc = rightChild;
+
+    // 调用setNodeValues函数设置每个节点的数值
+    setNodeValues(root);
+
+    // 打印每个节点的数值
+    std::cout << "Node Values:" << std::endl;
+    // 编写打印节点值的代码或遍历树的其他方式...
+
+    // 释放内存（假设没有其他指向这些节点的引用）
+    delete root;
+    delete leftChild;
+    delete rightChild;
+
+    return 0;
+}
+
+```
+
 ## 5-30 键树 Trie
 设字符集为Σ(|Σ|=r)，任一字符串集 S 都可用如图的 Trie 树表示：
 ![[51-Exercise-trie.png]]
 Trie：键树是有根有序树，其中的每个节点均包含 r 个分支。深度为 d 的节点分别对应于长度为 d 的字符串，且祖先所对应字符串必为后代所对应字符串的前缀。键树只保留与 S 中字符串（及其 前缀）相对应的节点（黑色），其余的分支均标记为 NULL（白色）。 注意，因为不能保证字符串相互不为前缀（如"man"不"many"），故对应于完整字符串的节点（黑色方形、大写字母）未必都是叶子。
 
-==试按照如图所示的构思，实现对应 Trie 模板类。同时要求提供一个接口 find(w)， 在 O(|w|) = O(h)的时间内判断 S 是否包含字符串 w，其中|w|为该字符串的长度，h 为树高。==
+==试按照如下图所示的构思，实现对应 Trie 模板类。同时要求提供一个接口 find(w)， 在 O(|w|) = O(h)的时间内判断 S 是否包含字符串 w，其中|w|为该字符串的长度，h 为树高。==
 （提示：每个节点都实现为包含 r 个指针的一个向量，各指针依次对应于 Σ 中的字符：S 包含对应的字符串（前缀），当且仅当对应的指针非空。此外，每个非空指针都还需配有一个 bool 类型的标志位，以指示其是否对应于 S 中的某个完整的字符串。于是，键树的整体逻辑结构可以抽象为下图所示形式。其中，黑色方形元素的标志位为 true，其余均为 false。）
 
 ![[51-Exercise-trie-compressed.png]]
+
