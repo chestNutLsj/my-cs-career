@@ -1,5 +1,4 @@
-## Binary Search Tree
-### 定义与特性
+## 定义与特性
 为了使二叉树支持快速查找，利用二分搜索的思路，人为的设定节点间的顺序：**任一节点均不小于其左后代，也不大于其右后代**
 ![[60-Binary_Search_Tree-instance.png]]
 
@@ -17,7 +16,7 @@
 - 顺序性是对局部特征的刻画，但由此可以推出全局的单调性：
 - 即，**二叉搜索树在中序遍历意义下，是单调非降的**。
 
-### ADT
+## ADT
 ```
 template <typename T> class BST : public BinTree<T> {
 public: //以virtual修饰，以便派生类重写
@@ -38,7 +37,7 @@ protected:
 };
 ```
 
-### 查找
+## 查找
 ![[60-Binary_Search_Tree-bst-search.png]]
 - 从根节点出发，逐步地缩小查找范围，直到 
 	- 发现目标（成功），或抵达空树（失败）
@@ -63,7 +62,7 @@ BinNodePosi<T> & BST<T>::search( const T & e ) {
 - 查找成功时，返回一个关键码为 e 且真实存在的节点；
 - 查找失败时，指向最后一次试图转向的空接点 NULL，此时不妨假想地将空节点转换为数值为 e 的哨兵节点；
 
-### 插入
+## 插入
 借助 search()接口，可以非常快速地确定插入位置与方向：
 - 若 e 已经存在，则不必操作（当然这是在讨论初期只关注各节点互异的情况，实际中没必要如此限制）
 - 若 e 不存在，则将新节点作作为叶子插入：
@@ -95,7 +94,7 @@ BinNodePosi<T> BST<T>::insert( const T & e ) {
 - 时间主要消耗于 search (e)和 updateHeightAbove (x)；
 - 均线性正比于 x 的深度，不超过树高-->O (logn)
 
-### 删除
+## 删除
 ```
 //主算法
 template <typename T>
@@ -138,7 +137,7 @@ static BinNodePosi<T> removeAt( BinNodePosi<T> & x, BinNodePosi<T> & hot ) {
 	- 由此可以保证，除了直接后继极其后代，其余 BST 的部分均不受影响；
 	- 此时由于直接后继转换为没有兄弟的第一类情况，直接复用第一类的思想即可。
 
-### 期望树高
+## 期望树高
 非常直观，BST 的所有操作都正比于树高：O (h)。因此若树高不能有效控制，就无法体现出 BST 的优势——甚至最坏情况下退化成一条链。
 
 考虑随机生成 n 个词条并按随机排列 $\sigma=(e_{i1},e_{i2},...,e_{i3})$ 的顺序依次插入，且==每种排列出现的概率相同==—— $\frac{1}{n!}$，则 BST 的平均高度为 $\Theta(\log n)$。
@@ -161,7 +160,7 @@ static BinNodePosi<T> removeAt( BinNodePosi<T> & x, BinNodePosi<T> & hot ) {
 > 
 >较高甚至极高的 BST 频繁出现，不足为怪；平衡化处理很有必要！
 
-### 平衡化
+## 平衡化
 1. **理想平衡**：
 	- 节点数目固定时，兄弟子树的高度越接近（平衡），全树也将倾向于更低；
 	- 由 n 个节点组成的二叉树，高度不致低于 $\lfloor \log_{2}n\rfloor$ ，达到这个下界时，称作理想平衡；
