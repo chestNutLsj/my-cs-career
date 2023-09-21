@@ -143,12 +143,13 @@ static BinNodePosi<T> removeAt( BinNodePosi<T> & x, BinNodePosi<T> & hot ) {
 
 考虑随机生成 n 个词条并按随机排列 $\sigma=(e_{i1},e_{i2},...,e_{i3})$ 的顺序依次插入，且==每种排列出现的概率相同==—— $\frac{1}{n!}$，则 BST 的平均高度为 $\Theta(\log n)$。
 - ![[60-Binary_Search_Tree-bst-height-equal-probability.png]]
-- 上图情况中，{1,2,3}序列的平均树高为 (2+2+2+2+1+1)/6=1.67
-- 多数实际应用中的 BST 总体上都是如此生成和演化的，即便计入 remove()，也可通过随机使用 succ()和 pred()，避免逐渐倾侧的趋势
+- 上图情况中，{1,2,3}序列的平均树高为 (2+2+2+2+1+1)/6 = 1.67
+- 多数实际应用中的 BST 总体上都是如此生成和演化的，即便计入 remove()，也可通过随机使用 succ()和 pred()，避免逐渐倾侧的趋势——若固定使用 succ()进行删除算法，则每棵 BST 有逐渐左倾的趋势；
 
 但若排列出现的概率不均等时，情况会有差别。考虑 n 个互异节点在遵守 BST 的顺序条件下，随机确定拓扑关系：
 - n 个互异节点组成的 BST 的种类有 S (n)棵，其递推公式为：
 - $S(n)=\sum\limits_{k=1}^{n}S(k-1)\cdot S(n-k)=catalan(n)=\frac{(2n)!}{(n+1)!\cdot n!}$ 
+- 同样以 {1,2,3} 序列，共五种拓扑，因此以拓扑数分析平均树高为：(2+2+2+2+1)/5 = 1.8
 - 假设所有 BST 等概率出现，则平均高度为 $\Theta(\sqrt{n})$ 
 
 ![[60-Binary_Search_Tree-bst-height.png]]
@@ -178,7 +179,7 @@ BBST 是 BST 的子集，同样满足左小右大的顺序性：
 - 单次动态修改后，至多 O (logn)处局部不再满足顺序性——可能修复一处上升到上一层，相继违反，不一定同时；
 - 因此可以在 O (logn)时间内修复这些局部以满足 BST 的要求；
 - 修复操作是通过旋转局部的父子兄弟完成：
-- ![[60-Binary_Search_Tree-bst-rebalance.png]]
+- ![[60-Binary_Search_Tree-bst-rebalance.png]] ^fef5a1
 - zig 和 zag 只涉及局部的常数个节点的旋转操作，只需调整其中的连接关系；
 - zig 调整之后，v 的深度加 1，c 的深度减 1；zag 正好相反；
 - ==子树甚至全树的高度变化幅度不会超过 1==；

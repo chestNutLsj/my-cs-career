@@ -4,16 +4,28 @@
     "type": "split",
     "children": [
       {
-        "id": "6e46ca4a005c57ab",
+        "id": "730de5aba5ca1738",
         "type": "tabs",
         "children": [
           {
-            "id": "1a1e751e7592b44b",
+            "id": "db0e4b1c875bfc41",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60B-Balanced-BST-AVL.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "0a703d1e6d57d549",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60A-Binary_Search_Tree.md",
                 "mode": "source",
                 "source": false
               }
@@ -80,8 +92,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 329.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -98,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60B-Balanced-BST-AVL.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60B-Balanced-BST-AVL.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -145,7 +156,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md"
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60B-Balanced-BST-AVL.md"
               }
             }
           },
@@ -182,11 +193,42 @@
       "omnisearch:Omnisearch": false
     }
   },
-  "active": "1a1e751e7592b44b",
+  "active": "db0e4b1c875bfc41",
   "lastOpenFiles": [
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60B-Balanced-BST.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60F-BST-application.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60C-BBST-Splay-tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60B-Balanced-BST-AVL.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60A-Binary_Search_Tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60B-Balanced-BST-avl-rebalance-zag-zig.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60B-Balanced-BST-avl-rebalance-zag-zag.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60B-Balanced-BST-avl-rebalance-zig-zag.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60B-Balanced-BST-avl-rebalance-zig-zig.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60B-Balanced-BST-avl-3+4-reconstruction.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60B-Balanced-BST-avl-del-rebalance2.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60B-Balanced-BST-avl-del-rebalance1.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60B-Balanced-BST-avl-rebalance-twice.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60B-Balanced-BST-avl-rebalance-once.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60B-Balanced-BST-avl-unbalance.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/10-Privilege-mechanism.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/practice/2-批处理操作系统.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/40-Switching-privilege.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/30-Impl-batch-OS.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/20-Impl-application-prog.md",
+    "1-Theory/5-OS-principle/thu-chyyuu",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/10-Exec-env-and-Rust.md",
+    "1-Theory/5-OS-principle/internal&principle/20-进程与线程.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/00-Overview.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/assets",
+    "1-Theory/5-OS-principle/rCore-tutorial/practice/1-应用程序与基本执行环境.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system",
+    "5-Tools/Dev-Tools/Git/Github克隆的项目如何切换分支？.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/60-Print-and-shutdown-based-on-RustSBI.md",
+    "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/assets",
@@ -196,40 +238,9 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/60-Binary_Search_Tree-bst-rebalance.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/60-Binary_Search_Tree-bst-balanceing.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/60-Binary_Search_Tree-asymptotic-balance.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/60-Binary_Search_Tree-ideal-balance.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/60-Binary_Search_Tree-bst-height-equal-probability.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/60-Binary_Search_Tree-bst-height.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/60-Binary_Search_Tree-bst-delete2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/60-Binary_Search_Tree-bst-delete1.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/60-Binary_Search_Tree-bst-insert2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/60-Binary_Search_Tree-bst-insert.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Exercise.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/60-Print-and-shutdown-by-RustSBI.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/50-Support-func-call-for-kernel.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/50-Support-func-call-for-kernel.md",
     "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/^8eaaaf.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/40-First-instruction-of-kernel.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/10-Exec-env-and-Rust.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/30-Qemu-boot-and-compile-process.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/51-Arch-env-config.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/50-rCore-env-config.md",
-    "1-Theory/5-OS-principle/internal&principle/42-加载和链接.md",
-    "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50A-Huffman 树.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50B-二叉树应用.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/20-Remove-std-dependency.md",
-    "5-Tools/Dev-Tools/Docker/10-Official-getting-started.md",
-    "5-Tools/Dev-Tools/Docker/20-Config.md",
-    "5-Tools/Dev-Tools/Docker/00-Install.md",
-    "5-Tools/Dev-Tools/Docker/在ArchLinux上安装docker.md",
-    "5-Tools/Dev-Tools/Docker/为WSL 2 安装docker.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/00-Overview.md",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/assets",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env",
-    "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/assets",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",

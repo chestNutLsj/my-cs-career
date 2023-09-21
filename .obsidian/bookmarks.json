@@ -244,35 +244,35 @@
         {
           "type": "file",
           "ctime": 1694869858991,
-          "path": "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/30-OS-abstraction.md",
+          "path": "1-Theory/5-OS-principle/rCore-tutorial/0-OS-overview/30-OS-abstraction.md",
           "subpath": "#普通控制流",
           "title": "Common Control Flow"
         },
         {
           "type": "file",
           "ctime": 1694870055231,
-          "path": "1-Theory/5-OS-principle/thu-rCore-tutorial/0-OS-overview/30-OS-abstraction.md",
+          "path": "1-Theory/5-OS-principle/rCore-tutorial/0-OS-overview/30-OS-abstraction.md",
           "subpath": "#异常控制流",
           "title": "Exceptional Control Flow"
         },
         {
           "type": "file",
           "ctime": 1695109259318,
-          "path": "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/30-Qemu-boot-and-compile-process.md",
+          "path": "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/30-Qemu-boot-and-compile-process.md",
           "subpath": "#^662cbb",
           "title": "真实计算机的加电启动过程"
         },
         {
           "type": "file",
           "ctime": 1695111035079,
-          "path": "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/30-Qemu-boot-and-compile-process.md",
+          "path": "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/30-Qemu-boot-and-compile-process.md",
           "subpath": "#编译流程",
           "title": "编译流程"
         },
         {
           "type": "file",
           "ctime": 1695119674413,
-          "path": "1-Theory/5-OS-principle/thu-rCore-tutorial/1-App-basic-exec-env/50-Support-func-call-for-kernel.md",
+          "path": "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/50-Support-func-call-for-kernel.md",
           "subpath": "#^8eaaaf",
           "title": "riscv中如何实现函数调用返回？"
         }
