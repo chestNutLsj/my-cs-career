@@ -722,7 +722,7 @@ If not, insert it:
 4. If the node is not full, follow the steps below.
 5. Insert the node in increasing order.
 
-### Example
+### Insert-Example
 ![[71-BTree-insertion.png]]
 
 ### Implementation

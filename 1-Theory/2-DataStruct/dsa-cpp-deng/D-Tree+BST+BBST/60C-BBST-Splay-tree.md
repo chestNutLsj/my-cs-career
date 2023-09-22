@@ -239,6 +239,59 @@ $$
 &=2^{h+2}-h-3\\
 &=O(n)
 \end{aligned} 
-
 $$
-#### 
+
+#### 调整时间的上界
+考查对伸展树 S 的 m 次连续访问 (m >> n，不妨仅考查 search() )
+
+记第 i 次操作的分摊复杂度取作实际复杂度与势能变化量之和：
+$A^{(k)} = T^{(k)} + \Delta\Phi^{(k)},k=0,1,2,...,m$ ，
+则有：$A-O(n\log n)\le T=A-\Delta\Phi \le A+O(n\log n)$ 
+
+只要能够确定 A=O (mlogn)，则必有 T=O (mlogn)。
+
+![[60C-BBST-Splay-tree-search-splay.png]]
+
+实际上，$A^{(k)}$ 永远不致超过节点 v 的势能变化量：$O(rank^{(k)}(v)-rank^{(k-1)}(v))=O(\log n)$。$A^{(k)}$ 的本质是对 v 作若干次连续伸展操作的时间成本之累积，这些操作无非三种情况：
+1. zig/zag
+	- ![[60C-BBST-Splay-tree-potential-energy-zig-zag.png]]
+$$
+\begin{aligned}
+A^{(k)} &= T^{(k)} + \Delta\Phi(S_{i}^{(k)})=1+\Delta rank_{i}(v)+\Delta rank_{i}(r)\\
+&=1+[rank_{i}(v)-rank_{i-1}(v)]+[rank_{i}(r)-rank_{i-1}(r)]\\
+&<1+[rank_{i}(v)-rank_{i-1}(v)]
+\end{aligned}
+$$
+
+2. zig-zag/zag-zig
+	- ![[60C-BBST-Splay-tree-potential-energy-zigzag.png]]
+$$
+\begin{aligned}
+A^{(k)} &= T^{(k)} + \Delta\Phi(S_{i}^{(k)})\\
+&=2+\Delta rank_{i}(g)+\Delta rank_{i}(p)+\Delta rank_{i}(v)\\
+&=2+[rank_{i}(g)-rank_{i-1}(g)]+[rank_{i}(p)-rank_{i-1}(p)]+[rank_{i}(v)-rank_{i-1}(v])\\
+&<2+rank_{i}(g)+rank_{i}(p)-2\cdot rank_{i-1}(v)\quad (1)\\
+&<2+2\cdot rank_{i}(v)-2-2\cdot rank_{i-1}(v)\ \ \ \ \qquad(2)\\
+&=2\cdot(rank_{i}(v)-rank_{i-1}(v))
+\end{aligned}
+$$
+
+1) 放缩的原理是：$rank_{i-1}(p)>rank_{i-1}(v)$
+2) 放缩的原理是：$\frac{\log G_{i}+\log P_{i}}{2}\le \log \frac{G_{i}+P_{i}}{2}<\log \frac{V_{i}}{2}$
+
+3. zig-zig/zag-zag
+	- ![[60C-BBST-Splay-tree-potential-energy-zigzig.png]]
+$$
+\begin{aligned}
+A^{(k)} &= T^{(k)} + \Delta\Phi(S_{i}^{(k)})\\
+&=2+\Delta rank_{i}(g)+\Delta rank_{i}(p)+\Delta rank_{i}(v)\\
+&=2+[rank_{i}(g)-rank_{i-1}(g)]+[rank_{i}(p)-rank_{i-1}(p)]+[rank_{i}(v)-rank_{i-1}(v])\\
+&<2+rank_{i}(g)+rank_{i}(p)-2\cdot rank_{i-1}(v)\quad (1)\\
+&<2+rank_{i}(g)+rank_{i}(v)-2\cdot rank_{i-1}(v)\quad(2)\\
+&<3\cdot(rank_{i}(v)-rank_{i-1}(v)) \qquad(3)
+\end{aligned}
+$$
+
+1) 放缩的原理是：$rank_{i-1}(p)>rank_{i-1}(v)$ 
+2) 放缩的原理是：$rank_{i}(p)<rank_{i}(v)$
+3) 放缩的原理是：$\frac{\log G_{i}+\log V_{i-1}}{2}\le \log \frac{G_{i}+V_{i-1}}{2}<\log \frac{V_{i}}{2}$ 

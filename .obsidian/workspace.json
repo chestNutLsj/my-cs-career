@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "c37ac67729aa2670",
+        "id": "9599833ffd9f42b4",
         "type": "tabs",
         "children": [
           {
-            "id": "e8d352f728115d6e",
+            "id": "6df3e4c904f4ace2",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -93,6 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -109,6 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +143,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md"
+              }
             }
           },
           {
@@ -152,8 +160,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -173,53 +180,54 @@
       "omnisearch:Omnisearch": false
     }
   },
-  "active": "e8d352f728115d6e",
+  "active": "6df3e4c904f4ace2",
   "lastOpenFiles": [
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60C-BBST-Splay-tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60C-BBST-Splay-tree-locality.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-09.伸展树的节点删除.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-08.伸展树的节点插入.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60C-BBST-Splay-tree-splay-instance.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60C-BBST-Splay-tree-zigzag.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/31-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60C-BBST-Splay-tree-double-layer-rotate.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-06.双层调整策略的高度折半效果.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60C-BBST-Splay-tree-zig-zig.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60C-BBST-Splay-tree-zig-zag.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-02.简易伸展树的最坏情况.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50B-二叉树应用.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50A-Huffman 树.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60B-Balanced-BST-AVL.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60A-Binary_Search_Tree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60F-BST-application.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/10-Privilege-mechanism.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/practice/2-批处理操作系统.md",
+    "1-Theory/5-OS-principle/internal&principle/71-BTree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60D-BBST-BTree-delete3.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60D-BBST-BTree-delete2.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/Pasted image 20230922224526.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60D-BBST-BTree-delete1.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60D-BBST-BTree-split-instance.png",
+    "1-Theory/5-OS-principle/internal&principle/30-并发.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60D-BBST-BTree-height-maxist.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60D-BBST-BTree-height-minist.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60D-BBST-BTree-height.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60D-BBST-BTree-search.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60D-BBST-BTree-2-4-BTree.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60C-BBST-Splay-tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60B-Balanced-BST-AVL.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-time-sharing/30-Multiprog-coop-schedule.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-time-sharing/20-Task-switch.md",
     "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/40-Switching-privilege.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/30-Impl-batch-OS.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/20-Impl-application-prog.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-time-sharing/10-Multiprog-place-loader.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-time-sharing/00-Overview.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-time-sharing/assets",
+    "1-Theory/5-OS-principle/rCore-tutorial/practice/2-批处理操作系统.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-time-sharing",
+    "5-Tools/Dev-Tools/Docker/20-Config.md",
+    "5-Tools/Dev-Tools/Docker/19-Continue-study.md",
+    "5-Tools/Dev-Tools/Docker/18-Image-building-best-practices.md",
+    "5-Tools/Dev-Tools/Docker/17-Use-docker-compose.md",
+    "5-Tools/Dev-Tools/Docker/16-Multi-container-app.md",
+    "5-Tools/Dev-Tools/Docker/15-Use-bind-mounts.md",
+    "5-Tools/Dev-Tools/Docker/11-Containerize-application.md",
+    "5-Tools/Dev-Tools/Docker/10-Official-getting-started-overview.md",
+    "5-Tools/Dev-Tools/Docker/14-Persist-in-DB.md",
+    "5-Tools/Dev-Tools/Docker/13-Share-application.md",
+    "5-Tools/Dev-Tools/Docker/12-Update-application.md",
+    "5-Tools/Dev-Tools/Docker/The Ultimate Docker Cheat Sheet _ dockerlabs.md",
+    "8-SimpRead/The Ultimate Docker Cheat Sheet _ dockerlabs/assets",
+    "8-SimpRead/The Ultimate Docker Cheat Sheet _ dockerlabs",
+    "5-Tools/Dev-Tools/Docker/docker_cheatsheet.pdf",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Exercise.md",
     "1-Theory/5-OS-principle/thu-chyyuu",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/10-Exec-env-and-Rust.md",
-    "1-Theory/5-OS-principle/internal&principle/20-进程与线程.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/00-Overview.md",
     "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/assets",
-    "1-Theory/5-OS-principle/rCore-tutorial/practice/1-应用程序与基本执行环境.md",
     "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system",
-    "5-Tools/Dev-Tools/Git/Github克隆的项目如何切换分支？.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/60-Print-and-shutdown-based-on-RustSBI.md",
-    "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/assets",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/assets",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
