@@ -275,6 +275,20 @@
           "path": "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/50-Support-func-call-for-kernel.md",
           "subpath": "#^8eaaaf",
           "title": "riscv中如何实现函数调用返回？"
+        },
+        {
+          "type": "group",
+          "ctime": 1695533698795,
+          "items": [
+            {
+              "type": "file",
+              "ctime": 1695533637471,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-and-time-sharing/40-Time-sharing-preemptive.md",
+              "subpath": "#^9359cd",
+              "title": "第三章新增syscall-sys_get_time"
+            }
+          ],
+          "title": "syscall"
         }
       ],
       "title": "rCore-tips"

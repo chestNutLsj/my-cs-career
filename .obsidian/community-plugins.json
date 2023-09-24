@@ -6,7 +6,6 @@
   "obsidian-banners",
   "obsidian-auto-link-title",
   "obsidian-excel-to-markdown-table",
-  "obsidian-style-settings",
   "obsidian-underline",
   "obsidian-zotero-desktop-connector",
   "easy-typing-obsidian",
@@ -27,5 +26,7 @@
   "obsidian-mindmap-nextgen",
   "obsidian-image-toolkit",
   "obsidian-importer",
-  "obsidian-footnotes"
+  "obsidian-footnotes",
+  "obsidian-style-settings",
+  "reading-comments"
 ]
