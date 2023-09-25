@@ -3,7 +3,6 @@
   "emoji-shortcodes",
   "obsidian-excalidraw-plugin",
   "obsidian-pandoc",
-  "obsidian-banners",
   "obsidian-auto-link-title",
   "obsidian-excel-to-markdown-table",
   "obsidian-underline",
@@ -28,5 +27,9 @@
   "obsidian-importer",
   "obsidian-footnotes",
   "obsidian-style-settings",
-  "reading-comments"
+  "reading-comments",
+  "homepage",
+  "recent-files-obsidian",
+  "buttons",
+  "obsidian-banners"
 ]

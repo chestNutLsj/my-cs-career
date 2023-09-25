@@ -11,6 +11,8 @@
 > C-->C1[2] & C2[6]
 > ```
 
+^d29fb9
+
 因此，二叉搜索树不仅存在顺序性，而且存在单调性：
 ![[60-Binary_Search_Tree-bst-monotonous.png]]
 - 顺序性是对局部特征的刻画，但由此可以推出全局的单调性：
@@ -56,6 +58,8 @@ BinNodePosi<T> & BST<T>::search( const T & e ) {
 	} //返回目标节点位置的引用，以便后续插入、删除操作
 } //无论命中或失败，_hot均指向v之父亲（v是根时，hot为NULL）
 ```
+
+^dc6a84
 
 ![[60-Binary_Search_Tree-search-res.png]]
 上述代码的返回结果有如下两种情况：
@@ -107,6 +111,9 @@ bool BST<T>::remove( const T & e ) {
 } //删除成功与否，由返回值指示
 //累计O(h)时间，主要消耗于search()、updateHeightAbove()、removeAt()中的succ()
 
+```
+
+```
 // removeAt()
 template <typename T>
 static BinNodePosi<T> removeAt( BinNodePosi<T> & x, BinNodePosi<T> & hot ) {
@@ -128,6 +135,8 @@ static BinNodePosi<T> removeAt( BinNodePosi<T> & x, BinNodePosi<T> & hot ) {
 
 ```
 
+^e2a6fa
+
 从 BST 中删除有两种情况：
 1. 删除节点是其父节点的唯一孩子（分支）：
 	- ![[60-Binary_Search_Tree-bst-delete1.png]]
@@ -140,12 +149,12 @@ static BinNodePosi<T> removeAt( BinNodePosi<T> & x, BinNodePosi<T> & hot ) {
 ## 期望树高
 非常直观，BST 的所有操作都正比于树高：O (h)。因此若树高不能有效控制，就无法体现出 BST 的优势——甚至最坏情况下退化成一条链。
 
-考虑随机生成 n 个词条并按随机排列 $\sigma=(e_{i1},e_{i2},...,e_{i3})$ 的顺序依次插入，且==每种排列出现的概率相同==—— $\frac{1}{n!}$，则 BST 的平均高度为 $\Theta(\log n)$。
+考虑**随机生成** n 个词条并按随机排列 $\sigma=(e_{i1},e_{i2},...,e_{i3})$ 的顺序依次插入，且==每种排列出现的概率相同==—— $\frac{1}{n!}$，则 BST 的平均高度为 $\Theta(\log n)$。
 - ![[60-Binary_Search_Tree-bst-height-equal-probability.png]]
 - 上图情况中，{1,2,3}序列的平均树高为 (2+2+2+2+1+1)/6 = 1.67
 - 多数实际应用中的 BST 总体上都是如此生成和演化的，即便计入 remove()，也可通过随机使用 succ()和 pred()，避免逐渐倾侧的趋势——若固定使用 succ()进行删除算法，则每棵 BST 有逐渐左倾的趋势；
 
-但若排列出现的概率不均等时，情况会有差别。考虑 n 个互异节点在遵守 BST 的顺序条件下，随机确定拓扑关系：
+但若排列出现的概率不均等时，情况会有差别。考虑 n 个互异节点在遵守 BST 的顺序条件下，**随机组成**确定拓扑关系：
 - n 个互异节点组成的 BST 的种类有 S (n)棵，其递推公式为：
 - $S(n)=\sum\limits_{k=1}^{n}S(k-1)\cdot S(n-k)=catalan(n)=\frac{(2n)!}{(n+1)!\cdot n!}$ 
 - 同样以 {1,2,3} 序列，共五种拓扑，因此以拓扑数分析平均树高为：(2+2+2+2+1)/5 = 1.8

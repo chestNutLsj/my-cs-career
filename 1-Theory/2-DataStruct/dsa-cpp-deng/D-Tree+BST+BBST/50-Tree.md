@@ -255,6 +255,9 @@ template <typename T, typename VST> static void visitAlongVine
 	} //只有右孩子、NULL可能入栈——增加判断以剔除后者，是否值得？
 }
 ```
+
+^871d4f
+
 ![[50-Tree-prefix-visit-along-vine.png]]
 
 #### 分析

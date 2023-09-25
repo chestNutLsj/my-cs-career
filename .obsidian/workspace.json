@@ -4,15 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "c8026d6154717bb3",
+        "id": "7b7e1b17061378de",
         "type": "tabs",
         "children": [
           {
-            "id": "7ac3ef14905751f4",
+            "id": "255062d632f7250b",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "canvas",
+              "state": {
+                "file": "MyHome.canvas",
+                "viewState": {
+                  "x": -322.5,
+                  "y": 210,
+                  "zoom": -0.4641851486079319
+                }
+              }
             }
           }
         ]
@@ -27,6 +34,7 @@
       {
         "id": "b59937020c8d4ec4",
         "type": "tabs",
+        "dimension": 79.61264016309887,
         "children": [
           {
             "id": "3d3d978ac964e0aa",
@@ -73,10 +81,25 @@
             }
           }
         ]
+      },
+      {
+        "id": "2504204283e182e7",
+        "type": "tabs",
+        "dimension": 20.38735983690112,
+        "children": [
+          {
+            "id": "8ed71b685f84a34f",
+            "type": "leaf",
+            "state": {
+              "type": "recent-files",
+              "state": {}
+            }
+          }
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 262.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -92,7 +115,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md",
+                "file": "MyHome.canvas",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -109,7 +132,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md",
+                "file": "MyHome.canvas",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +160,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md"
+                "file": "MyHome.canvas"
               }
             }
           },
@@ -153,8 +176,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -171,26 +193,39 @@
       "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false,
       "mermaid-tools:Open Mermaid Toolbar": false,
       "obsidian-importer:Open Importer": false,
+      "homepage:Open homepage": false,
       "omnisearch:Omnisearch": false
     }
   },
   "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/红黑树.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60E-BBST-Red-black-tree-double-black-flow.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60E-BBST-Red-black-tree-BB3-2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60E-BBST-Red-black-tree-BB3-1.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60E-BBST-Red-black-tree-BB2B-2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/Pasted image 20230924215558.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60E-BBST-Red-black-tree-BB2B-1.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60E-BBST-Red-black-tree-BB2R-2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60E-BBST-Red-black-tree-BB2R-1.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60E-BBST-Red-black-tree-BB1-2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/60E-BBST-Red-black-tree-BB1-1.png",
-    "1-Theory/5-OS-principle/internal&principle/50-CPU调度.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md",
-    "1-Theory/5-OS-principle/internal&principle/39-Unix_Linux并发机制.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61A-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60C-BBST-Splay-tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61B-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61-Exercise-7-20.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61-Exercise-7-19.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60B-Balanced-BST-AVL.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/AVL-nums.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61-Exercise-fib-avl.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61-Exercise-shallowest-node-in-avl.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60A-Binary_Search_Tree.md",
+    "MyHome.canvas",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/50-Address-space-of-kernel-app.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/40-Manage-SV39-multilevel-pagetable.md",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/30-SV39-multilevel-page-table.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets/30-SV39-multilevel-page-table-sv39-full-flow.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets/30-SV39-multilevel-page-table-pte-rwx.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets/30-SV39-multilevel-page-table-trie.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets/30-SV39-multilevel-page-table-physical-memory-layouts.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets/30-SV39-multilevel-page-table-sv39-pte.png",
+    "0-Assets/Diary/2023/12月-23日.md",
+    "MyHome.md",
+    "1-Theory/1-ProgramLanguage/Assembly/RSIC-V",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md",
+    "1-Theory/7-DataBase/MySQL",
+    "1-Theory/5-OS-principle/internal&principle/50-CPU调度.md",
+    "1-Theory/5-OS-principle/internal&principle/39-Unix_Linux并发机制.md",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/20-Address-space.md",
     "1-Theory/4-Architecture/MMU.md",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/10-Rust-dynamic-mem-allocate.md",
@@ -206,23 +241,12 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/80-Graph.md",
     "1-Theory/1-ProgramLanguage/JavaScript/js_get_started.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50A-Huffman 树.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60F-BST-application.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md",
-    "1-Theory/5-OS-principle/internal&principle/71-BTree.md",
-    "1-Theory/5-OS-principle/internal&principle/30-并发.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60C-BBST-Splay-tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60B-Balanced-BST-AVL.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-and-time-sharing/20-Task-switch.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/40-Switching-privilege.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-and-time-sharing/10-Multiprog-place-loader.md",
     "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-and-time-sharing/assets",
     "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-and-time-sharing",
     "8-SimpRead/The Ultimate Docker Cheat Sheet _ dockerlabs/assets",
     "8-SimpRead/The Ultimate Docker Cheat Sheet _ dockerlabs",
     "5-Tools/Dev-Tools/Docker/docker_cheatsheet.pdf",
     "1-Theory/5-OS-principle/thu-chyyuu",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets",
-    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/assets",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",

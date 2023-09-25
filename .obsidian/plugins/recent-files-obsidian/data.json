@@ -1,0 +1,51 @@
+{
+  "recentFiles": [
+    {
+      "basename": "MyHome",
+      "path": "MyHome.canvas"
+    },
+    {
+      "basename": "61A-Exercise",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61A-Exercise.md"
+    },
+    {
+      "basename": "60C-BBST-Splay-tree",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60C-BBST-Splay-tree.md"
+    },
+    {
+      "basename": "61B-Exercise",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61B-Exercise.md"
+    },
+    {
+      "basename": "60B-Balanced-BST-AVL",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60B-Balanced-BST-AVL.md"
+    },
+    {
+      "basename": "50-Tree",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md"
+    },
+    {
+      "basename": "60A-Binary_Search_Tree",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60A-Binary_Search_Tree.md"
+    },
+    {
+      "basename": "50-Address-space-of-kernel-app",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/50-Address-space-of-kernel-app.md"
+    },
+    {
+      "basename": "40-Manage-SV39-multilevel-pagetable",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/40-Manage-SV39-multilevel-pagetable.md"
+    },
+    {
+      "basename": "30-SV39-multilevel-page-table",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/30-SV39-multilevel-page-table.md"
+    },
+    {
+      "basename": "00-Overview",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Overview.md"
+    }
+  ],
+  "omittedPaths": [],
+  "maxLength": null,
+  "openType": "tab"
+}

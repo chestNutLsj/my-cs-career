@@ -91,6 +91,7 @@ delete (x)操作可能造成至多一个失衡节点——失衡节点若出现�
 	- ![[60B-Balanced-BST-avl-del-rebalance2.png]]
 	- 哪里出现失衡，就对其失衡的子树进行旋转，在对自身旋转。
 	- 同样失衡会继续向上传播，最多要作 O (logn)次调整。
+	- 经 Knuth 测试、统计指出，平均而言仅需 0.21 次旋转即可恢复平衡。
 
 ```
 template <typename T>

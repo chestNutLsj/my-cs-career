@@ -289,6 +289,13 @@
             }
           ],
           "title": "syscall"
+        },
+        {
+          "type": "file",
+          "ctime": 1695634564666,
+          "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/40-Manage-SV39-multilevel-pagetable.md",
+          "subpath": "#^4e745d",
+          "title": "多级页表的恒等映射"
         }
       ],
       "title": "rCore-tips"

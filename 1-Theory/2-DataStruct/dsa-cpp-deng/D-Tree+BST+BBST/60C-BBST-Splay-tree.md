@@ -32,7 +32,7 @@
 
 可以看到，节点访问之后，对应路径的长度随即折半，使得最坏情况不致于持续发生。伸展操作的分摊时间仅需 O (logn)时间！
 
-在习题集 [[61-Exercise#8-2 Splay Tree 操作的分摊时间复杂度为 O (logn)|8-2 Splay Tree的各操作分摊时间复杂度为O(logn)]] 中有详细证明。
+在习题集 [[61B-Exercise#8-2 Splay Tree 操作的分摊时间复杂度为 O (logn)|8-2 Splay Tree的各操作分摊时间复杂度为O(logn)]] 中有详细证明。
 
 最后不要忘记，v 只有父亲没有祖父的情况：v 在操作的最后，仅次于根节点处：
 ![[60C-BBST-Splay-tree-zigzag.png]]
