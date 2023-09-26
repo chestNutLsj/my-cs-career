@@ -49,5 +49,6 @@
   "blue-topaz-theme@@background-image-settings-markdown-page-random-options": "background-image-settings-markdown-page-random-green",
   "blue-topaz-theme@@background-notebook-liked-switch": false,
   "blue-topaz-theme@@hr-for-pagination": true,
-  "blue-topaz-theme@@outline-style": "logseq-outline-style"
+  "blue-topaz-theme@@outline-style": "logseq-outline-style",
+  "blue-topaz-theme@@font-weight-inline-code": "regular"
 }

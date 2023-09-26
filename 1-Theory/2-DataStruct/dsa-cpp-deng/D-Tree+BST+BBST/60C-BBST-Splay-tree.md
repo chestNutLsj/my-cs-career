@@ -34,6 +34,7 @@
 
 在习题集 [[61B-Exercise#8-2 Splay Tree 操作的分摊时间复杂度为 O (logn)|8-2 Splay Tree的各操作分摊时间复杂度为O(logn)]] 中有详细证明。
 
+#### zig/zag
 最后不要忘记，v 只有父亲没有祖父的情况：v 在操作的最后，仅次于根节点处：
 ![[60C-BBST-Splay-tree-zigzag.png]]
 此时必有 v.parent () == T.root ()，只需要单次旋转即可，并且每轮伸展最多发生一次。

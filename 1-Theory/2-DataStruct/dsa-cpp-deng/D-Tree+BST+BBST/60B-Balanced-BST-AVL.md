@@ -48,7 +48,7 @@ public: //BST::search()等接口，可直接沿用
 insert (x)可能造成同时有多个失衡的节点，其中失衡的最低者 g 不低于 x 的祖父。共有两种情况，分别通过一次旋转和两次旋转可以复衡：
 
 1. 单旋：x 在失衡局部的两侧
-	- ![[60B-Balanced-BST-avl-rebalance-once.png]]
+	- ![[60B-Balanced-BST-avl-rebalance-once.png]] ^4eea35
 	- 上图中 x 插入黄色方块中任意一处，镜像情况同理；
 	- g 只需经过单次旋转后就能复衡，g 作根节点的子树的高度复原（子树高度不变化）
 	- 更高祖先因此复衡，全树复衡；

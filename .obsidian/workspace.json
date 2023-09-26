@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "7b7e1b17061378de",
+        "id": "1d69f93dfd634400",
         "type": "tabs",
         "children": [
           {
-            "id": "255062d632f7250b",
+            "id": "047ecb6d16c29fdb",
             "type": "leaf",
             "state": {
               "type": "canvas",
@@ -17,7 +17,7 @@
                 "viewState": {
                   "x": -322.5,
                   "y": 210,
-                  "zoom": -0.4641851486079319
+                  "zoom": -0.4625988977159804
                 }
               }
             }
@@ -99,7 +99,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 262.5
+    "width": 200
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -176,7 +176,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -197,28 +198,37 @@
       "omnisearch:Omnisearch": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "047ecb6d16c29fdb",
   "lastOpenFiles": [
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61A-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60C-BBST-Splay-tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61B-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61-Exercise-7-20.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61-Exercise-7-19.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60B-Balanced-BST-AVL.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/AVL-nums.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61-Exercise-fib-avl.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61-Exercise-shallowest-node-in-avl.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60A-Binary_Search_Tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61B-Exercise-python-randomize.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61B-Exercise-insert-BTree-random.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61B-Exercise-insert-BTree-sequential.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61B-Exercise-8-5.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61B-Exercise-8-4-2.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61B-Exercise-8-4.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60C-BBST-Splay-tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-07.伸展树中较深的节点一旦被访问到，对应分支的长度将随即减半.png",
     "MyHome.canvas",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/50-Address-space-of-kernel-app.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/10-Rust-dynamic-mem-allocate.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/50-Address-space-of-kernel-and-app.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Appendix/B-常见工具的使用方法.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Appendix",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets/50-Address-space-of-kernel-and-app-app-address-space-layouts.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets/50-Address-space-of-kernel-and-app-kernel-address-space-low-half.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets/50-Address-space-of-kernel-and-app-kernel-address-space-high-half.png",
+    "README.md",
+    "1-Theory/4-Architecture/408&&912/MMU.md",
+    "1-Theory/4-Architecture/408&&912/assets",
+    "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60B-Balanced-BST-AVL.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61A-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60A-Binary_Search_Tree.md",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/40-Manage-SV39-multilevel-pagetable.md",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/30-SV39-multilevel-page-table.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets/30-SV39-multilevel-page-table-sv39-full-flow.png",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets/30-SV39-multilevel-page-table-pte-rwx.png",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets/30-SV39-multilevel-page-table-trie.png",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets/30-SV39-multilevel-page-table-physical-memory-layouts.png",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets/30-SV39-multilevel-page-table-sv39-pte.png",
     "0-Assets/Diary/2023/12月-23日.md",
     "MyHome.md",
     "1-Theory/1-ProgramLanguage/Assembly/RSIC-V",
@@ -227,26 +237,16 @@
     "1-Theory/5-OS-principle/internal&principle/50-CPU调度.md",
     "1-Theory/5-OS-principle/internal&principle/39-Unix_Linux并发机制.md",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/20-Address-space.md",
-    "1-Theory/4-Architecture/MMU.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/10-Rust-dynamic-mem-allocate.md",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Overview.md",
     "1-Theory/1-ProgramLanguage/Cpp/3-modern-cpp/Introduction-cpp11-and-later/50-Smart-pointer-and-memory-management.md",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address",
     "1-Theory/5-OS-principle/rCore-tutorial/practice/3-多道程序与分时多任务.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-and-time-sharing/40-Time-sharing-preemptive.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-and-time-sharing/30-Multiprog-coop-schedule.md",
     "未命名.canvas",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50B-二叉树应用.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/80-Graph.md",
-    "1-Theory/1-ProgramLanguage/JavaScript/js_get_started.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50A-Huffman 树.md",
     "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-and-time-sharing/assets",
     "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-and-time-sharing",
     "8-SimpRead/The Ultimate Docker Cheat Sheet _ dockerlabs/assets",
     "8-SimpRead/The Ultimate Docker Cheat Sheet _ dockerlabs",
-    "5-Tools/Dev-Tools/Docker/docker_cheatsheet.pdf",
-    "1-Theory/5-OS-principle/thu-chyyuu",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",
