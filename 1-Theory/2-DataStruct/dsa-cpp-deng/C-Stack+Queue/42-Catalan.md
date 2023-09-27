@@ -222,10 +222,10 @@ int main()
     ![](1694691923453.png)
 9.  Number of Dyck words of length 2n. A Dyck word is a string consisting of n X’s and n Y’s such that no initial segment of the string has more Y’s than X’s.  For example, the following are the Dyck words of length 6: XXXYYY     XYXXYY     XYXYXY     XXYYXY     XXYXYY.
 10.  Number of ways to tile a stairstep shape of height n with n rectangles. The following figure illustrates the case n = 4:   
-    ![](<assets/1694691924274.png>)
+    ![](1694691924274.png)
 11. Given a number **n**, return the number of ways you can draw n chords in a circle with ==2 x n== points such that no **2** chords intersect.
 12.  Number of ways to form a “mountain ranges” with n upstrokes and n down-strokes that all stay above the original line.The mountain range interpretation is that the mountains will never go below the horizon.  
-    ![](<assets/1694691924992.png>)
+    ![](1694691924992.png)
 13.  Number of stack-sortable permutations of {1, …, n}. A permutation w is called stack-sortable if S(w) = (1, …, n), where S(w) is defined recursively as follows: write w = unv where n is the largest element in w and u and v are shorter sequences, and set S(w) = S(u)S(v)n, with S being the identity for one-element sequences.
 14.  Number of permutations of {1, …, n} that avoid the pattern 123 (or any of the other patterns of length 3); that is, the number of permutations with no three-term increasing subsequence. For n = 3, these permutations are 132, 213, 231, 312 and 321. For n = 4, they are 1432, 2143, 2413, 2431, 3142, 3214, 3241, 3412, 3421, 4132, 4213, 4231, 4312 and 4321
 

@@ -1,24 +1,48 @@
 {
   "recentFiles": [
     {
-      "basename": "MyHome",
-      "path": "MyHome.canvas"
+      "basename": "60-Time-sharing-multitask-based-on-address-space",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md"
     },
     {
-      "basename": "60D-BBST-BTree",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md"
+      "basename": "70-Beyond-physical-memory",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/70-Beyond-physical-memory.md"
+    },
+    {
+      "basename": "70-Hash",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md"
+    },
+    {
+      "basename": "MyHome",
+      "path": "MyHome.canvas"
     },
     {
       "basename": "61B-Exercise",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61B-Exercise.md"
     },
     {
-      "basename": "60C-BBST-Splay-tree",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60C-BBST-Splay-tree.md"
+      "basename": "60E-BBST-Red-black-tree",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md"
     },
     {
-      "basename": "60-Time-sharing-multitask-based-on-address-space",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md"
+      "basename": "60D-BBST-BTree",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md"
+    },
+    {
+      "basename": "63-Height-BBST-vs-Weight-BBST",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/63-Height-BBST-vs-Weight-BBST.md"
+    },
+    {
+      "basename": "62-B*Tree",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-B*Tree.md"
+    },
+    {
+      "basename": "00-Overview",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Overview.md"
+    },
+    {
+      "basename": "60C-BBST-Splay-tree",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60C-BBST-Splay-tree.md"
     },
     {
       "basename": "10-Rust-dynamic-mem-allocate",
@@ -67,10 +91,6 @@
     {
       "basename": "30-SV39-multilevel-page-table",
       "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/30-SV39-multilevel-page-table.md"
-    },
-    {
-      "basename": "00-Overview",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Overview.md"
     }
   ],
   "omittedPaths": [],

@@ -425,7 +425,7 @@ impl TaskControlBlock {
 
 * 第 22 行，根据传入的应用 ID `app_id` 调用在 `config` 子模块中定义的 `kernel_stack_position` ==找到应用的内核栈预计放在内核地址空间 `KERNEL_SPACE` 中的哪个位置==，并通过 `insert_framed_area` 实际将这个逻辑段加入到内核地址空间中；
 
-* 第 30~32 行，在应用的内核栈顶压入一个跳转到 `trap_return` 而不是 `__restore` 的任务上下文，这主要是==为了能够支持对该应用的启动并顺利切换到用户地址空间执行==。
+* 第 30~32 行，在应用的内核栈顶压入一个跳转到 `trap_return` 而不是 `__restore` 的任务上下文，这主要是==为了能够支持对该应用的启动并顺利切换到用户地址空间执行==。 ^a60dc4
 	* 在构造方式上，只是将 ra 寄存器的值设置为 `trap_return` 的地址。 `trap_return` 是后面要介绍的新版的 Trap 处理的一部分。
 	* 这里对裸指针解引用成立的原因在于：当前已经进入了内核地址空间，而要操作的内核栈也是在内核地址空间中的；
 
@@ -556,78 +556,89 @@ pub fn current_trap_cx() -> &'static mut TrapContext {
 让我们来看现在 `trap_handler` 的改进实现：
 
 ```
-1// os/src/trap/mod.rs
- 3fn set_kernel_trap_entry() {
- 4    unsafe {
- 5        stvec::write(trap_from_kernel as usize, TrapMode::Direct);
- 6    }
- 7}
- 9#[no_mangle]
-10pub fn trap_from_kernel() -> ! {
-11    panic!("a trap from kernel!");
-12}
-14#[no_mangle]
-15pub fn trap_handler() -> ! {
-16    set_kernel_trap_entry();
-17    let cx = current_trap_cx();
-18    let scause = scause::read();
-19    let stval = stval::read();
-20    match scause.cause() {
-21        ...
-22    }
-23    trap_return();
-24}
+// os/src/trap/mod.rs
+
+fn set_kernel_trap_entry() {
+    unsafe {
+        stvec::write(trap_from_kernel as usize, TrapMode::Direct);
+    }
+}
+
+#[no_mangle]
+pub fn trap_from_kernel() -> ! {
+    panic!("a trap from kernel!");
+}
+
+#[no_mangle]
+pub fn trap_handler() -> ! {
+    set_kernel_trap_entry();
+    let cx = current_trap_cx();
+    let scause = scause::read();
+    let stval = stval::read();
+    match scause.cause() {
+        ...
+    }
+    trap_return();
+}
 ```
 
-由于应用的 Trap 上下文不在内核地址空间，因此我们调用 `current_trap_cx` 来获取当前应用的 Trap 上下文的可变引用而不是像之前那样作为参数传入 `trap_handler` 。至于 Trap 处理的过程则没有发生什么变化。
+- 由于应用的 Trap 上下文不在内核地址空间，因此我们==调用 `current_trap_cx` 来获取当前应用的 Trap 上下文的可变引用而不是像之前那样作为参数传入 `trap_handler`== 。至于 Trap 处理的过程则没有发生什么变化。
 
-注意到，在 `trap_handler` 的开头还调用 `set_kernel_trap_entry` 将 `stvec` 修改为同模块下另一个函数 `trap_from_kernel` 的地址。这就是说，一旦进入内核后再次触发到 S 态 Trap，则硬件在设置一些 CSR 寄存器之后，会跳过对通用寄存器的保存过程，直接跳转到 `trap_from_kernel` 函数，在这里直接 `panic` 退出。这是因为内核和应用的地址空间分离之后，U 态 –> S 态 与 S 态 –> S 态 的 Trap 上下文保存与恢复实现方式 / Trap 处理逻辑有很大差别。这里为了简单起见，弱化了 S 态 –> S 态的 Trap 处理过程：直接 `panic` 。
+- 注意到，在 `trap_handler` 的开头还调用 `set_kernel_trap_entry` 将 `stvec` 修改为同模块下另一个函数 `trap_from_kernel` 的地址。
+	- 这就是说，==一旦进入内核后再次触发到 S 态 Trap，则硬件在设置一些 CSR 寄存器之后，会跳过对通用寄存器的保存过程，直接跳转到 `trap_from_kernel` 函数，在这里直接 `panic` 退出==。
+	- 这是因为内核和应用的地址空间分离之后，U 态 –> S 态 与 S 态 –> S 态 的 Trap 上下文保存与恢复实现方式 / Trap 处理逻辑有很大差别。这里为了简单起见，弱化了 S 态 –> S 态的 Trap 处理过程：直接 `panic` 。
 
 在 `trap_handler` 完成 Trap 处理之后，我们需要调用 `trap_return` 返回用户态：
 
 ```
-1// os/src/trap/mod.rs
- 3fn set_user_trap_entry() {
- 4    unsafe {
- 5        stvec::write(TRAMPOLINE as usize, TrapMode::Direct);
- 6    }
- 7}
- 9#[no_mangle]
-10pub fn trap_return() -> ! {
-11    set_user_trap_entry();
-12    let trap_cx_ptr = TRAP_CONTEXT;
-13    let user_satp = current_user_token();
-14    extern "C" {
-15        fn __alltraps();
-16        fn __restore();
-17    }
-18    let restore_va = __restore as usize - __alltraps as usize + TRAMPOLINE;
-19    unsafe {
-20        asm!(
-21            "fence.i",
-22            "jr {restore_va}",
-23            restore_va = in(reg) restore_va,
-24            in("a0") trap_cx_ptr,
-25            in("a1") user_satp,
-26            options(noreturn)
-27        );
-28    }
-29    panic!("Unreachable in back_to_user!");
-30}
+// os/src/trap/mod.rs
+
+fn set_user_trap_entry() {
+    unsafe {
+        stvec::write(TRAMPOLINE as usize, TrapMode::Direct);
+    }
+}
+
+#[no_mangle]
+pub fn trap_return() -> ! {
+    set_user_trap_entry();
+    let trap_cx_ptr = TRAP_CONTEXT;
+    let user_satp = current_user_token();
+    extern "C" {
+        fn __alltraps();
+        fn __restore();
+    }
+    let restore_va = __restore as usize - __alltraps as usize + TRAMPOLINE;
+    unsafe {
+        asm!(
+            "fence.i",
+            "jr {restore_va}",
+            restore_va = in(reg) restore_va,
+            in("a0") trap_cx_ptr,
+            in("a1") user_satp,
+            options(noreturn)
+        );
+    }
+    panic!("Unreachable in back_to_user!");
+}
 ```
 
-*   第 11 行，在 `trap_return` 的开始处就调用 `set_user_trap_entry` ，来让应用 Trap 到 S 的时候可以跳转到 `__alltraps` 。注：我们把 `stvec` 设置为内核和应用地址空间共享的跳板页面的起始地址 `TRAMPOLINE` 而不是编译器在链接时看到的 `__alltraps` 的地址。这是因为启用分页模式之后，内核只能通过跳板页面上的虚拟地址来实际取得 `__alltraps` 和 `__restore` 的汇编代码。
-    
-*   第 12~13 行，准备好 `__restore` 需要两个参数：分别是 Trap 上下文在应用地址空间中的虚拟地址和要继续执行的应用地址空间的 token 。
-    
-    最后我们需要跳转到 `__restore` ，以执行：切换到应用地址空间、从 Trap 上下文中恢复通用寄存器、 `sret` 继续执行应用。它的关键在于如何找到 `__restore` 在内核 / 应用地址空间中共同的虚拟地址。
-    
-*   第 18 行，展示了计算 `__restore` 虚地址的过程：由于 `__alltraps` 是对齐到地址空间跳板页面的起始地址 `TRAMPOLINE` 上的， 则 `__restore` 的虚拟地址只需在 `TRAMPOLINE` 基础上加上 `__restore` 相对于 `__alltraps` 的偏移量即可。这里 `__alltraps` 和 `__restore` 都是指编译器在链接时看到的内核内存布局中的地址。
-    
-*   第 20-27 行，首先需要使用 `fence.i` 指令清空指令缓存 i-cache 。这是因为，在内核中进行的一些操作可能导致一些原先存放某个应用代码的物理页帧如今用来存放数据或者是其他应用的代码，i-cache 中可能还保存着该物理页帧的错误快照。因此我们直接将整个 i-cache 清空避免错误。接着使用 `jr` 指令完成了跳转到 `__restore` 的任务。
-    
+* 第 11 行，在 `trap_return` 的开始处就调用 `set_user_trap_entry` ，来让应用 Trap 到 S 的时候可以跳转到 `__alltraps` 。
+	* 注：我们把 `stvec` 设置为内核和应用地址空间共享的跳板页面的起始地址 `TRAMPOLINE` 而不是编译器在链接时看到的 `__alltraps` 的地址。
+	* 这是因为启用分页模式之后，==内核只能通过跳板页面上的虚拟地址来实际取得 `__alltraps` 和 `__restore` 的汇编代码==。
 
-当每个应用第一次获得 CPU 使用权即将进入用户态执行的时候，它的内核栈顶放置着我们在 [内核加载应用的时候](#trap-return-intro) 构造的一个任务上下文：
+* 第 12~13 行，准备好 `__restore` 需要两个参数：分别是 Trap 上下文在应用地址空间中的虚拟地址和要继续执行的应用地址空间的 token 。
+	* 最后我们需要跳转到 `__restore` ，以执行：切换到应用地址空间、从 Trap 上下文中恢复通用寄存器、 `sret` 继续执行应用。
+	* 它的关键在于如何找到 `__restore` 在内核 / 应用地址空间中共同的虚拟地址。
+
+* 第 18 行，展示了计算 `__restore` 虚地址的过程：
+	* 由于 `__alltraps` 是对齐到地址空间跳板页面的起始地址 `TRAMPOLINE` 上的， 则 `__restore` 的虚拟地址只需在 `TRAMPOLINE` 基础上加上 `__restore` 相对于 `__alltraps` 的偏移量即可。
+	* 这里 `__alltraps` 和 `__restore` 都是指编译器在链接时看到的内核内存布局中的地址。
+
+* 第 20-27 行，首先需要使用 `fence.i` 指令清空指令缓存 i-cache 。这是因为，在==内核中进行的一些操作可能导致一些原先存放某个应用代码的物理页帧如今用来存放数据或者是其他应用的代码，i-cache 中可能还保存着该物理页帧的错误快照==。因此我们直接将整个 i-cache 清空避免错误。接着使用 `jr` 指令完成了跳转到 `__restore` 的任务。
+
+
+当每个应用第一次获得 CPU 使用权即将进入用户态执行的时候，它的内核栈顶放置着我们在 [[#^a60dc4|内核加载应用的时候]] 构造的一个任务上下文：
 
 ```
 // os/src/task/context.rs
@@ -644,46 +655,48 @@ impl TaskContext {
 
 在 `__switch` 切换到该应用的任务上下文的时候，内核将会跳转到 `trap_return` 并返回用户态开始该应用的启动执行。
 
-改进 sys_write 的实现[#]( #sys -write "永久链接至标题")
------------------------------------------
+## 改进 sys_write 的实现
 
-类似 Trap 处理的改进，由于内核和应用地址空间的隔离， `sys_write` 不再能够直接访问位于应用空间中的数据，而需要手动查页表才能知道那些数据被放置在哪些物理页帧上并进行访问。
+类似 Trap 处理的改进，==由于内核和应用地址空间的隔离， `sys_write` 不再能够直接访问位于应用空间中的数据==，而需要手动查页表才能知道那些数据被放置在哪些物理页帧上并进行访问。
 
 为此，页表模块 `page_table` 提供了将应用地址空间中一个缓冲区转化为在内核空间中能够直接访问的形式的辅助函数：
 
 ```
-1// os/src/mm/page_table.rs
- 3pub fn translated_byte_buffer(
- 4    token: usize,
- 5    ptr: *const u8,
- 6    len: usize
- 7) -> Vec<&'static [u8]> {
- 8    let page_table = PageTable::from_token(token);
- 9    let mut start = ptr as usize;
-10    let end = start + len;
-11    let mut v = Vec::new();
-12    while start < end {
-13        let start_va = VirtAddr::from(start);
-14        let mut vpn = start_va.floor();
-15        let ppn = page_table
-16            .translate(vpn)
-17            .unwrap()
-18            .ppn();
-19        vpn.step();
-20        let mut end_va: VirtAddr = vpn.into();
-21        end_va = end_va.min(VirtAddr::from(end));
-22        if end_va.page_offset() == 0 {
-23            v.push(&mut ppn.get_bytes_array()[start_va.page_offset()..]);
-24        } else {
-25            v.push(&mut ppn.get_bytes_array()[start_va.page_offset()..end_va.page_offset()]);
-26        }
-27        start = end_va.into();
-28    }
-29    v
-30}
+// os/src/mm/page_table.rs
+
+pub fn translated_byte_buffer(
+    token: usize,
+    ptr: *const u8,
+    len: usize
+) -> Vec<&'static [u8]> {
+    let page_table = PageTable::from_token(token);
+    let mut start = ptr as usize;
+    let end = start + len;
+    let mut v = Vec::new();
+    while start < end {
+        let start_va = VirtAddr::from(start);
+        let mut vpn = start_va.floor();
+        let ppn = page_table
+            .translate(vpn)
+            .unwrap()
+            .ppn();
+        vpn.step();
+        let mut end_va: VirtAddr = vpn.into();
+        end_va = end_va.min(VirtAddr::from(end));
+        if end_va.page_offset() == 0 {
+            v.push(&mut ppn.get_bytes_array()[start_va.page_offset()..]);
+        } else {
+            v.push(&mut ppn.get_bytes_array()[start_va.page_offset()..end_va.page_offset()]);
+        }
+        start = end_va.into();
+    }
+    v
+}
 ```
 
-参数中的 `token` 是某个应用地址空间的 token ， `ptr` 和 `len` 则分别表示该地址空间中的一段缓冲区的起始地址和长度 (注：这个缓冲区的应用虚拟地址范围是连续的)。 `translated_byte_buffer` 会以向量的形式返回一组可以在内核空间中直接访问的字节数组切片（注：这个缓冲区的内核虚拟地址范围有可能是不连续的），具体实现在这里不再赘述。
+- 参数中的 `token` 是某个应用地址空间的 token ， 
+- `ptr` 和 `len` 则分别表示该地址空间中的一段缓冲区的起始地址和长度 (注：这个缓冲区的应用虚拟地址范围是连续的)。
+- `translated_byte_buffer` 会以向量的形式返回一组可以在内核空间中直接访问的字节数组切片（注：==这个缓冲区的内核虚拟地址范围有可能是不连续的==），具体实现在这里不再赘述。
 
 进而我们可以完成对 `sys_write` 系统调用的改造：
 
@@ -706,13 +719,23 @@ pub fn sys_write(fd: usize, buf: *const u8, len: usize) -> isize {
 }
 ```
 
-上述函数尝试将按应用的虚地址指向的缓冲区转换为一组按内核虚地址指向的字节数组切片构成的向量，然后把每个字节数组切片转化为字符串 ``&str`` 然后输出即可。
+上述函数==尝试将按应用的虚地址指向的缓冲区转换为一组按内核虚地址指向的字节数组切片构成的向量==，然后把每个字节数组切片转化为字符串 ``&str`` 然后输出即可。
 
-小结[#]( #id14 "永久链接至标题")
-----------------------
+## 小结
 
-这一章内容很多，讲解了 **地址空间** 这一抽象概念是如何在一个具体的 “头甲龙” 操作系统中实现的。这里面的核心内容是如何建立基于页表机制的虚拟地址空间。为此，操作系统需要知道并管理整个系统中的物理内存；需要建立虚拟地址到物理地址映射关系的页表；并基于页表给操作系统自身和每个应用提供一个虚拟地址空间；并需要对管理应用的任务控制块进行扩展，确保能对应用的地址空间进行管理；由于应用和内核的地址空间是隔离的，需要有一个跳板来帮助完成应用与内核之间的切换执行；并导致了对异常、中断、系统调用的相应更改。这一系列的改进，最终的效果是编写应用更加简单了，且应用的执行或错误不会影响到内核和其他应用的正常工作。为了得到这些好处，我们需要比较费劲地进化我们的操作系统。如果同学结合阅读代码，编译并运行应用 + 内核，读懂了上面的文档，那完成本章的实验就有了一个坚实的基础。
+这一章内容很多，讲解了 **地址空间** 这一抽象概念是如何在一个具体的 “头甲龙” 操作系统中实现的。这里面的核心内容是如何建立基于页表机制的虚拟地址空间。为此，操作系统
+- 需要知道并管理整个系统中的物理内存；
+- 需要建立虚拟地址到物理地址映射关系的页表；
+- 并基于页表给操作系统自身和每个应用提供一个虚拟地址空间；
+- 并需要对管理应用的任务控制块进行扩展，确保能对应用的地址空间进行管理；
+- 由于应用和内核的地址空间是隔离的，需要有一个跳板来帮助完成应用与内核之间的切换执行；
+- 并导致了对异常、中断、系统调用的相应更改。
+
+这一系列的改进，最终的效果是编写应用更加简单了，且应用的执行或错误不会影响到内核和其他应用的正常工作。为了得到这些好处，我们需要比较费劲地进化我们的操作系统。如果同学结合阅读代码，编译并运行应用 + 内核，读懂了上面的文档，那完成本章的实验就有了一个坚实的基础。
 
 如果同学能想明白如何插入 / 删除页表；如何在 `trap_handler` 下处理 `LoadPageFault` ；以及 `sys_get_time` 在使能页机制下如何实现，那就会发现下一节的实验练习也许 **就和 lab1 一样** 。
+
+## 评论区的讨论
+
 
 [^1]: 头甲龙最早出现在1.8亿年以前的侏罗纪中期，是身披重甲的食素恐龙，尾巴末端的尾锤，是防身武器。

@@ -18,7 +18,7 @@ $\Delta\Phi =\sum\limits_{i=1}^{m} [\Phi(S_{i})-\Phi(S_{i-1})]=\Phi(S_{m})-\Phi(
 也就是说，整体的势能变化量仅取决于最初和最终状态——这与物理学中势能场的规律吻合。势能函数与物理学中势能的另一相似之处在于，它也可以被看作是能量（计算成本）的一种存在形式。比如，==当某一步计算实际所需的时间小于分摊复杂度时，则可理解为通过势能的增加将提前支出的计算成本存储起来；反之，在前者大于后者时，则可从此前积累的势能中支取相应量用于支付超出的计算成本==。
 
 以下，若将第 i 次操作的分摊复杂度取作实际复杂度与势能变化量之和，即 
-$A=T_{i}+\Delta\Phi_{i}$
+$A_{i}=T_{i}+\Delta\Phi_{i}$
 
 则有 $\sum\limits_{i=1}^{m}A_{i}=\sum\limits_{i=1}^{m}T_{i}+[\Phi(S_m)-\Phi(S_0)]$ 
 
@@ -120,9 +120,9 @@ $h=1+\lfloor\log_{\lceil\frac{m}{2}\rceil}[((\lceil\frac{m}{2}\rceil-1)\cdot N +
 
 ![[61B-Exercise-8-5.png]]
 
-一般地，不难验证：在按递增次序插入各关键码的过程中，最右侧通路（沿途节点在图中以黑色示意）以下的所有子树（以虚框包围的各组白色节点），始终都属于“稀疏临界”状态。在处于这种状态的子树中，任一节点的删除，都将引起持续的合并操作，并导致(子树)高度的下降。
+一般地，不难验证：在按递增次序插入各关键码的过程中，最右侧通路（沿途节点在图中以黑色示意）以下的所有子树（以虚框包围的各组白色节点），始终都属于“稀疏临界”状态。在处于这种状态的子树中，任一关键码的删除，都将引起持续的合并操作，并导致(子树)高度的下降。
 
-因此，若阶次为 m，则此类子树中的每个节点均有 $\lceil\frac{m}{2}\rceil$ 分支；若其高度为 h，则其下所含的外部节点总数应为 $\lceil\frac{m}{2}\rceil^h$，内部节点总数应为 $\lceil\frac{m}{2}\rceil^{h}-1$。在上例中 m = 5，于是高度为 h = 1 的（4棵）此类子树必然包含3个外部节点和2个内部节点，高度为 h = 2的（4棵）此类子树必然包含9个外部节点和8个内部节点。
+因此，若阶次为 m，则此类子树中的每个节点均有 $\lceil\frac{m}{2}\rceil$ 分支；若其高度为 h，则其下所含的外部节点总数应为 $\lceil\frac{m}{2}\rceil^h$，关键码总数应为 $\lceil\frac{m}{2}\rceil^{h}-1$。在上例中 m = 5，于是高度为 h = 1 的（4棵）此类子树必然包含3个外部节点和2个关键码，高度为 h = 2的（4棵）此类子树必然包含9个外部节点和8个关键码。
 
 实际上若采用单调递增的次序，则每次插入的关键码在当前都属最大。因此，插入算法必然沿着最右侧通路做查找并确定其插入位置；而一旦出现上溢现象，也只能沿最右侧通路实施分裂操作。如此，尽管最右侧通路下属的子树可能会增加，但它们==始终保持稀疏临界状态==。 
 
@@ -142,13 +142,13 @@ $h = \log_{\lceil\frac{5}{2}\rceil}  \lfloor\frac{53+1}{2}\rfloor + 1=4$ 依然�
 - 以顺序插入 1~30 关键码：
 	- ![[61B-Exercise-insert-BTree-sequential.png]]
 - 以随机次序插入 1~30 关键码：
-	- \[19, 7, 3, 1, 25, 9, 20, 5, 15, 14, 23, 27, 2, 21, 6, 30, 24, 29, 22, 12, 8, 26 , 17, 16, 11, 18, 4, 28, 13, 10](randomized by python)
+	- \[19, 7, 3, 1, 25, 9, 20, 5, 15, 14, 23, 27, 2, 21, 6, 30, 24, 29, 22, 12, 8, 26, 17, 16, 11, 18, 4, 28, 13, 10](randomized by python)
 	- ![[61B-Exercise-python-randomize.png]]
 	- ![[61B-Exercise-insert-BTree-random.png]]
 
 More discussion：[algorithm - In what order should you insert a set of known keys into a B-Tree to get minimal height? - Stack Overflow](https://stackoverflow.com/questions/16001727/in-what-order-should-you-insert-a-set-of-known-keys-into-a-b-tree-to-get-minimal) 
 
-其中第一个回答的思路比较有趣：
+### solution 1 (wrong)
 The following trick should work for most ordered search trees, assuming the data to insert are the integers `1..n`.
 
 Consider the binary representation of your integer keys - for 1..7 (with dots for zeros) that's...
@@ -165,6 +165,7 @@ Bit : 210
 ```
 
 Bit 2 changes least often, Bit 0 changes most often. That's the opposite of what we want, so what if we reverse the order of those bits, then sort our keys in order of this bit-reversed value...
+>第 2 位变化最少，第 0 位变化最多。这与我们想要的恰恰相反，那么如果我们把这些位的顺序颠倒过来，然后按照颠倒后的位值对键进行排序......
 
 ```
 Bit : 210    Rev
@@ -180,14 +181,18 @@ Bit : 210    Rev
 ```
 
 It's easiest to explain this in terms of an unbalanced binary search tree, growing by adding leaves. The first item is dead centre - it's exactly the item we want for the root. Then we add the keys for the next layer down. Finally, we add the leaf layer. At every step, the tree is as balanced as it can be, so even if you happen to be building an AVL or red-black balanced tree, the rebalancing logic should never be invoked.
+> 用一棵不平衡的二叉搜索树来解释这一点是最简单的，它通过增加树叶来生长。第一个项位于中心位置--它正是我们想要的根项。然后，我们添加下一层的键。最后，我们添加叶子层。在每一步中，树都尽可能保持平衡，所以即使你碰巧正在构建一棵 AVL 或红黑平衡树，也不应该调用重新平衡逻辑。
 
 \[**EDIT** I just realised you don't need to sort the data based on those bit-reversed values in order to access the keys in that order. The trick to that is to notice that bit-reversing is its own inverse. As well as mapping keys to positions, it maps positions to keys. So if you loop through from 1..n, you can use this bit-reversed value to decide which item to insert next - for the first insert use the 4th item, for the second insert use the second item and so on. One complication - you have to round n upwards to one less than a power of two (7 is OK, but use 15 instead of 8) and you have to bounds-check the bit-reversed values. The reason is that bit-reversing can move some in-bounds positions out-of-bounds and visa versa.]
+> 我刚刚意识到，你不需要根据这些位反转值对数据进行排序，就能按顺序访问键值。这样做的诀窍在于注意到位反转是其自身的逆反。它不仅能将键映射到位置，还能将位置映射到键。因此，如果从 1..n 开始循环，就可以使用位反转值来决定下一步插入哪个项--第一次插入时使用第 4 项，第二次插入时使用第 2 项，以此类推。有一点比较复杂--==你必须将 n 向上舍入到小于 2 的幂次==（7 也可以，但要用 15 而不是 8），而且你必须对位反转值进行边界检查。原因是位反转会将一些在界内的位置移到界外，反之亦然。
 
 Actually, for a red-black tree _some_ rebalancing logic will be invoked, but it should just be re-colouring nodes - not rearranging them. However, I haven't double checked, so don't rely on this claim.
 
 For a B tree, the height of the tree grows by adding a new root. Proving this works is, therefore, a little awkward (and it may require a more careful node-splitting than a B tree normally requires) but the basic idea is the same. Although rebalancing occurs, it occurs in a balanced way because of the order of inserts.
+>对于 B 树来说，树的高度是通过增加一个新根来增长的。因此，证明这种方法可行有点困难（而且可能需要比 B 树通常更仔细的节点分割），但基本思想是相同的。虽然重新平衡会发生，但由于插入的顺序不同，平衡的方式也不同。
 
 This can be generalised for any set of known-in-advance keys because, once the keys are sorted, you can assign suitable indexes based on that sorted order.
+>这可以推广到任何一组已知的键，因为一旦键被排序，就可以根据排序顺序分配合适的索引。
 
 **WARNING** - This isn't an efficient way to construct a perfectly balanced tree from known already-sorted data.
 
@@ -203,7 +208,422 @@ add the left and right subtree results as the child pointers
 return the new (subtree) root
 ```
 
+```cpp
+#include <iostream>
+#include <vector>
+
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+
+TreeNode* buildTree(std::vector<int>& inorder, std::vector<int>& preorder) {
+    // Base case: If size is zero, return nullptr
+    if (preorder.empty()) {
+        return nullptr;
+    }
+
+    // Determine the root value from the preorder traversal
+    int rootValue = preorder[0];
+    TreeNode* root = new TreeNode(rootValue);
+
+    // Find the index of the root value in the inorder traversal
+    int index = 0;
+    while (inorder[index] != rootValue) {
+        index++;
+    }
+
+    // Recurse for the left subtree with updated size
+    root->left = buildTree(std::vector<int>(inorder.begin(), inorder.begin() + index),
+                           std::vector<int>(preorder.begin() + 1, preorder.begin() + 1 + index));
+
+    // Recurse for the right subtree with updated size
+    root->right = buildTree(std::vector<int>(inorder.begin() + index + 1, inorder.end()),
+                            std::vector<int>(preorder.begin() + 1 + index, preorder.end()));
+
+    return root;
+}
+
+// Helper function to print the tree (for testing)
+void printTree(TreeNode* root) {
+    if (root == nullptr) {
+        return;
+    }
+    printTree(root->left);
+    std::cout << root->val << " ";
+    printTree(root->right);
+}
+
+int main() {
+    // Example usage
+    std::vector<int> inorder = {9, 3, 15, 20, 7};
+    std::vector<int> preorder = {3, 9, 20, 15, 7};
+
+    TreeNode* result = buildTree(inorder, preorder);
+
+    // Print the constructed tree (inorder traversal)
+    printTree(result);
+
+    return 0;
+}
+
+```
+
 Basically, this decides the structure of the tree based on the size and traverses that structure, building the actual nodes along the way. It shouldn't be too hard to adapt it for B Trees.
+
+### soulution 2 (correct)
+This is how I would add elements to b-tree.
+
+Thanks to Steve314, for giving me the start with binary representation,
+
+Given are n elements to add, in order. We have to add it to m-order b-tree. Take their indexes (1...n) and convert it to radix m. The main idea of this insertion is to insert number with highest m-radix bit currently and keep it above the lesser m-radix numbers added in the tree despite splitting of nodes.
+>给定 n 个元素，按顺序添加。我们必须将其添加到 m 阶 b 树中。插入的主要目的是插入当前 m 阶最高位的数字，并使其高于树中添加的 m 阶较低的数字，尽管节点会分裂。
+
+1,2,3.. are indexes so you actually insert the numbers they point to.
+
+```
+For example, order-4 tree
+     4     8       12      // highest radix bit nums
+1,2,3 5,6,7 9,10,11  13,14,15  
+```
+
+Now depending on order, the median can be:
+
+- order is even -> number of keys are odd -> median is middle (mid median)
+- order is odd -> number of keys are even -> left median or right median
+
+The choice of median (left/right) to be promoted will decide the order in which I should insert elements. This has to be fixed for the b-tree.
+>中位数（左/右）的选择将决定我插入元素的顺序。这一点必须在 b 树中加以固定。
+
+I add elements to trees in buckets. First I add bucket elements then on completion next bucket in order. Buckets can be easily created if median is known, bucket size is order m.
+
+```
+I take left median for promotion. Choosing bucket for insertion.
+    |  4     |  8      |   12       |    
+1,2,|3   5,6,|7   9,10,|11    13,14,|15  
+        3       2          1         Order to insert buckets.
+```
+
+- For left-median choice I insert buckets to the tree starting from right side, for right median choice I insert buckets from left side.
+- Choosing left-median we insert median first, then elements to left of it first then rest of the numbers in the bucket.
+>选择左中位数时，我从右侧开始在树中插入数字桶；选择右中位数时，我从左侧开始插入数字桶。选择左中位数时，我们会先插入中位数，然后先插入中位数左边的元素，最后再将其余的数字放入桶中。
+
+Example
+
+```
+Bucket median first
+12,
+Add elements to left
+11,12,
+Then after all elements inserted it looks like,
+|   12       | 
+|11    13,14,| 
+
+Then I choose the bucket left to it. And repeat the same process.
+Median
+     12        
+8,11    13,14, 
+Add elements to left first
+       12        
+7,8,11    13,14, 
+Adding rest
+  8      |   12        
+7   9,10,|11    13,14, 
+
+Similarly keep adding all the numbers,
+  4     |  8      |   12        
+3   5,6,|7   9,10,|11    13,14, 
+At the end add numbers left out from buckets.
+    |  4     |  8      |   12       |   
+1,2,|3   5,6,|7   9,10,|11    13,14,|15 
+```
+
+- For mid-median (even order b-trees) you simply insert the median and then all the numbers in the bucket.
+>对于中位数（偶数阶 b 树），只需插入中位数，然后再插入桶中的所有数字。
+
+
+- For right-median I add buckets from the left. For elements within the bucket I first insert median then right elements and then left elements.
+>对于右中值，我从左边开始添加数据桶。对于桶内的元素，我首先插入中位数，然后插入右边的元素，最后插入左边的元素。
+
+Here we are adding the highest m-radix numbers, and in the process I added numbers with immediate lesser m-radix bit, making sure the highest m-radix numbers stay at top. Here I have only two levels, for more levels I repeat the same process in descending order of radix bits.
+>在这里，我们添加的是最高的 m-radix 数字，在此过程中，我添加的是 m-radix 位数较小的数字，确保最高的 m-radix 数字保持在最前面。这里我只加了两级，如果要加更多级，我将按弧度位数从大到小的顺序重复同样的过程。
+
+Last case is when remaining elements are of same radix-bit and there is no numbers with lesser radix-bit, then simply insert them and finish the procedure.
+>最后一种情况是，当剩余元素的阶位相同，且没有半径位更小的数字时，只需插入这些元素并完成程序。
+
+I would give an example for 3 levels, but it is too long to show. So please try with other parameters and tell if it works.
+
+Test:
+- 1~30, sequential insertion:
+- ![[61B-Exercise-seq-insert.png]]
+- insertion by solu 2:
+- ![[61B-Exercise-insertBTree-solu2.png]]
+- insertion by random:
+- ![[61B-Exercise-insert-random-bTree4.png]]
+
+### solution 3 (wrong)
+> So is there a particular way to determine sequence of insertion which would reduce **space consumption**?
+
+**Edit note**: since the question was quite interesting, I try to improve my answer with a bit of Haskell.
+
+Let `k` be the Knuth order of the B-Tree and `list` a list of keys
+
+The minimization of space consumption has a trivial solution:
+
+```haskell
+-- won't use point free notation to ease haskell newbies
+trivial k list = concat $ reverse $ chunksOf (k-1) $ sort list
+```
+
+```cpp
+// 这段 Haskell 代码的功能是将一个列表按照指定的步长 `k` 进行分组，然后对每个分组进行排序，并最终将这些排序后的分组连接成一个新的列表。
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+
+// 定义一个函数用于分组并排序
+std::vector<int> trivial(int k, std::vector<int> list) {
+    std::vector<int> result;
+
+    // 反转输入列表
+    std::reverse(list.begin(), list.end());
+
+    // 按步长 k-1 分组并排序
+    for (int i = 0; i < list.size(); i += (k - 1)) {
+        int endIndex = std::min(i + (k - 1), static_cast<int>(list.size()));
+        std::vector<int> chunk(list.begin() + i, list.begin() + endIndex);
+        std::sort(chunk.begin(), chunk.end());
+        
+        // 将排序后的分组添加到结果列表
+        result.insert(result.end(), chunk.begin(), chunk.end());
+    }
+
+    return result;
+}
+
+int main() {
+    std::vector<int> input = {5, 2, 8, 1, 3, 7, 4, 6};
+    int k = 3;
+    
+    std::vector<int> output = trivial(k, input);
+
+    // 输出结果
+    for (int num : output) {
+        std::cout << num << " ";
+    }
+
+    return 0;
+}
+//这段 C++ 代码实现了与原始 Haskell 代码相同的功能。它首先反转了输入列表，然后按照指定的步长 `k-1` 对列表进行分组，并对每个分组进行排序。最后，将排序后的分组连接起来，形成一个新的列表。
+
+//例如，如果输入列表为 `{5, 2, 8, 1, 3, 7, 4, 6}`，而步长 `k` 为 `3`，则输出结果为 `{2, 5, 1, 3, 4, 6, 7, 8}`。这段代码可以帮助你按照指定规则对列表进行处理和排序。
+```
+
+Such algorithm will **efficiently** produce a **time-inefficient** B-Tree, unbalanced on the left but with minimal **space** consumption.
+
+A lot of non trivial solutions exist that are less efficient to produce but show better lookup performance (lower height/depth). As you know, **it's all about trade-offs**!
+
+A simple algorithm that minimizes both the B-Tree depth and the space consumption (but it doesn't **minimize** lookup performance!), is the following
+
+```haskell
+-- Sort the list in increasing order and call sortByBTreeSpaceConsumption 
+-- with the result
+smart k list = sortByBTreeSpaceConsumption k $ sort list
+
+-- Sort list so that inserting in a B-Tree with Knuth order = k 
+-- will produce a B-Tree  with minimal space consumption minimal depth 
+-- (but not best performance)
+sortByBTreeSpaceConsumption :: Ord a => Int -> [a] -> [a]
+sortByBTreeSpaceConsumption _ [] = []
+sortByBTreeSpaceConsumption k list
+    | k - 1 >= numOfItems = list  -- this will be a leaf
+    | otherwise = heads ++ tails ++ sortByBTreeSpaceConsumption k remainder
+    where requiredLayers = minNumberOfLayersToArrange k list
+          numOfItems = length list
+          capacityOfInnerLayers = capacityOfBTree k $ requiredLayers - 1
+          blockSize = capacityOfInnerLayers + 1 
+          blocks = chunksOf blockSize balanced
+          heads = map last blocks
+          tails = concat $ map (sortByBTreeSpaceConsumption k . init) blocks
+          balanced = take (numOfItems - (mod numOfItems blockSize)) list
+          remainder = drop (numOfItems - (mod numOfItems blockSize)) list
+
+-- Capacity of a layer n in a B-Tree with Knuth order = k
+layerCapacity k 0 = k - 1
+layerCapacity k n = k * layerCapacity k (n - 1)
+
+-- Infinite list of capacities of layers in a B-Tree with Knuth order = k
+capacitiesOfLayers k = map (layerCapacity k) [0..]
+
+-- Capacity of a B-Tree with Knut order = k and l layers
+capacityOfBTree k l = sum $ take l $ capacitiesOfLayers k
+
+-- Infinite list of capacities of B-Trees with Knuth order = k 
+-- as the number of layers increases
+capacitiesOfBTree k = map (capacityOfBTree k) [1..]
+
+-- compute the minimum number of layers in a B-Tree of Knuth order k 
+-- required to store the items in list
+minNumberOfLayersToArrange k list = 1 + f k
+    where numOfItems = length list
+          f = length . takeWhile (< numOfItems) . capacitiesOfBTree
+```
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+
+// Capacity of a layer n in a B-Tree with Knuth order k
+int layerCapacity(int k, int n) {
+    if (n == 0) {
+        return k - 1;
+    } else {
+        return k * layerCapacity(k, n - 1);
+    }
+}
+
+// Infinite list of capacities of layers in a B-Tree with Knuth order k
+std::vector<int> capacitiesOfLayers(int k) {
+    std::vector<int> capacities;
+    for (int n = 0; ; ++n) {
+        capacities.push_back(layerCapacity(k, n));
+    }
+    return capacities;
+}
+
+// Capacity of a B-Tree with Knuth order k and l layers
+int capacityOfBTree(int k, int l) {
+    std::vector<int> capacities = capacitiesOfLayers(k);
+    int capacity = 0;
+    for (int i = 0; i < l; ++i) {
+        capacity += capacities[i];
+    }
+    return capacity;
+}
+
+// Infinite list of capacities of B-Trees with Knuth order k 
+// as the number of layers increases
+std::vector<int> capacitiesOfBTree(int k) {
+    std::vector<int> capacities;
+    for (int l = 1; ; ++l) {
+        capacities.push_back(capacityOfBTree(k, l));
+    }
+    return capacities;
+}
+
+// Compute the minimum number of layers in a B-Tree of Knuth order k 
+// required to store the items in list
+int minNumberOfLayersToArrange(int k, int numOfItems) {
+    std::vector<int> bTreeCapacities = capacitiesOfBTree(k);
+    int layers = 1;
+    for (int capacity : bTreeCapacities) {
+        if (capacity >= numOfItems) {
+            break;
+        }
+        layers++;
+    }
+    return layers;
+}
+
+// Sort list so that inserting in a B-Tree with Knuth order = k 
+// will produce a B-Tree with minimal space consumption minimal depth 
+// (but not best performance)
+std::vector<int> sortByBTreeSpaceConsumption(int k, std::vector<int> list) {
+    std::vector<int> result;
+
+    // Calculate the required number of layers for the B-Tree
+    int requiredLayers = minNumberOfLayersToArrange(k, list.size());
+
+    // Calculate the capacity of inner layers
+    int capacityOfInnerLayers = capacityOfBTree(k, requiredLayers - 1);
+    int blockSize = capacityOfInnerLayers + 1;
+
+    // Divide the list into blocks
+    std::vector<std::vector<int>> blocks;
+    for (int i = 0; i < list.size(); i += blockSize) {
+        int endIndex = std::min(i + blockSize, static_cast<int>(list.size()));
+        std::vector<int> block(list.begin() + i, list.begin() + endIndex);
+        blocks.push_back(block);
+    }
+
+    // Rearrange the blocks to minimize space consumption
+    std::vector<int> heads;
+    for (const auto& block : blocks) {
+        heads.push_back(block.back());
+    }
+
+    std::vector<int> tails;
+    for (const auto& block : blocks) {
+        std::vector<int> blockWithoutLast(block.begin(), block.end() - 1);
+        tails.insert(tails.end(), blockWithoutLast.begin(), blockWithoutLast.end());
+    }
+
+    // Concatenate the rearranged blocks
+    for (const auto& block : blocks) {
+        result.insert(result.end(), block.begin(), block.end());
+    }
+
+    return result;
+}
+
+int main() {
+    std::vector<int> input = {5, 2, 8, 1, 3, 7, 4, 6};
+    int k = 3;
+
+    std::vector<int> output = sortByBTreeSpaceConsumption(k, input);
+
+    // Output the result
+    for (int num : output) {
+        std::cout << num << " ";
+    }
+
+    return 0;
+}
+//这段 C++ 代码实现了与原始 Haskell 代码相同的功能，包括计算 B-Tree 层数，按照最小空间消耗重新排列列表，并进行排序。注释提供了对代码功能的详细解释
+```
+
+With this `smart` function given a `list = [21, 18, 16, 9, 12, 7, 6, 5, 1, 2]` and a B-Tree with knuth order = 3 we should obtain `[18, 5, 9, 1, 2, 6, 7, 12, 16, 21]` with a resulting B-Tree like
+
+```
+              [18, 21]
+             /
+      [5 , 9]
+     /   |   \
+ [1,2] [6,7] [12, 16]
+```
+
+Obviously this is suboptimal from a performance point of view, but should be acceptable, since obtaining a better one (like the following) would be far more expensive (computationally and economically):
+
+```
+          [7 , 16]
+         /   |   \
+     [5,6] [9,12] [18, 21]
+    /
+[1,2]
+```
+
+If you want to run it, compile the previous code in a Main.hs file and compile it with ghc after prepending
+
+```haskell
+import Data.List (sort)
+import Data.List.Split
+import System.Environment (getArgs)
+
+main = do
+    args <- getArgs
+    let knuthOrder = read $ head args
+    let keys = (map read $ tail args) :: [Int]
+    putStr "smart: "
+    putStrLn $ show $ smart knuthOrder keys
+    putStr "trivial: "
+    putStrLn $ show $ trivial knuthOrder keys
+```
+
 
 ## 8-6 考查 BTree 节点插入导致的分裂次数
 1. ==对任意阶 BTree T，若 T 的初始高度为 1，在经历连续若干次插入操作后，高度增加至 h 且共有 n 个内部节点，则在此过程中 T 总共分裂多少次==？
@@ -243,7 +663,7 @@ Basically, this decides the structure of the tree based on the size and traverse
 ## 8-7 BTree 反复插入、删除操作导致结构的变化
 **描述**：==构造一棵高度 h 的 m（m>=3, odd） 阶 BTree 使得反复交替地对其插入、删除操作，每次插入或删除都会引发 h 次分裂或合并==。
 
-若从一棵空的 m 节 B-树开始，按单调顺序依次插入以下关键码： { 1, 2, 3, 4, 5, ..., N }, 其中，N = 2∙\[((m + 1)/2)^h - 1]
+若从一棵空的 m 阶 B-树开始，按单调顺序依次插入以下关键码： { 1, 2, 3, 4, 5, ..., N }, 其中，N = 2∙\[((m + 1)/2)^h - 1]
 
 则易见，树高恰好为 h，而且最右侧通路上的节点均有 m 个分支，其余节点各有(m + 1)/2个分支。
 
@@ -265,12 +685,84 @@ Basically, this decides the structure of the tree based on the size and traverse
 最后，优先分裂策略也不致于导致树高——决定 I/O 负担以及访问效率的主要因素——的明显增加。实际上根据教材8.2.4节的分析结论，B-树的高度主要取决于所存关键码的总数，而与其中节点的数目几乎没有关系。
 
 ## 8-9 B* 树
+**背景**：极端情况下，BTree 中根以外的所有节点只有 $\lceil \frac{m}{2}\rceil$ 个分支，空间使用率大致 50%，而若按照简单地将上溢节点一分为二，则有较大的概率会出现或接近这种极端情况。为了提高空间利用率，可将内部节点的分支数下限从 $\lceil \frac{m}{2}\rceil$ 提高至 $\lceil \frac{2m}{3}\rceil$。于是，一旦节点 v 发生上溢且无法通过旋转完成修复，即可将 v 与其（已经饱和的某一）兄弟合并，再将合并节点等分为三个节点，采用这一策略后得到 B* 树。
+当然，实际上不必真的先合二为一，再一分为三，可通过更快捷的方式，达到同样的效果：从来自原先两个节点极其父节点的共计 m+(m-1)+1=2m 个关键码中，取出两个上交给父节点，其余 2m-2 个尽可能均衡地分配给三个新节点。
+
+1. ==按照上述思路，实现 B* 树的关键码插入算法==。
+
+2. ==与 B 树相比，B* 树的关键码删除算法有何不同==？
+与插入过程对称地，从节点 v 中删除关键码后若发生下溢，且其左、右兄弟均无法借出关键码，则先将 v 与左、右兄弟合并，再将合并节点等分为两个节点。同样地，实际上不必真地先合三为一，再一分为二。可通过更为快捷的方式，达到同样的效果：从来自原先三个节点及其父节点的共计：$(\lceil \frac{m}{2}\rceil-1)+1+(\lceil \frac{m}{2}\rceil-2)+1+(\lceil \frac{m}{2}\rceil-1)=3\cdot \lceil \frac{m}{2}\rceil-2$ 个关键码中，取一个上交给父节点，其余 $3\cdot\lceil \frac{m}{2}\rceil-3$ 个则尽可能均衡地分摊给两个新节点。
+
+注意，以上所建议的方法，不再是每次仅转移单个关键码，而是一次性地转移多个——等效于上溢或下溢节点与其兄弟平摊所有的关键码。采用这一策略，可以充分地利用实际应用中普遍存在的高度数据局部性，大大减少读出或写入节点的 I/O 操作。
+
+不难看出，单关键码的转移尽管也可以修复上溢或下溢的节点，但经如此修复之后的节点将依然处于上溢或下溢的临界状态。接下来一旦继续插入或删除近似甚至重复的关键码（在局部性 较强的场合，这种情况往往会反复出现），该节点必将再次发生上溢或下溢。由此可见，就修效果而言，多关键码的成批转移，相对单关键码的转移更为彻底——尽管还不是一劳永逸。
+
+针对数据局部性的另一改进策略，是使用所谓的页面缓冲池（buffer pool of pages）。这是在内存中设置的一个缓冲区，用以保存近期所使用过节点（页面）的副本。只要拟访问的节点仍在其中（同样地，在局部性较强的场合，这种情况也往往会反复出现），即可省略 I/O 操作并直接访问；否则，才照常规方法处理，通过 I/O 操作从外存取出对应的节点（页面）。缓冲池的规模确定后，一旦需要读入新的节点，只需将其中最不常用的节点删除即可腾出空间。实际上，不大的页面缓冲池即可极大地提高效率。
+
+3. ==实现 B* 树的关键码删除算法==。
 
 ## 8-11 半平衡二叉搜索树
+**描述**：H. Olivie 于 1982 年提出的半平衡二叉搜索树（half-balanced binary search trees）， 非常类似于红黑树。这里所谓的半平衡（half-balanced），是指此树的什么性质？试阅读参考文献，并给出你的理解。
+
+按照定义，在半平衡二叉搜索树中，每个节点v都应满足以下条件：v到其最深后代（叶）节点的距离，不得超过到其最浅后代叶节点距离的两倍。若半平衡二叉搜索树所含内部节点的总数记作n，高度记作h，则可以证明必有：
+ h <= 2∙log2(n + 2) - 2
 
 ## 8-12 B 树存放若干关键码后最大、最小高度
+**背景**：考虑人类所有数字化数据的总量——2010 年为 10^21 (2^70,ZB)量级。假定其中每个字节自成一个关键码，若用一棵 m=256 阶的 BTree 存放，则：
 
-## 8-13 考察红黑树高度
+1. ==树的最大高度是多少==？
+首先需要指出的是，鉴于目前常规的字节仅含8个比特位，可能的关键码只有2^8 = 256种， 故数据集中必然含有大量重复，因此若果真需要使用 B-树来存放该数据集，可参照习题7-10和习题7-16的方法和技巧，扩展 B-树结构的功能，使之支持重复关键码。
+
+根据分析结论 [[60D-BBST-BTree#树高|BTree高度]]，存放 N < 10^21个关键码的 m = 256阶 B-树，高度不会超过：
+$1+\lfloor\log_{\lceil \frac{m}{2}\rceil} \frac{N+1}{2}\rfloor=1+\log_{\lceil \frac{m}{2}\rceil}\lfloor \frac{N+1}{2}\rfloor=\log_{128}\lfloor \frac{10^{21}+1}{2}\rfloor+1\sim \frac{\log_{2}10^{21}}{\log_{2}128}+1\sim \frac{70}{7}+1=11$
+2. ==树的最小高度是多少==？
+同样根据分析，BTree 高度不会低于：
+$\log_{m}(N+1)=\log_{256}(10^{21}+1)\sim\log_{2}10^{21}/\log_{2}256\sim\lceil \frac{70}{8}\rceil=9$
+实际应用中，多采用128~256阶的 B-树。综合以上分析结论，可以明确地看到，此类 B-树的高度并不大，而且起伏变化的范围也不大。这也是在多层次存储系统中，该结构可以成功用以处理大规模数据的原因。
+
+## 8-13 考察 2012 个内部节点的红黑树高度
+### 最小黑高度 d_min
+将红黑树中内部节点的总数记作 N，将其黑高度记作 d。 若考查与之相对应的4阶 B-树，则该 B-树中存放的关键码恰有 N 个，且其高度亦为 d。于是，再次根据 BTree 的分析结论，最小黑高度应为：
+$d_{min}=\lceil\log_{4}(N+1)=\lceil\log_{4}2013\rceil=6$ 
+
+### 最大黑高度 d_max
+同理，最大黑高度为：
+$d_{max}=1+\lfloor\log_\frac{4}{2}\lfloor\frac{N+1}{2}\rfloor\rfloor=1+\lfloor\log_{2}\lfloor\frac{2012+1}{2}\rfloor\rfloor=1+1+\lfloor\log_{2}1006\rfloor=10$ 
+
+### 最小高度 h_min
+根据习题 [[61A-Exercise#7-3 证明 n 个节点的二叉树最低 $ lfloor log_{2}(n) rfloor$ ——即完全二叉树的树高|7-3]]，从常规二叉搜索树的角度看，树高不低于：
+$h_{min}=\lfloor\log_{2}N\rfloor=\lfloor\log_{2}2012\rfloor=10$ 
+
+### 最大高度 h_max
+我们来考查与原问题等价的逆问题：若高度固定为 h，红黑树中至少包含多少个节点。不妨仍然考查与红黑树的对应的4阶 B-树。
+![[61B-Exercise-8-13.png]]
+先考查 h 为偶数的情况。如图 x8.4所示，该 B-树的高度应为 h/2；其中几乎所有节点均只含单关键码；只有 h/2个节点包含两个关键码（分别对应于原红黑树中的一个红、黑节点），它们在每一高度上各有一个，且依次互为父子，整体构成一条路径（这里不妨以最右侧通路为例）。
+
+于是，该 B-树所含关键码（亦即原红黑树节点）的总数为： $N_{min} = 2 \times ( 1 + 2 + 4 + 8 + 16 + ... + 2^{\frac{h}{2} - 1} ) = 2^{\frac{h}{2} + 1} - 2$
+
+例如，如图 x8.4所示的红黑树高度为10，对应 B-树高度为5，所含关键码（节点）总数为：$N_{min} = 2^{\frac{10}{2} + 1} - 2 = 2^{5 + 1} - 2 = 62$
+
+因此反过来，当节点总数固定为 N 时，最大高度不过 $h_{max} = 2\cdot(\lfloor\log_{2}(N + 2)\rfloor - 1)$  ................... (1)
+
+![[61B-Exercise-8-13-d.png]]
+再考查 h 为奇数的情况。如图 x8.5所示，该 B-树的高度应为(h + 1)/2；其中几乎所有节点均只含单关键码；只有(h - 1)/2个节点包含两个关键码（分别对应于原红黑树中的一个红、黑节点），除了根节点，它们在每一高度上各有一个，且依次互为父子，整体构成一条路径（同样地，以最右侧通路为例）。
+
+于是，该 B-树所含关键码（亦即原红黑树节点）的总数为： $N_{min} = 2 \times ( 1 + 2 + 4 + 8 + 16 + ... + 2^{\frac{h-1}{2} - 1} ) + 2^{\frac{h+1}{2} - 1} = 3\cdot 2^{\frac{h-1}{2}} - 2$ 
+
+例如，如图 x8.5所示的红黑树高度为9，对应 B-树高度为5，所含关键码（节点）总数为： $N_{min} = 3\cdot 2^{\frac{h-1}{2}} - 2 = 3\cdot 2^{4} - 2 = 46$ 
+
+因此反过来，当节点总数固定为 N 时，最大高度不过 $h_{max} = 2\cdot\lfloor\log_{2}( \frac{N+2}{3} )\rfloor + 1$ ............ (2) 
+
+综合(1)和(2)两式可知，在 N = 2012 时，应有： $h_{max} = max( 2\cdot(\lfloor\log_{2}(2012 + 2)\rfloor - 1), 2\cdot\lfloor\log_{2}( \frac{N+2}{3} )\rfloor + 1 ) = max(18, 19) = 19$ 
 
 ## 8-14 考察红黑树重染色节点的数量
+**描述**：就最坏情况而言，红黑树在其重平衡过程中可能需要对多达Ω(logn)个节点做重染色。然而，这并不足以代表红黑树在一般情况下的性能。==试证明，就分摊意义而言，红黑树重平衡过程中需重染色的节点不超过 O(1)个==。
 
+![[60E-BBST-Red-black-tree#双红修复复杂度分析]]
+
+![[60E-BBST-Red-black-tree#双黑修复复杂度分析]] 
+不妨从初始为空开始，考查对红黑树的一系列插入和删除操作，将操作总数记作 m >> 2。 可以证明：存在常数 c > 0，使得在此过程中所做的重染色操作不超过 cm 次。
+
+为此，可以使用习题8-2的方法，定义势能函数如下： Φ(S) = 2·BRR(S) + BBB(S) 其中，BRR(S)为当前状态 S 下，拥有两个红孩子的黑节点总数；BBB(S)则为当前状态 S 下，拥有两个黑孩子的黑节点总数。不难验证，以上势能函数始终非负，且初始值为零。
+
+为得出题中所述结论，只需进一步验证：在可能造成 O(logn)次重染色的任一情况中，每做一次重染色，该势能函数都会至少减少1个单位；另外，每经过一次插入或删除操作，该势能函数至多会增加常数 c 个单位。

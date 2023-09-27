@@ -14,7 +14,7 @@ BST 的访问需要稳定的结构——修改导致的结构变化，需要加�
 
 若要实现复杂度控制在 O (n+hlogn)以内，则要利用相邻版本之间的相关性（历史版本在时间上连续，自然结构上有前后的相关性）：
 ![[60E-BBST-Red-black-tree-partial-persistence.png]]
-- 如此，就树形结构的拓扑而言，相邻版本之间的差异不超过 O (1)
+- 如此，就树形结构的拓扑而言，相邻版本之间的结构差异不超过 O (1)
 
 ### 红黑树的规则
 由红黑两类节点组成的 BST，统一增设外部节点 NULL 使 BST 为真二叉树。
@@ -139,7 +139,7 @@ void RedBlack<T>::solveDoubleRed( BinNodePosi<T> x ) { // x当前必为红
 }
 ```
 
-#### 复杂度分析
+#### 双红修复复杂度分析
 重构、染色只需要常数时间，故只需统计总次数：
 - RedBlack:: insert ()只需要 O (logn)时间，期间至多作 O (logn)次重染色、O (1)次旋转
 - 即 RR-2 至多可以出现 O (logn)次，而 RR1 至多出现 1 次，流程图如下：
@@ -272,7 +272,7 @@ template <typename T> void RedBlack<T>::solveDoubleBlack( BinNodePosi<T> r ) {
 }
 ```
 
-#### 复杂度分析
+#### 双黑修复复杂度分析
 - 删除只需 O (logn)时间，涉及 O (logn)次重染色，O (1)次旋转：
 ![[60E-BBST-Red-black-tree-double-black-flow.png]]
 
