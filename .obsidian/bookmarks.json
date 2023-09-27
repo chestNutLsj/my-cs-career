@@ -7,147 +7,147 @@
         {
           "type": "file",
           "ctime": 1693562860341,
-          "path": "1-Theory/5-OS-principle/internal&principle/20-进程与线程.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/20-进程与线程.md",
           "subpath": "#**完整的进程切换步骤**",
           "title": "完整的进程切换步骤"
         },
         {
           "type": "file",
           "ctime": 1693565148772,
-          "path": "1-Theory/5-OS-principle/internal&principle/20-进程与线程.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/20-进程与线程.md",
           "subpath": "#^93a1bf",
           "title": "套管 jacketing"
         },
         {
           "type": "file",
           "ctime": 1693663468664,
-          "path": "1-Theory/5-OS-principle/internal&principle/30-并发.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/30-并发.md",
           "subpath": "#资源分配拒绝(银行家算法)",
           "title": "银行家算法"
         },
         {
           "type": "file",
           "ctime": 1693663596445,
-          "path": "1-Theory/5-OS-principle/internal&principle/30-并发.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/30-并发.md",
           "subpath": "#死锁检测算法(coffman 算法)",
           "title": "Coffman算法"
         },
         {
           "type": "file",
           "ctime": 1693985701846,
-          "path": "1-Theory/5-OS-principle/internal&principle/40-内存与虚存.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
           "subpath": "#^55c770",
           "title": "基址寄存器、界限寄存器实现内存保护"
         },
         {
           "type": "file",
           "ctime": 1693986551100,
-          "path": "1-Theory/5-OS-principle/internal&principle/40-内存与虚存.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
           "subpath": "#^18bf0a",
           "title": "抖动thrashing"
         },
         {
           "type": "file",
           "ctime": 1693986865631,
-          "path": "1-Theory/5-OS-principle/internal&principle/40-内存与虚存.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
           "subpath": "#^6d9569",
           "title": "二级虚拟页表的计算方式"
         },
         {
           "type": "file",
           "ctime": 1693988404370,
-          "path": "1-Theory/5-OS-principle/internal&principle/40-内存与虚存.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
           "subpath": "#置换策略",
           "title": "虚拟分页-置换策略"
         },
         {
           "type": "file",
           "ctime": 1693989041904,
-          "path": "1-Theory/5-OS-principle/internal&principle/40-内存与虚存.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
           "subpath": "#工作集策略",
           "title": "工作集策略及PFF、VSWS"
         },
         {
           "type": "file",
           "ctime": 1694156253307,
-          "path": "1-Theory/5-OS-principle/internal&principle/50-CPU调度.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
           "subpath": "#^a7452f",
           "title": "处理器抖动"
         },
         {
           "type": "file",
           "ctime": 1694156263515,
-          "path": "1-Theory/5-OS-principle/internal&principle/50-CPU调度.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
           "subpath": "#^f60129",
           "title": "处理器碎片"
         },
         {
           "type": "file",
           "ctime": 1694158306205,
-          "path": "1-Theory/5-OS-principle/internal&principle/50-CPU调度.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
           "subpath": "#最早 deadline 优先策略",
           "title": "最早ddl优先策略"
         },
         {
           "type": "file",
           "ctime": 1694158513562,
-          "path": "1-Theory/5-OS-principle/internal&principle/50-CPU调度.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
           "subpath": "#^a93108",
           "title": "自愿空闲时间的最早ddl策略"
         },
         {
           "type": "file",
           "ctime": 1694244815185,
-          "path": "1-Theory/5-OS-principle/internal&principle/60-IO管理与磁盘.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/60-IO管理与磁盘.md",
           "subpath": "#DMA 工作流程",
           "title": "DMA工作流程"
         },
         {
           "type": "file",
           "ctime": 1694159199390,
-          "path": "1-Theory/5-OS-principle/internal&principle/50-CPU调度.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
           "subpath": "#优先级反转",
           "title": "优先级反转"
         },
         {
           "type": "file",
           "ctime": 1694158548693,
-          "path": "1-Theory/5-OS-principle/internal&principle/50-CPU调度.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
           "subpath": "#速率单调调度",
           "title": "速率单调调度"
         },
         {
           "type": "file",
           "ctime": 1694425936340,
-          "path": "1-Theory/5-OS-principle/internal&principle/40-内存与虚存.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
           "subpath": "#^6b6500",
           "title": "静态重定位"
         },
         {
           "type": "file",
           "ctime": 1694430319599,
-          "path": "1-Theory/5-OS-principle/internal&principle/40-内存与虚存.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
           "subpath": "#^e36fc3",
           "title": "Clock算法与Belady现象"
         },
         {
           "type": "file",
           "ctime": 1694425953443,
-          "path": "1-Theory/5-OS-principle/internal&principle/40-内存与虚存.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
           "subpath": "#^f55749",
           "title": "动态重定位"
         },
         {
           "type": "file",
           "ctime": 1694502184288,
-          "path": "1-Theory/5-OS-principle/internal&principle/40-内存与虚存.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
           "subpath": "#^668f31",
           "title": "抖动解决办法"
         },
         {
           "type": "file",
           "ctime": 1694502232867,
-          "path": "1-Theory/5-OS-principle/internal&principle/40-内存与虚存.md",
+          "path": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
           "subpath": "#^c1a7bf",
           "title": "clock算法扫描速度快慢意味着什么？"
         }
