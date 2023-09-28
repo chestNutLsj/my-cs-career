@@ -225,7 +225,7 @@ $$
 #### 独立链
 - 每个桶对应一个链表，存放发生冲突的一组同义词
 - **优点**：无需为每个桶预备多个槽位，任意多次冲突都可以解决，删除操作实现简单、统一
-- **缺点**：指针本身占用空间，节点的动态分配和回收需要消耗时间，更重要的是空间未必连续分布，系统缓存很难生效
+- **缺点**：指针本身占用空间，节点的动态分配和回收需要消耗时间，更重要的是==空间不连续分布，系统缓存很难生效==
 ![[70-Hash-linkedlist-chaining.png]]
 
 ### 封闭散列
@@ -248,7 +248,7 @@ Linear Probing：
 - 新增非同义词之间的冲突——数据堆积（clustering）现象严重
 - 好在，试探链连续，数据局部性良好
 - 通过装填因子，冲突与堆积都可有效控制
-
+- ![[70-Hash-linear-prob.png]]
 ![[70-Hash-linear-probing.png]]
 - 插入：新词条若尚不存在，则存入试探终止处的空桶
 - 试探链可能因而彼此串接、重叠！
@@ -282,8 +282,88 @@ Rank Hashtable<K, V>::probe4Free( const K& k ) {
 ```
 
 #### 重散列
+```
+// rehash
+/**
+ * 重散列：空桶太少时对散列表重新整理：
+ * 扩容，再将词条逐一移入新表
+ * 散列函数的定址与表长M直接相关，故不可简单地批量复制原桶数组
+ **/
+template <typename K, typename V>
+void Hashtable<K, V>::rehash() {
+	Rank oldM = M; Entry<K, V>** oldHt = ht;
+	M = primeNLT( 4 * N, 1048576, PRIME_TABLE ); //容量至少加倍（若懒惰删除很多，可能反而缩容）
+	ht = new Entry<K, V>*[M]; N = 0; memset( ht, 0, sizeof( Entry<K, V>* ) * M ); //初始化桶数组
+	release( removed ); removed = new Bitmap( M ); //懒惰删除标记
+   
+	for ( Rank i = 0; i < oldM; i++ ) //扫描原表
+	    if ( oldHt[i] ) //将每个非空桶中的词条
+	        put( oldHt[i]->key, oldHt[i]->value ); //转入新表
+	release( oldHt ); //释放――因所有词条均已转移，故只需释放桶数组本身
+}
+
+Rank primeNLT( Rank c, Rank n, char* file ) { //根据file文件中的记录，在[c, n)内取最小的素数
+   Bitmap B( file, n ); // file已经按位图格式记录了n以内的所有素数，因此只要
+   while ( c < n ) //从c开始，逐位地
+      if ( B.test( c ) ) c++; //测试，即可
+      else return c; //返回首个发现的素数
+   return c; //若没有这样的素数，返回n（实用中不能如此简化处理）
+}
+
+template <typename K, typename V> struct Entry { //词条模板类
+   K key; V value; //关键码、数值
+   Entry( K k = K(), V v = V() ) : key( k ), value( v ){}; //默认构造函数
+   Entry( Entry<K, V> const& e ) : key( e.key ), value( e.value ){}; //基于克隆的构造函数
+   bool operator<( Entry<K, V> const& e ) { return key < e.key; } //比较器：小于
+   bool operator>( Entry<K, V> const& e ) { return key > e.key; } //比较器：大于
+   bool operator==( Entry<K, V> const& e ) { return key == e.key; } //判等器：等于
+   bool operator!=( Entry<K, V> const& e ) { return key != e.key; } //判等器：不等于
+}; //得益于比较器和判等器，从此往后，不必严格区分词条及其对应的关键码
+```
+
+插入：
+```
+template <typename K, typename V>
+bool Hashtable<K, V>::put( K k, V v ) { //散列表词条插入
+	if ( ht[ probe4Hit( k ) ] ) return false; //雷同元素不必重复插入
+	Rank r = probe4Free( k ); //为新词条找个空桶（只要装填因子控制得当，必然成功）
+	ht[ r ] = new Entry<K, V>( k, v ); ++N; //插入
+	if ( removed->test( r ) ) removed->clear( r );  //懒惰删除标记
+	if ( (N + removed->size())*2 > M ) rehash(); //若装填因子高于50%，重散列
+	return true;
+}
+```
+
+删除：
+```
+template <typename K, typename V> bool Hashtable<K, V>::remove( K k ) { //散列表词条删除算法
+	int r = probe4Hit( k ); if ( !ht[r] ) return false; //确认目标词条确实存在
+	release( ht[r] ); ht[r] = NULL; --N; //清除目标词条
+	removed->set(r); //更新标记、计数器
+	if ( removed->size() > 3*N ) rehash(); //若懒惰删除标记过多，重散列
+	return true;
+}
+```
 
 #### 平方试探
+Quadratic Probing:
+- 以平方数为距离，确定下一试探桶的位置：
+- ![[70-Hash-quadratic-prob.png]]
+- 能够缓解数据聚集现象，试探链上各桶之间的距离线性递增，一旦冲突能很快离开冲突局部；
+- ![[70-Hash-quadraatic-probing.png]]
+- 但是未必能找到所有空桶：表长为素数时，对于装填因子λ<0.5 就一定能找出，否则不行：
+	- 考虑{0,1,2,3,4,...,}^2 % 12 = {0,1,4,9},
+	- {0,1,2,3,4,...,}^2 % 11 = {0,1,4,9,5,3}
+	- ![[70-Hash-prime-composite-quadratic.png]]
+	- M 为合数，则 n^2 % M 的取值小于 $\lceil \frac{M}{2}\rceil$ 种
+	- M 为素数，则 n^2 % M 恰有 $\lceil \frac{M}{2}\rceil$ 种取值，且由试探链的前 $\lceil \frac{M}{2}\rceil$ 项取遍；
+
+因此，试探链的前缀必须足够长，且无重复：
+反证：
+- 假设存在 $0\le a<b<\lceil \frac{M}{2}\rceil$ ，使得沿着试探链，第 a 项和第 b 项彼此冲突
+- 于是：a^2 和 b^2 自然关于 M 同余，亦即 $a^{2} \equiv b^{2} (mod M),b^{2}-a^{2}=(b+a)(b-a)\equiv 0(mod M)$
+- 然而，$0<b-a\le b+a<\lceil \frac{M}{2}\rceil+(\lceil \frac{M}{2}\rceil-1)\le \lceil \frac{M}{2}\rceil+\lfloor \frac{M}{2}\rfloor=M$ 无论 b-a 还是 b+a 都不可能整除 M 
+- 那么，另一半的桶，可否也利用起来呢... (再加一层线性散列)
 
 #### 双向平方试探
 

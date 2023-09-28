@@ -1,6 +1,18 @@
 {
   "recentFiles": [
     {
+      "basename": "00-Overview",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/00-Overview.md"
+    },
+    {
+      "basename": "10-Process-concepts-and-syscall",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Process-concepts-and-syscall.md"
+    },
+    {
+      "basename": "MyHome",
+      "path": "MyHome.canvas"
+    },
+    {
       "basename": "70-Hash",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md"
     },
@@ -23,10 +35,6 @@
     {
       "basename": "prime&bucket",
       "path": "0-Assets/Excalidraw/prime&bucket.md"
-    },
-    {
-      "basename": "MyHome",
-      "path": "MyHome.canvas"
     },
     {
       "basename": "60-Memory-hierarchy",
@@ -59,14 +67,6 @@
     {
       "basename": "00-Overview",
       "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Overview.md"
-    },
-    {
-      "basename": "00-Overview",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/00-Overview.md"
-    },
-    {
-      "basename": "10-Process-concepts-and-syscall",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Process-concepts-and-syscall.md"
     },
     {
       "basename": "4-地址空间",
