@@ -1,16 +1,20 @@
 {
   "recentFiles": [
     {
-      "basename": "00-Overview",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/00-Overview.md"
+      "basename": "MyHome",
+      "path": "MyHome.canvas"
+    },
+    {
+      "basename": "20-Process-manage-structure",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/20-Process-manage-structure.md"
     },
     {
       "basename": "10-Process-concepts-and-syscall",
       "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Process-concepts-and-syscall.md"
     },
     {
-      "basename": "MyHome",
-      "path": "MyHome.canvas"
+      "basename": "00-Overview",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/00-Overview.md"
     },
     {
       "basename": "70-Hash",

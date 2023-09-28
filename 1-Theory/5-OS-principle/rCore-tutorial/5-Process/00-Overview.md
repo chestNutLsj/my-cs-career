@@ -173,124 +173,150 @@ Shell: Process 2 exited with code 0
 为了让用户能够输入命令或执行程序的名字，ProcessOS 还==增加了一个 read 系统调用服务，这样用户通过操作系统的命令行接口 —— 新添加的 shell 应用程序发出命令，来动态地执行各种新的应用==，提高了用户与操作系统之间的交互能力。
 
 而由于有了进程的新抽象，需要对已有任务控制块进行重构，ProcessOS 中与进程相关的核心数据结构如下图所示：
-![进程相关的核心数据结构](https://rcore-os.cn/rCore-Tutorial-Book-v3/_images/process-os-key-structures.png)
-![](https://rcore-os.cn/rCore-Tutorial-Book-v3/_images/process-os-key-structures.png)
 
-从上图可知，进程控制块 `TaskControlBlock` 包含与进程运行 / 切换 / 调度 / 地址空间相关的各种资源和信息。以前的任务管理器 `TaskManager` 分离为处理器管理结构 `Processor` 和新的 `TaskManager` 。 `Processor` 负责管理 CPU 上正在执行的任务和一些相关信息；而新的任务管理器 `TaskManager` 仅负责管理没在执行的所有任务，以及各种新的进程管理相关的系统调用服务。
+![[00-Overview-processOS-structures.png]]
+
+- 从上图可知，进程控制块 `TaskControlBlock` 包含与进程运行 / 切换 / 调度 / 地址空间相关的各种资源和信息。
+- 以前的任务管理器 `TaskManager` 分离为处理器管理结构 `Processor` 和新的 `TaskManager` 。 
+	- `Processor` 负责管理 CPU 上正在执行的任务和一些相关信息；
+	- 而新的任务管理器 `TaskManager` 仅负责管理没在执行的所有任务，以及各种新的进程管理相关的系统调用服务。
 
 位于 `ch5` 分支上的伤齿龙操作系统 - ProcessOS 的源代码如下所示：
 
 ```
-1./os/src
- 2Rust        28 Files    1848 Lines
- 3Assembly     3 Files      86 Lines
- 5├── bootloader
- 6│   └── rustsbi-qemu. bin
- 7├── LICENSE
- 8├── os
- 9│   ├── build.rs (修改：基于应用名的应用构建器)
-10│   ├── Cargo. toml
-11│   ├── Makefile
-12│   └── src
-13│       ├── config. rs
-14│       ├── console. rs
-15│       ├── entry. asm
-16│       ├── lang_items. rs
-17│       ├── link_app. S
-18│       ├── linker-qemu. ld
-19│       ├── loader.rs (修改：基于应用名的应用加载器)
-20│       ├── main.rs (修改)
-21│       ├── mm (修改：为了支持本章的系统调用对此模块做若干增强)
-22│       │   ├── address. rs
-23│       │   ├── frame_allocator. rs
-24│       │   ├── heap_allocator. rs
-25│       │   ├── memory_set. rs
-26│       │   ├── mod. rs
-27│       │   └── page_table. rs
-28│       ├── sbi. rs
-29│       ├── sync
-30│       │   ├── mod. rs
-31│       │   └── up. rs
-32│       ├── syscall
-33│       │   ├── fs.rs (修改：新增 sys_read)
-34│       │   ├── mod.rs (修改：新的系统调用的分发处理)
-35│       │   └── process. rs（修改：新增 sys_getpid/fork/exec/waitpid）
-36│       ├── task
-37│       │   ├── context. rs
-38│       │   ├── manager.rs (新增：任务管理器，为上一章任务管理器功能的一部分)
-39│       │   ├── mod.rs (修改：调整原来的接口实现以支持进程)
-40│       │   ├── pid.rs (新增：进程标识符和内核栈的 Rust 抽象)
-41│       │   ├── processor.rs (新增：处理器管理结构 ``Processor`` ，为上一章任务管理器功能的一部分)
-42│       │   ├── switch. rs
-43│       │   ├── switch. S
-44│       │   └── task.rs (修改：支持进程管理机制的任务控制块)
-45│       ├── timer. rs
-46│       └── trap
-47│           ├── context. rs
-48│           ├── mod.rs (修改：对于系统调用的实现进行修改以支持进程系统调用)
-49│           └── trap. S
-50├── README. md
-51├── rust-toolchain
-52└── user (对于用户库 user_lib 进行修改，替换了一套新的测例)
-53├── Cargo. toml
-54├── Makefile
-55└── src
-56    ├── bin
-57    │   ├── exit. rs
-58    │   ├── fantastic_text. rs
-59    │   ├── forktest2. rs
-60    │   ├── forktest. rs
-61    │   ├── forktest_simple. rs
-62    │   ├── forktree. rs
-63    │   ├── hello_world. rs
-64    │   ├── initproc. rs
-65    │   ├── matrix. rs
-66    │   ├── sleep. rs
-67    │   ├── sleep_simple. rs
-68    │   ├── stack_overflow. rs
-69    │   ├── user_shell. rs
-70    │   ├── usertests. rs
-71    │   └── yield. rs
-72    ├── console. rs
-73    ├── lang_items. rs
-74    ├── lib. rs
-75    ├── linker. ld
-76    └── syscall. rs
+./os/src
+Rust        28 Files    1848 Lines
+Assembly     3 Files      86 Lines
+
+├── bootloader
+│   └── rustsbi-qemu.bin
+├── LICENSE
+├── os
+│   ├── build.rs(修改：基于应用名的应用构建器)
+│   ├── Cargo.toml
+│   ├── Makefile
+│   └── src
+│       ├── config.rs
+│       ├── console.rs
+│       ├── entry.asm
+│       ├── lang_items.rs
+│       ├── link_app.S
+│       ├── linker-qemu.ld
+│       ├── loader.rs(修改：基于应用名的应用加载器)
+│       ├── main.rs(修改)
+│       ├── mm(修改：为了支持本章的系统调用对此模块做若干增强)
+│       │   ├── address.rs
+│       │   ├── frame_allocator.rs
+│       │   ├── heap_allocator.rs
+│       │   ├── memory_set.rs
+│       │   ├── mod.rs
+│       │   └── page_table.rs
+│       ├── sbi.rs
+│       ├── sync
+│       │   ├── mod.rs
+│       │   └── up.rs
+│       ├── syscall
+│       │   ├── fs.rs(修改：新增 sys_read)
+│       │   ├── mod.rs(修改：新的系统调用的分发处理)
+│       │   └── process.rs（修改：新增 sys_getpid/fork/exec/waitpid）
+│       ├── task
+│       │   ├── context.rs
+│       │   ├── manager.rs(新增：任务管理器，为上一章任务管理器功能的一部分)
+│       │   ├── mod.rs(修改：调整原来的接口实现以支持进程)
+│       │   ├── pid.rs(新增：进程标识符和内核栈的 Rust 抽象)
+│       │   ├── processor.rs(新增：处理器管理结构 ``Processor`` ，为上一章任务管理器功能的一部分)
+│       │   ├── switch.rs
+│       │   ├── switch.S
+│       │   └── task.rs(修改：支持进程管理机制的任务控制块)
+│       ├── timer.rs
+│       └── trap
+│           ├── context.rs
+│           ├── mod.rs(修改：对于系统调用的实现进行修改以支持进程系统调用)
+│           └── trap.S
+├── README.md
+├── rust-toolchain
+└── user(对于用户库 user_lib 进行修改，替换了一套新的测例)
+├── Cargo.toml
+├── Makefile
+└── src
+    ├── bin
+    │   ├── exit.rs
+    │   ├── fantastic_text.rs
+    │   ├── forktest2.rs
+    │   ├── forktest.rs
+    │   ├── forktest_simple.rs
+    │   ├── forktree.rs
+    │   ├── hello_world.rs
+    │   ├── initproc.rs
+    │   ├── matrix.rs
+    │   ├── sleep.rs
+    │   ├── sleep_simple.rs
+    │   ├── stack_overflow.rs
+    │   ├── user_shell.rs
+    │   ├── usertests.rs
+    │   └── yield.rs
+    ├── console.rs
+    ├── lang_items.rs
+    ├── lib.rs
+    ├── linker.ld
+    └── syscall.rs
 ```
 
-本章代码导读[#]( #id8 "永久链接至标题")
--------------------------
-
+## 本章代码导读
+### 第一节、进程概念及重要系统调用
 本章的第一小节 [进程概念及重要系统调用](https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter5/1process.html) 介绍了操作系统中经典的进程概念，并描述我们将要实现的参考自 UNIX 系内核并经过简化的精简版进程模型。在该模型下，若想对进程进行管理，实现创建、退出等操作，核心就在于 `fork/exec/waitpid` 三个系统调用。
 
-首先我们修改运行在应用态的应用软件，它们均放置在 `user` 目录下。在新增系统调用的时候，需要在 `user/src/lib. rs` 中新增一个 `sys_*` 的函数，它的作用是将对应的系统调用按照与内核约定的 ABI 在 `syscall` 中转化为一条用于触发系统调用的 `ecall` 的指令；还需要在用户库 `user_lib` 将 `sys_*` 进一步封装成一个应用可以直接调用的与系统调用同名的函数。通过这种方式我们新增三个进程模型中核心的系统调用 `fork/exec/waitpid` ，一个查看进程 PID 的系统调用 `getpid` ，还有一个允许应用程序获取用户键盘输入的 `read` 系统调用。
+1. 首先我们修改运行在应用态的应用软件，它们均放置在 `user` 目录下。
+2. 在新增系统调用的时候，需要在 `user/src/syscall.rs` 中新增一个 `sys_*` 的函数，它的作用是将对应的系统调用按照与内核约定的 ABI 在 `syscall` 中转化为一条用于触发系统调用的 `ecall` 的指令；
+3. 还需要在用户库 `user/src/lib.rs` 将 `sys_*` 进一步封装成一个应用可以直接调用的与系统调用同名的函数。通过这种方式我们新增三个进程模型中核心的系统调用 `fork/exec/waitpid` ，一个查看进程 PID 的系统调用 `getpid` ，还有一个允许应用程序获取用户键盘输入的 `read` 系统调用。
 
-基于进程模型，我们在 `user/src/bin` 目录下重新实现了一组应用程序。其中有两个特殊的应用程序：用户初始程序 `initproc. rs` 和 shell 程序 `user_shell. rs` ，可以认为它们位于内核和其他应用程序之间的中间层提供一些基础功能，但是它们仍处于用户态的应用层。前者会被内核唯一自动加载、也是最早加载并执行，后者则负责从键盘接收用户输入的应用名并执行对应的应用。剩下的应用从不同层面测试了我们内核实现的正确性，同学可以自行参考。值得一提的是， `usertests` 可以按照顺序执行绝大部分应用，会在测试操作系统功能和正确性上为我们提供很多方便。
+基于进程模型，我们在 `user/src/bin` 目录下重新实现了一组应用程序。其中有两个特殊的应用程序：
+1. 用户初始程序 `initproc.rs` 和 shell 程序 `user_shell.rs` ，可以认为它们位于内核和其他应用程序之间的中间层提供一些基础功能，但是它们仍处于用户态的应用层。
+2. 前者会被内核唯一自动加载、也是最早加载并执行，
+3. 后者则负责从键盘接收用户输入的应用名并执行对应的应用。
+4. 剩下的应用从不同层面测试了我们内核实现的正确性，同学可以自行参考。值得一提的是， `usertests` 可以按照顺序执行绝大部分应用，会在测试操作系统功能和正确性上为我们提供很多方便。
 
+### 第二节、进程管理的核心数据结构
 接下来就需要在内核中实现简化版的进程管理机制并支持新增的系统调用。在本章第二小节 [进程管理的核心数据结构](https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter5/2core-data-structures.html) 中我们对一些进程管理机制相关的数据结构进行了重构或者修改：
 
-*   为了支持基于应用名而不是应用 ID 来查找应用 ELF 可执行文件，从而实现灵活的应用加载，在 `os/build. rs` 以及 `os/src/loader. rs` 中更新了 `link_app. S` 的格式使得它包含每个应用的名字，另外提供 `get_app_data_by_name` 接口获取应用的 ELF 数据。
-    
-*   在本章之前，任务管理器 `TaskManager` 不仅负责管理所有的任务状态，还维护着 CPU 当前正在执行的任务。这种设计耦合度较高，我们将后一个功能分离到 `os/src/task/processor. rs` 中的处理器管理结构 `Processor` 中，它负责管理 CPU 上执行的任务和一些其他信息；而 `os/src/task/manager. rs` 中的任务管理器 `TaskManager` 仅负责管理所有任务。
-    
-*   针对新的进程模型，我们复用前面章节的任务控制块 `TaskControlBlock` 作为进程控制块来保存进程的一些信息，相比前面章节还要新增 PID 、内核栈、应用数据大小、父子进程、退出码等信息。它声明在 `os/src/task/task. rs` 中。
-    
-*   从本章开始，进程的 PID 将作为查找进程控制块的索引，这样就可以通过进程的 PID 来查找到进程的内核栈等各种进程相关信息。 同时我们还面向进程控制块提供相应的资源自动回收机制。具体实现可以参考 `os/src/task/pid. rs` 。
-    
+* 为了支持基于应用名而不是应用 ID 来查找应用 ELF 可执行文件，从而实现灵活的应用加载，在 `os/build.rs` 以及 `os/src/loader.rs` 中更新了 `link_app.S` 的格式使得它包含每个应用的名字，另外提供 `get_app_data_by_name` 接口获取应用的 ELF 数据。
 
+* 在本章之前，任务管理器 `TaskManager` 不仅负责管理所有的任务状态，还维护着 CPU 当前正在执行的任务。
+	* 这种设计耦合度较高，我们将后一个功能分离到 `os/src/task/processor.rs` 中的==处理器管理结构 `Processor` 中，它负责管理 CPU 上执行的任务和一些其他信息==；
+	* 而 `os/src/task/manager.rs` 中的==任务管理器 `TaskManager` 仅负责管理所有任务==。
+
+* 针对新的进程模型，我们复用前面章节的任务控制块 `TaskControlBlock` 作为进程控制块来保存进程的一些信息，
+	* 相比前面章节还要新增 PID 、内核栈、应用数据大小、父子进程、退出码等信息。
+	* 它声明在 `os/src/task/task.rs` 中。
+
+* 从本章开始，进程的 PID 将作为查找进程控制块的索引，这样就可以通过进程的 PID 来查找到进程的内核栈等各种进程相关信息。
+	* 同时我们还==面向进程控制块提供相应的资源自动回收机制==。
+	* 具体实现可以参考 `os/src/task/pid.rs` 。
+
+### 第三节、进程管理机制的设计实现
 有了这些数据结构的支撑，我们在本章第三小节 [进程管理机制的设计实现](https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter5/3implement-process-mechanism.html) 实现进程管理机制。它可以分成如下几个方面：
 
-*   初始进程的创建：在内核初始化的时候需要调用 `os/src/task/mod. rs` 中的 `add_initproc` 函数，它会调用 `TaskControlBlock::new` 读取并解析初始应用 `initproc` 的 ELF 文件数据并创建初始进程 `INITPROC` ，随后会将它加入到全局任务管理器 `TASK_MANAGER` 中参与调度。
-    
-*   进程切换机制：当一个进程退出或者是主动 / 被动交出 CPU 使用权之后，需要由内核将 CPU 使用权交给其他进程。在本章中我们沿用 `os/src/task/mod. rs` 中的 `suspend_current_and_run_next` 和 `exit_current_and_run_next` 两个接口来实现进程切换功能，但是需要适当调整它们的实现。我们需要调用 `os/src/task/task. rs` 中的 `schedule` 函数进行进程切换，它会首先切换到处理器的 idle 控制流（即 `os/src/task/processor` 的 `Processor::run` 方法），然后在里面选取要切换到的进程并切换过去。
-    
-*   进程调度机制：在进程切换的时候我们需要选取一个进程切换过去。选取进程逻辑可以参考 `os/src/task/manager. rs` 中的 `TaskManager::fetch_task` 方法。
-    
-*   进程生成机制：这主要是指 `fork/exec` 两个系统调用。它们的实现分别可以在 `os/src/syscall/process. rs` 中找到，分别基于 `os/src/process/task. rs` 中的 `TaskControlBlock:: fork/exec` 。
-    
-*   进程资源回收机制：当一个进程主动退出或出错退出的时候，在 `exit_current_and_run_next` 中会立即回收一部分资源并在进程控制块中保存退出码；而需要等到它的父进程通过 `waitpid` 系统调用（与 `fork/exec` 两个系统调用放在相同位置）捕获到它的退出码之后，它的进程控制块才会被回收，从而该进程的所有资源都被回收。
-    
-*   进程的 I/O 输入机制：为了支持用户终端 `user_shell` 读取用户键盘输入的功能，还需要实现 `read` 系统调用，它可以在 `os/src/syscall/fs. rs` 中找到。
+* **初始进程的创建**：
+	* 在内核初始化的时候需要调用 `os/src/task/mod.rs` 中的 `add_initproc` 函数，它会调用 `TaskControlBlock::new` 读取并解析初始应用 `initproc` 的 ELF 文件数据并创建初始进程 `INITPROC` ，
+	* 随后会将它加入到全局任务管理器 `TASK_MANAGER` 中参与调度。
+
+* **进程切换机制**：
+	* 当一个进程退出或者是主动 / 被动交出 CPU 使用权之后，需要由内核将 CPU 使用权交给其他进程。在本章中我们沿用 `os/src/task/mod.rs` 中的 `suspend_current_and_run_next` 和 `exit_current_and_run_next` 两个接口来实现进程切换功能，但是需要适当调整它们的实现。
+	* 我们需要调用 `os/src/task/task.rs` 中的 `schedule` 函数进行进程切换，它会首先切换到处理器的 idle 控制流（即 `os/src/task/processor` 的 `Processor::run` 方法），然后在里面选取要切换到的进程并切换过去。
+
+* **进程调度机制**：
+	* 在进程切换的时候我们需要选取一个进程切换过去。选取进程逻辑可以参考 `os/src/task/manager.rs` 中的 `TaskManager::fetch_task` 方法。
+
+* **进程生成机制**：
+	* 这主要是指 `fork/exec` 两个系统调用。
+	* 它们的实现分别可以在 `os/src/syscall/process.rs` 中找到，分别基于 `os/src/process/task.rs` 中的 `TaskControlBlock:: fork/exec` 。
+
+* **进程资源回收机制**：
+	* 当一个进程主动退出或出错退出的时候，在 `exit_current_and_run_next` 中会立即回收一部分资源并在进程控制块中保存退出码；
+	* 而==需要等到它的父进程通过 `waitpid` 系统调用（与 `fork/exec` 两个系统调用放在相同位置）捕获到它的退出码之后，它的进程控制块才会被回收==，从而该进程的所有资源都被回收。
+
+* **进程的 I/O 输入机制**：
+	* 为了支持用户终端 `user_shell` 读取用户键盘输入的功能，还需要实现 `read` 系统调用，它可以在 `os/src/syscall/fs. rs` 中找到。
 
 [^1]: Fernando J. Corbató. “Introductmn and overvmw of the MULTICS system ” In Proc AFIPS I965 Fall Joznt Computer Conf, Part I, Spartan Books, New York, 185-196.
 [^2]: V.A. Vyssotsky. “Structure of the Multics supervisor” In AFIPS Conf Proc 27 1965, Spartan Books Washington D C 1965 pp 203–212
