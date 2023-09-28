@@ -1,9 +1,9 @@
 {
 	"nodes":[
 		{"id":"b2e3b3d85f06e888","type":"text","text":"开启今日的学习吧！","x":-140,"y":-360,"width":250,"height":60},
-		{"id":"d41090c6183303c3","type":"text","text":"912\n","x":-442,"y":-144,"width":250,"height":60},
 		{"id":"261ee1ed6ab2e35c","type":"text","text":"OS\n","x":-755,"y":110,"width":250,"height":60},
-		{"id":"27df6f51567a569d","x":-440,"y":380,"width":400,"height":400,"type":"file","file":"1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Overview.md"}
+		{"id":"27df6f51567a569d","type":"file","file":"1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Overview.md","x":-440,"y":380,"width":580,"height":640},
+		{"id":"d41090c6183303c3","type":"text","text":"912\n","x":-365,"y":-80,"width":250,"height":60}
 	],
 	"edges":[
 		{"id":"cec0d09b99596c8d","fromNode":"b2e3b3d85f06e888","fromSide":"bottom","toNode":"d41090c6183303c3","toSide":"top"},

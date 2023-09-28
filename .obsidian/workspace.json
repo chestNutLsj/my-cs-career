@@ -4,21 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "6e6a682e502cb725",
+        "id": "9996b9e55018bd75",
         "type": "tabs",
         "children": [
           {
-            "id": "06d02235432c27d7",
+            "id": "475183ccd74d8719",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "MyHome.canvas",
-                "viewState": {
-                  "x": -322.5,
-                  "y": 210,
-                  "zoom": -0.4641851486079319
-                }
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -116,7 +113,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "MyHome.canvas",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -133,7 +130,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "MyHome.canvas",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -161,7 +158,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "MyHome.canvas"
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md"
               }
             }
           },
@@ -199,56 +196,56 @@
       "omnisearch:Omnisearch": false
     }
   },
-  "active": "06d02235432c27d7",
+  "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70-Hash-lazy-removal.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70-Hash-linear-probing.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70-Hash-linkedlist-chaining.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70-Hash-overflow-area.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70-Hash-multiple-slots.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70-Hash-hashcode.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70-Hash-fisher-shuffle.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70-Hash-pseudorandom.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70-Hash-mid-square.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70-Hash-MAD.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/prime&bucket.svg",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets",
+    "0-Assets/Excalidraw/prime&bucket.md",
+    "MyHome.canvas",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/60-Memory-hierarchy.md",
+    "8-SimpRead/第 06 章：存储器层次结构 - CSAPP 重点解读/第 06 章：存储器层次结构 - CSAPP 重点解读.md",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/32-GDB简单使用.md",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/40-Processor-architecture.md",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/50-Optimizing-program-performance.md",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/60-Memory-hierarchy.md",
+    "8-SimpRead/第 06 章：存储器层次结构 - CSAPP 重点解读/assets",
+    "8-SimpRead/第 06 章：存储器层次结构 - CSAPP 重点解读",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/50-Optimize-program-performance.md",
+    "8-SimpRead/第 04 章：处理器体系结构 - CSAPP 重点解读/assets",
+    "8-SimpRead/第 04 章：处理器体系结构 - CSAPP 重点解读",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/00-课程准备与介绍.md",
+    "1-Theory/4-Architecture/CSAPP/Keypoints",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/00-Overview.md",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Process-concepts-and-syscall.md",
-    "MyHome.canvas",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process",
     "1-Theory/5-OS-principle/rCore-tutorial/practice/4-地址空间.md",
     "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/70-Beyond-physical-memory.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets/70-Beyond-physical-memory-mem-level.png",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/70-Hash-perfect-hash.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/Pasted image 20230927175837.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/70-Hash-synonym.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/assets/70-Hash-hashing.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61B-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61B-Exercise-8-13-d.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61B-Exercise-8-13.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/63-Height-BBST-vs-Weight-BBST.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-B*Tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/Pasted image 20230927153035.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61B-Exercise-insert-random-bTree4.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/61B-Exercise-insertBTree-solu2.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60C-BBST-Splay-tree.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/10-Rust-dynamic-mem-allocate.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/50-Address-space-of-kernel-and-app.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Appendix/B-常见工具的使用方法.md",
     "1-Theory/5-OS-principle/rCore-tutorial/Appendix",
-    "README.md",
-    "1-Theory/4-Architecture/408&&912/MMU.md",
-    "1-Theory/4-Architecture/408&&912/assets",
-    "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60B-Balanced-BST-AVL.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61A-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60A-Binary_Search_Tree.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/40-Manage-SV39-multilevel-pagetable.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/30-SV39-multilevel-page-table.md",
-    "0-Assets/Diary/2023/12月-23日.md",
-    "1-Theory/1-ProgramLanguage/Assembly/RSIC-V",
-    "1-Theory/7-DataBase/MySQL",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/assets",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address",
     "未命名.canvas",
-    "1-Theory/5-OS-principle/rCore-tutorial/3-Multi-prog-and-time-sharing/assets",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",
     "1-Theory/1-ProgramLanguage/Haskell/未命名.canvas",

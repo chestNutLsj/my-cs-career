@@ -1,8 +1,64 @@
 {
   "recentFiles": [
     {
+      "basename": "70-Hash",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md"
+    },
+    {
+      "basename": "11-Exercise",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Exercise.md"
+    },
+    {
+      "basename": "10-Introduction",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md"
+    },
+    {
+      "basename": "20-Vector",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md"
+    },
+    {
+      "basename": "prime&bucket",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/prime&bucket.svg"
+    },
+    {
+      "basename": "prime&bucket",
+      "path": "0-Assets/Excalidraw/prime&bucket.md"
+    },
+    {
       "basename": "MyHome",
       "path": "MyHome.canvas"
+    },
+    {
+      "basename": "60-Memory-hierarchy",
+      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/60-Memory-hierarchy.md"
+    },
+    {
+      "basename": "32-GDB简单使用",
+      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/32-GDB简单使用.md"
+    },
+    {
+      "basename": "40-Processor-architecture",
+      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/40-Processor-architecture.md"
+    },
+    {
+      "basename": "50-Optimizing-program-performance",
+      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/50-Optimizing-program-performance.md"
+    },
+    {
+      "basename": "1695825875834",
+      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/assets/1695825875834.png"
+    },
+    {
+      "basename": "1695825199085",
+      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/assets/1695825199085.png"
+    },
+    {
+      "basename": "00-课程准备与介绍",
+      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/00-课程准备与介绍.md"
+    },
+    {
+      "basename": "00-Overview",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Overview.md"
     },
     {
       "basename": "00-Overview",
@@ -29,10 +85,6 @@
       "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md"
     },
     {
-      "basename": "70-Hash",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md"
-    },
-    {
       "basename": "61B-Exercise",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61B-Exercise.md"
     },
@@ -53,10 +105,6 @@
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-B*Tree.md"
     },
     {
-      "basename": "00-Overview",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Overview.md"
-    },
-    {
       "basename": "60C-BBST-Splay-tree",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60C-BBST-Splay-tree.md"
     },
@@ -75,10 +123,6 @@
     {
       "basename": "README",
       "path": "README.md"
-    },
-    {
-      "basename": "40-Processor-architecture",
-      "path": "1-Theory/4-Architecture/CSAPP/40-Processor-architecture.md"
     },
     {
       "basename": "MMU",
