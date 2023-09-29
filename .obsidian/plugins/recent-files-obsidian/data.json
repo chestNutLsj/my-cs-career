@@ -1,24 +1,56 @@
 {
   "recentFiles": [
     {
-      "basename": "MyHome",
-      "path": "MyHome.canvas"
-    },
-    {
-      "basename": "20-Process-manage-structure",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/20-Process-manage-structure.md"
-    },
-    {
-      "basename": "10-Process-concepts-and-syscall",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Process-concepts-and-syscall.md"
+      "basename": "20-Core-structure-for-management",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/20-Core-structure-for-management.md"
     },
     {
       "basename": "00-Overview",
       "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/00-Overview.md"
     },
     {
-      "basename": "70-Hash",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md"
+      "basename": "0-操作系统概述",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/practice/0-操作系统概述.md"
+    },
+    {
+      "basename": "10-Concepts-and-syscall",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Concepts-and-syscall.md"
+    },
+    {
+      "basename": "30-Manage-mechanism",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/30-Manage-mechanism.md"
+    },
+    {
+      "basename": "40-Scheduling",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md"
+    },
+    {
+      "basename": "MyHome",
+      "path": "MyHome.canvas"
+    },
+    {
+      "basename": "70-文件系统",
+      "path": "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md"
+    },
+    {
+      "basename": "71-Exercise",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/71-Exercise.md"
+    },
+    {
+      "basename": "70A-Hash",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70A-Hash.md"
+    },
+    {
+      "basename": "40-Stack_Queue",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md"
+    },
+    {
+      "basename": "70B-Hash-application",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70B-Hash-application.md"
+    },
+    {
+      "basename": "62-SSD",
+      "path": "1-Theory/5-OS-principle/Internal&design-principle/62-SSD.md"
     },
     {
       "basename": "11-Exercise",
@@ -55,14 +87,6 @@
     {
       "basename": "50-Optimizing-program-performance",
       "path": "1-Theory/4-Architecture/CSAPP/Keypoints/50-Optimizing-program-performance.md"
-    },
-    {
-      "basename": "1695825875834",
-      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/assets/1695825875834.png"
-    },
-    {
-      "basename": "1695825199085",
-      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/assets/1695825199085.png"
     },
     {
       "basename": "00-课程准备与介绍",

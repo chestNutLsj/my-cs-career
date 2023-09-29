@@ -304,7 +304,7 @@
             {
               "type": "file",
               "ctime": 1695895133383,
-              "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Process-concepts-and-syscall.md",
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Concepts-and-syscall.md",
               "subpath": "#^87a5b4",
               "title": "僵尸进程"
             }
