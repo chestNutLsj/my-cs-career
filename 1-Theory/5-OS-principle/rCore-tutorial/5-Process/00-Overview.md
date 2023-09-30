@@ -300,7 +300,7 @@ Assembly     3 Files      86 Lines
 	* 在内核初始化的时候需要调用 `os/src/task/mod.rs` 中的 `add_initproc` 函数，它会调用 `TaskControlBlock::new` 读取并解析初始应用 `initproc` 的 ELF 文件数据并创建初始进程 `INITPROC` ，
 	* 随后会将它加入到全局任务管理器 `TASK_MANAGER` 中参与调度。
 
-* **进程切换机制**：
+* **进程切换机制**： ^1e3313
 	* 当一个进程退出或者是主动 / 被动交出 CPU 使用权之后，需要由内核将 CPU 使用权交给其他进程。在本章中我们沿用 `os/src/task/mod.rs` 中的 `suspend_current_and_run_next` 和 `exit_current_and_run_next` 两个接口来实现进程切换功能，但是需要适当调整它们的实现。
 	* 我们需要调用 `os/src/task/task.rs` 中的 `schedule` 函数进行进程切换，它会首先切换到处理器的 idle 控制流（即 `os/src/task/processor` 的 `Processor::run` 方法），然后在里面选取要切换到的进程并切换过去。
 

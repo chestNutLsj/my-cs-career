@@ -136,7 +136,7 @@ pub fn list_apps() {
 pub struct PidHandle(pub usize);
 ```
 
-类似之前的物理页帧分配器 `FrameAllocator` ，我们实现一个同样使用简单栈式分配策略的进程标识符分配器 `PidAllocator` ，并将其全局实例化为 `PID_ALLOCATOR` ：
+类似之前的物理页帧分配器 `FrameAllocator` ，我们实现一个同样**使用简单栈式分配策略的进程标识符分配器** `PidAllocator` ，并将其全局实例化为 `PID_ALLOCATOR` ：
 
 ```
 // os/src/task/pid.rs
@@ -200,10 +200,11 @@ impl Drop for PidHandle {
 }
 ```
 
-### 内核栈[#]( #id8 "永久链接至标题")
+### 内核栈
 
-在前面的章节中我们介绍过 [内核地址空间布局](https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter4/5kernel-app-spaces.html#kernel-as-high) ，当时我们将每个应用的内核栈按照应用编号从小到大的顺序将它们作为逻辑段从高地址到低地址放在内核地址空间中，且两两之间保留一个守护页面使得我们能够尽可能早的发现内核栈溢出问题。从本章开始，我们将应用编号替换为进程标识符。我们可以在内核栈 `KernelStack` 中保存着它所属进程的 PID ：
+在前面的章节中我们介绍过 [[50-Address-space-of-kernel-and-app#^ef53d7|内核地址空间布局]] ，当时我们将每个应用的内核栈按照应用编号从小到大的顺序将它们作为逻辑段从高地址到低地址放在内核地址空间中，且两两之间保留一个守护页面使得我们能够尽可能早的发现内核栈溢出问题。
 
+从本章开始，我们将应用编号替换为进程标识符。我们可以在内核栈 `KernelStack` 中保存着它所属进程的 PID ：
 ```
 // os/src/task/pid.rs
 
@@ -213,51 +214,54 @@ pub struct KernelStack {
 ```
 
 它提供以下方法：
-
 ```
-1// os/src/task/pid.rs
- 3/// Return (bottom, top) of a kernel stack in kernel space.
- 4pub fn kernel_stack_position(app_id: usize) -> (usize, usize) {
- 5    let top = TRAMPOLINE - app_id * (KERNEL_STACK_SIZE + PAGE_SIZE);
- 6    let bottom = top - KERNEL_STACK_SIZE;
- 7    (bottom, top)
- 8}
-10impl KernelStack {
-11    pub fn new(pid_handle: &PidHandle) -> Self {
-12        let pid = pid_handle.0;
-13        let (kernel_stack_bottom, kernel_stack_top) = kernel_stack_position(pid);
-14        KERNEL_SPACE
-15            .exclusive_access()
-16            .insert_framed_area(
-17                kernel_stack_bottom.into(),
-18                kernel_stack_top.into(),
-19                MapPermission::R | MapPermission::W,
-20            );
-21        KernelStack {
-22            pid: pid_handle.0,
-23        }
-24    }
-25    pub fn push_on_top<T>(&self, value: T) -> *mut T where
-26        T: Sized, {
-27        let kernel_stack_top = self.get_top();
-28        let ptr_mut = (kernel_stack_top - core::mem::size_of::<T>()) as *mut T;
-29        unsafe { *ptr_mut = value; }
-30        ptr_mut
-31    }
-32    pub fn get_top(&self) -> usize {
-33        let (_, kernel_stack_top) = kernel_stack_position(self.pid);
-34        kernel_stack_top
-35    }
-36}
+// os/src/task/pid.rs
+
+/// Return (bottom, top) of a kernel stack in kernel space.
+pub fn kernel_stack_position(app_id: usize) -> (usize, usize) {
+    let top = TRAMPOLINE - app_id * (KERNEL_STACK_SIZE + PAGE_SIZE);
+    let bottom = top - KERNEL_STACK_SIZE;
+    (bottom, top)
+}
+
+impl KernelStack {
+    pub fn new(pid_handle: &PidHandle) -> Self {
+        let pid = pid_handle.0;
+        let (kernel_stack_bottom, kernel_stack_top) = kernel_stack_position(pid);
+        KERNEL_SPACE
+            .exclusive_access()
+            .insert_framed_area(
+                kernel_stack_bottom.into(),
+                kernel_stack_top.into(),
+                MapPermission::R | MapPermission::W,
+            );
+        KernelStack {
+            pid: pid_handle.0,
+        }
+    }
+    pub fn push_on_top<T>(&self, value: T) -> *mut T where
+        T: Sized, {
+        let kernel_stack_top = self.get_top();
+        let ptr_mut = (kernel_stack_top - core::mem::size_of::<T>()) as *mut T;
+        unsafe { *ptr_mut = value; }
+        ptr_mut
+    }
+    pub fn get_top(&self) -> usize {
+        let (_, kernel_stack_top) = kernel_stack_position(self.pid);
+        kernel_stack_top
+    }
+}
 ```
 
-*   第 11 行， `new` 方法可以从一个 `PidHandle` ，也就是一个已分配的进程标识符中对应生成一个内核栈 `KernelStack` 。它调用了第 4 行声明的 `kernel_stack_position` 函数来根据进程标识符计算内核栈在内核地址空间中的位置，随即在第 14 行将一个逻辑段插入内核地址空间 `KERNEL_SPACE` 中。
-    
-*   第 25 行的 `push_on_top` 方法可以将一个类型为 `T` 的变量压入内核栈顶并返回其裸指针，这也是一个泛型函数。它在实现的时候用到了第 32 行的 `get_top` 方法来获取当前内核栈顶在内核地址空间中的地址。
-    
+* 第 11 行， `new` 方法可以从一个 `PidHandle` ，也就是一个已分配的进程标识符中对应生成一个内核栈 `KernelStack` 。
+	* 它调用了第 4 行声明的 `kernel_stack_position` 函数来根据进程标识符计算内核栈在内核地址空间中的位置，
+	* 随即在第 14 行将一个逻辑段插入内核地址空间 `KERNEL_SPACE` 中。
 
-内核栈 `KernelStack` 也用到了 RAII 的思想，具体来说，实际保存它的物理页帧的生命周期与它绑定在一起，当 `KernelStack` 生命周期结束后，这些物理页帧也将会被编译器自动回收：
+* 第 25 行的 `push_on_top` 方法可以将一个类型为 `T` 的变量压入内核栈顶并返回其裸指针，这也是一个泛型函数。
+	* 它在实现的时候用到了第 32 行的 `get_top` 方法来获取当前内核栈顶在内核地址空间中的地址。
 
+
+内核栈 `KernelStack` 也用到了 RAII 的思想，具体来说，==实际保存它的物理页帧的生命周期与它绑定在一起，当 `KernelStack` 生命周期结束后，这些物理页帧也将会被编译器自动回收==：
 ```
 // os/src/task/pid.rs
 
@@ -274,64 +278,68 @@ impl Drop for KernelStack {
 
 这仅需要为 `KernelStack` 实现 `Drop` Trait，一旦它的生命周期结束则在内核地址空间中将对应的逻辑段删除（为此在 `MemorySet` 中新增了一个名为 `remove_area_with_start_vpn` 的方法，感兴趣的同学可以参考其实现），由前面章节的介绍我们知道这也就意味着那些物理页帧被同时回收掉了。
 
-进程控制块[#]( #id9 "永久链接至标题")
-------------------------
+## 进程控制块
 
-在内核中，每个进程的执行状态、资源控制等元数据均保存在一个被称为 **进程控制块** (PCB, Process Control Block) 的结构中，它是内核对进程进行管理的单位，故而是一种极其关键的内核数据结构。在内核看来，它就等价于一个进程。
+在内核中，每个进程的执行状态、资源控制等元数据均保存在一个被称为 **进程控制块** (PCB, Process Control Block) 的结构中，它==是内核对进程进行管理的单位，故而是一种极其关键的内核数据结构==。**在内核看来，它就等价于一个进程**。
 
 承接前面的章节，我们仅需对任务控制块 `TaskControlBlock` 进行若干改动并让它直接承担进程控制块的功能：
-
 ```
-1// os/src/task/task.rs
- 3pub struct TaskControlBlock {
- 4    // immutable
- 5    pub pid: PidHandle,
- 6    pub kernel_stack: KernelStack,
- 7    // mutable
- 8    inner: UPSafeCell<TaskControlBlockInner>,
- 9}
-11pub struct TaskControlBlockInner {
-12    pub trap_cx_ppn: PhysPageNum,
-13    pub base_size: usize,
-14    pub task_cx: TaskContext,
-15    pub task_status: TaskStatus,
-16    pub memory_set: MemorySet,
-17    pub parent: Option<Weak<TaskControlBlock>>,
-18    pub children: Vec<Arc<TaskControlBlock>>,
-19    pub exit_code: i32,
-20}
+// os/src/task/task.rs
+
+pub struct TaskControlBlock {
+    // immutable
+    pub pid: PidHandle,
+    pub kernel_stack: KernelStack,
+    // mutable
+    inner: UPSafeCell<TaskControlBlockInner>,
+}
+
+pub struct TaskControlBlockInner {
+    pub trap_cx_ppn: PhysPageNum,
+    pub base_size: usize,
+    pub task_cx: TaskContext,
+    pub task_status: TaskStatus,
+    pub memory_set: MemorySet,
+    pub parent: Option<Weak<TaskControlBlock>>,
+    pub children: Vec<Arc<TaskControlBlock>>,
+    pub exit_code: i32,
+}
 ```
 
 任务控制块中包含两部分：
 
-*   在初始化之后就不再变化的元数据：直接放在任务控制块中。这里将进程标识符 `PidHandle` 和内核栈 `KernelStack` 放在其中；
-    
-*   在运行过程中可能发生变化的元数据：则放在 `TaskControlBlockInner` 中，将它再包裹上一层 `UPSafeCell<T>` 放在任务控制块中。这是因为在我们的设计中外层只能获取任务控制块的不可变引用，若想修改里面的部分内容的话这需要 `UPSafeCell<T>` 所提供的内部可变性。
-    
+* 在**初始化之后就不再变化**的元数据：直接放在任务控制块中。
+	* 这里将进程标识符 `PidHandle` 和内核栈 `KernelStack` 放在其中；
+
+* 在**运行过程中可能发生变化**的元数据：则放在 `TaskControlBlockInner` 中，将它再包裹上一层 `UPSafeCell<T>` 放在任务控制块中。
+	* 这是因为在我们的设计中外层只能获取任务控制块的不可变引用，若想修改里面的部分内容的话这需要 `UPSafeCell<T>` 所提供的内部可变性。
+
 
 `TaskControlBlockInner` 中则包含下面这些内容：
 
-*   `trap_cx_ppn` 指出了应用地址空间中的 Trap 上下文（详见第四章）被放在的物理页帧的物理页号。
-    
-*   `base_size` 的含义是：应用数据仅有可能出现在应用地址空间低于 `base_size` 字节的区域中。借助它我们可以清楚的知道应用有多少数据驻留在内存中。
-    
-*   `task_cx` 将暂停的任务的任务上下文保存在任务控制块中。
-    
-*   `task_status` 维护当前进程的执行状态。
-    
-*   `memory_set` 表示应用地址空间。
-    
-*   `parent` 指向当前进程的父进程（如果存在的话）。注意我们使用 `Weak` 而非 `Arc` 来包裹另一个任务控制块，因此这个智能指针将不会影响父进程的引用计数。
-    
-*   `children` 则将当前进程的所有子进程的任务控制块以 `Arc` 智能指针的形式保存在一个向量中，这样才能够更方便的找到它们。
-    
-*   当进程调用 exit 系统调用主动退出或者执行出错由内核终止的时候，它的退出码 `exit_code` 会被内核保存在它的任务控制块中，并等待它的父进程通过 waitpid 回收它的资源的同时也收集它的 PID 以及退出码。
-    
+* `trap_cx_ppn` 指出了==应用地址空间中的 Trap 上下文被放在的物理页帧的物理页号==。
 
-注意我们在维护父子进程关系的时候大量用到了引用计数 `Arc/Weak` 。进程控制块的本体是被放到内核堆上面的，对于它的一切访问都是通过智能指针 `Arc/Weak` 来进行的，这样是便于建立父子进程的双向链接关系（避免仅基于 `Arc` 形成环状链接关系）。当且仅当智能指针 `Arc` 的引用计数变为 0 的时候，进程控制块以及被绑定到它上面的各类资源才会被回收。子进程的进程控制块并不会被直接放到父进程控制块中，因为子进程完全有可能在父进程退出后仍然存在。
+* `base_size` 的含义是：==应用数据仅有可能出现在应用地址空间低于 `base_size` 字节的区域中==。借助它我们可以清楚的知道应用有多少数据驻留在内存中。
+
+* `task_cx` 将暂停的任务的任务上下文保存在任务控制块中。
+
+* `task_status` 维护当前进程的执行状态。
+
+* `memory_set` 表示应用地址空间。
+ 
+* `parent` 指向当前进程的父进程（如果存在的话）。注意我们使用 `Weak` 而非 `Arc` 来包裹另一个任务控制块，因此这个智能指针将不会影响父进程的引用计数。
+
+* `children` 则将当前进程的所有子进程的任务控制块以 `Arc` 智能指针的形式保存在一个向量中，这样才能够更方便的找到它们。
+ 
+* 当进程调用 exit 系统调用主动退出或者执行出错由内核终止的时候，它的退出码 `exit_code` 会被内核保存在它的任务控制块中，并等待它的父进程通过 waitpid 回收它的资源的同时也收集它的 PID 以及退出码。
+
+
+注意我们在维护父子进程关系的时候大量用到了引用计数 `Arc/Weak` 。
+- ==进程控制块的本体是被放到内核堆上面的，对于它的一切访问都是通过智能指针 `Arc/Weak` 来进行的==，这样是便于建立父子进程的双向链接关系（避免仅基于 `Arc` 形成环状链接关系）。
+- 当且仅当智能指针 `Arc` 的引用计数变为 0 的时候，进程控制块以及被绑定到它上面的各类资源才会被回收。
+- ==子进程的进程控制块并不会被直接放到父进程控制块中==，因为子进程完全有可能在父进程退出后仍然存在。
 
 `TaskControlBlockInner` 提供的方法主要是对于它内部的字段的快捷访问：
-
 ```
 // os/src/task/task.rs
 
@@ -352,7 +360,6 @@ impl TaskControlBlockInner {
 ```
 
 而任务控制块 `TaskControlBlock` 目前提供以下方法：
-
 ```
 // os/src/task/task.rs
 
@@ -369,60 +376,67 @@ impl TaskControlBlock {
 }
 ```
 
-*   `inner_exclusive_access` 通过 `UPSafeCell<T>.exclusive_access()` 来得到一个 `RefMut<'_, TaskControlBlockInner>` ，它可以被看成一个内层 `TaskControlBlockInner` 的可变引用并可以对它指向的内容进行修改。
-    
-*   `getpid` 以 `usize` 的形式返回当前进程的进程标识符。
-    
-*   `new` 用来创建一个新的进程，目前仅用于内核中手动创建唯一一个初始进程 `initproc` 。
-    
-*   `exec` 用来实现 `exec` 系统调用，即当前进程加载并执行另一个 ELF 格式可执行文件。
-    
-*   `fork` 用来实现 `fork` 系统调用，即当前进程 fork 出来一个与之几乎相同的子进程。
-    
+* `inner_exclusive_access` 通过 `UPSafeCell<T>.exclusive_access()` 来得到一个 `RefMut<'_, TaskControlBlockInner>` ，它可以==被看成一个内层 `TaskControlBlockInner` 的可变引用并可以对它指向的内容进行修改==。
+
+* `getpid` 以 `usize` 的形式返回当前进程的进程标识符。
+
+* `new` 用来创建一个新的进程，目前仅用于内核中手动创建唯一一个初始进程 `initproc` 。
+
+* `exec` 用来实现 `exec` 系统调用，即当前进程加载并执行另一个 ELF 格式可执行文件。
+
+* `fork` 用来实现 `fork` 系统调用，即当前进程 fork 出来一个与之几乎相同的子进程。
+
 
 `new/exec/fork` 的实现我们将在下一小节再介绍。
 
-任务管理器[#]( #id10 "永久链接至标题")
--------------------------
+## 任务管理器
 
-在前面的章节中，任务管理器 `TaskManager` 不仅负责管理所有的任务，还维护着 CPU 当前在执行哪个任务。由于这种设计不够灵活，不能拓展到后续的多核环境，我们需要将任务管理器对于 CPU 的监控职能拆分到下面即将介绍的处理器管理结构 `Processor` 中去，任务管理器自身仅负责管理所有任务。在这里，任务指的就是进程。
+在前面的章节中，任务管理器 `TaskManager` 不仅负责管理所有的任务，还维护着 CPU 当前在执行哪个任务。由于这种设计不够灵活，不能拓展到后续的多核环境，我们需要将任务管理器对于 CPU 的监控职能拆分到下面即将介绍的处理器管理结构 `Processor` 中去，**任务管理器自身仅负责管理所有任务**。在这里，任务指的就是进程。
 
 ```
-1// os/src/task/manager.rs
- 3pub struct TaskManager {
- 4    ready_queue: VecDeque<Arc<TaskControlBlock>>,
- 5}
- 7/// A simple FIFO scheduler.
- 8impl TaskManager {
- 9    pub fn new() -> Self {
-10        Self { ready_queue: VecDeque::new(), }
-11    }
-12    pub fn add(&mut self, task: Arc<TaskControlBlock>) {
-13        self.ready_queue.push_back(task);
-14    }
-15    pub fn fetch(&mut self) -> Option<Arc<TaskControlBlock>> {
-16        self.ready_queue.pop_front()
-17    }
-18}
-20lazy_static! {
-21    pub static ref TASK_MANAGER: UPSafeCell<TaskManager> = unsafe {
-22        UPSafeCell::new(TaskManager::new())
-23    };
-24}
-26pub fn add_task(task: Arc<TaskControlBlock>) {
-27    TASK_MANAGER.exclusive_access().add(task);
-28}
-30pub fn fetch_task() -> Option<Arc<TaskControlBlock>> {
-31    TASK_MANAGER.exclusive_access().fetch()
-32}
+// os/src/task/manager.rs
+
+pub struct TaskManager {
+    ready_queue: VecDeque<Arc<TaskControlBlock>>,
+}
+
+/// A simple FIFO scheduler.
+impl TaskManager {
+    pub fn new() -> Self {
+        Self { ready_queue: VecDeque::new(), }
+    }
+    pub fn add(&mut self, task: Arc<TaskControlBlock>) {
+        self.ready_queue.push_back(task);
+    }
+    pub fn fetch(&mut self) -> Option<Arc<TaskControlBlock>> {
+        self.ready_queue.pop_front()
+    }
+}
+
+lazy_static! {
+    pub static ref TASK_MANAGER: UPSafeCell<TaskManager> = unsafe {
+        UPSafeCell::new(TaskManager::new())
+    };
+}
+
+pub fn add_task(task: Arc<TaskControlBlock>) {
+    TASK_MANAGER.exclusive_access().add(task);
+}
+
+pub fn fetch_task() -> Option<Arc<TaskControlBlock>> {
+    TASK_MANAGER.exclusive_access().fetch()
+}
 ```
 
-`TaskManager` 将所有的任务控制块用引用计数 `Arc` 智能指针包裹后放在一个双端队列 `VecDeque` 中。正如之前介绍的那样，我们并不直接将任务控制块放到 `TaskManager` 里面，而是将它们放在内核堆上，在任务管理器中仅存放他们的引用计数智能指针，这也是任务管理器的操作单位。这样做的原因在于，任务控制块经常需要被放入 / 取出，如果直接移动任务控制块自身将会带来大量的数据拷贝开销，而对于智能指针进行移动则没有多少开销。其次，允许任务控制块的共享引用在某些情况下能够让我们的实现更加方便。
+- `TaskManager` 将所有的任务控制块用引用计数 `Arc` 智能指针包裹后放在一个双端队列 `VecDeque` 中。
+	- 正如之前介绍的那样，我们并不直接将任务控制块放到 `TaskManager` 里面，而是将它们放在内核堆上，在任务管理器中仅存放他们的引用计数智能指针，这也是任务管理器的操作单位。
+	- 这样做的原因在于，==任务控制块经常需要被放入 / 取出，如果直接移动任务控制块自身将会带来大量的数据拷贝开销，而对于智能指针进行移动则没有多少开销==。其次，允许任务控制块的共享引用在某些情况下能够让我们的实现更加方便。
 
-`TaskManager` 提供 `add/fetch` 两个操作，前者表示将一个任务加入队尾，后者则表示从队头中取出一个任务来执行。从调度算法来看，这里用到的就是最简单的 RR 算法。全局实例 `TASK_MANAGER` 则提供给内核的其他子模块 `add_task/fetch_task` 两个函数。
+- `TaskManager` 提供 `add/fetch` 两个操作，前者表示将一个任务加入队尾，后者则表示从队头中取出一个任务来执行。
+	- 从调度算法来看，这里用到的就是最简单的 RR 算法。
+	- 全局实例 `TASK_MANAGER` 则提供给内核的其他子模块 `add_task/fetch_task` 两个函数。
 
-处理器管理结构[#]( #id11 "永久链接至标题")
----------------------------
+## 处理器管理结构
 
 处理器管理结构 `Processor` 负责从任务管理器 `TaskManager` 中分出去的维护 CPU 状态的职责：
 
@@ -444,12 +458,12 @@ impl Processor {
 }
 ```
 
-在 `Processor` 中存放所有在运行过程中可能变化的内容，目前包括：
+在 `Processor` 中**存放所有在运行过程中可能变化的内容**，目前包括：
 
-*   `current` 表示在当前处理器上正在执行的任务；
-    
-*   `idle_task_cx` 表示当前处理器上的 idle 控制流的任务上下文。
-    
+* `current` 表示在当前处理器上正在执行的任务；
+
+* `idle_task_cx` 表示当前处理器上的 idle 控制流的任务上下文。
+
 
 `Processor` 是描述 CPU 执行状态 的数据结构。在单核 CPU 环境下，我们仅创建单个 `Processor` 的全局实例 `PROCESSOR` ：
 
@@ -463,93 +477,102 @@ lazy_static! {
 }
 ```
 
-### 正在执行的任务[#]( #id12 "永久链接至标题")
+### 正在执行的任务
 
-在抢占式调度模型中，在一个处理器上执行的任务常常被换入或换出，因此我们需要维护在一个处理器上正在执行的任务，可以查看它的信息或是对它进行替换：
-
+在抢占式调度模型中，在一个处理器上执行的任务常常被换入或换出，因此我们需要==维护在一个处理器上正在执行的任务，可以查看它的信息或是对它进行替换==：
 ```
-1// os/src/task/processor.rs
- 3impl Processor {
- 4    pub fn take_current(&mut self) -> Option<Arc<TaskControlBlock>> {
- 5        self.current.take()
- 6    }
- 7    pub fn current(&self) -> Option<Arc<TaskControlBlock>> {
- 8        self.current.as_ref().map(|task| Arc::clone(task))
- 9    }
-10}
-12pub fn take_current_task() -> Option<Arc<TaskControlBlock>> {
-13    PROCESSOR.exclusive_access().take_current()
-14}
-16pub fn current_task() -> Option<Arc<TaskControlBlock>> {
-17    PROCESSOR.exclusive_access().current()
-18}
-20pub fn current_user_token() -> usize {
-21    let task = current_task().unwrap();
-22    let token = task.inner_exclusive_access().get_user_token();
-23    token
-24}
-26pub fn current_trap_cx() -> &'static mut TrapContext {
-27    current_task().unwrap().inner_exclusive_access().get_trap_cx()
-28}
-```
+// os/src/task/processor.rs
 
-*   第 4 行的 `Processor::take_current` 可以取出当前正在执行的任务。
-    
-*   第 7 行的 `Processor::current` 返回当前执行的任务的一份拷贝。
-    
-*   第 12 行的 `take_current_task` 以及第 16 行的 `current_task` 是对 `Processor::take_current/current` 进行封装并提供给内核其他子模块的接口。
-    
-*   第 20 行的 `current_user_token` 和第 26 行的 `current_trap_cx` 基于 `current_task` 实现，可以提供当前正在执行的任务的更多信息。
-    
+impl Processor {
+    pub fn take_current(&mut self) -> Option<Arc<TaskControlBlock>> {
+        self.current.take()
+    }
+    pub fn current(&self) -> Option<Arc<TaskControlBlock>> {
+        self.current.as_ref().map(|task| Arc::clone(task))
+    }
+}
 
-### 任务调度的 idle 控制流[#]( #idle "永久链接至标题")
+pub fn take_current_task() -> Option<Arc<TaskControlBlock>> {
+    PROCESSOR.exclusive_access().take_current()
+}
 
-> `Processor` 有一个不同的 idle 控制流，它运行在这个 CPU 核的启动栈上，功能是尝试从任务管理器中选出一个任务来在当前 CPU 核上执行。在内核初始化完毕之后，会通过调用 `run_tasks` 函数来进入 idle 控制流：
+pub fn current_task() -> Option<Arc<TaskControlBlock>> {
+    PROCESSOR.exclusive_access().current()
+}
 
-```
-1// os/src/task/processor.rs
- 3pub fn run_tasks() {
- 4    loop {
- 5        let mut processor = PROCESSOR.exclusive_access();
- 6        if let Some(task) = fetch_task() {
- 7            let idle_task_cx_ptr = processor.get_idle_task_cx_ptr();
- 8            // access coming task TCB exclusively
- 9            let mut task_inner = task.inner_exclusive_access();
-10            let next_task_cx_ptr = &task_inner.task_cx as *const TaskContext;
-11            task_inner.task_status = TaskStatus::Running;
-12            // stop exclusively accessing coming task TCB manually
-13            drop(task_inner);
-14            processor.current = Some(task);
-15            // stop exclusively accessing processor manually
-16            drop(processor);
-17            unsafe {
-18                __switch(
-19                    idle_task_cx_ptr,
-20                    next_task_cx_ptr,
-21                );
-22            }
-23        }
-24    }
-25}
-27impl Processor {
-28    fn get_idle_task_cx_ptr(&mut self) -> *mut TaskContext {
-29        &mut self.idle_task_cx as *mut _
-30    }
-31}
+pub fn current_user_token() -> usize {
+    let task = current_task().unwrap();
+    let token = task.inner_exclusive_access().get_user_token();
+    token
+}
+
+pub fn current_trap_cx() -> &'static mut TrapContext {
+    current_task().unwrap().inner_exclusive_access().get_trap_cx()
+}
 ```
 
-可以看到，调度功能的主体是 `run_tasks()` 。它循环调用 `fetch_task` 直到顺利从任务管理器中取出一个任务，随后便准备通过任务切换的方式来执行：
+* 第 4 行的 `Processor::take_current` 可以取出当前正在执行的任务。
 
-*   第 7 行得到 `__switch` 的第一个参数，也就是当前 idle 控制流的 task_cx_ptr，这调用了第 25 行的 `Processor.get_idle_task_cx_ptr` 方法。
-    
-*   第 9~11 行需要先获取从任务管理器中取出对应的任务控制块，并获取任务块内部的 `next_task_cx_ptr` 作为 `__switch` 的第二个参数，然后修改任务的状态为 `Running` 。
-    
-*   第 13 行需要手动回收对即将执行任务的任务控制块的借用标记，使得后续我们仍可以访问该任务控制块。这里我们不能依赖编译器在 `if let` 块结尾时的自动回收，因为中间我们会在自动回收之前调用 `__switch` ，这将导致我们在实际上已经结束访问却没有进行回收的情况下切换到下一个任务，最终可能违反 `UPSafeCell` 的借用约定而使得内核报错退出。同理在第 16 行我们手动回收 `PROCESSOR` 的借用标记。
-    
-*   第 14 行我们修改当前 `Processor` 正在执行的任务为我们取出的任务。注意这里相当于 `Arc<TaskControlBlock>` 形式的任务从任务管理器流动到了处理器管理结构中。也就是说，在稳定的情况下，每个尚未结束的进程的任务控制块都只能被引用一次，要么在任务管理器中，要么则是在代表 CPU 处理器的 `Processor` 中。
-    
-*   第 18 行我们调用 `__switch` 来从当前的 idle 控制流切换到接下来要执行的任务。
-    
+* 第 7 行的 `Processor::current` ==返回当前执行的任务的一份拷贝==。
+
+* 第 12 行的 `take_current_task` 以及第 16 行的 `current_task` 是对 `Processor::take_current/current` 进行封装并提供给内核其他子模块的接口。
+
+* 第 20 行的 `current_user_token` 和第 26 行的 `current_trap_cx` 基于 `current_task` 实现，可以提供当前正在执行的任务的更多信息。
+
+
+### 任务调度的 idle 控制流
+
+> `Processor` 有一个不同的 [[1-Theory/5-OS-principle/rCore-tutorial/5-Process/00-Overview#^1e3313|idle 控制流]]，它运行在这个 CPU 核的启动栈上，功能是尝试从任务管理器中选出一个任务来在当前 CPU 核上执行。在内核初始化完毕之后，会通过调用 `run_tasks` 函数来进入 idle 控制流：
+```
+// os/src/task/processor.rs
+
+pub fn run_tasks() {
+    loop {
+        let mut processor = PROCESSOR.exclusive_access();
+        if let Some(task) = fetch_task() {
+            let idle_task_cx_ptr = processor.get_idle_task_cx_ptr();
+            // access coming task TCB exclusively
+            let mut task_inner = task.inner_exclusive_access();
+            let next_task_cx_ptr = &task_inner.task_cx as *const TaskContext;
+            task_inner.task_status = TaskStatus::Running;
+            // stop exclusively accessing coming task TCB manually
+            drop(task_inner);
+            processor.current = Some(task);
+            // stop exclusively accessing processor manually
+            drop(processor);
+            unsafe {
+                __switch(
+                    idle_task_cx_ptr,
+                    next_task_cx_ptr,
+                );
+            }
+        }
+    }
+}
+
+impl Processor {
+    fn get_idle_task_cx_ptr(&mut self) -> *mut TaskContext {
+        &mut self.idle_task_cx as *mut _
+    }
+}
+```
+
+可以看到，调度功能的主体是 `run_tasks()` 。它==循环调用 `fetch_task` 直到顺利从任务管理器中取出一个任务==，随后便准备通过任务切换的方式来执行：
+
+* 第 7 行得到 `__switch` 的第一个参数，也就是当前 idle 控制流的 task_cx_ptr，这调用了第 25 行的 `Processor.get_idle_task_cx_ptr` 方法。
+
+* 第 9~11 行需要先获取从任务管理器中取出对应的任务控制块，并获取任务块内部的 `next_task_cx_ptr` 作为 `__switch` 的第二个参数，然后修改任务的状态为 `Running` 。
+
+* 第 13 行需要手动回收对即将执行任务的任务控制块的借用标记，使得后续我们仍可以访问该任务控制块。
+	* 这里我们不能依赖编译器在 `if let` 块结尾时的自动回收，因为中间我们会在自动回收之前调用 `__switch` ，这将导致我们在实际上已经结束访问却没有进行回收的情况下切换到下一个任务，最终可能违反 `UPSafeCell` 的借用约定而使得内核报错退出。
+	* 同理在第 16 行我们手动回收 `PROCESSOR` 的借用标记。
+
+* 第 14 行我们==修改当前 `Processor` 正在执行的任务为我们取出的任务==
+	* 注意这里相当于 `Arc<TaskControlBlock>` 形式的任务从任务管理器流动到了处理器管理结构中。
+	* 也就是说，**在稳定的情况下，每个尚未结束的进程的任务控制块都只能被引用一次**，要么在任务管理器中，要么则是在代表 CPU 处理器的 `Processor` 中。
+
+* 第 18 行我们调用 `__switch` 来从当前的 idle 控制流切换到接下来要执行的任务。
+
 
 上面介绍了从 idle 控制流通过任务调度切换到某个任务开始执行的过程。而反过来，当一个应用用尽了内核本轮分配给它的时间片或者它主动调用 `yield` 系统调用交出 CPU 使用权之后，内核会调用 `schedule` 函数来切换到 idle 控制流并开启新一轮的任务调度。
 
@@ -570,3 +593,20 @@ pub fn schedule(switched_task_cx_ptr: *mut TaskContext) {
 ```
 
 这里，我们需要传入即将被切换出去的任务的 task_cx_ptr 来在合适的位置保存任务上下文，之后就可以通过 `__switch` 来切换到 idle 控制流。从源代码来看，切换回去之后，内核将跳转到 `run_tasks` 中 `__switch` 返回之后的位置，也即开启了下一轮的调度循环。
+
+## 评论区中的讨论
+### 为什么需要额外的一个 idle_task_cx？
+Q：为什么需要额外的一个 idle_task_cx，不能够直接使用之前 task_cx 吗，为何在前一个 task 和后一个 task 之间还要夹一个 idle_task_cx？
+
+A：这样做的主要目的是==使得换入/换出进程和调度执行流在内核层各自执行在不同的内核栈上，分别是进程自身的内核栈和内核初始化时使用的启动栈==。这样的话，调度相关的数据不会出现在进程内核栈上，也使得调度机制对于换出进程的 Trap 执行流是不可见的，它在决定换出的时候只需调用 schedule 而无需操心调度的事情。从而各执行流的分工更加明确了，虽然带来了更大的开销。
+
+实际上当然可以在 Trap 处理中直接进行调度找到切换到哪个进程并切换过去。有兴趣的话可以试试。
+
+### idle 控制流的理解
+1. idle 控制流的设计和 xv6 的很像，rCore 让 `run_tasks` 始终保持运行， 可以把这个函数想象成一个游戏机，它的作用就是不断挑选可运行的游戏卡（进程），然后放到 CPU 这个卡槽中。一定时间后这个 CPU 卡槽要给别的游戏卡（进程）用了就把这个当前的卡弹出来（这里就用了 `schedule` 函数弹出），然后游戏机又开始选下一张能用的游戏卡（进程）了。游戏卡（进程）只知道自己被插上要运行，以及到某个点自己要弹出来，它不知道游戏机的存在，这样就做到了任务调度的透明。
+
+2. idle 控制流我个人的理解：
+	-  `idle_task_cx_ptr` 实际上只是一个占位符。它存在的意义就是作为 __switch 的第一个参数。
+	- run_tasks 是在 os 的入口函数中调用的，也即运行在内核系统栈。这个函数是系统的自带调度流，而非被进程所推动的调度流。
+	- 而调度操作，我们可以举例追溯 `sys_yield` 的实现，发现它调用 `suspend_current_and_run_next`，后者调用 `schedule`。即：进程的内核栈主动请求了将自己换出，换成新的进程。
+	- 因此，使用一个空上下文作为占位，内核的自己的调度流就不需要关心现在是谁在运行，只要换成下一个就绪任务就行，完成了解耦。

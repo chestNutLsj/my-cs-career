@@ -251,7 +251,7 @@ impl MapArea {
 
 下图是软件看到的 64 位地址空间在 SV39 分页模式下实际可能通过 MMU 检查的最高 （之前在 [[30-SV39-multilevel-page-table#^b4b8fc|这里]] 中解释过最高和最低的问题）：
 
-![[50-Address-space-of-kernel-and-app-kernel-address-space-high-half.png]]
+![[50-Address-space-of-kernel-and-app-kernel-address-space-high-half.png]] ^ef53d7
 
 可以看到，
 - 跳板放在最高的一个虚拟页面中。
