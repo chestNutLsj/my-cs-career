@@ -1,6 +1,30 @@
 {
   "recentFiles": [
     {
+      "basename": "MyHome",
+      "path": "MyHome.canvas"
+    },
+    {
+      "basename": "80A-Graph",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md"
+    },
+    {
+      "basename": "80B-Graph-application",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80B-Graph-application.md"
+    },
+    {
+      "basename": "70B-Hash-application",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70B-Hash-application.md"
+    },
+    {
+      "basename": "71-Exercise",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/71-Exercise.md"
+    },
+    {
+      "basename": "70A-Hash",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70A-Hash.md"
+    },
+    {
       "basename": "20-Core-structure-for-management",
       "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/20-Core-structure-for-management.md"
     },
@@ -25,28 +49,12 @@
       "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md"
     },
     {
-      "basename": "MyHome",
-      "path": "MyHome.canvas"
-    },
-    {
       "basename": "70-文件系统",
       "path": "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md"
     },
     {
-      "basename": "71-Exercise",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/71-Exercise.md"
-    },
-    {
-      "basename": "70A-Hash",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70A-Hash.md"
-    },
-    {
       "basename": "40-Stack_Queue",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md"
-    },
-    {
-      "basename": "70B-Hash-application",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70B-Hash-application.md"
     },
     {
       "basename": "62-SSD",

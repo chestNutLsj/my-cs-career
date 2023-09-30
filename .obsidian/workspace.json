@@ -4,18 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "d8057391c3da986a",
+        "id": "51b83e9e7c00a3af",
         "type": "tabs",
         "children": [
           {
-            "id": "be7e966349212889",
+            "id": "7459af5b41036f2e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/20-Core-structure-for-management.md",
-                "mode": "source",
-                "source": false
+                "file": "MyHome.canvas",
+                "viewState": {
+                  "x": -307.5,
+                  "y": 330,
+                  "zoom": -0.7398195912213595
+                }
               }
             }
           }
@@ -113,7 +116,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/20-Core-structure-for-management.md",
+                "file": "MyHome.canvas",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,7 +133,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/20-Core-structure-for-management.md",
+                "file": "MyHome.canvas",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -158,7 +161,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/20-Core-structure-for-management.md"
+                "file": "MyHome.canvas"
               }
             }
           },
@@ -196,30 +199,33 @@
       "omnisearch:Omnisearch": false
     }
   },
-  "active": "be7e966349212889",
+  "active": "7459af5b41036f2e",
   "lastOpenFiles": [
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-adjancency-matrix-vertex-dynamic-opt.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-adjancency-matrix-edge-dynamic-opt.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-adjancency-matrix-neighbour.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/图06-06.以邻接表方式描述和实现图.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-adjacency-matrix-instance.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-incidence-matrix.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-adjacency-matrix.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-spanning-tree.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-kinds.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80B-Graph-application.md",
+    "MyHome.canvas",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70B-Hash-application.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/71-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/71-Exercise-countingsort-table.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70A-Hash.md",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/00-Overview.md",
     "1-Theory/5-OS-principle/rCore-tutorial/practice/0-操作系统概述.md",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Concepts-and-syscall.md",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/30-Manage-mechanism.md",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/20-Core-structure-for-management.md",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
-    "MyHome.canvas",
     "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/assets/70-文件系统-superblock.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/71-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70A-Hash.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70B-Hash-application.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70B-Hash-application-skiplist-insert-remove.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70B-Hash-application-skiplist-search2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70B-Hash-application-skiplist-search.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70B-Hash-application-quadlist.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70B-Hash-application-skiplist.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70B-Hash-application-countsort-instance-11.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70B-Hash-application-countsort-instance-10.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70B-Hash-application-countsort-instance-9.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70B-Hash-application-countsort-instance-9.png",
     "1-Theory/5-OS-principle/Internal&design-principle/62-SSD.md",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Exercise.md",
@@ -238,13 +244,9 @@
     "1-Theory/4-Architecture/CSAPP/Keypoints/50-Optimize-program-performance.md",
     "8-SimpRead/第 04 章：处理器体系结构 - CSAPP 重点解读/assets",
     "8-SimpRead/第 04 章：处理器体系结构 - CSAPP 重点解读",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/00-课程准备与介绍.md",
     "1-Theory/4-Architecture/CSAPP/Keypoints",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process",
-    "1-Theory/5-OS-principle/rCore-tutorial/practice/4-地址空间.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort",
     "未命名.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",
