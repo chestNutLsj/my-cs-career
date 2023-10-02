@@ -36,7 +36,7 @@ G=(V; E):
 
 ![[80A-Graph-spanning-tree.png]]
 
-## 实现
+## 图的存储结构
 ### ADT
 ```
 using VStatus = enum { UNDISCOVERED, DISCOVERED, VISITED }; //顶点状态
@@ -109,10 +109,7 @@ Incidence matrix: 记录顶点与边之间的连接关系
 ![[80A-Graph-adjacency-matrix-instance.png]]
 - 可以看到无向图的邻接矩阵中，有一半是冗余的。
 
-### 邻接表
-![[图06-06.以邻接表方式描述和实现图.png]]
-
-### 邻接矩阵的模板实现
+#### 邻接矩阵的模板实现
 ```
 #include "Vector/Vector.h" //引入向量
 #include "Graph/Graph.h" //引入图ADT
@@ -148,7 +145,7 @@ public:
 }; //Graph
 ```
 
-### 邻接矩阵的静态操作
+#### 邻接矩阵的静态操作
 ```
 template <typename Tv, typename Te>
 class GraphMatrix : public Graph<Tv, Te> {
@@ -186,7 +183,7 @@ public:
 
 ![[80A-Graph-adjancency-matrix-neighbour.png]]
 
-### 邻接矩阵的动态操作
+#### 邻接矩阵的动态操作
 ```
 /**********************
  * 顶点的动态操作
@@ -228,11 +225,11 @@ public:
 
 ![[80A-Graph-adjancency-matrix-vertex-dynamic-opt.png]]
 
-### 邻接矩阵的性能分析
+#### 邻接矩阵的性能分析
 - 直观，易于理解和实现
 - 适用范围广泛，尤其适用于稠密图（dense graph）
 - 判断两点之间是否存在联边：O (1)
-- 获取顶点的（出/入）度数：O (1)
+- 获取顶点的（出/入）度数：O (1)（任何动态操作都会更新一遍顶点的度）
 - 添加、删除边后更新度数：O (1)
 - 扩展性（scalability）：得益于 Vector 良好的控制策略，空间溢出等情况可被“透明地”处理
 
@@ -243,3 +240,148 @@ public:
 - 平面图：e <= 3 * n - 6 = O (n) << n^2 此时，空间利用率 ≈ 1/n
 - 稀疏图（sparse graph） 空间利用率同样很低，可采用压缩存储技术 (只存非零元素的坐标和权值)
 
+
+### 邻接表
+思路：为避免邻接矩阵的空间浪费，则将邻接矩阵的各行组织成为列表，只记录存在的边及其权值。
+
+等效于每一顶点 v 对应于列表 $L_{v}=\{u|<v,u>\in E\}$ :
+![[80A-Graph-adjacency-list.png]]
+
+实例如下：
+![[图06-06.以邻接表方式描述和实现图.png]]
+- 4 顶点 5 条弧：邻接矩阵需要 16 个单元的二维矩阵，邻接表则需要 9 个单元和 4 个表头；
+- **在稀疏图中的优势更明显**。
+
+#### 空间复杂度
+- 有向图：O (n+e)
+- 无向图：O (n+2e)
+	- 无向弧被重复存储，若要改进，只需要...（[[81-Adjacency-multilist|邻接多重表]]）
+- 平面图：O (n+3n)
+
+#### 时间复杂度
+- 建立邻接表：O (n+e) //递增式构造，如何实现？
+- 枚举所有以顶点 v 为尾的弧：O (1+deg (v)) //遍历 v 的邻接表
+- 枚举（无向图中）顶点 v 的邻居：O (1+deg (v)) //遍历 v 的邻接表
+- 枚举所有以顶点 v 为头的弧：O (n+e) //遍历所有邻接表
+	- 可改进至 O (1+deg (v)) //办法是建立逆邻接表，空间复杂度需要增加...
+- 计算顶点 v 的出度/入度：
+	- 增加度数的记录域：O (n)的附加空间
+	- 增加/删除弧时更新度数：O (1)时间，总体 O (e)时间
+	- 每次查询需要：O (1) 时间
+
+给定顶点 u 和 v，判断<u, v>是否属于 E：
+- 有向图：搜索 u 的邻接表，时间复杂度为 O (deg (u)) = O (e)
+- 无向图：搜索 u 或 v 的邻接表，O (max (deg (u), deg (v)))=O (e)
+- 并行搜索：O (2 * min (deg (u), deg (v)))=O (e)
+- 如何达到邻接矩阵的 O (1)?
+	- 利用散列技术，使弧的判定达到 expected-O (1) //与邻接矩阵相同
+	- 空间：O (n+e) //与邻接表相同
+
+#### 邻接矩阵与邻接表的取舍原则
+- 邻接矩阵适用的场合：
+	- 经常检测边的存在
+	- 经常做边的插入和删除操作
+	- 图的规模固定
+	- 稠密图
+
+- 邻接表适用的场合：
+	- 经常计算顶点的度数
+	- 顶点数目不确定
+	- 经常做遍历
+	- 稀疏图
+
+### 十字链表
+- 十字链表 (orthogonal-list) **存储的对象是有向图**。同邻接表相同的是，图中每个顶点各自构成一个链表，为链表的首元结点。
+- 同时，对于有向图中的弧来说，有弧头和弧尾。==一个顶点所有的弧头的数量即为该顶点的入度，弧尾的数量即为该顶点的出度==。
+- 每个顶点构成的链表中，以该顶点作为弧头的弧单独构成一个链表，以该顶点作为弧尾的弧也单独构成一个链表，两个链表的表头都为该顶点构成的头结点。
+- 这样，由每个顶点构建的链表按照一定的顺序存储在数组中，就构成了十字链表。  
+
+#### 节点结构
+所以，十字链表中由两种结点构成：顶点结点和弧结点。各自的结构构成如下图所示：  
+
+![[80A-Graph-orthogonal-list-node.png]]
+
+- 弧结点中， tailvex 和 headvex 分别存储的是弧尾和弧头对应的顶点在数组中的位置下标； hlink 和 tlink 为指针域，分别指向弧头相同的下一个弧和弧尾相同的下一个弧； info 为指针域，存储的是该弧具有的相关信息，例如权值等。
+- 顶点结点中，data 域存储该顶点含有的数据； firstin 和 firstout 为两个指针域，分别指向以该顶点为弧头和弧尾的首个弧结点。  
+
+#### 实例
+
+![](http://data.biancheng.net/uploads/allimg/170905/2-1FZ51A135458.png)  
+
+  
+例如，使用十字链表存储有向图 5（A） ，构建的十字链表如图 （B） 所示,构建代码实现为：
+
+```c
+#define  MAX_VERTEX_NUM 20
+#define  InfoType int//图中弧包含信息的数据类型
+#define  VertexType int
+typedef struct ArcBox{
+    int tailvex,headvex;//弧尾、弧头对应顶点在数组中的位置下标
+    struct ArcBox *hlik,*tlink;//分别指向弧头相同和弧尾相同的下一个弧
+    InfoType *info;//存储弧相关信息的指针
+}ArcBox;
+typedef struct VexNode{
+    VertexType data;//顶点的数据域
+    ArcBox *firstin,*firstout;//指向以该顶点为弧头和弧尾的链表首个结点
+}VexNode;
+typedef struct {
+    VexNode xlist[MAX_VERTEX_NUM];//存储顶点的一维数组
+    int vexnum,arcnum;//记录图的顶点数和弧数
+}OLGraph;
+int LocateVex(OLGraph * G,VertexType v){
+    int i=0;
+    //遍历一维数组，找到变量v
+    for (; i<G->vexnum; i++) {
+        if (G->xlist[i].data==v) {
+            break;
+        }
+    }
+    //如果找不到，输出提示语句，返回 -1
+    if (i>G->vexnum) {
+        printf("no such vertex.\n");
+        return -1;
+    }
+    return i;
+}
+//构建十字链表函数
+void CreateDG(OLGraph *G){
+    //输入有向图的顶点数和弧数
+    scanf("%d,%d",&(G->vexnum),&(G->arcnum));
+    //使用一维数组存储顶点数据，初始化指针域为NULL
+    for (int i=0; i<G->vexnum; i++) {
+        scanf("%d",&(G->xlist[i].data));
+        G->xlist[i].firstin=NULL;
+        G->xlist[i].firstout=NULL;
+    }
+    //构建十字链表
+    for (int k=0;k<G->arcnum; k++) {
+        int v1,v2;
+        scanf("%d,%d",&v1,&v2);
+        //确定v1、v2在数组中的位置下标
+        int i=LocateVex(G, v1);
+        int j=LocateVex(G, v2);
+        //建立弧的结点
+        ArcBox * p=(ArcBox*)malloc(sizeof(ArcBox));
+        p->tailvex=i;
+        p->headvex=j;
+        //采用头插法插入新的p结点
+        p->hlik=G->xlist[j].firstin;
+        p->tlink=G->xlist[i].firstout;
+        G->xlist[j].firstin=G->xlist[i].firstout=p;
+    }
+}
+```
+
+对于链表中的各个结点来说，由于表示的都是该顶点的出度或者入度，所以结点之间没有先后次序之分，程序中构建链表对于每个新初始化的结点采用头插法进行插入。
+
+#### 十字链表计算顶点的度
+
+采用十字链表表示的有向图，在计算某顶点的出度时，为 firstout 域链表中结点的个数；入度为 firstin 域链表中结点的个数。
+
+### 邻接多重表
+![[81-Adjacency-multilist]]
+
+## 图的遍历
+### 广度优先搜索
+#### 思路
+- 对顶点 s 进行广度优先搜索
