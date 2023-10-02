@@ -16,11 +16,9 @@
   "file-explorer-note-count",
   "obsidian-git",
   "better-word-count",
-  "omnisearch",
   "oz-clear-unused-images",
   "obsidian-paste-image-rename",
   "mermaid-tools",
-  "obsidian-wordnet-plugin",
   "obsidian-markdown-export-plugin",
   "obsidian-mindmap-nextgen",
   "obsidian-image-toolkit",
@@ -28,8 +26,5 @@
   "obsidian-footnotes",
   "obsidian-style-settings",
   "reading-comments",
-  "homepage",
-  "recent-files-obsidian",
-  "buttons",
-  "obsidian-banners"
+  "recent-files-obsidian"
 ]

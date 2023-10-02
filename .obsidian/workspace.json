@@ -4,22 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "48671bd4c48afcc0",
+        "id": "8554ed9d4799f6e1",
         "type": "tabs",
         "children": [
           {
-            "id": "3929f981b9ea08b6",
+            "id": "5ef36a483e6f8121",
             "type": "leaf",
             "state": {
-              "type": "canvas",
-              "state": {
-                "file": "MyHome.canvas",
-                "viewState": {
-                  "x": -307.5,
-                  "y": 330,
-                  "zoom": -0.7398195912213595
-                }
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -99,8 +92,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -116,7 +108,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "MyHome.canvas",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -133,7 +124,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "MyHome.canvas",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -160,9 +150,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "MyHome.canvas"
-              }
+              "state": {}
             }
           },
           {
@@ -182,7 +170,6 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "obsidian42-brat:BRAT": false,
       "canvas:新建白板": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
@@ -190,19 +177,19 @@
       "command-palette:打开命令面板": false,
       "markdown-importer:打开 Markdown 格式转换器": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "obsidian42-brat:BRAT": false,
       "oz-clear-unused-images:Clear Unused Images": false,
-      "obsidian-wordnet-plugin:WordNet Dictionary": false,
-      "obsidian-excalidraw-plugin:新建 Excalidraw 绘图": false,
+      "omnisearch:Omnisearch": false,
       "mermaid-tools:Open Mermaid Toolbar": false,
-      "obsidian-importer:Open Importer": false,
-      "homepage:Open homepage": false,
-      "omnisearch:Omnisearch": false
+      "obsidian-wordnet-plugin:WordNet Dictionary": false,
+      "obsidian-excalidraw-plugin:新建绘图文件": false,
+      "obsidian-importer:Open Importer": false
     }
   },
-  "active": "3929f981b9ea08b6",
+  "active": "5ef36a483e6f8121",
   "lastOpenFiles": [
-    "1-Theory/4-Architecture/408&&912/第4章+存储系统.md",
     "MyHome.canvas",
+    "1-Theory/4-Architecture/408&&912/第4章+存储系统.md",
     "1-Theory/3-Algorithm/Algo4-in-Java",
     "1-Theory/3-Algorithm/Intro-of-algo",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
@@ -244,7 +231,6 @@
     "1-Theory/4-Architecture/CSAPP/Keypoints/60-Memory-hierarchy.md",
     "8-SimpRead/第 06 章：存储器层次结构 - CSAPP 重点解读/assets",
     "8-SimpRead/第 06 章：存储器层次结构 - CSAPP 重点解读",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/50-Optimize-program-performance.md",
     "8-SimpRead/第 04 章：处理器体系结构 - CSAPP 重点解读/assets",
     "8-SimpRead/第 04 章：处理器体系结构 - CSAPP 重点解读",
     "1-Theory/4-Architecture/CSAPP/Keypoints",

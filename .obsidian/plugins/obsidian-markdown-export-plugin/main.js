@@ -278,11 +278,11 @@ var path3 = __toESM(require("path"));
 var ATTACHMENT_URL_REGEXP = /!\[\[((.*?)\.(\w+))\]\]/g;
 var MARKDOWN_ATTACHMENT_URL_REGEXP = /!\[(.*?)\]\(((.*?)\.(\w+))\)/g;
 var EMBED_URL_REGEXP = /!\[\[(.*?)\]\]/g;
-var GMT_IMAGE_FORMAT = "![]({0})";
+var GFM_IMAGE_FORMAT = "![]({0})";
 var DEFAULT_SETTINGS = {
   output: "output",
   attachment: "attachment",
-  GTM: true
+  GFM: true
 };
 
 // src/utils.ts
@@ -432,8 +432,8 @@ async function tryCopyMarkdownByRead(plugin, { file, outputFormat, outputSubPath
         if (urlEncodedImageLink.startsWith("http")) {
           continue;
         }
-        if (plugin.settings.GTM) {
-          content = content.replace(rawImageLink, GMT_IMAGE_FORMAT.format(hashLink));
+        if (plugin.settings.GFM) {
+          content = content.replace(rawImageLink, GFM_IMAGE_FORMAT.format(hashLink));
         } else {
           content = content.replace(urlEncodedImageLink, hashLink);
         }
@@ -536,8 +536,8 @@ var MarkdownExportSettingTab = class extends import_obsidian3.PluginSettingTab {
       this.plugin.settings.attachment = value;
       await this.plugin.saveSettings();
     }));
-    new import_obsidian3.Setting(containerEl).setName("Use GitHub Flavored Markdown Format").setDesc("The format of markdown is more inclined to choose Github Flavored Markdown").addToggle((toggle) => toggle.setValue(this.plugin.settings.GTM).onChange(async (value) => {
-      this.plugin.settings.GTM = value;
+    new import_obsidian3.Setting(containerEl).setName("Use GitHub Flavored Markdown Format").setDesc("The format of markdown is more inclined to choose Github Flavored Markdown").addToggle((toggle) => toggle.setValue(this.plugin.settings.GFM).onChange(async (value) => {
+      this.plugin.settings.GFM = value;
       await this.plugin.saveSettings();
     }));
   }
