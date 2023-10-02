@@ -384,4 +384,180 @@ void CreateDG(OLGraph *G){
 ## 图的遍历
 ### 广度优先搜索
 #### 思路
-- 对顶点 s 进行广度优先搜索
+对顶点 s 进行广度优先搜索：
+- 访问顶点s
+- 依次访问 s 所有尚未访问的邻接顶点
+- 依次访问它们尚未访问的邻接顶点
+- 如此反复，直到没有尚未访问的邻接顶点
+
+以上策略完全及过程完全等同于树的层次遍历，实际上 BFS 也会构造出原图的一棵支撑树——称为 [[#BFS-Tree/Forest|BFS-Tree]]：
+![[80A-Graph-bfs-process.png]]
+
+#### 实现
+```
+template <typename Tv, typename Te> //广度优先搜索BFS算法（单个连通域）
+void Graph<Tv, Te>::BFS( Rank v, Rank& dClock ) { // v < n
+	Queue<Rank> Q;
+	status( v ) = DISCOVERED; 
+	Q.enqueue( v ); 
+	dTime( v ) = dClock++; //起点入队
+	
+	for ( Rank fClock = 0; !Q.empty(); ) { //在Q变空之前，反复地
+	    if ( dTime( v ) < dTime( Q.front() ) ) //dTime的增加，意味着开启新的一代，因此
+	        dClock++, fClock = 0; //dTime递增，fTime复位
+	    v = Q.dequeue(); //取出首顶点v，并
+	    for ( Rank u = firstNbr( v ); -1 != u; u = nextNbr( v, u ) ) //考查v的每一个邻居u，视u的状态分别处理
+	        if ( UNDISCOVERED == status( u ) ) { //若u尚未被发现，则发现之
+		        status( u ) = DISCOVERED;//对该顶点作发现操作
+		        Q.enqueue( u ); 
+		        dTime( u ) = dClock;
+		        
+	            type( v, u ) = TREE;//引入树边，拓展BFS树
+	            parent( u ) = v; 
+	    } else //若u已被发现，或者甚至已访问完毕，则
+	        type( v, u ) = CROSS; //将(v, u)归类于跨边
+	    
+	    status( v ) = VISITED; 
+	    fTime( v ) = fClock++; //至此，v访问完毕
+	} //for
+} //BFS
+```
+
+#### 实例
+![[80A-Graph-bfs-instance.png]]
+
+BFS 过程中顶点的状态：
+- UNDISCOVERED：邻居顶点未发现
+- DISCOVERED：邻居顶点已发现
+- VISITED：顶点已通过 BFS 遍历完毕
+- dTime：顶点离开队列的时间——代表着顶点已访问完毕的时间
+
+BFS 过程中边的类型：
+- CROSS：跨边，表示顶点的邻居 u 已经被发现或访问完毕（已出队）
+- TREE：树边，表示 BFS 的结果——BFS-Tree 中的一条边
+#### 推广：对全图（多个连通分量的遍历）
+**连通分量**：在给定无向图中，找出其中任一顶点 s 所在的连通图；
+**可达分量**：在给定有向图中，找出源自其中任一顶点 s 的可到达分量；
+
+实现思路：从 s 出发作 BFS，输出所有被发现的顶点，队列空后立即中止，无需考虑其它顶点。
+
+若图中包含多个连通/可达分量，如何对全图进行 BFS？
+```
+template <typename Tv, typename Te> //广度优先搜索BFS算法（全图）
+void Graph<Tv, Te>::bfs( Rank s ) { // s < n
+	reset(); Rank dClock = 0; //全图复位
+	for ( Rank v = s; v < s + n; v++ ) //从s起顺次检查所有顶点
+	    if ( UNDISCOVERED == status( v % n ) ) //一旦遇到尚未发现者
+	        BFS( v % n, dClock ); //即从它出发启动一次BFS
+} //如此可完整覆盖全图，且总体复杂度依然保持为O(n+e)
+```
+- 复杂度（考查无向图）：
+	- bfs ()初始化的 reset ()：O (n+e)
+	- BFS ()的迭代：
+		- 外循环（`while (!Q.empty)`）每个顶点各进入 1 次，
+		- 内循环（枚举 v 的每个邻居）：O (1+deg (v)) //邻接表
+		- 故总共 $O\left(\sum\limits_{v\in V}(1+deg(v))\right)=O(n+2e)$ 
+	- 整个算法：O (n+e)+O (n+2e)=O (n+e)
+	- 有向图亦是如此！
+
+#### 性质与应用
+##### 边分类
+- 经 BFS 后，所有边将确定方向且被分为两类：
+	- (v, u)被标记为 TREE 时，v 为 DISCOVERED 而 u 为 UNDISCOVERED
+		- ![[80A-Graph-bfs-TREE.png]]
+	- (v, u)被标记为 CROSS 时，v 和 u 均为 DISCOVERED 或 v 为 DISCOVERED 而 u 为 VISITED
+		- ![[80A-Graph-bfs-CROSS.png]]
+
+##### BFS-Tree/Forest
+- 对于起始于 v 的每一连通分量/可达分量，bfs() 进入 BFS(v)恰好 1 次
+- 进入 BFS (v)时，队列为空，v 所属分量内的每个顶点
+	- 迟早会已 UNDISCOVERED 状态入队一次，
+	- 入队后随机转化为 DISCOVERED 状态并生成一条树边，
+	- 且迟早会出队且将 v 转换为 VISITED 状态，
+	- 同样退出 BFS (v)时队列也为空
+- BFS (v)以 v 为根，生成一棵 BFS-Tree
+- bfs ()生成一个 BFS 森林，包含 c 棵树、n-c 条树边、e-n+c 条跨边
+
+##### 最短路径
+- 无向图中，将顶点 v 到 u 的距离记作 dist (v, u)，在 v 的视角里，简记作 dist(u)，下面的描述就是这个意思
+- BFS 过程中，队列 Q 的变化如下：
+	- 队列中的顶点按照 dist (s)单调非递减（非递增当然也可以）排列
+	- 相邻顶点的 dist (s)相差不超过 1
+	- 首、末顶点的 dist (s)相差不超过 1 （意思是队列中始终保持在相邻的层次内遍历）
+	- 由树边连接的顶点，dist (s)恰好差 1     ⭐
+	- 由跨边连接的顶点，dist (s)至多相差 1   ⭐
+	- ![[D3F0A6433A895224023A791DF399F561.png]]
+- BFS-Tree 中从 s 到达 v 的路径，即是二者在原图中最短的通路
+
+##### Erdős number
+[Erdős number - Wikipedia](https://en.wikipedia.org/wiki/Erd%C5%91s_number)
+描述协作距离
+
+##### Chow Number
+[Chow-Number](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/index.htm)：一道 thu-oj 的题目：
+![[80A-Graph-app-chow-number.png]]
+
+周星驰（Stephen Chow）似乎已成为了当今校园文化的代名词了。
+
+这不，即使是影视圈的明星们，也开始通过” 周数 “（Chow Number）来衡量自己的艺术水准和文化品味了。
+
+所谓的 “周数” 是一个（随时间不增）的函数：
+```
+chow() : {所有人}  ├→  {0, 1, 2, ..., ∞}
+
+具体的：
+
+1. chow(周星驰) = 0；
+
+2. chow(x) = 1 + min( {∞} U {chow(a) | x 与 a 一起拍过某部电影 } )，x ≠ 周星驰。
+```
+- 任务：不幸的是，大多数急于知道自己的 Chow Number 的人，确实很难坐下来亲自计算一下（他们太忙，另外...）。作为一名正在学习数据结构的星星的影迷，你是否觉得有责任来编写[一个程序](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/chownumber.exe)帮助他们？你编写的程序需要提供以下功能：
+	1. 根据给定的影片数据库，建立有效的数据结构；
+	2. 对给定的影星[名单]( http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/stars.dat "这是一个没法再短的名单")，计算出他 / 她们的周数，并且给出相应的信息；
+	3. 能够处理一定规模的影片数据库（这里提供这样的一个[样例数据库]( http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/films.dat "实际上，这个的数据库的规模顶多可以称为“微型”")）；
+	4. 有一定的计算速度；
+	5. 程序健壮。
+
+- 例子
+
+%  [chownumber](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/chownumber.exe "你的输出是什么样的？与这个程序对照一下吧。") [films.dat](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/films.dat "这是一个没法再小的数据库") [stars.dat](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/stars.dat "这是一个没法再短的名单") > [stars.chow](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/stars.chow "运行结果")
+
+- 实现提示
+
+这里已经准备好了一个[数据库](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/films.dat "仅供调试用")，里面有 “所有” 影片的信息。
+
+即使对这样小规模的数据，如果直接搜索，程序的速度也很难令人满意，因此这样的实现将不能得分。
+
+幸运的是，最短路径的数据结构及算法可以帮助你：将所有影星表示为图的顶点，在任何曾经合作过的两位影星之间构造一条弧。
+
+如果弧的权值统一为 1，那么一个影星的周数实际就是他 / 她在图中到周星驰的最短路径长。
+
+任务要求的就是找到这样一条最短路径，并输出沿途各弧（合作影片）的信息。
+
+- 速度测试
+
+你可以将自己程序的速度与这个程序对比一下：
+
+% [chownumber](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/chownumber.exe "你的输出是什么样的？与这个程序对照一下吧。") [films.dat](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/films.dat "还是那个小小的数据库")  [allstars.dat](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/allstars.dat "这次，明星稍微多些") > [allstars.chow](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/allstars.chow "运行结果")
+
+注意，要通过重定向将输出直接记入某个文件，否则，屏幕输出本身就会占用绝大部分时间。
+
+- 附加功能
+
+如果你关心的不止是周数，是否要为每位明星都写一个程序呢？
+
+试编写一个通用的程序。比如：
+
+% [chownumber](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/chownumber.exe "你的输出是什么样的？与这个程序对照一下吧。") [films.dat](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/films.dat "还是那个小小的数据库")  [allstars.dat](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/allstars.dat "这次，明星稍微多些") 孙海鹰 > [sunhaiying.chow](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/sunhaiying.chow "孙海鹰")
+
+或者
+
+% [chownumber]( http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/chownumber.exe "你的输出是什么样的？与这个程序对照一下吧。") [films.dat]( http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/films.dat "还是那个小小的数据库")  [allstars.dat]( http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/allstars.dat "这次，明星稍微多些") 张国荣 > [gege.chow]( http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/gege.chow "张国荣")
+
+##### 二分图
+Bipartite Graph
+
+##### 图的偏心率、半径、直径、中心
+![[50B-二叉树应用]]
+
+### 深度优先搜索

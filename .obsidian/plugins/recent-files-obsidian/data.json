@@ -5,6 +5,14 @@
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md"
     },
     {
+      "basename": "50B-二叉树应用",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50B-二叉树应用.md"
+    },
+    {
+      "basename": "50-Tree",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md"
+    },
+    {
       "basename": "81-Adjacency-multilist",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Adjacency-multilist.md"
     },
@@ -175,10 +183,6 @@
     {
       "basename": "61A-Exercise",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61A-Exercise.md"
-    },
-    {
-      "basename": "50-Tree",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md"
     },
     {
       "basename": "60A-Binary_Search_Tree",
