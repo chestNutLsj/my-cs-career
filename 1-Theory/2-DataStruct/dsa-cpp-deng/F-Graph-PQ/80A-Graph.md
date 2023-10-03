@@ -437,7 +437,7 @@ BFS 过程中顶点的状态：
 BFS 过程中边的类型：
 - CROSS：跨边，表示顶点的邻居 u 已经被发现或访问完毕（已出队）
 - TREE：树边，表示 BFS 的结果——BFS-Tree 中的一条边
-#### 推广：对全图（多个连通分量的遍历）
+#### 推广：全图BFS
 **连通分量**：在给定无向图中，找出其中任一顶点 s 所在的连通图；
 **可达分量**：在给定有向图中，找出源自其中任一顶点 s 的可到达分量；
 
@@ -570,19 +570,11 @@ Bipartite Graph
 	- 否则，返回
 - 若此时尚有节点未被访问，则任取一个顶点作起始点，重复上述过程直到所有顶点都被访问到
 
-以上策略完全等效于树的先序遍历，DFS 也会构造出原树的一棵支撑树——DFS-Tree：
+以上策略完全等效于树的先序遍历，DFS 也会构造出原树的一棵支撑树—— [[#DFS-Tree/Forest|DFS-Tree]]：
 ![[80A-Graph-dfs-tree.png]]
 
 #### 实现
 ```
-template <typename Tv, typename Te> //深度优先搜索DFS算法（全图）
-void Graph<Tv, Te>::dfs( Rank s ) { // s < n
-   reset(); Rank clock = 0; //全图复位
-   for ( Rank v = s; v < s + n; v++ ) //从s起顺次检查所有顶点
-      if ( UNDISCOVERED == status( v % n ) ) //一旦遇到尚未发现者
-         DFS( v % n, clock ); //即从它出发启动一次DFS
-} //如此可完整覆盖全图，且总体复杂度依然保持为O(n+e)
-
 //深度优先搜索DFS算法（单个连通域）
 template <typename Tv, typename Te> 
 void Graph<Tv, Te>::DFS( Rank v, Rank& clock ) { // v < n
@@ -606,9 +598,13 @@ void Graph<Tv, Te>::DFS( Rank v, Rank& clock ) { // v < n
 ```
 
 - 注意在设置 v 点的 dTime 时，使用的是 `clock++` 语句，与 BFS 中区分 dClock 和 fClock 不同，这表明 DFS 中 dTime 和 fTime 都使用统一的时钟，并且起点 v 的 dClock——发现时间是从 0 开始计数；
-- 如果发现邻居 u 是 UNDISCOVERED 状态，则将<v, u>设置为树边、u 的父亲设置为 v——为构造 DFSTree 作准备；
+- 如果发现邻居 u 是 UNDISCOVERED 状态，则将<v, u>设置为树边、u 的父亲设置为 v——为构造 DFSTree 作准备；并继续对 u 进行递归 DFS，clock 传递下去，因此 u 的 dTime 设置为 1；
+- 如果发现 u 是 DISCOVERED 状态，表明 u 已被发现但尚未访问完毕（访问完毕应当是 VISITED 状态），则标记<v, u>为后向边 BACKWARD，并查找下一个邻居；若所有邻居都访问完毕，则设置为 VISITED，并设置 fTime 为 clock++；此后回退递归栈，直到栈顶元素有邻居；
+	- ![[80A-Graph-dfs-backward.png]]
+- 如果发现 u 是 VISITED 状态，表明 u 已经访问完毕，其所有邻居（除父亲）都被访问结束，则根据 dTime 被访问时间的先后，设定<v, u>为前向边 FORWORD 抑或跨边 CROSS
  
 #### 实例
+##### 无向图
 ![[80A-Graph-dfs-instance1.png]]
 
 ![[80A-Graph-dfs-instance2.png]]
@@ -620,8 +616,66 @@ DFS 过程中顶点的状态：
 - dTime：顶点被发现的时间
 - fTime：顶点被访问完毕的时间
 
-DFS 过程中边的状态：
-- TREE
-- CROSS
-- FORWARD：
-- BACKWARD：表明边的目的点 u 已被发现，但是还未访问完毕（访问完毕的意思是对 u 的 DFS 已经返回）
+- DFS 过程中边的状态： ^562460
+	- TREE
+	- CROSS：表明边的目的点 u 已经访问完毕，但是当前节点的发现时间晚于 u，这通常出现在有向图中，从 DFSTree 的角度看，当前节点 v 是较上溯到公共祖先的另一支子树中目标节点 u 的深度更深；
+	- FORWARD：表明边的目的点 u 已经访问完毕，并且当前节点的发现时间还要早于 u，这通常出现在有向图中，从 DFSTree 的角度看，当前节点 v 是较上溯到公共祖先的另一支子树中目标节点 u 的深度更浅；
+	- BACKWARD：表明边的目的点 u 已被发现，但是还未访问完毕，从 DFSTree 的角度来看，BACKWARD 表明从树的低层向祖先的指向的边；
+
+##### 有向图
+![[80A-Graph-dfs-directed-graph-instance1.png]]
+- 注意到 A->c 时 c 已经访问完毕，而 dTime (A)<dTime (c)，表明 a 的深度较浅，由此<a, c>是一条FORWARD前向边；
+
+![[80A-Graph-dfs-directed-graph-instance2.png]]
+- 注意到此处 G->a 的 BACKWARD 出现了 loop，表明 a->f->g 构成了一条环路；
+- 而 G->c 时，c 已访问完毕，且 dTime (G)>dTime (c)，表明 G 的深度更深，由此<g, c>是一条 CROSS 跨边；
+
+![[80A-Graph-dfs-directed-graph-instance3.png]]
+- 注意到此时 a 所属的连通分量已经访问完毕，但是全图仍有未访问节点，于是根据邻接表找到它们，进行 dfs 全局遍历；
+- 对后访问的连通分量，其指向前一个访问完毕的连通分量的边都是 CROSS 跨边；
+
+![[80A-Graph-dfs-directed-graph-instance4.png]]
+
+#### 推广：全图DFS
+```
+//深度优先搜索DFS算法（全图）
+template <typename Tv, typename Te>
+void Graph<Tv, Te>::dfs( Rank s ) { // s < n
+	reset(); Rank clock = 0; //全图复位
+	for ( Rank v = s; v < s + n; v++ ) //从s起顺次检查所有顶点
+	    if ( UNDISCOVERED == status( v % n ) ) //一旦遇到尚未发现者
+	        DFS( v % n, clock ); //即从它出发启动一次DFS
+} //如此可完整覆盖全图，且总体复杂度依然保持为O(n+e)
+```
+
+- 与 bfs 之于 BFS 类似，dfs 也采用邻接表策略，可在累计 O (n+e)时间内，
+	- 对每一连通/可达分量，从其其实顶点 v 进入 DFS (v)恰好一次，
+	- 最终生成一个 DFS 森林，包含 c 棵树，n-c 条树边；
+
+#### 性质与应用
+##### DFS-Tree/Forest
+从顶点 s 出发的 DFS 
+- 在无向图中将访问与 s 连通的所有顶点（connectivity）
+- 在有向图中将访问由 s 可达的所有顶点（reachability）
+
+经 DFS 确定的树边，不会构成回路（回想树是极大无环图）：
+- 从 s 出发的 DFS，将以 s 为根生成一棵 DFS 树；
+- 所有 DFS 树，进而构成 DFS 森林
+- DFS 树及森林由 parent 指针描述（只不过所有边取反向） 
+
+#### 括号引理
+在有向图 DFS 的实例中，
+- 若从 a 开始 DFS 可以得到的 DFS-Tree 是这样：
+	- ![[80A-Graph-dfs-directed-graph-fromA.png]]
+
+- 若从 d 开始 DFS，得到的 DFS-Tree 则是这样：
+	- ![[80A-Graph-dfs-directed-graph-fromD.png]]
+
+
+
+#### 边分类
+![[80A-Graph-edge-kinds.png]]
+我的笔记更完善：[[#^562460|DFS过程中边的状态]]
+
+### 何时选用 BFS/DFS？
+![[80A-Graph-when-bfs-dfs?.png]]
