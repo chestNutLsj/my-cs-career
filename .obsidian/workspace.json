@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "2be6d17c2dc201db",
+        "id": "4687ec37708749ce",
         "type": "tabs",
         "children": [
           {
-            "id": "0628016c01069a8c",
+            "id": "25fae44f014066e9",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -84,7 +84,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 223.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -100,6 +100,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,6 +117,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -142,7 +144,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md"
+              }
             }
           },
           {
@@ -157,8 +161,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -177,8 +180,32 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "0628016c01069a8c",
+  "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
+    "1-Theory/6-Network/Top-to-down/practice",
+    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-protocal.png",
+    "1-Theory/6-Network/Top-to-down/assets",
+    "1-Theory/6-Network/Top-to-down/chapter0.md",
+    "1-Theory/6-Network/Top-to-down/chapter6.md",
+    "1-Theory/6-Network/Top-to-down/chapter5.md",
+    "1-Theory/6-Network/Top-to-down/chapter4.md",
+    "1-Theory/6-Network/Top-to-down/chapter3.md",
+    "1-Theory/6-Network/Top-to-down/chapter2.md",
+    "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
+    "1-Theory/6-Network/THU-Xu/精简版PPT.pdf",
+    "1-Theory/6-Network/Data-communication-and-network/DCN-summary.pdf",
+    "1-Theory/6-Network/THU-Xu/期末复习提纲.pdf",
+    "1-Theory/6-Network/Data-communication-and-network/10-绪论-物理层.md",
+    "1-Theory/6-Network/THU-Xu",
+    "1-Theory/6-Network/Data-communication-and-network/CS-Network-Review-and-Summary.md",
+    "1-Theory/6-Network/Data-communication-and-network/20-数据链路层.md",
+    "1-Theory/6-Network/Data-communication-and-network/30-网络层.md",
+    "1-Theory/6-Network/Data-communication-and-network/40-传输层.md",
+    "1-Theory/6-Network/Data-communication-and-network/50-应用层.md",
+    "1-Theory/6-Network/Data-communication-and-network/期末复习（2）.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/10-绪论.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote",
+    "1-Theory/6-Network/Data-communication-and-network/CS-Network-summary.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md",
     "1-Theory/4-Architecture/CSAPP/Keypoints/60-Memory-hierarchy.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
@@ -193,12 +220,6 @@
     "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/00-AppEE-Overview.md",
     "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/00-Batch-Overview.md",
     "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/00-Multiprog-Overview.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Memory-management-Overview.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/00-Process-Overview.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80B-Graph-application.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Adjacency-multilist.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-bipartite-graph.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-fromD.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-fromA.png",
@@ -206,26 +227,8 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-when-bfs-dfs?.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-instance4.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-instance3.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-instance2.png",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system",
-    "1-Theory/5-OS-principle/rCore-tutorial/practice/5-进程.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
-    "1-Theory/2-DataStruct/Practice/使用队列和栈进行选择排序.md",
-    "1-Theory/2-DataStruct/Practice/assets",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50B-二叉树应用.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
     "MyHome.canvas",
-    "1-Theory/4-Architecture/408&&912/第4章+存储系统.md",
-    "1-Theory/3-Algorithm/Algo4-in-Java",
-    "1-Theory/3-Algorithm/Intro-of-algo",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70B-Hash-application.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/30-Manage-mechanism.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/20-Core-structure-for-management.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/71-Exercise.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/assets",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets",
     "未命名.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",

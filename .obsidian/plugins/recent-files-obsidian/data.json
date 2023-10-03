@@ -1,6 +1,46 @@
 {
   "recentFiles": [
     {
+      "basename": "10-Intro-of-Network-and-Internet",
+      "path": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md"
+    },
+    {
+      "basename": "精简版PPT",
+      "path": "1-Theory/6-Network/THU-Xu/精简版PPT.pdf"
+    },
+    {
+      "basename": "DCN-summary",
+      "path": "1-Theory/6-Network/Data-communication-and-network/DCN-summary.pdf"
+    },
+    {
+      "basename": "期末复习提纲",
+      "path": "1-Theory/6-Network/THU-Xu/期末复习提纲.pdf"
+    },
+    {
+      "basename": "10-绪论-物理层",
+      "path": "1-Theory/6-Network/Data-communication-and-network/10-绪论-物理层.md"
+    },
+    {
+      "basename": "20-数据链路层",
+      "path": "1-Theory/6-Network/Data-communication-and-network/20-数据链路层.md"
+    },
+    {
+      "basename": "30-网络层",
+      "path": "1-Theory/6-Network/Data-communication-and-network/30-网络层.md"
+    },
+    {
+      "basename": "40-传输层",
+      "path": "1-Theory/6-Network/Data-communication-and-network/40-传输层.md"
+    },
+    {
+      "basename": "50-应用层",
+      "path": "1-Theory/6-Network/Data-communication-and-network/50-应用层.md"
+    },
+    {
+      "basename": "10-绪论",
+      "path": "1-Theory/6-Network/Data-communication-and-network/Mynote/10-绪论.md"
+    },
+    {
       "basename": "60D-BBST-BTree",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md"
     },
@@ -159,46 +199,6 @@
     {
       "basename": "50-Optimizing-program-performance",
       "path": "1-Theory/4-Architecture/CSAPP/Keypoints/50-Optimizing-program-performance.md"
-    },
-    {
-      "basename": "00-课程准备与介绍",
-      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/00-课程准备与介绍.md"
-    },
-    {
-      "basename": "4-地址空间",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/practice/4-地址空间.md"
-    },
-    {
-      "basename": "40-内存与虚存",
-      "path": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md"
-    },
-    {
-      "basename": "70-Beyond-physical-memory",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/70-Beyond-physical-memory.md"
-    },
-    {
-      "basename": "60-Time-sharing-multitask-based-on-address-space",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md"
-    },
-    {
-      "basename": "61B-Exercise",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61B-Exercise.md"
-    },
-    {
-      "basename": "60E-BBST-Red-black-tree",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md"
-    },
-    {
-      "basename": "63-Height-BBST-vs-Weight-BBST",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/63-Height-BBST-vs-Weight-BBST.md"
-    },
-    {
-      "basename": "62-B*Tree",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-B*Tree.md"
-    },
-    {
-      "basename": "60C-BBST-Splay-tree",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60C-BBST-Splay-tree.md"
     }
   ],
   "omittedPaths": [],
