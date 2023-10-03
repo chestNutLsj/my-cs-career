@@ -395,7 +395,8 @@ void CreateDG(OLGraph *G){
 
 #### 实现
 ```
-template <typename Tv, typename Te> //广度优先搜索BFS算法（单个连通域）
+//广度优先搜索BFS算法（单个连通域）
+template <typename Tv, typename Te> 
 void Graph<Tv, Te>::BFS( Rank v, Rank& dClock ) { // v < n
 	Queue<Rank> Q;
 	status( v ) = DISCOVERED; 
@@ -430,7 +431,8 @@ BFS 过程中顶点的状态：
 - UNDISCOVERED：邻居顶点未发现
 - DISCOVERED：邻居顶点已发现
 - VISITED：顶点已通过 BFS 遍历完毕
-- dTime：顶点离开队列的时间——代表着顶点已访问完毕的时间
+- dTime：顶点进入队列的时间——代表着顶点刚被发现的时间
+- fTime：顶点离开队列的时间——代表顶点被访问完毕的时间
 
 BFS 过程中边的类型：
 - CROSS：跨边，表示顶点的邻居 u 已经被发现或访问完毕（已出队）
@@ -561,3 +563,65 @@ Bipartite Graph
 ![[50B-二叉树应用]]
 
 ### 深度优先搜索
+#### 思路
+始自顶点 s 进行 DFS：
+- 访问顶点s
+	- 若 s 尚有未被访问的邻居，则任取其一作为 u，递归执行 DFS (u)
+	- 否则，返回
+- 若此时尚有节点未被访问，则任取一个顶点作起始点，重复上述过程直到所有顶点都被访问到
+
+以上策略完全等效于树的先序遍历，DFS 也会构造出原树的一棵支撑树——DFS-Tree：
+![[80A-Graph-dfs-tree.png]]
+
+#### 实现
+```
+template <typename Tv, typename Te> //深度优先搜索DFS算法（全图）
+void Graph<Tv, Te>::dfs( Rank s ) { // s < n
+   reset(); Rank clock = 0; //全图复位
+   for ( Rank v = s; v < s + n; v++ ) //从s起顺次检查所有顶点
+      if ( UNDISCOVERED == status( v % n ) ) //一旦遇到尚未发现者
+         DFS( v % n, clock ); //即从它出发启动一次DFS
+} //如此可完整覆盖全图，且总体复杂度依然保持为O(n+e)
+
+//深度优先搜索DFS算法（单个连通域）
+template <typename Tv, typename Te> 
+void Graph<Tv, Te>::DFS( Rank v, Rank& clock ) { // v < n
+	dTime( v ) = clock++;
+	status( v ) = DISCOVERED; //发现当前顶点v
+	for ( Rank u = firstNbr( v ); - 1 != u; u = nextNbr( v, u ) ) //考查v的每一个邻居u
+	    switch ( status( u ) ) { //并视其状态分别处理
+	        case UNDISCOVERED : // u尚未发现，意味着支撑树可在此拓展
+		        type( v, u ) = TREE; 
+		        parent( u ) = v; 
+		        DFS( u, clock ); break;
+	        case DISCOVERED : // u已被发现但尚未访问完毕，应属被后代指向的祖先
+	            type( v, u ) = BACKWARD; 
+	            break;
+	        default : // u已访问完毕（VISITED，有向图），则视承袭关系分为前向边或跨边
+	            type( v, u ) = ( dTime( v ) < dTime( u ) ) ? FORWARD : CROSS; break;
+	    }
+	status( v ) = VISITED; 
+	fTime( v ) = clock++; //至此，当前顶点v方告访问完毕
+}
+```
+
+- 注意在设置 v 点的 dTime 时，使用的是 `clock++` 语句，与 BFS 中区分 dClock 和 fClock 不同，这表明 DFS 中 dTime 和 fTime 都使用统一的时钟，并且起点 v 的 dClock——发现时间是从 0 开始计数；
+- 如果发现邻居 u 是 UNDISCOVERED 状态，则将<v, u>设置为树边、u 的父亲设置为 v——为构造 DFSTree 作准备；
+ 
+#### 实例
+![[80A-Graph-dfs-instance1.png]]
+
+![[80A-Graph-dfs-instance2.png]]
+
+DFS 过程中顶点的状态：
+- UNDISCOVERED
+- DISCOVERED
+- VISITED
+- dTime：顶点被发现的时间
+- fTime：顶点被访问完毕的时间
+
+DFS 过程中边的状态：
+- TREE
+- CROSS
+- FORWARD：
+- BACKWARD：表明边的目的点 u 已被发现，但是还未访问完毕（访问完毕的意思是对 u 的 DFS 已经返回）
