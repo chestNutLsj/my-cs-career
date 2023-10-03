@@ -522,7 +522,7 @@ pub fn current_trap_cx() -> &'static mut TrapContext {
 
 ### 任务调度的 idle 控制流
 
-> `Processor` 有一个不同的 [[1-Theory/5-OS-principle/rCore-tutorial/5-Process/00-Overview#^1e3313|idle 控制流]]，它运行在这个 CPU 核的启动栈上，功能是尝试从任务管理器中选出一个任务来在当前 CPU 核上执行。在内核初始化完毕之后，会通过调用 `run_tasks` 函数来进入 idle 控制流：
+> `Processor` 有一个不同的 [[00-Process-Overview#^1e3313|idle 控制流]]，它运行在这个 CPU 核的启动栈上，功能是尝试从任务管理器中选出一个任务来在当前 CPU 核上执行。在内核初始化完毕之后，会通过调用 `run_tasks` 函数来进入 idle 控制流：
 ```
 // os/src/task/processor.rs
 

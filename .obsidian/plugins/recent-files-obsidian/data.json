@@ -1,6 +1,34 @@
 {
   "recentFiles": [
     {
+      "basename": "00-FS-Overview",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/00-FS-Overview.md"
+    },
+    {
+      "basename": "00-Course-overview",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/0-OS-overview/00-Course-overview.md"
+    },
+    {
+      "basename": "00-AppEE-Overview",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/00-AppEE-Overview.md"
+    },
+    {
+      "basename": "00-Batch-Overview",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/00-Batch-Overview.md"
+    },
+    {
+      "basename": "00-Multiprog-Overview",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/00-Multiprog-Overview.md"
+    },
+    {
+      "basename": "00-Memory-management-Overview",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Memory-management-Overview.md"
+    },
+    {
+      "basename": "00-Process-Overview",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/00-Process-Overview.md"
+    },
+    {
       "basename": "80B-Graph-application",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80B-Graph-application.md"
     },
@@ -15,10 +43,6 @@
     {
       "basename": "80A-Graph",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md"
-    },
-    {
-      "basename": "00-FS-overview",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/00-FS-overview.md"
     },
     {
       "basename": "5-进程",
@@ -55,10 +79,6 @@
     {
       "basename": "30-Manage-mechanism",
       "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/30-Manage-mechanism.md"
-    },
-    {
-      "basename": "00-Overview",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/00-Overview.md"
     },
     {
       "basename": "20-Core-structure-for-management",
@@ -133,10 +153,6 @@
       "path": "1-Theory/4-Architecture/CSAPP/Keypoints/00-课程准备与介绍.md"
     },
     {
-      "basename": "00-Overview",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Overview.md"
-    },
-    {
       "basename": "4-地址空间",
       "path": "1-Theory/5-OS-principle/rCore-tutorial/practice/4-地址空间.md"
     },
@@ -179,26 +195,6 @@
     {
       "basename": "10-Rust-dynamic-mem-allocate",
       "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/10-Rust-dynamic-mem-allocate.md"
-    },
-    {
-      "basename": "50-Address-space-of-kernel-and-app",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/50-Address-space-of-kernel-and-app.md"
-    },
-    {
-      "basename": "B-常见工具的使用方法",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/Appendix/B-常见工具的使用方法.md"
-    },
-    {
-      "basename": "README",
-      "path": "README.md"
-    },
-    {
-      "basename": "MMU",
-      "path": "1-Theory/4-Architecture/408&&912/MMU.md"
-    },
-    {
-      "basename": "60B-Balanced-BST-AVL",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60B-Balanced-BST-AVL.md"
     }
   ],
   "omittedPaths": [],
