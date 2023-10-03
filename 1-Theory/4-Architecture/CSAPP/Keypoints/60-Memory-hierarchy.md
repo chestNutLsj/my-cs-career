@@ -20,7 +20,7 @@
 
 ![](https://1484576603-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MV9vJFv4kmvRLgEog6g%2F-MXeOB-jU-VHYC6KPWGP%2F-MXeOT3F1T9QAzbSeIzJ%2F%E6%8D%95%E8%8E%B7.PNG?alt=media&token=53099813-3d6d-4414-94d2-dcf32a71a137)
 
-**磁盘的访问为什么那么慢？**想一想它的物理特性，寻道时间是机械移动的时间，很难再有突破，怎么办？
+**磁盘的访问为什么那么慢？** 想一想它的物理特性，寻道时间是机械移动的时间，很难再有突破，怎么办？
 
 ![](https://1484576603-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MV9vJFv4kmvRLgEog6g%2F-MXdrCpRD_lQ1mT_Atvl%2F-MXdt0mFt04BGwNzNgob%2F%E6%8D%95%E8%8E%B71_%E5%89%AF%E6%9C%AC.png?alt=media&token=3f7b8908-3f81-4b91-a98c-091301d7a595)
 

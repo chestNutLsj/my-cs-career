@@ -286,6 +286,13 @@
               "path": "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/40-Time-sharing-preemptive.md",
               "subpath": "#^9359cd",
               "title": "第三章新增syscall-sys_get_time"
+            },
+            {
+              "type": "file",
+              "ctime": 1696323258560,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/10-Interface.md",
+              "subpath": "#文件打开",
+              "title": "sys_open"
             }
           ],
           "title": "syscall"

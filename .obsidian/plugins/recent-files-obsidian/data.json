@@ -1,6 +1,22 @@
 {
   "recentFiles": [
     {
+      "basename": "60D-BBST-BTree",
+      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md"
+    },
+    {
+      "basename": "60-Memory-hierarchy",
+      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/60-Memory-hierarchy.md"
+    },
+    {
+      "basename": "20-Easyfs",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md"
+    },
+    {
+      "basename": "10-Interface",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/10-Interface.md"
+    },
+    {
       "basename": "00-FS-Overview",
       "path": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/00-FS-Overview.md"
     },
@@ -133,10 +149,6 @@
       "path": "0-Assets/Excalidraw/prime&bucket.md"
     },
     {
-      "basename": "60-Memory-hierarchy",
-      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/60-Memory-hierarchy.md"
-    },
-    {
       "basename": "32-GDB简单使用",
       "path": "1-Theory/4-Architecture/CSAPP/Keypoints/32-GDB简单使用.md"
     },
@@ -177,10 +189,6 @@
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md"
     },
     {
-      "basename": "60D-BBST-BTree",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md"
-    },
-    {
       "basename": "63-Height-BBST-vs-Weight-BBST",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/63-Height-BBST-vs-Weight-BBST.md"
     },
@@ -191,10 +199,6 @@
     {
       "basename": "60C-BBST-Splay-tree",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60C-BBST-Splay-tree.md"
-    },
-    {
-      "basename": "10-Rust-dynamic-mem-allocate",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/10-Rust-dynamic-mem-allocate.md"
     }
   ],
   "omittedPaths": [],

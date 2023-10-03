@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "2eb0c8570c7e4444",
+        "id": "2be6d17c2dc201db",
         "type": "tabs",
         "children": [
           {
-            "id": "bb4a8b2e957e1dca",
+            "id": "0628016c01069a8c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/00-FS-Overview.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -88,8 +84,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -105,7 +100,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/00-FS-Overview.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +116,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/00-FS-Overview.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,9 +142,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/00-FS-Overview.md"
-              }
+              "state": {}
             }
           },
           {
@@ -186,12 +177,16 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "bb4a8b2e957e1dca",
+  "active": "0628016c01069a8c",
   "lastOpenFiles": [
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/60-Memory-hierarchy.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/10-Interface.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/00-FS-Overview.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/assets/fsos-fsdisk.png",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/assets/00-FS-Overview-fsos-fsdisk.png",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/assets/fsos-fsdisk.png.crdownload",
-    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/00-FS-Overview.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/assets/00-FS-Overview-fsos-fsdisk.png.crdownload",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/assets",
     "1-Theory/5-OS-principle/rCore-tutorial/0-OS-overview/00-Course-overview.md",
@@ -212,7 +207,6 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-instance4.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-instance3.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-instance2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-instance1.png",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system",
     "1-Theory/5-OS-principle/rCore-tutorial/practice/5-进程.md",
     "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
@@ -230,9 +224,6 @@
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/20-Core-structure-for-management.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/71-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70A-Hash.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/practice/0-操作系统概述.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Concepts-and-syscall.md",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets",
     "未命名.canvas",
