@@ -23,7 +23,7 @@ G=(V; E):
 - 简单路径：vi != vj 除非 i = j 
 - 环/环路：v0 = vk 
 - 有向无环图（DAG）:
-	- 欧拉环路：| $\pi$ | = |E| 各边恰好出现一次
+	- 欧拉环路：| $\pi$ | = |E| 各边恰好出现一次 ^e03e5a
 	- 哈密尔顿环路：| $\pi$ | = |V| 各顶点恰好出现一次
 	- 欧拉环路和哈密尔顿环路都不唯一
 
@@ -255,7 +255,7 @@ public:
 #### 空间复杂度
 - 有向图：O (n+e)
 - 无向图：O (n+2e)
-	- 无向弧被重复存储，若要改进，只需要...（[[81-Adjacency-multilist|邻接多重表]]）
+	- 无向弧被重复存储，若要改进，只需要...（[[82-Adjacency-multilist|邻接多重表]]）
 - 平面图：O (n+3n)
 
 #### 时间复杂度
@@ -379,7 +379,7 @@ void CreateDG(OLGraph *G){
 采用十字链表表示的有向图，在计算某顶点的出度时，为 firstout 域链表中结点的个数；入度为 firstin 域链表中结点的个数。
 
 ### 邻接多重表
-![[81-Adjacency-multilist]]
+![[82-Adjacency-multilist]]
 
 ## 图的遍历
 ### 广度优先搜索
@@ -558,7 +558,10 @@ chow() : {所有人}  ├→  {0, 1, 2, ..., ∞}
 
 ##### 二分图
 Bipartite Graph
+![[80A-Graph-bipartite-graph.png]]
+二分图又称作二部图，是图论中的一种特殊模型。
 
+设G=(V,E)是一个无向图，如果顶点V可分割为两个互不相交的子集(A,B)，并且图中的每条边（i，j）所关联的两个顶点i和j分别属于这两个不同的顶点集(i in A,j in B)，则称图G为一个二分图。
 ##### 图的偏心率、半径、直径、中心
 ![[50B-二叉树应用]]
 
@@ -671,7 +674,11 @@ void Graph<Tv, Te>::dfs( Rank s ) { // s < n
 - 若从 d 开始 DFS，得到的 DFS-Tree 则是这样：
 	- ![[80A-Graph-dfs-directed-graph-fromD.png]]
 
-
+若规定某个节点的活跃期为 $active[v]=(dTime[v],fTime[v])$，表明该节点从发现到访问结束的时间间隔，可以发现，对于有向图 G=(V, E)及其任一 DFS 森林，有：
+- 若 u 是 v 的后代，则 $active[u]\subseteq active[v]$ 
+- 若 u 是 v 的祖先，则 $active[u]\supseteq active[v]$ 
+- 若 u 与 v 无关，则 $active[u]\cap active[v]=\varnothing$ 
+- 这就是括号引理——仅凭 status、dTime 和 fTime 就可以对各边分类；
 
 #### 边分类
 ![[80A-Graph-edge-kinds.png]]
@@ -679,3 +686,21 @@ void Graph<Tv, Te>::dfs( Rank s ) { // s < n
 
 ### 何时选用 BFS/DFS？
 ![[80A-Graph-when-bfs-dfs?.png]]
+- 支撑树和支撑森林：都可以
+- 连通性检测：都可以
+- 顶点之间是否可达、路径是什么：都可以
+- 无向图是否存在环路：都可以
+	- BFS 出现 CROSS 的地方就说明有环路；
+	- DFS 出现 BACKWARD 也能说明有环路
+- 判断是否是二分图：都可以
+	- BFS
+
+- 有向图是否存在环路：只能 DFS，因为 BFS 没有 BACKWARD
+- 计算图是否构成[[#^e03e5a|欧拉回路]]：DFS
+- 给出图的拓扑排序：DFS，方便确定节点是否还有出度
+- 双连通分量、强连通分量的分解：DFS
+
+- 顶点之间的最短距离：
+	- BFS，每一层扩散算作 1 个距离，
+	- 而 DFS 一竿到底难以统计最短距离，只能得到可用的路径，由于访问邻居时比较随机，可能出现各种边，需要进一步讨论处理，比较麻烦；
+- 图的直径、半径、中心、偏心率：这些计算都依赖于最短距离，因此非 BFS 不可；

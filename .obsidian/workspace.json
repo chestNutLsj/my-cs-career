@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "099b54370928c36d",
+        "id": "45b12c3fe5e266b1",
         "type": "tabs",
         "children": [
           {
-            "id": "7891ce44dc105fad",
+            "id": "6ac50e562c63e079",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -105,7 +101,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +117,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,9 +143,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md"
-              }
+              "state": {}
             }
           },
           {
@@ -185,21 +177,22 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "7891ce44dc105fad",
+  "active": "6ac50e562c63e079",
   "lastOpenFiles": [
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80B-Graph-application.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Adjacency-multilist.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-bipartite-graph.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-fromD.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-fromA.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-edge-kinds.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-when-bfs-dfs?.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-instance4.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-instance3.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-instance2.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-instance1.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-backward.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-tree.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-instance2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80B-Graph-application.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/00-FS-overview.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system",
     "1-Theory/5-OS-principle/rCore-tutorial/practice/5-进程.md",
@@ -209,7 +202,6 @@
     "1-Theory/2-DataStruct/Practice/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50B-二叉树应用.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Adjacency-multilist.md",
     "MyHome.canvas",
     "1-Theory/4-Architecture/408&&912/第4章+存储系统.md",
     "1-Theory/3-Algorithm/Algo4-in-Java",
