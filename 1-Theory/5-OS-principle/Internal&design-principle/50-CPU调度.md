@@ -500,7 +500,7 @@ $$
 $$
 \frac{C_1}{T_1}+\frac{C_2}{T_2}+\dots+\frac{C_n}{T_{n}} \le n(2^{\frac{1}{n}}-1)
 $$
-考虑极限，$n \to \infty$ 时，上式上界为 $ln2 \approx 0.693$ 。
+考虑极限，$n \to \infty$ 时，上式上界为 $\ln 2 \approx 0.693$ 。
 
 ![[Pasted image 20230816152157.png]]
 

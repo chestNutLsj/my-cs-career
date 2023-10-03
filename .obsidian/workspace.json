@@ -4,31 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "8554ed9d4799f6e1",
+        "id": "12b7f6ab409349ab",
         "type": "tabs",
         "children": [
           {
-            "id": "5ef36a483e6f8121",
+            "id": "099555e2dbba747b",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "633b703dc302fc95",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Adjacency-multilist.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -43,7 +27,6 @@
       {
         "id": "b59937020c8d4ec4",
         "type": "tabs",
-        "dimension": 76.57841140529531,
         "children": [
           {
             "id": "3d3d978ac964e0aa",
@@ -79,6 +62,14 @@
             }
           },
           {
+            "id": "8ed71b685f84a34f",
+            "type": "leaf",
+            "state": {
+              "type": "recent-files",
+              "state": {}
+            }
+          },
+          {
             "id": "5019e4a770c657c5",
             "type": "leaf",
             "state": {
@@ -87,21 +78,6 @@
                 "sortOrder": "frequency",
                 "useHierarchy": true
               }
-            }
-          }
-        ]
-      },
-      {
-        "id": "2504204283e182e7",
-        "type": "tabs",
-        "dimension": 23.421588594704687,
-        "children": [
-          {
-            "id": "8ed71b685f84a34f",
-            "type": "leaf",
-            "state": {
-              "type": "recent-files",
-              "state": {}
             }
           }
         ]
@@ -125,7 +101,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -142,7 +117,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -169,9 +143,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md"
-              }
+              "state": {}
             }
           },
           {
@@ -186,11 +158,11 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
+      "omnisearch:Omnisearch": false,
       "canvas:新建白板": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
@@ -205,11 +177,21 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "5ef36a483e6f8121",
+  "active": "099555e2dbba747b",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/00-FS-overview.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system",
+    "1-Theory/5-OS-principle/rCore-tutorial/practice/5-进程.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
+    "1-Theory/2-DataStruct/Practice/使用队列和栈进行选择排序.md",
+    "1-Theory/2-DataStruct/Practice/assets/solu-2.jpg",
+    "1-Theory/2-DataStruct/Practice/assets/solu-1.jpg",
+    "1-Theory/2-DataStruct/Practice/assets/Cache_4476863c82cacf7c..jpg",
+    "1-Theory/2-DataStruct/Practice/assets",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-app-chow-number.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50B-二叉树应用.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/D3F0A6433A895224023A791DF399F561.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-bfs-CROSS.png",
@@ -218,15 +200,10 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-bfs-process.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-orthogonal-list-node.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Adjacency-multilist.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/81-Adjacency-multilist-instance.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/81-Adjacency-multilist-other-node.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/81-Adjacency-multiple-list-first-node.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-adjacency-list.png",
     "MyHome.canvas",
     "1-Theory/4-Architecture/408&&912/第4章+存储系统.md",
     "1-Theory/3-Algorithm/Algo4-in-Java",
     "1-Theory/3-Algorithm/Intro-of-algo",
-    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70B-Hash-application.md",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/30-Manage-mechanism.md",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/00-Overview.md",
@@ -246,14 +223,9 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets",
     "0-Assets/Excalidraw/prime&bucket.md",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/60-Memory-hierarchy.md",
-    "8-SimpRead/第 06 章：存储器层次结构 - CSAPP 重点解读/第 06 章：存储器层次结构 - CSAPP 重点解读.md",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/32-GDB简单使用.md",
     "8-SimpRead/第 06 章：存储器层次结构 - CSAPP 重点解读/assets",
     "8-SimpRead/第 06 章：存储器层次结构 - CSAPP 重点解读",
     "8-SimpRead/第 04 章：处理器体系结构 - CSAPP 重点解读/assets",
-    "8-SimpRead/第 04 章：处理器体系结构 - CSAPP 重点解读",
-    "1-Theory/4-Architecture/CSAPP/Keypoints",
     "未命名.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",

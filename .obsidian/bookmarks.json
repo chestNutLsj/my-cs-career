@@ -310,6 +310,20 @@
             }
           ],
           "title": "概念"
+        },
+        {
+          "type": "file",
+          "ctime": 1696257570879,
+          "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
+          "subpath": "#^439fb0",
+          "title": "Lottery调度"
+        },
+        {
+          "type": "file",
+          "ctime": 1696258321098,
+          "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
+          "subpath": "#^b901a9",
+          "title": "Stride调度"
         }
       ],
       "title": "rCore-tips"

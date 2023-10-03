@@ -15,7 +15,6 @@
   "obsidian-html-tags-autocomplete",
   "file-explorer-note-count",
   "obsidian-git",
-  "better-word-count",
   "oz-clear-unused-images",
   "obsidian-paste-image-rename",
   "mermaid-tools",
@@ -26,5 +25,7 @@
   "obsidian-footnotes",
   "obsidian-style-settings",
   "reading-comments",
-  "recent-files-obsidian"
+  "recent-files-obsidian",
+  "omnisearch",
+  "text-extractor"
 ]

@@ -1,6 +1,26 @@
 {
   "recentFiles": [
     {
+      "basename": "00-FS-overview",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/00-FS-overview.md"
+    },
+    {
+      "basename": "5-进程",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/practice/5-进程.md"
+    },
+    {
+      "basename": "50-CPU调度",
+      "path": "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md"
+    },
+    {
+      "basename": "40-Scheduling",
+      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md"
+    },
+    {
+      "basename": "使用队列和栈进行选择排序",
+      "path": "1-Theory/2-DataStruct/Practice/使用队列和栈进行选择排序.md"
+    },
+    {
       "basename": "80A-Graph",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md"
     },
@@ -19,10 +39,6 @@
     {
       "basename": "第4章+存储系统",
       "path": "1-Theory/4-Architecture/408&&912/第4章+存储系统.md"
-    },
-    {
-      "basename": "40-Scheduling",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md"
     },
     {
       "basename": "70B-Hash-application",
@@ -183,18 +199,6 @@
     {
       "basename": "61A-Exercise",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61A-Exercise.md"
-    },
-    {
-      "basename": "60A-Binary_Search_Tree",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60A-Binary_Search_Tree.md"
-    },
-    {
-      "basename": "40-Manage-SV39-multilevel-pagetable",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/40-Manage-SV39-multilevel-pagetable.md"
-    },
-    {
-      "basename": "30-SV39-multilevel-page-table",
-      "path": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/30-SV39-multilevel-page-table.md"
     }
   ],
   "omittedPaths": [],
