@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "4687ec37708749ce",
+        "id": "67d48da4bfee7204",
         "type": "tabs",
         "children": [
           {
-            "id": "25fae44f014066e9",
+            "id": "da4f1b79640f5f7e",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -100,7 +104,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -117,7 +121,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -145,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md"
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md"
               }
             }
           },
@@ -180,10 +184,23 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "da4f1b79640f5f7e",
   "lastOpenFiles": [
+    "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/operator-priority.pdf",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80C-GraphApp-MST-SPT.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-MST-SPT-dijkstra.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80B-GraphApp-TopoSort-BCC.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-bcc-instance3.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-bcc-instance2.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-bcc-instance1.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-bcc-internal-nodes.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-bcc-root.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-biconnected-components.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-bioconnected-graph.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-articulation-point.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-non-outdegree-topo.png",
     "1-Theory/6-Network/Top-to-down/practice",
-    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-protocal.png",
     "1-Theory/6-Network/Top-to-down/assets",
     "1-Theory/6-Network/Top-to-down/chapter0.md",
     "1-Theory/6-Network/Top-to-down/chapter6.md",
@@ -211,23 +228,9 @@
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/10-Interface.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/00-FS-Overview.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/assets/fsos-fsdisk.png",
-    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/assets/00-FS-Overview-fsos-fsdisk.png",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/assets/fsos-fsdisk.png.crdownload",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/assets/00-FS-Overview-fsos-fsdisk.png.crdownload",
-    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/assets",
     "1-Theory/5-OS-principle/rCore-tutorial/0-OS-overview/00-Course-overview.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/00-AppEE-Overview.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/00-Batch-Overview.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/00-Multiprog-Overview.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-bipartite-graph.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-fromD.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-fromA.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-edge-kinds.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-when-bfs-dfs?.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-instance4.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80A-Graph-dfs-directed-graph-instance3.png",
-    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system",
     "MyHome.canvas",
     "未命名.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
