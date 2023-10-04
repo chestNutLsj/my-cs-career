@@ -1,6 +1,26 @@
 {
   "recentFiles": [
     {
+      "basename": "10-Intro-of-Network-and-Internet",
+      "path": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md"
+    },
+    {
+      "basename": "70-Load",
+      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md"
+    },
+    {
+      "basename": "bss段为什么是未初始化数据？",
+      "path": "9-Others/ComputerCulture/bss段为什么是未初始化数据？.md"
+    },
+    {
+      "basename": "42-加载和链接",
+      "path": "1-Theory/5-OS-principle/Internal&design-principle/42-加载和链接.md"
+    },
+    {
+      "basename": "60-Memory-hierarchy",
+      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/60-Memory-hierarchy.md"
+    },
+    {
       "basename": "20-Easyfs",
       "path": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md"
     },
@@ -19,10 +39,6 @@
     {
       "basename": "80B-GraphApp-TopoSort-BCC",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80B-GraphApp-TopoSort-BCC.md"
-    },
-    {
-      "basename": "10-Intro-of-Network-and-Internet",
-      "path": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md"
     },
     {
       "basename": "精简版PPT",
@@ -63,10 +79,6 @@
     {
       "basename": "60D-BBST-BTree",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md"
-    },
-    {
-      "basename": "60-Memory-hierarchy",
-      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/60-Memory-hierarchy.md"
     },
     {
       "basename": "10-Interface",
@@ -183,22 +195,6 @@
     {
       "basename": "10-Introduction",
       "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md"
-    },
-    {
-      "basename": "20-Vector",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md"
-    },
-    {
-      "basename": "prime&bucket",
-      "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/prime&bucket.svg"
-    },
-    {
-      "basename": "prime&bucket",
-      "path": "0-Assets/Excalidraw/prime&bucket.md"
-    },
-    {
-      "basename": "32-GDB简单使用",
-      "path": "1-Theory/4-Architecture/CSAPP/Keypoints/32-GDB简单使用.md"
     }
   ],
   "omittedPaths": [],

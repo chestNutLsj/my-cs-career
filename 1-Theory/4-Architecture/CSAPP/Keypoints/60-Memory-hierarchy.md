@@ -2,11 +2,12 @@
 ## 导读
 
 为什么你（程序员）需要理解内存？推荐你认真阅读一下Ulrich Drepper撰写的长达114页的经典论文：What Every Programmer Should Know About Memory，如果你实在没有耐心看完它，或者想了解其中的重点内容，那么也可以通过观看我自己录制的小视频来了解其中的重点内容：
-- ​ [每个程序员都应该知道的内存知识 (第1部分：内存基础)](https://www.bilibili.com/video/BV1Xy4y1b7SK?p=1)，
+- ​[每个程序员都应该知道的内存知识 (第1部分：内存基础)](https://www.bilibili.com/video/BV1Xy4y1b7SK?p=1)，
 - [每个程序员都应该知道的内存知识（第2部分：CPU 缓存）](https://www.bilibili.com/video/BV1Xy4y1b7SK?p=2)，
 - [每个程序员都应该知道的内存知识（第4部分：实践部分）](https://www.bilibili.com/video/BV1Xy4y1b7SK?p=4) ​
 
-![](https://1484576603-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MV9vJFv4kmvRLgEog6g%2F-MXLKKlF3FRtT7rBf2xd%2F-MXLLI-Kqzluo_Zqwqjs%2F%E6%8D%95%E8%8E%B7.PNG?alt=media&token=00542e34-5e33-42b6-ac3d-b709a2799ab0)
+![[What-every-programmer-should-know-about-memory.pdf]]
+
 
 **重点提示：**[**Latency Numbers Every Programmer Should Know**](https://colin-scott.github.io/personal_website/research/interactive_latency.html)（数量级上的差异，这是引入缓存的原因）
 
@@ -68,9 +69,7 @@ Cache不命中时的写策略 ① 写不分配（Write Non-Allocate）：直接�
 
 **典型情况：**① Write-­‐through + No-­‐write-­‐allocate ② Write-­‐back + Write-­‐allocate
 
-## 
-
-**重点示例**[](https://fengmuzi2003.gitbook.io/csapp3e/di-06-zhang-cun-chu-qi-ceng-ci-jie-gou#zhong-dian-shi-li)
+## 重点示例
 
 **行序和列序访问**对性能产生的影响（理解缓存在其中的作用：Row-major and column-major order ）
 
@@ -81,22 +80,19 @@ Cache不命中时的写策略 ① 写不分配（Write Non-Allocate）：直接�
 ![](https://1484576603-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MV9vJFv4kmvRLgEog6g%2F-MXfLKP6Vb6xaqPCOkB5%2F-MXfMH5EUzAwlx8TTUnX%2Fimage.png?alt=media&token=7bf45acd-adc9-4181-8b23-dee9871e8117)
 
 **Prefetching**：除了缓存，现代处理器还会执行硬件/软件预取（Prefetching），所谓的软件预取，就是在程序中插入一些提示，期待编译器在编译时会插入Prefetch相应的指令，这里以 Intel 为例，Intel 的 SSE SIMD 指令集提供了 Prefetch 相关的指令，示例如下所示，另外还可以参考 [GNU官方对于Prefetch的说明](https://gcc.gnu.org/projects/prefetch.html)​
-
+```
 #include <mmintrinsics.h>
 
 void _mm_prefetch(char * p , int i ); // 其中 p 是数据所在的内存地址，i 是要载入哪一个层级的Cache
+```
 
 **总的来说，CPU Cache对于程序员是透明的，所有的操作和策略都在CPU内部完成。但是，了解和理解CPU Cache的设计、工作原理有利于我们更好的利用CPU Cache，写出更多对CPU Cache友好的程序！**
 
-## 
-
-延伸阅读[](https://fengmuzi2003.gitbook.io/csapp3e/di-06-zhang-cun-chu-qi-ceng-ci-jie-gou#yan-shen-yue-du)
+## 延伸阅读
 
 - 苏黎世联邦理工：[计算机体系结构(2020年最新版)](https://www.bilibili.com/video/BV1Vf4y1i7YG/) - 授课教授Onur Mutlu，里面讲了很多内存相关议题
-    
 
 - Linux性能工具(含内存工具)，推荐你看大牛Brendan Gregg的网站：[http://www.brendangregg.com/](http://www.brendangregg.com/)​
-    
 
 ![](https://1484576603-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MV9vJFv4kmvRLgEog6g%2F-MYsdZgD68FVtMe-7EEK%2F-MYsfAOOUhV-Xo5DmSBM%2Fimage.png?alt=media&token=3534556d-3212-4781-9c78-03aba18466bb)
 
