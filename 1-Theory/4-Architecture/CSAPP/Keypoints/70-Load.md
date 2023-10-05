@@ -33,7 +33,7 @@ Bin Yang - Senoir Android Framework Architect at Intel Corporation（from slides
 
 ![](https://1484576603-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MV9vJFv4kmvRLgEog6g%2F-MaLyclZPXFKxyaUY2UL%2F-MaM0_MiG9w3YNQ6ACPp%2Fimage.png?alt=media&token=a4a1df7c-1d26-40e4-8cd0-1c014e65c42a)
 
-**链接器：**GNU ld** vs Google **gold** vs LLVM **lld** : [https://gcc.gnu.org/onlinedocs/gcc/Link-Options.html](https://gcc.gnu.org/onlinedocs/gcc/Link-Options.html) ​
+**链接器：** GNU **ld** vs Google **gold** vs LLVM **lld** : [https://gcc.gnu.org/onlinedocs/gcc/Link-Options.html](https://gcc.gnu.org/onlinedocs/gcc/Link-Options.html) ​
 
 ![](https://1484576603-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MV9vJFv4kmvRLgEog6g%2F-MaMUZaJEbPYgE2GEWFq%2F-MaMVu00PKv7nyg4bB87%2Fimage.png?alt=media&token=58a9622e-a94b-4d1a-816e-d2b6d39b7b3b)
 

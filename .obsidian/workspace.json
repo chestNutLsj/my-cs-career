@@ -4,16 +4,40 @@
     "type": "split",
     "children": [
       {
-        "id": "927d2eca71c3c606",
+        "id": "4bf078163696f891",
         "type": "tabs",
         "children": [
           {
-            "id": "51e2ab9b70c0c6cc",
+            "id": "71d46e7f5882912e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md",
+                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "4c369d50cd5cee7d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/6-Network/Data-communication-and-network/Mynote/第6章-带宽利用.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "6ab6979628f4a310",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/6-Network/Data-communication-and-network/Mynote/第7章-传输介质.md",
                 "mode": "source",
                 "source": false
               }
@@ -88,7 +112,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 283.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -104,7 +129,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md",
+                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -121,7 +146,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md",
+                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md"
+                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md"
               }
             }
           },
@@ -165,8 +190,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -180,8 +204,20 @@
       "oz-clear-unused-images:Clear Unused Images": false
     }
   },
-  "active": "51e2ab9b70c0c6cc",
+  "active": "71d46e7f5882912e",
   "lastOpenFiles": [
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/第6章-带宽利用.md",
+    "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/第7章-传输介质.md",
+    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-FDM-TDM.png",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/第8章+交换.md",
+    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-circuit-switched.png",
+    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-packet-waiting.png",
+    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-store-and-forward.png",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/第3章+数据和信号.md",
+    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-wireless-access.png",
+    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-ethernet-access.png",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Introduce-easyfs-to-kernel.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/83-并查集.md",
@@ -190,18 +226,10 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-kruskal-algo.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-prim-pfs.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-prim-iscorrect?.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-prim-instance2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-prim-instance1.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-Prim.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80B-GraphApp-TopoSort-BCC.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-include-shortest-edge.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-exclude-longest-edge.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-composite-number.png",
     "9-Others/ComputerCulture/bss段为什么表示未初始化数据？.md",
-    "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
     "未命名.canvas",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md",
     "1-Theory/5-OS-principle/Internal&design-principle/42-加载和链接.md",
     "1-Theory/4-Architecture/CSAPP/Keypoints/60-Memory-hierarchy.md",
     "1-Theory/4-Architecture/CSAPP/Keypoints/paper/What-every-programmer-should-know-about-memory.pdf",
@@ -224,11 +252,6 @@
     "1-Theory/6-Network/Data-communication-and-network/CS-Network-Review-and-Summary.md",
     "1-Theory/6-Network/Data-communication-and-network/20-数据链路层.md",
     "1-Theory/6-Network/Data-communication-and-network/30-网络层.md",
-    "1-Theory/6-Network/Data-communication-and-network/40-传输层.md",
-    "1-Theory/6-Network/Data-communication-and-network/50-应用层.md",
-    "1-Theory/6-Network/Data-communication-and-network/期末复习（2）.md",
-    "1-Theory/6-Network/Data-communication-and-network/Mynote/10-绪论.md",
-    "1-Theory/6-Network/Data-communication-and-network/CS-Network-summary.md",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",
