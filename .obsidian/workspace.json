@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "37ab11226a6904fd",
+        "id": "927d2eca71c3c606",
         "type": "tabs",
         "children": [
           {
-            "id": "a20b40e69a7f8a33",
+            "id": "51e2ab9b70c0c6cc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
+                "file": "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md",
                 "mode": "source",
                 "source": false
               }
@@ -88,8 +88,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 223.5,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -105,7 +104,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
+                "file": "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +121,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
+                "file": "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md"
+                "file": "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md"
               }
             }
           },
@@ -181,33 +180,34 @@
       "oz-clear-unused-images:Clear Unused Images": false
     }
   },
-  "active": "a20b40e69a7f8a33",
+  "active": "51e2ab9b70c0c6cc",
   "lastOpenFiles": [
-    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-FTTH.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Introduce-easyfs-to-kernel.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/83-并查集.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80C-GraphApp-SPT-MST.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-kruskal-iscorrect.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-kruskal-algo.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-prim-pfs.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-prim-iscorrect?.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-prim-instance2.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-prim-instance1.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-Prim.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80B-GraphApp-TopoSort-BCC.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-include-shortest-edge.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-exclude-longest-edge.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-composite-number.png",
+    "9-Others/ComputerCulture/bss段为什么表示未初始化数据？.md",
     "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
-    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-DSL.png",
     "未命名.canvas",
     "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md",
-    "9-Others/ComputerCulture/bss段为什么是未初始化数据？.md",
     "1-Theory/5-OS-principle/Internal&design-principle/42-加载和链接.md",
     "1-Theory/4-Architecture/CSAPP/Keypoints/60-Memory-hierarchy.md",
     "1-Theory/4-Architecture/CSAPP/Keypoints/paper/What-every-programmer-should-know-about-memory.pdf",
     "1-Theory/4-Architecture/CSAPP/Keypoints/paper/未确认 663888.crdownload",
     "1-Theory/4-Architecture/CSAPP/Keypoints/paper",
-    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/assets/20-Easyfs-disk-layout.png",
     "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/operator-priority.pdf",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80C-GraphApp-MST-SPT.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-MST-SPT-dijkstra.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80B-GraphApp-TopoSort-BCC.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-bcc-instance3.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-bcc-instance2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-bcc-instance1.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-bcc-internal-nodes.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-bcc-root.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-biconnected-components.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80B-Graph-application-bioconnected-graph.png",
     "1-Theory/6-Network/Top-to-down/practice",
     "1-Theory/6-Network/Top-to-down/assets",
     "1-Theory/6-Network/Top-to-down/chapter0.md",
@@ -229,7 +229,6 @@
     "1-Theory/6-Network/Data-communication-and-network/期末复习（2）.md",
     "1-Theory/6-Network/Data-communication-and-network/Mynote/10-绪论.md",
     "1-Theory/6-Network/Data-communication-and-network/CS-Network-summary.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",

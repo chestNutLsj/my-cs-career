@@ -1,9 +1,9 @@
 {
-  "accentColor": "",
-  "cssTheme": "",
+  "accentColor": "#747eb9",
+  "cssTheme": "Minimal",
   "baseFontSize": 20,
   "monospaceFontFamily": "FiraCode Nerd Font Mono",
   "textFontFamily": "CodeNewRoman Nerd Font Mono",
-  "interfaceFontFamily": "CodeNewRoman Nerd Font",
+  "interfaceFontFamily": "Cantarell",
   "theme": "moonstone"
 }
