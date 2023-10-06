@@ -271,12 +271,12 @@
       "codeblock": {
         "lineNumbers": true,
         "unwrapLines": true,
-        "wrapLinesActive": true,
-        "curvature": 15
+        "wrapLinesActive": false,
+        "curvature": 4
       },
       "gutter": {
         "highlight": true,
-        "activeLine": false
+        "activeLine": true
       },
       "header": {
         "title": {
@@ -285,37 +285,37 @@
           "textItalic": true
         },
         "languageTag": {
-          "display": "none",
+          "display": "if_header_shown",
           "textFont": "",
           "textBold": true,
-          "textItalic": false
+          "textItalic": true
         },
         "languageIcon": {
-          "display": "none",
+          "display": "always",
           "displayColour": true
         },
         "fontSize": 14,
         "foldPlaceholder": ""
       },
       "highlights": {
-        "activeCodeblockLine": false,
+        "activeCodeblockLine": true,
         "activeEditorLine": false
       },
       "inline": {
         "syntaxHighlight": true,
         "style": true,
         "fontWeight": 4,
-        "curvature": 6,
+        "curvature": 5,
         "paddingVertical": 5,
         "paddingHorizontal": 5,
         "marginHorizontal": 0,
-        "titleFontWeight": 8
+        "titleFontWeight": 2
       },
       "advanced": {
-        "gradientHighlights": false,
-        "gradientHighlightsColourStop": "70%",
+        "gradientHighlights": true,
+        "gradientHighlightsColourStop": "52%",
         "languageBorderColour": true,
-        "languageBorderWidth": 3,
+        "languageBorderWidth": 5,
         "iconSize": 28
       }
     },
@@ -328,7 +328,7 @@
         "gutter": {
           "backgroundColour": "--code-background",
           "textColour": "--text-faint",
-          "activeTextColour": "--text-muted"
+          "activeTextColour": "#323231"
         },
         "header": {
           "backgroundColour": "--code-background",
@@ -345,7 +345,9 @@
           "activeCodeblockLineColour": "--color-base-30",
           "activeEditorLineColour": "--color-base-20",
           "defaultColour": "--text-highlight-bg",
-          "alternativeHighlights": {}
+          "alternativeHighlights": {
+            "error": "#E5480FAB"
+          }
         },
         "inline": {
           "backgroundColour": "--code-background",
@@ -383,7 +385,9 @@
           "activeCodeblockLineColour": "--color-base-30",
           "activeEditorLineColour": "--color-base-20",
           "defaultColour": "--text-highlight-bg",
-          "alternativeHighlights": {}
+          "alternativeHighlights": {
+            "error": "#5978BDFF"
+          }
         },
         "inline": {
           "backgroundColour": "--code-background",

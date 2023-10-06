@@ -286,7 +286,9 @@ pub const MMIO: &[(usize, usize)] = &[
 
 ## 内核索引节点层
 
-在本章的第一小节我们介绍过，站在用户的角度看来，在一个进程中可以使用多种不同的标志来打开一个文件，这会影响到打开的这个文件可以用何种方式被访问。此外，在连续调用 `sys_read/write` 读写一个文件的时候，我们知道进程中也存在着一个文件读写的当前偏移量，它也随着文件读写的进行而被不断更新。这些用户视角中的文件系统抽象特征需要内核来实现，与进程有很大的关系，而 `easy-fs` 文件系统不必涉及这些与进程结合紧密的属性。因此，我们需要将 `easy-fs` 提供的 `Inode` 加上上述信息，进一步封装为 OS 中的索引节点 `OSInode` ：
+在本章的第一小节我们介绍过，站在用户的角度看来，在一个进程中可以使用多种不同的标志来打开一个文件，这会影响到打开的这个文件可以用何种方式被访问。此外，在连续调用 `sys_read/write` 读写一个文件的时候，我们知道进程中也存在着一个文件读写的当前偏移量，它也随着文件读写的进行而被不断更新。
+
+这些==用户视角中的文件系统抽象特征需要内核来实现，与进程有很大的关系，而 `easy-fs` 文件系统不必涉及这些与进程结合紧密的属性==。因此，我们需要将 `easy-fs` 提供的 `Inode` 加上上述信息，进一步封装为 OS 中的索引节点 `OSInode` ：
 
 ```
 // os/src/fs/inode.rs
@@ -320,18 +322,23 @@ impl OSInode {
 }
 ```
 
-`OSInode` 就表示进程中一个被打开的常规文件或目录。 `readable/writable` 分别表明该文件是否允许通过 `sys_read/write` 进行读写。至于在 `sys_read/write` 期间被维护偏移量 `offset` 和它在 `easy-fs` 中的 `Inode` 则加上一把互斥锁丢到 `OSInodeInner` 中。这在提供内部可变性的同时，也可以简单应对多个进程同时读写一个文件的情况。
+`OSInode` 就**表示进程中一个被打开的常规文件或目录**。 
+- `readable/writable` 分别表明该文件是否允许通过 `sys_read/write` 进行读写。
+- 至于在 `sys_read/write` 期间被维护偏移量 `offset` 和它在 `easy-fs` 中的 `Inode` 则加上一把互斥锁丢到 `OSInodeInner` 中。这在提供内部可变性的同时，也可以简单应对多个进程同时读写一个文件的情况。
 
-文件描述符层[#]( #id6 "永久链接至标题")
--------------------------
+## 文件描述符层
 
-一个进程可以访问的多个文件，所以在操作系统中需要有一个管理进程访问的多个文件的结构，这就是 **文件描述符表** (File Descriptor Table) ，其中的每个 **文件描述符** (File Descriptor) 代表了一个特定读写属性的 I/O 资源。
+一个进程可以访问的多个文件，所以在==操作系统中需要有一个管理进程访问多个文件的结构==，这就是 **文件描述符表** (File Descriptor Table) ，其中的每个 **文件描述符** (File Descriptor) 代表了一个特定读写属性的 I/O 资源。
 
-为简化操作系统设计实现，可以让每个进程都带有一个线性的 **文件描述符表** ，记录该进程请求内核打开并读写的那些文件集合。而 **文件描述符** (File Descriptor) 则是一个非负整数，表示文件描述符表中一个打开的 **文件描述符** 所处的位置（可理解为数组下标）。进程通过文件描述符，可以在自身的文件描述符表中找到对应的文件记录信息，从而也就找到了对应的文件，并对文件进行读写。当打开（ `open` ）或创建（ `create` ） 一个文件的时候，一般情况下内核会返回给应用刚刚打开或创建的文件对应的文件描述符；而当应用想关闭（ `close` ）一个文件的时候，也需要向内核提供对应的文件描述符，以完成对应文件相关资源的回收操作。
+为简化操作系统设计实现，可以
+- 让每个进程都带有一个线性的 **文件描述符表** ，记录该进程请求内核打开并读写的那些文件集合。
+- 而 **文件描述符** (File Descriptor) 则是一个非负整数，表示文件描述符表中一个打开的 **文件描述符** 所处的位置（可理解为数组下标）。
+
+进程通过文件描述符，可以在自身的文件描述符表中找到对应的文件记录信息，从而也就找到了对应的文件，并对文件进行读写。当打开（ `open` ）或创建（ `create` ） 一个文件的时候，一般情况下内核会返回给应用刚刚打开或创建的文件对应的文件描述符；而当应用想关闭（ `close` ）一个文件的时候，也需要向内核提供对应的文件描述符，以完成对应文件相关资源的回收操作。
 
 因为 `OSInode` 也是一种要放到进程文件描述符表中文件，并可通过 `sys_read/write` 系统调用进行读写操作，因此我们也需要为它实现 `File` Trait ：
 
-```
+```rust
 // os/src/fs/inode.rs
 
 impl File for OSInode {
@@ -364,91 +371,89 @@ impl File for OSInode {
 }
 ```
 
-本章我们为 `File` Trait 新增了 `readable/writable` 两个抽象接口从而在 `sys_read/sys_write` 的时候进行简单的访问权限检查。 `read/write` 的实现也比较简单，只需遍历 `UserBuffer` 中的每个缓冲区片段，调用 `Inode` 写好的 `read/write_at` 接口就好了。注意 `read/write_at` 的起始位置是在 `OSInode` 中维护的 `offset` ，这个 `offset` 也随着遍历的进行被持续更新。在 `read/write` 的全程需要获取 `OSInode` 的互斥锁，保证两个进程无法同时访问同个文件。
+- 本章我们为 `File` Trait 新增了 `readable/writable` 两个抽象接口从而在 `sys_read/sys_write` 的时候进行简单的访问权限检查。 
+- `read/write` 的实现也比较简单，只需遍历 `UserBuffer` 中的每个缓冲区片段，调用 `Inode` 写好的 `read/write_at` 接口就好了。
+	- 注意 `read/write_at` 的==起始位置是在 `OSInode` 中维护的 `offset`== ，这个 `offset` 也随着遍历的进行被持续更新。
+	- 在 `read/write` 的==全程需要获取 `OSInode` 的互斥锁==，保证两个进程无法同时访问同个文件。
 
-文件描述符表[#]( #id7 "永久链接至标题")
--------------------------
+## 文件描述符表
 
 为了支持进程对文件的管理，我们需要在进程控制块中加入文件描述符表的相应字段：
 
-```
-1// os/src/task/task. rs
- 3pub struct TaskControlBlockInner {
- 4    pub trap_cx_ppn: PhysPageNum,
- 5    pub base_size: usize,
- 6    pub task_cx_ptr: usize,
- 7    pub task_status: TaskStatus,
- 8    pub memory_set: MemorySet,
- 9    pub parent: Option<Weak<TaskControlBlock>>,
-10    pub children: Vec<Arc<TaskControlBlock>>,
-11    pub exit_code: i32,
-12    pub fd_table: Vec<Option<Arc<dyn File + Send + Sync>>>,
-13}
+```rust hl:12 title:task.rs
+// os/src/task/task.rs
+
+pub struct TaskControlBlockInner {
+    pub trap_cx_ppn: PhysPageNum,
+    pub base_size: usize,
+    pub task_cx_ptr: usize,
+    pub task_status: TaskStatus,
+    pub memory_set: MemorySet,
+    pub parent: Option<Weak<TaskControlBlock>>,
+    pub children: Vec<Arc<TaskControlBlock>>,
+    pub exit_code: i32,
+    pub fd_table: Vec<Option<Arc<dyn File + Send + Sync>>>,
+}
 ```
 
 可以看到 `fd_table` 的类型包含多层嵌套，我们从外到里分别说明：
 
-*   `Vec` 的动态长度特性使得我们无需设置一个固定的文件描述符数量上限，我们可以更加灵活的使用内存，而不必操心内存管理问题；
-    
-*   `Option` 使得我们可以区分一个文件描述符当前是否空闲，当它是 `None` 的时候是空闲的，而 `Some` 则代表它已被占用；
-    
-*   `Arc` 首先提供了共享引用能力。后面我们会提到，可能会有多个进程共享同一个文件对它进行读写。此外被它包裹的内容会被放到内核堆而不是栈上，于是它便不需要在编译期有着确定的大小；
-    
-*   `dyn` 关键字表明 `Arc` 里面的类型实现了 `File/Send/Sync` 三个 Trait ，但是编译期无法知道它具体是哪个类型（可能是任何实现了 `File` Trait 的类型如 `Stdin/Stdout` ，故而它所占的空间大小自然也无法确定），需要等到运行时才能知道它的具体类型，对于一些抽象方法的调用也是在那个时候才能找到该类型实现的方法并跳转过去。
-    
+* `Vec` 的动态长度特性使得我们无需设置一个固定的文件描述符数量上限，我们可以更加==灵活的使用内存，而不必操心内存管理问题==；
 
-注解
+* `Option` 使得我们可以==区分一个文件描述符当前是否空闲==，当它是 `None` 的时候是空闲的，而 `Some` 则代表它已被占用；
 
-**Rust 语法卡片：Rust 中的多态**
+* `Arc` 首先提供了共享引用能力。后面我们会提到，可能会有多个进程共享同一个文件对它进行读写。此外==被它包裹的内容会被放到内核堆而不是栈上，于是它便不需要在编译期有着确定的大小==；
 
-在编程语言中， **多态** (Polymorphism) 指的是在同一段代码中可以隐含多种不同类型的特征。在 Rust 中主要通过泛型和 Trait 来实现多态。
+* `dyn` 关键字表明 `Arc` 里面的类型实现了 `File/Send/Sync` 三个 Trait ，但是编译期无法知道它具体是哪个类型（可能是任何实现了 `File` Trait 的类型如 `Stdin/Stdout` ，故而它所占的空间大小自然也无法确定），需要等到运行时才能知道它的具体类型，对于一些抽象方法的调用也是在那个时候才能找到该类型实现的方法并跳转过去。
 
-泛型是一种 **编译期多态** (Static Polymorphism)，在编译一个泛型函数的时候，编译器会对于所有可能用到的类型进行实例化并对应生成一个版本的汇编代码，在编译期就能知道选取哪个版本并确定函数地址，这可能会导致生成的二进制文件体积较大；而 Trait 对象（也即上面提到的 `dyn` 语法）是一种 **运行时多态** (Dynamic Polymorphism)，需要在运行时查一种类似于 C++ 中的 **虚表** (Virtual Table) 才能找到实际类型对于抽象接口实现的函数地址并进行调用，这样会带来一定的运行时开销，但是更省空间且灵活。
+>[! note] **Rust 语法卡片：Rust 中的多态**
+>在编程语言中， **多态** (Polymorphism) 指的是在同一段代码中可以隐含多种不同类型的特征。在 Rust 中主要通过**泛型**和 **Trait** 来实现多态。
+>- 泛型是一种 **编译期多态** (Static Polymorphism)，在编译一个泛型函数的时候，编译器会==对于所有可能用到的类型进行实例化并对应生成一个版本的汇编代码==，在编译期就能知道选取哪个版本并确定函数地址，这可能会导致生成的二进制文件体积较大；
+>- 而 Trait 对象（也即上面提到的 `dyn` 语法）是一种 **运行时多态** (Dynamic Polymorphism)，需要在==运行时查一种类似于 C++ 中的 **虚表** (Virtual Table) 才能找到实际类型对于抽象接口实现的函数地址并进行调用==，这样会带来一定的运行时开销，但是更省空间且灵活。
 
-应用访问文件的内核机制实现[#]( #id8 "永久链接至标题")
---------------------------------
+## 应用访问文件的内核机制实现
 
-应用程序在访问文件之前，首先需要完成对文件系统的初始化和加载。这可以通过操作系统来完成，也可以让应用程序发出文件系统相关的系统调用（如 `mount` 等）来完成。我们这里的选择是让操作系统直接完成。
+应用程序在访问文件之前，首先需要完成对文件系统的初始化和加载。这可以通过操作系统来完成，也可以让应用程序发出文件系统相关的系统调用（如 `mount` 等）来完成。我们这里的选择是==让操作系统直接完成==。
 
 应用程序如果要基于文件进行 I/O 访问，大致就会涉及如下一些系统调用：
 
-*   打开文件 – sys_open：进程只有打开文件，操作系统才能返回一个可进行读写的文件描述符给进程，进程才能基于这个值来进行对应文件的读写。
-    
-*   关闭文件 – sys_close：进程基于文件描述符关闭文件后，就不能再对文件进行读写操作了，这样可以在一定程度上保证对文件的合法访问。
-    
-*   读文件 – sys_read：进程可以基于文件描述符来读文件内容到相应内存中。
-    
-*   写文件 – sys_write：进程可以基于文件描述符来把相应内存内容写到文件中。
-    
+* 打开文件 – sys_open：进程只有打开文件，操作系统才能返回一个可进行读写的文件描述符给进程，进程才能基于这个值来进行对应文件的读写。
 
-### 文件系统初始化[#]( #id9 "永久链接至标题")
+* 关闭文件 – sys_close：进程基于文件描述符关闭文件后，就不能再对文件进行读写操作了，这样可以在一定程度上保证对文件的合法访问。
+
+* 读文件 – sys_read：进程可以基于文件描述符来读文件内容到相应内存中。
+
+* 写文件 – sys_write：进程可以基于文件描述符来把相应内存内容写到文件中。
+
+
+### 文件系统初始化
 
 在上一小节我们介绍过，为了使用 `easy-fs` 提供的抽象和服务，我们需要进行一些初始化操作才能成功将 `easy-fs` 接入到我们的内核中。按照前面总结的步骤：
 
-1.  打开块设备。从本节前面可以看出，我们已经打开并可以访问装载有 easy-fs 文件系统镜像的块设备 `BLOCK_DEVICE` ；
-    
-2.  从块设备 `BLOCK_DEVICE` 上打开文件系统；
-    
-3.  从文件系统中获取根目录的 inode 。
-    
+1. 打开块设备。从本节前面可以看出，我们已经打开并可以访问装载有 easy-fs 文件系统镜像的块设备 `BLOCK_DEVICE` ；
+
+2. 从块设备 `BLOCK_DEVICE` 上打开文件系统；
+
+3. 从文件系统中获取根目录的 inode 。
+
 
 2-3 步我们在这里完成：
 
-```
-// os/src/fs/inode. rs
+```rust
+// os/src/fs/inode.rs
 
 lazy_static! {
     pub static ref ROOT_INODE: Arc<Inode> = {
-        let efs = EasyFileSystem:: open (BLOCK_DEVICE.clone ());
-        Arc:: new (EasyFileSystem:: root_inode (&efs))
+        let efs = EasyFileSystem::open (BLOCK_DEVICE.clone ());
+        Arc:: new (EasyFileSystem::root_inode (&efs))
     };
 }
 ```
 
 这之后就可以使用根目录的 inode `ROOT_INODE` ，在内核中进行各种 `easy-fs` 的相关操作了。例如，在文件系统初始化完毕之后，在内核主函数 `rust_main` 中调用 `list_apps` 函数来列举文件系统中可用的应用的文件名：
 
-```
-// os/src/fs/inode. rs
+```rust
+// os/src/fs/inode.rs
 
 pub fn list_apps () {
     println! ("/**** APPS ****");
@@ -459,12 +464,12 @@ pub fn list_apps () {
 }
 ```
 
-### 打开与关闭文件[#]( #id10 "永久链接至标题")
+### 打开与关闭文件
 
 我们需要在内核中也定义一份打开文件的标志 `OpenFlags` ：
 
 ```
-// os/src/fs/inode. rs
+// os/src/fs/inode.rs
 
 bitflags! {
     pub struct OpenFlags: u32 {
@@ -494,26 +499,25 @@ impl OpenFlags {
 它的 `read_write` 方法可以根据标志的情况返回要打开的文件是否允许读写。简单起见，这里假设标志自身一定合法。
 
 接着，我们实现 `open_file` 内核函数，可根据文件名打开一个根目录下的文件：
-
 ```
-// os/src/fs/inode. rs
+// os/src/fs/inode.rs
 
-pub fn open_file (name: &str, flags: OpenFlags) -> Option<Arc<OSInode>> {
-    let (readable, writable) = flags. read_write ();
-    if flags.contains (OpenFlags::CREATE) {
-        if let Some (inode) = ROOT_INODE.find (name) {
+pub fn open_file(name: &str, flags: OpenFlags) -> Option<Arc<OSInode>> {
+    let (readable, writable) = flags.read_write();
+    if flags.contains(OpenFlags::CREATE) {
+        if let Some(inode) = ROOT_INODE.find(name) {
             // clear size
-            inode.clear ();
-            Some (Arc:: new (OSInode:: new (
+            inode.clear();
+            Some(Arc::new(OSInode::new(
                 readable,
                 writable,
                 inode,
             )))
         } else {
             // create file
-            ROOT_INODE.create (name)
-                .map (|inode| {
-                    Arc:: new (OSInode:: new (
+            ROOT_INODE.create(name)
+                .map(|inode| {
+                    Arc::new(OSInode::new(
                         readable,
                         writable,
                         inode,
@@ -521,12 +525,12 @@ pub fn open_file (name: &str, flags: OpenFlags) -> Option<Arc<OSInode>> {
                 })
         }
     } else {
-        ROOT_INODE.find (name)
-            .map (|inode| {
-                if flags.contains (OpenFlags::TRUNC) {
-                    inode.clear ();
+        ROOT_INODE.find(name)
+            .map(|inode| {
+                if flags.contains(OpenFlags::TRUNC) {
+                    inode.clear();
                 }
-                Arc:: new (OSInode:: new (
+                Arc::new(OSInode::new(
                     readable,
                     writable,
                     inode
@@ -536,24 +540,26 @@ pub fn open_file (name: &str, flags: OpenFlags) -> Option<Arc<OSInode>> {
 }
 ```
 
-这里主要是实现了 `OpenFlags` 各标志位的语义。例如只有 `flags` 参数包含 CREATE 标志位才允许创建文件；而如果文件已经存在，则清空文件的内容。另外我们将从 `OpenFlags` 解析得到的读写相关权限传入 `OSInode` 的创建过程中。
+这里主要是实现了 `OpenFlags` 各标志位的语义。
+- 例如只有 `flags` 参数包含 CREATE 标志位才允许创建文件；
+- 而如果文件已经存在，则清空文件的内容。
+- 另外我们将从 `OpenFlags` 解析得到的读写相关权限传入 `OSInode` 的创建过程中。
 
 在其基础上， `sys_open` 也就很容易实现了：
-
 ```
-// os/src/syscall/fs. rs
+// os/src/syscall/fs.rs
 
-pub fn sys_open (path: *const u8, flags: u32) -> isize {
-    let task = current_task (). unwrap ();
-    let token = current_user_token ();
-    let path = translated_str (token, path);
-    if let Some (inode) = open_file (
-        path. as_str (),
-        OpenFlags:: from_bits (flags). unwrap ()
+pub fn sys_open(path: *const u8, flags: u32) -> isize {
+    let task = current_task().unwrap();
+    let token = current_user_token();
+    let path = translated_str(token, path);
+    if let Some(inode) = open_file(
+        path.as_str(),
+        OpenFlags::from_bits(flags).unwrap()
     ) {
-        let mut inner = task. acquire_inner_lock ();
-        let fd = inner. alloc_fd ();
-        inner. fd_table[fd] = Some (inode);
+        let mut inner = task.acquire_inner_lock();
+        let fd = inner.alloc_fd();
+        inner.fd_table[fd] = Some(inode);
         fd as isize
     } else {
         -1
@@ -561,122 +567,124 @@ pub fn sys_open (path: *const u8, flags: u32) -> isize {
 }
 ```
 
-关闭文件的系统调用 `sys_close` 实现非常简单，我们只需将进程控制块中的文件描述符表对应的一项改为 `None` 代表它已经空闲即可，同时这也会导致内层的引用计数类型 `Arc` 被销毁，会减少一个文件的引用计数，当引用计数减少到 0 之后文件所占用的资源就会被自动回收。
-
+关闭文件的系统调用 `sys_close` 实现非常简单，我们==只需将进程控制块中的文件描述符表对应的一项改为 `None` 代表它已经空闲即可==，同时这也会导致内层的引用计数类型 `Arc` 被销毁，会减少一个文件的引用计数，当引用计数减少到 0 之后文件所占用的资源就会被自动回收。
 ```
-// os/src/syscall/fs. rs
+// os/src/syscall/fs.rs
 
-pub fn sys_close (fd: usize) -> isize {
-    let task = current_task (). unwrap ();
-    let mut inner = task. inner_exclusive_access ();
-    if fd >= inner. fd_table.len () {
+pub fn sys_close(fd: usize) -> isize {
+    let task = current_task().unwrap();
+    let mut inner = task.inner_exclusive_access();
+    if fd >= inner.fd_table.len() {
         return -1;
     }
-    if inner. fd_table[fd]. is_none () {
+    if inner.fd_table[fd].is_none() {
         return -1;
     }
-    inner. fd_table[fd]. take ();
+    inner.fd_table[fd].take();
+    0
 }
 ```
 
-### 基于文件来加载并执行应用[#]( #id11 "永久链接至标题")
+### 基于文件来加载并执行应用
 
-在有了文件系统支持之后，我们在 `sys_exec` 所需的应用的 ELF 文件格式的数据就不再需要通过应用加载器从内核的数据段获取，而是从文件系统中获取，这样内核与应用的代码 / 数据就解耦了：
+在有了文件系统支持之后，我们在 `sys_exec` 所需的应用的 ==ELF 文件格式的数据就不再需要通过应用加载器从内核的数据段获取，而是从文件系统中获取==，这样内核与应用的代码 / 数据就解耦了：
+
+```rust hl:6-9
+// os/src/syscall/process.rs
+
+pub fn sys_exec(path: *const u8) -> isize {
+    let token = current_user_token();
+    let path = translated_str(token, path);
+    if let Some(app_inode) = open_file(path.as_str(), OpenFlags::RDONLY) {
+        let all_data = app_inode.read_all();
+        let task = current_task().unwrap();
+        task.exec(all_data.as_slice());
+        0
+    } else {
+        -1
+    }
+}
+```
+
+注意上面代码片段中的高亮部分。
+- 当执行获取应用的 ELF 数据的操作时，首先调用 `open_file` 函数，以只读的方式在内核中打开应用文件并获取它对应的 `OSInode` 。
+- 接下来可以通过 `OSInode::read_all` 将该文件的数据全部读到一个向量 `all_data` 中：
 
 ```
-1// os/src/syscall/process. rs
- 3pub fn sys_exec (path: *const u8) -> isize {
- 4    let token = current_user_token ();
- 5    let path = translated_str (token, path);
- 6    if let Some (app_inode) = open_file (path. as_str (), OpenFlags::RDONLY) {
- 7        let all_data = app_inode. read_all ();
- 8        let task = current_task (). unwrap ();
- 9        task.exec (all_data. as_slice ());
-10        0
-11    } else {
-12        -1
-13    }
-14}
-```
-
-注意上面代码片段中的高亮部分。当执行获取应用的 ELF 数据的操作时，首先调用 `open_file` 函数，以只读的方式在内核中打开应用文件并获取它对应的 `OSInode` 。接下来可以通过 `OSInode::read_all` 将该文件的数据全部读到一个向量 `all_data` 中：
-
-```
-// os/src/fs/inode. rs
+// os/src/fs/inode.rs
 
 impl OSInode {
-    pub fn read_all (&self) -> Vec<u8> {
-        let mut inner = self.inner.lock ();
+    pub fn read_all(&self) -> Vec<u8> {
+        let mut inner = self.inner.lock();
         let mut buffer = [0u8; 512];
-        let mut v: Vec<u8> = Vec:: new ();
+        let mut v: Vec<u8> = Vec::new();
         loop {
-            let len = inner. inode. read_at (inner. offset, &mut buffer);
+            let len = inner.inode.read_at(inner.offset, &mut buffer);
             if len == 0 {
                 break;
             }
-            inner. offset += len;
-            v.extend_from_slice (&buffer[.. len]);
+            inner.offset += len;
+            v.extend_from_slice(&buffer[..len]);
         }
         v
     }
 }
 ```
 
-之后，就可以从向量 `all_data` 中拿到应用中的 ELF 数据，当解析完毕并创建完应用地址空间后该向量将会被回收。
+之后，就可以从向量 `all_data` 中拿到应用中的 ELF 数据，==当解析完毕并创建完应用地址空间后该向量将会被回收==。
 
 同样的，我们在内核中创建初始进程 `initproc` 也需要替换为基于文件系统的实现：
-
 ```
-// os/src/task/mod. rs
+// os/src/task/mod.rs
 
 lazy_static! {
-    pub static ref INITPROC: Arc<TaskControlBlock> = Arc:: new ({
-        let inode = open_file ("initproc", OpenFlags::RDONLY). unwrap ();
-        let v = inode. read_all ();
-        TaskControlBlock:: new (v.as_slice ())
+    pub static ref INITPROC: Arc<TaskControlBlock> = Arc::new({
+        let inode = open_file("initproc", OpenFlags::RDONLY).unwrap();
+        let v = inode.read_all();
+        TaskControlBlock::new(v.as_slice())
     });
 }
 ```
 
-### 读写文件[#]( #id12 "永久链接至标题")
+### 读写文件
 
 基于文件抽象接口和文件描述符表，我们可以按照无结构的字节流来处理基本的文件读写，这样可以让文件读写系统调用 `sys_read/write` 变得更加具有普适性，为后续支持把管道等抽象为文件打下了基础：
 
 ```
-// os/src/syscall/fs. rs
+// os/src/syscall/fs.rs
 
-pub fn sys_write (fd: usize, buf: *const u8, len: usize) -> isize {
-    let token = current_user_token ();
-    let task = current_task (). unwrap ();
-    let inner = task. inner_exclusive_access ();
-    if fd >= inner. fd_table.len () {
+pub fn sys_write(fd: usize, buf: *const u8, len: usize) -> isize {
+    let token = current_user_token();
+    let task = current_task().unwrap();
+    let inner = task.inner_exclusive_access();
+    if fd >= inner.fd_table.len() {
         return -1;
     }
-    if let Some (file) = &inner. fd_table[fd] {
-        let file = file.clone ();
+    if let Some(file) = &inner.fd_table[fd] {
+        let file = file.clone();
         // release current task TCB manually to avoid multi-borrow
-        drop (inner);
-        file.write (
-            UserBuffer:: new (translated_byte_buffer (token, buf, len))
+        drop(inner);
+        file.write(
+            UserBuffer::new(translated_byte_buffer(token, buf, len))
         ) as isize
     } else {
         -1
     }
 }
 
-pub fn sys_read (fd: usize, buf: *const u8, len: usize) -> isize {
-    let token = current_user_token ();
-    let task = current_task (). unwrap ();
-    let inner = task. inner_exclusive_access ();
-    if fd >= inner. fd_table.len () {
+pub fn sys_read(fd: usize, buf: *const u8, len: usize) -> isize {
+    let token = current_user_token();
+    let task = current_task().unwrap();
+    let inner = task.inner_exclusive_access();
+    if fd >= inner.fd_table.len() {
         return -1;
     }
-    if let Some (file) = &inner. fd_table[fd] {
-        let file = file.clone ();
+    if let Some(file) = &inner.fd_table[fd] {
+        let file = file.clone();
         // release current task TCB manually to avoid multi-borrow
-        drop (inner);
-        file.read (
-            UserBuffer:: new (translated_byte_buffer (token, buf, len))
+        drop(inner);
+        file.read(
+            UserBuffer::new(translated_byte_buffer(token, buf, len))
         ) as isize
     } else {
         -1
@@ -684,4 +692,4 @@ pub fn sys_read (fd: usize, buf: *const u8, len: usize) -> isize {
 }
 ```
 
-操作系统都是通过文件描述符在当前进程的文件描述符表中找到某个文件，无需关心文件具体的类型，只要知道它一定实现了 `File` Trait 的 `read/write` 方法即可。Trait 对象提供的运行时多态能力会在运行的时候帮助我们定位到符合实际类型的 `read/write` 方法。
+==操作系统都是通过文件描述符在当前进程的文件描述符表中找到某个文件，无需关心文件具体的类型==，只要知道它一定实现了 `File` Trait 的 `read/write` 方法即可。Trait 对象提供的运行时多态能力会在运行的时候帮助我们定位到符合实际类型的 `read/write` 方法。

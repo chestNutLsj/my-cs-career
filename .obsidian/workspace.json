@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "b96719ab37d3cc63",
+        "id": "08fbdde32c6418b7",
         "type": "tabs",
         "children": [
           {
-            "id": "74afbfadeba2a401",
+            "id": "0e667549b55a9099",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Integrate-easyfs-into-kernel.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -105,7 +101,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Integrate-easyfs-into-kernel.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +117,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Integrate-easyfs-into-kernel.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,9 +143,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Integrate-easyfs-into-kernel.md"
-              }
+              "state": {}
             }
           },
           {
@@ -166,7 +158,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -181,8 +174,16 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "74afbfadeba2a401",
+  "active": "0e667549b55a9099",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/00-IPC-IO-Overview.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/assets/00-IPC-IO-Overview-tcb-ipc-standard-file.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/assets/00-IPC-IO-Overview-IPCOS.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/assets",
+    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect",
+    "1-Theory/5-OS-principle/rCore-tutorial/practice/6-文件系统.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Integrate-easyfs-into-kernel.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/Course-Info.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/86-SPT-OIwiki.md",
@@ -206,8 +207,6 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/未确认 300672.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/83-并查集-kruskal.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/83-并查集-jerry-cheese-hole.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/83-并查集-merge-9.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/83-并查集-merge-8.png",
     "1-Theory/computer-science.pdf",
     "1-Theory/6-Network/Data-communication-and-network/Mynote/第7章-传输介质.md",
     "1-Theory/6-Network/Data-communication-and-network/Mynote/第6章-带宽利用.md",
@@ -215,8 +214,6 @@
     "1-Theory/6-Network/Data-communication-and-network/Mynote/第8章+交换.md",
     "1-Theory/6-Network/Data-communication-and-network/Mynote/第3章+数据和信号.md",
     "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Integrate-easyfs-into-kernel.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
     "9-Others/ComputerCulture/bss段为什么表示未初始化数据？.md",
     "未命名.canvas",
     "1-Theory/5-OS-principle/Internal&design-principle/42-加载和链接.md",
@@ -224,12 +221,7 @@
     "1-Theory/4-Architecture/CSAPP/Keypoints/paper/What-every-programmer-should-know-about-memory.pdf",
     "1-Theory/4-Architecture/CSAPP/Keypoints/paper/未确认 663888.crdownload",
     "1-Theory/4-Architecture/CSAPP/Keypoints/paper",
-    "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/operator-priority.pdf",
-    "1-Theory/6-Network/Top-to-down/practice",
     "1-Theory/6-Network/Top-to-down/chapter0.md",
-    "1-Theory/6-Network/Top-to-down/chapter6.md",
-    "1-Theory/6-Network/Top-to-down/chapter5.md",
-    "1-Theory/6-Network/Top-to-down/chapter4.md",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",
