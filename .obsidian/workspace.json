@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "08fbdde32c6418b7",
+        "id": "2b1c38a970d83111",
         "type": "tabs",
         "children": [
           {
-            "id": "0e667549b55a9099",
+            "id": "fa5f1f984a7cfe9b",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -101,6 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -117,6 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -143,7 +149,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md"
+              }
             }
           },
           {
@@ -158,8 +166,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -174,8 +181,24 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "0e667549b55a9099",
+  "active": "fa5f1f984a7cfe9b",
   "lastOpenFiles": [
+    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-throughput-bottleneck.png",
+    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-throughput-bottleneck.png",
+    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-traffic-intensity-and-average-queuingDelay.png",
+    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-nodal-delay.png",
+    "1-Theory/6-Network/Data-communication-and-network/50-应用层.md",
+    "1-Theory/6-Network/Data-communication-and-network/40-传输层.md",
+    "1-Theory/6-Network/Data-communication-and-network/30-网络层.md",
+    "1-Theory/6-Network/Data-communication-and-network/20-数据链路层.md",
+    "1-Theory/6-Network/Data-communication-and-network/10-绪论-物理层.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/第7章-传输介质.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/第6章-带宽利用.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/assets/第6章-带宽利用-FHSS.png",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/assets/第6章-带宽利用-sync-TDM.png",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/assets",
+    "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/60-IO管理与磁盘.md",
     "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/00-IPC-IO-Overview.md",
     "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/assets/00-IPC-IO-Overview-tcb-ipc-standard-file.png",
     "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/assets/00-IPC-IO-Overview-IPCOS.png",
@@ -197,31 +220,16 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-floyd-dp.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-kruskal-union-3.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-kruskal-union-2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-kruskal-union-1.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/minimum-spanning-trees-prims-algorithm-8.gif",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/minimum-spanning-trees-prims-algorithm-8.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/64-Lowest-Common-Ancestor.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Kruskal.gif",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Kruskal.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/83-并查集-kruskal.apng",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/未确认 300672.crdownload",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/83-并查集-kruskal.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/83-并查集-jerry-cheese-hole.png",
     "1-Theory/computer-science.pdf",
-    "1-Theory/6-Network/Data-communication-and-network/Mynote/第7章-传输介质.md",
-    "1-Theory/6-Network/Data-communication-and-network/Mynote/第6章-带宽利用.md",
     "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
-    "1-Theory/6-Network/Data-communication-and-network/Mynote/第8章+交换.md",
-    "1-Theory/6-Network/Data-communication-and-network/Mynote/第3章+数据和信号.md",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md",
-    "9-Others/ComputerCulture/bss段为什么表示未初始化数据？.md",
     "未命名.canvas",
-    "1-Theory/5-OS-principle/Internal&design-principle/42-加载和链接.md",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/60-Memory-hierarchy.md",
     "1-Theory/4-Architecture/CSAPP/Keypoints/paper/What-every-programmer-should-know-about-memory.pdf",
     "1-Theory/4-Architecture/CSAPP/Keypoints/paper/未确认 663888.crdownload",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/paper",
-    "1-Theory/6-Network/Top-to-down/chapter0.md",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",

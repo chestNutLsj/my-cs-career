@@ -21,7 +21,8 @@
   },
   "smartIndentList": true,
   "showIndentGuide": true,
-  "focusNewTab": false,
+  "focusNewTab": true,
   "newLinkFormat": "shortest",
-  "propertiesInDocument": "visible"
+  "propertiesInDocument": "visible",
+  "readableLineLength": true
 }
