@@ -130,7 +130,7 @@ void Graph<Tv, Te>::dijkstra( Rank s ) { // s < n
 } //对于无向连通图，假设每一条边表示为方向互逆、权重相等的一对边
 ```
 
-## Prim 算法求最小支撑树
+## Prim 算法求 MST
 ### MST 是什么
 - 支撑：对连通网络 N=(V; E)的子图 T=(V; F)，所谓支撑指的是覆盖 N 中所有可达顶点。树即可做到——连通且无环，并且树边数|F|=|V|-1；
 
@@ -186,7 +186,7 @@ void Graph<Tv, Te>::dijkstra( Rank s ) { // s < n
 ### 实例
 ![[80C-GraphApp-SPT-MST-prim-instance1.png]]
 ![[80C-GraphApp-SPT-MST-prim-instance2.png]]
-
+![[minimum-spanning-trees-prims-algorithm-8.gif]]
 ### 正确性
 - 设 Prim 算法依次选取了边{ e2, e3, ..., en }，其中每一条边 ek，的确都属于某棵 MST 
 - 但在 MST 不唯一时，由此并不能确认，最终的 T 必是 MST（之一），此时由极短跨边构成的支撑树，未必就是一棵 MST
@@ -270,7 +270,67 @@ Kruskal：贪心原则
 
 ![[80C-GraphApp-SPT-MST-kruskal-iscorrect.png]]
 ### 并查集
+![[83-并查集#MST 的 Kruskal 算法]]
 
-## Floyd-Warshall 算法求最短距离
+```python
+//Quick-Find(就是启发式合并)
+class UnionFind:
+	def __init__(self, n): #group[]记录各元素所属子集；初始各成一类，以[0,n)间整数标识
+		self.g = self.n = n; self.group = [ k for k in range(n) ]
+	def find(self, k):
+		return self.group[k]
+	def union(self, i, j):
+		iGroup , jGroup = self.group[i] , self.group[j]
+		if iGroup == jGroup: return
+		for k in range(self.n):
+			if (self.group[k] == jGroup): self.group[k] = iGroup
+		self.g -= 1
+
+```
+
+![[80C-GraphApp-SPT-MST-kruskal-union-1.png]]
+
+![[80C-GraphApp-SPT-MST-kruskal-union-2.png]]
+
+![[80C-GraphApp-SPT-MST-kruskal-union-3.png]]
+
+## Floyd-Warshall 算法求 SPT
+直觉： 依次将各顶点作为源点，调用 Dijkstra 算法，其时间复杂度 = $n \times O(n^2) = O(n^3)$ —— 可否更快？
+
+思路： 图矩阵 --> 最短路径矩阵
+效率： O(n^3)，与执行 n 次 Dijkstra 相同 —— 既如此，F.W.之价值何在？
+优点： 形式简单、算法紧凑、便于实现；允许负权边（尽管仍不能有负权环路）
+
+#### 问题描述
+u 和 v 之间的最短路径可能是
+- 不存在通路，或者 
+- 直接连接，或者 
+- 最短路径 (u, x) + 最短路径 (x, v)
+
+将所有顶点随意编号：1, 2, ..., n 。定义：$d^{k}(u, v) =$ 中途只经过前 k 个顶点中转，从 u 通往 v 的最短路径长度：
+- $d^{k}(u,v)=w(u,v),(if\ k=0)$ 
+- $d^{k}(u,v)=min\{d^{k-1}(u,v),d^{k-1}(u,k)+d^{k-1}(k,v)\},(if\ k\ge 1)$ 
+
+#### 蛮力递归
+```
+weight dist( node * u, node * v, int k )
+	if ( k < 1 ) return w( u, v );
+	u2v = dist( u, v, k-1 ); //经前k-1个点中转
+	for each node x  { u, v } //x作为第k个可中转点
+		u2x2v = dist( u, x, k-1 ) + dist( x, v, k-1 ); //递归
+		u2v = min( u2v, u2x2v ); //择优
+	return u2v;
+```
+
+#### 动态规划
+```
+for k in range(0, n)
+	for u in range(0, n)
+		for v in range(0, n)
+			A[u][v] = min( A[u][v], A[u][k] + A[k][v] )
+
+```
+蛮力递归会存在大量重复的递归调用，可以使用动态规划记忆化：维护一张表，记录需要反复计算的数值：
+![[80C-GraphApp-SPT-MST-floyd-dp.png]]
 
 [^1]: 去掉其中所有边能使一张网络流图不再连通（即分成两个子图）的**边集**称为图的割（英语：cut）

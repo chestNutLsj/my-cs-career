@@ -255,7 +255,7 @@ public:
 #### 空间复杂度
 - 有向图：O (n+e)
 - 无向图：O (n+2e)
-	- 无向弧被重复存储，若要改进，只需要...（[[82-Adjacency-multilist|邻接多重表]]）
+	- 无向弧被重复存储，若要改进，只需要...（[[83-Adjacency-multilist|邻接多重表]]）
 - 平面图：O (n+3n)
 
 #### 时间复杂度
@@ -379,7 +379,7 @@ void CreateDG(OLGraph *G){
 采用十字链表表示的有向图，在计算某顶点的出度时，为 firstout 域链表中结点的个数；入度为 firstin 域链表中结点的个数。
 
 ### 邻接多重表
-![[82-Adjacency-multilist]]
+![[83-Adjacency-multilist]]
 
 ## 图的遍历
 ### 广度优先搜索
@@ -696,10 +696,10 @@ void Graph<Tv, Te>::dfs( Rank s ) { // s < n
 	- BFS
 
 - 有向图是否存在环路：只能 DFS，因为 BFS 没有 BACKWARD
-	- 进一步地，如何判断 BACKWARD 是环路？毕竟不是出现 BACKWARD 就代表出现环路—— [[80B-GraphApp-TopoSort-BCC#^67e5d3|判断目标节点是否 VISITED]]，即是否是 DAG;
+	- 进一步地，如何判断 BACKWARD 是环路？毕竟不是出现 BACKWARD 就代表出现环路—— [[81-Graph-Application#^67e5d3|判断目标节点是否 VISITED]]，即是否是 DAG;
 - 计算图是否构成[[#^e03e5a|欧拉回路]]：DFS
 - 给出图的拓扑排序：DFS，方便确定节点是否还有出度
-- [[80B-GraphApp-TopoSort-BCC#双连通分量|双连通分量]]、强连通分量的分解：DFS
+- [[81-Graph-Application#双连通分量|双连通分量]]、强连通分量的分解：DFS
 
 - 顶点之间的最短距离：
 	- BFS，每一层扩散算作 1 个距离，

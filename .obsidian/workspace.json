@@ -4,40 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "4bf078163696f891",
+        "id": "b96719ab37d3cc63",
         "type": "tabs",
         "children": [
           {
-            "id": "71d46e7f5882912e",
+            "id": "74afbfadeba2a401",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "4c369d50cd5cee7d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/6-Network/Data-communication-and-network/Mynote/第6章-带宽利用.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6ab6979628f4a310",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/6-Network/Data-communication-and-network/Mynote/第7章-传输介质.md",
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Integrate-easyfs-into-kernel.md",
                 "mode": "source",
                 "source": false
               }
@@ -112,7 +88,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 283.5,
+    "width": 242.5,
     "collapsed": true
   },
   "right": {
@@ -129,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Integrate-easyfs-into-kernel.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -146,7 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Integrate-easyfs-into-kernel.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md"
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Integrate-easyfs-into-kernel.md"
               }
             }
           },
@@ -201,33 +177,46 @@
       "command-palette:打开命令面板": false,
       "markdown-importer:打开 Markdown 格式转换器": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
-      "oz-clear-unused-images:Clear Unused Images": false
+      "oz-clear-unused-images:Clear Unused Images": false,
+      "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "71d46e7f5882912e",
+  "active": "74afbfadeba2a401",
   "lastOpenFiles": [
+    "1-Theory/2-DataStruct/dsa-cpp-deng/Course-Info.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/86-SPT-OIwiki.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/85-MST-OIwiki.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/84-并查集.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/83-Adjacency-multilist.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80C-GraphApp-SPT-MST.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80C-GraphApp-SPT-MST 1.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-floyd-dp.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-kruskal-union-3.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-kruskal-union-2.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-kruskal-union-1.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/minimum-spanning-trees-prims-algorithm-8.gif",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/minimum-spanning-trees-prims-algorithm-8.gif.crdownload",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/64-Lowest-Common-Ancestor.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Kruskal.gif",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Kruskal.gif.crdownload",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/83-并查集-kruskal.apng",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/未确认 300672.crdownload",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/83-并查集-kruskal.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/83-并查集-jerry-cheese-hole.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/83-并查集-merge-9.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/83-并查集-merge-8.png",
+    "1-Theory/computer-science.pdf",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/第7章-传输介质.md",
     "1-Theory/6-Network/Data-communication-and-network/Mynote/第6章-带宽利用.md",
     "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
-    "1-Theory/6-Network/Data-communication-and-network/Mynote/第7章-传输介质.md",
-    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-FDM-TDM.png",
     "1-Theory/6-Network/Data-communication-and-network/Mynote/第8章+交换.md",
-    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-circuit-switched.png",
-    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-packet-waiting.png",
-    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-store-and-forward.png",
     "1-Theory/6-Network/Data-communication-and-network/Mynote/第3章+数据和信号.md",
-    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-wireless-access.png",
-    "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-ethernet-access.png",
     "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Introduce-easyfs-to-kernel.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Integrate-easyfs-into-kernel.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/83-并查集.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80C-GraphApp-SPT-MST.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-kruskal-iscorrect.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-kruskal-algo.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-prim-pfs.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-prim-iscorrect?.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80A-Graph.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80B-GraphApp-TopoSort-BCC.md",
     "9-Others/ComputerCulture/bss段为什么表示未初始化数据？.md",
     "未命名.canvas",
     "1-Theory/5-OS-principle/Internal&design-principle/42-加载和链接.md",
@@ -237,21 +226,10 @@
     "1-Theory/4-Architecture/CSAPP/Keypoints/paper",
     "1-Theory/1-ProgramLanguage/Cpp/0-basic/1-Basic/operator-priority.pdf",
     "1-Theory/6-Network/Top-to-down/practice",
-    "1-Theory/6-Network/Top-to-down/assets",
     "1-Theory/6-Network/Top-to-down/chapter0.md",
     "1-Theory/6-Network/Top-to-down/chapter6.md",
     "1-Theory/6-Network/Top-to-down/chapter5.md",
     "1-Theory/6-Network/Top-to-down/chapter4.md",
-    "1-Theory/6-Network/Top-to-down/chapter3.md",
-    "1-Theory/6-Network/Top-to-down/chapter2.md",
-    "1-Theory/6-Network/THU-Xu/精简版PPT.pdf",
-    "1-Theory/6-Network/Data-communication-and-network/DCN-summary.pdf",
-    "1-Theory/6-Network/THU-Xu/期末复习提纲.pdf",
-    "1-Theory/6-Network/Data-communication-and-network/10-绪论-物理层.md",
-    "1-Theory/6-Network/THU-Xu",
-    "1-Theory/6-Network/Data-communication-and-network/CS-Network-Review-and-Summary.md",
-    "1-Theory/6-Network/Data-communication-and-network/20-数据链路层.md",
-    "1-Theory/6-Network/Data-communication-and-network/30-网络层.md",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
     "0-Assets/Diary/未命名.canvas",

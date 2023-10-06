@@ -24568,7 +24568,6 @@ var viewState = {
     caseSensitive: false
   }),
   viewTreeOptions: ref([]),
-  viewExpandedKeys: ref([]),
   regexFilter(pattern, option) {
     var _a;
     let rule = /.*/;
@@ -24620,10 +24619,6 @@ var HtmlCommentsTemplate_default = /* @__PURE__ */ defineComponent({
         };
       };
     });
-    function expand(keys, option) {
-      viewState.viewExpandedKeys.value.length = 0;
-      viewState.viewExpandedKeys.value.push(...keys);
-    }
     onMounted(() => {
       plugin3.applySettingsStylesAndEvents();
     });
@@ -24642,16 +24637,13 @@ var HtmlCommentsTemplate_default = /* @__PURE__ */ defineComponent({
       searchEventsAggregator.triggerEvent();
     }
     async function jumpToCommentOrExpandTag(_selected, nodes) {
-      if (nodes[0] === void 0) {
+      if (!nodes[0]) {
         return;
       }
       const selectedOption = nodes[0];
       if (selectedOption.isComment) {
         const line = selectedOption.line;
         jumpToComment(line);
-      } else if (selectedOption.isTag) {
-        const tagKey = selectedOption.fullName;
-        expandOrCollapseTag(tagKey);
       }
     }
     function jumpToComment(line) {
@@ -24671,13 +24663,6 @@ var HtmlCommentsTemplate_default = /* @__PURE__ */ defineComponent({
           view.setEphemeralState(state);
         }
       });
-    }
-    function expandOrCollapseTag(tagKey) {
-      if (viewState.viewExpandedKeys.value.contains(tagKey)) {
-        viewState.viewExpandedKeys.value.remove(tagKey);
-      } else {
-        viewState.viewExpandedKeys.value.push(tagKey);
-      }
     }
     function clearFiltersAndParseCurrentNote() {
       searchInputValue.value = "";
@@ -24711,7 +24696,7 @@ var HtmlCommentsTemplate_default = /* @__PURE__ */ defineComponent({
       return plugin3;
     }, set plugin(v) {
       plugin3 = v;
-    }, setNodeProps, expand, get renderMethod() {
+    }, setNodeProps, get renderMethod() {
       return renderMethod;
     }, set renderMethod(v) {
       renderMethod = v;
@@ -24723,18 +24708,18 @@ var HtmlCommentsTemplate_default = /* @__PURE__ */ defineComponent({
       return searchInputValue;
     }, set searchInputValue(v) {
       searchInputValue = v;
-    }, searchEventsAggregator, onSearchInput, jumpToCommentOrExpandTag, jumpToComment, expandOrCollapseTag, clearFiltersAndParseCurrentNote, renderLabel, get SettingsBackupRestoreSharp() {
+    }, searchEventsAggregator, onSearchInput, jumpToCommentOrExpandTag, jumpToComment, clearFiltersAndParseCurrentNote, renderLabel, get SettingsBackupRestoreSharp() {
       return SettingsBackupRestoreSharp_default;
     }, get Icon() {
       return Icon;
-    }, get NSpace() {
-      return Space_default;
     }, get NButton() {
       return Button_default;
     }, get NConfigProvider() {
       return ConfigProvider_default;
     }, get NInput() {
       return Input_default;
+    }, get NSpace() {
+      return Space_default;
     }, get NTree() {
       return Tree_default;
     }, get viewState() {
@@ -24780,6 +24765,7 @@ function render6(_ctx, _cache, $props, $setup, $data, $options) {
       }),
       createVNode($setup["NTree"], {
         "block-line": "",
+        "expand-on-click": "",
         "default-expand-all": $setup.plugin.settings.autoExpand,
         pattern: $setup.searchPattern,
         data: $setup.viewState.viewTreeOptions.value,
@@ -24787,11 +24773,10 @@ function render6(_ctx, _cache, $props, $setup, $data, $options) {
         "on-update:selected-keys": $setup.jumpToCommentOrExpandTag,
         "render-label": $setup.renderMethod,
         "node-props": $setup.setNodeProps,
-        "expanded-keys": $setup.viewState.viewExpandedKeys.value,
-        "on-update:expanded-keys": $setup.expand,
+        "default-expanded-keys": [],
         filter: $setup.viewState.simpleFilter,
         "show-irrelevant-nodes": false
-      }, null, 8, ["default-expand-all", "pattern", "data", "render-label", "node-props", "expanded-keys", "filter"])
+      }, null, 8, ["default-expand-all", "pattern", "data", "render-label", "node-props", "filter"])
     ]),
     _: 1
   }, 8, ["theme"]);
@@ -25105,16 +25090,6 @@ var HtmlCommentsPlugin = class extends import_obsidian5.Plugin {
     const parsedText = new TextToTreeDataParser(text);
     viewState.viewTreeOptions.value.length = 0;
     viewState.viewTreeOptions.value.push(...parsedText.parsedComments.treeOptions);
-    if (!clearExpandedItems) {
-      return;
-    }
-    if (this.settings.autoExpand) {
-      const expandedKeys = parsedText.parsedComments.treeOptions.map((it) => it.key);
-      viewState.viewExpandedKeys.value.length = 0;
-      viewState.viewExpandedKeys.value.push(...expandedKeys);
-    } else {
-      viewState.viewExpandedKeys.value.length = 0;
-    }
   }
   async extractOriginalNote() {
     var _a;
