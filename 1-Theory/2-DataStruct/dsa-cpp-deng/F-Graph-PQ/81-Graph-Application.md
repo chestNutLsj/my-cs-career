@@ -311,6 +311,8 @@ template <typename Tv, typename Te> struct DijkPU {
 };
 ```
 
+^4afb80
+
 整体 Dijkstra 算法如下：
 ```
 //最短路径Dijkstra算法：适用于一般的有向图

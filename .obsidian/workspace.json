@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "2b1c38a970d83111",
+        "id": "bb6b570912471652",
         "type": "tabs",
         "children": [
           {
-            "id": "fa5f1f984a7cfe9b",
+            "id": "207480e4b8d043ad",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -88,8 +84,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 242.5,
-    "collapsed": true
+    "width": 242.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -105,7 +100,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +116,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,9 +142,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md"
-              }
+              "state": {}
             }
           },
           {
@@ -166,7 +157,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -181,8 +173,16 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "fa5f1f984a7cfe9b",
+  "active": "207480e4b8d043ad",
   "lastOpenFiles": [
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/82-Graph-Exercise-6-17.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/82-Graph-Exercise-6-10-Euler-curcuit.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/82-Graph-Exercise-6-4.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/82-Graph-Exercise-planar-graph.png",
+    "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
     "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-throughput-bottleneck.png",
     "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-throughput-bottleneck.png",
     "1-Theory/6-Network/Top-to-down/assets/10-Intro-of-Network-and-Internet-traffic-intensity-and-average-queuingDelay.png",
@@ -200,33 +200,24 @@
     "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
     "1-Theory/5-OS-principle/Internal&design-principle/60-IO管理与磁盘.md",
     "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/00-IPC-IO-Overview.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/assets/00-IPC-IO-Overview-tcb-ipc-standard-file.png",
-    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/assets/00-IPC-IO-Overview-IPCOS.png",
     "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/assets",
     "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect",
     "1-Theory/5-OS-principle/rCore-tutorial/practice/6-文件系统.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Integrate-easyfs-into-kernel.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/Course-Info.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/86-SPT-OIwiki.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/85-MST-OIwiki.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/84-并查集.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/83-Adjacency-multilist.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80C-GraphApp-SPT-MST.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80C-GraphApp-SPT-MST 1.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-floyd-dp.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-kruskal-union-3.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/80C-GraphApp-SPT-MST-kruskal-union-2.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/minimum-spanning-trees-prims-algorithm-8.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/64-Lowest-Common-Ancestor.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Kruskal.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/83-并查集-kruskal.apng",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/未确认 300672.crdownload",
     "1-Theory/computer-science.pdf",
-    "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
     "未命名.canvas",
     "1-Theory/4-Architecture/CSAPP/Keypoints/paper/What-every-programmer-should-know-about-memory.pdf",
     "1-Theory/4-Architecture/CSAPP/Keypoints/paper/未确认 663888.crdownload",

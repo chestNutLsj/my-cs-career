@@ -38,7 +38,7 @@ G=(V; E):
 
 ## 图的存储结构
 ### ADT
-```
+```cpp
 using VStatus = enum { UNDISCOVERED, DISCOVERED, VISITED }; //顶点状态
 using EType = enum { UNDETERMINED, TREE, CROSS, FORWARD, BACKWARD }; //边在遍历树中所属的类型
 
@@ -697,7 +697,7 @@ void Graph<Tv, Te>::dfs( Rank s ) { // s < n
 
 - 有向图是否存在环路：只能 DFS，因为 BFS 没有 BACKWARD
 	- 进一步地，如何判断 BACKWARD 是环路？毕竟不是出现 BACKWARD 就代表出现环路—— [[81-Graph-Application#^67e5d3|判断目标节点是否 VISITED]]，即是否是 DAG;
-- 计算图是否构成[[#^e03e5a|欧拉回路]]：DFS
+- 计算图是否构成[[#^e03e5a|欧拉回路]]：DFS [[82-Graph-Exercise#6-10 DFS 在 O (n+e)内判断是否存在欧拉环路并构造之|习题解析6-10]]
 - 给出图的拓扑排序：DFS，方便确定节点是否还有出度
 - [[81-Graph-Application#双连通分量|双连通分量]]、强连通分量的分解：DFS
 
