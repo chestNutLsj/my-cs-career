@@ -694,18 +694,20 @@ traceroute to www.google.com (69.63.186.31), 30 hops max, 60 byte packets
 
 ## 1.5 协议层次和服务模型
 
-协议层次
+### 协议分层
 - 网络功能繁杂：数字信号的物理信号承载、点到点、路由、rdt、进程区分、应用等
 - 现实来看，网络的许多构成元素和设备：主机；路由器；各种媒体的链路；应用；协议；硬件，软件
 - 问题是：如何组织和实现这个复杂的网络功能？
 
-层次化方式实现复杂网络功能！
+**层次化方式实现复杂网络功能**！
 - 将网络复杂的功能分层功能明确的层次，每一层实现了其中一个或一组功能，功能中有其上层可以使用的功能：服务（功能的子集）
 - 本层协议实体相互交互执行本层的协议动作，目的是实现本层功能，通过接口为上层提供更好的服务
 - 在实现本层协议的时候，直接利用了下层所提供的服务
 - 本层的服务：借助下层服务实现的本层协议实体之间交互带来的新功能（上层可以利用的）+ 更下层所提供的服务
 
-服务：
+值得注意：由于分层策略使得高层冗余低层的功能，因而这可能是导致效率低、系统复杂化的缺点。
+
+#### 服务：
 1. 服务和服务访问点
 - 服务(Service)：低层实体向上层实体提供它们之间的通信的能力
     - 服务用户(service user)：如TCP实体上的多个应用
@@ -745,7 +747,7 @@ traceroute to www.google.com (69.63.186.31), 30 hops max, 60 byte packets
     - 本层协议的实现要靠下层提供的服务来实现
     - 本层实体通过协议为上层提供更高级的服务
 
-数据单元(DU)
+#### 数据单元(DU)
 
 <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210721213159987.png"  style="zoom: 80%;"/>
 
@@ -769,47 +771,95 @@ n+1层将服务数据单元(SDU)传给第n层，接口控制信息(ICI)用于将
                 - 改变2个翻译使用的语言也不影响上下2个层次的工作
 - 分层思想被认为有害的地方？子系统之间交换信息效率低等等
 
-Internet协议栈：应用层——传输层——网络层——链路层——物理层
+### Internet 协议栈
+![[10-Intro-of-Network-and-Internet-protocol-stack.png]]
+应用层——传输层——网络层——链路层——物理层
 - 应用层：网络应用
     - 为人类用户或者其他应用进程提供网络应用服务
     - FTP，SMTP，HTTP，DNS
-- 传输层：主机之间的数据传输
-    - 在网络层提供的端到端通信基础上，细分为进程到进程；TCP将IP提供的不可靠的通信变成可靠地通信
-    - TCP，UDP
-- 网络层：为数据报从源到目的选择路由
-    - 主机主机之间的通信，端到端通信，不可靠
-    - IP，路由协议
-- 链路层：相邻网络节点间的数据传输（从比特流确定一帧的开始和结束，以帧为单位进行传输）
-    - 相邻两点的通信，点到点通信，可靠或不可靠
-    - 点对点协议PPP，802.11(wifi)，Ethernet
-- 物理层：在线路上传送bit
+    - 这些协议或应用使用软件实现
+    - 应用层的信息分组为：Message 报文
 
-ISO/OSI参考模型：应用层——表示层——会话层——传输层——网络层——链路层——物理层
-- 表示层：允许应用解释传输的数据，e.g.，加密，压缩，机器相关的表示转换，应用层就只用关心语义上的信息，在TCP/IP协议栈中通过应用层自己实现。
-- 会话层：数据交换的同步，检查点，恢复
-- 互联网协议栈没有这两层！
+- 传输层：主机之间的数据传输
+    - 在网络层提供的端到端通信基础上，细分为**进程到进程**；
+    - TCP将IP提供的不可靠的通信变成可靠地通信
+    - TCP(面向连接，确保传递、流量控制、拥塞控制)，UDP (无连接，不可靠通信)
+    - 传输层协议也是使用软件实现
+    - 传输层的信息分组称为：segment 报文段
+
+- 网络层：为数据报从源到目的选择路由
+    - **主机到主机**之间的通信，端到端通信，不可靠
+    - IP，路由协议
+    - 网络层协议是硬件和软件混合实现
+    - 网络层的信息分组为：datagram 数据报
+
+- 链路层：**相邻网络节点间**的数据传输（从比特流确定一帧的开始和结束，以帧为单位进行传输）
+    - 相邻两点的通信，点到点通信，可靠或不可靠
+    - 点对点协议 PPP，802.11 (wifi)，Ethernet
+    - 链路层及更低的物理层，通过网卡等硬件实现
+    - 链路层分组为：frame 帧
+
+- 物理层：在线路上传送 bit
+	- 协议与链路相关，并进一步控制传输媒体的电气属性
+
+### ISO-OSI 参考模型
+![[10-Intro-of-Network-and-Internet-OSI-layer.png]]
+应用层——表示层——会话层——传输层——网络层——链路层——物理层
+- 表示层：允许**应用解释传输的数据**，e.g.，加密，压缩，机器相关的表示转换，应用层就只用关心语义上的信息，在TCP/IP协议栈中通过应用层自己实现。
+- 会话层：**数据交换的同步，检查点，恢复**
+- 互联网协议栈没有这两层（互联网协议栈通常指 TCP/IP 协议栈）！
     - 这些服务，如果需要的话，必须被应用实现
 
-封装和解封装
+### 封装和解封装
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210721225044691.png" alt="image-20210721225044691" style="zoom:80%;" />
+![[10-Intro-of-Network-and-Internet-different-layers.png]]
+Figure 1.24 also illustrates the important concept of **encapsulation**. 
+1. At the sending host, an application-layer message (M in Figure 1.24) is passed to the transport layer. 
+2. In the simplest case, the transport layer takes the message and ==appends additional information== (so-called transport-layer header information, Ht in Figure 1.24) that will be used by the receiver-side transport layer. The application-layer message and the transport-layer header information together constitute the transport-layer segment. The transport-layer segment thus encapsulates the application-layer message. ==The added information might include information== allowing the receiver-side transport layer to deliver the message up to the appropriate application, and error-detection bits that allow the receiver to determine whether bits in the message have been changed in route.
+3. The transport layer then passes the segment to the network layer, which adds network-layer header information (Hn in Figure 1.24) such as source and destination end system addresses, creating a network-layer datagram.
+4. The datagram is then passed to the link layer, which (of course!) will add its own link-layer header information and create a link-layer frame. 
 
-链路层交换机主要用于组建局域网，而路由器则主要负责连接外网并寻找网络中最合适数据传输的路径。  
-最后需要说明的是：路由器一般都具有防火墙功能，能够对一些网络数据包选择性的进行过滤。现在的一些路由器都具备交换机的功能，也有具备路由器功能的交换机，称为三层交换机。相比较而言，路由器的功能较交换机要强大，但是速度也相对较慢，价格较为昂贵，而三层交换机既有交换机的线性转发报文的能力，又有路由器的路由功能，因此得到了广泛的应用。
+Thus, we see that at each layer, a packet has two types of fields: **header fields** and a **payload field**. The payload is typically a packet from the layer above.
 
-<span id="Jump2"></span>
-各层次的协议数据单元(PDU)[参考对应上文](#JumpBack2)
-- 应用层：报文(message)
-- 传输层：报文段(segment)：TCP段，UDP数据报
-- 网络层：分组packet（如果无连接方式：数据报datagram）
-- 数据链路层：帧(frame)
-- 物理层：位(bit)
+链路层交换机主要用于组建局域网，而路由器则主要负责连接外网并寻找网络中最合适数据传输的路径。
 
-### 1.8 Internet历史
+最后需要说明的是：路由器一般都具有防火墙功能，能够对一些网络数据包选择性的进行过滤（GFW）。现在的一些路由器都具备交换机的功能，也有具备路由器功能的交换机，称为三层交换机。相比较而言，路由器的功能较交换机要强大，但是速度也相对较慢，价格较为昂贵，而三层交换机既有交换机的线性转发报文的能力，又有路由器的路由功能，因此得到了广泛的应用。
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210722093221957.png" style="zoom:80%" />
+## 1.6 受到攻击的网络
+### Malware
+**The Bad Guys Can Put Malware into Your Host Via the Internet**.
 
-1. 早期（1960以前）计算机网络
+Once malware infects our device it can do all kinds of devious things, including deleting our files and installing spyware that collects our private information, such as social security numbers, passwords, and keystrokes, and then sends this (over the Internet, of course!) back to the bad guys. Our compromised host may also be enrolled in a network of thousands of similarly compromised devices, collectively known as a **botnet**(僵尸网络), which the bad guys control and leverage for spam e-mail distribution or distributed denial-of-service attacks (soon to be discussed) against targeted hosts.
+
+Much of the malware out there today is **self-replicating**: once it infects one host, from that host it seeks entry into other hosts over the Internet, and from the newly infected hosts, it seeks entry into yet more hosts. In this manner, self-replicating malware can spread exponentially fast.
+
+### Attack Servers and Network Infrastructure
+Another broad class of security threats are known as denial-of-service (DoS) attacks. As the name suggests, a DoS attack renders a network, host, or other piece of infrastructure unusable by legitimate users. Web servers, e-mail servers, DNS servers (discussed in Chapter 2), and institutional networks can all be subject to DoS attacks. The site Digital Attack Map allows use to visualize the top daily DoS attacks worldwide [DAM 2020]. Most Internet DoS attacks fall into one of three categories: 
+- **Vulnerability attack**. This involves sending a few well-crafted messages to a vulnerable application or operating system running on a targeted host. If the right sequence of packets is sent to a vulnerable application or operating system, the service can stop or, worse, the host can crash. 
+- **Bandwidth flooding**. The attacker sends a deluge of packets to the targeted host—so many packets that the target’s access link becomes clogged (拥塞), preventing legitimate packets from reaching the server. 
+- **Connection flooding**. The attacker establishes a large number of half-open or fully open TCP connections (TCP connections are discussed in Chapter 3) at the target host. The host can become so bogged down with these bogus connections that it stops accepting legitimate connections.
+
+![[10-Intro-of-Network-and-Internet-DDoS.png]]
+The attacker controls multiple sources and has each source blast traffic at the target. With this approach, the aggregate traffic rate across all the controlled sources needs to be approximately R to cripple the service. DDoS attacks leveraging botnets with thousands of comprised hosts are a common occurrence today [DAM 2020]. DDos attacks are much harder to detect and defend against than a DoS attack from a single host.
+
+### Sniff packets
+While ubiquitous Internet access is extremely convenient and enables marvelous new applications for mobile users, it also creates a major security vulnerability—by placing a passive receiver in the vicinity of the wireless transmitter, that receiver can obtain a copy of every packet that is transmitted! These packets can contain all kinds of sensitive information, including passwords, social security numbers, trade secrets, and private personal messages. A passive receiver that records a copy of every packet that flies by is called a **packet sniffer**.
+
+Sniffers can be deployed in wired environments as well. In wired broadcast environments, as in many Ethernet LANs, a packet sniffer can obtain copies of broadcast packets sent over the LAN. As described in Section 1.2, cable access technologies also broadcast packets and are thus vulnerable to sniffing. Further more, a bad guy who gains access to an institution’s access router or access link to the Internet may be able to plant a sniffer that makes a copy of every packet going to/from the organization. Sniffed packets can then be analyzed offline for sensitive information. 
+
+Packet-sniffing software is freely available at various Web sites and as commercial products. Professors teaching a networking course have been known to assign lab exercises that involve writing a packet-sniffing and application-layer data reconstruction program. Indeed, the Wireshark [Wireshark 2020] labs associated with this text (see the introductory Wireshark lab at the end of this chapter) use exactly such a packet sniffer! 
+
+Because packet sniffers are passive—that is, they do not inject packets into the channel—they are difficult to detect. So, when we send packets into a wireless channel, we must accept the possibility that some bad guy may be recording copies of our packets. As you may have guessed, some of the best defenses against packet sniffing involve cryptography.
+
+### Masquerade as someone trusted
+Imagine the unsuspecting receiver (say an Internet router) who receives such a packet, takes the (false) source address as being truthful, and then performs some command embedded in the packet’s contents (say modifies its forwarding table). The ability to inject packets into the Internet with a false source address is known as **IP spoofing**, and is but one of many ways in which one user can masquerade as another user.
+
+To solve this problem, we will need end-point authentication, that is, a mechanism that will allow us to determine with certainty if a message originates from where we think it does.
+
+## 1.7 Internet 历史
+![[10-Intro-of-Network-and-Internet-history.png]]
+
+### 1. 早期（1960以前）计算机网络
 - 线路交换网络
 - 线路交换的特性使得其不适合计算机之间的通信
     - 线路建立时间过长
@@ -820,7 +870,7 @@ ISO/OSI参考模型：应用层——表示层——会话层——传输层—�
     - 1964: Baran(美国兰德公司) – 军用网络上的分组交换
     - 1964：Donald（英国）等，NPL
 
-2. 1961-1972：早期的分组交换概念
+### 2. 1961-1972：早期的分组交换概念
 - 1967：美国高级研究计划研究局考虑ARPAnet
     - Kleinrock在MIT的同事
 - 1969：第一个 ARPAnet节点开始工作，UCLA
@@ -832,7 +882,7 @@ ISO/OSI参考模型：应用层——表示层——会话层——传输层—�
         - NCP协议：相当于传输层和网络层在一起，支持应用开发
     - 第一个e-mail程序（BBN）
     - ARPAnet有15个节点
-3. 1972-1980：专用网络和网络互联
+### 3. 1972-1980：专用网络和网络互联
 - 出现了很多对以后来说重要的网络形式，雨后春笋
     - 1970：ALOHAnet,夏威夷上的微波网络
     - 1973：Metcalfe在博士论文中提出了Ethernet
@@ -852,7 +902,7 @@ ISO/OSI参考模型：应用层——表示层——会话层——传输层—�
 *3.无状态的路由器*  
 *4.分布控制*  
 
-4. 1980-1990：体系结构变化，网络数量激增，应用丰富
+### 4. 1980-1990：体系结构变化，网络数量激增，应用丰富
 - 1983：TCP/IP部署，标记日
     - NCP分化成2个层次，TCP/IP，从而出现UDP
     - 覆盖式IP解决网络互联问题
@@ -866,7 +916,7 @@ ISO/OSI参考模型：应用层——表示层——会话层——传输层—�
     - 1985年：ISO/OSI提出，时机不对且太繁琐，
 - 100,000主机连接到网络联邦
 
-5. 1990，2000’s：商业化，Web，新的应用
+### 5. 1990，2000’s：商业化，Web，新的应用
 - 1990年代初：NSF对ARPAnet的访问网，双主干，ARPAnet退役
 - 1991：NSF放宽了对NSFnet用于商业目的的限制（1995退役），ASFNET非盈利性机构维护，后面叫Internet
 - UNIX中TCP/IP的免费捆绑
@@ -882,7 +932,7 @@ ISO/OSI参考模型：应用层——表示层——会话层——传输层—�
     - 2001网络泡沫，使得一些好公司沉淀下来（谷歌，微软，苹果，Yahoo，思科）
     - 主干网的速率达到Gbps
 
-6. 2005-现在
+### 6. 2005-现在
 - ~50+亿主机：包括智能手机和平板
 - 宽带接入的快速部署
 - 高速无线接入无处不在：移动互联时代
@@ -896,7 +946,7 @@ ISO/OSI参考模型：应用层——表示层——会话层——传输层—�
 - 电子商务，大学，企业在云中运行他们的服务（eg, Amazon EC2）
 - 体系结构酝酿着大的变化，未来网络蠢蠢欲动
 
-### 1.9 小结
+## 1.8 小结
 
 1. Internet
 2. 什么是协议
