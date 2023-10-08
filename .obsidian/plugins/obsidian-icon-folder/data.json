@@ -20,7 +20,8 @@
       "left": 0
     },
     "emojiStyle": "twemoji",
-    "iconInTabsEnabled": false
+    "iconInTabsEnabled": false,
+    "iconsBackgroundCheckEnabled": false
   },
   "0-Assets": "SiDatabricks",
   "5-Tools": "RiToolsFill",
