@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "d1ff6fcff2284848",
+        "id": "673f0a7bccb86050",
         "type": "tabs",
         "children": [
           {
-            "id": "04c6ba97a7d339b3",
+            "id": "6966c9f6b5a2fa10",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -105,7 +101,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +117,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,9 +143,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md"
-              }
+              "state": {}
             }
           },
           {
@@ -182,8 +174,12 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "04c6ba97a7d339b3",
+  "active": "6966c9f6b5a2fa10",
   "lastOpenFiles": [
+    "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-HTTP-request-response.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-tcp-socket.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-cs-p2p.png",
     "1-Theory/4-Architecture/CSAPP/Keypoints/80-Exceptional-control-flow.md",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/00-Concurrence-Overview.md",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence",
@@ -200,16 +196,12 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/82-Graph-Exercise-hypergraph.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/82-Graph-Exercise-6-32.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/82-Graph-Exercise-6-31.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/82-Graph-Exercise-6-30-6.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/82-Graph-Exercise-6-30-5.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61B-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md",
     "README.md",
     "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
     "1-Theory/5-OS-principle/Internal&design-principle/20-进程与线程.md",
-    "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
     "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
     "1-Theory/6-Network/Top-to-down/practice/10-Intro.md",
     "1-Theory/6-Network/Top-to-down/practice/assets",
@@ -222,7 +214,6 @@
     "1-Theory/6-Network/Data-communication-and-network/40-传输层.md",
     "1-Theory/6-Network/Data-communication-and-network/30-网络层.md",
     "1-Theory/6-Network/Data-communication-and-network/20-数据链路层.md",
-    "1-Theory/6-Network/Data-communication-and-network/10-绪论-物理层.md",
     "1-Theory/6-Network/Data-communication-and-network/Mynote/assets",
     "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/assets",
     "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect",
