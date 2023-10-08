@@ -133,21 +133,21 @@ https://blog.linuxplumbersconf.org/2016/ocw/system/presentations/3711/original/L
 ## 延伸阅读
 
 - 印度理工学院：[操作系统导论 (非常好的入门课)](https://www.bilibili.com/video/BV1YN411Q7DA/) -- 有课程的英文逐字稿
-    
+
 
 - 麻省理工学院：[操作系统导论 6.S081（2020年）](https://pdos.csail.mit.edu/6.828/2020/) -- 视频搬运到B站了（搜6.S081即可）
-    
+
 
 - 加州伯克利分校：[操作系统与系统编程 CS162](https://cs162.org/) -- 视频搬运到B站了（搜CS162即可）
-    
+
 
 - 斯坦福大学：[操作系统 CS140](http://web.stanford.edu/~ouster/cgi-bin/cs140-spring20/index.php) -- 没有视频，可以自行下载教学投影片学习
-    
+
 
 - 浙江大学：[操作系统（2018年秋冬季）](http://malgenomeproject.org/os2018fall/)-- 没有视频，可以自行下载教学投影片学习
-    
+
 
 - 毕尔肯大学：[操作系统原理 (CS-342)](https://www.bilibili.com/video/BV1uv4y1f7WC/) ​
-    
+
 
 - 本人拙作： 《Unix环境高级编程》系列视频课程：[进程环境和进程控制](https://edu.51cto.com/course/12892.html)，[信号控制](https://edu.51cto.com/course/14378.html)
