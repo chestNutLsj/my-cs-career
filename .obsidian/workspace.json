@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "94ba63dc971e73e2",
+        "id": "6b51d4e9c7473bc0",
         "type": "tabs",
         "children": [
           {
-            "id": "b5e6405fe8d725e5",
+            "id": "32f5864046f35ee3",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/00-Concurrence-Overview.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -66,14 +62,6 @@
             }
           },
           {
-            "id": "8ed71b685f84a34f",
-            "type": "leaf",
-            "state": {
-              "type": "recent-files",
-              "state": {}
-            }
-          },
-          {
             "id": "5019e4a770c657c5",
             "type": "leaf",
             "state": {
@@ -88,8 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 263.5,
-    "collapsed": true
+    "width": 263.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -105,7 +92,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/00-Concurrence-Overview.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +108,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/00-Concurrence-Overview.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,9 +134,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/00-Concurrence-Overview.md"
-              }
+              "state": {}
             }
           },
           {
@@ -182,10 +165,18 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "32f5864046f35ee3",
   "lastOpenFiles": [
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/10-Usermode-thread-management.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/00-Concurrence-Overview.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/assets/00-Concurrence-Overview-syncmutexOS-detail.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/assets/00-Concurrence-Overview-task-abstract.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/assets/00-Concurrence-Overview-ThreadOS-detail.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/30-并发.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/assets/00-Concurrence-Overview-phil_din_mutex.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/assets",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-heapsort-instance-2.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-heapsort-instance.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-heapsort-impl.png",
@@ -193,14 +184,9 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-heapsort-swap.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-heapsort.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/92-Min-max-heap.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/92-Min-max-heap-insert-instance.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/92-Min-max-heap-instance.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-heap-heapify-floyd-principle.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-heap-heapify-floyd-instance.png",
     "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
     "1-Theory/4-Architecture/CSAPP/Keypoints/80-Exceptional-control-flow.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/00-Concurrence-Overview.md",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence",
     "1-Theory/5-OS-principle/rCore-tutorial/practice/7-信号.md",
     "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/40-Signal.md",
@@ -221,14 +207,12 @@
     "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/10-File-based-stdio.md",
     "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/00-IPC-IO-Overview.md",
     "1-Theory/6-Network/Data-communication-and-network/50-应用层.md",
-    "1-Theory/6-Network/Data-communication-and-network/40-传输层.md",
     "1-Theory/6-Network/Data-communication-and-network/Mynote/assets",
     "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/assets",
     "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/minimum-spanning-trees-prims-algorithm-8.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Kruskal.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/83-并查集-kruskal.apng",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/未确认 300672.crdownload",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",

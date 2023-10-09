@@ -313,7 +313,7 @@
       },
       "advanced": {
         "gradientHighlights": true,
-        "gradientHighlightsColourStop": "52%",
+        "gradientHighlightsColourStop": "29%",
         "languageBorderColour": true,
         "languageBorderWidth": 5,
         "iconSize": 28
@@ -344,9 +344,10 @@
         "highlights": {
           "activeCodeblockLineColour": "--color-base-30",
           "activeEditorLineColour": "--color-base-20",
-          "defaultColour": "--text-highlight-bg",
+          "defaultColour": "#15EF138F",
           "alternativeHighlights": {
-            "error": "#E5480FAB"
+            "error": "#E5480FAB",
+            "warning": "#EFDC50B3"
           }
         },
         "inline": {
@@ -386,7 +387,8 @@
           "activeEditorLineColour": "--color-base-20",
           "defaultColour": "--text-highlight-bg",
           "alternativeHighlights": {
-            "error": "#5978BDFF"
+            "error": "#5978BDFF",
+            "warning": "#D9C84EFF"
           }
         },
         "inline": {
