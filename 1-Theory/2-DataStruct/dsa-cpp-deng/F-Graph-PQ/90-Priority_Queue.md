@@ -255,6 +255,231 @@ template <typename T> void Vector<T>::heapSort( Rank lo, Rank hi ) { // 0 <= lo 
 
 ## 锦标赛排序
 ### 胜者树
-完全二叉树 - 叶节点： 参赛选手/团队 - 内部节点：孩子对决后之胜者 或有重复（连胜）  create() //O(n) remove() //O(logn) insert() //O(logn)  树根总是全局冠军：类似于堆顶
-### 败者树
+- 一种完全二叉树，其叶节点是参赛选手，内部节点：孩子对决后的胜者，或有重复（连胜）
+- ADT：
+	- create () //O (n)
+	- remove () //O (logn)
+	- insert () //O (logn)
+- 树根总是全局冠军：类似于堆顶
 
+#### 用以排序的思路
+```
+TournamentSort():
+	CREATE a tournament tree for the input list
+	while there are active leaves
+		REMOVE the root
+		RETRACE the root down to its leaf
+		DEACTIVATE the leaf
+		REPLAY along the path back to the root
+```
+
+#### 实例
+![[90-Priority_Queue-winner-tree-instance.png]]
+- 数值小代表胜者；
+- 每一次决出胜者，就将胜者对应的节点设置为无穷大——重赛时不必考虑
+#### 性能
+- 空间： O (节点数) = O (叶节点数) = O (n)
+- 构造： 仅需 O (n)时间 
+- 更新： 每次都须全体重赛 replay ？
+	- 唯上一优胜者的祖先，才有必要！为此，只需从其所在叶节点出发，逐层上溯直到树根，
+	- 如此，为确定各轮优胜者，总共所需时间仅 O (logn) 
+- 时间： n 轮 重赛 = n * O (logn) = O (nlogn)，达到下界
+- 稳定性：稳定
+- 用以 k 选取：初始化 O (n)，迭代 k 步 O (klogn)
+	- 渐进意义上与小顶堆旗鼓相当
+	- 单就常系数而言，远小于小顶堆——小顶堆在 Floyd 建堆、delMin 的 `percolateDown()` 中每一层都需要 2 次比较，累计 `2*logn` 次，胜者树只需要与兄弟比较即可—— `logn`；
+
+### 败者树
+可以看到，胜者树在重赛过程中，会交替访问沿途节点及其兄弟：
+![[90-Priority_Queue-champion-tree-flaw.png]]
+
+若在内部节点反其道而行之，记录对应比赛的败者，并增设根的“父节点”记录冠军：
+![[90-Priority_Queue-loser-tree.png]]
+- 注意此时根节点并不是“亚军”，但胜者树的根的孩子之一是“亚军”
+
+#### 实例
+![[90-Priority_Queue-loser-instance.png]]
+
+## 多叉堆
+### 利用优先级队列改进 PFS 框架的思路
+回顾图的 PFS 以及统一框架：g->pfs ()：
+- 无论何种算法，差异仅在于所采用的优先级更新器 prioUpdater() 
+- Prim 算法： g->pfs( 0, PrimPU() ); 
+- Dijkstra 算法： g->pfs ( 0, DijkPU () ); 
+- 每一节点引入遍历树后，都需要更新树外顶点的优先级（数），并选出新的优先级最高者
+- 若采用邻接表，两类操作的累计时间分别为 `O(n+e)` 和 ` O(n^2) ` 
+==能否更快呢？==——将 PFS 中各顶点组织为优先级队列：
+- 为此需要使用 PQ 接口：
+	- `heapify()`: 由 n 个顶点创建初始 PQ 总计 O (n)
+	- `delMax()`: 取优先级最高（极短）跨边 (u, w) 总计 O ( n * logn ) 
+	- `increase()`: 更新所有关联顶点到 U 的距离，提高优先级，总计 O ( e * logn )
+	- 总体运行时间 = O ( (n+e) logn ) 
+	- 对于稀疏图，处理效率很高
+	- 对于稠密图，反而不如常规实现的版本——有无更好的办法？
+
+### 多叉堆形式
+![[90-Priority_Queue-d-heap.png]]
+- 多叉堆 d-heap 仍可基于向量实现，且父、子节点的秩可简明地相互换算 
+	- $parent(k)=\lfloor(k-1)/d\rfloor$ 
+	- $child (k, i)=kd+i, 0<i\le d$ 
+	- d 不是 2 的幂时，不能借助移位加速秩的换算
+- heapify ()：O (n) //不可能再快了
+- delMax ()：O (logn) //实质就是 percolateDown ()，已是极限了——为什么？
+- increase()：O(logn) //实质就是 percolateUp() —— 似乎仍有改进空间...
+
+### 多叉堆特点
+若将二叉堆改成多叉堆，则
+- 堆高降低至 $O (\log_{d}n)$ 
+- 相应地，上滤成本降低至 $\log_{d}n$
+- 但下滤成本反而增加，当 d>4 时，下滤成本增加至 $d\cdot\log_{d}n=\frac{d}{\ln d}\ln n$
+
+### 多叉堆实现 PFS 的优势
+- 使用多叉堆实现 PFS 时，运行时间将是 $n\cdot d\cdot\log_{d}n+e\cdot\log_{d}n=(n\cdot d+e)\log_{d}n$ 
+- 取 $d\approx \frac{e}{n}+2$ 时总体性能达到最优：$O(e\log_{\frac{e}{n+2}}n)$ 
+- 对于稀疏图仍然能保持高效：$e\log_{\frac{e}{n+2}}n\approx n\cdot\log_{\frac{n}{n+2}}n=O(n\log n)$ 
+- 对于稠密图改进极大：$e\log_{\frac{e}{n+2}}n\approx n^{2}\cdot\log_{\frac{n^{2}}{n+2}}n\approx n^{2}=O(e)$ 
+
+### Fibonacci 堆
+![[93-Fibonacci-heap]]
+
+## 左式堆
+### 堆合并问题
+![[90-Priority_Queue-leftheap-heapmerge.png]]
+- H = merge (A, B)：将堆 A 和 B 合二为一 //不妨设|A| = n >= m = |B| 
+- 方法一：在 A 堆中逐个插入 B 的最大值
+	- `while(!B.empty()) A.insert ( B.delMax ());`，直到 B 堆空
+	- 用时：`O(m*(logm + log(n+m)))` = `O(m*log(n + m))`
+- 方法二：使用并查集合并 A 和 B 堆，再 Floyd 建堆
+	- `union( A, B ).heapify( n + m )` 
+	- 用时：`O(m + n)` 
+
+有没有更好的办法？比如可否奢望在 `O(logn)` 时间内实现 merge()？
+
+### 思路
+![[90-Priority_Queue-leftheap-merge.png]]
+
+若将“藤”拉直，并统一节点在左、藤在右：
+![[90-Priority_Queue-leftheap-merge-2.png]]
+![[90-Priority_Queue-leftheap-rightvine.png]]
+
+### 左式堆的 ADT
+```
+template <typename T>
+class PQ_LeftHeap : public PQ<T>, public BinTree<T> { //基于二叉树，以左式堆形式实现的PQ
+ public:
+	PQ_LeftHeap() {} //默认构造
+	PQ_LeftHeap( T* E, int n ) { 
+		//批量构造：可改进为Floyd建堆算法
+		for ( int i = 0; i < n; i++ ) 
+			insert( E[i] ); 
+	}
+	PQ_LeftHeap( PQ_LeftHeap& A, PQ_LeftHeap& B ) { 
+		//合并构造
+	    _root = merge( A._root, B._root ); 
+	    _size = A._size + B._size;
+	    A._root = B._root = NULL; 
+	    A._size = B._size = 0;
+	}
+	void insert( T ); //按照比较器确定的优先级次序插入元素
+	T getMax(); //取出优先级最高的元素
+	T delMax(); //删除优先级最高的元素
+}; // PQ_LeftHeap
+
+template BinNodePosi merge(BinNodePosi, BinNodePosi);
+```
+
+### 左式堆形态
+此处所谓可持续，值得就是单侧倾斜——保持藤在右，节点向左的倾斜状态：
+![[90-Priority_Queue-leftheap.png]]
+- 保持堆序性，附加新条件，使得在堆合并过程中，只涉及少量节点：O (logn) 
+- 新条件 = 单侧倾斜： 节点分布偏向于左侧，合并操作只涉及右侧
+- 可是，果真如此，则拓扑上不见得是完全二叉树，结构性无法保证！？是的，实际上，结构性并非堆结构的本质要求
+
+### 空节点路径长度
+- 引入所有的外部节点，消除一度节点，将其转为真二叉树 
+- 空节点路径长度 Null Path Length：
+	- $npl(NULL)=0$ 
+	- $npl(x)=1+min\{npl(lc(x)),npl(rc(x))\}$ 
+- 验证： `npl(x)` = `x 到外部节点的最近距离` = `以 x 为根的最大满子树的高度` 
+![[90-Priority_Queue-leftheap-npl.png]]
+
+### 左式堆与右侧链
+左式堆处处左倾：
+- 对任何节点 x，都有 $npl(lc(x))\ge npl(rc(x))$
+- 推论：$npl(x)=1+npl(rc(x))$ 
+
+- 左倾性与堆序性，相容而不矛盾：
+- 左式堆的子堆，必是左式堆
+- 左式堆倾向于更多节点分布于左侧分支
+	- 这是否意味着，左子堆的规模和高度必然大于右子堆？——并不
+
+右侧链：
+- rChain (x)：从节点 x 出发，一直沿右分支前进
+- 特别地，rChain(r)的终点，即全堆中最浅的外部节点：
+	- $npl(r) = |rChain(r)|=d$
+	- 存在一棵以 r 为根、高度为 d 的满子树
+	- ![[90-Priority_Queue-rightChain.png]]
+- 右侧链长为 d 的左式堆，至少包含 `2^d - 1` 个内部节点, `2^(d+1) - 1` 个节点
+- 反之，包含 n 个节点的左式堆，右侧链长度 $d\le\lfloor\log_{2}(n+1)\rfloor-1=O(\log n)$ 
+
+### 递归实现左式堆合并
+![[90-Priority_Queue-leftheap-merge-before-after.png]]
+
+```
+template <typename T> //合并以a和b为根节点的两个左式堆（递归版）
+BinNodePosi<T> merge( BinNodePosi<T> a, BinNodePosi<T> b ) {
+   if ( !a ) return b; //退化情况
+   if ( !b ) return a; //退化情况
+   if ( lt( a->data, b->data ) ) swap( a, b ); //确保a>=b
+   ( a->rc = merge( a->rc, b ) )->parent = a; //将a的右子堆，与b合并
+   if ( !a->lc || ( a->lc->npl < a->rc->npl ) ) //若有必要
+      swap( a->lc, a->rc ); //交换a的左、右子堆，以确保右子堆的npl不大
+   a->npl = a->rc ? a->rc->npl + 1 : 1; //更新a的npl
+   return a; //返回合并后的堆顶
+} //本算法只实现结构上的合并，堆的规模须由上层调用者负责更新
+```
+
+### 实例
+![[90-Priority_Queue-leftheap-merge-instance-1.png]]
+![[90-Priority_Queue-leftheap-merge-instance-2.png]]
+![[90-Priority_Queue-leftheap-merge-instance-3.png]]
+
+### 迭代实现合并
+```
+template <typename T> //合并以a和b为根节点的两个左式堆（迭代版）
+BinNodePosi<T> merge( BinNodePosi<T> a, BinNodePosi<T> b ) {
+   if ( !a ) return b; //退化情况
+   if ( !b ) return a; //退化情况
+   if ( lt( a->data, b->data ) ) swap( a, b ); //确保a>=b
+   for ( ; a->rc; a = a->rc ) //沿右侧链做二路归并，直至堆a->rc先于b变空
+      if ( lt( a->rc->data, b->data ) ) //只有在a->rc < b时才需做实质的操作
+         { b->parent = a; swap( a->rc, b ); } //接入b的根节点（及其左子堆）
+   ( a->rc = b )->parent = a; //直接接入b的残余部分（必然非空）
+   for ( ; a; b = a, a = a->parent ) { //从a出发沿右侧链逐层回溯（b == a->rc）
+      if ( !a->lc || ( a->lc->npl < a->rc->npl ) ) //若有必要
+         swap( a->lc, a->rc ); //通过交换确保右子堆的npl不大
+      a->npl = a->rc ? a->rc->npl + 1 : 1; //更新npl
+   }
+   return b; //返回合并后的堆顶
+} //本算法只实现结构上的合并，堆的规模须由上层调用者负责更新
+```
+
+### 插入与删除 
+```
+template <typename T> void PQ_LeftHeap<T>::insert( T e ) {
+   _root = merge( _root, new BinNode<T>( e, NULL ) ); //将e封装为左式堆，与当前左式堆合并
+   _size++; //更新规模
+}
+
+template <typename T> T PQ_LeftHeap<T>::delMax() {
+   BinNodePosi<T> lHeap = _root->lc; if ( lHeap ) lHeap->parent = NULL; //左子堆
+   BinNodePosi<T> rHeap = _root->rc; if ( rHeap ) rHeap->parent = NULL; //右子堆
+   T e = _root->data; delete _root; _size--; //删除根节点
+   _root = merge( lHeap, rHeap ); //合并原左、右子堆
+   return e; //返回原根节点的数据项
+}
+
+```
+
+## 优先级搜索树
+![[94-Priority-search-tree]]
