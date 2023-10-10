@@ -618,50 +618,89 @@ If-modified-since: <date>
 > We see that in response to the conditional GET, the Web server still sends a response message but does not include the requested object in the response message. Including the requested object would only waste bandwidth and increase user-perceived response time, particularly if the object is large. Note that this last response message has 304 Not Modified in the status line, which tells the cache that it can go ahead and forward its (the proxy cache’s) cached copy of the object to the requesting browser.
 
 ### HTTP/2
-HTTP/2 [RFC 7540], standardized in 2015, was the first new version of HTTP since HTTP/1.1, which was standardized in 1997. Since standardization, HTTP/2 has taken off, with over 40% of the top 10 million websites supporting HTTP/2 in 2020 [W3Techs]. Most browsers—including Google Chrome, Internet Explorer, Safari, Opera, and Firefox—also support HTTP/2. The primary goals for HTTP/2 are to reduce perceived latency by enabling request and response multiplexing over a single TCP connection, provide request prioritization and server push, and provide efficient compression of HTTP header fields. HTTP/2 does not change HTTP methods, status codes, URLs, or header fields. Instead, HTTP/2 changes how the data is formatted and transported between the client and server.
+HTTP/2 `[RFC 7540]`, standardized in 2015, was the first new version of HTTP since HTTP/1.1, which was standardized in 1997. Since standardization, HTTP/2 has taken off, with over 40% of the top 10 million websites supporting HTTP/2 in 2020 `[W3Techs]`. Most browsers—including Google Chrome, Internet Explorer, Safari, Opera, and Firefox—also support HTTP/2. 
 
-To motivate the need for HTTP/2, recall that HTTP/1.1 uses persistent TCP connections, allowing a Web page to be sent from server to client over a single TCP connection. By having only one TCP connection per Web page, the number of sockets at the server is reduced and each transported Web page gets a fair share of the network bandwidth (as discussed below). But developers of Web browsers quickly discovered that sending all the objects in a Web page over a single TCP connection has a Head of Line (HOL) blocking problem. To understand HOL blocking, consider a Web page that includes an HTML base page, a large video clip near the top of Web page, and many small objects below the video. Further suppose there is a low-to-medium speed bottleneck link (for example, a low-speed wireless link) on the path between server and client. Using a single TCP connection, the video clip will take a long time to pass through the bottleneck link, while the small objects are delayed as they wait behind the video clip; that is, the video clip at the head of the line blocks the small objects behind it. HTTP/1.1 browsers typically work around this problem by opening multiple parallel TCP connections, thereby having objects in the same web page sent in parallel to the browser. This way, the small objects can arrive at and be rendered in the browser much faster, thereby reducing user-perceived delay. TCP congestion control, discussed in detail in Chapter 3, also provides browsers an unintended incentive to use multiple parallel TCP connections rather than a single persistent connection. Very roughly speaking, TCP congestion control aims to give each TCP connection sharing a bottleneck link an equal share of the available bandwidth of that link; so if there are n TCP connections operating over a bottleneck link, then each connection approximately gets 1/nth of the bandwidth. By opening multiple parallel TCP connections to transport a single Web page, the browser can “cheat” and grab a larger portion of the link bandwidth. Many HTTP/1.1 browsers open up to six parallel TCP connections not only to circumvent HOL blocking but also to obtain more bandwidth. One of the primary goals of HTTP/2 is to get rid of (or at least reduce the number of) parallel TCP connections for transporting a single Web page. This not only reduces the number of sockets that need to be open and maintained at servers, but also allows TCP congestion control to operate as intended. But with only one TCP connection to transport a Web page, HTTP/2 requires carefully designed mechanisms to avoid HOL blocking.
+The primary goals for HTTP/2 are to 
+- ==reduce perceived (感知到的) latency== by enabling request and response multiplexing over a single TCP connection, 
+- ==provide request prioritization and server push==, 
+- and ==provide efficient compression of HTTP header fields==. 
+
+==HTTP/2 does not change HTTP methods, status codes, URLs, or header fields. Instead, HTTP/2 changes how the data is formatted and transported between the client and server==.
+
+#### HTTP/1.1 and HOL problem
+To motivate the need for HTTP/2, recall that HTTP/1.1 uses persistent TCP connections, allowing a Web page to be sent from server to client over a single TCP connection. By having only one TCP connection per Web page, the number of sockets at the server is reduced and each transported Web page gets a fair share of the network bandwidth (as discussed below). ==But developers of Web browsers quickly discovered that sending all the objects in a Web page over a single TCP connection has a **Head of Line (HOL) blocking** problem==. 
+> 仅通过单个 TCP 连接传输一个网页的所有对象有行首阻塞问题。
+
+To understand HOL blocking, consider a Web page that includes an HTML base page, a large video clip near the top of Web page, and many small objects below the video. Further suppose there is a low-to-medium speed bottleneck link (for example, a low-speed wireless link) on the path between server and client. ==Using a single TCP connection, the video clip will take a long time to pass through the bottleneck link, while the small objects are delayed as they wait behind the video clip==; that is, the video clip at the head of the line blocks the small objects behind it. 
+
+#### How HTTP/1.1 and TCP deal with HOL?
+HTTP/1.1 browsers typically work around this problem by opening multiple parallel TCP connections, thereby having objects in the same web page sent in parallel to the browser. This way, the small objects can arrive at and be rendered in the browser much faster, thereby reducing user-perceived delay. TCP congestion control, discussed in detail in Chapter 3, also provides browsers an unintended incentive (预期外的激励，指不能预先确定的) to use multiple parallel TCP connections rather than a single persistent connection. Very roughly speaking, TCP congestion control aims to give each TCP connection sharing a bottleneck link an equal share of the available bandwidth of that link; so if there are n TCP connections operating over a bottleneck link, then each connection approximately gets 1/nth of the bandwidth. By opening multiple parallel TCP connections to transport a single Web page, the browser can “cheat” and grab a larger portion of the link bandwidth. Many HTTP/1.1 browsers open up to six parallel TCP connections not only to circumvent(避免，绕过) HOL blocking but also to obtain more bandwidth. 
+
+#### The purpose of HTTP/2
+One of the primary goals of HTTP/2 is to get rid of (or at least reduce the number of) parallel TCP connections for transporting a single Web page. This not only reduces the number of sockets that need to be open and maintained at servers, but also allows TCP congestion control to operate as intended. But with only one TCP connection to transport a Web page, HTTP/2 requires carefully designed mechanisms to avoid HOL blocking.
 
 #### HTTP/2 Framing
-The HTTP/2 solution for HOL blocking is to break each message into small frames, and interleave the request and response messages on the same TCP connection. To understand this, consider again the example of a Web page consisting of one large video clip and, say, 8 smaller objects. Thus the server will receive 9 concurrent requests from any browser wanting to see this Web page. For each of these requests, the server needs to send 9 competing HTTP response messages to the browser. Suppose all frames are of fixed length, the video clip consists of 1000 frames, and each of the smaller objects consists of two frames. With frame interleaving, after sending one frame from the video clip, the first frames of each of the small objects are sent. Then after sending the second frame of the video clip, the last frames of each of the small objects are sent. Thus, all of the smaller objects are sent after sending a total of 18 frames. If interleaving were not used, the smaller objects would be sent only after sending 1016 frames. Thus the HTTP/2 framing mechanism can significantly decrease user-perceived delay. The ability to break down an HTTP message into independent frames, interleave them, and then reassemble them on the other end is the single most important enhancement of HTTP/2. The framing is done by the framing sub-layer of the HTTP/2 protocol. When a server wants to send an HTTP response, the response is processed by the framing sub-layer, where it is broken down into frames. The header field of the response becomes one frame, and the body of the message is broken down into one for more additional frames. The frames of the response are then interleaved by the framing sub-layer in the server with the frames of other responses and sent over the single persistent TCP connection. As the frames arrive at the client, they are first reassembled into the original response messages at the framing sub-layer and then processed by the browser as usual. Similarly, a client’s HTTP requests are broken into frames and interleaved. In addition to breaking down each HTTP message into independent frames, the framing sublayer also binary encodes the frames. Binary protocols are more efficient to parse, lead to slightly smaller frames, and are less error-prone.
+The HTTP/2 solution for HOL blocking is to break each message into small frames, and interleave (插入，夹带) the request and response messages on the same TCP connection. 
+
+To understand this, consider again the example of a Web page consisting of one large video clip and, say, 8 smaller objects. Thus the server will receive 9 concurrent requests from any browser wanting to see this Web page. For each of these requests, the server needs to send 9 competing HTTP response messages to the browser. Suppose all frames are of fixed length, the video clip consists of 1000 frames, and each of the smaller objects consists of two frames. ==With frame interleaving, after sending one frame from the video clip, the first frames of each of the small objects are sent==. Then after sending the second frame of the video clip, the last frames of each of the small objects are sent. Thus, all of the smaller objects are sent after sending a total of 18 frames. If interleaving were not used, the smaller objects would be sent only after sending 1016 frames. Thus the HTTP/2 framing mechanism can significantly decrease user-perceived delay. 
+
+The ability to break down an HTTP message into independent frames, interleave them, and then reassemble them on the other end is the single most important enhancement of HTTP/2. ==The framing is done by the framing sub-layer(组帧子层) of the HTTP/2 protocol==. When a server wants to send an HTTP response, the response is processed by the framing sub-layer, where it is broken down into frames. ==The header field of the response becomes one frame, and the body of the message is broken down into one for more additional frames==. The frames of the response are then interleaved by the framing sub-layer in the server with the frames of other responses and sent over the single persistent TCP connection. As the frames arrive at the client, they are first reassembled into the original response messages at the framing sub-layer and then processed by the browser as usual. 
+
+==Similarly, a client’s HTTP requests are broken into frames and interleaved==. In addition to breaking down each HTTP message into independent frames, the framing sublayer also binary encodes the frames. ==Binary protocols are more efficient to parse, lead to slightly smaller frames, and are less error-prone==.
 
 #### Response Message Prioritization and Server Pushing
-Message prioritization allows developers to customize the relative priority of requests to better optimize application performance. As we just learned, the framing sub-layer organizes messages into parallel streams of data destined to the same requestor. When a client sends concurrent requests to a server, it can prioritize the responses it is requesting by assigning a weight between 1 and 256 to each message. The higher number indicates higher priority. Using these weights, the server can send first the frames for the responses with the highest priority. In addition to this, the client also states each message’s dependency on other messages by specifying the ID of the message on which it depends. 
+Message prioritization allows developers to customize the relative priority of requests to better optimize application performance. 
 
-Another feature of HTTP/2 is the ability for a server to send multiple responses for a single client request. That is, in addition to the response to the original request, the server can push additional objects to the client, without the client having to request each one. This is possible since the HTML base page indicates the objects that will be needed to fully render the Web page. So instead of waiting for the HTTP requests for these objects, the server can analyze the HTML page, identify the objects that are needed, and send them to the client before receiving explicit requests for these objects. Server push eliminates the extra latency due to waiting for the requests.
+As we just learned, the framing sub-layer organizes messages into parallel streams of data destined to the same requestor. When a client sends concurrent requests to a server, it can ==prioritize the responses it is requesting by assigning a weight between 1 and 256 to each message==. **The higher number indicates higher priority**. Using these weights, the server can send first the frames for the responses with the highest priority. In addition to this, ==the client also states each message’s **dependency on other messages** by specifying the ID of the message on which it depends==. 
+
+Another feature of HTTP/2 is **the ability for a server to send multiple responses for a single client request**. That is, in addition to the response to the original request, the server can push additional objects to the client, without the client having to request each one. This is possible since the HTML base page indicates the objects that will be needed to fully render the Web page. So ==instead of waiting for the HTTP requests for these objects, the server can analyze the HTML page, identify the objects that are needed, and send them to the client before receiving explicit requests for these objects==. Server push eliminates the extra latency due to waiting for the requests.
+> 预先发送可能请求的资源。
 
 ### HTTP/3
-QUIC, discussed in Chapter 3, is a new “transport” protocol that is implemented in the application layer over the bare-bones UDP protocol. QUIC has several features that are desirable for HTTP, such as message multiplexing (interleaving), per-stream flow control, and low-latency connection establishment. HTTP/3 is yet a new HTTP protocol that is designed to operate over QUIC. As of 2020, HTTP/3 is described in Internet drafts and has not yet been fully standardized. Many of the HTTP/2 features (such as message interleaving) are subsumed by QUIC, allowing for a simpler, streamlined design for HTTP/3.
+**QUIC**, discussed in Chapter 3, is a new “transport” protocol that is implemented in the application layer over the bare-bones(简陋的) UDP protocol. 
+
+QUIC has several features that are desirable for HTTP, such as 
+- message multiplexing (interleaving), 
+- per-stream flow control, 
+- and low-latency connection establishment. 
+
+HTTP/3 is yet a new HTTP protocol that is designed to operate over QUIC. As of 2020, HTTP/3 is described in Internet drafts and has not yet been fully standardized. Many of the HTTP/2 features (such as message interleaving) are subsumed(纳入、归入) by QUIC, allowing for a simpler, streamlined design for HTTP/3.
 
 ## 2.3 FTP（文件传输协议）
 
-工作原理
+### 工作原理
 - 向远程主机上**传输文件**或从远程主机**接收文件**
 - 客户/服务器模式
     - 客户端：发起传输的一方
     - 服务器：远程主机
-- ftp：RFC 959
+- `[RFC 959]`
 - ftp服务器：端口号为21
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210723081249382.png" />
+![[20-Application-layer-FTP.png]]
 
-FTP：**控制连接**（FTP客户端与FTP服务器建立起的控制性的TCP连接）与**数据连接**分开
-- FTP客户端与FTP服务器通过端口21联系，并使用TCP为传输协议
-- 客户端通过控制连接获得身份确认 *注：FTP用户名和口令采用明文传输，容易被抓包*
+### FTP 特点
+
+**控制连接**（FTP 客户端与 FTP 服务器建立起的控制性的 TCP 连接）与**数据连接**分开：
+- FTP 客户端与 FTP 服务器通过端口21联系，并使用 TCP 为传输协议
+- 客户端通过控制连接获得身份确认 *<mark style="background: #FFB8EBA6;">注：FTP用户名和口令采用明文传输，容易被抓包</mark>*
 - 客户端通过控制连接发送命令浏览远程目录并要求服务器将某个文件下载给客户端
-- 收到一个文件传输命令时，服务器主动打开一个到客户端的数据连接（端口号20）
+- ==收到一个文件传输命令时，服务器主动打开一个到客户端的数据连接==（端口号20）
 - 一个文件传输完成后，服务器关闭连接
-- 服务器打开第二个TCP数据连接用来传输另一个文件
-- 控制连接：带外(“out of band”)传送 *注：“带内”传数据，“带外”传指令、控制信息*
-- FTP服务器维护用户的状态信息：当前路径、用户帐户与控制连接对应；**有状态**（HTTP无状态，通过SSL打了一个补丁）
+- 服务器==打开第二个TCP数据连接用来传输另一个文件==
+- 控制连接：通过带外 (“out of band”)传送 
+	- *注：“带内”传数据，“带外”传指令、控制信息*
+- FTP **服务器维护用户的状态信息**：
+	- 当前路径、用户帐户与控制连接对应；
+	- **有状态**（HTTP 无状态，通过 SSL 打了一个补丁）
 
-FTP命令、响应
+### FTP命令、响应
 - 命令样例：（在控制连接上以ASCII文本方式传送）
     - USER username
     - PASS password
     - LIST：请服务器返回远程主机当前目录的文件列表
     - RETR filename：从远程主机的当前目录检索下载文件(gets)
-    - STOR filename：向远程主机的当前目录存放文件(puts) *注：客户端向服务器发送东西——上载；服务器向客户端发送东西——下载。都默认以客户端的角度来讲。*
+    - STOR filename：向远程主机的当前目录存放文件 (puts) 
+	    - *注：客户端向服务器发送东西——上载；服务器向客户端发送东西——下载。都默认以客户端的角度来讲。*
 - 返回码样例：（状态码和状态信息（同HTTP））
     - 331 Username OK, password required
     - 125 data connection already open; transfer starting
@@ -670,27 +709,30 @@ FTP命令、响应
 
 ## 2.4 EMail（电子邮件）
 
-3个主要组成部分：
-- 用户代理(user agent)：发送、接收电子邮件的客户端软件 *注：Web应用的用户代理：Web浏览器；FTP的用户代理：FTP的客户端软件*
+### 3个主要组成部分
+- 用户代理(user agent)：发送、接收电子邮件的客户端软件 
     - 又名“邮件阅读器”
     - 撰写、编辑和阅读邮件
     - 如Outlook、Foxmail
     - 输出和输入邮件保存在服务器上
-- 邮件服务器
-- 简单邮件传输协议：SMTP（SMTP是发送的协议，EMail还有拉取的协议包括POP3、IMAP、HTTP等等）
+    - *注：Web 应用的用户代理：Web 浏览器；FTP 的用户代理：FTP 的客户端软件*
+- 邮件服务器(mail server)
+- 简单邮件传输协议：SMTP（Simple Mail Transfer Protocol, SMTP 是发送的协议，EMail 还有拉取的协议包括 POP3、IMAP、HTTP 等等）
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210723084335560.png" />
+![[20-Application-layer-email-system.png]]
+A typical message starts its journey in the sender’s user agent, then travels to the sender’s mail server, and then travels to the recipient’s mail server, where it is deposited in the recipient’s mailbox.
 
-EMail: 邮件服务器
+### EMail: 邮件服务器
 - 邮箱中管理和维护发送给用户的邮件
-- 输出**报文队列**保持待发送邮件报文（排队发）（邮件服务器通常设置成一段时间间隔发一次）
-- 邮件服务器之间的SMTP协议：发送email报文
+- 如果发送失败（不论是自身原因还是对方未接收的原因），邮件都会在 mail server 的**报文队列**中保持，排队等待后续尝试（邮件服务器通常设置成一段时间间隔发一次）
+- 邮件服务器之间通过 SMTP 协议发送 email 报文
     - 客户：发送方邮件服务器
     - 服务器：接收端邮件服务器
+    - 每台邮件服务器上既运行 SMTP 客户端，也运行 SMTP 服务端。
 
-> 举例：Alice给Bob发送报文
-> 
-> 1) Alice使用用户代理撰写邮件并发送给bob@someschool.edu
+> [! example] 举例：Alice 给 Bob 发送报文
+> ![[20-Application-layer-alice-send-msg-bob.png]]
+> 1) Alice 使用用户代理撰写邮件并发送给 `bob@someschool.edu`
 > 2) Alice的用户代理将邮件**发送**到她自己的邮件服务器；邮件放在报文队列中（SMTP协议）
 > 3) SMTP的客户端打开到Bob邮件服务器的TCP连接
 > 4) SMTP客户端通过TCP连接**传输**Alice的邮件
@@ -700,61 +742,96 @@ EMail: 邮件服务器
 > Alice的用户代理 --发送--> Alice的邮件服务器 --传输--> Bob的邮件服务器 --拉取--> Bob的用户代理    
 > **“两推一拉”**
 
-EMail：SMTP [RFC 2821]
-- 使用TCP在客户端和服务器之间传送报文，端口号为25
+> [! note] SMTP has no intermediate mail server!
+> It is important to observe that SMTP does not normally use intermediate mail servers for sending mail, even when the two mail servers are located at opposite ends of the world. If Alice’s server is in Hong Kong and Bob’s server is in St. Louis, the TCP connection is a direct connection between the Hong Kong and St. Louis servers. 
+> 
+> In particular, ==if Bob’s mail server is down, the message remains in Alice’s mail server and waits for a new attempt== — the message does not get placed in some intermediate mail server.
+
+### EMail：SMTP 
+`[RFC 2821]`, `[RFC 5321]`
+
+- 使用TCP在客户端和服务器之间传送报文，**端口号为25**
 - 直接传输：从发送方服务器到接收方服务器
-- 传输的3个阶段
-    - 握手
-    - 传输报文
-    - 关闭
+
 - 命令/响应交互
     - 命令：ASCII文本
     - 响应：状态码和状态信息
 - 报文必须为7位ASCII码（所有的字节范围为0-127，包括邮件内容）
 
-简单的SMTP交互
+> [! note] SMTP, a legacy technology.
+> For example, it restricts the body (not just the headers) of all mail messages to simple 7-bit ASCII. This restriction made sense in the early 1980s when transmission capacity was scarce and no one was e-mailing large attachments or large image, audio, or video files. 
+> 
+> But today, in the multimedia era, the 7-bit ASCII restriction is a bit of a pain — ==it requires binary multimedia data to be encoded to ASCII before being sent over SMTP==; and it requires the corresponding ASCII message to be decoded back to binary after SMTP transport. Recall from Section 2.2 that ==HTTP does not require multimedia data to be ASCII encoded before transfer==.
+
+>[! example] 简单的 SMTP 交互
+>The ASCII text lines prefaced with C: are exactly the lines the client sends into its TCP socket, and the ASCII text lines prefaced with S: are exactly the lines the server sends into its TCP socket.The following transcript begins as soon as the TCP connection is established. 
+> ```
 > S: 220 hamburger.edu   
-> C: **HELO** crepes.fr   
+> C: HELO crepes.fr   
 > S: 250 Hello crepes.fr, pleased to meet you   
-> C: **MAIL FROM**: <alice@crepes.fr>   
+> C: MAIL FROM: <alice@crepes.fr>   
 > S: 250 alice@crepes.fr... Sender ok   
-> C: **RCPT TO**: <bob@hamburger.edu>   
+> C: RCPT TO: <bob@hamburger.edu>   
 > S: 250 bob@hamburger.edu ... Recipient ok   
-> C: **DATA**  
+> C: DATA 
 > S: 354 Enter mail, end with "." on a line by itself   
 > C: Do you like ketchup?   
 > C: How about pickles?   
 > C: .   
 > S: 250 Message accepted for delivery   
-> C: **QUIT**   
-> S: 221 hamburger.edu closing connection   
+> C: QUIT   
+> S: 221 hamburger.edu closing connection 
+> ```
+> As part of the dialogue, the client issued five commands: 
+> 1. `HELO` (an abbreviation for HELLO), 
+> 2. `MAIL FROM`, 
+> 3. `RCPT TO`, 
+> 4. `DATA`,
+> 5. and `QUIT`. 
+> 
+> These commands are self-explanatory. The client also sends a line consisting of a single period, which indicates the end of the message to the server. (In ASCII jargon, each message ends with CRLF. CRLF, where CR and LF stand for carriage return (回车) and line feed (换行，没错这是两个键), respectively.)
+> 
+> We mention here that ==SMTP uses persistent connections==: If the sending mail server has several messages to send to the same receiving mail server, it can send all of the messages over the same TCP connection. ==For each message, the client begins the process with a new MAIL FROM: crepes. fr, designates the end of message with an isolated period, and issues QUIT only after all messages have been sent==.
+> （对于每封邮件，客户端都以新的 `MAIL FROM：crepes.fr` 开始处理，用一个孤立的句号指定邮件结束，并在所有邮件发送完毕后才发出 QUIT。）
 
-SMTP：总结
-- SMTP使用**持久连接**
+- 预先准备：建立连接——First, the client SMTP (running on the sending mail server host) has TCP establish a connection to port 25 at the server SMTP (running on the receiving mail server host). If the server is down, the client tries again later.
+- **传输的 3 个阶段**
+    - ==握手==：SMTP clients and servers introduce themselves before transferring information. During this SMTP handshaking phase, the SMTP client indicates the e-mail address of the sender (the person who generated the message) and the e-mail address of the recipient.
+    - ==传输报文==：
+	    - SMTP can count on the reliable data transfer service of TCP to get the message to the server without errors.
+	    - The client then repeats this process over the same TCP connection if it has other messages to send to the server.
+    - ==关闭==：
+
+#### SMTP：总结
+- SMTP 使用**持久连接**，使用 TCP 可靠数据传输服务
 - SMTP要求报文（首部和主体）为7位ASCII编码
-- SMTP服务器使用CRLF.CRLF决定报文的尾部
+- SMTP 服务器使用 `CRLF.CRLF` 决定报文的尾部
 - SMTP与HTTP比较：
-    - HTTP：拉(pull)
-    - SMTP：推(push)
-    - 二者都是ASCII形式的命令/响应交互、状态码
+    - HTTP：拉协议(pull)——内容提供者在 Web 服务器上装载信息，用户使用 HTTP 从中拉取信息，尤其是 TCP 连接发起自想接收文件的主机；
+    - SMTP：推协议(push)——邮件服务器把文件推向另一个邮件服务器，尤其是该 TCP 连接发起自要发送文件的主机；
+    - 二者都是 ASCII 形式的命令/响应交互、状态码，但 SMTP 要求必须是 ASCII 编码，而 HTTP 限制较小；
     - HTTP：每个对象封装在各自的响应报文中，一个响应报文至多一个对象
     - SMTP：多个对象包含在一个报文中
 
-邮件报文格式   
-SMTP：交换email报文的协议   
-RFC 822: 文本报文的标准：
-- 首部行（与SMTP命令不同！）：如
-    - To:
-    - From:
-    - Subject:   <-- 邮件的title
-    - CC:        <-- 抄送
-- 首部行与主体之间留一空行
-- 主体
-    - 报文，只能是ASCII码字符
+### 邮件报文格式
 
-若邮件包括中文字符，（一个中文字符包括两个字节），若两个字节都不在ASCII码的范围之内，就需要进行base64编码（编码：定义一个映射关系，将一串不在ASCII码范围之内的字节映射到一串更长的字节，其中每个字节都在ASCII码的范围之内，最常见的是base64编码），进行MIME扩展
+- The header lines and the body of the message are separated by a blank line (that is, by CRLF). 
+- `[RFC 5322]` specifies the exact format for mail header lines as well as their semantic interpretations. 
+- As with HTTP, each header line contains readable text, consisting of a keyword followed by a colon followed by a value. 
+- Some of the keywords are required and others are optional. Every header must have a `From:` header line and a `To:` header line; a header may include a `Subject:` header line as well as other optional header lines. 
+- It is important to note that these header lines are ==different from the SMTP commands== we studied in Section 2.3.1 (even though they contain some common words such as “from” and “to”). The commands in that section were part of the SMTP handshaking protocol; the header lines examined in this section are part of the mail message itself.
 
-报文格式：多媒体扩展
+```
+From: alice@crepes.fr 
+To: bob@hamburger.edu 
+Subject: Searching for the meaning of life.
+
+<body> # only in ASCII 
+```
+
+#### base64 和 MIME 扩展
+若邮件包括中文字符，（一个中文字符包括两个字节），若两个字节都不在 ASCII 码的范围之内，就需要进行 base64编码（编码：定义一个映射关系，将一串不在 ASCII 码范围之内的字节映射到一串更长的字节，其中每个字节都在 ASCII 码的范围之内，最常见的是 base64编码），进行 MIME 扩展
+
 - MIME：多媒体邮件扩展（multimedia mail extension），RFC 2045, 2056
 - 在报文首部用额外的行申明MIME内容类型
 ```SMTP
@@ -770,18 +847,18 @@ base64 encoded data .....           # 编码好的数据
 ......base64 encoded data           # 编码好的数据
 ```
 
-邮件访问协议
-- SMTP：传送到接收方的邮件服务器
-- 邮件访问协议：从服务器访问邮件
-    - POP：邮局访问协议(Post Office Protocol)[RFC 1939]
+### 邮件访问协议
+- SMTP：传送邮件到接收方的邮件服务器
+- 邮件访问协议：从邮件服务器拉取、访问邮件
+    - POP：邮局访问协议(Post Office Protocol) `[RFC 1939]`
         - 用户身份确认（代理<-->服务器）并下载
-    - IMAP：Internet邮件访问协议(Internet Mail Access Protocol)[RFC 1730]
+    - IMAP：Internet 邮件访问协议(Internet Mail Access Protocol) `[RFC 1730]`
         - 比POP3具备更多特性（更复杂），包括远程目录的维护（远程将报文从一个邮箱搬到另一个邮箱）
         - 在服务器上处理存储的报文
     - HTTP：Hotmail，Yahoo! Mail等
         - 方便
 
-POP3协议
+### POP3协议
 - **用户确认阶段**
     - 客户端命令：
         - user：申明用户名
@@ -818,7 +895,7 @@ C: quit
 S: +OK POP3 server signing off
 ```
 
-POP3与IMAP
+### POP3与IMAP
 - POP3：本地管理文件夹
     - 先前的例子使用“下载并删除”模式（一共有两种模式：下载并删除、下载并保留）。
         - 如果改变客户机，Bob不能阅读邮件
@@ -831,7 +908,7 @@ POP3与IMAP
     - IMAP在会话过程中保留用户状态：
         - 目录名、报文ID与目录名之间映射
 
-### 2.5 DNS (Domain Name System)
+## 2.5 DNS (Domain Name System)
 
 域名解析系统(DNS)不是一个给人用的应用，而是一个给其他应用用的应用，提供**域名到IP地址的转换**，供应用使用。如Web应用中，用户输入URL，Web浏览器调用DNS的解析性，得到域名对应的IP地址
 

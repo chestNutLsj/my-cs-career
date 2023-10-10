@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "114668dfd98ddfeb",
+        "id": "1482f76c5a6a96b5",
         "type": "tabs",
         "children": [
           {
-            "id": "8b8c2059c7996f1b",
+            "id": "a714c21faa768adf",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/20-Kernelmode-thread-management.md",
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
                 "mode": "source",
                 "source": false
               }
@@ -80,7 +80,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 263.5,
+    "width": 200,
     "collapsed": true
   },
   "right": {
@@ -97,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/20-Kernelmode-thread-management.md",
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/20-Kernelmode-thread-management.md",
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -142,7 +142,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/20-Kernelmode-thread-management.md"
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md"
               }
             }
           },
@@ -174,10 +174,16 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "8b8c2059c7996f1b",
+  "active": "a714c21faa768adf",
   "lastOpenFiles": [
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/10-Usermode-thread-management.md",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-alice-send-msg-bob.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-email-system.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-FTP.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/30-Mutex-lock.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/20-Kernelmode-thread-management.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/assets/20-Kernelmode-thread-management-thread-address-space.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/10-Usermode-thread-management.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/93-Fibonacci-heap.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/93-Fibonacci-heap-running-time-summary.png",
@@ -193,9 +199,6 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/未确认 839532.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/range-tree-and-priority-search-tree.pdf",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/未确认 480166.crdownload",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-leftheap-merge-instance-3.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-leftheap-merge-instance-2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-leftheap-merge-instance-1.png",
     "1-Theory/3-Algorithm/topk problem.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/92-Min-max-heap.md",
     "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
@@ -219,9 +222,6 @@
     "0-Assets/Export/8-Concurrence",
     "0-Assets/Export/7-IPC-IOredirect/40-Signal.md",
     "0-Assets/Export/7-IPC-IOredirect/30-Cmdline-params-and-stdio-redirect.md",
-    "0-Assets/Export/7-IPC-IOredirect/20-Pipe.md",
-    "0-Assets/Export/7-IPC-IOredirect/10-File-based-stdio.md",
-    "0-Assets/Export/7-IPC-IOredirect/00-IPC-IO-Overview.md",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
