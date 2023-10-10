@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "6b51d4e9c7473bc0",
+        "id": "2f9b99bee2c9fc29",
         "type": "tabs",
         "children": [
           {
-            "id": "32f5864046f35ee3",
+            "id": "795d28091388bae5",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -76,7 +80,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 263.5
+    "width": 263.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -92,6 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,6 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +141,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md"
+              }
             }
           },
           {
@@ -149,8 +158,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -165,54 +173,54 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "32f5864046f35ee3",
+  "active": "795d28091388bae5",
   "lastOpenFiles": [
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/10-Usermode-thread-management.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/00-Concurrence-Overview.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/assets/00-Concurrence-Overview-syncmutexOS-detail.png",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/assets/00-Concurrence-Overview-task-abstract.png",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/assets/00-Concurrence-Overview-ThreadOS-detail.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/30-并发.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/assets/00-Concurrence-Overview-phil_din_mutex.png",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/assets",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-heapsort-instance-2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-heapsort-instance.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-heapsort-impl.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-floyd-heapify-quiz.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-heapsort-swap.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/90-Priority_Queue-heapsort.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/92-Min-max-heap.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
-    "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/80-Exceptional-control-flow.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence",
-    "1-Theory/5-OS-principle/rCore-tutorial/practice/7-信号.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/40-Signal.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/30-Cmdline-params-and-stdio-redirect.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61B-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60E-BBST-Red-black-tree.md",
-    "README.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/20-进程与线程.md",
-    "1-Theory/6-Network/Top-to-down/10-Intro-of-Network-and-Internet.md",
-    "1-Theory/6-Network/Top-to-down/practice/10-Intro.md",
-    "1-Theory/6-Network/Top-to-down/practice/assets",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/70-Load.md",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/未命名",
-    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/20-Pipe.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/10-File-based-stdio.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/00-IPC-IO-Overview.md",
-    "1-Theory/6-Network/Data-communication-and-network/50-应用层.md",
-    "1-Theory/6-Network/Data-communication-and-network/Mynote/assets",
-    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/assets",
-    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/minimum-spanning-trees-prims-algorithm-8.gif.crdownload",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Kruskal.gif.crdownload",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/83-并查集-kruskal.apng",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-inetnet-webcache-institutional-network.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-bottleneck-between-internet-barely-institutional-network.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-web-cache.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-cookies.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-response-message.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-HTTP-request-message.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-request-receive-time-calc.png",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/90-Virtual-memory.md",
+    "0-Assets/Export/压缩文件.zip",
+    "0-Assets/Export/压缩文件.zip.fbqor6.part",
+    "0-Assets/Export/practice/5-进程.md",
+    "0-Assets/Export/practice/1-应用程序与基本执行环境.md",
+    "0-Assets/Export/practice/7-信号.md",
+    "0-Assets/Export/practice/6-文件系统.md",
+    "0-Assets/Export/practice/3-多道程序与分时多任务.md",
+    "0-Assets/Export/practice/4-地址空间.md",
+    "0-Assets/Export/practice/2-批处理操作系统.md",
+    "0-Assets/Export/practice/0-操作系统概述.md",
+    "0-Assets/Export/practice",
+    "0-Assets/Export/Appendix/B-常见工具的使用方法.md",
+    "0-Assets/Export/Appendix",
+    "0-Assets/Export/8-Concurrence/10-Usermode-thread-management.md",
+    "0-Assets/Export/8-Concurrence/assets/00-Concurrence-Overview-syncmutexOS-detail.png",
+    "0-Assets/Export/8-Concurrence/assets/00-Concurrence-Overview-task-abstract.png",
+    "0-Assets/Export/8-Concurrence/assets/00-Concurrence-Overview-ThreadOS-detail.png",
+    "0-Assets/Export/8-Concurrence/assets/00-Concurrence-Overview-phil_din_mutex.png",
+    "0-Assets/Export/8-Concurrence/assets",
+    "0-Assets/Export/8-Concurrence/00-Concurrence-Overview.md",
+    "0-Assets/Export/8-Concurrence",
+    "0-Assets/Export/7-IPC-IOredirect/40-Signal.md",
+    "0-Assets/Export/7-IPC-IOredirect/30-Cmdline-params-and-stdio-redirect.md",
+    "0-Assets/Export/7-IPC-IOredirect/assets",
+    "0-Assets/Export/7-IPC-IOredirect/20-Pipe.md",
+    "0-Assets/Export/7-IPC-IOredirect/10-File-based-stdio.md",
+    "0-Assets/Export/7-IPC-IOredirect/00-IPC-IO-Overview.md",
+    "0-Assets/Export/7-IPC-IOredirect",
+    "0-Assets/Export/6-File-system/30-Integrate-easyfs-into-kernel.md",
+    "0-Assets/Export/6-File-system/10-Interface.md",
+    "0-Assets/Export/6-File-system/assets",
+    "0-Assets/Export/6-File-system/20-Easyfs.md",
+    "0-Assets/Export/6-File-system/00-FS-Overview.md",
+    "0-Assets/Export/6-File-system",
+    "0-Assets/Export/5-Process/30-Manage-mechanism.md",
+    "0-Assets/Export/5-Process/40-Scheduling.md",
+    "0-Assets/Export/5-Process/20-Core-structure-for-management.md",
+    "0-Assets/Export/5-Process/10-Concepts-and-syscall.md",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",

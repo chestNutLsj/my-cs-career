@@ -324,173 +324,207 @@ HTTP ==定义了 Web 客户向 Web 服务器请求 Web 页面的方式，以及�
 
 ### HTTP连接
 - 非持久HTTP
-    - 最多只有一个对象在TCP连接上发送
+    - 最多只有一个对象 (所谓对象，就是请求-响应对)在 TCP 连接上发送
     - 下载多个对象需要多个TCP连接
     - HTTP/1.0使用非持久连接
 - 持久HTTP
     - 多个对象可以在一个（在客户端和服务器之间的）TCP连接上传输
     - HTTP/1.1默认使用持久连接
 
-*注：非持久HTTP在每次正式发送和响应请求前都要先建立TCP连接，在报文发送完毕后TCP连接即关闭；而持久HTTP在报文发送完成后连接不关闭，可继续发送和接收报文。*
+>[! tip] 连接关闭否？
+>非持久 HTTP 在每次正式发送和响应请求前都要先建立 TCP 连接，在报文发送完毕后 TCP 连接即关闭；而持久 HTTP 在报文发送完成后连接不关闭，可继续发送和接收报文。
 
-非持久HTTP连接
-- 假设用户输入URL：[www.someSchool.edu/someDept/home.index](www.someSchool.edu/someDept/home.index)，其中包含文本和10个就jpeg图像的引用
+#### 非持久HTTP连接
+- 假设用户输入 URL：`www.someSchool.edu/someDept/home.index`，其中包含文本和10 个 jpeg 图像的引用
 - 则在非持久HTTP连接的情况下，随时间顺序，客户端和服务器通信如下：
-    - 1a. HTTP客户端在端口号80发起一个到服务器www.someSchool.edu的连接
-    - 1b. 位于主机www.someSchool.edu的HTTP服务器在80号端口等待连接，接受连接并通知客户端
-    - 2.HTTP客户端向TCP连接的套接字发送HTTP请求报文，报文表示客户端需要对象someDepartment/home.index
-    - 3.HTTP服务器接收到请求报文，检索出被请求的对象，将对象封装在一个**响应报文**，并通过其套接字象客户端发送
-    - 4.HTTP关闭TCP连接
-    - 5.HTTP客户端收到包含html文件的响应报文，并显示html。然后对html文件进行检查，找到10引用对象
-    - 6.对10jpeg对象，重复1-5步
+	1. HTTP 客户端在端口号 80 发起一个到服务器 `www.someSchool.edu` 的连接；
+	2. 位于主机 `www.someSchool.edu` 的 HTTP 服务器在 80 号端口监听，接受连接请求并告知客户端成功与否，**客户端和服务器各有自己的 socket 与该连接相关联**；
+	3. HTTP 客户端经自己的 socket，向 TCP 的套接字发送 HTTP 请求报文，报文指明客户端需要的对象 someDepartment/home.index
+	4. HTTP 服务器接从其 socket 中收到请求报文，在自己主机中（RAM or 磁盘里）检索出被请求的对象，将对象封装在一个**响应报文**中，并通过其 socket 向客户端发送
+	5. HTTP 服务器上的进程通知 TCP 断开该连接，==实际上直到 TCP 确认客户端完整收到报文才真正地中断连接==
+	6. HTTP 客户端收到包含 html 文件的响应报文，并关闭 TCP 连接。然后对 html 文件进行检查，找到10 个图像引用对象（即还需向服务器发送 10 个图像的请求）
+	7. 对 10 个 jpeg 对象，重复1-6步
 
-响应时间模型
-- 往返时间RTT(round-trip time)：一个小的分组从客户端到服务器，在回到客户端的时间（传输时间忽略，但是传播时间不忽略，即RTT是往返传输时间）
-- 响应时间：共2RTT+传输时间
-    - 一个RTT用来发起TCP连接
-    - 一个RTT用来HTTP请求并等待HTTP响应
-    - 文件传输时间
+>[!tip] web 真的是逐条接收连接吗？
+>实际上，web 可以对多个连接并行访问，即解析 html 文件后得到 10 个图像资源的引用，这时同时对多个图像资源建立对应的连接进行访问。现代 web 客户端一般提供 5~10 个并行的 TCP 连接。
+>
+>当然可以手动设置并行数为 1，此时就是串行了。
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210722234055927.png" />
+>[! warning] HTTP 与 web 如何解释 html 无关
+>HTTP 规范仅定义在 HTTP 客户程序和 HTTP 服务器程序之间的通信协议。如何解释 HTML 文件，是 web 自己要做的事。
 
-持久HTTP
-- 非持久HTTP的缺点：
-    - 每个对象要2个RTT
-    - 操作系统必须为每个TCP连接分配资源
-    - 但浏览器通常打开并行TCP连接，以获取引用对象
-- 持久HTTP
+**响应时间模型**
+- 往返时间 RTT (round-trip time)：一个小的分组从客户端到服务器，再回到客户端的时间（传输时间忽略，但是==传播时间==不忽略）
+	- 不要忘记，分组在传播过程中，可能会在路由器和交换机上排队，因此有==排队时延==
+	- 分组在节点还要进行比特级检错，因此还有==分组处理时延==
+- 响应时间：共 2RTT + 传输时间
+	- 一个 RTT 用来发起 TCP 连接
+	- 一个 RTT 用来 HTTP 请求并等待 HTTP 响应
+	- 文件传输时间
+
+![[20-Application-layer-request-receive-time-calc.png]]
+- 三次握手：
+	1. 客户向服务器发送一个小 TCP 报文段
+	2. 服务器用一个小 TCP 报文段作出确认和响应
+	3. 客户向服务器返回确认
+- 一旦第三部分向服务器确认的报文被接收，服务器就在该 TCP 连接上开始发送 html 文件
+#### 持久HTTP
+- **非持久 HTTP 的缺点**：
+    - 每个对象要 2 个 RTT
+    - 每个对象都要占用 1 个 TCP 连接，由于操作系统必须为每个 TCP 连接分配资源，这样开销未免太大
+
+- **持久 HTTP**
     - 服务器在发送响应后，仍保持TCP连接
     - 在相同客户端和服务器之间的后续请求和响应报文通过相同的连接进行传送
-    - 客户端在遇到一个引用对象的时候，就可以尽快发送该对象的请求
+    - 客户端在遇到一个引用对象的时候，就可以尽快发送向该对象的请求
     - 持久HTTP也分为两种：
         - 非流水方式(non-pipeline)的持久HTTP：
             - 客户端**只能在收到前一个响应后才能发出新的请求**，一次只有一个请求
             - 每个引用对象花费一个RTT
         - 流水方式(pipeline)的持久HTTP：
             - HTTP/1.1的默认模式
-            - 客户端**遇到一个引用对象就立即产生一个请求**，而非在收到前一个请求的响应后才产生新的请求，最后对象依次回来
+            - 客户端**遇到一个引用对象就立即产生一个请求**，而非在收到前一个请求的响应后才产生新的请求，最后对象依次回来，不必等待之前请求的回答
             - 所有引用（小）对象只花费一个RTT是可能的
 
-### HTTP请求报文
-- 两种类型的HTTP报文：**请求**、**响应**
+>[! note] HTTP/2 的改进
+>HTTP/2 允许在相同连接中多个请求和回答交错，并增加了在该连接中优化 HTTP 报文请求和回答的机制。
+
+### HTTP 报文格式
+
+- 两种类型的 HTTP 报文：**请求**、**响应**
+
+#### HTTP 请求报文
+
 - HTTP请求报文：
     - ASCII（人能阅读）
 ```
-# 请求行（GET，POST，HEAD命令）
-GET /somedir/page.html HTTP/1.1     # 第一个是接口请求：GET是请求行为；POST是上载行为；HEAD是只取HTTP头部，搜索引擎从头部提取描述信息建立索引或用于维护。第二个是目录和文件，主机名因为已经建立连接所以可以忽略。第三个是协议和版本号
-# 首部行  
-Host: www.someschool.edu            # 首部名：首部值。Host表示主机域名
-User-agent: Mozilla/4.0             # User-agent表示用户代理的程序，浏览器的第几个版本
-Connection: close                   # 表示连接状态开启还是关闭
-Accept-language: fr
-（一个额外的换行回车符） # 换行回车符表示报文结束
-# body
+# 请求行 (request line,每个请求报文的第一行,包含GET，POST，HEAD，PUT，DELETE等方法选项)
+GET /somedir/page.html HTTP/1.1     # 第一个是接口请求：GET是请求资源行为；POST是上传表单行为；HEAD是只取HTTP头部；PUT是存放资源；DELETE是删除资源，搜索引擎从头部提取描述信息建立索引或用于维护。第二个是目录和文件，主机名因为已经建立连接所以可以忽略。第三个是协议和版本号
+# 首部行 (header line,后面的行都是首部行)
+Host: www.someschool.edu  #首部名:首部值。Host表示主机域名
+User-agent: Mozilla/4.0   #User-agent表示用户代理的程序，浏览器的第几个版本
+Connection: close         #表示连接状态开启还是关闭
+Accept-language: fr       #发送资源的语言版本，fr表示法语
+(一个额外的换行回车符)        # 换行回车符表示报文结束
+# Entity body
 --- snip ---
 ```
 
-HTTP请求报文：通用格式
+![[20-Application-layer-HTTP-request-message.png]]
+- GET 方法时 Entity body 为空；
+- POST 方法时 Entity body 处存放要提交给服务器检查的表单；如向 Google 搜索“计算机网络”这一条目，Entity body 就存放这个条目，Google 搜索引擎服务器检索后将数据返还给请求方。
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210722234848572.png" />
-
-提交表单输入
+**提交表单输入**
 - Post方式：
     - 网页通常包括表单输入
     - 包含在**实体主体**(entity body)中的输入被提交到服务器
 - URL方式：
     - 方法：GET
-    - 输入通过请求行的URL字段上载（以**参数**形式上传）
-    - 如 http://www.baidu.com/s?wd=xx+yy+zzz&cl=3 后面的wd，cl为参数；XX+YY+zzz，3为参数值
+    - 输入通过请求行的 URL 字段上载（以**参数**形式上传）
+    - 如 `http://www.baidu.com/s?wd=xx+yy+zzz&cl=3` ，`?` 后面的 wd，cl 为参数并通过 `&` 表示并列连接，而XX+YY+zzz，3为参数值
 
-方法类型
+**方法类型**
 - HTTP/1.0
     - GET
     - POST
     - HEAD
-        - 要求服务器在响应报文中不包含请求对象 -> 故障跟踪
+        - 要求服务器在响应报文中不包含请求对象 -> 多用来进行故障跟踪
 - HTTP/1.1
     - GET，POST，HEAD
     - PUT
-        - 将实体主体中的文件上载提交到URL字段规定的路径，通常用于网页的维护修改
+        - 将实体主体中的文件上载==提交到URL字段规定的路径==，==通常用于网页的维护修改==
     - DELETE
         - 删除URL字段规定的文件
 
-### HTTP响应报文
+#### HTTP响应报文
 ```
-# 状态行（协议版本、状态码和相应状态信息）
-HTTP/1.1 200 OK
+# 状态行(status line,协议版本、状态码和相应状态信息)
+HTTP/1.1 200 OK #状态码200和状态信息OK，表示请求一切正常
 # 首部行
-Connection close
-Date: Thu, 06 Aug 1998 12:00:15 GMT
-Server: Apache/1.3.0 (Unix)
-Last-Modified: Mon, 22 Jun 1998 10:00:00 GMT
-Content-Length: 6821
-Content-Type: text/html
+Connection close #发送报文后将关闭连接
+Date: Thu, 06 Aug 1998 12:00:15 GMT #报文发送的时间
+Server: Apache/1.3.0 (Unix) #服务器类型与服务器操作系统
+Last-Modified: Mon, 22 Jun 1998 10:00:00 GMT #对象最后修改时间，对本地客户端和网络缓存服务器至关重要
+Content-Length: 6821 #被发送对象的字节长度
+Content-Type: text/html #对象类型
 
-# 数据，如请求的HTML文件
+# Entity body，如请求的HTML文件
 <data>
 ```
-注：TCP只负责传输报文，报文字节流的结构需要HTTP进行判断，从而提取出首部与其他部分
+注：TCP 只负责传输报文，报文字节流的结构需要 HTTP 进行判断，从而提取出首部与其他部分
 
-HTTP响应状态码：位于服务器客户端的响应报文中的首行，以下是部分示例：
+![[20-Application-layer-response-message.png]]
+
+**HTTP 响应状态码**：位于服务器->客户端的响应报文中的首行，以下是部分示例：
 - 200 OK
     - 请求成功，请求对象包含在响应报文的后续部分
 - 301 Moved Permanently
-    - 请求的对象已经被永久转移了；新的URL在响应报文的Location：首部行中指定
+    - 请求的对象已经被永久转移了；新的 URL 在响应报文的 `Location:` 首部行中指定
     - 客户端软件自动用新的URL去获取对象
 - 400 Bad Request
-    - 一个通用的差错代码，表示该请求不能被服务器解读
+    - 一个通用的差错代码，==表示该请求不能被服务器解读==
 - 404 Not Found
     - 请求的文档在该服务上没有找到
 - 505 HTTP Version Not Supported
 
 ### 维护用户-服务器状态：cookies
-大多数主要的门户网站使用 cookies 改造无状态的 HTTP 协议。
+HTTP 本身的无状态简化了服务器的设计和压力，允许开发同时处理成千上万的 TCP 连接的高性能 Web 服务器。
+但 Web 站点需要识别用户——提高用户使用体验——大多数主要的门户网站使用 cookies 改造无状态的 HTTP 协议。
 
+#### 举例
+![[20-Application-layer-cookies.png]]
 - 4个组成部分：
     1) 在HTTP响应报文中有一个cookie的首部行
     2) 在HTTP请求报文含有一个cookie的首部行
     3) 在用户端系统中保留有一个cookie文件，由用户的浏览器管理
     4) 在Web站点有一个后端数据库
 - 例子：
-    - Susan总是用同一个PC使用Internet Explore上网
-    - 她第一次访问了一个使用了Cookie的电子商务网站
-    - 当最初的HTTP请求到达服务器时，该Web站点产生一个唯一的ID，并以此作为索引在它的后端数据库中产生一个项
-
-Cookies：维护状态
-
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210723005216576.png" />
+    - Susan 总是用同一个 PC 使用 Internet Explore 上网
+    - 她要访问一个使用了 Cookie 的电子商务网站 Amazon，此前已经访问过 eBay；
+    - 当最初的 HTTP 请求到达 Amazon 服务器时，该 Web 站点产生一个唯一的 ID，并以此作为索引在它的后端数据库中产生一个表项存储——代表该 ID 与用户 Susan 绑定；
+    - 接下来 Amazon 服务器使用包含 `Set-cookie:` 首部行的 HTTP 响应报文告知 Susan 的浏览器应该设置的识别码（这里是 1678）
+    - Susan 的浏览器接收到响应报文时，从 `Set-cookie` 中得知 Amazon 给出的识别码，进行设置后再次访问 Amazon 时，此时请求报文的首部行 `Cookie:1678` 就可以使 Amazon 对请求进行查询——这是来自 Susan 的请求；
+    - 如果 Susan 在一定时间（如一周）后再次访问，同样会利用这个 cookie 进行查询 Susan 的信息——名字、邮箱、收货地址、信用卡号等——这就是电子购物商场的实现原理；
 
 Cookies能带来什么：
 用户登录验证、购物车、推荐、用户的其他状态（Web e-mail）
 
-如何维持状态：
+#### 如何维持状态
 - 协议端节点：在多个事务上，发送端和接收端维持状态
-- cookies：http报文携带状态信息
+- cookies：http 报文携带状态信息
+- 通过 cookie 在 HTTP 之上建立一个用户与服务器的会话层，在该会话层内服务器对用户进行标识；
 
-Cookies与隐私：
+#### Cookies与隐私
 - Cookies允许站点知道许多关于用户的信息
 - 可能将它知道的东西卖给第三方
 - 使用重定向和cookie的搜索引擎还能知道用户更多的信息
     - 如通过某个用户在大量站点上的行为，了解其个人浏览方式的大致模式
 - 广告公司从站点获得信息
 
-### Web缓存（代理服务器）
+### Web 缓存（代理服务器 proxy server）
 - 目标：不访问原始服务器，就满足客户的请求，对客户端来说速度快，对服务器和网络来说负载压力更小
-- 用户设置浏览器：通过缓存访问Web
-- 浏览器将所有的HTTP请求发给缓存
-    - 在缓存中的对象：缓存直接返回对象
-    - 如对象不在缓存，缓存请求原始服务器，然后再将对象返回给客户端
-- 缓存既是客户端又是服务器
-- 通常缓存是由ISP安装（大学、公司、居民区ISP）
-- 为什么要使用Web缓存？
-    - 降低客户端的请求响应时间，提升速度
-    - 可以大大减少一个机构内部网络与Internet接入链路上的流量，降低负载
-    - 互联网大量采用了缓存：可以使较弱的ICP也能够有效提供内容
 
-> 缓存示例：
+![[20-Application-layer-web-cache.png]]
+- Web 缓存具有自己的磁盘存储空间，在存储空间中保存最近请求过的对象的副本；
+- 用户设置浏览器——使 HTTP 优先通过缓存访问 Web。
+
+As an example, suppose a browser is requesting the object `http://www.someschool.edu/campus.gif`. Here is what happens: 
+1. The browser establishes a TCP connection to the Web cache and sends an HTTP request for the object to the Web cache.
+2. The Web cache checks to see if it has a copy of the object stored locally. If it does, the Web cache returns the object within an HTTP response message to the client browser.
+3. If the Web cache does not have the object, the Web cache opens a TCP connection to the origin server, that is, to `www.someschool.edu`. The Web cache then sends an HTTP request for the object into the cache-to-server TCP connection. After receiving this request, the origin server sends the object within an HTTP response to the Web cache.
+4. When the Web cache receives the object, it ==stores a copy== in its local storage and sends a copy, within an HTTP response message, to the client browser (over the existing TCP connection between the client browser and the Web cache).
+
+- **缓存既是客户端又是服务器**
+- 通常缓存是由 ISP 安装（大学、公司、居民区 ISP）
+- 为什么要使用 Web 缓存？
+    - 降低客户端的请求响应时间，提升速度
+    - 可以大大减少一个机构内部网络与 Internet 接入链路上的流量，降低负载
+    - 互联网大量采用了缓存：可以使较弱的 ICP(Internet Cache Protocol) 也能够有效提供内容
+
+> [! example] 缓存示例
 > 
->       1.更快的接入链路
-> 
+>  1.更快的接入链路
+> ![[20-Application-layer-bottleneck-between-internet-barely-institutional-network.png]]
 > 假设：
 > - 平均对象大小为 $100kb$
 > - 机构内浏览器对原始服务器的平均请求率为 $15请求/s$
@@ -499,13 +533,13 @@ Cookies与隐私：
 > - 若接入链路带宽为 $1.54Mbps$
 > 
 > 结果
-> - LAN的流量强度 $= 15%$ （按局域网内部带宽为 $1Gbps$ 计算）
-> - 接入链路上的流量强度 $= 1.5Mbps / 1.54Mbps = 99\%$ ，排队延时较大，其他延时可以忽略不计（*注：排队延时公式 $t_{queue}=\frac{I}{1-I}\frac{L}{R}$，其中$I$为流量强度）*
-> - 总延时 = LAN延时 + 接入延时 + Internet延时 = $ms + 分 + 2s$
-> - 注：若升级接入链路带宽到 $154Mbps$ ，则流量强度降低到 $0.99\%$ ，则接入延时从分钟级降低为毫秒级。但是代价非常大：增加接入链路带宽非常昂贵！  
->>
->       2.安装本地缓存
-> 
+> - LAN 的流量强度 $\frac{La}{r} = 15\%$ （按局域网内部带宽为 $1Gbps$ 计算）
+> - 接入链路上的流量强度 $= 1.5Mbps / 1.54Mbps = 99\%$ ，排队延时较大，其他延时可以忽略不计（*注：排队延时公式 $t_{queue}=\frac{I}{1-I}\cdot\frac{L}{R}$，其中 $I$ 为流量强度）*
+> - 总延时 = LAN 延时 + 接入延时 + Internet 延时 = $ms + minutes + 2s$
+> - 注：若升级接入链路带宽到 $154Mbps$ ，则流量强度降低到 $0.99\%$ ，则接入延时从分钟级降低为毫秒级。但是==代价非常大：增加接入链路带宽非常昂贵==！  
+>
+> 2. 配置本地缓存
+> ![[20-Application-layer-inetnet-webcache-institutional-network.png]]
 > 假设：
 > - 平均对象大小为 $100kb$
 > - 机构内浏览器对原始服务器的平均请求率为 $15请求/s$
@@ -517,34 +551,87 @@ Cookies与隐私：
 > 
 > 计算链路利用率，有缓存的延迟：
 > - 假设缓存命中率 $0.4$，即 $0.4$ 的可能性直接在本地访问， $0.6$ 的可能性需要通过外网拉取对象
-> - $40\%$请求在缓存中被满足，其他$60\%$的请求需要被原始服务器满足
 > - 接入链路利用率：
 >     - $60\%$的请求采用接入链路
-> - 进过接入链路到达浏览器的数据速率 $= 0.6*1.50 Mbps = 0.9 Mbps$
+> - 经过接入链路到达浏览器的数据速率 $= 0.6*1.50 Mbps = 0.9 Mbps$
 >     - 利用率 $= 0.9/1.54 = 0.58$
 > - 总体延迟（加权平均）：
 >     - $= 0.6 * (从原始服务器获取对象的延迟) + 0.4 * (从缓存获取对象的延迟)$  
->     $= 0.6 * (2.01 secs) + 0.4 * (10 msecs) $  
->     $\cong 1.2 secs$  
+>     $= 0.6 * (2.01 secs) + 0.4 * (10 msecs)$  
+>     $\approx 1.2 secs$  
 >     - 比安装 $154Mbps$ 链路还来得小（而且比较便宜!）
 
 ### 条件GET方法(conditional-GET)
-- 目标：如果缓存器中的对象拷贝是最新的，就不要封装并发送整个对象，只用发送头部
-- 缓存器：在HTTP请求增加一个头部，指定缓存拷贝的日期
-    ```
-    If-modified-since: 
-        <date>
-    ```
+- 众所周知：只要使用缓存，就存在缓存一致性问题——缓存的对象副本可能是陈旧的，服务器中的数据可能已经更新。
+- HTTP 协议的条件 GET 方法，可以验证缓存中的对象是否最新：如果缓存中的对象拷贝是最新的，就不要封装并发送整个对象，只用发送头部
+
+如何使用条件 GET？
+- 缓存：在 HTTP 请求中使用 GET 方法，并且增加一个首部行 `If-modified-since:` —— 指定缓存拷贝的日期：
+```
+If-modified-since: <date>
+```
 - 服务器：
-    - 如果缓存拷贝陈旧没有变化，则响应报文没包含对象：
-        ```
-        HTTP/1.0 304 Not Modified
-        ```
+    - 如果缓存拷贝陈旧没有变化，则响应报文不包含对象：
+	```
+	HTTP/1.0 304 Not Modified
+	```
     - 如果缓存拷贝的原对象已经被修改，则响应报文包含对象：
-        ```
-        HTTP/1.0 200 OK
-        <data>
-        ```
+	```
+	HTTP/1.0 200 OK
+	<data>
+	```
+
+>[! example] 条件 GET 方法举例
+>To illustrate how the conditional GET operates, let’s walk through an example. 
+>
+>First, on the behalf of a requesting browser, a proxy cache sends a request message to a Web server: 
+> ```
+> GET /fruit/kiwi. gif
+> HTTP/1.1 Host: www.exotiquecuisine.com 
+> ```
+> 
+>Second, the Web server sends a response message with the requested object to the cache: 
+> ```
+> HTTP/1.1 200 OK 
+> Date: Sat, 3 Oct 2015 15:39:29 
+> Server: Apache/1.3.0 (Unix) 
+> Last-Modified: Wed, 9 Sep 2015 09:23:24 
+> Content-Type: image/gif 
+> 
+> (data data data data data ...)
+>```
+>
+>The cache forwards the object to the requesting browser but also caches the object locally. Importantly, the cache also stores the last-modified date along with the object. Third, one week later, another browser requests the same object via the cache, and the object is still in the cache. Since this object may have been modified at the Web server in the past week, the cache performs an up-to-date check by issuing a conditional GET. Specifically, the cache sends:
+> ```
+> GET /fruit/kiwi. gif HTTP/1.1 
+> Host: www.exotiquecuisine.com 
+> If-modified-since: Wed, 9 Sep 2015 09:23:24
+> ```
+>Note that the value of the `If-modified-since:` header line is exactly equal to the value of the `Last-Modified:` header line that was sent by the server one week ago. This conditional GET is telling the server to send the object only if the object has been modified since the specified date. Suppose the object has not been modified since 9 Sep 2015 09:23:24. Then, fourth, the Web server sends a response message to the cache: 
+> ```
+> HTTP/1.1 304 Not Modified 
+> Date: Sat, 10 Oct 2015 15:39:29 
+> Server: Apache/1.3.0 (Unix)
+> 
+> (empty entity body) 
+> ```
+> We see that in response to the conditional GET, the Web server still sends a response message but does not include the requested object in the response message. Including the requested object would only waste bandwidth and increase user-perceived response time, particularly if the object is large. Note that this last response message has 304 Not Modified in the status line, which tells the cache that it can go ahead and forward its (the proxy cache’s) cached copy of the object to the requesting browser.
+
+### HTTP/2
+HTTP/2 [RFC 7540], standardized in 2015, was the first new version of HTTP since HTTP/1.1, which was standardized in 1997. Since standardization, HTTP/2 has taken off, with over 40% of the top 10 million websites supporting HTTP/2 in 2020 [W3Techs]. Most browsers—including Google Chrome, Internet Explorer, Safari, Opera, and Firefox—also support HTTP/2. The primary goals for HTTP/2 are to reduce perceived latency by enabling request and response multiplexing over a single TCP connection, provide request prioritization and server push, and provide efficient compression of HTTP header fields. HTTP/2 does not change HTTP methods, status codes, URLs, or header fields. Instead, HTTP/2 changes how the data is formatted and transported between the client and server.
+
+To motivate the need for HTTP/2, recall that HTTP/1.1 uses persistent TCP connections, allowing a Web page to be sent from server to client over a single TCP connection. By having only one TCP connection per Web page, the number of sockets at the server is reduced and each transported Web page gets a fair share of the network bandwidth (as discussed below). But developers of Web browsers quickly discovered that sending all the objects in a Web page over a single TCP connection has a Head of Line (HOL) blocking problem. To understand HOL blocking, consider a Web page that includes an HTML base page, a large video clip near the top of Web page, and many small objects below the video. Further suppose there is a low-to-medium speed bottleneck link (for example, a low-speed wireless link) on the path between server and client. Using a single TCP connection, the video clip will take a long time to pass through the bottleneck link, while the small objects are delayed as they wait behind the video clip; that is, the video clip at the head of the line blocks the small objects behind it. HTTP/1.1 browsers typically work around this problem by opening multiple parallel TCP connections, thereby having objects in the same web page sent in parallel to the browser. This way, the small objects can arrive at and be rendered in the browser much faster, thereby reducing user-perceived delay. TCP congestion control, discussed in detail in Chapter 3, also provides browsers an unintended incentive to use multiple parallel TCP connections rather than a single persistent connection. Very roughly speaking, TCP congestion control aims to give each TCP connection sharing a bottleneck link an equal share of the available bandwidth of that link; so if there are n TCP connections operating over a bottleneck link, then each connection approximately gets 1/nth of the bandwidth. By opening multiple parallel TCP connections to transport a single Web page, the browser can “cheat” and grab a larger portion of the link bandwidth. Many HTTP/1.1 browsers open up to six parallel TCP connections not only to circumvent HOL blocking but also to obtain more bandwidth. One of the primary goals of HTTP/2 is to get rid of (or at least reduce the number of) parallel TCP connections for transporting a single Web page. This not only reduces the number of sockets that need to be open and maintained at servers, but also allows TCP congestion control to operate as intended. But with only one TCP connection to transport a Web page, HTTP/2 requires carefully designed mechanisms to avoid HOL blocking.
+
+#### HTTP/2 Framing
+The HTTP/2 solution for HOL blocking is to break each message into small frames, and interleave the request and response messages on the same TCP connection. To understand this, consider again the example of a Web page consisting of one large video clip and, say, 8 smaller objects. Thus the server will receive 9 concurrent requests from any browser wanting to see this Web page. For each of these requests, the server needs to send 9 competing HTTP response messages to the browser. Suppose all frames are of fixed length, the video clip consists of 1000 frames, and each of the smaller objects consists of two frames. With frame interleaving, after sending one frame from the video clip, the first frames of each of the small objects are sent. Then after sending the second frame of the video clip, the last frames of each of the small objects are sent. Thus, all of the smaller objects are sent after sending a total of 18 frames. If interleaving were not used, the smaller objects would be sent only after sending 1016 frames. Thus the HTTP/2 framing mechanism can significantly decrease user-perceived delay. The ability to break down an HTTP message into independent frames, interleave them, and then reassemble them on the other end is the single most important enhancement of HTTP/2. The framing is done by the framing sub-layer of the HTTP/2 protocol. When a server wants to send an HTTP response, the response is processed by the framing sub-layer, where it is broken down into frames. The header field of the response becomes one frame, and the body of the message is broken down into one for more additional frames. The frames of the response are then interleaved by the framing sub-layer in the server with the frames of other responses and sent over the single persistent TCP connection. As the frames arrive at the client, they are first reassembled into the original response messages at the framing sub-layer and then processed by the browser as usual. Similarly, a client’s HTTP requests are broken into frames and interleaved. In addition to breaking down each HTTP message into independent frames, the framing sublayer also binary encodes the frames. Binary protocols are more efficient to parse, lead to slightly smaller frames, and are less error-prone.
+
+#### Response Message Prioritization and Server Pushing
+Message prioritization allows developers to customize the relative priority of requests to better optimize application performance. As we just learned, the framing sub-layer organizes messages into parallel streams of data destined to the same requestor. When a client sends concurrent requests to a server, it can prioritize the responses it is requesting by assigning a weight between 1 and 256 to each message. The higher number indicates higher priority. Using these weights, the server can send first the frames for the responses with the highest priority. In addition to this, the client also states each message’s dependency on other messages by specifying the ID of the message on which it depends. 
+
+Another feature of HTTP/2 is the ability for a server to send multiple responses for a single client request. That is, in addition to the response to the original request, the server can push additional objects to the client, without the client having to request each one. This is possible since the HTML base page indicates the objects that will be needed to fully render the Web page. So instead of waiting for the HTTP requests for these objects, the server can analyze the HTML page, identify the objects that are needed, and send them to the client before receiving explicit requests for these objects. Server push eliminates the extra latency due to waiting for the requests.
+
+### HTTP/3
+QUIC, discussed in Chapter 3, is a new “transport” protocol that is implemented in the application layer over the bare-bones UDP protocol. QUIC has several features that are desirable for HTTP, such as message multiplexing (interleaving), per-stream flow control, and low-latency connection establishment. HTTP/3 is yet a new HTTP protocol that is designed to operate over QUIC. As of 2020, HTTP/3 is described in Internet drafts and has not yet been fully standardized. Many of the HTTP/2 features (such as message interleaving) are subsumed by QUIC, allowing for a simpler, streamlined design for HTTP/3.
 
 ## 2.3 FTP（文件传输协议）
 
@@ -581,7 +668,7 @@ FTP命令、响应
     - 425 Can’t open data connection
     - 452 Error writing file
 
-### 2.4 EMail（电子邮件）
+## 2.4 EMail（电子邮件）
 
 3个主要组成部分：
 - 用户代理(user agent)：发送、接收电子邮件的客户端软件 *注：Web应用的用户代理：Web浏览器；FTP的用户代理：FTP的客户端软件*
