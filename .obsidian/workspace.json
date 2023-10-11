@@ -11,8 +11,12 @@
             "id": "25e17af0e9dfb0bd",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -76,7 +80,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -92,6 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,6 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +141,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md"
+              }
             }
           },
           {
@@ -149,8 +158,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -167,8 +175,15 @@
   },
   "active": "25e17af0e9dfb0bd",
   "lastOpenFiles": [
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/40-Semaphore.md",
+    "1-Theory/6-Network/Top-to-down/assets/Pasted image 20231011225216.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
     "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-DNS-interaction.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-DNS-root.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-DNS-hierarchy.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-email-pull-protocols-7th.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-email-protocols-between-communicating-entities.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/40-Semaphore.md",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/30-Mutex-lock.md",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/assets/30-Mutex-lock-adder-status-machine.png",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/assets/30-Mutex-lock-adder-example-2.png",
@@ -176,13 +191,7 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/91-PQ-Exercise-10-20.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/91-PQ-Exercise-10-19.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/91-PQ-Exercise-PST-search.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/91-PQ-Exercise-PST.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/91-PQ-Exercise-d-heap.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/95-Skew-heap.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/95-Skew-heap-nonrecursive-merging.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/95-Skew-heap-1.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/14-Lowerbound-analyze.md",
     "1-Theory/4-Architecture/硬软件接口-riscv/RISC-V-Book.pdf",
@@ -212,7 +221,6 @@
     "0-Assets/Export/practice/2-批处理操作系统.md",
     "0-Assets/Export/practice/0-操作系统概述.md",
     "0-Assets/Export/Appendix/B-常见工具的使用方法.md",
-    "0-Assets/Export/8-Concurrence/10-Usermode-thread-management.md",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",

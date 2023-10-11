@@ -848,8 +848,14 @@ base64 encoded data .....           # 编码好的数据
 ```
 
 ### 邮件访问协议
-- SMTP：传送邮件到接收方的邮件服务器
-- 邮件访问协议：从邮件服务器拉取、访问邮件
+- SMTP：仅传送邮件到接收方的邮件服务器，而不是邮箱客户端
+![[20-Application-layer-email-protocols-between-communicating-entities.png]]
+- Now let’s consider the path an e-mail message takes when it is sent from Alice to Bob. We just learned that at some point along the path the e-mail message needs to be deposited in Bob’s mail server. This could be done simply by having Alice’s user agent send the message directly to Bob’s mail server. 
+- However, ==typically the sender’s user agent does not dialogue directly with the recipient’s mail server==. Instead, as shown in Figure 2.16, Alice’s user agent uses SMTP or HTTP to deliver the e-mail message into her mail server, then Alice’s mail server uses SMTP (as an SMTP client) to relay the e-mail message to Bob’s mail server. 
+- Why the two-step procedure? Primarily because without relaying through Alice’s mail server, Alice’s user agent doesn’t have any recourse to an unreachable destination mail server. By having Alice first deposit the e-mail in her own mail server, ==Alice’s mail server can repeatedly try to send the message to Bob’s mail server, say every 30 minutes, until Bob’s mail server becomes operational==. (And if Alice’s mail server is down, then she has the recourse of complaining to her system administrator!)
+
+- 但是，似乎忘了什么...SMTP 是个 push protocol，它是没法从邮件服务器获得邮件的！
+- **邮件访问协议**：从邮件服务器拉取、访问邮件
     - POP：邮局访问协议(Post Office Protocol) `[RFC 1939]`
         - 用户身份确认（代理<-->服务器）并下载
     - IMAP：Internet 邮件访问协议(Internet Mail Access Protocol) `[RFC 1730]`
@@ -858,35 +864,51 @@ base64 encoded data .....           # 编码好的数据
     - HTTP：Hotmail，Yahoo! Mail等
         - 方便
 
-### POP3协议
+>[!note] 被替代的 POP3 和越发强大的 HTTP
+>注意到，上面第八版的 Top-down 课本里插图是仅出现了 IMAP 和 HTTP 两种邮件拉取协议。而第七版的插图是这样：
+> ![[20-Application-layer-email-pull-protocols-7th.png]]
+>这是因为 POP3 已经广泛地被 IMAP 替代了。第八版书中这样写到：
+>Today, there are two common ways for Bob to retrieve his e-mail from a mail server. 
+>- If Bob is using Web-based e-mail or a smartphone app (such as ==Gmail==), then the user agent will use HTTP to retrieve Bob’s e-mail. This case requires Bob’s mail server to have an HTTP interface as well as an SMTP interface (to communicate with Alice’s mail server). 
+>- The alternative method, typically used with mail clients such as ==Microsoft Outlook==, is to use the Internet Mail Access Protocol (IMAP) defined in `RFC 3501`. 
+>
+>Both the HTTP and IMAP approaches allow Bob to manage folders, maintained in Bob’s mail server. Bob can move messages into the folders he creates, delete messages, mark messages as important, and so on.
+
+#### POP3协议
+POP3 begins when the user agent (the client) opens a TCP connection to the mail server (the server) on port 110. With the TCP connection established, POP3 progresses through three phases: authorization, transaction, and update.
+1. During the first phase, authorization, the user agent sends a username and a password (in the clear) to authenticate the user. 
+2. During the second phase, transaction, the user agent retrieves messages; also during this phase, the user agent can mark messages for deletion, remove deletion marks, and obtain mail statistics. 
+3. The third phase, update, occurs after the client has issued the quit command, ending the POP3 session; at this time, the mail server deletes the messages that were marked for deletion.
+
 - **用户确认阶段**
     - 客户端命令：
         - user：申明用户名
         - pass：口令
     - 服务器响应
-        - +OK
+        - +OK(后跟服务器到客户的数据)
         - -ERR
 - **事物处理阶段**，客户端：
     - list：报文号列表
     - retr：根据报文号检索报文
     - dele：删除
     - quit
-```POP3
+```
+telnet mailServer 110 #通过110端口连接到指定邮件服务器
 # 用户确认阶段
 S: +OK POP3 server ready 
 C: user bob 
-S: +OK 
+S: +OK         #如果服务器验证错误会发送-ERR，下面密码也一样
 C: pass hungry 
 S: +OK user successfully logged on
 # 事务处理阶段
-C: list 
-S: 1 498 
+C: list     #列出所有报文及其长度
+S: 1 498  
 S: 2 912 
 S: . 
 C: retr 1 
 S: <message 1 contents>
 S: . 
-C: dele 1   # 下载并删除模式
+C: dele 1   # 下载并删除模式，如果没有dele指令则下载但不删除。这取决于用户代理程序配置的方式
 C: retr 2 
 S: <message 2 contents>
 S: . 
@@ -895,35 +917,63 @@ C: quit
 S: +OK POP3 server signing off
 ```
 
-### POP3与IMAP
+#### POP3与IMAP
 - POP3：本地管理文件夹
     - 先前的例子使用“下载并删除”模式（一共有两种模式：下载并删除、下载并保留）。
         - 如果改变客户机，Bob不能阅读邮件
     - “下载并保留”：不同客户机上为报文的拷贝，在其他邮件客户端仍能阅读邮件
-    - POP3在会话中是无状态的
-- IMAP：远程管理文件夹
-    - IMAP服务器将每个报文与一个文件夹联系起来
+    - POP3 在会话中是无状态的
+    - 但无论是否保存，POP3 都是在本地邮件服务器保存的，没有给用户提供任何远程访问和管理能力
+- IMAP：远程管理邮件文件夹
+    - IMAP 服务器将每个报文与一个文件夹联系起来；when a message first arrives at the server, it is associated with the recipient’s INBOX folder.
     - 允许用户用目录来组织报文
-    - 允许用户读取报文组件
+    - IMAP also provides commands that allow users to search remote folders for messages matching specific criteria.
     - IMAP在会话过程中保留用户状态：
-        - 目录名、报文ID与目录名之间映射
+        - 目录名、报文 ID 与目录名之间映射
+	- Another important feature of IMAP is that it has commands that **permit a user agent to obtain components of messages**. For example, a user agent ==can obtain just the message header of a message== or just one part of a multipart MIME message. This feature is ==useful when there is a low-bandwidth connection== (for example, a slow-speed modem link) between the user agent and its mail server. With a low-bandwidth connection, the user may not want to download all of the messages in its mailbox, particularly avoiding long messages that might contain, for example, an audio or video clip.
+
+#### HTTP 也能用作邮件访问
+
+More and more users today are sending and accessing their e-mail through their Web browsers. Hotmail introduced Web-based access in the mid 1990s. Now Web-based e-mail is also provided by Google, Yahoo!, as well as just about every major university and corporation. ==With this service, the user agent is an ordinary Web browser, and the user communicates with its remote mailbox via HTTP==. 
+
+When a recipient, such as Bob, wants to access a message in his mailbox, the e-mail message is sent from Bob’s mail server to Bob’s browser using the HTTP protocol rather than the POP3 or IMAP protocol. When a sender, such as Alice, wants to send an e-mail message, the e-mail message is sent from her browser to her mail server over HTTP rather than over SMTP. ==Alice’s mail server, however, still sends messages to, and receives messages from, other mail servers using SMTP==.
 
 ## 2.5 DNS (Domain Name System)
 
-域名解析系统(DNS)不是一个给人用的应用，而是一个给其他应用用的应用，提供**域名到IP地址的转换**，供应用使用。如Web应用中，用户输入URL，Web浏览器调用DNS的解析性，得到域名对应的IP地址
+域名解析系统(DNS)不是一个给人用的应用，而是一个给其他应用使用的应用，提供**域名到 IP 地址的转换**，供应用使用。如 Web 应用中，用户输入 URL，Web 浏览器调用 DNS 的解析功能，得到域名对应的 IP 地址
 
-DNS的必要性
+### DNS 大致介绍
+#### DNS的必要性
 - IP地址标识主机、路由器（Everything over IP）（IP地址用于**标识**、**寻址**）
-- 但IP地址不好记忆（IPv4是一个4字节即32bit的数字；如果是IPv6的话是一个16字节128bit的数字），不便人类使用（没有意义）
+- 但 IP 地址不好记忆（IPv4是一个4字节即32bit 的数字；如果是 IPv6的话是一个16字节128bit 的数字），不便人类使用（没有人类语言的语义）
 - 人类一般倾向于使用一些有意义的字符串来标识Internet上的设备
     - 例如：
         - qzheng@ustc.edu.cn 所在的邮件服务器
         - www.ustc.edu.cn 所在的web服务器
 - 存在着 “字符串”——IP地址 的转换的必要性
 - 人类用户提供要访问机器的“字符串”名称
-- 由DNS负责转换成为二进制的网络地址（IP地址）
+- 由 DNS(Domain Name System) 负责转换成为二进制的网络地址（IP 地址）
 
-DNS系统需要解决的问题
+#### DNS 的历史
+- ARPANET的名字解析解决方案
+    - 主机名：没有层次的一个字符串（全部在一个平面）。当时的节点比较少，问题不大
+    - 存在着一个（集中）维护站：维护着一张 主机名-IP 地址 的映射文件：Hosts.txt。原因同上，一台设备集中式解决的负载不够大
+    - 每台主机定时从维护站取文件
+- ARPANET解决方案的问题
+    - 当网络中主机数量很大时
+        - 没有层次的主机名称很难分配
+        - 文件的管理、发布、查找都很麻烦
+
+#### DNS 是什么？
+The DNS is 
+1) a distributed database implemented in a hierarchy of DNS servers, and 
+2) an application-layer protocol that allows hosts to query the distributed database.
+
+The DNS servers are often UNIX machines running the Berkeley Internet Name Domain (BIND) software `[BIND 2020]`. 
+
+The DNS protocol **runs over UDP and uses port 53**.
+
+#### DNS 系统需要解决的问题
 - 问题1：如何命名设备
     - 用有意义的字符串：好记，便于人类用使用
     - 解决一个平面命名的重名问题：**层次化命名**
@@ -931,31 +981,83 @@ DNS系统需要解决的问题
     - **分布式的数据库**维护（一个节点维护一小个范围）和响应名字查询
 - 问题3：如何维护：增加或者删除一个域，需要在域名系统中做哪些工作
 
-DNS的历史
-- ARPANET的名字解析解决方案
-    - 主机名：没有层次的一个字符串（全部在一个平面）。当时的节点比较少，问题不大
-    - 存在着一个（集中）维护站：维护着一张 主机名-IP地址 的映射文件：Hosts.txt。原因同上，一台设备集中式解决的负载不是很大
-    - 每台主机定时从维护站取文件
-- ARPANET解决方案的问题
-    - 当网络中主机数量很大时
-        - 没有层次的主机名称很难分配
-        - 文件的管理、发布、查找都很麻烦
+### DNS 提供的服务
+DNS is commonly employed by other application-layer protocols, including HTTP and SMTP, to translate user-supplied hostnames to IP addresses. 
 
-DNS总体思路和目标
-- DNS的主要思路
-    - 分层的、基于域的命名机制
-    - 若干分布式的数据库完成名字到IP地址的转换
-    - 运行在UDP之上端口号为53的应用服务
-    - 核心的Internet功能，但以应用层协议实现
-        - 在网络边缘处理复杂性
-- DNS主要目的：
-    - 实现主机名-IP地址的转换(name/IP translate)
-    - 其它目的
-        - 主机别名到规范名字的转换：Host aliasing，规范名为了便于管理，别名为了便于用户的访问
-        - 邮件服务器别名到邮件服务器的正规名字的转换：Mail server aliasing
-        - 负载均衡：Load Distribution，在DNS服务器中为同一个主机名配置多个IP地址，在应答DNS查询时，DNS服务器对每个查询将以DNS文件中主机记录的IP地址按顺序返回不同的解析结果，将客户端的访问引导到不同的刀片服务器上去，使得不同的客户端访问不同的服务器
+#### Most important: translate hostname to IP-address
+As an example, consider what happens when a browser (that is, an HTTP client), running on some user’s host, requests the URL `www.someschool.edu/index.html`. In order for the user’s host to be able to send an HTTP request message to the Web server `www.someschool.edu` , the user’s host must first obtain the IP address of `www.someschool.edu`. This is done as follows: 
+1. The ==same user machine runs the client side== of the DNS application. 
+2. The browser extracts the hostname, `www.someschool.edu` , from the URL and passes the hostname to the client side of the DNS application. 
+3. The ==DNS client sends a query containing the hostname to a DNS server==. 
+4. The DNS client eventually receives a reply, which includes the IP address for the hostname. 
+5. ==Once the browser receives the IP address from DNS, it can initiate a TCP connection to the HTTP server== process located at port 80 at that IP address.
 
-问题1：DNS名字空间(The DNS Name Space)
+#### Host aliasing
+DNS provides a few other important services in addition to translating hostnames to IP addresses:
+- **Host aliasing**. A host with a complicated hostname can have one or more alias names. For example, a hostname such as `relay1.west-coast.enterprise.com` could have, say, two aliases such as `enterprise.com` and `www.enterprise.com`. In this case, the hostname `relay1.west-coast.enterprise.com` is said to be a canonical hostname (规范主机名). Alias hostnames, when present, are typically more mnemonic (好记的) than canonical hostnames. DNS can be invoked by an application to obtain the canonical hostname for a supplied alias hostname as well as the IP address of the host.
+#### Mail Server aliasing
+- **Mail server aliasing**. For obvious reasons, it is highly desirable that e-mail addresses be mnemonic. For example, if Bob has an account with Yahoo Mail, Bob’s e-mail address might be as simple as `bob@yahoo.com`. However, the hostname of the Yahoo mail server is more complicated and much less mnemonic than simply yahoo. com (for example, the canonical hostname might be something like `relay1.west-coast.yahoo.com`). ==DNS can be invoked by a mail application to obtain the canonical hostname for a supplied alias hostname as well as the IP address of the host==. In fact, the MX record (see below) permits a company’s mail server and Web server to have identical (aliased) hostnames; for example, a company’s Web server and mail server can both be called `enterprise.com`.
+#### Load distribution
+- **Load distribution**. DNS is also used to perform load distribution among replicated(冗余的) servers, such as replicated Web servers. Busy sites, such as `cnn.com`, are replicated over multiple servers, with each server running on a different end system and each having a different IP address. For replicated Web servers, ==a set of IP addresses is thus associated with one alias hostname. The DNS database contains this set of IP addresses. When clients make a DNS query for a name mapped to a set of addresses, the server responds with the entire set of IP addresses, but rotates the ordering of the addresses within each reply==. Because a client typically sends its HTTP request message to the IP address that is listed first in the set, DNS rotation distributes the traffic among the replicated servers. DNS rotation is also used for e-mail so that multiple mail servers can have the same alias name. Also, content distribution companies such as Akamai have used DNS in more sophisticated ways `[Dilley 2002]` to provide Web content distribution.
+
+
+### DNS 的工作机理
+[[#Most important translate hostname to IP-address|From the perspective of the invoking application]] in the user’s host, DNS is a black box providing a simple, straightforward translation service. But in fact, the **black box** that implements the service is complex, consisting of a large number of DNS servers distributed around the globe, as well as an application-layer protocol that specifies how the DNS servers and querying hosts communicate.
+
+#### 分布式、层次数据库
+
+>[! note] DNS 不采用集中式(整个网络使用一个 DNS 服务器)数据库的原因
+>The problems with a centralized design include: 
+>- **A single point of failure**. If the DNS server crashes, so does the entire Internet! 
+>- **Traffic volume**. A single DNS server would have to handle all DNS queries (for all the HTTP requests and e-mail messages generated from hundreds of millions of hosts). 
+>- **Distant centralized database**. A single DNS server cannot be “close to” all the querying clients. If we put the single DNS server in New York City, then all queries from Australia must travel to the other side of the globe, perhaps over slow and congested links. This can lead to significant delays. 
+>- **Maintenance**. The single DNS server would have to keep records for all Internet hosts. Not only would this centralized database be huge, but it would have to be updated frequently to account for every new host.
+>总之，集中式数据库既不合适、也不可行。
+
+**No single DNS server has all of the mappings for all of the hosts in the Internet. Instead, the mappings are distributed across the DNS servers**.
+
+上面这句话是对 DNS 分布式机制的最好诠释。
+
+#### 三类 DNS 服务器
+DNS 分为三类：root DNS servers, top-level domain (TLD) DNS servers, and authoritative DNS servers：
+![[20-Application-layer-DNS-hierarchy.png]]
+To understand how these three classes of servers interact, suppose a DNS client wants to determine the IP address for the hostname `www.amazon.com`. 
+1. To a first approximation, the following events will take place. The client first contacts one of the ==root servers, which returns IP addresses for TLD servers for the top-level domain `com`==. 
+2. The client then contacts one of these TLD servers, which returns the IP address of an authoritative server for `amazon.com`. 
+3. Finally, the client contacts one of the authoritative servers for amazon. com, which returns the IP address for the hostname `www.amazon.com`.
+
+> [! note] More about DNS hierarchy
+> - **Root DNS servers**. There are more than 1000 root servers instances scattered all over the world, as shown in Figure 2.18. These root servers are copies of 13 different root servers, managed by 12 different organizations, and coordinated through the Internet Assigned Numbers Authority `[IANA 2020]`. The full list of root name servers, along with the organizations that manage them and their IP addresses can be found at `[Root Servers 2020]`. ==Root name servers provide the IP addresses of the TLD servers==. 
+> - **Top-level domain (TLD) servers**. For each of the top-level domains—top-level domains such as `com`, `org`, `net`, `edu`, and `gov`, and all of the country top-level domains such as `uk`, `fr`, `ca`, and `jp` —there is TLD server (or server cluster). The company Verisign Global Registry Services maintains the TLD servers for the `com` top-level domain, and the company Educause maintains the TLD servers for the `edu` top-level domain. The network infrastructure supporting a TLD can be large and complex; see `[Osterweil 2012]` for a nice overview of the Verisign network. See `[TLD list 2020]` for a list of all top-level domains. ==TLD servers provide the IP addresses for authoritative DNS servers==. 
+> - **Authoritative DNS servers**. ==Every organization with publicly accessible hosts (such as Web servers and mail servers) on the Internet must provide publicly accessible DNS records that map the names of those hosts to IP addresses==. An organization’s authoritative DNS server houses these DNS records. 
+> 	- An organization can choose to implement its own authoritative DNS server to hold these records; 
+> 	- alternatively, the organization can pay to have these records stored in an authoritative DNS server of some service provider. 
+> 	- Most universities and large companies implement and maintain their own primary and secondary (backup) authoritative DNS server.
+> 
+> ![[20-Application-layer-DNS-root.png]]
+
+#### 本地 DNS 服务器
+There is another important type of DNS server called the **local DNS server**. A local DNS server does not strictly belong to the hierarchy of servers but is nevertheless central to the DNS architecture. Each ISP—such as a residential ISP or an institutional ISP—has a local DNS server (also called a default name server). 
+
+==When a host connects to an ISP, the ISP provides the host with the IP addresses of one or more of its local DNS servers==(typically through **DHCP**, which is discussed in Chapter 4). You can easily determine the IP address of your local DNS server by accessing network status windows in Windows or UNIX. 
+
+A host’s ==local DNS server is typically “close to” the host==. For an institutional ISP, the local DNS server may be on the same LAN as the host; for a residential ISP, it is typically separated from the host by no more than a few routers. ==When a host makes a DNS query, the query is sent to the local DNS server, which acts a proxy, forwarding the query into the DNS server hierarchy, as we’ll discuss in more detail below==.
+
+#### DNS 查询实例
+![[20-Application-layer-DNS-interaction.png]]
+Let’s take a look at a simple example. Suppose the host `cse.nyu.edu` desires the IP address of `gaia.cs.umass.edu`. Also suppose that NYU’s local DNS server for `cse.nyu.edu` is called `dns.nyu.edu` and that an authoritative DNS server for `gaia.cs.umass.edu` is called `dns.umass.edu`. 
+1. As shown in Figure 2.19, the host `cse.nyu.edu` first sends a DNS query message to its local DNS server, `dns.nyu.edu`. The query message contains the hostname to be translated, namely, `gaia.cs.umass.edu`. 
+2. The local DNS server forwards the query message to a root DNS server. The root DNS server takes note of the edu suffix and returns to the local DNS server a list of IP addresses for TLD servers responsible for `edu`. 
+3. The local DNS server then resends the query message to one of these TLD servers. The TLD server takes note of the `umass.edu` suffix and responds with the IP address of the authoritative DNS server for the University of Massachusetts, namely, `dns.umass.edu`. 
+4. Finally, the local DNS server resends the query message directly to `dns.umass.edu`, which responds with the IP address of `gaia.cs.umass.edu`. 
+
+Note that in this example, in order to obtain the mapping for one hostname, **eight DNS messages were sent**: four query messages and four reply messages!
+
+Our previous example assumed that the TLD server knows the authoritative DNS server for the hostname. In general, this is not always true. Instead, the TLD server may know only of an intermediate DNS server, which in turn knows the authoritative DNS server for the hostname. For example, suppose again that the University of Massachusetts has a DNS server for the university, called dns.umass.edu. Also suppose that each of the departments at the University of Massachusetts has its own DNS server, and that each departmental DNS server is authoritative for all hosts in the department. In this case, when the intermediate DNS server, dns.umass.edu, receives a query for a host with a hostname ending with cs.umass.edu, it returns to dns.nyu.edu the IP address of dns.cs.umass.edu, which is authoritative for all hostnames ending with cs.umass.edu. The local DNS server dns.nyu .edu then sends the query to the authoritative DNS server, which returns the desired mapping to the local DNS server, which in turn returns the mapping to the requesting host. In this case, a total of 10 DNS messages are sent! The example shown in Figure 2.19 makes use of both recursive queries and iterative queries. The query sent from cse.nyu.edu to dns.nyu.edu is a recursive query, since the query asks dns.nyu.edu to obtain the mapping on its behalf. However, the subsequent three queries are iterative since all of the replies are directly returned to dns.nyu.edu. In theory, any DNS query can be iterative or recursive. For example, Figure 2.20 shows a DNS query chain for which all of the queries are recursive. In practice, the queries typically follow the pattern in Figure 2.19: The query from the requesting host to the local DNS server is recursive, and the remaining queries are iterative.
+
+#### DNS cache
+
+### 问题1：DNS名字空间(The DNS Name Space)
 - DNS域名结构
     - 一个层面命名设备会有很多重名
     - NDS采用层次树状结构的命名方法
@@ -967,9 +1069,6 @@ DNS总体思路和目标
     - 每个（子）域下面可划分为若干子域(subdomains)，如每个顶级域分为若干二级域（也可以不分），每个二级域分为若干个三级域（也可以不分）等等。
     - 在这棵倒着生长的树上，树叶是主机
 
-DNS根名字服务器
-
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210723160541606.png" />
 
 DNS名字空间
 
@@ -994,7 +1093,7 @@ DNS名字空间
         - 一个网络的主机不一定在一个域
     - 域的划分是逻辑的，而不是物理的
 
-问题2：解析问题-名字服务器(Name Server)
+#### 问题2：解析问题-名字服务器(Name Server)
 - 只有一个名字服务器的问题
     - 可靠性问题：单点故障
     - 扩展性问题：通信容量
@@ -1041,7 +1140,7 @@ TLD服务器
             - name中为邮件服务器的别名
             - Value为name对应的邮件服务器的正规名字
 
-DNS大致工作过程
+### DNS大致工作过程
 1. 应用调用 解析器(resolver)
 2. 解析器作为客户向Name Server发出查询报文（封装在UDP段中）  
    （解析器怎么知道Name Server的IP地址？已经配置好了，手工配置或者通过DHCP协议自动配置。  
@@ -1076,7 +1175,7 @@ DNS大致工作过程
 - 当前联络的服务器给出可以联系的服务器的名字
 - “我不知道这个名字，但可以向这个服务器请求”
 
-DNS协议、报文
+### DNS协议、报文
 - DNS协议：**查询和响应报文的报文格式相同**，通过标识位(flags)加以区分
 - 报文首部
     - 标识符(identification/ID)：16位。使用ID号，通过查询ID和响应ID的比对，Name server可以同时维护相当多的查询，而非等待该ID查询完之后再进行下一个查询
@@ -1109,7 +1208,7 @@ DNS协议、报文
     - 用于Web服务器的 www.networkuptopia.com 的类型为A的记录
     - 用于邮件服务器 mail.networkutopia.com 的类型为MX的记录
 
-攻击DNS
+### 攻击DNS
 - DDoS攻击
     - 对根服务器进行流量轰炸攻击：发送大量ping
         - 没有成功
@@ -1129,9 +1228,7 @@ DNS协议、报文
     - 查询放大，响应报文比查询报文大
     - 效果有限
 
-总的说来，DNS比较健壮！
-
-### 2.6 P2P应用
+## 2.6 P2P应用
 
 相比于C/S模式，P2P可扩展性高（所有的对等方都是服务器），不会出现服务器宕机就整个无法使用的情况，但是可管理性差
 
@@ -1299,7 +1396,7 @@ P2P一共分为以下几种：
 >       (2) Alice 变成了Bob的前4位提供者；Bob答谢Alice
 >       (3) Bob 变成了Alice的前4提供者
 
-### 2.7 CDN (Content Distribution Networks)
+## 2.7 CDN (Content Distribution Networks)
 
 视频业务是互联网中最重要的一种杀手级应用，占用网络流量较多且最能够吸引用户。
 
@@ -1383,7 +1480,7 @@ CDN在应用层、在网络边缘而非底层、网络核心中实现加速用�
 > 
 > <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210724103248401.png" style="zoom:80%"/>
 
-### 2.8 TCP套接字编程
+## 2.8 TCP套接字编程
 
 Socket编程      
 应用进程使用传输层提供的服务才能够交换报文，实现应用协议，实现应用    
@@ -1563,7 +1660,7 @@ struct hostent
 > 
 > ```
 
-### 2.9 UDP套接字编程
+## 2.9 UDP套接字编程
 
 UDP：在客户端和服务器之间没有连接
 - 没有握手，socket只和本地的IP和端口号相捆绑
