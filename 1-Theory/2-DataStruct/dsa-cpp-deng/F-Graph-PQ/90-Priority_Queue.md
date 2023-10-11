@@ -332,7 +332,7 @@ TournamentSort():
 - 堆高降低至 $O (\log_{d}n)$ 
 - 相应地，上滤成本降低至 $\log_{d}n$
 - 但下滤成本反而增加，当 d>4 时，下滤成本增加至 $d\cdot\log_{d}n=\frac{d}{\ln d}\ln n$
-
+[[91-PQ-Exercise#10.17 利用多叉堆改进 Prim 算法|更详细的说明]]
 ### 多叉堆实现 PFS 的优势
 - 使用多叉堆实现 PFS 时，运行时间将是 $n\cdot d\cdot\log_{d}n+e\cdot\log_{d}n=(n\cdot d+e)\log_{d}n$ 
 - 取 $d\approx \frac{e}{n}+2$ 时总体性能达到最优：$O(e\log_{\frac{e}{n+2}}n)$ 
