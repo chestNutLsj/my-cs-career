@@ -1001,6 +1001,59 @@ DNS provides a few other important services in addition to translating hostnames
 - **Load distribution**. DNS is also used to perform load distribution among replicated(冗余的) servers, such as replicated Web servers. Busy sites, such as `cnn.com`, are replicated over multiple servers, with each server running on a different end system and each having a different IP address. For replicated Web servers, ==a set of IP addresses is thus associated with one alias hostname. The DNS database contains this set of IP addresses. When clients make a DNS query for a name mapped to a set of addresses, the server responds with the entire set of IP addresses, but rotates the ordering of the addresses within each reply==. Because a client typically sends its HTTP request message to the IP address that is listed first in the set, DNS rotation distributes the traffic among the replicated servers. DNS rotation is also used for e-mail so that multiple mail servers can have the same alias name. Also, content distribution companies such as Akamai have used DNS in more sophisticated ways `[Dilley 2002]` to provide Web content distribution.
 
 
+### DNS 名字空间(The DNS Name Space)
+#### DNS域名结构
+- 一个层面命名设备会有很多重名
+- DNS采用层次树状结构的命名方法
+- Internet根被划为几百个顶级域(top lever domains)
+	- 通用的(generic)
+		- .com ; .edu ; .gov ; .int ; .mil ; .net ; .org ; .firm ; .hsop ; .web ; .arts ; .rec ;
+	- 国家的(countries)
+		- .cn ; .us ; .nl ; .jp
+- 每个（子）域下面可划分为若干子域(subdomains)，如每个顶级域分为若干二级域（也可以不分），每个二级域分为若干个三级域（也可以不分）等等。
+- 在这棵倒着生长的树上，树叶是主机
+
+![[20-Application-layer-DNS-namespace.png]]
+
+#### 域名(Domain Name)
+- 从本域往上，直到树根
+	- 中间使用“.”间隔不同的级别
+	- 例如：`ustc.edu.cn` ； `auto.ustc.edu.cn` ；`www.auto.ustc.edu.cn`
+	- 域的域名：可以用于表示一个域
+	- 主机的域名：一个域上的一个主机
+- 域名的管理
+    - 一个域管理其下的子域
+        - `.jp` 被划分为 `ac.jp` `co.jp`
+        - `.cn` 被划分为 `edu.cn` `com.cn`
+    - 创建一个新的域，必须征得它所属域的同意
+- 域与物理网络无关，如国内某个大学的某个子网可能是欧洲的某台服务器在维护
+    - **域遵从组织界限，而不是物理网络**
+        - 一个域的主机可以不在一个网络
+        - 一个网络的主机不一定在一个域
+    - 域的划分是逻辑的，而不是物理的
+
+### 解析域名——名字服务器(Name Server)
+
+- 区域(zone) —— 分布式管理
+    - 区域的划分有区域管理者自己决定
+    - 将DNS名字空间划分为互不相交的区域，每个区域都是树的一部分
+    - 名字服务器：
+        - 每个区域都有一个（权威）名字服务器：维护着它所管辖区域的权威信息(authoritative record)
+        - 名字服务器允许被放置在区域之外，以保障可靠性
+
+名字空间划分为若干区域：Zone
+![[20-Application-layer-DNS-zone.png]]
+
+**权威 DNS 服务器**：
+- 组织机构的 DNS 服务器，提供组织机构服务器（如 Web 和 mail）可访问的主机和 IP 之间的映射
+- 组织机构可以选择实现自己维护或由某个服务提供商来维护
+
+**顶级域(TLD)服务器**：
+- 负责顶级域名（如 com，org，net，edu 和 gov）和所有国家级的顶级域名（如 cn，uk，fr，ca，jp）
+- *注：DNS 根名字服务器维护的是顶级域名的根，如 `ustc.edu.cn.` 的最后一个点，TLD 服务器维护的是顶级域名，如上面的 `.cn`，即 TLD 服务器是根服务器的下面一级，顶级域名是根的下面一级*
+- Network solutions 公司维护 `com` TLD 服务器
+- Educause 公司维护 `edu` TLD 服务器
+
 ### DNS 的工作机理
 [[#Most important translate hostname to IP-address|From the perspective of the invoking application]] in the user’s host, DNS is a black box providing a simple, straightforward translation service. But in fact, the **black box** that implements the service is complex, consisting of a large number of DNS servers distributed around the globe, as well as an application-layer protocol that specifies how the DNS servers and querying hosts communicate.
 
@@ -1051,180 +1104,142 @@ Let’s take a look at a simple example. Suppose the host `cse.nyu.edu` desires 
 3. The local DNS server then resends the query message to one of these TLD servers. The TLD server takes note of the `umass.edu` suffix and responds with the IP address of the authoritative DNS server for the University of Massachusetts, namely, `dns.umass.edu`. 
 4. Finally, the local DNS server resends the query message directly to `dns.umass.edu`, which responds with the IP address of `gaia.cs.umass.edu`. 
 
-Note that in this example, in order to obtain the mapping for one hostname, **eight DNS messages were sent**: four query messages and four reply messages!
+Note that in this example, in order to obtain the mapping for one hostname, ==eight DNS messages were sent: four query messages and four reply messages==!
 
-Our previous example assumed that the TLD server knows the authoritative DNS server for the hostname. In general, this is not always true. Instead, the TLD server may know only of an intermediate DNS server, which in turn knows the authoritative DNS server for the hostname. For example, suppose again that the University of Massachusetts has a DNS server for the university, called dns.umass.edu. Also suppose that each of the departments at the University of Massachusetts has its own DNS server, and that each departmental DNS server is authoritative for all hosts in the department. In this case, when the intermediate DNS server, dns.umass.edu, receives a query for a host with a hostname ending with cs.umass.edu, it returns to dns.nyu.edu the IP address of dns.cs.umass.edu, which is authoritative for all hostnames ending with cs.umass.edu. The local DNS server dns.nyu .edu then sends the query to the authoritative DNS server, which returns the desired mapping to the local DNS server, which in turn returns the mapping to the requesting host. In this case, a total of 10 DNS messages are sent! The example shown in Figure 2.19 makes use of both recursive queries and iterative queries. The query sent from cse.nyu.edu to dns.nyu.edu is a recursive query, since the query asks dns.nyu.edu to obtain the mapping on its behalf. However, the subsequent three queries are iterative since all of the replies are directly returned to dns.nyu.edu. In theory, any DNS query can be iterative or recursive. For example, Figure 2.20 shows a DNS query chain for which all of the queries are recursive. In practice, the queries typically follow the pattern in Figure 2.19: The query from the requesting host to the local DNS server is recursive, and the remaining queries are iterative.
+Our previous example assumed that the TLD server knows the authoritative DNS server for the hostname. In general, this is not always true. Instead, ==the TLD server may know only of an intermediate DNS server, which in turn knows the authoritative DNS server for the hostname==. For example, suppose again that the University of Massachusetts has a DNS server for the university, called `dns.umass.edu`. Also suppose that each of the departments at the University of Massachusetts has its own DNS server, and that each departmental DNS server is authoritative for all hosts in the department. In this case, when the intermediate DNS server, `dns.umass.edu`, receives a query for a host with a hostname ending with `cs.umass.edu`, it returns to `dns.nyu.edu` the IP address of `dns.cs.umass.edu`, which is authoritative for all hostnames ending with `cs.umass.edu`. The local DNS server `dns.nyu.edu` then sends the query to the authoritative DNS server, which returns the desired mapping to the local DNS server, which in turn returns the mapping to the requesting host. ==In this case, a total of 10 DNS messages are sent!== 
 
-#### DNS cache
+#### 递归查询和迭代查询
+![[20-Application-layer-DNS-interaction.png]]
+The example shown in Figure 2.19 makes use of both recursive queries and iterative queries. 
+- The query sent from `cse.nyu.edu` to `dns.nyu.edu` is a recursive query, since the query asks `dns.nyu.edu` to obtain the mapping on its behalf. 
+- However, the subsequent three queries are iterative since all of the replies are directly returned to `dns.nyu.edu`. 
 
-### 问题1：DNS名字空间(The DNS Name Space)
-- DNS域名结构
-    - 一个层面命名设备会有很多重名
-    - NDS采用层次树状结构的命名方法
-    - Internet根被划为几百个顶级域(top lever domains)
-        - 通用的(generic)
-            - .com ; .edu ; .gov ; .int ; .mil ; .net ; .org ; .firm ; .hsop ; .web ; .arts ; .rec ;
-        - 国家的(countries)
-            - .cn ; .us ; .nl ; .jp
-    - 每个（子）域下面可划分为若干子域(subdomains)，如每个顶级域分为若干二级域（也可以不分），每个二级域分为若干个三级域（也可以不分）等等。
-    - 在这棵倒着生长的树上，树叶是主机
+In theory, any DNS query can be iterative or recursive. For example, Figure 2.20 shows a DNS query chain for which all of the queries are recursive. 
+![[20-Application-layer-recursive-queries-DNS.png]]
+In practice, the queries typically follow the pattern in Figure 2.19: ==The query from the requesting host to the local DNS server is recursive, and the remaining queries are iterative==.
 
+>[! note] 为什么查询要分两种？
+>递归查询的缺陷：
+>- 问题：根服务器的负担太重
+>- 解决：迭代查询
+#### DNS caching
+上文中可以看到，为了请求一个地址，要进行多次的、重复的 DNS 查询，这可以通过设立 DNS 缓存来优化查询时间和请求次数。
 
-DNS名字空间
+In a query chain, when a DNS server receives a DNS reply (containing, for example, a mapping from a hostname to an IP address), it can ==cache the mapping in its local memory==. 
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210723161151756.png" />
+Because hosts and mappings between hostnames and IP addresses are by no means permanent, ==DNS servers discard cached information after a period of time== (often set to two days).
 
-- 域名(Domain Name)
-    - 从本域往上，直到树根
-    - 中间使用“.”间隔不同的级别
-    - 例如：ustc.edu.cn ；  
-            auto.ustc.edu.cn ；  
-            www.auto.ustc.edu.cn
-    - 域的域名：可以用于表示一个域
-    - 主机的域名：一个域上的一个主机
-- 域名的管理
-    - 一个域管理其下的子域
-        - .jp 被划分为 ac.jp co.jp
-        - .cn 被划分为 edu.cn com.cn
-    - 创建一个新的域，必须征得它所属域的同意
-- 域与物理网络无关，如国内某个大学的某个子网可能是欧洲的某台服务器在维护
-    - 域遵从组织界限，而不是物理网络
-        - 一个域的主机可以不在一个网络
-        - 一个网络的主机不一定在一个域
-    - 域的划分是逻辑的，而不是物理的
+### DNS 记录
+共同实现 DNS 分布式数据库的所有 DNS 服务器存储了资源记录 Resource Record，RR 提供主机名到 IP 地址的映射。
 
-#### 问题2：解析问题-名字服务器(Name Server)
-- 只有一个名字服务器的问题
-    - 可靠性问题：单点故障
-    - 扩展性问题：通信容量
-    - 维护问题：远距离的集中式数据库
-- 区域(zone) —— 分布式管理
-    - 区域的划分有区域管理者自己决定
-    - 将DNS名字空间划分为互不相交的区域，每个区域都是树的一部分
-    - 名字服务器：
-        - 每个区域都有一个（权威）名字服务器：维护着它所管辖区域的权威信息(authoritative record)
-        - 名字服务器允许被放置在区域之外，以保障可靠性
-
-名字空间划分为若干区域：Zone
-
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210723163720694.png" />
-
-**权威DNS服务器**：组织机构的DNS服务器，提供组织机构服务器（如Web和mail）可访问的主机和IP之间的映射    
-组织机构可以选择实现自己维护或由某个服务提供商来维护
-
-TLD服务器
--  **顶级域(TLD)服务器**：负责顶级域名（如com，org，net，edu和gov）和所有国家级的顶级域名（如cn，uk，fr，ca，jp）*注：DNS根名字服务器维护的是顶级域名的根，如 ustc.edu.cn. 的最后一个点，TLD服务器维护的是顶级域名，如上面的 .cn，即TLD服务器是根服务器的下面一级，顶级域名是根的下面一级*
-- Network solutions公司维护com TLD服务器
-- Educause公司维护edu TLD服务器
-
-每个区域的（权威）名字服务器都要维护一个数据库，其中包含了资源记录
-- 资源记录(resource records，缩写RR)
-    - 作用：维护 域名-IP地址（还有其它如 别名-规范名、邮件服务器别名-邮件服务器正规名）的映射关系
-    - 位置：Name Server的分布式数据库中
-- 资源记录格式：(domain_name, ttl, type, class, Value)
-    - Domain_name：域名
-    - Ttl(time to live)：生存时间，决定了资源记录应当从缓存中删除的时间（权威，缓冲记录）（若ttl很长趋于无限大，则指的是权威记录；若ttl为有限值，则为缓冲记录，需要过了ttl这么长的时间后将资源记录删除，一般是其他区域的域名和IP地址的关系，需要暂时缓存（为了性能），超过时限后删除（为了一致性，防止域名改变后本权威名字服务器还保留错误的老旧域名））
-    - Class 类别：对于Internet，值为IN
-    - Value 值：可以是数字（如IP地址等），域名或ASCII串
+- 资源记录 (resource records，缩写 RR)
+    - ==作用：维护 域名-IP 地址的映射关系==（还有其它如 别名-规范名、邮件服务器别名-邮件服务器正规名）
+    - 位置：Name Server 的分布式数据库中
+- 资源记录格式：
+    - 四元组：(Name, Value, Type, TTL)
+    - TTL (time to live)：生存时间，决定了资源记录应当从缓存中删除的时间（权威，缓冲记录）
+	    - 若 ttl 很长趋于无限大，则指的是权威记录；
+	    - 若 ttl 为有限值，则为缓冲记录，需要过了 ttl 这么长的时间后将资源记录删除，
+	    - 一般是其他区域的域名和 IP 地址的关系，需要暂时缓存（为了性能），超过时限后删除（为了一致性，防止域名改变后本权威名字服务器还保留错误的老旧域名））
+    - Value 和 Name 取决于 Type：
     - Type 类别：本资源记录的类型，用不同的值来标识
         - Type=A （是什么）
-            - Name为主机；Value为IP地址
-        - Type=NS （在哪里）
-            - Name中放子域的域名（如 foo.com ）
-            - Value为该域名的权威服务器的域名（子域名字服务器（权威DNS服务器）的名字）
+            - Name 为主机名；Value 为 IP 地址
+            - 如：`relay1.bar.foo.com, 145.37.93.126, A` 
+        - Type=NS（在哪里）
+            - Name 中放子域的域名（如 foo. com ）
+            - Value 为该域名的权威服务器的主机名
+            - 用于沿着查询链来路由 DNS 查询
+            - 如：`foo.com, dns.foo.com, NS`
         - Type=CNAME
-            - Name为规范名字的别名
-                - 如 www.ibm.com 的规范名字为 servereast.backup2.ibm.com
+            - Name 为规范名字的别名
             - value 为规范名字
+            - 如：`foo.com, relay1.bar.foo.com, CNAME`
         - Type=MX
-            - name中为邮件服务器的别名
-            - Value为name对应的邮件服务器的正规名字
+            - Name 中为邮件服务器的别名
+            - Value 为 Name 对应的邮件服务器的规范名字
 
-### DNS大致工作过程
-1. 应用调用 解析器(resolver)
-2. 解析器作为客户向Name Server发出查询报文（封装在UDP段中）  
-   （解析器怎么知道Name Server的IP地址？已经配置好了，手工配置或者通过DHCP协议自动配置。  
-   一台设备上网必备的IP信息：我的IP地址；我的子网掩码；我的local name server；我的default getway（从一个子网内部出去到其他的网络要走的路由器的IP地址））
-3. Name Server返回响应报文（name/ip）
+>[!note] 资源记录的类型分别对应什么情况的主机名？
+>1. If a DNS server is authoritative for a particular hostname, then the DNS server will contain a Type A record for the hostname. (Even if the DNS server is not authoritative, it may contain a Type A record in its cache.)
+>2. If a server is not authoritative for a hostname, then the server will contain a Type NS record for the domain that includes the hostname; it will also contain a Type A record that provides the IP address of the DNS server in the Value field of the NS record. 
+>
+>As an example, suppose an `edu` TLD server is not authoritative for the host `gaia.cs.umass.edu`. Then this server will contain a record for a domain that includes the host `gaia.cs.umass.edu`, for example, (`umass.edu`, `dns.umass.edu`, NS). The edu TLD server would also contain a Type A record, which maps the DNS server `dns.umass.edu` to an IP address, for example, (`dns.umass.edu`, `128.119.40.111`, A).
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210723165920149.png" />
-
-其中 本地名字服务器(Local Name Server)
-- 并不严格属于层次结构，可以指定任何名字服务器作为本地名字服务器，但是一般指定的是在同一个子网内部的一台名字服务器（距离近，访问速度快）
-- 每个ISP（居民区的ISP、公司、大学）都有一个本地DNS服务器
-    - 也称为“默认名字服务器”
-- 当一个主机发起一个DNS查询时，查询被送到其本地DNS服务器
-    - 起着代理的作用，将查询转发到层次结构中
-
-名字服务器(Name Server)
-- 名字解析过程
-    - 目标名字在Local Name Server中
-        - 情况1：查询的名字在该区域内部
-        - 情况2：缓存(cashing)
-
-当没有缓存时（当与本地名字服务器不能解析名字时），联系根名字服务器顺着 根-TLD 一直找到 权威名字服务器，再按原路返回——递归查询。
-
-递归查询：发出请求的主机-->本地名字服务器-->根服务器-->TLD服务器-->权威DNS服务器-->TLD服务器-->根服务器-->本地名字服务器-->发出请求的主机
-- 名字解析负担都放在当前联络的名字服务器上
-- 问题：根服务器的负担太重
-- 解决：迭代查询(iterated queries)
-
-迭代查询：发出请求的主机-->本地名字服务器-->根DNS服务器-->本地DNS服务器-->TLD服务器-->本地名字服务器-->权威DNS服务器-->本地名字服务器-->发出请求的主机
-- 当一个主机发出想查询另一台主机的IP地址的请求时，根（及各级域名）服务器返回的不是查询结果，而是下一个NS的地址
-- 最后由权威名字服务器给出解析结果
-- 当前联络的服务器给出可以联系的服务器的名字
-- “我不知道这个名字，但可以向这个服务器请求”
-
-### DNS协议、报文
+### DNS 报文
 - DNS协议：**查询和响应报文的报文格式相同**，通过标识位(flags)加以区分
 - 报文首部
-    - 标识符(identification/ID)：16位。使用ID号，通过查询ID和响应ID的比对，Name server可以同时维护相当多的查询，而非等待该ID查询完之后再进行下一个查询
+    - 标识符 (identification/ID)：16 位。
+	    - 使用 ID 号，通过查询 ID 和响应 ID 的比对，Name server 可以同时维护相当多的查询，而非等待该 ID 查询完之后再进行下一个查询
     - flags:
         - 查询/应答
         - 希望递归
         - 递归可用
         - 应答为权威
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210723171404280.png" />
+![[20-Application-layer-DNS-message-format.png]]
+1. The first 12 bytes is the header section, which has a number of fields. 
+	- The first field is a 16-bit number that identifies the query. This identifier is copied into the reply message to a query, allowing the client to match received replies with sent queries. 
+	- There are a number of flags in the flag field. 
+		- A 1-bit query/reply flag indicates whether the message is a query (0) or a reply (1).
+		- A 1-bit authoritative flag is set in a reply message when a DNS server is an authoritative server for a queried name. 
+		- A 1-bit recursion-desired flag is set when a client (host or DNS server) desires that the DNS server perform recursion when it doesn’t have the record. 
+		- A 1-bit recursion-available field is set in a reply if the DNS server supports recursion. 
+	- In the header, there are also four number-of fields. ==These fields indicate the number of occurrences of the four types of data sections that follow the header==. 
 
-提高性能：缓存
-- 一旦名字服务器学到了一个映射，就将该映射缓存起来
-- 根服务器通常都在本地服务器中缓存着
-    - 使得根服务器不用经常被访问
-- 目的：提高效率
-- 可能存在的问题：如果情况变化，缓存结果和权威资源记录不一致
-- 解决方案：TTL（默认2天）
+2. The ==question section contains information about the query that is being made==. This section includes 
+	1) a ==name field== that contains the name that is being queried, and 
+	2) a ==type field== that indicates the type of question being asked about the name—for example, a host address associated with a name (Type A) or the mail server for a name (Type MX)
 
-问题3：维护问题：新增一个域
-- 在上级域的名字服务器中增加两条记录，指向这个新增的子域的域名 和 域名服务器的地址
-- 在新增子域的名字服务器上运行名字服务器，负责本域的名字解析：名字->IP地址
-- 例子：在com域中建立一个“Network Utopia”
-    - 到注册登记机构注册域名 networkutopia.com
-        - 需要向该机构提供权威DNS服务器（基本的、和辅助的）的名字和IP地址
-        - 登记机构在com TLD服务器中插入两条RR记录（实质是两个指针）：  
-        ( networkutopia.com, dns1.networkutopia.com , NS) 新增子域的域名->维护这个新增子域的名字服务器的域名  
-        ( dns1.networkutopia.com , 212.212.212.1, A) 维护这个新增子域的名字服务器的域名->维护这个新增子域的名字服务器的IP地址  
-- 在networkutopia.com的权威服务器中确保有
-    - 用于Web服务器的 www.networkuptopia.com 的类型为A的记录
-    - 用于邮件服务器 mail.networkutopia.com 的类型为MX的记录
+3. In a reply from a DNS server, the ==answer section contains the resource records for the name that was originally queried==. 
+	- Recall that in each resource record there is the Type (for example, A, NS, CNAME, and MX), the Value, and the TTL. 
+	- A reply can return multiple RRs in the answer, since a hostname can have multiple IP addresses (for example, for replicated Web servers, as discussed earlier in this section). 
+
+4. The ==authority section contains records of other authoritative servers==. 
+
+5. The ==additional section contains other helpful records==. 
+	- For example, the answer field in a reply to an MX query contains a resource record providing the canonical hostname of a mail server. The additional section contains a Type A record providing the IP address for the canonical hostname of the mail server.
+
+
+### 维护问题：如何在 DNS 中新增一个域
+- 在上级域的名字服务器中增加两条记录，指向这个新增的子域的域名 和域名服务器的 IP 地址
+- 在新增子域的名字服务器上运行名字服务器，负责本域的名字解析：名字->IP 地址
+
+>[! example] 例子：在 com 域中建立一个“Network Utopia”
+>1. 到注册登记机构 resigtrar 注册域名 `networkutopia.com`
+>2. 需要向该机构提供权威 DNS 服务器（基本的、和辅助的）的名字和 IP 地址, 登记机构在 com TLD 服务器中插入两条 RR 记录：
+>	- ( `networkutopia.com`, `dns1.networkutopia.com` , NS) 新增子域的域名->维护这个新增子域的权威服务器的域名
+>	- ( `dns1.networkutopia.com` , `212.212.212.1`, A) 维护这个新增子域的名字服务器的域名->维护这个新增子域的名字服务器的 IP 地址
+>3. 在 networkutopia. com 的权威服务器中确保有
+>	- 用于 Web 服务器的 `www.networkuptopia.com` 的类型为 A 的记录
+>	- 用于邮件服务器 `mail.networkutopia.com` 的类型为 MX 的记录
+>
+>现在，这个 Web 站点就可以访问了！让我们来试试：
+>Suppose Alice in Australia wants to view the Web page `www.networkutopia.com`. 
+>- As discussed earlier, her host will first send a DNS query to her local DNS server. 
+>- The local DNS server will then contact a TLD com server. (The local DNS server will also have to contact a root DNS server if the address of a TLD com server is not cached.) 
+>- This TLD server contains the Type NS and Type A resource records listed above, because the registrar had these resource records inserted into all of the TLD com servers. 
+>- The TLD `com` server sends a reply to Alice’s local DNS server, with the reply containing the two resource records. 
+>- The local DNS server then sends a DNS query to `212.212.212.1`, asking for the Type A record corresponding to `www.networkutopia.com`. 
+>- This record provides the IP address of the desired Web server, say, `212.212.71.4`, which the local DNS server passes back to Alice’s host. 
+>- Alice’s browser can now initiate a TCP connection to the host `212.212.71.4` and send an HTTP request over the connection
 
 ### 攻击DNS
 - DDoS攻击
     - 对根服务器进行流量轰炸攻击：发送大量ping
         - 没有成功
         - 原因1：根目录服务器配置了流量过滤器，防火墙
-        - 原因2：Local DNS服务器缓存了TLD服务器的IP地址，因此无需查询根服务器
+        - 原因2：Local DNS 服务器缓存了 TLD 服务器的 IP 地址，因此无需查询根服务器
     - 向TLD服务器流量轰炸攻击：发送大量查询
         - 可能更危险
-        - 效果一般，大部分DNS缓存了TLD
+        - 效果一般，大部分 DNS 缓存了 TLD
 - 重定向攻击
     - 中间人攻击
-        - 截获查询，伪造回答，从而攻击某个（DNS回答指定的IP）站点
-    - DNS中毒
-        - 发送伪造的应答给DNS服务器，希望它能够缓存这个虚假的结果
+        - 截获查询，伪造回答，从而攻击某个（DNS 回答指定的 IP）站点
+    - DNS 中毒
+        - 发送伪造的应答给 DNS 服务器，希望它能够缓存这个虚假的结果
     - 技术上较困难：分布式截获和伪造
-- 利用DNS基础设施进行DDoS
-    - 伪造某个IP进行查询，攻击这个目标IP
+- 利用 DNS 基础设施进行 DDoS
+    - 伪造某个 IP 进行查询，攻击这个目标 IP
     - 查询放大，响应报文比查询报文大
     - 效果有限
 
@@ -1232,42 +1247,54 @@ TLD服务器
 
 相比于C/S模式，P2P可扩展性高（所有的对等方都是服务器），不会出现服务器宕机就整个无法使用的情况，但是可管理性差
 
-纯P2P架构
+### P2P 架构
 - 没有（或极少）一直运行的服务器
 - 任意端系统都可以直接通信
-- 利用peer的服务能力
+- 利用 peer 主机的服务能力，每个对等方能够向任何其他对等方重新发送它已经收到的该文件的任何部分，从而在分发过程中协助服务器
 - Peer节点间歇上网，每次IP地址都有可能变化
 - 例子：
-    - 文件分发(BitTorrent)
-    - 流媒体(KanKan)：不需要专业的大型服务器，而是许多peer节点相互服务，很容易扩展到几百上千万的用户量级
-    - VoIP(Skype)
+    - 文件分发 (BitTorrent)
+    - 流媒体 (KanKan)：不需要专业的大型服务器，而是许多 peer 节点相互服务，很容易扩展到几百上千万的用户量级
+    - VoIP (Skype)
 
-文件分发：C/S vs P2P
-- 问题：从一台服务器分发文件（大小 $F$ ）到 $N$ 个peer需要多少时间？
-    - Peer节点上下载能力是有限的资源
-    - 不妨假设：每个客户端上载带宽为 $u_i$ ，下载带宽为 $d_i$ ，服务器的上载带宽为 $u_s$
-- 文件分发时间：C/S模式
-    - 服务器传输：都是由服务器发送给peer，服务器必须顺序传输（上载） $N$ 个文件拷贝:
-        - 发送 $1$ 个copy： $F/u_s$ 
-        - 则发送 $N$ 个copy： $N*F/u_s$
-    - 客户端：每个客户端必须下载一个文件拷贝 注：C/S模式都是通过服务器的服务来获取文件，所以每个客户端的上载能力无关紧要
-        - $d_{min}$ 为客户端最小的下载速率
-        - 下载带宽最小的客户端下载的时间： $F/d_{min}$
-    - 则采用C-S方法将一个$F$大小的文件分发给$N$个客户端耗时： $$D_{c-s} \geq \max(N*F/u_s, F/d_{min})$$ 随着 $N$ 线性增长
-- 文件分发时间：P2P模式
-    - 服务器传输：最少需要上载一份拷贝
-        - 发送 $1$ 个拷贝的时间： $F/u_s$
-    - 客户端：每个客户端必须下载一个拷贝
-        - 最小下载带宽客户单耗时： $F/d_{min}$
-    - 客户端：所有客户端总体下载量： $N*F$
-        - 最大上载带宽是： $u_s+\sum\limits_{i=1}^{N}{u_i}$
-        - 除了服务器可以上载，其他所有的peer节点都可以上载
-    - 则采用P2P方法将一个 $F$ 大小的文件分发给 $N$ 个客户端耗时： $$D_{P2P} \geq \max(F/u_s, F/d_{min}, N*F/(u_s + \sum{u_i}))$$  分子随着 $N$ 线性变化，每个节点需要下载，整体下载量随着 $N$ 增大…… 分母也是如此，随着peer节点的增多每个peer也带了服务能力  
-- 例子：客户端上载速率为 $u$ ，当 $F/u = 1 hour$ 时， $u_s = 10*u$ ， $d_{min} \geq u_s$
+### 文件分发：C/S vs P2P
+问题：**从一台服务器分发文件（大小 $F$ ）到 $N$ 个 peer 用时几何**？
+- Peer 节点的上下载能力是有限的资源
+- 不妨假设：每个客户端上载带宽为 $u_i$ ，下载带宽为 $d_i$ ，服务器的上载带宽为 $u_s$
+- ![[20-Application-layer-file-distribution.png]]
 
-    <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210723173824123.png" style="zoom:80%" />
+#### 文件分发时间：**C/S模式**
+- 服务器传输：都是由服务器发送给 peer，服务器必须顺序传输（上载） $N$ 个文件拷贝:
+	- 发送 $1$ 个copy： $\frac{F}{u_{s}}$ 
+	- 则发送 $N$ 个 copy： $N\times\frac{F}{u_{s}}$
+- 客户端：每个客户端必须下载一个文件拷贝 注：C/S模式都是通过服务器的服务来获取文件，所以每个客户端的上载能力无关紧要
+	- $d_{min}$ 为客户端最小的下载速率
+	- 下载带宽最小的客户端下载的时间： $\frac{F}{d_{min}}$，
+	- 因此最少的分发时间为：$\frac{F}{d_{min}}$
+- 则采用 C/S 模式将一个 $F$ 大小的文件分发给 $N$ 个客户端耗时： $$D_{c/s} \geq \max\left(N\times \frac{F}{u_{s}}, \frac{F}{d_{min}}\right)$$ 
+- 对于足够大的 N，C/S 模式的分发时间取决于 $N\times \frac{F}{u_{s}}$ 
 
-P2P文件共享
+#### 文件分发时间：**P2P模式**
+- 服务器传输：最少需要上载一份拷贝
+	- 发送 $1$ 个拷贝的时间： $\frac{F}{u_{s}}$
+- 客户端：每个客户端必须下载一个拷贝
+	- 最小下载带宽的客户耗时： $\frac{F}{d_{min}}$
+- 客户端：所有客户端总体下载量： $N\times F$
+	- 除了服务器可以上载，其他所有的 peer 节点都可以上载，因此
+	- 最大上载带宽是： $u_s+\sum\limits_{i=1}^{N}{u_i}$
+- 则采用 P2P 方法将一个 $F$ 大小的文件分发给 $N$ 个客户端耗时的下界： $$D_{P2P} \geq \max\left(\frac{F}{u_{s}}, \frac{F}{d_{min}}, \frac{N\times F}{u_{s} + \sum\limits_{i=1}^{N}{u_{i}}}\right)$$  
+- 分子随着 $N$ 线性变化，每个节点需要下载，整体下载量随着 $N$ 增大…… 分母也是如此，随着 peer 节点的增多每个 peer 也带了服务能力  
+
+![[20-Application-layer-p2p-vs-cs.png]]
+Figure 2.23 compares the minimum distribution time for the client-server and P2P architectures assuming that all peers have the same upload rate u. In Figure 2.23, we have set $\frac{F}{u_{s}} = 1 hour$, $u_s = 10u_i$, and $d_{min} \ge u_{s}$. Thus, a peer can transmit the entire file in one hour, the server transmission rate is 10 times the peer upload rate, and (for simplicity) the peer download rates are set large enough so as not to have an effect. 
+
+- We see from Figure 2.23 that for the ==client-server architecture==, the distribution time increases linearly and without bound as the number of peers increases. 
+- However, for the P2P architecture, the minimal distribution time is not only always less than the distribution time of the client-server architecture; it is also less than one hour for any number of peers N. 
+
+Thus, applications with the P2P architecture can be self-scaling. **This scalability is a direct consequence of peers being redistributors as well as consumers of bits**.
+> P2P 中的 peer 主机不仅是服务器文件分发的消费者，也是再生产者，会传递地发送给其它 peer 主机。
+
+### P2P 文件共享的问题与解决方案
 - 两大问题：
     - 如何定位所需资源
     - 如何处理对等方的加入与离开
@@ -1356,45 +1383,41 @@ P2P一共分为以下几种：
         - 环形DHT以及覆盖网络
         - Peer波动
 
-> 例：P2P文件分发：BitTorrent
+### BitTorrent
+BitTorrent is a popular P2P protocol for file distribution `[Chao 2011]`. In BitTorrent lingo, ==the collection of all peers participating in the distribution of a particular file is called a **torrent**==.
+
+- Peers in a torrent download equal-size chunks of the file from one another, with a typical chunk size of 256 KBytes.
+- When a peer first joins a torrent, it has no chunks. Over time it accumulates more and more chunks.
+- While it downloads chunks it also uploads chunks to other peers. Once a peer has acquired the entire file, it may (selfishly) leave the torrent, or (altruistically) remain in the torrent and continue to upload chunks to other peers.
+- Also, any peer may leave the torrent at any time with only a subset of chunks, and later rejoin the torrent.
+
+![[20-Application-layer-BitTorrent.png]]
+Each torrent has an infrastructure node called a **tracker**. ==When a peer joins a torrent, it registers itself with the tracker and periodically informs the tracker that it is still in the torrent==. In this manner, the tracker keeps track of the peers that are participating in the torrent. A given torrent may have fewer than ten or more than a thousand peers participating at any instant of time.
+
+> [! example] 例：P2P 文件分发 - BitTorrent
 > 
-> 文件被分为一个个块256KB    
-> 当Alice加入后需要共享这个网络，首先解决目录问题：每个文件块用0或1标识是否自己具备该文件块（该方法称为map）。每个节点都有一个 bit map ，标记自己对用该文件的拥有情况。     
-> 然后所有的peer节点在该洪流中定期地泛洪/交换 bit map，各个节点就知道了其他节点的情况。   
-> 网络中的这些peers发送接收文件块，相互服务    
+> 当 Alice 加入洪流后，tracker 随机地从洪流中选出 peer 的一个子集（假定 50 个 peer 的子集），并将这 50 个 peer 的 IP 地址发送给 Alice，Alice 持有这张列表并试图与其中的 peer 建立 TCP 连接。若 Alice 成功地与 peer 创建连接，称其为**邻近 peer**。
 > 
-> <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210723203007411.png" style="zoome:80%" />
+> 随着时间的推移，其中一些对等点可能会离开，其他对等点（在最初的 50 个对等点之外）可能会尝试与 Alice 建立 TCP 连接。因此，一个对等点的邻近对等点会随着时间的推移而波动。
 > 
-> *Torrent（洪流）：节点的组，之间交换文件块（互通有无）*
+> 在任何给定时间，每个 peer 都将拥有文件中的一个分块子集，不同的 peer 拥有不同的子集。Alice 会定期（通过 TCP 连接）向每个相邻的对等节点询问它们拥有的数据块列表。如果 Alice 有 L 个不同的邻居，她将获得 L 个数据块列表。有了这些信息，Alice 就可以（再次通过 TCP 连接）请求获得她目前没有的数据块。
 > 
-> Peer加入torrent：
-> - 一开始没有块，但是将会通过其他节点处累积文件块（随机下载，“饥不择食”）
-> - 只要请求到4个文件块后，该节点就会开始向其他节点请求它希望的块，稀缺的块（稀缺优先）
-> - 只要先向跟踪服务器(tracking server)注册（跟踪服务器如何找到？网站维护，可以通过源文件描述中找到），就能从跟踪服务器那里获得peer节点列表，然后和部分peer节点构成邻居关系（“连接”）
+> 每个文件块用 0 或 1 标识是否自己具备该文件块（该方法称为 map）。每个节点都有一个 bit map ，标记自己对用该文件的拥有情况。所有的 peer 节点在该洪流中定期地泛洪/交换 bit map，各个节点就知道了其他节点的情况。  
 > 
-> 当peer下载时，该peer可以同时向其他节点提供上载服务：
-> - 发送块：Alice向4个peer发送块，这些块向它自己提供最大带宽的服务（你对我好，我就对你好，礼尚往来），其他peer被Alice阻塞（将不会从Alice处获得服务）
+> 那么，Alice 应该向她的邻居请求哪些块呢？她又应当向哪些向她请求块的邻居发送块？
+> 1. 最稀缺优先策略解决第一个问题。
+> 	- 其思路是从她没有的数据块中确定在她的邻居中最稀有的数据块（即在她的邻居中重复拷贝最少的数据块），然后首先请求这些最稀有的数据块。
+> 	- 通过这种方式，最稀有的数据块可以更快地重新分配，从而（大致）均衡洪流中每个数据块的副本数量。
 > 
-> *扰动churn：peer节点可能会上线或者下线。整个洪流表现出一定的动态性，但是整体上系统处于动态平衡。*
+> 2. 对换策略解决第二个问题。
+> 	- 其基本思想是，Alice 优先考虑目前以最高速率向其提供数据的邻居。具体来说，对于每个邻居，Alice 不断测量其接收比特的速率，并确定以最高速率向其提供比特的四个对等方。然后，她向这四个对等网络发送数据块。
+> 	- 每隔 10 秒，她会重新计算速率，并在可能的情况下修改四个对等点的集合。用 BitTorrent 的行话说，这四个对等点是疏通的 unchoked。
+> 	- 重要的是，每隔 30 秒，她还会随机选择一个额外的邻居并向其发送数据块。我们称随机选择的邻居为鲍勃。用 BitTorrent 的行话说，Bob 是乐观的无标记者。由于爱丽丝正在向鲍勃发送数据，她可能成为鲍勃的前四名上传者之一，在这种情况下，鲍勃将开始向爱丽丝发送数据。如果鲍勃向爱丽丝发送数据的速度足够快，鲍勃就会反过来成为爱丽丝的四大上传者之一。
+> 	- 换句话说，每隔 30 秒，爱丽丝会随机选择一个新的交易伙伴，并与该伙伴开始交易。如果双方都对交易感到满意，就会把对方列入自己的前四名名单，并继续进行交易，直到其中一方找到更好的伙伴为止。==这样做的结果是，能以兼容速率上传的对等点往往会找到彼此==。
+> 	- 随机邻居选择还允许新的 peer 获得数据块，这样他们就有东西可以交易了。
+> 	- 除了这 5 个 peer（4 个 "顶级 top"peer 和 1 个试探 peer）外，所有其他邻接 peer 都会被 "掐死 choked "，也就是说，它们不会从 Alice 处接收到任何数据块。
 > 
-> 一旦一个peer拥有整个文件（该peer称为“种子”），它会离开（利己主义）或者保留（利他主义）在torrent中
-> 
-> BitTorrent：请求，发送文件块
-> - 请求块：
->     - 在任何给定时间，不同peer节点拥有一个文件块的子集
->     - 周期性的，Alice节点向邻居询问他们拥有哪些块的信息
->     - Alice向peer节点请求它希望的块，稀缺的块
-> - 发送块：一报还一报tit-for-tat
->     - Alice向4个peer发送块，这些块向它自己提供最大带宽的服务
->         - 其他peer被Alice阻塞（将不会从Alice处获得服务）（有限疏通）
->         - 每10秒重新评估一次：前4位
->     - 每个30秒：随机选择其他peer节点，向这个节点发送块
->         - “优化疏通”这个节点
->         - 新选择的节点可以加入这个top4
->      
->       (1) Alice “优化疏通” Bob（被Alice随机选中了）
->       (2) Alice 变成了Bob的前4位提供者；Bob答谢Alice
->       (3) Bob 变成了Alice的前4提供者
+> The incentive mechanism for trading just described is often referred to as tit-for-tat(一报还一报) `[Cohen 2003]`. It has been shown that this incentive scheme can be circumvented `[Liogkas 2006; Locher 2006; Piatek 2008]`. Nevertheless, the BitTorrent ecosystem is wildly successful.
 
 ## 2.7 CDN (Content Distribution Networks)
 

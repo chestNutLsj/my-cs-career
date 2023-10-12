@@ -215,6 +215,14 @@ int* buildNext ( char* P ) { //构造模式串P的next表（改进版本）
 
 ![[A0-String-kmp-improved-next-instance.png]]
 
+>[! note] 通俗地描述
+>如果 j 和 next（j）这一项的字符一样，就可以把这一项的字符更新为 next（j）的 next 表项，直到从左到右刚好能保证每个的 next（j）都是最深那一层的 next
+> ![[A0-String-kmp-improved-next-instance-1.png]]
+>比如这个 p（5），他的 next 值为 0，而 p（0）＝p（5），就可以把 next（5）更新为 next（0）
+>
+>原版 next 是在查询 T 串的时候一层层 next，而改进版 next 就是在 P 串上直接把所有可以进行完的 next 操作完，就不用查询的时候再一层层找 next 了
+
+
 ### 适用范围
 - 特别适用于顺序存储介质
 - 单次匹配概率越大（字符集越小），优势越明显 //比如二进制串

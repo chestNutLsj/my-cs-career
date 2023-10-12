@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "3ef0b39a678eff84",
+        "id": "41cf55d015478e77",
         "type": "tabs",
         "children": [
           {
-            "id": "b19cb0f07ff873b2",
+            "id": "2f349166b6b1ddb5",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -93,6 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -109,6 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +141,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md"
+              }
             }
           },
           {
@@ -150,8 +158,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -166,23 +173,28 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "b19cb0f07ff873b2",
+  "active": "2f349166b6b1ddb5",
   "lastOpenFiles": [
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-BitTorrent.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-p2p-vs-cs.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-file-distribution.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-DNS-message-format.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-DNS-zone.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-DNS-namespace.png",
+    "1-Theory/6-Network/Top-to-down/assets/20-Application-layer-recursive-queries-DNS.png",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/90-Virtual-memory.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/50-Condition-variable-mechanism.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/40-Semaphore.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/assets/40-Semaphore-producer-consumer.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/assets/40-Semaphore-semaphore-sync.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A0-String-kmp-improved-next-instance-1.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/KMP.mp4",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A0-String-kmp-improved-next-instance.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A0-String-kmp-next-improved-compare.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A0-String-kmp-improved-next-1.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A0-String-kmp-build-next-2013-4.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A0-String-kmp-build-next-2013-3.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A0-String-kmp-build-next-2013-2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A0-String-kmp-build-next-2013-1.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A0-String-kmp-analyze.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A0-String-kmp-next-build-3.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A0-String-kmp-next-build-2.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
     "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/40-Semaphore.md",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/30-Mutex-lock.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/95-Skew-heap.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
@@ -202,18 +214,13 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/未确认 480166.crdownload",
     "1-Theory/3-Algorithm/topk problem.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/92-Min-max-heap.md",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/90-Virtual-memory.md",
     "0-Assets/Export/压缩文件.zip",
-    "0-Assets/Export/压缩文件.zip.fbqor6.part",
     "0-Assets/Export/practice/5-进程.md",
     "0-Assets/Export/practice/1-应用程序与基本执行环境.md",
     "0-Assets/Export/practice/7-信号.md",
     "0-Assets/Export/practice/6-文件系统.md",
     "0-Assets/Export/practice/3-多道程序与分时多任务.md",
     "0-Assets/Export/practice/4-地址空间.md",
-    "0-Assets/Export/practice/2-批处理操作系统.md",
-    "0-Assets/Export/practice/0-操作系统概述.md",
-    "0-Assets/Export/Appendix/B-常见工具的使用方法.md",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
