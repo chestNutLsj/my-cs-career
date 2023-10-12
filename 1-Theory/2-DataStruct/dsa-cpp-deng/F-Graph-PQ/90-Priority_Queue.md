@@ -349,7 +349,7 @@ TournamentSort():
 - 方法一：在 A 堆中逐个插入 B 的最大值
 	- `while(!B.empty()) A.insert ( B.delMax ());`，直到 B 堆空
 	- 用时：`O(m*(logm + log(n+m)))` = `O(m*log(n + m))`
-- 方法二：使用并查集合并 A 和 B 堆，再 Floyd 建堆
+- 方法二：直接合并 A 和 B 堆（堆的实现是向量），再 Floyd 建堆
 	- `union( A, B ).heapify( n + m )` 
 	- 用时：`O(m + n)` 
 
@@ -361,6 +361,14 @@ TournamentSort():
 若将“藤”拉直，并统一节点在左、藤在右：
 ![[90-Priority_Queue-leftheap-merge-2.png]]
 ![[90-Priority_Queue-leftheap-rightvine.png]]
+可见，在保证堆序性的前提下附加新的条件，使得在堆的合并过程中，只需调整很少的节点，可以达到高效的合并。
+
+### 左式堆形态
+
+![[90-Priority_Queue-leftheap.png]]
+- 保持堆序性，附加新条件，使得在堆合并过程中，只涉及少量节点：O (logn) 
+- 新条件 = 单侧倾斜： 节点分布偏向于左侧，合并操作只涉及右侧
+- 可是，果真如此，则拓扑上不见得是完全二叉树，结构性无法保证！？是的，实际上，结构性并非堆结构的本质要求——堆序性才是堆结构的关键所在。
 
 ### 左式堆的 ADT
 ```
@@ -388,42 +396,44 @@ class PQ_LeftHeap : public PQ<T>, public BinTree<T> { //基于二叉树，以左
 template BinNodePosi merge(BinNodePosi, BinNodePosi);
 ```
 
-### 左式堆形态
-此处所谓可持续，值得就是单侧倾斜——保持藤在右，节点向左的倾斜状态：
-![[90-Priority_Queue-leftheap.png]]
-- 保持堆序性，附加新条件，使得在堆合并过程中，只涉及少量节点：O (logn) 
-- 新条件 = 单侧倾斜： 节点分布偏向于左侧，合并操作只涉及右侧
-- 可是，果真如此，则拓扑上不见得是完全二叉树，结构性无法保证！？是的，实际上，结构性并非堆结构的本质要求
+由前文可知，左式堆的逻辑结构不再等价于完全二叉树，使用向量的实现方法不再合适——因此代码中采用了二叉树结构，灵活性更强，但紧凑性稍差（空间利用率不高，分给了指针）
 
 ### 空节点路径长度
+
+如何控制左式堆的倾斜度？——类似 AVL 的平衡因子、BTree 的外部节点，引入空节点路径长度这一指标：
 - 引入所有的外部节点，消除一度节点，将其转为真二叉树 
 - 空节点路径长度 Null Path Length：
-	- $npl(NULL)=0$ 
-	- $npl(x)=1+min\{npl(lc(x)),npl(rc(x))\}$ 
-- 验证： `npl(x)` = `x 到外部节点的最近距离` = `以 x 为根的最大满子树的高度` 
+	- 外部节点：$npl(NULL)=0$ 
+	- 内部节点：$npl(x)=1+min\{npl(lc(x)),npl(rc(x))\}$ 
+- `npl(x)` = `x 到外部节点的最近距离` = `以 x 为根的最大满子树的高度` 
 ![[90-Priority_Queue-leftheap-npl.png]]
 
-### 左式堆与右侧链
+### 左式堆的左倾性
+
 左式堆处处左倾：
 - 对任何节点 x，都有 $npl(lc(x))\ge npl(rc(x))$
-- 推论：$npl(x)=1+npl(rc(x))$ 
+- 由左倾性和 npl 的定义，可以推论：$npl(x)=1+npl(rc(x))$ ，即左式堆中每个节点的 npl 值仅与其右子有关
 
 - 左倾性与堆序性，相容而不矛盾：
 - 左式堆的子堆，必是左式堆
 - 左式堆倾向于更多节点分布于左侧分支
-	- 这是否意味着，左子堆的规模和高度必然大于右子堆？——并不
+	- 这是否意味着，左子堆的规模和高度必然大于右子堆？——并不，请看上图的🔴红色节点
 
-右侧链：
-- rChain (x)：从节点 x 出发，一直沿右分支前进
-- 特别地，rChain(r)的终点，即全堆中最浅的外部节点：
+### 最右侧通路——右侧链
+- rChain (x)：从节点 x 出发，一直沿右分支前进直至空节点
+- 尽管右孩子的高度可能大于左孩子，但由“每个节点的 npl 决定于右子”的推论可以得知，$npl(x)=|rChain(x)|$ ——每个节点 npl 值等于其右侧链的长度。
+- 特别地，**rChain(r)的终点，即全堆中最浅的外部节点**：
 	- $npl(r) = |rChain(r)|=d$
-	- 存在一棵以 r 为根、高度为 d 的满子树
+	- 则该堆必然存在一棵以 r 为根、高度为 d 的满子树，下图的深绿色部分即是：
 	- ![[90-Priority_Queue-rightChain.png]]
-- 右侧链长为 d 的左式堆，至少包含 `2^d - 1` 个内部节点, `2^(d+1) - 1` 个节点
-- 反之，包含 n 个节点的左式堆，右侧链长度 $d\le\lfloor\log_{2}(n+1)\rfloor-1=O(\log n)$ 
+	- 该满二叉树最少应包含 $2^{d+1}-1$ 个节点、$2^{d}-1$ 个内部节点，
+	- 同样，浅绿色的部分并非必然存在，因此上述节点数也是左式堆的节点数下限。
+- 反之，包含 n 个节点的左式堆，右侧链长度必然不会长于 $d\le\lfloor\log_{2}(n+1)\rfloor-1=O(\log n)$ 
 
 ### 递归实现左式堆合并
 ![[90-Priority_Queue-leftheap-merge-before-after.png]]
+- 不妨设 a>=b，可以从右图看出——递归地将 a 的右子堆 $a_{R}$ 与 b 堆合并，然后作为节点 a 的右孩子替换原先的 $a_R$
+- 为了保证左倾性，最后还需比较 a 的左右孩子的 npl 值——有必要时直接交换即可。
 
 ```
 template <typename T> //合并以a和b为根节点的两个左式堆（递归版）
@@ -443,6 +453,9 @@ BinNodePosi<T> merge( BinNodePosi<T> a, BinNodePosi<T> b ) {
 ![[90-Priority_Queue-leftheap-merge-instance-1.png]]
 ![[90-Priority_Queue-leftheap-merge-instance-2.png]]
 ![[90-Priority_Queue-leftheap-merge-instance-3.png]]
+### 左式堆合并的复杂度
+递归版合并算法的所有递归实例，可以排成一个线性序列，因此实质上是线性递归，运行时间正比于递归深度。
+进一步地，递归只发生于两个待合并堆的最右侧通路上，因此若待合并堆的规模分别为 n 和 m，则其最右侧通路的长度不会超过 O (logn) 和 O (logm)，因此合并算法总体运行时间不超过 O (logn)+O (logm)=O (log (max (n, m)))
 
 ### 迭代实现合并
 ```
@@ -465,6 +478,12 @@ BinNodePosi<T> merge( BinNodePosi<T> a, BinNodePosi<T> b ) {
 ```
 
 ### 插入与删除 
+将 merge 作为左式堆的基本操作来实现 insert 和 delMax 操作：
+- delMax：摘除 x 后，左右子堆进行一次 merge 即可：
+	- ![[90-Priority_Queue-leftistHeap-delMax.png]]
+- insert：将 x 视作单个节点的堆，调用 merge 与之递归地合并即可：
+	- ![[90-Priority_Queue-LeftistHeap-insert.png]]
+
 ```
 template <typename T> void PQ_LeftHeap<T>::insert( T e ) {
    _root = merge( _root, new BinNode<T>( e, NULL ) ); //将e封装为左式堆，与当前左式堆合并
