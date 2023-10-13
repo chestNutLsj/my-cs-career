@@ -1415,30 +1415,30 @@ Each torrent has an infrastructure node called a **tracker**. ==When a peer join
 > 
 > The incentive mechanism for trading just described is often referred to as tit-for-tat(一报还一报) `[Cohen 2003]`. It has been shown that this incentive scheme can be circumvented `[Liogkas 2006; Locher 2006; Piatek 2008]`. Nevertheless, the BitTorrent ecosystem is wildly successful.
 
-## 2.7 CDN (Content Distribution Networks)
+## 2.7 CDN
 
-视频业务是互联网中最重要的一种杀手级应用，占用网络流量较多且最能够吸引用户。
-
-视频流化服务和CDN：上下文
+### 视频流服务
 - 视频流量：占据着互联网大部分的带宽
     - Netflix，YouTube：占据37%，16%的ISP下行流量
-    - 约1B YouTube用户，约75M Netflix用户
-- 挑战：规模性-如何服务者 ~1B 用户?
-    - 单个超级服务器无法提供服务（为什么）
+    - 约1B YouTube 用户，约75Million Netflix 用户
+- 挑战：规模巨大-如何服务者 1Billion 用户?
+    - 单个超级服务器无法提供服务
 - 挑战：
     - 规模性：用户规模大
-    - 异构性：不同用户拥有不同的能力，需求也不一样（例如：有线接入和移动用户；带宽丰富和受限用户）
+    - 异构性：不同用户拥有不同的能力，需求也不一样
+	    - 有线接入和移动用户；
+	    - 带宽丰富和受限用户；
 - 解决方案：分布式的，应用层面的基础设施：用CDN解决
 
-多媒体：视频
+#### 多媒体：视频
 - 视频：固定速度显示的图像序列
     - e.g. 24 images/sec
 - 网络视频特点：
-    - 高码率：>10x于音频，高的网络带宽需求
-    - 可以被压缩
+    - 高码率：10 倍于音频，高的网络带宽需求
+    - 可以被压缩——比特率用来衡量视频图像的质量
     - 90%以上的网络流量是视频
 - 数字化图像：像素的阵列
-    - 每个像素被若干bits表示
+    - 每个像素被若干 bits 表示 
 - 编码：使用图像内和图像间的冗余来降低编码的比特数（压缩）
     - 空间冗余（图像内）
         - 空间编码例子：对于一幅大面积紫色的图片，不是发送N个相同的颜色值，而是仅仅发送2各值：颜色（紫色）和重复的个数（N个）
@@ -1452,56 +1452,131 @@ Each torrent has an infrastructure node called a **tracker**. ==When a peer join
         - MPEG2 (DVD) 3-6 Mbps
         - MPEG4 (often used in Internet, < 1 Mbps)
 
-存储视频的流化服务（streaming）：    
-简单场景：每下载几秒就播放（缓冲）     
-video server(stored video) --> Internet --> client     
+#### 存储视频的流化服务（streaming）   
+简单场景：每下载几秒就播放（缓冲） 
+![[20-Application-layer-CDN-streaming.png]]
+- video server (stored video) --> Internet --> client 
+- 在 HTTP 流媒体中，视频只是作为一个普通文件存储在 HTTP 服务器中，并带有一个特定的 URL。当用户想观看视频时，客户端会与服务器建立 TCP 连接，并对该 URL 发出 HTTP GET 请求。
+- 然后，服务器在底层网络协议和流量条件允许的情况下，通过 HTTP 响应信息快速发送视频文件。在客户端，字节被收集到客户端应用程序缓冲区中。一旦缓冲区中的字节数超过预定的阈值，客户端应用程序就会开始播放--具体来说，流媒体视频应用程序会定期从客户端应用程序缓冲区中抓取视频帧，解压缩后将其显示在用户屏幕上。
+- 因此，==视频流应用程序在显示视频的同时，也在接收和缓冲与视频后几部分相对应的帧==。
 
-多媒体流化服务的一种常见协议：DASH —— 解决不同客户端、不同网络需求和能力的问题
+HTTP 流的缺陷：所有客户收到相同编码的视频——不论它们的设备如何。
+
+#### DASH
+DASH —— 解决不同客户端、不同网络需求和能力的问题
 - DASH：Dynamic, Adaptive Streaming over HTTP
 - 服务器：
     - 将视频文件分割成多个块
-    - 每个块独立存储，编码于不同码率（8-10种）
-    - 提供 告示文件(manifest file)：描述该文件是什么，它的描述信息，切成了多少块，不同块的URL，每块视频持续的范围，有哪些编码版本等等
+    - 每个块独立存储，编码于不同码率（8-10 种），码率指的就是比特率，对应不同的质量水平
+    - 提供告示文件 (manifest file)：描述该文件是什么，它的描述信息，切成了多少块，不同块的 URL，每块视频持续的范围，有哪些编码版本等等
 - 客户端：
     - 先获取告示文件
     - 周期性地测量服务器到客户端的带宽
-    - 查询告示文件，在一个时刻请求一个块，HTTP头部指定字节范围
-        - 如果带宽足够，选择最大码率的视频块
+    - 查询告示文件，在一个时刻请求一个块，通过 HTTP GET 请求报文，一次选择一个不同的块。HTTP 头部指定字节范围
+        - 客户动态地请求来自不同版本的视频段数据块，这取决于客户的带宽。如果带宽足够，选择最大码率的视频块
         - 会话中的不同时刻，可以切换请求不同的编码块（取决于当时的可用带宽、客户端的需求）
-- 注：“智能”客户端：客户端自适应决定
+
+- “智能”客户端：客户端自适应决定
     - 什么时候去请求块（不至于缓存挨饿，或者溢出）
     - 请求什么编码速率的视频块（当带宽够用时，请求高质量的视频块）
     - 哪里去请求块、哪些服务器去请求（可以向离自己近的服务器发送URL，或者向高可用带宽的服务器请求）
 
-若现在只有一个或很少服务器，并发数较大，如何解决？（即：服务器如何通过网络向上百万用户同时流化视频内容（上百万视频内容））
-- 选择1：单个的、大的超级服务中心“mega-server”
+### 视频流输出
+前面解决了客户如何从互联网获得视频流的方法。那么，问题在于视频服务提供者如何分发视频内容？—— 若现在只有一个或很少服务器，并发数较大，如何解决？（即：服务器如何通过网络向上百万用户同时流化视频内容（上百万视频内容））
+
+#### Mega-server
+- 选择1：单个的、大的超级服务中心“mega-server”。其缺点非常明显：
     - 服务器到客户端路径上跳数较多，瓶颈链路的带宽小导致停顿（服务器只能优化自身，无法优化整个网络）
-    - “二八规律”决定了网络同时充斥着同一个视频的多个拷贝，效率低（付费高、带宽浪费、效果差）
-    - 单点故障点，性能瓶颈
+    - 网络同时充斥着同一个视频的多个拷贝，效率低（付费高、带宽浪费、效果差）
+    - 如果服务器单点故障，那就不能分发任何视频流
     - 周边网络的拥塞
     - 评述：相当简单，但是这个方法不可扩展
-- 选择2：通过CDN，全网部署缓存节点(server)，预先存储服务内容（在CDN节点中存储内容的多个拷贝 e.g. Netflix stores copies of MadMen），就近为用户提供服务（ICP购买CDN运营商的服务，加速对用户服务的传输质量，当用户请求时，通过域名解析的重定向，找到离它最近、服务质量最好的拷贝节点，由那些节点提供服务，如果网络路径拥塞则可能选择不同的拷贝，来提高用户体验：内容加速服务）
-    - 部署策略1：enter deep：将CDN服务器深入到许多接入网（local ISP 的内部）
-        - 更接近用户，数量多，离用户近，服务质量高，但数量多管理困难
-        - Akamai，1700个位置
-    - 部署策略2：bring home：部署在少数（10个左右）关键位置，如将服务器簇安装于POP附近（离若干1stISP POP较近）
-        - 采用租用线路将服务器簇连接起来
-        - Limelight
 
-CDN在应用层、在网络边缘而非底层、网络核心中实现加速用户访问的功能（“over the top”）。       
-这个模式也产生一定的挑战：     
-在拥塞的互联网上复制内容，     
-1.从哪个CDN节点中获取内容？      
-2.用户在网络拥塞时的行为？切换节点      
-3.在哪些CDN节点中存储什么内容（内容、节点部署问题）？     
+#### CDN
+- 选择 2：通过 CDN
+	- 全网部署缓存节点 (server)，**预先存储服务内容**，在 CDN 节点中存储内容的多个拷贝 
+		- e.g. Netflix stores copies of MadMen
+	- 就近为用户提供服务
+		- ISP 购买 CDN 运营商的服务，加速对用户服务的传输质量，当用户请求时，==通过域名解析的重定向，找到离它最近、服务质量最好的拷贝节点，由那些节点提供服务==，
+		- 如果网络路径拥塞则可能选择不同的拷贝，来提高用户体验：内容加速服务）
+    - 部署策略：
+	    1. enter deep：深入
+	        - 通过在遍及全球的接入 ISP 中部署服务器集群来深入到 ISP 的接入网中
+	        - 更接近用户，数量多，离用户近，服务质量高，但数量多管理困难
+	        - Akamai，1700个位置
+	    2. bring home：邀请做客
+	        - 通过在少量关键位置建造大集群来邀请 ISP 做客，这些集群通常在因特网交换点 IXP 中
+	        - 维护和管理开销较低，但端用户时延和吞吐量不够理想
+	        - Limelight 等多数 CDN 公司采用
 
-> CDN例子：Netflix
-> 
-> <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210724103248401.png" style="zoom:80%"/>
+### CDN 存放副本的策略
+一旦集群部署就位，CDN 就会在集群间复制内容。CDN 不会在每个集群中放置每个视频的副本，因为有些视频很少被观看，或者只在某些国家流行。事实上，许多 CDN 并不向集群推送视频，而是采用简单的拉取策略：
+- 如果客户端向未存储视频的集群请求视频，集群就会检索视频（从中央存储库或其他集群）并在本地存储一份副本，同时将视频流传输给客户端。
+- 与网络缓存类似，当群集的存储空间满时，它会删除不常被请求的视频。
 
-## 2.8 TCP套接字编程
+### CDN 操作
+When a browser in a user’s host is instructed to retrieve a specific video (identified by a URL), the CDN must intercept (截获) the request so that it can 
+1) determine a suitable CDN server cluster for that client at that time, and 
+2) redirect the client’s request to a server in that cluster.
 
-Socket编程      
+==Most CDNs take advantage of DNS to intercept and redirect requests==. 
+
+>[!example] 用户如何通过 CDN 访问视频资源？
+>Suppose a content provider, NetCinema, employs the third-party CDN company, KingCDN, to distribute its videos to its customers. On the NetCinema Web pages, each of its videos is assigned a URL that includes the string “video” and a unique identifier for the video itself; for example, *Transformers 7* (变形金刚 7) might be assigned `http://video.netcinema.com/6Y7B23V`. Six steps then occur, as shown in Figure 2.25:
+> ![[20-Application-layer-CDN-operate.png]]
+>1. The user visits the Web page at NetCinema.
+>2. When the user clicks on the link `http://video.netcinema.com/6Y7B23V`, the user’s host sends a DNS query for `video.netcinema.com`. 
+>3. The user’s Local DNS Server (LDNS) relays the DNS query to an authoritative DNS server for NetCinema, which observes the string “video” in the hostname `video.netcinema.com`. To “hand over” the DNS query to KingCDN, instead of returning an IP address, the NetCinema authoritative DNS server returns to the LDNS a hostname in the KingCDN’s domain, for example, `a1105.kingcdn.com`. 
+>4. From this point on, the DNS query enters into KingCDN’s private DNS infrastructure. The user’s LDNS then sends a second query, now for `a1105.kingcdn.com`, and KingCDN’s DNS system eventually returns the IP addresses of a KingCDN content server to the LDNS. It is thus here, within the KingCDN’s DNS system, that the CDN server from which the client will receive its content is specified.
+>5. The LDNS forwards the IP address of the content-serving CDN node to the user’s host. 
+>6. Once the client receives the IP address for a KingCDN content server, it establishes a direct TCP connection with the server at that IP address and issues an HTTP GET request for the video. If DASH is used, the server will first send to the client a manifest file with a list of URLs, one for each version of the video, and the client will dynamically select chunks from the different versions.
+
+### 集群选择策略
+任何 CDN 部署的核心都是**集群选择策略**，即动态将客户导向 CDN 内的服务器集群或数据中心的机制。CDN 通过客户端的 DNS 查询得知客户端 LDNS 服务器的 IP 地址。在得知该 IP 地址后，CDN 需要根据该 IP 地址选择一个合适的群集。CDN 通常采用专有的集群选择策略。有以下几种策略：
+1. **将客户端分配到地理位置最近的集群**。
+	- 利用商业地理位置数据库，每个 LDNS IP 地址都会映射到一个地理位置。当收到来自某个 LDNS 的 DNS 请求时，CDN 会选择地理位置上最近的集群。
+	- 对于大部分客户来说，这种解决方案的效果还算不错。但是，对于某些客户来说，这种解决方案可能效果不佳，因为就网络路径的长度或跳数而言，地理位置上最近的集群可能并不是网络长度或跳数最近的集群。
+	- 所有基于 DNS 的方法都有一个固有的问题，即有些终端用户被配置为使用远程定位的 LDNS，在这种情况下，LDNS 的位置可能远离客户端的位置。
+	- 此外，这种简单的策略忽略了互联网路径的延迟和可用带宽随时间的变化，总是将相同的集群分配给特定的客户端。
+
+2. **根据当前的流量条件为客户端确定最佳集群**。
+	- CDN 可以对其集群和客户端之间的延迟和损耗性能进行定期的实时测量。例如，CDN 可以让其每个集群定期向全球所有 LDNS 发送探测信息（如 ping 消息或 DNS 查询）。
+	- 这种方法的一个缺点是，许多 LDNS 被配置为不响应此类探测。
+
+
+> [! example] CDN 例子：Netflix
+> ![[20-Application-layer-CDN-netflix.png]]
+
+
+## 2.8 Socket 编程
+
+A typical network application consists of a pair of programs—a client program and a server program—residing in two different end systems. When these two programs are executed, a client process and a server process are created, and these processes communicate with each other by reading from, and writing to, **sockets**.
+
+There are **two types of network applications**. 
+1. One type is an implementation whose operation is specified in a protocol standard, such as an RFC or some other standards document; 
+	- such an application is sometimes referred to as “open,” since the rules specifying its operation are known to all.
+	- For such an implementation, the client and server programs must conform to the rules dictated by the RFC. For example, the client program could be an implementation of the client side of the HTTP protocol.
+2. The other type of network application is a proprietary network application. 
+	- In this case, the client and server programs employ an application-layer protocol that has not been openly published in an RFC or elsewhere. 
+	- A single developer (or development team) creates both the client and server programs, and the developer has complete control over what goes in the code.
+
+>[! warning] 应该使用什么端口号？
+>- Recall also that when a client or server program implements a protocol defined by an RFC, it should use the well-known port number associated with the protocol; 
+>- conversely, when developing a proprietary application, the developer must be careful to avoid using such well-known port numbers. 
+>
+>常用端口号列表：[TCP/UDP端口列表 - 维基百科，自由的百科全书](https://zh.wikipedia.org/wiki/TCP/UDP%E7%AB%AF%E5%8F%A3%E5%88%97%E8%A1%A8)
+>- 20/21，FTP 协议，数据/控制端口
+>- 22， SSH 端口
+>- 23， Telnet 端口
+>- 25， SMTP 端口
+>- 53， DNS 端口
+>- 56， 远程访问协议
+>- 80， HTTP 端口
+>- 110，POP3 端口
+>- 143，IMAP 端口
+>- 443，HTTPS 端口
+>- 546/547， DHCPv6 客户端/服务器
+
 应用进程使用传输层提供的服务才能够交换报文，实现应用协议，实现应用    
     TCP/IP：应用进程使用Socket API访问传输服务     
     地点：界面上的SAP(Socket) 方式：Socket API    
@@ -1519,7 +1594,103 @@ socket：分布式应用进程之间的门，传输层协议提供的端到端�
 TCP服务：从一个进程向另一个进程可靠地传输字节流（从应用程序的角度：TCP在客户端和服务器进程之间
 提供了可靠的、字节流（管道）服务）
 
-TCP套接字编程的工作流程
+### UDP 套接字编程
+
+UDP：在客户端和服务器之间没有连接
+- 没有握手，socket只和本地的IP和端口号相捆绑
+- 发送端在每一个报文中明确地指定目标的IP地址和端口号
+- 服务器必须从收到的分组中提取出发送端的IP地址和端口号
+  
+UDP传送的数据可能乱序，也可能丢失
+
+进程视角看UDP服务：UDP为客户端和服务器提供不可靠的字节组的传送服务
+
+**[有关UDP socket编程，详见这个视频3:45开始](https://www.bilibili.com/video/BV1JV411t7ow?p=21&vd_source=485cdaef2e99160b22fe3c01315013e0&t=225.7)**
+
+<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210724132456460.png" />
+
+> [! example]
+> 样例：
+> 1. C客户端（UDP）
+> ```c
+> // client.c
+> 
+> void main(int argc, char *argv[])
+> { 
+>     struct sockaddr_in sad; // structure to hold an IP address
+>     int clientSocket; // socket descriptor
+>     struct hostent *ptrh; // pointer to a host table entry 
+> 
+>     char Sentence[128]; 
+>     char modifiedSentence[128];
+> 
+>     host = argv[1]; 
+>     port = atoi(argv[2]);
+> 
+>     clientSocket = socket(PF_INET, SOCK_DGRAM, 0); // 创建客户端socket，没有连接到服务器
+> 
+>     /* determine the server's address */
+>         memset((char *)&sad, 0, sizeof(sad)); // clear sockaddr structure
+>         sad.sin_family = AF_INET; // set family to Internet
+>         sad.sin_port = htons((unsigned short)port); 
+>         ptrh = gethostbyname(host);
+>             /* Convert host name to IP address */
+>         memcpy(&sad.sin_addr, ptrh->h_addr, ptrh->h_length);
+>     
+>     gets(Sentence) // Get input stream from user
+> 
+>     addr_len = sizeof(struct sockaddr); 
+>     n = sendto(clientSocket, Sentence, strlen(Sentence)+1, (struct sockaddr *) &sad, addr_len); // Send line to server
+> 
+>     n = recvfrom(clientSocket, modifiedSentence, sizeof(modifiedSentence), (struct sockaddr *) &sad, &addr_len); // Read line from server
+> 
+>     printf("FROM SERVER: %s\n", modifiedSentence);
+> 
+>     close(clientSocket); // Close connection
+> }
+> 
+> ```
+> 
+> 2. C服务器（UDP）
+> ```c
+> // server.c
+> 
+> void main(int argc, char *argv[])
+> { 
+>     struct sockaddr_in sad; // structure to hold an IP address
+>     struct sockaddr_in cad;
+>     int serverSocket; // socket descriptor
+>     struct hostent *ptrh; // pointer to a host table entry
+> 
+>     char clientSentence[128]; 
+>     char capitalizedSentence[128]; 
+> 
+>     port = atoi(argv[1]);
+> 
+>     /*
+>         Create welcoming socket at port
+>             &
+>         Bind a local address
+>     */
+>     serverSocket = socket(PF_INET, SOCK_DGRAM, 0);   
+>         memset((char *)&sad,0,sizeof(sad)); // clear sockaddr structure 
+>         sad.sin_family = AF_INET; // set family to Internet
+>         sad.sin_addr.s_addr = INADDR_ANY; // set the local IP address 
+>         sad.sin_port = htons((unsigned short)port); // set the port number
+>         bind(serverSocket, (struct sockaddr *) &sad, sizeof(sad));
+>     while(1):
+>     { 
+>         n = recvfrom(serverSocket, clientSentence, sizeof(clientSentence), 0, (struct sockaddr *) &cad, &addr_len); // Receive messages from clients 
+>         
+>         /* capitalize Sentence and store the result in capitalizedSentence */
+>         
+>         n = sendto(serverSocket, capitalizedSentence, strlen(capitalizedSentence)+1, (struct sockaddr *) &cad, &addr_len); // Write out the result to socket
+>     } // End of while loop, loop back and wait for another client connection
+> }
+> 
+> ```
+
+### TCP套接字编程的工作流程
 - 服务器首先运行，等待连接建立    
     1.服务器进程必须先处于运行状态
     - 创建 欢迎socket，返回一个整数
@@ -1547,12 +1718,13 @@ struct sockaddr_in
     char sin_zero[8]; //align对齐
 }
 ```
-|变量|含义|
-|:---:|:---:|
-|sin_family|地址簇|
-|sin_port|端口号|
-|sin_addr|IP地址|
-|sin_zero[8]|对齐|
+
+|    变量     |  含义  |
+|:-----------:|:------:|
+| sin_family  | 地址簇 |
+|  sin_port   | 端口号 |
+|  sin_addr   | IP地址 |
+| sin_zero[8] |  对齐  |
 
 2. 数据结构hostent
 ```c
@@ -1570,12 +1742,13 @@ struct hostent
 
 /*h_addr_list作为调用域名解析函数时的参数。返回后，将IP地址拷贝到sockaddr_in的IP地址部分*/
 ```
-|变量|含义|
-|:---:|:---:|
-|*h_name|主机域名|
-|**h_aliases|主机的一系列别名|
-|h_length|IP地址的长度|
-|**h_addr_list[i]|IP地址的列表|
+
+|        变量        |       含义       |
+|:------------------:|:----------------:|
+|     `*h_name`      |     主机域名     |
+|   `**h_aliases`    | 主机的一系列别名 | 
+|     `h_length`     |  IP 地址的长度   |
+| `**h_addr_list[i]` |  IP 地址的列表   |
 
 **[有关TCP socket编程，详见这个视频21:20开始](https://www.bilibili.com/video/BV1JV411t7ow?p=20&vd_source=485cdaef2e99160b22fe3c01315013e0&t=1280.2)**
 
@@ -1589,6 +1762,7 @@ struct hostent
 
 <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210724125259562.png" />
 
+> [! example]
 > 样例：
 > 1. C客户端（TCP）
 > ```c
@@ -1679,102 +1853,7 @@ struct hostent
 > 
 > ```
 
-## 2.9 UDP套接字编程
-
-UDP：在客户端和服务器之间没有连接
-- 没有握手，socket只和本地的IP和端口号相捆绑
-- 发送端在每一个报文中明确地指定目标的IP地址和端口号
-- 服务器必须从收到的分组中提取出发送端的IP地址和端口号
-  
-UDP传送的数据可能乱序，也可能丢失
-
-进程视角看UDP服务：UDP为客户端和服务器提供不可靠的字节组的传送服务
-
-**[有关UDP socket编程，详见这个视频3:45开始](https://www.bilibili.com/video/BV1JV411t7ow?p=21&vd_source=485cdaef2e99160b22fe3c01315013e0&t=225.7)**
-
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210724132456460.png" />
-
-> 样例：
-> 1. C客户端（UDP）
-> ```c
-> // client.c
-> 
-> void main(int argc, char *argv[])
-> { 
->     struct sockaddr_in sad; // structure to hold an IP address
->     int clientSocket; // socket descriptor
->     struct hostent *ptrh; // pointer to a host table entry 
-> 
->     char Sentence[128]; 
->     char modifiedSentence[128];
-> 
->     host = argv[1]; 
->     port = atoi(argv[2]);
-> 
->     clientSocket = socket(PF_INET, SOCK_DGRAM, 0); // 创建客户端socket，没有连接到服务器
-> 
->     /* determine the server's address */
->         memset((char *)&sad, 0, sizeof(sad)); // clear sockaddr structure
->         sad.sin_family = AF_INET; // set family to Internet
->         sad.sin_port = htons((unsigned short)port); 
->         ptrh = gethostbyname(host);
->             /* Convert host name to IP address */
->         memcpy(&sad.sin_addr, ptrh->h_addr, ptrh->h_length);
->     
->     gets(Sentence) // Get input stream from user
-> 
->     addr_len = sizeof(struct sockaddr); 
->     n = sendto(clientSocket, Sentence, strlen(Sentence)+1, (struct sockaddr *) &sad, addr_len); // Send line to server
-> 
->     n = recvfrom(clientSocket, modifiedSentence, sizeof(modifiedSentence), (struct sockaddr *) &sad, &addr_len); // Read line from server
-> 
->     printf("FROM SERVER: %s\n", modifiedSentence);
-> 
->     close(clientSocket); // Close connection
-> }
-> 
-> ```
-> 
-> 2. C服务器（UDP）
-> ```c
-> // server.c
-> 
-> void main(int argc, char *argv[])
-> { 
->     struct sockaddr_in sad; // structure to hold an IP address
->     struct sockaddr_in cad;
->     int serverSocket; // socket descriptor
->     struct hostent *ptrh; // pointer to a host table entry
-> 
->     char clientSentence[128]; 
->     char capitalizedSentence[128]; 
-> 
->     port = atoi(argv[1]);
-> 
->     /*
->         Create welcoming socket at port
->             &
->         Bind a local address
->     */
->     serverSocket = socket(PF_INET, SOCK_DGRAM, 0);   
->         memset((char *)&sad,0,sizeof(sad)); // clear sockaddr structure 
->         sad.sin_family = AF_INET; // set family to Internet
->         sad.sin_addr.s_addr = INADDR_ANY; // set the local IP address 
->         sad.sin_port = htons((unsigned short)port); // set the port number
->         bind(serverSocket, (struct sockaddr *) &sad, sizeof(sad));
->     while(1):
->     { 
->         n = recvfrom(serverSocket, clientSentence, sizeof(clientSentence), 0, (struct sockaddr *) &cad, &addr_len); // Receive messages from clients 
->         
->         /* capitalize Sentence and store the result in capitalizedSentence */
->         
->         n = sendto(serverSocket, capitalizedSentence, strlen(capitalizedSentence)+1, (struct sockaddr *) &cad, &addr_len); // Write out the result to socket
->     } // End of while loop, loop back and wait for another client connection
-> }
-> 
-> ```
-
-### 2.10 小结
+## 2.9 小结
 
 - 应用程序体系结构
     - 客户-服务器（C/S）
