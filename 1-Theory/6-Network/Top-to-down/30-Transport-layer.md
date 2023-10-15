@@ -181,84 +181,119 @@ ClientSocket = socket(PF_INET, SOCK_DGRAM, 0);
 UDP(User Datagram Protocol `[RFC 768]`)：用户数据报协议
 - “no frills,” “bare bones”Internet传输协议
 - “尽力而为”的服务，报文段可能丢失也可能送到应用进程的报文段乱序
+- 仅提供最低限度的 复用/解复用 服务，以便能通过网络层
 - 无连接：
-    - UDP发送端和接收端之间没有握手
-    - 每个UDP报文段都被独立地处理
-- UDP被用于：
+    - UDP 发送端和接收端之间**没有握手**
+    - 每个 UDP 报文段都被独立地处理
+- UDP 被用于：
     - 流媒体（丢失不敏感，速率敏感、应用可控制传输速率）
-    - DNS
+    - **DNS**
     - SNMP（简单网络管理协议）
-- 在UDP上可行可靠传输：
+- 在 UDP 上若要实现可靠传输：
     - 在应用层增加可靠性
     - 应用特定的差错恢复
 
+
+### UDP 的优势
+- **适合实时应用**：不需要较高的发送速率，而要求较低的报文段发送延迟，能够容忍部分数据丢失；而 TCP 的拥塞控制在此时会导致实时应用的性能变差；
+- **适合时延敏感的应用**：如对 DNS 来说，UDP 不会引入建立连接时延；HTTP 通常是建立在 TCP 上的，但是 HTTP/3.0、Google Chrome 的私有 QUIC 协议，是通过 UDP 来提高速率、在应用层保证可靠性；
+- **不必维护链接**：因此可以支持的活动用户数量更多、更适合突发情况；
+- **分组首部开销小**：UDP 首部开销仅 8 字节，TCP 则是 20 字节，这对数据较小时优势明显；
+
+### 常用应用的协议
+![[30-Transport-layer-applications-protocol.png]]
+
+> [! note] SNMP 为什么选用 UDP？
+> SNMP 作为网络管理协议，使用 UDP 则能够在网络处于重压状态下运行，而 TCP 的拥塞控制策略会使数据传输难以实现。
+
+>[!note] 流式多媒体应用越来越青睐 TCP
+>1. 在拥塞状态下，UDP 的情况会越来越恶化——如果每个人都启动流式高比特率视频而不使用任何拥塞控制手段的话，会导致路由器中有大量分组溢出，最终只有极少量的 UDP 分组能够成功到达目的地。
+>2. 无控制的 UDP 发送方导致的高丢包率，将引起 TCP 发送方大大减少它们的速率，从而挤垮 TCP 回话，这个问题相当严重。
+
 ### UDP报文段格式
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210725134800713.png" />
+![[30-Transport-layer-UDP-segment-structure.png]]
+- 报文段的头部很小，只有四个部分，每个部分 2 字节
+	- 源端口号和目的端口号用于进程交付；
+	- 长度字段指示了 UDP 报文段中的字节数：头部+应用数据
+	- 校验和用来检查报文段在传输过程中是否出现了差错
 
-为什么要有UDP？
-- 不建立连接（若要先建立连接则会增加延时）
-- 简单：在发送端和接收端没有连接状态
-- 报文段的头部很小（开销小：头部只有8个字节，而TCP有20个字节）
-- 无拥塞控制和流量控制：UDP可以尽可能快的发送报文段
-    - 应用层->传输层的速率 = 主机->网络的速率 （上面来多快，往下发就多快）
-
-UDP校验和（校验和：EDC，差错检测码）
+### UDP 校验和
+校验和：EDC (Error Detection and Correction)，差错检测码
 - 目标：检测在被传输报文段中的差错（如比特反转），若出错，这个UDP数据报就会被扔掉（表现为丢失）
 - 发送方：
-    - 将报文段的内容视为16比特的整数（每16bit切一段，得到一系列二进制整数）
-    - 校验和：报文段的加法和（1的补运算）
-    - 发送方将校验和放在UDP的校验和字段
+    - 将报文段的内容每16bit 切一段，得到一系列长度为 16 比特的段
+    - 校验和：将所有 16 比特的段相加，加法中遇到的所有溢出都加回最低位，最后进行反码运算；
+    - 发送方将校验和放在 UDP 报文段的校验和字段
 - 接收方：
-    - 计算接收到的报文段的校验和
-    - 检查计算出的校验和与校验和字段的内容是否相等：
-        - 不相等 --> 检测到差错
-        - 相等 --> 没有检测到差错，但也许还是有差错
-            - 残存错误（校验范围 + 校验和 = 1111111111111111，但是两个加数都出错了）
+    - 计算接收到的报文段的校验和：
+	    - 将收到的校验和字段与报文段全部的 16 比特的段加起来（包括校验和本身）
+	    - 如果结果是全 1 串，没有出错；否则至少有一个错误，==整个报文丢弃==或者==警告地发送给应用程序==（校验和没有纠错能力，只能检错）；
 
-> Internet校验和的例子：两个16bit的整数相加
+
+> [! example] Internet 校验和的例子：两个16bit 的整数相加
 > 
-> 注意：当数字相加时，在最高位的进位要回卷，再加到结果上（即最高位的进位数字与末位相加，重新计算得到和）
+> 注意：当数字相加时，在最高位的进位要回送到最低位，再加到结果上（即最高位的进位数字与末位相加，重新计算得到和）
+>
+> suppose that we have the following three 16-bit words:
+> ![[30-Transport-layer-checksum-example.png]]
 > 
-> <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210725135335276.png" />
-> 
-> - 目标端：校验范围 + 校验和 = 1111111111111111 通过校验
->     - 否则没有通过校验
-> - 注：求和时，必须将进位回卷到结果上
+> - Note that this last addition had overflow, which was wrapped around. 
+> - The 1s complement is obtained by converting all the 0s to 1s and converting all the 1s to 0s. Thus, the 1s complement of the sum 0100101011000010 is 1011010100111101, which becomes the checksum. 
+> - At the receiver, all four 16-bit words are added, including the checksum. If no errors are introduced into the packet, then clearly the sum at the receiver will be 1111111111111111. If one of the bits is a 0, then we know that errors have been introduced into the packet.
 
-## 3.4 可靠数据传输(rdt)的原理
+>[! note] 端到端原则
+>在无法确保每条链路的可靠性、也无法确保中途路由器内存的差错检测时，如果端到端的数据传输要求提供服务检测，那么 UDP 必须在端到端基础上在传输层提供差错检测。（即便校验和是最基本的、只能提供检错能力的差错检测机制）
+>
+>**端到端原则**：This is an example of the celebrated **end-end principle** in system design `[Saltzer 1984]`, which states that since certain functionality (error detection, in this case) must be implemented on an end-end basis: “functions placed at the lower levels may be redundant or of little value when compared to the cost of providing them at the higher level.”
 
-rdt在应用层、传输层和数据链路层都很重要，是网络Top 10问题之一。
+## 3.4 可靠数据传输的原理
 
-信道的不可靠特点（只是“尽力而为”）决定了可靠数据传输协议(rdt)的复杂性。
+Reliable Data Transfer 在应用层、传输层和数据链路层都很重要，是网络 Top 10问题之一。
 
-可靠数据传输：问题描述
+信道的不可靠特点（只是“尽力而为”）决定了可靠数据传输协议 (Reliable Data Transfer Protocol) 的复杂性。
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210725151016012.png" />
+### 问题描述
 
-*udt：不可靠数据传递*
+![[30-Transport-layer-rdt.png]]
+- RDT 协议的功能：为上层实体提供可靠信道的服务抽象
+	- 数据可以通过一条可靠的信道进行传输，在可靠信道中传输数据不会导致其损坏或丢失；
+	- 所有数据都是按照发送顺序进行交付；
+	- TCP 就是 RDT 类型的协议，UDP 是 UDT 类型的协议；
+- 因此，RDT 协议是建立在不可靠的信道、不可靠的底层协议上的，实现起来比较困难、复杂。
+- 根据上图 b 的语义，我们规定：
+	- 调用 `rdt_send()` 函数，上层可以调用数据传输协议的发送方，将要发送的数据交付给位于接收方的高层；
+	- `rdt_send()` 函数会通过 `udt_send()` 调用不可靠的信道传输数据，这意味着数据传输中可能被损坏、丢失，但是为了简便目前不考虑底层信道重排序分组的问题；
+	- 接收端在分组从信道到达时，调用 `rdt_rcv()` 接收分组，并对分组进行检查，若无问题，则通过 `deliver_data()` 向高层交付数据。
 
-我们将在本层进行如下工作：
-- 渐增式地开发可靠数据传输协议(rdt)的发送方和接收方（渐增式：从下层可靠、不丢失开始，一步步去掉假设，使下层变得越来越不可靠，从而完善rdt协议）
-- 只考虑单向数据传输
-    - 但控制信息是双向流动的！（有一些反馈机制）
+### 构造可靠数据传输协议
+#### 工作安排：
+- 渐增式地开发可靠数据传输协议 (rdt) 的发送方和接收方（渐增式：从下层可靠、不丢失开始，一步步去掉假设，使下层变得越来越不可靠，从而完善 rdt 协议）
+- 只考虑单向数据传输（半双工）。双向数据传输（全双工）只是形式上复杂，并没有触及 RDT 的核心问题，暂时忽略；
+- 控制信息是双向流动的，通过 `rdt` 函数交换控制分组，并且都要通过 `udt_send` 发送给对方。
 - 双向的数据传输问题实际上是2个单向数据传输问题的综合（两个过程具有对称性）
-- 使用有限状态机(FSM)来描述发送方和接收方（有限状态机实际上就是描述协议如何工作的一个形式化的描述方案，比语言更加简洁易懂、便于检查）
-
-状态：在该状态时，下一个状态只由下一个事件唯一确定。    
-节点之间有个状态变迁的边(edge)连在一起，代表状态1变成状态2在变迁的这条有限边上有标注。    
-标注有分子和分母： $\frac{引起状态变化的事件}{状态变迁时采取的动作}$
+- 使用有限状态机 (FSM) 来描述发送方和接收方（有限状态机实际上就是描述协议如何工作的一个形式化的描述方案，比语言更加简洁易懂、便于检查）
+	- 状态：在该状态时，下一个状态只由下一个事件唯一确定。
+	- 节点之间有个状态变迁的边 (edge)连在一起，代表状态 1 变成状态 2 在变迁的这条有限边上有标注。
+	- 标注有分子和分母： $\frac{引起状态变化的事件}{状态变迁时采取的动作}$
 
 下面进行渐进式开发： Rdt1.0 --> Rdt2.0 --> Rdt2.1 --> Rdt2.2 --> Rdt 3.0
+
+#### RDT1.0
 
 Rdt1.0：在可靠信道上的可靠数据传输
 - 下层的信道是完全可靠的
     - 没有比特出错
     - 没有分组丢失
 - 发送方和接收方的FSM
-    - 发送方将数据发送到下层信道（只进行接收、封装、打走的动作，不进行其他动作）
-    - 接收方从下层信道接收数据（解封装、交付）
+    - ![[30-Transport-layer-rdt10.png]]
+    - 发送方和接收方有各自的 FSM ，每个 FSM 都只有一个状态，状态转移就是从自身通过中间态（发送分组和接收分组的动作）后回到自身
+    - ==横线上方是表示引起变迁的事件，下方是事件发生时采取的动作==：
+	    - The sending side of `rdt` simply accepts data from the upper layer via the `rdt_send(data)` event, creates a packet containing the data (via the action `make_pkt(data)`) and sends the packet into the channel. In practice, the `rdt_send(data)` event would result from a procedure call (for example, to `rdt_send()`) by the upper-layer application.
+	    - On the receiving side, `rdt` receives a packet from the underlying channel via the `rdt_rcv(packet)` event, removes the data from the packet (via the action `extract(packet, data)`) and passes the data up to the upper layer (via the action `deliver_data(data)`). In practice, the `rdt_rcv(packet)` event would result from a procedure call (for example, to `rdt_rcv()`) from the lower-layer protocol.
 
+
+#### RDT2.0
 Rdt2.0：去掉一个假设，变为具有比特差错（如0和1的反转）的信道
 - 下层信道可能会出错：将分组中的比特翻转
     - 用校验和来检测比特差错
@@ -276,7 +311,7 @@ Rdt2.0：FSM描述
 
 <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210725152850739.png" />
 
-
+#### RDT2.1
 Rdt2.0的致命缺陷！-> Rdt2.1
 - 如果ACK/NAK出错？
     - 发送方不知道接收方发生了什么事情！（既不是ACK也不是NAK）
@@ -311,6 +346,7 @@ Rdt2.0的致命缺陷！-> Rdt2.1
 
             <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210725154944808.png" />
 
+#### RDT2.2
 Rdt2.2：无NAK、只有ACK的协议（NAK free）
 - 功能同rdt2.1，但只使用ACK（ack 要编号）
 - 接收方对**最后正确接收的分组发ACK**，以替代NAK（对当前分组的反向确认可由对前一项分组的正向确认代表，如用ack0代表nak1、用ack1代表nak0等等）
@@ -327,6 +363,7 @@ Rdt2.2的运行
 <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210725155546252.png" />
 <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210725155624953.png" />
 
+#### RDT3.0
 Rdt3.0：具有比特差错和分组丢失的信道
 - 新的假设：下层信道可能会丢失分组（数据或ACK）
     - 会死锁（发送方等待确认，接收方等待分组）
@@ -366,6 +403,7 @@ Rdt3.0的性能
 
 <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210725171641105.png" style="zoom:80%" />
 
+### 流水线 RDT 协议
 如何提高链路利用率？流水线(pipeline)
 
 <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210725175741034.png" />
@@ -381,6 +419,7 @@ Rdt3.0的性能
     - 接收方缓存：上层用户取用数据的速率 $\neq$ 接收到的数据速率，需要缓冲来对抗数据的不一致性；接收到的数据可能乱序，排序交付（可靠）
 - 两种通用的流水线协议：**回退N步(GBN)** 和 **选择重传(SR)**
 
+### Go-Back-N 与 选择重传
 为讲解GBN和SR协议的差别，先引入slide window协议
 
 通用：滑动窗口(slide window)协议
@@ -534,11 +573,12 @@ GBN的运行
     - 其它：
         - 忽略该分组
 
-对比GBN和SR
-| | GBN | SR |
-|:---:|:---:|:---:|
-| 优点 | 简单，所需资源少（接收方一个缓存单元）| 出错时，重传一个代价小 |
-| 缺点 | 一旦出错，回退N步代价大 | 复杂，所需要资源多（接收方多个缓存单元）|
+#### 对比 GBN 和 SR 
+
+|      |                  GBN                   |                    SR                    |
+|:----:|:--------------------------------------:|:----------------------------------------:|
+| 优点 | 简单，所需资源少（接收方一个缓存单元） |          出错时，重传一个代价小          |
+| 缺点 |        一旦出错，回退N步代价大         | 复杂，所需要资源多（接收方多个缓存单元） |
 - 适用范围
 - 出错率低：比较适合GBN，出错非常罕见，没有必要用复杂的SR，为罕见的事件做日常的准备和复杂处理
 - 链路容量大（延迟大、带宽大）：比较适合SR而不是GBN，一点出错代价太大
