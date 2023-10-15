@@ -19,5 +19,6 @@
   "highlightr-plugin",
   "code-styler",
   "obsidian-markdown-export-plugin",
-  "obsidian-reading-time"
+  "obsidian-reading-time",
+  "obsidian-plugin-toc"
 ]

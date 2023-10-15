@@ -74,71 +74,111 @@
 
 ## 3.2 多路复用与解复用
 
-复用：多个进程应用进程借助一个TCP或UDP实体来发送
+### 多路复用与多路分解
 
-在发送方主机多路复用：    
-从多个套接字接收来自多个进程的报文，根据套接字对应的IP地址和端口号等信息对报文段用头部加以封装（该头部信息用于以后的解复用）
-- TCP复用：source port and destination port (TCP header) + message，通过层间接口来到网络层，加上IP头部：IP header(source IP and destination IP) + TCP header + message
-- UDP复用：应用进程往下交 1.message 2.socket(source IP and source port) 3.&cad(destination IP and destination port) 给UDP传输层，UDP得到源端口和目标端口并封装信息交给IP网络层，IP知道源IP、目标IP，即可将报文打出
+- 将网络层提供的主机到主机的交付服务，延伸到为运行在主机上的应用程序提供进程到进程的交付服务。
 
-在接收方主机多路解复用：    
-根据报文段的头部信息中的IP地址和端口号将接收到的报文段发给正确的套接字（和对应的应用进程）
-- TCP解复用：收到IP数据报后，拿出IP body部分即TCP段，从TCP头部提取源端口、目标端口，从IP头部提取出源IP、目标IP，从而查询到相应的socket，进而发给相应的进程
-- UDP解复用：IP传上来的报文中有源端口和目标端口，通过查询相应的socket发给相应的进程
+![[30-Transport-layer-multiplex-demultiplex.png]]
+- 回顾：一个进程可以有一个或多个 socket，socket 是网络和进程间传递数据的门户；
+- 由图可以见得：接收方主机的运输层实际上并没有直接将数据交付给进程，而是将数据交给了一个 socket ；
+- socket 有唯一的标识符，用以区分不同进程和进程的不同功能模块。标识符的格式取决于 TCP 还是 UDP 的 socket。
 
-多路解复用工作原理（UDP和TCP不同）
-- 解复用作用：TCP或者UDP实体采用哪些信息，将报文段的数据部分交给正确的socket，从而交给正确的进程
-- 主机收到IP数据报
-    - 每个数据报有源IP地址和目标地址
+#### 在发送方主机多路复用    
+从源主机的多个套接字接收来自多个进程的报文，根据套接字对应的 IP 地址和端口号等信息对报文段封装以首部信息（该头部信息用于以后的解复用）
+
+#### 在接收方主机多路解复用 
+根据报文段的头部信息中的 IP 地址和端口号将接收到的报文段发给正确的套接字（和对应的应用进程）
+
+- 主机收到 IP 数据报
+    - 每个数据报有源 IP 地址和目标地址
     - 每个数据报承载一个传输层报文段
     - 每个报文段有一个源端口号和目标端口号（特定应用有著名的端口号）
-- 主机联合使用**IP地址**和**端口号**将报文段发送给合适的套接字
+- 主机联合使用 **IP 地址** 和 **端口号** 将报文段发送给合适的套接字
 
-|TCP/UDP报文段格式（32 bit）|
-|:---:|
-|source port and destination port|
-|other header|
-|application layer message|
+#### 传输层报文段中源与目的端口字段
+Socket 有唯一的标识符，每个报文段有特殊字段来指示该报文来自哪个端口、发向哪个端口，这些特殊字段就是：
+![[30-Transport-layer-source-destination-port-fields.png]]
+- 源端口号字段 (source port number field)；
+- 目的端口号字段 (destination port number field)；
+- 其它首部字段留待协议使用：TCP 和 UDP 需要的字段不同；
 
-无连接(UDP)多路解复用
-- 创建套接字：
-    - 服务器端：serverSocket 和 Sad 指定的端口号捆绑
-      ```UDP
-      serverSocket = socket(PF_INET, SOCK_DGRAM, 0);
-      bind(serverSocket, &sad, sizeof(sad));
-      ``` 
-    - 客户端：没有 Bind，ClientSocket 和 OS 为之分配的某个端口号捆绑（客户端使用什么端口号无所谓，客户端主动找服务器）
-      ```UDP
-      ClientSocket=socket(PF_INET, SOCK_DGRAM, 0);
-      ```
-    - 在接收端，UDP套接字用二元组标识：(destination IP address, destination port)
-    - 当主机收到UDP报文段：
-        - 检查报文段的目标端口号
-        - 用该端口号将报文段定位给套接字
-    - 如果两个不同源IP地址/源端口号的数据报，但是有相同的目标IP地址和端口号，则被定位到相同的目标UDP套接字。
-      > 例子：
-      > 
-      > <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210725125946183.png" />
+### 无连接(UDP)多路解复用
+#### 创建套接字
+服务器端：serverSocket 和 sad 指定的端口号捆绑
+```python
+serverSocket = socket(PF_INET, SOCK_DGRAM, 0);
+bind(serverSocket, &sad, sizeof(sad));
+``` 
 
-面向连接(TCP)的多路复用
-- TCP套接字：四元组本地标识：(源IP地址, 源端口号, 目标IP地址, 目标端口号)
-- 解复用：接收主机用这四个值来将数据报定位到合适的套接字
-- 服务器能够在一个TCP端口上同时支持多个TCP套接字：
-    - 每个套接字由其四元组标识（有不同的源IP和源PORT）
-    > 例子：
-    > 
-    > <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210725125934798.png" />
-- Web服务器对每个连接客户端有不同的套接字
-    - 非持久对每个请求有不同的套接字
+客户端：没有 Bind，ClientSocket 和 OS 为之分配的某个端口号捆绑（客户端使用什么端口号无所谓，客户端主动找服务器）
+```python
+ClientSocket = socket(PF_INET, SOCK_DGRAM, 0);
+```
 
-面向连接的多路复用：多线程Web Server
-- 一个进程下面可能有多个线程：由多个线程分别为客户提供服务
-- 在这个场景下，还是根据4元组决定将报文段内容同一个进程下的不同线程
-- 解复用到不同线程（与解复用到不同进程相似）
+- UDP socket 用二元组唯一地标识：(destination IP address, destination port)
+- 如果两个不同源 IP 地址/源端口号的数据报，但是有相同的目标 IP 地址和端口号，则被定位到相同的目标 UDP 套接字。
+- 当主机收到 UDP 报文段：
+	- 检查报文段的目标端口号
+	- 用该端口号将报文段定位给套接字
+
+> [! example] 例子：UDP socket 传送报文
+> 主机 A 中某进程的源 UDP 端口 19157，发向目的主机 B 的 UDP 端口 46428 的进程：
+> ![[30-Transport-layer-UDP-socket.png]]
+> - 主机 A 中运输层创建一个运输层报文段，其中包括应用程序数据、源端口号 19157、目的端口号 46428 。
+> - 接着传输层将得到的报文段传递到网络层，网络层将该报文段封装到一个 IP 数据报中，并尽力地将数据报交付给接收主机；
+> - 如果该报文段到达接收主机 B，接收主机运输层就检查该报文段中的目的端口号 46428，并将该报文段交付给端口号 46428 所标识的 socket。
+> 
+> ==似乎少了什么？源端口号做什么去了？==
+> 源端口号作为“返回地址”，当 B 需要回发一个报文段给 A 时，B 到 A 的报文段中的目的端口号便从 A 到 B 的报文中源端口号字段提取得到。
+
+### 面向连接(TCP)的多路复用
+- TCP 套接字：四元组本地标识：(源 IP 地址, 源端口号, 目标 IP 地址, 目标端口号)
+- 四元组全部用以将报文段定向（分解）到相应的 TCP socket，
+- 与 UDP socket 不同的是，两个具有不同源 IP 地址或源端口号的到达 TCP 报文段，将被定向到两个不同的 TCP socket，除非 TCP 报文段携带了初始创建连接的请求
+
+>[! note] 回顾 TCP 客户端-服务器编程
+>1. The TCP server application has a “welcoming socket,” that waits for connection establishment requests from TCP clients (see Figure 2.29) on port number 12000. 
+>2. The TCP client creates a socket and sends a connection establishment request segment with the lines:
+> ```
+>clientSocket = socket (AF_INET, SOCK_STREAM) clientSocket.connect ((serverName, 12000)) 
+> ```
+>
+>3. A connection-establishment request is nothing more than a TCP segment with destination port number 12000 and a special connection-establishment bit set in the TCP header (discussed in Section 3.5). The segment also includes a source port number that was chosen by the client. 
+>4. When the host operating system of the computer running the server process receives the incoming connection-request segment with destination port 12000, it locates the server process that is waiting to accept a connection on port number 12000. The server process then creates a new socket: 
+> ```
+>connectionSocket, addr = serverSocket.accept ()
+> ```
+>
+>5. Also, the transport layer at the server notes the following four values in the connection-request segment: 
+>	1) the source port number in the segment, 
+>	2) the IP address of the source host, 
+>	3) the destination port number in the segment, and 
+>	4) its own IP address. 
+>	The newly created connection socket is identified by these four values; all subsequently arriving segments whose source port, source IP address, destination port, and destination IP address match these four values will be demultiplexed to this socket.
+>
+>With the TCP connection now in place, the client and server can now send data to each other.
+
+
+- 服务器能够在一个 TCP 端口上同时支持多个 TCP socket，每个 socket 由其四元组标识
+- 当一个 TCP 报文段到达主机时，所有 4 个字段被用来将报文段定向到相应的 socket。
+
+>[! example] TCP socket 传送报文
+>主机 C 向服务器 B 发起两个 HTTP 会话，主机 A 向服务器 B 发起一个 HTTP 会话：
+> ![[30-Transport-layer-TCP-socket.png]]
+>- 主机 A、B、C 都有各自的 IP 地址，
+>- 主机 C 为两个 HTTP 连接分配 26145、7532 两个不同的 socket 端口，
+>- 主机 A 分配 socket 时与主机 C 不相干，因此也可以创建 ID 为 26145 的socket
+
+### Web Server 与 TCP
+- 高性能 Web Server 通常只使用一个进程，但是为每个新客户连接创建一个具有新连接 socket 的新线程，由线程为客户提供服务；
+- 在这个场景下，还是根据4元组决定将报文段内容同一个进程下的不同线程关联，解复用到不同线程（与解复用到不同进程相似）
+
+- Web 服务器对持久连接的 HTTP，在持续期间经由同一个服务器 socket 交换 HTTP 报文
+    - 非持久连接的 HTTP，则对每个请求有不同的套接字，这种频繁创建和关闭 socket 会严重影响 Web Server 的性能；
 
 ## 3.3 无连接传输：UDP
 
-UDP(User Datagram Protocol [RFC 768])：用户数据报协议
+UDP(User Datagram Protocol `[RFC 768]`)：用户数据报协议
 - “no frills,” “bare bones”Internet传输协议
 - “尽力而为”的服务，报文段可能丢失也可能送到应用进程的报文段乱序
 - 无连接：
@@ -152,7 +192,7 @@ UDP(User Datagram Protocol [RFC 768])：用户数据报协议
     - 在应用层增加可靠性
     - 应用特定的差错恢复
 
-UDP报文段格式
+### UDP报文段格式
 
 <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210725134800713.png" />
 
