@@ -347,9 +347,207 @@ T median ( Vector<T>& S1, Rank lo1, Rank n1, Vector<T>& S2, Rank lo2, Rank n2 ) 
 } //O(log(min(n1,n2))) ，可见实际上等长版本才是难度最大的
 ```
 
-
 ### 快速选取
+#### 蛮力法：排序
+![[B0-Sort-quickselect-bf.png]]
+
+#### 建堆法
+1. 建立小顶堆：
+	-  ![[B0-Sort-quickselect-heap.png]]
+
+2. 建立大顶堆：
+	- 任选 k+1 个元素（`A[0,k]` 内的元素），组织为大顶堆 // ` O(k) `
+	- 对剩余元素，依次插入堆中，再从堆中删除最大值 // `(n-k)*O(logk)*O(logk)=O(2(n-k)logk)
+	- ![[B0-Sort-quickselect-heap-2.png]]
+
+3. 建立两个堆
+	- 将输入向量任意划分为规模 k 、n-k 的子集，分别组织大、小顶堆 // `O(k+(n-k))=O(n)`
+	- 当大顶堆的顶小于小顶堆的顶时，交换之并分别下滤 // `O(logk), O(log(n-k))`
+	- 重复直到大顶堆的顶 > 小顶堆的顶，返回小顶堆即可；
+	- ![[B0-Sort-quickselect-heap-3.png]]
+
+#### 快速选取法
+所谓第 k 小，是相对于序列整体而言，所以在访问每个元素至少一次之前，绝无可能确定，因此快速选取的下界是Ω(n)——最快也不过如此。
+
+```
+template <typename T> void quickSelect( Vector<T>& A, Rank k ) { //基于快速划分的k选取算法
+	for ( Rank lo = 0, hi = A.size(); lo < hi; ) {
+		Rank i = lo, j = hi; T pivot = A[lo]; //大胆猜测
+		while ( i < j ) { //小心求证：O(hi - lo + 1) = O(n)
+			do j--; while ( ( i < j ) && ( pivot <= A[j] ) );
+			if ( i < j ) A[i] = A[j];
+			do i++; while ( ( i < j ) && ( A[i] <= pivot ) );
+			if ( i < j ) A[j] = A[i];
+		} // assert: quit with i == j or j+1
+		A[j] = pivot; // A[0,j) <= A[j] <= A(j, n)
+		if ( k <= j ) hi = j; //suffix trimmed (剪枝后缀)
+		if ( i <= k ) lo = i; //prefix trimmed
+	} //A[k] is now a pivot
+}
+```
+
+![[B0-Sort-quickselect.png]]
+
+- 记期望的比较次数为 $T(n)$，有 $T(1)=0,T(2)=1,...$
+- 可以证明 $T(n)=O(n)=(n-1)+ \frac{1}{n}\sum\limits_{k=0}^{n-1}max\{T(k),T(n-k-1)\}\le(n-1)+ \frac{2}{n}\sum\limits_{k= \frac{n}{2}}^{n-1}T(k)$ 
+- 不难验证 $T (n)\le(n-1)+ \frac{2}{n}\sum\limits_{k= \frac{n}{2}}^{n-1}4k\le (n-1)+3n<4n$ 
+
+#### 线性选取
+`LinearSelect(A,n,k)`：从长度为 n 的向量 A 中，选取第 k 大的元素：
+0. 设定 Q 作为较小的常数（如 2），判断如果向量 A 的长度 n 小于 Q，则用遍历的方法直接给出其中的第 k 大元素；
+1. 若 A 的长度大于 Q，则将 A 均匀地分成 n/Q 个子向量，每个子向量的长度为 Q，
+2. 对每个子向量排序并找出其中的中位数——得到 n/Q 个中位数；
+3. 递归地调用 `LinearSelect()` 寻找 n/Q 个中位数的中位数，记作 M ；
+4. 将 A 划分为三个区段，分别是 L 段（`x<M`），E 段（`x=M`），G 段（`x>M` ）；
+5. 如果所要选取的第 k 大元素，
+	-  if  `k <= |L|` 即该元素在 L 段，则返回 `LinearSelect(A,k)`，
+	- elif `k <= |L+E|` 即该元素在 L 或 E 段，则返回 M；
+	- else `k <= |L+E+G|` 即该元素在 G 段，返回 `LinearSelect(G,k - |L| - |E|)`
+6. 上述都是递归地进行。
+
+![[B0-Sort-linearSelect.png]]
+
+复杂度分析：将 linearSelect()算法的运行时间记作 T(n) 
+- 第 0 步：O (1) = O (QlogQ) //递归基：序列长度|A| <= Q 
+- 第 1 步：O (n) //子序列划分
+- 第 2 步：O (n) = Q^2 * n/Q //子序列各自排序，并找到中位数
+- 第 3 步：T (n/Q) //从 n/Q 个中位数中，递归地找到全局中位数
+- 第 4 步：O (n) //划分子集 L/E/G，并分别计数 —— 一趟扫描足矣
+- 第 5 步：T(3n/4) //为什么...
+
+$T(n)=c\cdot n+T( \frac{n}{Q})+T(\frac{3n}{4})$ 
+$min(|L|,|G|)+|E|\ge \frac{n}{4}$
+$max(|L|,|G|)\le \frac{3n}{4}$ 
+$if\ Q=5, T(n)=O(n)\quad whenever\quad \frac{1}{Q}+3/4<1$ 
+
+![[B0-Sort-linearSelect-analysis.png]]
 
 ## 希尔排序
+### 思路
+ShellSort：将整个序列视作一个矩阵，逐列各自排序
+![[图12-15.递减增量、逐渐逼近策略.png]]
+- 递减增量策略：
+	- 由粗到细：重排矩阵，使其更窄，再逐列排序
+	- 逐步求精，如此往复，直至矩阵变成一列
+- 步长序列 step sequence：由矩阵宽度升序排列而成的序列
+	- $H=\{h_{1}=1,h_{2},h_3,...,h_{k},...\}$ 
+- 正确性：最后一次迭代等同于全排序：`h-sorting -> 1-sorting`，实际操作是插入排序；
+- 可见，相较于归并排序是在向量横向上分块，而希尔排序是在向量纵向上分块。
+
+### 实例
+![[B0-Sort-shellsort-instance-1.png]]
+
+![[B0-Sort-shellsort-instance-2.png]]
+
+![[B0-Sort-shellsort-instance-3.png]]
+### 实现
+
+如何实现矩阵重排？借助一维向量足矣：
+- 每步迭代中，若当前矩阵宽度为 h，则 `B[i][j] = A[i*h+j]`
+- ![[B0-Sort-shellsort-matrix.png]]
+- 或 `A[k] = B[k/h][k%h]`
+- ![[B0-Sort-shellsort-matrix-2.png]]
+
+```
+template <typename T> //向量希尔排序
+void Vector<T>::shellSort( Rank lo, Rank hi ) { 
+	for ( Rank d = 0x7FFFFFFF; 0 < d; d >>= 1 ) // PS Sequence: { 1, 3, 7, 15, 31, ... }
+		for ( Rank j = lo + d; j < hi; j++ ) { // for each j in [lo+d, hi)
+			T x = _elem[j]; Rank i = j; // within the prefix of the subsequence of [j]
+			while ( ( lo + d <= i ) && ( x < _elem[i - d] ) ) // find the appropriate
+				_elem[i] = _elem[i - d], i -= d; // predecessor [i]
+			_elem[i] = x; // where to insert [j]
+		}
+}// 0 <= lo < hi <= size <= 2^31
+```
+
+### 输入敏感性与希尔排序性能分析
+#### shell 序列
+当步长序列（每次运行时矩阵的宽度）为 $H_{shell}=\{1,2,4,8,16,32,...,2^{k},...\}$ 时，最坏情况下需要 $\Omega(n^{2})$ 的时间。
+- 考查由子序列 $A=unsort[0, 2^{N−1})$ 和 $B = unsort[2^{N−1}, 2^{N})$ 交错而成的序列：
+- ![[B0-Sort-shell-seq.png]]
+- 在倒数第二趟—— `2-sorting` 时，A、B 各成一列进行矩阵重排，得到的结果如下：
+- ![[B0-Sort-shell-seq-2.png]]
+- 然而此时逆序对仍然很多，最后一趟 `1-sorting` 需要 $1+2+3+...+2^{N-1}=\Omega(\frac{n^{2}}{4})$ 的时间
+- 这一现象的原因在于 $H_{shell}$ 中的各项并不互素，相邻项也不互素。
+
+#### 邮资问题
+考查如下问题： 假设在某个国家，邮局仅发行面值分别为4分和13分的两种邮票，那么 
+1) 准备邮寄平信的你，可否用这两种邮票组合出对应的 50 分邮资？
+2) 准备邮寄明信片的你，可否用这两种邮票组合出对应的35 分邮资？
+
+![[B0-Sort-shell-seq-postage.png]]
+
+由上可见，邮资 P 一定属于集合 $P\in\{n\cdot 4+m\cdot 13|n,m\in N\}$ 
+
+#### 线性组合
+用数论的语言，邮资问题即是 4n+13m=35 是否存在 n、m 都为非负整数的解？
+
+对任意自然数 g 和 h，只要 n 和 m 也是自然数，
+- 则称 $C(g,h)=\{n\cdot g+m\cdot h|n,m\in N\}$ 为 g 和 h 的一个线性组合，
+- 称 $N(g,h)=N\text{\\}C(g,h)$ 为不能由 g 和 h 线性组合的数字
+- 将不能由 g 和 h 组合生成出来的最大自然数记作 `x(g,h)`，即 $x(g,h)=max\{N(g,h)\}$ 
+
+数论的基本结论：如果 g 和 h 互素，则必有 $x(g,h)=(g-1)(h-1)-1=gh-g-h$，即 `x(4,13)=35` 。
+
+#### h-soring 和 h-sorted
+
+在向量 `S[0,n)` 中，若 `S[i]<=S[i+h]` 对任何 `0<=i<n-h` 均成立，则称该向量 h-sorted，将向量由 h-unsorted 进行排序操作得到 h-sorted 状态的过程，称作 h-sorting：
+- 可见，1-sorted 状态是全局向量有序的；
+- Knuth 给出了一个重要结论：已经 g-sorted 的向量，再经一次 h-sorting，必然仍保持 g-sorted，此时对 h 和 g 都有序，记作 (g, h)-sorted.
+- ![[图12-16.(g,h)-有序序列必然(mg+nh)-有序.png]]
+- 上图表示 (g, h)-sorted 的向量必然 (mg+nh)-sorted
+
+#### 有序性的保持和加强
+根据 Knuth 指出的性质，随着 h 的不断递减，h-sorted 向量整体的有序性必然逐渐改善。
+
+考查与任一元素 `S[i]` 构成逆序对的后继元素（这里要回顾一下 [[31-List-Exercise#3-11 逆序对与插入排序分析|习题 3-11]] 的知识）：
+- ![[图12-17.经多步迭代，逆序元素可能的范围必然不断缩小.png]]
+- 在分别做过 g-排序与 h-排序之后，根据 Knuth 的结论可知该向量必已 (g, h)-有序。由以上分析，对于 g 和 h 的任一线性组合 mg + nh，该向量也应 (mg + nh)-有序。因此反过来，逆序对的间距必不可能是 g 和 h 的组合。而根据此前所引数论中的结论，只要 g 和 h 互素，则如图所示，逆序对的间距就绝不可能大于 (g - 1)∙(h - 1)。
+- 由此可见，希尔排序过程中向量的有序性之所以会不断积累并改善，其原因可解释为，**向量中每个元素所能参与构成的逆序对持续减少，整个向量所含逆序对的总数也持续减少**。与此同时，随着逆序对的减少，底层所采用的插入排序算法的实际执行时间，也将不断减少，从而提高希尔排序的整体效率。
+
+#### (g, h)-sorted 和排序成本
+
+设某向量 S 已属(g, h)-sorted，且假设 g 和 h 的数值均处于 `O(d)` 数量级，以下考查对该向量做 d-sorting 所需的时间成本：
+- 据其定义，d-sorting 需将 S 等间距地划分为长度各为 `O(n/d)` 的 d 个子向量，并分别排序。
+- 由以上分析，在 (g, h)-sorted 的向量中，逆序对的间距不超过 (g - 1)∙(h - 1) 故就任何一个子向量的内部而言，逆序对的间距应不超过 (g - 1)∙(h - 1) / d = `O(d)` 
+- 再次根据 [[31-List-Exercise#3-11 逆序对与插入排序分析|习题 3-11]] 的结论，采用插入排序算法可在：`O(d)∙(n/d)=O(n)` 的时间内，完成每一子向量的排序；
+- 于是，所有子向量的排序总体消耗的时间应不超过 `O(dn)`。
+
+### 特殊步长序列
+#### Papernov-Stasevic Seq
+
+回到增量序列的优化设计问题。按照此前“尽力避免增量值之间公共因子”的思 路，Papernov 和 Stasevic 于1965年提出了另一增量序列：
+$H_{PS}=\{1,3,7,15,31,63,...,2^{k}-1,...\}$
+
+不难看出，其中相邻各项的确互素。采用这一增量序列，希尔排序算法的性能可以改进至 $O(n^{\frac{3}{2}})$，其中 n 为待排序向量的规模。
+
+在序列 $H_{PS}$ 的各项中，设 $w_t$ 为与 $n^{\frac{1}{2}}$ 最接近者，亦即 $w_{t} = \Theta(n^{\frac{1}{2}})$。以下将希尔排序算法过程中的所有迭代分为两类，分别估计其运行时间。
+1. 首先，考查在 $w_t$ 之前执行的各步迭代。这类迭代所对应的增量均满足 $w_k > w_t$，或等价地，k > t。在每一次这类迭代中，矩阵共有 $w_k$ 列，各列包含 $O(\frac{n}{w_{k}})$ 个元素。因此，若采用插入排序算法，各列分别耗时 $O\left(\left(\frac{n}{w_{k}}\right)^{2}\right)$，所有列共计耗时 $O\left(\frac{n^{2}}{w_{k}}\right)$。于是，此类迭代各自所需的时间 $O\left(\frac{n^{2}}{w_{k}}\right)$ 构成一个大致以 2 为比例的几何级数，其总和应线性正比于其中最大的一项，亦即不超过 $O\left(2\cdot \frac{n^{2}}{w_{t}}\right) = O\left(n^{\frac{3}{2}}\right)$ 
+2. 对称地，再来考查 $w_t$ 之后的各步迭代。 这类迭代所对应的增量均满足 $w_k < w_t$，或等价地，k < t。考虑到此前刚刚完成 $w_{k+1}$ -sorting 和 $w_k+2$ -sorting，而来自 $H_{PS}$ 序列的 $w_{k+1}$ 和 $w_{k+2}$ 必然互素，且与 $w_k$ 同处一个数量级。因此根据此前结论，每一次这样的迭代至多需要 $O(n\cdot w_k)$ 时间。同样地，这类迭代所需的时间 $O(n\cdot w_k)$ 也构成一个大致以 2 为比例的几何级数，其总和也应线性正比于其中最大的一项，亦即不超过 $O(2\cdot n\cdot w_t) = O(n^{\frac{3}{2}})$ 
+
+综上可知，采用 $H_{PS}$ 序列的希尔排序算法，在最坏情况下的运行时间不超过 $O(n^{\frac{3}{2}})$。(注意到外循环会发生 $O (\log n)$ 次)
+
+![[B0-Sort-shellsort-PSseq.png]]
+#### Pratt Seq
+Pratt 于1971年也提出了自己的增量序列：
+$H_{pratt} = \{ 1, 2, 3, 4, 6, 8, 9, 12, 16, ..., 2^{p}\cdot 3^{q} , ... \}$ 
+
+可见，其中各项除2和3外均不含其它素因子，并且其中项数为 $O(\log^{2}n)$，且都不大于 n 。
+
+可以证明，采用 $H_{pratt}$ 序列，希尔排序算法至多运行 $O(n\log^{2} n)$ 时间（[[B1-Sort-Exercise#12-14|习题12-14]]）。
+
+#### Sedgewick Seq
+尽管 Pratt 序列的效率较高，但因其中各项的间距太小，会导致迭代趟数过多，此时对已经基本有序的序列耗时较久。为此， Sedgewick 综合 Papernov-Stasevic 序列与 Pratt 序列的优点，提出了以下增量序列：
+$H_{sedgewick} = \{ 1, 5, 19, 41, 109, 209, 505, 929, 2161, 3905, 8929, ... \}$ 其中各项，均为： $9\cdot 4^{k} - 9\cdot 2^{k} + 1$ 或 $4^{k} - 3\cdot 2^{k} + 1$ 的形式。
+
+如此改进之后，希尔排序算法在最坏情况下的时间复杂度为 $O(n^{\frac{4}{3}})$，平均复杂度为 $O(n^{\frac{7}{6}})$。 更重要的是，在通常的应用环境中，这一增量序列的综合效率最佳。
+
+> [! problem] 存在使希尔排序复杂度为 `O(nlogn)` 的步长序列吗？
+> PS 序列在 70 的量级后，$O(n^{\frac{3}{2}})>O(n\log n)$ 
+> Sedgewick 序列在 $10^{10}$ 的量级后，$O(n^{\frac{7}{6}})>O(n\log n)$
+> 
+> 由前文证明，基于 CBA 式的排序算法下界为 $\Omega(n\log n)$，希尔排序的步长序列应能进一步优化。
 
 ### 排序大总结
+![[排序总结.png]]

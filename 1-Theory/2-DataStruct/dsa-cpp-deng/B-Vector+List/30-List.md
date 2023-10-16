@@ -142,7 +142,7 @@ template <typename T> void List<T>::insertionSort( ListNodePosi<T> p, Rank n ) {
 - 观察：其中的r+1个元素均有可能，且概率均为1/(r+1)
 - 因此，在刚完成的这次迭代中为引入 S\[r\]所花费时间的数学期望为 $1+\sum\limits_{k=0}^{r} \frac{k}{r+1}=1+ \frac{r}{2}$
 - 于是，总体时间的数学期望为 $\sum\limits_{r=0}^{n-1}(1+ \frac{r}{2})=O(n^{2})$
-- 再问：在 n 次迭代中，平均有多少次无需交换呢？—— [[31-Exercise#3-10 插入排序性能分析]]
+- 再问：在 n 次迭代中，平均有多少次无需交换呢？—— [[31-List-Exercise#3-10 插入排序性能分析]]
 
 ### 归并排序
 #### 思想
@@ -221,7 +221,7 @@ $<i,j> is\ called\ an\ inversion\ iff.\ 0\le i<j<n\ and\ A[i]>A[j]$
 针对 e=A\[r\] 的那一步迭代，恰好需要做 I (r) 次比较 
 若共含 I 个逆序对，则 
 - 关键码比较次数为 O (I)
-- 运行时间为 O (n+I) —— [[31-Exercise#3-11]]
+- 运行时间为 O (n+I) —— [[31-List-Exercise#3-11]]
 
 ### 如何计算逆序对数？
 蛮力算法需要 Ω(n^2) 时间；而借助归并排序，仅需 O (nlogn) 时间：
