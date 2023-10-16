@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "aa03d471157765e1",
+        "id": "eb092f8083e2973a",
         "type": "tabs",
         "children": [
           {
-            "id": "f9d80256441f7ae5",
+            "id": "8d10791d6324399c",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -76,8 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 220.5,
-    "collapsed": true
+    "width": 250.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -150,8 +149,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -166,23 +164,31 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "f9d80256441f7ae5",
+  "active": "8d10791d6324399c",
   "lastOpenFiles": [
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/B0-Sort-shellsort-PSseq.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/排序总结.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/图12-17.经多步迭代，逆序元素可能的范围必然不断缩小.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/31-List-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/图12-16.(g,h)-有序序列必然(mg+nh)-有序.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/B0-Sort-shell-seq-postage.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/B0-Sort-shell-seq-2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/B0-Sort-shell-seq.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/B0-Sort-shellsort-matrix-2.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/B0-Sort-shellsort-matrix.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/B0-Sort-shellsort-instance-3.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61B-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61A-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/63-Height-BBST-vs-Weight-BBST.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/64-Lowest-Common-Ancestor.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/mindmap/70-文件系统-mindmap.png",
+    "1-Theory/5-OS-principle/Internal&design-principle/mindmap/60-IO管理与磁盘-mindmap.png",
+    "1-Theory/5-OS-principle/Internal&design-principle/mindmap/50-CPU调度-mindmap.png",
+    "1-Theory/5-OS-principle/Internal&design-principle/mindmap/40-内存与虚存-mindmap.png",
+    "1-Theory/5-OS-principle/Internal&design-principle/mindmap/30-并发-mindmap.png",
+    "1-Theory/5-OS-principle/Internal&design-principle/mindmap/20-进程与线程-mindmap.png",
+    "1-Theory/6-Network/THU-Xu/精简版PPT.pdf",
     "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-receiving-window.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-sliding-window-protocol.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-pipeline-rdt-n.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-pipeline-rdt.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/50-VirtIO-blk-driver.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/40-VirtIO-devices-driver.md",
     "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/30-UART-driver.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/31-List-Exercise.md",
     "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/20-External-devices.md",
     "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/10-IO-devices.md",
     "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/20-Pipe.md",
@@ -200,19 +206,12 @@
     "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/60-Problem-of-concurrence.md",
     "1-Theory/5-OS-principle/Internal&design-principle/30-并发.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/50-Condition-variable-mechanism.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/39-Unix_Linux并发机制.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/90-Virtual-memory.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/40-Semaphore.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/KMP.mp4",
     "1-Theory/4-Architecture/硬软件接口-riscv/RISC-V-Book.pdf",
     "1-Theory/4-Architecture/未确认 873561.crdownload",
     "1-Theory/4-Architecture/THU-Liu",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/priority-search-tree.pdf",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/未确认 839532.crdownload",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/range-tree-and-priority-search-tree.pdf",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
