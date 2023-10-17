@@ -308,7 +308,7 @@ void Vector<T>::merge( Rank lo, Rank mi, Rank hi ) { //lo < mi < hi
 **缺点**
 - 非就地，需要对等规模的辅助空间——可否更加节省？
 	- [[22-In-place-mergeSort|原地归并]] ——以时间换空间
-	- [[21-Exercise#2-27 改进 mergeSort ()适应于大致有序情况]]
+	- [[21-Vector-Exercise#2-27 改进 mergeSort ()适应于大致有序情况]]
 - 即便输入已是完全（或接近）有序，仍需 $\Omega(n\log n)$ 时间——如何改进？
 	- 在归并排序的 merge 过程中, 检查当前两个子数组是否已有序。如果是, 直接合并两个子数组, 不进行比较和交换操作。
 	- 另外, 可以在递归分割数组前, 检查整个数组是否已基本有序。如果是, 直接退出递归, 不再继续分割。
@@ -322,4 +322,4 @@ void Vector<T>::merge( Rank lo, Rank mi, Rank hi ) { //lo < mi < hi
     
 4. **自适应排序：** 一些排序算法，如Timsort，具有自适应性，它们可以根据输入的特性选择不同的排序策略。对于部分有序的输入，它们可能会选择更快的排序方法。
 
-[[21-Exercise]]
+[[21-Vector-Exercise]]

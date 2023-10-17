@@ -103,7 +103,7 @@ HuffTree* generateTree ( HuffForest* forest ) {
 相对于如代码5.36（147页）所示的版本，这里只不过将 minHChar()替换为 PQ::delMax() 标准接口。优先级队列的所有 ADT 操作均可在 O(logn)时间内完成，故 generateTree()算法也相应地可在 O(nlogn)时间内构造出 Huffman 编码树——较之原版本，改进显著。
 
 1. ==试证明，任何 CBA 式 Huffman 树构造算法，在最坏情况下都需要运行Ω(nlogn)时间==。
-只需建立一个从排序问题，到 Huffman 编码问题的线性归约（[[21-Exercise#2-12-d deduplicate ()可以改进到什么地步？|习题2-12]]）。
+只需建立一个从排序问题，到 Huffman 编码问题的线性归约（[[21-Vector-Exercise#2-12-d deduplicate ()可以改进到什么地步？|习题2-12]]）。
 
 事实上，对于每一个待排序的输入序列，我们都将其视作一组字符的出现频率。不失一般性， 这里可以假设每个元素均非负——否则，可以在 O(n)时间内令它们增加同一足够大的正数。
 

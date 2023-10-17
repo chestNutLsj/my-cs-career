@@ -225,7 +225,7 @@ bool majority( Vector<T> A, T & maj ){
 - 既然最终总要花费 O(n)时间做验证，故而只需考虑 A 的确含有众数的两种情况：
 	1. 若 x = m，则在排除前缀 P 之后，m 与其它元素在数量上的差距保持不变 
 	2. 若 x != m，则在排除前缀 P 之后，m 与其它元素在数量上的差距不致缩小 
-- 若将众数的标准从“一半以上”改作“至少一半”，算法需做什么调整？——调整等号，在 `majEleCheck` 中的判断之处
+- 若将众数的标准从“一半以上”改作“至少一半”，算法需做什么调整？——[[B1-Sort-Exercise#12-3 众数定义改为“不少于”|习题12-3]]
 
 众数查找算法的实现：
 ```
@@ -253,6 +253,8 @@ template <typename T> bool majEleCheck ( Vector<T> A, T maj ) { //验证候选�
    return 2 * occurrence > A.size(); //根据最终的计数值，即可判断是否的确当选
 }
 ```
+
+^622c20
 
 ### 中位数选取
 归并向量的中位数如何找到？任给有序向量 $S_1$ 和 $S_2$，长度为 $n_1$ 和 $n_2$，如何快速找出 $S=S_{1}\cup S_{2}$ 的中位数：
@@ -385,6 +387,8 @@ template <typename T> void quickSelect( Vector<T>& A, Rank k ) { //基于快速�
 	} //A[k] is now a pivot
 }
 ```
+
+^539dfb
 
 ![[B0-Sort-quickselect.png]]
 
@@ -535,7 +539,7 @@ $H_{pratt} = \{ 1, 2, 3, 4, 6, 8, 9, 12, 16, ..., 2^{p}\cdot 3^{q} , ... \}$
 
 可见，其中各项除2和3外均不含其它素因子，并且其中项数为 $O(\log^{2}n)$，且都不大于 n 。
 
-可以证明，采用 $H_{pratt}$ 序列，希尔排序算法至多运行 $O(n\log^{2} n)$ 时间（[[B1-Sort-Exercise#12-14|习题12-14]]）。
+可以证明，采用 $H_{pratt}$ 序列，希尔排序算法至多运行 $O(n\log^{2} n)$ 时间（[[B1-Sort-Exercise#12-14 Pratt 序列分析|习题12-14]]）。
 
 #### Sedgewick Seq
 尽管 Pratt 序列的效率较高，但因其中各项的间距太小，会导致迭代趟数过多，此时对已经基本有序的序列耗时较久。为此， Sedgewick 综合 Papernov-Stasevic 序列与 Pratt 序列的优点，提出了以下增量序列：
