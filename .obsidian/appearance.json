@@ -3,7 +3,7 @@
   "cssTheme": "Minimal",
   "baseFontSize": 20,
   "monospaceFontFamily": "FiraCode Nerd Font Mono",
-  "textFontFamily": "Maple Mono NF",
+  "textFontFamily": "Maple Mono NF,Noto Sans CJK SC",
   "interfaceFontFamily": "DejaVu Serif",
   "theme": "moonstone"
 }

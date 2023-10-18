@@ -505,7 +505,7 @@ Rdt3.0的性能
             - ==接收窗口尺寸>1：收到分组，发送那个分组的确认==（单独确认：只代表正确收到了这个分组）
 
 #### 发送窗口-接收窗口的互动
-- 正常情况下的2个窗口互动
+- 正常情况下的窗口互动
     - 发送窗口
         - 有新的分组落入发送缓冲区范围，发送->前沿滑动
         - 来了老的低序号分组的确认->后沿向前滑动->新的分组可以落入发送缓冲区的范围
@@ -513,7 +513,7 @@ Rdt3.0的性能
         - 收到分组，落入到接收窗口范围内，接收
         - 是低序号，发送确认给对方
     - 发送端上面来了分组->发送窗口滑动->接收窗口滑动->发确认
-- 异常情况下GBN(wr=1)的2窗口互动
+- 异常情况下 GBN(wr=1)的窗口互动
     - 发送窗口
         - 新分组落入发送缓冲区范围，发送->前沿滑动
         - 超时重发机制让发送端将发送窗口中的所有分组发送出去
@@ -521,7 +521,7 @@ Rdt3.0的性能
     - 接收窗口
         - 收到乱序分组，没有落入到接收窗口范围内，抛弃
         - （重复）发送老分组的确认，累计确认
-- 异常情况下SR(wr>1)的2窗口互动
+- 异常情况下SR(wr>1)的窗口互动
     - 发送窗口
         - 新分组落入发送缓冲区范围，发送->前沿滑动
         - 超时重发机制让发送端将超时的分组重新发送出去（不像GBN需要将发送窗口中的所有分组全部重发）
@@ -530,7 +530,84 @@ Rdt3.0的性能
         - 收到乱序分组，落入到接收窗口范围内，接收
         - 发送该分组的确认，单独确认
 
-GBN协议和SR协议的异同
+#### Go-Back-N
+- GBN 协议的窗口：
+	-  ![[30-Transport-layer-GBN-sender-seq.png]]
+	- 基序号 `base`：最早未确认的分组的序号
+	- 下一个序号 `nextseqnum`：下一个待发分组的序号
+	- `[0,base)`：已发送并确认的分组
+	- `[base,nextseqnum)`：已发送待确认的分组
+	- `[nextseqnum,base+N)`：窗口内待发送的分组。N 是窗口长度
+		- 为什么要限制窗口长度 N？——流量控制
+	- `[base+N,buffer_max)`：缓存区中、窗口外的不可发送分组。
+
+- 序号：
+	- 由于 GBN 协议窗口大小为 N，因此需要 $\log_{2}N$ 个比特作序号标记分组，该序号存储在分组首部的固定长度字段中；
+	- 序号计算使用模 $2^{\log_{2}N}$ 运算，即序号空间中 $2^{\log_{2}N}-1$ 的下一位是 0；
+
+- GBM 的 FSM：
+	- ![[30-Transport-layer-GBN-FSM.png]]
+	- GBN 发送方必须响应三类事件：
+		1) 上层调用：调用 `rdt_send()` 前，发送方检查发送窗口是否已满，未满则可发送，已满则缓存数据、或使用同步机制告知上层（生产者消费者模型）
+		2) 收到一个 ACK：GBN 使用累积确认的方式，表明 ACK-n 之前的分组都已收到；
+		3) 超时事件：一旦出现超时，重传所有已发送但未确认的分组。上图中仅使用一个定时器，作为最早已发送但未确认的分组的定时器，收到后续 ACK 却仍有未确认分组，定时器就重置，否则停止；
+	- GBN 接收方动作：
+		- 序号为 n 的分组被接收，且之前的分组业已接收并交付给上层，则发送 ACK-n 并交付；
+		- 其它情况则直接丢弃分组 n，并为最近按序接收的分组重传对应 ACK；
+	- 优点：接收方不必缓存任何失序分组，简单实现；
+	- 缺点：丢弃正确的分组导致低效
+
+- GBK 的运行情况：
+	- ![[30-Transport-layer-GBN-operation.png]]
+	- 由于窗口大小的限制，发送方发送数据包 0 至 3 后，必须等待其中一个或多个数据包得到确认后才能继续发送。当收到每个连续的 ACK（例如 ACK0 和 ACK1）时，窗口向前滑动，发送方可以发送一个新数据包（分别为 pkt4 和 pkt5）。在接收端，数据包 2 丢失，因此数据包 3、4 和 5 被认为不符合顺序而丢弃。
+	- 正常情况：
+		- ![[30-Transport-layer-GBN.gif]]
+	- 发送中丢包：
+		- ![[30-Transport-layer-GBN-send-loss.gif]]
+		- 当发送过程中的 2 号包发生丢失时，发送方没有收到接收方的 ACK2，于是后面发送的 ACK3, ACK4 全部变成了 ACK1，代表接收方因为丢失了分组 2，所以分组 3 和分组 4 都被丢弃。所以全部返回 ACK1，经过一段时间后，定时器确认超时没有收到 ACK3, ACK4，所以发送方将重新发送。也代表接收方首先只收到了分组 1 及之前的包。
+	- 接收中丢包：
+		- ![[30-Transport-layer-GBN-receive-loss.gif]]
+		- 在此例中，我们可以看到，当接收方接收完消息以后，返回给发送方 ACK0, ACK1, ACK2, ACK3, ACK4，我们假设 ACK2 发生了丢失。根据上一例我们可以知道，如果接收方没有收到分组 2，则后面返回的都是 ACK1，因为本次返回的为 ACK3, ACK4，所以发送方可以判断接收方已经接收到消息，不再进行重复发送。
+
+#### Selective Repeat
+
+GBN 的缺点：在信道差错率较高时，一旦一个分组丢失将引起大量分组重传，最终导致信道中充斥着重传的分组，利用率极低。
+
+- SR 协议的窗口：
+	- ![[30-Transport-layer-SR-sender-windows.png]]
+	- 发送方仅重传它怀疑未接收到的分组，从而避免不必要的重传；
+	- 发送方窗口中可以离散地分布着发送且确认的分组，这一点与 GBN 不同；
+	- 接收方确认每个正确接收的分组，无论其是否按序，失序的分组将被缓存直到所有丢失分组都被接收到为止，此时再将一批分组交付给上层应用；
+	- ![[30-Transport-layer-SR-sender-receivers-actions.png]]
+	- 值得注意的是，在图 3.25 的步骤 2 中，接收方会**重新确认**（而不是忽略）已收到的序列号低于当前窗口基数的数据包。以图 3.23 中的发送方和接收方序列号空间为例，如果没有从接收方传播到发送方的数据包 send_base 的 ACK，发送方最终将重新发送数据包 send_base，尽管接收方已经收到了该数据包。如果接收方不确认这个数据包，发送方的窗口就永远不会向前移动！
+	- 发送方和接收方对哪些数据包已正确接收，哪些未正确接收的看法并不总是一致的。对于 SR 协议来说，这意味着发送方和接收方的窗口可能不同，这引入了**同步问题**。
+
+>[! important] SR 协议的发送方和接收方窗口同步问题
+> ![[30-Transport-layer-SR-sync.png]]
+>The lack of synchronization between sender and receiver windows has important consequences when we are faced with the reality of a finite range of sequence numbers. Consider what could happen, for example, with a finite range of four packet sequence numbers, 0, 1, 2, 3, and a window size of three. 
+>
+>Suppose packets 0 through 2 are transmitted and correctly received and acknowledged at the receiver. At this point, the receiver’s window is over the fourth, fifth, and sixth packets, which have sequence numbers 3, 0, and 1, respectively. Now consider two scenarios. 
+>- In the first scenario, shown in Figure 3.27 (a), the ACKs for the first three packets are lost and the sender retransmits these packets. The receiver thus next receives a packet with sequence number 0—a copy of the first packet sent. 
+>- In the second scenario, shown in Figure 3.27 (b), the ACKs for the first three packets are all delivered correctly. The sender thus moves its window forward and sends the fourth, fifth, and sixth packets, with sequence numbers 3, 0, and 1, respectively. The packet with sequence number 3 is lost, but the packet with sequence number 0 arrives—a packet containing new data. 
+>
+>Now consider the receiver’s viewpoint in Figure 3.27, which has a figurative curtain between the sender and the receiver, since the receiver cannot “see” the actions taken by the sender. All the receiver observes is the sequence of messages it receives from the channel and sends into the channel. As far as it is concerned, the two scenarios in Figure 3.27 are identical. ==**There is no way of distinguishing the retransmission of the first packet from an original transmission of the fifth packet**==. 
+>
+>Clearly, a window size that is 1 less than the size of the sequence number space won’t work. But how small must the window size be? A problem at the end of the chapter asks you to show that the ==**window size must be less than or equal to half the size of the sequence number space for SR protocols**==.
+>> 窗口大小必须小于等于序号空间大小的一半。
+
+- SR 的运行情况：
+	- ![[30-Transport-layer-SR-operation.png]]
+	- 分组 2 丢失，但是收到分组 3、4、5 时，接收方会缓存它们，直到分组 2 到达再一起交付；
+	- 正常情况：
+		- ![[30-Transport-layer-SR.gif]]
+	- 发送中丢包：
+		- ![[30-Transport-layer-SR-send-loss.gif]]
+		- 我们同样将分组 2 丢失，但可以看到与 GNB 不同的是，接收方在没有收到分组 2 的情况下，依然返回了 ACK3, ACK4。此时窗口已经由之前的 0-4 变成了 2-6。当所以 ACK1 返回以后，分组 5，分组 6 就已经可以发送。然后在接收方，分组 3456 都已经被缓存，等待分组 2 的计时器超时后，分组 2 将重新发送，然后在接收方的分组 23456 全部变为接收 received 状态。
+	- 接收中丢包：
+		- ![[30-Transport-layer-SR-receive-loss.gif]]
+		- 我们同样将ACK2丢弃，此时发送方的分组已经由0-4到了2-6,在最后2-6的窗口中，分组2会因为ACK2被丢失然后在计时器计时后重新发送一次。==可以看到如果在接收过程中有丢失发生，选择重传SR的效率是不如回退N步GBN的。==
+
+#### GBN协议和SR协议的异同
 - 相同之处
     - 发送窗口>1
     - 一次能够可发送多个未经确认的分组
@@ -548,54 +625,6 @@ GBN协议和SR协议的异同
     - SR：接收窗口尺寸>1
         - 接收端：可以乱序接收
         - 发送端：发送0,1,2,3,4，一旦1未成功，2,3,4,已发送，无需重发，选择性发送1
-
-流水线协议：总结
-- Go-back-N (GBN) ：
-    - 发送端最多在流水线中有N个未确认的分组
-    - 接收端只是发送累计型确认cumulative ack
-        - 接收端如果发现gap，不确认新到来的分组
-    - 发送端拥有对最老的未确认分组的定时器
-        - 只需设置一个定时器
-        - 当定时器到时时，重传所有未确认分组
-- Selective Repeat (SR) ：
-    - 发送端最多在流水线中有N个未确认的分组
-    - 接收方对每个到来的分组单独确认individual ack（非累计确认/单独确认）
-    - 发送方为每个未确认的分组保持一个定时器
-        - 当超时定时器到时，只是重发到时的未确认分组
-
-GBN的运行
-   
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210725191547108.png" style="zoom:80%" />
-
-选择重传SR的运行
-
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210725191937619.png" />
-
-选择重传SR
-- 接收方对每个正确接收的分组，分别发送ACKn（非累积确认）
-    - 接收窗口>1
-        - 可以缓存乱序的分组
-    - 最终将分组按顺序交付给上层
-- 发送方只对那些没有收到ACK的分组进行重发-选择性重发（而非整个发送窗口中的分组）
-    - 发送方为每个未确认的分组设定一个定时器
-- 发送窗口的最大值（发送缓冲区）限制发送未确认分组的个数
-- 发送方
-    - 从上层接收数据：
-        - 如果下一个可用于该分组的序号可在发送窗口中，则发送
-    - timeout(n)：
-        - 重新发送分组n，重新设定定时器
-    - ACK(n) in [sendbase,sendbase+N]：
-        - 将分组n标记为已接收
-        - 如n为最小未确认的分组序号，将base移到下一个未确认序号
-- 接收方
-    - 分组n [rcvbase, rcvbase+N-1]
-        - 发送ACK(n)
-        - 乱序：缓存
-        - 有序：该分组及以前缓存的序号连续的分组交付给上层，然后将窗口移到下一个仍未被接收的分组
-    - 分组n [rcvbase-N, rcvbase-1]
-        - ACK(n)
-    - 其它：
-        - 忽略该分组
 
 #### 对比 GBN 和 SR 
 
@@ -616,29 +645,56 @@ GBN的运行
 
 ## 3.5 面向连接的传输：TCP
 
-### 3.5.1 段结构
+TCP relies on many of the underlying principles discussed in the previous section, including error detection, retransmissions, cumulative acknowledgments, timers, and header fields for sequence and acknowledgment numbers. TCP is defined in RFC 793, RFC 1122, RFC 2018, RFC 5681, and RFC 7323.
 
-TCP：概述 RFCs: 793, 1122, 1323, 2018, 2581
-- 向应用进程提供**点对点**的服务：
-    - 一个发送方，一个接收方（单点到单点）
+### TCP 连接的特点与建立
+
+- **Connection-oriented**: 面向连接
+	- TCP is said to be connection-oriented because ==before one application process can begin to send data to another, the two processes must first “handshake” with each other==—that is, they must send some preliminary segments to each other to establish the parameters of the ensuing data transfer. 
+	- As part of TCP connection establishment, both sides of the connection will initialize many TCP state variables associated with the TCP connection.
+
+- **Logical connection**: 逻辑连接而非物理连接
+	- The TCP “connection” is not an end-to-end TDM or FDM circuit as in a circuit switched network. Instead, the “connection” is a ==logical one, with common state residing only in the TCPs in the two communicating end systems==. 
+	- Recall that because the ==TCP protocol runs only in the end systems== and not in the intermediate network elements (routers and link-layer switches), the intermediate network elements do not maintain TCP connection state. In fact, the intermediate routers are completely oblivious to TCP connections; they see datagrams, not connections.
+
+- **Full-duplex service**: 全双工的
+	- A TCP connection provides a full-duplex service: If there is a TCP connection between Process A on one host and Process B on another host, then application-layer data can flow from Process A to Process B at the same time as application-layer data flows from Process B to Process A.
+
+- **Point-to-point**: 点到点的
+	- A TCP connection is also always point-to-point, that is, between a single sender and a single receiver. 
+	- So-called “multicasting” —the transfer of data from one sender to many receivers in a single send operation—is not possible with TCP. With TCP, two hosts are company and three are a crowd!
+
+- 如何建立 TCP 连接？——三次握手
+	- Suppose a process running in one host wants to initiate a connection with another process in another host. Recall that ==the process that is initiating the connection is called the client process==, while the other process is called the server process. 
+	- The client application process first informs the client transport layer that it wants to establish a connection to a process in the server. By issuing the command `clientSocket.connect((serverName,serverPort))` in Python, TCP in the client then proceeds to establish a TCP connection with TCP in the server. 
+	- ==Three-way handshake==: The client first sends a special TCP segment; the server responds with a second special TCP segment; and finally the client responds again with a third special segment. 
+		- The first two segments carry no payload (不承载有效载荷), that is, no application-layer data; 
+		- the third of these segments may carry a payload. 
+		- Because three segments are sent between the two hosts, this connection-establishment procedure is often referred to as a three-way handshake.
+
+- Send data: After connection established
+	- ![[30-Transport-layer-TCP-send-receive-buffers.png]]
+	- The client process passes a stream of data through the socket. Once the data is put into the socket, the data is in the hands of TCP running in the client.
+	- As shown in Figure 3.28, ==TCP directs this data to the connection’s **send buffer==**, which is one of the buffers that is set aside during the initial three-way handshake. From time to time, TCP will grab chunks of data from the send buffer and pass the data to the network layer. Interestingly, the TCP specification `[RFC 793]` is not specifying when TCP should actually send buffered data, stating that TCP should “send that data in segments at its own convenience.” (TCP 应当在它方便的时候以报文段的形式发送数据)
+	- The maximum amount of data that can be grabbed and placed in a segment is limited by the **maximum segment size** (MSS). The MSS is typically set by first determining the length of the largest link-layer frame that can be sent by the local sending host (the so-called maximum transmission unit, MTU), and then ==setting the MSS to ensure that a TCP segment (when encapsulated in an IP datagram) plus the TCP/IP header length (typically 40 bytes) will fit into a single link-layer frame==.(MSS 的设置需要保证： TCP 报文段+TCP/IP 首部长度≤链路层帧)
+		- Both Ethernet and PPP link-layer protocols have an MTU of 1,500 bytes. Thus, a typical value of MSS is 1460 bytes. 
+		- Note that the ==MSS is the maximum amount of application-layer data in the segment, not the maximum size of the TCP segment including headers==.
+		- When TCP sends a large file, such as an image as part of a Web page, it typically ==breaks the file into chunks of size MSS== (except for the last chunk, which will often be less than the MSS). Interactive applications, however, often transmit data chunks that are smaller than the MSS; for example, with remote login applications such as ==Telnet and ssh, the data field in the TCP segment is often only one byte==. Because the TCP header is typically 20 bytes (12 bytes more than the UDP header), segments sent by Telnet and ssh may be only 21 bytes in length.
+
+- TCP connection composition:
+	- A TCP connection consists of buffers, variables, and a socket connection to a process in one host, and another set of buffers, variables, and a socket connection to a process in another host.
+	- As mentioned earlier, ==no buffers or variables are allocated to the connection in the network elements== (routers, switches, and repeaters) between the hosts.
+
 - 可靠的、按顺序的字节流：
     - 没有报文边界，报文界限靠应用进程自己区分
 - 管道化（流水线）：
-    - TCP拥塞控制和流量控制设置窗口大小
-- 发送和接收缓存
-    - 发送缓存区：发完后需要检错重发、超时重传
-    - 接收缓存区：发送方的发送速率不等于接收方的接收速率，需要接收缓存区匹配速度的不一致性
-- 全双工数据：
-    - 在同一连接中数据流双向流动（同时、双向）
-    - MSS：最大报文段大小。TCP按照MSS进行报文段的切分，每个MSS报文段前加上TCP头部形成TCP报文段（IP header + TCP header + MSS = MTU(Maixum Transfer Unit, 最大传送单元，表示IP数据报的最大长度（不包括帧头尾），单位为字节)）
-- 面向连接：
-    - 在数据交换之前，先建立连接，通过握手（交换控制报文）初始化发送方、接收方的状态变量
+    - TCP 拥塞控制和流量控制设置窗口大小
 - 有流量控制：
     - 发送方不会淹没接收方
 
-TCP报文段结构
+### 段结构
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726073703179.png" />
+![[30-Transport-layer-TCP-segment-structure.png]]
 
 注：这里第二行的“序号”不是前面讲的PDU的序号（不是分组号），而是字节的序号：body部分的第一个字节在整个字节流中的偏移量offset（第 $i$ 个MSS的第一个字节在字节流中的位置，初始的序号称为 $X$ ， $X$ 在建立连接时两个进程商量好，第 $n$ 个的序号为 $X+n*MSS$ ）
 
@@ -659,7 +715,7 @@ TCP序号，确认号
 > 3. A(host ACKs receipt of echoed 'C') --> B: Seq = $43$ , ACK = $80$ , data = ... 
 > 4. ...
 
-TCP往返延时(RTT)和超时
+### TCP往返延时(RTT)和超时
 - Q：怎样设置TCP超时定时器？
     - 比RTT要长
         - 但RTT是变化的
@@ -689,7 +745,7 @@ TCP往返延时(RTT)和超时
 - 超时时间间隔设置为：
     - $TimeoutInterval = EstimatedRTT + 4*DevRTT$
 
-### 3.5.2 可靠数据传输
+### 可靠数据传输
 
 TCP：可靠数据传输
 - TCP在IP不可靠服务的基础上建立了rdt
@@ -753,7 +809,7 @@ TCP：重传
 
 <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726083418896.png" style="zoom:80%" />
 
-### 3.5.3 流量控制
+### 流量控制
 
 目的：接收方控制发送方，不让发送方发送的太多、太快，超过了接收方的处理能力，以至于让接收方的接收缓冲区溢出
 
@@ -768,7 +824,7 @@ TCP流量控制
   
   <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726115906902.png" style="zoom:60%"/>
 
-### 3.5.4 连接管理
+### 连接管理
 
 连接
 - 两个应用进程建立起的TCP连接

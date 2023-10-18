@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "ff3c60c882d130dc",
+        "id": "4b2b8bb7ef647901",
         "type": "tabs",
         "children": [
           {
-            "id": "14a0339f5becb5b8",
+            "id": "4aab56cfa4d25205",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -97,7 +93,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +109,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -141,9 +135,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md"
-              }
+              "state": {}
             }
           },
           {
@@ -176,12 +168,27 @@
       "obsidian-advanced-slides:Show Slide Preview": false
     }
   },
-  "active": "14a0339f5becb5b8",
+  "active": "4aab56cfa4d25205",
   "lastOpenFiles": [
+    "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-segment-structure.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-send-receive-buffers.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-sync.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-operation.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-sender-receivers-actions.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-sender-windows.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN-operation.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN-FSM.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN-sender-seq.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-receive-loss.gif",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-receive-loss.gif.crdownload",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-send-loss.gif.crdownload",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR.gif.crdownload",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN-receive-loss.gif.crdownload",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN-send-loss.gif.crdownload",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN.gif.crdownload",
     "1-Theory/4-Architecture/THU-Liu/11-ALU.md",
     "1-Theory/4-Architecture/THU-Liu/10-Intro.md",
-    "1-Theory/4-Architecture/THU-Liu/assets/10-Intro-of-Computer-System-RV32-instruction-format.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/10-Intro-of-Computer-System-instruction-format.png",
     "1-Theory/4-Architecture/THU-Liu/assets",
     "1-Theory/4-Architecture/THU-Liu/12-Data-Calculate.md",
     "1-Theory/4-Architecture/THU-Liu/23-Singlecycle.md",
@@ -199,7 +206,6 @@
     "1-Theory/4-Architecture/THU-Liu/2020计原复习笔记.pdf",
     "1-Theory/4-Architecture/硬软件接口-riscv/ebook",
     "1-Theory/4-Architecture/硬软件接口-riscv/ebook/Computer Organization and Design RISC-V edition.pdf",
-    "1-Theory/4-Architecture/硬软件接口-riscv/ebook/RISC-V-Book.pdf",
     "1-Theory/4-Architecture/CSAPP/Keypoints/00-课程准备与介绍.md",
     "1-Theory/4-Architecture/CSAPP/Keypoints/Appendix-ebook.md",
     "1-Theory/4-Architecture/CSAPP/Keypoints/C0-Concurrence.md",
@@ -210,19 +216,6 @@
     "1-Theory/5-OS-principle/thu-chyyuu/p1-osviewarch.md",
     "1-Theory/5-OS-principle/thu-chyyuu/figs/batch-os-detail.md",
     "1-Theory/5-OS-principle/thu-chyyuu/p3-batchos.md",
-    "1-Theory/5-OS-principle/thu-chyyuu/figs/x86-arm-rv-compare.png",
-    "1-Theory/5-OS-principle/thu-chyyuu/figs/vm.png",
-    "1-Theory/5-OS-principle/thu-chyyuu/figs/vm-pagetable.png",
-    "1-Theory/5-OS-principle/thu-chyyuu/figs/ucore-arch.png",
-    "1-Theory/5-OS-principle/thu-chyyuu/figs/tlb.png",
-    "1-Theory/5-OS-principle/thu-chyyuu/figs/syscall.png",
-    "1-Theory/5-OS-principle/thu-chyyuu/figs/syscall-read.png",
-    "1-Theory/5-OS-principle/thu-chyyuu/figs/syscall-proc.png",
-    "1-Theory/5-OS-principle/thu-chyyuu/figs/rv-privil-arch.odg",
-    "1-Theory/5-OS-principle/thu-chyyuu/figs",
-    "1-Theory/5-OS-principle/thu-chyyuu/assets",
-    "1-Theory/1-ProgramLanguage/Rust/Rust Atomics and Locks/cover.xhtml",
-    "1-Theory/1-ProgramLanguage/Rust/Rust Atomics and Locks",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
