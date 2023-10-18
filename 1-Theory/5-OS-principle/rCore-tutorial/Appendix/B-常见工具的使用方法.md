@@ -398,3 +398,9 @@ k210 平台上可执行文件和二进制镜像的生成流程[#]( #k210 "永久
     
 
 可以输入 Ctrl+] 退出 miniterm。
+
+## 其他工具和文件格式说明的参考
+
+- [链接脚本(Linker Scripts)语法和规则解析(翻译自官方手册)](https://blog.csdn.net/m0_47799526/article/details/108765403)
+
+- [Make 命令教程](https://www.w3cschool.cn/mexvtg/)

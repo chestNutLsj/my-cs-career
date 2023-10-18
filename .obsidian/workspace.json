@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "b13a9e5c253e38d5",
+        "id": "ff3c60c882d130dc",
         "type": "tabs",
         "children": [
           {
-            "id": "a01e6734b4ad97ee",
+            "id": "14a0339f5becb5b8",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/Course-Info.md",
+                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
                 "mode": "source",
                 "source": false
               }
@@ -80,7 +80,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 250.5
+    "width": 276.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -96,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/Course-Info.md",
+                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/Course-Info.md",
+                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -141,7 +142,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/Course-Info.md"
+                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md"
               }
             }
           },
@@ -170,57 +171,58 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "oz-clear-unused-images:Clear Unused Images": false,
       "obsidian-excalidraw-plugin:新建绘图文件": false,
-      "obsidian42-brat:BRAT": false
+      "obsidian42-brat:BRAT": false,
+      "obsidian-importer:Open Importer": false,
+      "obsidian-advanced-slides:Show Slide Preview": false
     }
   },
-  "active": "a01e6734b4ad97ee",
+  "active": "14a0339f5becb5b8",
   "lastOpenFiles": [
-    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/assets/1694691924992.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/assets/1694691924274.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/assets/1694691923453.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/assets/1694691922637.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/assets/1694691921916.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/70-Hash-hashing.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/主定理.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图10-02.按照层次遍历序列对完全二叉树节点的编号（其中圆形表示内部节点，方形表示外部节点）.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图05-03.多叉树的“父节点”表示法.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图05-32.先序遍历过程：先沿左侧通路自顶而下访问沿途节点，再自底而上依次遍历这些节点的右子树.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图05-33.中序遍历过程：顺着左侧通路，自底而上依次访问沿途各节点及其右子树.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/Course-Info.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
-    "0-Assets/Excalidraw/三点取中法.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61B-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61A-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/63-Height-BBST-vs-Weight-BBST.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/64-Lowest-Common-Ancestor.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60D-BBST-BTree.md",
-    "1-Theory/6-Network/THU-Xu/精简版PPT.pdf",
-    "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/50-VirtIO-blk-driver.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/40-VirtIO-devices-driver.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/30-UART-driver.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/31-List-Exercise.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/20-External-devices.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/10-IO-devices.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/20-Pipe.md",
-    "1-Theory/4-Architecture/THU-Liu/Organization2022fall.pdf",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/00-Concurrence-Overview.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/00-IO-Overview.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/assets",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A1-String-Exercise.md",
-    "1-Theory/6-Network/Top-to-down/practice/20-Application-layer.md",
-    "1-Theory/6-Network/Top-to-down/practice/10-Intro.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/KMP.mp4",
-    "1-Theory/4-Architecture/硬软件接口-riscv/RISC-V-Book.pdf",
-    "1-Theory/4-Architecture/未确认 873561.crdownload",
-    "1-Theory/4-Architecture/THU-Liu",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/priority-search-tree.pdf",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/未确认 839532.crdownload",
+    "1-Theory/4-Architecture/THU-Liu/11-ALU.md",
+    "1-Theory/4-Architecture/THU-Liu/10-Intro.md",
+    "1-Theory/4-Architecture/THU-Liu/assets/10-Intro-of-Computer-System-RV32-instruction-format.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/10-Intro-of-Computer-System-instruction-format.png",
+    "1-Theory/4-Architecture/THU-Liu/assets",
+    "1-Theory/4-Architecture/THU-Liu/12-Data-Calculate.md",
+    "1-Theory/4-Architecture/THU-Liu/23-Singlecycle.md",
+    "1-Theory/4-Architecture/THU-Liu/22-Datapath.md",
+    "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
+    "1-Theory/4-Architecture/THU-Liu/20-Intruction-x86.md",
+    "1-Theory/4-Architecture/THU-Liu/42-Device.md",
+    "1-Theory/4-Architecture/THU-Liu/41-Bus.md",
+    "1-Theory/4-Architecture/THU-Liu/40-IO.md",
+    "1-Theory/4-Architecture/THU-Liu/35-ARM.md",
+    "1-Theory/4-Architecture/THU-Liu/34-Disk.md",
+    "1-Theory/4-Architecture/THU-Liu/33-Virtual-Memory.md",
+    "1-Theory/4-Architecture/THU-Liu/30-DRAM.md",
+    "1-Theory/4-Architecture/THU-Liu/31-Cache.md",
+    "1-Theory/4-Architecture/THU-Liu/2020计原复习笔记.pdf",
+    "1-Theory/4-Architecture/硬软件接口-riscv/ebook",
+    "1-Theory/4-Architecture/硬软件接口-riscv/ebook/Computer Organization and Design RISC-V edition.pdf",
+    "1-Theory/4-Architecture/硬软件接口-riscv/ebook/RISC-V-Book.pdf",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/00-课程准备与介绍.md",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/Appendix-ebook.md",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/C0-Concurrence.md",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/B0-Network-program.md",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/A0-System-IO.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/0-操作系统概述.md",
+    "1-Theory/5-OS-principle/thu-chyyuu/3-基于特权级的隔离与批处理系统.md",
+    "1-Theory/5-OS-principle/thu-chyyuu/p1-osviewarch.md",
+    "1-Theory/5-OS-principle/thu-chyyuu/figs/batch-os-detail.md",
+    "1-Theory/5-OS-principle/thu-chyyuu/p3-batchos.md",
+    "1-Theory/5-OS-principle/thu-chyyuu/figs/x86-arm-rv-compare.png",
+    "1-Theory/5-OS-principle/thu-chyyuu/figs/vm.png",
+    "1-Theory/5-OS-principle/thu-chyyuu/figs/vm-pagetable.png",
+    "1-Theory/5-OS-principle/thu-chyyuu/figs/ucore-arch.png",
+    "1-Theory/5-OS-principle/thu-chyyuu/figs/tlb.png",
+    "1-Theory/5-OS-principle/thu-chyyuu/figs/syscall.png",
+    "1-Theory/5-OS-principle/thu-chyyuu/figs/syscall-read.png",
+    "1-Theory/5-OS-principle/thu-chyyuu/figs/syscall-proc.png",
+    "1-Theory/5-OS-principle/thu-chyyuu/figs/rv-privil-arch.odg",
+    "1-Theory/5-OS-principle/thu-chyyuu/figs",
+    "1-Theory/5-OS-principle/thu-chyyuu/assets",
+    "1-Theory/1-ProgramLanguage/Rust/Rust Atomics and Locks/cover.xhtml",
+    "1-Theory/1-ProgramLanguage/Rust/Rust Atomics and Locks",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",

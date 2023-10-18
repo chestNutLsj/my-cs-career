@@ -21,5 +21,8 @@
   "obsidian-markdown-export-plugin",
   "obsidian-reading-time",
   "obsidian-plugin-toc",
-  "obsidian42-brat"
+  "obsidian42-brat",
+  "epub-importer",
+  "obsidian-importer",
+  "obsidian-advanced-slides"
 ]

@@ -116,7 +116,7 @@ template <typename T> void increase( Vector<T> & V )
 
 ## 有序向量
 ### 二分查找 a
-有序向量中，每个元素都是轴点，以任一元素 x = S[mi] 为界，都可将待查找区间 `[lo,hi)` 分为三部分：$S[lo,mi)\le S[mi]\le S(mi,hi)$ 
+有序向量中，每个元素都是轴点，以任一元素 `x = S[mi]` 为界，都可将待查找区间 ` [lo,hi)` 分为三部分：$S[lo,mi)\le S[mi]\le S(mi,hi)$ 
 
 因此只需要将目标元素 e 与 x 做一次比较，即可分三种情况进一步处理：
 - e < x：则 e 若存在必属于左侧子区间，故可（减除 `S[mi,hi)` 并）递归深入 `S[lo, mi)`

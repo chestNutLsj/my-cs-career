@@ -86,7 +86,7 @@ $$
 \end{equation}
 $$
 - 复杂度接近常数：$\forall c>0,logn=O(n^c)$;
-	- $\lim_{n\rightarrow \infty} \frac{ln(n)}{n^{c}}=0$;
+	- $\lim\limits_{n\rightarrow \infty} \frac{\ln(n)}{n^{c}}=0$;
 
 
 #### $O (n^c)$: polynomial
@@ -101,8 +101,8 @@ $O(n^{c})$ 到 $O(2^{n})$ 是有效算法到无效算法的分水岭。
 **NPC 问题**：No-Polynomial complete
 典型如 2-Subset 问题，其有定理 $|2^{S}|=2^{|S|}=2^{n}$
 
-![[算法复杂度层次级别.png]]
-- $log^{*}n$ 表示对数迭代函数，即取多少次对数，使得 $logn$ 的值小于等于 1，返回的是对数运算的次数；
+![[10-Introduction-算法复杂度层次级别.png]]
+- $\log^{*} n$ 表示对数迭代函数，即取多少次对数，使得 $\log n$ 的值小于等于 1，返回的是对数运算的次数；
 	- $log^{*}_{2}16=3$
 	- $log^{*}_{2}2^{1024}=5:$
 		- $log_{2}2^{1024}=1024$,
@@ -119,10 +119,10 @@ $O(n^{c})$ 到 $O(2^{n})$ 是有效算法到无效算法的分水岭。
 - $T(n)=1+2+...+n=\binom{n+1}{2}=\frac{n(n+1)}{2}=O(n^{2})$
 
 幂方级数：比幂级数高出一阶
-- $T(n)=\sum_{k=0}^{n}k^{d}\approx \int_{0}^{n}x^{d}dx=\frac{n^{d+1}}{d+1}=O(n^{d+1})$
+- $T(n)=\sum\limits_{k=0}^{n}k^{d}\approx \int_{0}^{n}x^{d}dx=\frac{n^{d+1}}{d+1}=O(n^{d+1})$
 
 几何级数：与末项同阶
-- $T_{a}(n)=\sum_{k=0}^{n}=a^{0}+a^{1}+...+a^{n}=\frac{a^{n+1}-1}{a-1}=O(a^{n}),1<a$
+- $T_{a}(n)=\sum\limits_{k=0}^{n}=a^{0}+a^{1}+...+a^{n}=\frac{a^{n+1}-1}{a-1}=O(a^{n}),1<a$
 - 即等比数列求和
 
 
@@ -138,12 +138,12 @@ $O(n^{c})$ 到 $O(2^{n})$ 是有效算法到无效算法的分水岭。
 
 **不收敛，但有限**：
 调和级数：$\Theta(logn)$
-- $h(n)=\sum\limits_{k=1}^{n}\frac{1}{k}=1+\frac{1}{2}+\frac{1}{3}+...=lnn+\gamma+O(\frac{1}{2n})=\Theta(logn)$
+- $h(n)=\sum\limits_{k=1}^{n}\frac{1}{k}=1+\frac{1}{2}+\frac{1}{3}+...=\ln n+\gamma+O(\frac{1}{2n})=\Theta(\log n)$
 
 对数级数：$\Theta(nlogn)$
-- $\sum\limits_{k=1}^{n}lnk=ln\prod\limits_{k=1}^{n}=ln(n!)\approx (n+0.5)lnn-n=\Theta(nlogn)$
+- $\sum\limits_{k=1}^{n}\ln k=\ln\prod\limits_{k=1}^{n}=\ln(n!)\approx (n+0.5)\ln n-n=\Theta(n\log n)$
 - stirling formulation: $n!\approx \sqrt{2\pi n}\cdot (\frac{n}{e})^n$ 
-- stirling approximation: $ln(n!)=n\ln n-n+O(\ln n)$ 
+- stirling approximation: $\ln(n!)=n\ln n-n+O(\ln n)$ 
 
 ### 迭代
 ![[涉及级数的迭代时间复杂度估计.png]]
@@ -185,13 +185,14 @@ $O(n^{c})$ 到 $O(2^{n})$ 是有效算法到无效算法的分水岭。
 ### 分治
 ![[分治.png]]
 - 二分查找是减治，归并排序是分治；
-- 减治思想是除去平凡的子问题；而分治思想是将原问题切分成若干子问题，对子问题进行同样的操作，直到子问题变为平凡；
+	- 减治思想是除去平凡的子问题；
+	- 而分治思想是将原问题切分成若干子问题，对子问题进行同样的操作，直到子问题变为平凡；
 
 #### 二分递归跟踪
 ![[分治sum.png]]
 
 ![[二分递归跟踪.png]]
-- sum (0,8)先入栈，接着是 sum (0,4)，接着是 sum (0,2)，最后是 sum (0,1)，此时栈顶为平凡地返回 A[0]，出栈后 sum (1,2)入栈得到 A[1]，出栈后栈顶变为 sum (0,2)则得到 sum (0,1)+sum (1,2)=A[0]+A[1]，以此类推；
+- `sum (0,8)` 先入栈，接着是 `sum (0,4)`，接着是 `sum (0,2)`，最后是 `sum (0,1)`，此时栈顶为平凡地返回 `A[0]`，出栈后 `sum (1,2)` 入栈得到 `A[1]`，出栈后栈顶变为 `sum (0,2)` 则得到 `sum (0,1)+sum (1,2)=A[0]+A[1]`，以此类推；
 - 递归深度为 $\log n$；
 #### 二分递推方程
 
@@ -331,6 +332,7 @@ In the second inadmissible example above, the difference between $f(n)$ and $
 | Binary Search         | $T(n)=T(\frac{n}{2})+O(1)$  | $O(\log n)$  | Apply Master theorem case $c=\log _{b}a$, where $a=1,b=2,c=0,k=0$ |
 | Binary Tree Traversal | $T(n)=2T(\frac{n}{2})+O(1)$ | $O(n)$       | Apply Master theorem case $c<\log_{b}a$ where $a=2,b=2,c=0$       |
 | Merge Sort            | $T(n)=2T(\frac{n}{2})+O(n)$ | $O(n\log n)$ | Apply Master theorem case $c=\log_{b}a$ where $a=2,b=2,c=1,k=0$   |
+
 ## 迭代与递归应用：总和最大区段
 
 从整数数列中找出总和最大的区段（有多个时，短者、靠后者优先）。
@@ -378,7 +380,7 @@ $$
 ![[10-Introduction-fib(n)-complexity.png]]
 - 递归深度/空间复杂度 $O(n)$
 
-递归法低效的原因在于，递归实例被重复调用多次，先后出现的递归实例达到 $O(\phi^{n})$ 个，而实际上递归实例的种类不过 $O(n)$ 种。
+递归法低效的原因在于，递归实例被重复调用多次，先后出现的递归实例达到 $O(\Phi^{n})$ 个，而实际上递归实例的种类不过 $O(n)$ 种。
 
 若能记忆递归实例计算的结果，保存沿途信息，使得后续不必再重复计算，即可降低无用计算。
 动态规划——颠倒计算方向，将自顶向下的递归改为自底向上的迭代。
@@ -662,4 +664,4 @@ void shuffle(int A[],int n){
 
 关于该问题，可以详细阅读下一章的内容：[[20-Vector#2-6 permute 生成随机排列]] 和
 
-习题请看： [[11-Exercise]]
+习题请看： [[11-Intro-Exercise]]

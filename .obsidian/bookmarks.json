@@ -203,7 +203,7 @@
         {
           "type": "file",
           "ctime": 1694519382981,
-          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/41-Exercise.md",
+          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/41-Stack-queue-Exercise.md",
           "subpath": "#4-11 中缀表达式运算中栈内括号数问题",
           "title": "中缀表达式运算中括号数问题"
         },
@@ -217,14 +217,14 @@
         {
           "type": "file",
           "ctime": 1695034666607,
-          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Exercise.md",
+          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
           "subpath": "#5-16 分析 travIn_I3 的时间复杂度",
           "title": "分析travIn_I3的时间复杂度"
         },
         {
           "type": "file",
           "ctime": 1695037210155,
-          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Exercise.md",
+          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
           "subpath": "#5-30 键树 Trie",
           "title": "Trie键树"
         }
