@@ -231,29 +231,47 @@ $$
 ### Generic form
 Master Theorem 是一种用于分析递归算法时间复杂度的工具，特别适用于分治算法中的递归情况。这些算法将输入划分为大小相等的较小子问题，递归求解子问题，然后组合子问题解决方案以给出原始问题的解决方案。这种算法的时间可以通过将它们在递归的顶层执行的工作（将问题划分为子问题，然后组合子问题解决方案）与算法的递归调用中所做的时间相加来表示。
 
+> 以下内容来自 Wikipedia：[Master theorem (analysis of algorithms)](https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms)?useskin=vector)
+
 Master Theorem的一般形式如下：
 
 如果递归算法的递归式可以表示为：$T(n) = aT(\frac{n}{b}) + f(n)$，其中：
+- $n$ is the size of an input problem
 - $a$ is the number of subproblems in the recursion,
-- $b$ is the factor by which the subproblem size is reduced in each recursive call (b>1), (a b 不能与 n 相关)
-- $f(n)$ denotes the amount of time taken at the top level of the recurrence.
+- $b$ is the factor by which the subproblem size is reduced in each recursive call (b>1), (a、b 不能与 n 相关)
+- $f(n)$ denotes the amount of time taken at the top level of the recurrence. ==Another word, $f(n)$ is the time to create the subproblems and combine their results in the above procedure==.
 
 Recurrences of this form often satisfy one of the three following regimes, based on how the work to split/recombine the problem $f(n)$ relates to the critical exponent 
-$$c_{crit}=log_{b}a=\frac{log(subproblems num)}{log(relative subproblem size)} $$.
+$$c_{crit}=\log_{b}a=\frac{\log(\#\text{subproblems})}{\log(\text{relative subproblem size)}} $$.
 #### Case 1
-Work to split/recombine a problem is dwarfed by subproblems.
-- 如果 $f(n) = O(n^{c}),c<c_{crit}$，那么 $T(n) = Θ(n^{c_{crit}})$
-- The splitting term does not appear; the recursive tree structure dominates.
+Work to split/recombine a problem is dwarfed by subproblems. (recursion tree is leaf-heavy. )
+- 如果 $f(n) = O(n^{c}),c<c_{crit}$ (upper-bounded by a lesser exponent polynomial)，
+- 那么 $T(n) = Θ(n^{c_{crit}})$, The splitting term does not appear; the recursive tree structure dominates.
+- i.e. If $b=a^2$ and $f(n)=O(n^{\frac{1}{2}-\epsilon})$, then $T(n)=\Theta(n^{\frac{1}{2}})$.
 
 #### Case 2
 Work to split/recombine a problem is comparable to subproblems.
-- 如果 $f(n) = Θ(n^{c_{crit}} * \log^{k} n),k\ge0$，那么 $T(n) = Θ(n^{c_{crit}} * log^{(k+1)} n)$
-- rangebound by the critical-exponent polynomial, times zero or more optional $\log$ s,
-- The bound is the splitting term, where the log is augmented by a single power.
+- 如果 $f(n) = Θ(n^{c_{crit}} * \log^{k} n),k\ge0$，(rangebound by the critical-exponent polynomial, times zero or more optional $\log s$.) 
+- 那么 $T(n) = Θ(n^{c_{crit}} * \log^{(k+1)} n)$，(The bound is splitting term, where the $\log$ is augmented by a single power.)
+- i.e. If $b=a^2$ and $f(n)=\Theta(n^{\frac{1}{2}})$, then $T(n)=\Theta(n^{\frac{1}{2}}\log n)$ 
+- i.e. If $b=a^{2}$ and $f(n)=\Theta(n^{\frac{1}{2}}\log n)$, then $T(n)=\Theta(n^\frac{1}{2}\log^{2}n)$.
+
+> [! note] Extension of Case 2 handles all values of $k$
+> 1) When $f(n)=\Theta(n^{c_{crit}}\log^{k}n)$ for any $k> -1$, 
+> 	- then $T(n)=\Theta(n^{c_{crit}}\log^{k+1}n)$. (The bound is the splitting term, where the $\log$ is augmented by a single power.)
+> 	- i.e. if $b=a^2$ and $f(n)=\Theta(n^{\frac{1}{2}}\times\log^{-\frac{1}{2}}n)$, then $T(n)=\Theta(n^{\frac{1}{2}}\log^{\frac{1}{2}}n)$.
+> 2) When $f(n)=\Theta(n^{c_{crit}}\log^{k}n)$ for any $k= -1$,
+> 	- then $T(n)=\Theta(n^{c_{crit}}\log\log n)$. (The bound is the splitting term, where the $\log$ reciprocal is replaced by an iterated $\log$.)
+> 	- i.e. if $b=a^2$ and $f(n)=\Theta(n^{\frac{1}{2}}\times\log^{-1} n)$, then $T(n)=\Theta(n^{\frac{1}{2}}\log\log n)$.
+> 3) When $f(n)=\Theta(n^{c_{crit}}\log^{k}n)$ for any $k< -1$,
+> 	- then $T(n)=\Theta(n^{c_{crit}})$. (The bound is the splitting term, where the $\log$ is disappears.)
+> 	- i.e. if $b=a^2$ and $f(n)=\Theta(n^{\frac{1}{2}}\times\log^{-2} n)$, then $T(n)=\Theta(n^{\frac{1}{2}})$.
 
 #### Case 3
-Work to split/recombine a problem dominates subproblems.
-- 如果 $f(n) = Ω(n^c),c>c_{crit}$，且存在 $k< 1$，使得 $af(\frac{n}{b}) ≤ k{f(n)}$，那么 $T(n) = Θ(f(n))$。
+Work to split/recombine a problem dominates subproblems. (recursion tree is root-heavy. )
+- 如果 $f(n) = Ω(n^c),c>c_{crit}$ (lower-bounded by a greater-exponent polynomial)，且存在 $k< 1$，使得 $af(\frac{n}{b}) ≤ k{f(n)}$ (the second condition is called *regularity condition*)，
+- 那么 $T(n) = Θ(f(n))$ (total is dominated by the splitting term $f(n)$.)
+- i.e. if $b=a^2$ and $f(n)=\Omega(n^{\frac{1}{2}+\epsilon})$ and the regularity condition holds, then $T(n)=\Theta(f(n))$.
 
 
 ### Example
@@ -637,8 +655,8 @@ int power(int a,int n){
 
 现在来解释为什么这个悖论实际上不存在：
 
-- 计算 $a^{n}$ 的二进制展开确实需要 $Θ(n)$ 的时间，但这并不意味着我们必须显式计算每一位的二进制展开并执行相应的乘法操作。在实际的计算机算术中，使用的是更高效的算法，如快速幂算法（也称为指数的二分法），它的时间复杂度是 $O (log n)$。这意味着我们能够以对数级别的成本来计算 $a^{n}$，而不需要逐位计算。
-- 在常数代价原则的背景下，虽然 $a^{n}$ 的二进制展开宽度为 $Θ(n)$，但计算 $a^{n}$ 的代价并不是逐位计算，而是通过快速幂算法将指数 n 分解为对数级别的子问题。因此，每个子问题的代价是 $O (1)$，虽然有多个子问题，但总的计算时间仍然是 $O (log n)$，这符合对数代价原则。
+- 计算 $a^{n}$ 的二进制展开确实需要 $Θ(n)$ 的时间，但这并不意味着我们必须显式计算每一位的二进制展开并执行相应的乘法操作。在实际的计算机算术中，使用的是更高效的算法，如快速幂算法（也称为指数的二分法），它的时间复杂度是 $O (\log n)$。这意味着我们能够以对数级别的成本来计算 $a^{n}$，而不需要逐位计算。
+- 在常数代价原则的背景下，虽然 $a^{n}$ 的二进制展开宽度为 $Θ(n)$，但计算 $a^{n}$ 的代价并不是逐位计算，而是通过快速幂算法将指数 n 分解为对数级别的子问题。因此，每个子问题的代价是 $O (1)$，虽然有多个子问题，但总的计算时间仍然是 $O (\log n)$，这符合对数代价原则。
 
 因此，尽管 $a^{n}$ 的二进制展开宽度较大，但我们可以使用高效的算法在 $O (log n)$时间内计算 $a^{n}$，而这并不违反常数代价原则或对数代价原则。这个悖论实际上是由于算法的高效性和渐近分析的原则相结合而产生的。
 

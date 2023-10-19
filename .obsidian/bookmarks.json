@@ -160,31 +160,10 @@
       "items": [
         {
           "type": "file",
-          "ctime": 1693927661594,
-          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
-          "subpath": "#2-15 CBA 算法详析",
-          "title": "CBA算法下界"
-        },
-        {
-          "type": "file",
-          "ctime": 1694008090285,
-          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
-          "subpath": "#^7c47ca",
-          "title": "代数判定树ADT"
-        },
-        {
-          "type": "file",
           "ctime": 1694013820245,
           "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
           "subpath": "#2-21 指数查找 expSearch",
           "title": "指数查找"
-        },
-        {
-          "type": "file",
-          "ctime": 1694183889118,
-          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/14-Lowerbound-analyze.md",
-          "subpath": "#比较树",
-          "title": "比较树"
         },
         {
           "type": "file",
@@ -227,6 +206,138 @@
           "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
           "subpath": "#5-30 键树 Trie",
           "title": "Trie键树"
+        },
+        {
+          "type": "group",
+          "ctime": 1697701223496,
+          "items": [
+            {
+              "type": "file",
+              "ctime": 1697701292826,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
+              "subpath": "#迭代与递归应用：总和最大区段",
+              "title": "总和最大区段问题"
+            },
+            {
+              "type": "file",
+              "ctime": 1697701329746,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
+              "subpath": "#求 fib(n)",
+              "title": "动态规划求Fibonacci序列"
+            },
+            {
+              "type": "file",
+              "ctime": 1697701380476,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
+              "subpath": "#最长公共子序列",
+              "title": "最长公共子序列LCS问题"
+            },
+            {
+              "type": "file",
+              "ctime": 1697701468614,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
+              "subpath": "#局限 1 缓存——就地循环位移",
+              "title": "向量元素就地循环位移问题"
+            },
+            {
+              "type": "file",
+              "ctime": 1697701524391,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
+              "subpath": "#从 O (n)到 O (r=logn)",
+              "title": "快速幂计算问题"
+            },
+            {
+              "type": "file",
+              "ctime": 1697701575776,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
+              "subpath": "#局限 3 随机数",
+              "title": "(伪)随机数生成问题"
+            },
+            {
+              "type": "file",
+              "ctime": 1697701683907,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Intro-Exercise.md",
+              "subpath": "#1-12 countOnes 算法改进",
+              "title": "快速计算整数二进制表示的1位数"
+            },
+            {
+              "type": "file",
+              "ctime": 1697702141471,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Intro-Exercise.md",
+              "subpath": "#更相减损术",
+              "title": "更相减损术"
+            }
+          ],
+          "title": "算法问题"
+        },
+        {
+          "type": "group",
+          "ctime": 1697701980171,
+          "items": [
+            {
+              "type": "file",
+              "ctime": 1697701915906,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Intro-Exercise.md",
+              "subpath": "#fib (k)的递归实例在执行中出现了多少次？",
+              "title": "fib(k)二分递归实例出现次数问题"
+            },
+            {
+              "type": "file",
+              "ctime": 1697702320092,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Intro-Exercise.md",
+              "subpath": "#O (√n）",
+              "title": "O(√n)的形式"
+            },
+            {
+              "type": "file",
+              "ctime": 1697702554793,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Intro-Exercise.md",
+              "subpath": "#递归与调用 1",
+              "title": "递归调用：线性递归实例分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1697702681452,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Intro-Exercise.md",
+              "subpath": "#递归与调用 4",
+              "title": "递归调用：二分递归实例分析"
+            }
+          ],
+          "title": "知识点细节"
+        },
+        {
+          "type": "group",
+          "ctime": 1697703064545,
+          "items": [
+            {
+              "type": "file",
+              "ctime": 1697703072225,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/16-Stirling-Approximation.md",
+              "subpath": "#Intro",
+              "title": "Stirling渐进"
+            },
+            {
+              "type": "file",
+              "ctime": 1697703106362,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/15-Little-o-notation.md",
+              "title": "Little-o-notation"
+            },
+            {
+              "type": "file",
+              "ctime": 1697703136858,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/14-Lowerbound-analyze.md",
+              "subpath": "#线性规约",
+              "title": "线性规约Linear reduction"
+            },
+            {
+              "type": "file",
+              "ctime": 1697703177173,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/14-Lowerbound-analyze.md",
+              "subpath": "#CBA排序算法下界",
+              "title": "CBA排序算法下界分析(比较树)"
+            }
+          ],
+          "title": "拓展延伸"
         }
       ],
       "title": "DSA-考点重点"

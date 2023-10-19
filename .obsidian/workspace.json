@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "4b2b8bb7ef647901",
+        "id": "2838f2a1b9182021",
         "type": "tabs",
         "children": [
           {
-            "id": "4aab56cfa4d25205",
+            "id": "c040c0c1fdf67756",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -76,8 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 276.5,
-    "collapsed": true
+    "width": 276.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -168,8 +167,15 @@
       "obsidian-advanced-slides:Show Slide Preview": false
     }
   },
-  "active": "4aab56cfa4d25205",
+  "active": "c040c0c1fdf67756",
   "lastOpenFiles": [
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/12-Instances-of-recursion.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/13-Dynamic-programming.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/14-Lowerbound-analyze.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/15-Little-o-notation.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/16-Stirling-Approximation.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Intro-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
     "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-segment-structure.png",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-send-receive-buffers.png",
@@ -209,13 +215,6 @@
     "1-Theory/4-Architecture/CSAPP/Keypoints/00-课程准备与介绍.md",
     "1-Theory/4-Architecture/CSAPP/Keypoints/Appendix-ebook.md",
     "1-Theory/4-Architecture/CSAPP/Keypoints/C0-Concurrence.md",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/B0-Network-program.md",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/A0-System-IO.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/0-操作系统概述.md",
-    "1-Theory/5-OS-principle/thu-chyyuu/3-基于特权级的隔离与批处理系统.md",
-    "1-Theory/5-OS-principle/thu-chyyuu/p1-osviewarch.md",
-    "1-Theory/5-OS-principle/thu-chyyuu/figs/batch-os-detail.md",
-    "1-Theory/5-OS-principle/thu-chyyuu/p3-batchos.md",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
