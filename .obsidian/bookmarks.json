@@ -340,13 +340,7 @@
           "title": "拓展延伸"
         }
       ],
-      "title": "DSA-考点重点"
-    },
-    {
-      "type": "group",
-      "ctime": 1693927625420,
-      "items": [],
-      "title": "ALGO-principle"
+      "title": "DSA-cpp-deng"
     },
     {
       "type": "group",
@@ -421,27 +415,104 @@
           "items": [
             {
               "type": "file",
+              "ctime": 1696258321098,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
+              "subpath": "#^b901a9",
+              "title": "Stride调度"
+            },
+            {
+              "type": "file",
+              "ctime": 1696257570879,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
+              "subpath": "#^439fb0",
+              "title": "Lottery调度"
+            },
+            {
+              "type": "file",
               "ctime": 1695895133383,
               "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Concepts-and-syscall.md",
               "subpath": "#^87a5b4",
               "title": "僵尸进程"
+            },
+            {
+              "type": "file",
+              "ctime": 1697711502036,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
+              "subpath": "#^5fa656",
+              "title": "地址空间布局随机化ASLR"
             }
           ],
-          "title": "概念"
+          "title": "琐碎概念"
         },
         {
-          "type": "file",
-          "ctime": 1696257570879,
-          "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
-          "subpath": "#^439fb0",
-          "title": "Lottery调度"
+          "type": "group",
+          "ctime": 1697711353246,
+          "items": [
+            {
+              "type": "file",
+              "ctime": 1697711368801,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
+              "subpath": "#函数调用与系统调用区别",
+              "title": "函数调用与系统调用区别"
+            },
+            {
+              "type": "file",
+              "ctime": 1697711452787,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
+              "subpath": "#用户程序库形式的 OS 被破坏的方式",
+              "title": "用户程序库形式的 OS 被破坏的方式"
+            },
+            {
+              "type": "file",
+              "ctime": 1697711488355,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
+              "subpath": "#编译器/CPU/OS 合作避免破坏",
+              "title": "编译器/CPU/OS 合作避免破坏"
+            },
+            {
+              "type": "file",
+              "ctime": 1697711623526,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
+              "subpath": "#Trap 上下文的理解",
+              "title": "Trap 上下文的理解"
+            }
+          ],
+          "title": "简答题"
         },
         {
-          "type": "file",
-          "ctime": 1696258321098,
-          "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
-          "subpath": "#^b901a9",
-          "title": "Stride调度"
+          "type": "group",
+          "ctime": 1697711530985,
+          "items": [
+            {
+              "type": "file",
+              "ctime": 1697711388024,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
+              "subpath": "#异常/中断的委托",
+              "title": "RISC-V异常/中断的委托"
+            },
+            {
+              "type": "file",
+              "ctime": 1697711550149,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
+              "subpath": "#RISC-V 的 S 态特权指令介绍",
+              "title": "RISC-V 的 S 态特权指令介绍"
+            },
+            {
+              "type": "file",
+              "ctime": 1697711575901,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
+              "subpath": "#RISC-V 的 trap 硬件操作",
+              "title": "RISC-V 的 trap 硬件操作"
+            },
+            {
+              "type": "file",
+              "ctime": 1697711597454,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
+              "subpath": "#RISC-V 支持的中断/异常及细节",
+              "title": "RISC-V 支持的中断/异常及细节"
+            }
+          ],
+          "title": "RISC-V相关"
         }
       ],
       "title": "rCore-tips"

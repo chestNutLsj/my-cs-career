@@ -695,60 +695,85 @@ TCP relies on many of the underlying principles discussed in the previous sectio
 ### 段结构
 
 ![[30-Transport-layer-TCP-segment-structure.png]]
+- As with UDP, the header includes **source and destination port numbers**, which are used for multiplexing/demultiplexing data from/to upper-layer applications. 
+- Also, as with UDP, the header includes a checksum field.
+- The 32-bit **sequence number field** and the 32-bit **acknowledgment number field** are used by the TCP sender and receiver in implementing a reliable data transfer service. *注：这里第二行的“序号”不是前面讲的 PDU 的序号（不是分组号），而是对字节计数的序号——body 部分的第一个字节在整个字节流中的偏移量 offset（第 $i$ 个 MSS 的第一个字节在字节流中的位置，初始的序号称为 $X$ ， $X$ 在建立连接时两个进程商量好，第 $n$ 个的序号为 $X+n*MSS$ ）*
+- The 16-bit **receive window field** is used for flow control. It is used to indicate the number of bytes that a receiver is willing to accept.
+- The 4-bit **header length field** specifies the length of the TCP header in 32-bit words. (指示 TCP 首部的长度) The TCP header can be of variable length due to the TCP options field. (Typically, the options field is empty, so that the length of the ==typical TCP header is 20 bytes==.)
+- The **optional and variable-length options field** is used when a sender and receiver negotiate the maximum segment size (MSS) or as a window scaling factor for use in high-speed networks. A time-stamping option is also defined. See RFC 854 and RFC 1323 for additional details. 
+- The **flag field** contains 6 bits. 
+	- The ACK bit is used to indicate that the value carried in the acknowledgment field is valid; that is, the segment contains an acknowledgment for a segment that has been successfully received.
+	- The RST, SYN, and FIN bits are used for connection setup and teardown.
+	- The CWR and ECE bits are used in explicit congestion notification. 
+	- Setting the PSH bit indicates that the receiver should pass the data to the upper layer immediately. 
+	- Finally, the URG bit is used to indicate that there is data in this segment that the sending-side upperlayer entity has marked as “urgent.” The location of the last byte of this urgent data is indicated by the 16-bit urgent data pointer field. TCP must inform the receiving-side upper-layer entity when urgent data exists and pass it a pointer to the end of the urgent data. (In practice, the PSH, URG, and the urgent data pointer are not used. However, we mention these fields for completeness.)
 
-注：这里第二行的“序号”不是前面讲的PDU的序号（不是分组号），而是字节的序号：body部分的第一个字节在整个字节流中的偏移量offset（第 $i$ 个MSS的第一个字节在字节流中的位置，初始的序号称为 $X$ ， $X$ 在建立连接时两个进程商量好，第 $n$ 个的序号为 $X+n*MSS$ ）
 
-TCP序号，确认号
-- 序号(sequence number, 简写seq)：
-    - 报文段首字节的在字节流的编号
-- 确认号(acknowledgement number, 简写ack)：
-    - 期望从另一方收到的下一个字节的序号
-    - 累积确认（如假设ack=555，则表示接收方已经收到了554及之前的所有字节）
-- Q：接收方如何处理乱序的报文段？ 没有规定（可以缓存，也可以抛弃，取决于实现者自己）
+#### TCP序号，确认号
+- 序号(sequence number)：报文段首字节在字节流中的编号
+    - ![[30-Transport-layer-TCP-segments-seq-num.png]]
+    - Suppose that a process in Host A wants to send a stream of data to a process in Host B over a TCP connection. ==The TCP in Host A will implicitly number each byte in the data stream==.
+    - Suppose that the data stream consists of a file consisting of 500,000 bytes, that the MSS is 1,000 bytes, and that the first byte of the data stream is numbered 0. As shown in Figure 3.30, TCP constructs 500 segments out of the data stream. The first segment gets assigned sequence number 0, the second segment gets assigned sequence number 1,000, the third segment gets assigned sequence number 2,000, and so on.
+    - Each sequence number is inserted in the sequence number field in the header of the appropriate TCP segment.
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726074323701.png" />
+- 确认号(ack number)：期望从另一方收到的下一个字节的序号
+    - TCP 是全双工的，因此发送方和接收方的角色可能互换，因此设置此“确认号域”提示对方要发什么数据；
+    - 举例：Suppose that Host A has received all bytes numbered 0 through 535 from B and suppose that it is about to send a segment to Host B. Host A is waiting for byte 536 and all the subsequent bytes in Host B’s data stream. So Host A puts 536 in the acknowledgment number field of the segment it sends to B.
+    - 举例：(累积确认) Suppose that Host A has received one segment from Host B containing bytes 0 through 535 and another segment containing bytes 900 through 1,000. For some reason Host A has not yet received bytes 536 through 899. In this example, ==Host A is still waiting for byte 536 (and beyond) in order to re-create B’s data stream==. Thus, A’s next segment to B will contain 536 in the acknowledgment number field. Because TCP only acknowledges bytes up to the first missing byte in the stream, TCP is said to provide **cumulative acknowledgments**.
+    - 举例：(处理乱序报文段) 没有规定（可以缓存，也可以抛弃，取决于实现者自己）The TCP RFCs do not impose any rules here and leave the decision up to the programmers implementing a TCP implementation. There are basically two choices: either (1) the receiver immediately discards out-of-order segments (which, as we discussed earlier, can simplify receiver design), or (2) the receiver keeps the out-of-order bytes and waits for the missing bytes to fill in the gaps. Clearly, the latter choice is more efficient in terms of network bandwidth, and is the approach taken in practice.
 
-> 例：Host A - Host B （双向数据传递）
+
+> [! example] Telnet: 序号与确认号的使用案例
+> 
+> ![[30-Transport-layer-telnet-seq-ack-num.png]]
+> A 向 B 发起 Telnet 回话，A 作客户，B 为服务器。客户端 A 输入的每个字符都被发送到远程主机 B 上，B 会将该字符回显到客户屏幕，从而确保远程主机 B 确实接收到用户的数据，即用户 A 输入的字符被传输了两次：
 > 
 > 1. A(User types 'C') --> B(host ACKs receipt of 'C', echoes back 'C'): Seq = $42$ , ACK = $79$ , data = 'C';
 > 2. B(host ACKs receipt of 'C', echoes back 'C') --> A(host ACKs receipt of echoed 'C'): Seq = $79$ , ACK = $43$ , data = 'C';
 > 3. A(host ACKs receipt of echoed 'C') --> B: Seq = $43$ , ACK = $80$ , data = ... 
 > 4. ...
+> 
+> 需要注意的是：第二个报文段由服务器回送给客户，有两个作用
+> - 为该服务器所收到的数据提供确认。ACK=43 即代表 42 及之前的数据都已收到，同时回送的数据'C'也验证了确实收到 Seq=42 的报文；
+> - 注意到第二个报文段的 Seq 为 79，这是服务器向客户端发送的第一个报文的序号；对客户到服务器的报文的确认存放在服务器到客户的报文段中，称之为捎带 piggybacked。
+> 
+>另外：Telnet 协议逐渐被 SSH 替代，是因为 Telnet 传送数据时不加密。
 
 ### TCP往返延时(RTT)和超时
 - Q：怎样设置TCP超时定时器？
-    - 比RTT要长
-        - 但RTT是变化的
-    - 太短：太早超时
-        - 不必要的重传
-    - 太长：对报文段丢失反应太慢，消极
-- Q：怎样估计RTT？
+    - 比 RTT 要长，但 RTT 是变化的——取决于信道拥塞和端系统负载变化
+    - 太短：太早超时，引起不必要的重传
+    - 太长：对报文段丢失反应太慢，过于消极
+- Q：怎样估计 RTT？逐个报文检查 RTT 开销过大不现实
     - SampleRTT：测量从报文段发出到收到确认的时间，得到往返延时
-        - 如果有重传，忽略此次测量
-    - SampleRTT会变化，因此估计的RTT应该比较平滑
-        - 对几个最近的测量值求平均，而不是仅用当前的SampleRTT
-- RTT不是一个固定的值，而是一个适应式的测量。由于每个分组经历不一样，严重依赖于网络状况，则SampleRTT变化非常大，用SampleRTT建立超时定时器不合理，需要用SampleRTT的平均值EstimatedRTT（滤波算法）
-    - $[EstimatedRTT] = (1-\alpha) * [(previous)EstimatedRTT] + \alpha * SampleRTT$
-    - 指数加权移动平均
-    - 过去样本的影响呈指数衰减
+        - 仅为已发送但尚未确认的报文段估计 SampleRTT
+        - 如果有重传，忽略此次测量，仅为传输一次的报文段测量SampleRTT
+    - SampleRTT 会变化，
+        - Because of this fluctuation, any given SampleRTT value may be atypical. In order to estimate a typical RTT, it is therefore natural to take some sort of average of the SampleRTT values.
+        - TCP maintains an average, called **EstimatedRTT**, of the SampleRTT values. 
+
+- EstimatedRTT（滤波算法）的计算方式
+    - `EstimatedRTT = (1-α) * EstimatedRTT + α * SampleRTT` 
     - 推荐值： $\alpha = 0.125$
-    
-    <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726075613747.png" style="zoom:80%"/>
+    - EstimatedRTT 是一个 SampleRTT 值的加权平均，其对最近样本赋予的权值比旧样本的权值更高，过去样本的影响呈指数衰减。统计学上称之为指数加权移动平均 (Exponential Weighted Moving Average)
+    - ![[30-Transport-layer-sampleRTT-estimatedRTT.png]]
+
+- 另一个尺度：RTT 的离散程度：
+	- `DevRTT=(1-β) * DevRTT + β * |SampleRTT-EstimatedRTT|`
+	- DevRTT 是对 SampleRTT 偏离 EstimatedRTT 的程度的估算
+	- β推荐值为 0.25
 
 - 设置超时
-    - EstimtedRTT + 安全边界时间(safety margin)
-    - EstimatedRTT变化大（方差大）
-        - 较大的安全边界时间
-    - SampleRTT会偏离EstimatedRTT多远：
-        - $[DevRTT] = (1-\alpha) * [(previous)DevRTT] + \alpha * |SampleRTT-EstimatedRTT|$
-        - 推荐值： $\alpha = 0.25$
-- 超时时间间隔设置为：
-    - $TimeoutInterval = EstimatedRTT + 4*DevRTT$
+    - EstimtedRTT + 安全边界时间 (safety margin)
+    - It is desirable to set the timeout equal to the EstimatedRTT plus some margin. ==The margin should be large when there is a lot of fluctuation in the SampleRTT values; it should be small when there is little fluctuation==. The value of DevRTT should thus come into play here. All of these considerations are taken into account in TCP’s method for determining the retransmission timeout interval:
+    - `TimeoutInterval = EstimatedRTT + 4*DevRTT`
+    - 推荐的初始超时间隔为 1s，出现超时后将加倍，而只要收到报文段就重新更新 EstimatedRTT 和 TimeoutInterval.
+
 
 ### 可靠数据传输
 
-TCP：可靠数据传输
-- TCP在IP不可靠服务的基础上建立了rdt
+- TCP 在 IP 不可靠的尽力服务的基础上建立了 rdt 服务
+    - TCP 确保一个进程从接收缓存中取出的数据流是无损坏、无间隙、非冗余、按序的数据流。
     - 管道化的报文段
         - GBN or SR
     - 累积确认，期望从另一方收到的下一个字节的序号，对顺序到来的最后一个字节给予确认（像GBN）
@@ -762,34 +787,73 @@ TCP：可靠数据传输
     - 忽略重复的确认
     - 忽略流量控制和拥塞控制
 
-TCP发送方事件：
+#### TCP 发送方事件
+
+```
+/* 简化版：假设发送方不受 TCP 流量或拥塞控制的限制，来自上方的数据长度小于 MSS，且数据传输仅为单向传输 */ 
+
+NextSeqNum=InitialSeqNumber
+SendBase=InitialSeqNumber
+
+loop (forever) {
+	switch(event) 
+		event: data received from application above
+			create TCP segment with sequence number NextSeqNum 
+			if (timer currently not running) 
+				start timer
+			pass segment to IP 
+			NextSeqNum=NextSeqNum+length(data)
+			break; 
+		event: timer timeout 
+			retransmit not-yet-acknowledged segment with smallest sequence number
+			start timer 
+			break; 
+		event: ACK received, with ACK field value of y 
+			if (y > SendBase) { 
+				SendBase=y
+				if (there are currently any not-yet-acknowledged segments) 
+					start timer 
+				} 
+			break; 
+	} /* end of loop forever */
+```
+
 - 从应用层接收数据：
-    - 用nextseq创建报文段
-    - 序号nextseq为报文段首字节的字节流编号
-    - 如果还没有运行，启动定时器
+    - 用 nextseq 创建报文段并交付给 IP 
+    - 如果定时器还没有运行，在传递给 IP 报文时，启动之
         - 定时器与最早未确认的报文段关联
-        - 过期间隔：TimeOutInterval
+        - 定时器的过期间隔：TimeOutInterval
 - 超时：
-    - 重传 后沿最老的报文段
+    - 重传未确认的最小序号的报文段
     - 重新启动定时器
 - 收到确认：
-    - 如果是对尚未确认的报文段确认
-        - 更新已被确认的报文序号
-        - 如果当前还有未被确认的报文段，重新启动定时器
+    - On the occurrence of this event, TCP compares the ACK value `y` with its `variable SendBase`. The TCP state variable `SendBase` is the sequence number of the oldest unacknowledged byte. (Thus SendBase–1 is the sequence number of the last byte that is known to have been received correctly and in order at the receiver.) 
+    - As indicated earlier, TCP uses ==cumulative acknowledgments, so that `y` acknowledges the receipt of all bytes before byte number ` y ` ==. 
+    - If `y > SendBase`, then the ACK is acknowledging one or more previously unacknowledged segments. Thus the sender updates its `SendBase` variable; it also restarts the timer if there currently are any not-yet-acknowledged segments.
 
-TCP：重传
+#### 三种 TCP 重传情况分析
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726081314233.png" height=300 /><img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726082045415.png" height=300/>
+![[30-Transport-layer-TCP-retransmission-1.png]]
+Figure 3.34 depicts the first scenario, in which Host A sends one segment to Host B. Suppose that this segment has sequence number 92 and contains 8 bytes of data. After sending this segment, Host A waits for a segment from B with acknowledgment number 100. Although the segment from A is received at B, the acknowledgment from B to A gets lost. In this case, the timeout event occurs, and Host A retransmits the same segment. Of course, when Host B receives the retransmission, it observes from the sequence number that the segment contains data that has already been received. Thus, TCP in Host B will discard the bytes in the retransmitted segment.
 
-产生TCP ACK的建议 [RFC 1122, RFC 2581]
-| 接收方的事件 | TCP接收方动作 |
-| --- | --- |
-| 所期望序号的报文段按序到达。所有在期望序号之前的数据都已经被确认 | 延迟的ACK（提高效率，少发一个ACK）。对另一个按序报文段的到达最多等待500ms。如果下一个报文段在这个时间间隔内没有到达，则发送一个ACK。|
-| 有期望序号的报文段到达。另一个按序报文段等待发送ACK | 立即发送单个累积ACK，以确认两个按序报文段。|
-| 比期望序号大的报文段乱序到达。检测出数据流中的间隔 | 立即发送重复的ACK，指明下一个期待字节的序号 |
-| 能部分或完全填充接收数据间隔的报文段到达 | 若该报文段起始于间隔(gap)的低端，则立即发送ACK（给确认并反映下一段的需求）。 |
+![[30-Transport-layer-TCP-retransmission-2.png]]
+In a second scenario, shown in Figure 3.35, Host A sends two segments back to back. The first segment has sequence number 92 and 8 bytes of data, and the second segment has sequence number 100 and 20 bytes of data. Suppose that both segments arrive intact at B, and B sends two separate acknowledgments for each of these segments. The first of these acknowledgments has acknowledgment number 100; the second has acknowledgment number 120. Suppose now that neither of the acknowledgments arrives at Host A before the timeout. When the timeout event occurs, Host A resends the first segment with sequence number 92 and restarts the timer. As long as the ACK for the second segment arrives before the new timeout, the second segment will not be retransmitted.
 
-快速重传（3个冗余ACK触发的重发）
+![[30-Transport-layer-retransmission-3.png]]
+In a third and final scenario, suppose Host A sends the two segments, exactly as in the second example. The acknowledgment of the first segment is lost in the network, but just before the timeout event, Host A receives an acknowledgment with acknowledgment number 120. Host A therefore knows that Host B has received everything up through byte 119; so Host A does not resend either of the two segments. This scenario is illustrated in Figure 3.36.
+
+产生 TCP ACK 的建议 [RFC 1122, RFC 2581]
+
+| 接收方的事件                                                     | TCP 接收方动作                                                                                                                        |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| 所期望序号的报文段按序到达。所有在期望序号之前的数据都已经被确认 | 延迟的ACK（提高效率，少发一个ACK）。对另一个按序报文段的到达最多等待500ms。如果下一个报文段在这个时间间隔内没有到达，则发送一个ACK。 |
+| 有期望序号的报文段到达。另一个按序报文段等待发送ACK              | 立即发送单个累积ACK，以确认两个按序报文段。                                                                                          |
+| 比期望序号大的报文段乱序到达。检测出数据流中的间隔               | 立即发送重复的ACK，指明下一个期待字节的序号                                                                                          |
+| 能部分或完全填充接收数据间隔的报文段到达                         | 若该报文段起始于间隔(gap)的低端，则立即发送ACK（给确认并反映下一段的需求）。                                                         |
+
+#### 超时间隔加倍
+
+#### 快速重传
 
 <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726083307463.png" style="zoom:80%"/>
 

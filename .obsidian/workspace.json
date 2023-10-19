@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "2838f2a1b9182021",
+        "id": "759ee0d055afbb5f",
         "type": "tabs",
         "children": [
           {
-            "id": "c040c0c1fdf67756",
+            "id": "0c82186fcfb55e10",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -76,7 +80,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 276.5
+    "width": 276.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -92,6 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,6 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +141,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md"
+              }
             }
           },
           {
@@ -149,7 +158,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -167,8 +177,26 @@
       "obsidian-advanced-slides:Show Slide Preview": false
     }
   },
-  "active": "c040c0c1fdf67756",
+  "active": "0c82186fcfb55e10",
   "lastOpenFiles": [
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-retransmission-3.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-retransmission-2.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-retransmission-1.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-sampleRTT-estimatedRTT.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-telnet-seq-ack-num.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-segments-seq-num.png",
+    "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
+    "1-Theory/4-Architecture/THU-Liu/11-ALU.md",
+    "1-Theory/4-Architecture/THU-Liu/assets/11-ALU-multiply-instance.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/11-ALU-multiply-circuit-3.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/11-ALU-multiply-circuit-2.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/11-ALU-multiply-flow.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/11-ALU-multiplex.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/0-操作系统概述.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/1-应用程序与基本执行环境.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/40-Time-sharing-preemptive.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/12-Instances-of-recursion.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/13-Dynamic-programming.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/14-Lowerbound-analyze.md",
@@ -177,26 +205,14 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Intro-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
     "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-segment-structure.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-send-receive-buffers.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-sync.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-operation.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-sender-receivers-actions.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-sender-windows.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN-operation.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN-FSM.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN-sender-seq.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-receive-loss.gif",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-receive-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-send-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN-receive-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN-send-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN.gif.crdownload",
-    "1-Theory/4-Architecture/THU-Liu/11-ALU.md",
     "1-Theory/4-Architecture/THU-Liu/10-Intro.md",
     "1-Theory/4-Architecture/THU-Liu/assets",
-    "1-Theory/4-Architecture/THU-Liu/12-Data-Calculate.md",
     "1-Theory/4-Architecture/THU-Liu/23-Singlecycle.md",
     "1-Theory/4-Architecture/THU-Liu/22-Datapath.md",
     "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
@@ -206,15 +222,9 @@
     "1-Theory/4-Architecture/THU-Liu/40-IO.md",
     "1-Theory/4-Architecture/THU-Liu/35-ARM.md",
     "1-Theory/4-Architecture/THU-Liu/34-Disk.md",
-    "1-Theory/4-Architecture/THU-Liu/33-Virtual-Memory.md",
-    "1-Theory/4-Architecture/THU-Liu/30-DRAM.md",
-    "1-Theory/4-Architecture/THU-Liu/31-Cache.md",
     "1-Theory/4-Architecture/THU-Liu/2020计原复习笔记.pdf",
     "1-Theory/4-Architecture/硬软件接口-riscv/ebook",
     "1-Theory/4-Architecture/硬软件接口-riscv/ebook/Computer Organization and Design RISC-V edition.pdf",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/00-课程准备与介绍.md",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/Appendix-ebook.md",
-    "1-Theory/4-Architecture/CSAPP/Keypoints/C0-Concurrence.md",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
