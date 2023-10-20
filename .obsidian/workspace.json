@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "8dff5f9f5d8cff99",
+        "id": "de319b1d2c488b83",
         "type": "tabs",
         "children": [
           {
-            "id": "66e86443360b4879",
+            "id": "c6977f6207f3a2f5",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -80,8 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 276.5,
-    "collapsed": true
+    "width": 276.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -97,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
+                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +109,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
+                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -142,7 +137,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md"
+                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md"
               }
             }
           },
@@ -177,10 +172,19 @@
       "obsidian-advanced-slides:Show Slide Preview": false
     }
   },
-  "active": "66e86443360b4879",
+  "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
+    "1-Theory/6-Network/Top-to-down/assets/TCP-flow-control.mp4",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-flow-control-rwnd.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-fast-retransmit.png",
+    "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
+    "1-Theory/4-Architecture/THU-Liu/assets/12-Data-Expression-and-EDC-question.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/12-Data-Expression-and-EDC-truetype.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/12-Data-Expression-and-EDC-utf8.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/40-Semaphore.md",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
+    "1-Theory/1-ProgramLanguage/Rust/30-Rustlings/安装与报错解决.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets/2-批处理操作系统-RISC-V-exception.png",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets",
@@ -208,16 +212,7 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/43-Probing-backtracking.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/图04-10-2.四皇后问题求解过程.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/图04-10-1.四皇后问题求解过程.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/图04-09.(a)皇后的控制范围，(b)8皇后问题的一个解.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/12-Instances-of-recursion-hanoi.png",
     "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-retransmission-3.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-retransmission-2.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-retransmission-1.png",
-    "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
-    "1-Theory/4-Architecture/THU-Liu/11-ALU.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/0-操作系统概述.md",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-receive-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-send-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR.gif.crdownload",

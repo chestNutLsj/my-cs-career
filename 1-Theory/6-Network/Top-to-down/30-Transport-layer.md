@@ -834,59 +834,143 @@ loop (forever) {
 #### 三种 TCP 重传情况分析
 
 ![[30-Transport-layer-TCP-retransmission-1.png]]
-Figure 3.34 depicts the first scenario, in which Host A sends one segment to Host B. Suppose that this segment has sequence number 92 and contains 8 bytes of data. After sending this segment, Host A waits for a segment from B with acknowledgment number 100. Although the segment from A is received at B, the acknowledgment from B to A gets lost. In this case, the timeout event occurs, and Host A retransmits the same segment. Of course, when Host B receives the retransmission, it observes from the sequence number that the segment contains data that has already been received. Thus, TCP in Host B will discard the bytes in the retransmitted segment.
+Figure 3.34 depicts the first scenario, in which Host A sends one segment to Host B. 
+- Suppose that this segment has sequence number 92 and contains 8 bytes of data. After sending this segment, Host A waits for a segment from B with acknowledgment number 100. Although the segment from A is received at B, ==the acknowledgment from B to A gets lost==.
+- In this case, the timeout event occurs, and Host A retransmits the same segment. Of course, when Host B receives the retransmission, it observes from the sequence number that ==the segment contains data that has already been received. Thus, TCP in Host B will discard the bytes in the retransmitted segment==.
 
 ![[30-Transport-layer-TCP-retransmission-2.png]]
-In a second scenario, shown in Figure 3.35, Host A sends two segments back to back. The first segment has sequence number 92 and 8 bytes of data, and the second segment has sequence number 100 and 20 bytes of data. Suppose that both segments arrive intact at B, and B sends two separate acknowledgments for each of these segments. The first of these acknowledgments has acknowledgment number 100; the second has acknowledgment number 120. Suppose now that neither of the acknowledgments arrives at Host A before the timeout. When the timeout event occurs, Host A resends the first segment with sequence number 92 and restarts the timer. As long as the ACK for the second segment arrives before the new timeout, the second segment will not be retransmitted.
+In a second scenario, shown in Figure 3.35, Host A sends two segments back to back. The first segment has sequence number 92 and 8 bytes of data, and the second segment has sequence number 100 and 20 bytes of data. 
+- Suppose that both segments arrive intact at B, and B sends two separate acknowledgments for each of these segments. The first of these acknowledgments has acknowledgment number 100; the second has acknowledgment number 120. 
+- Suppose now that ==neither of the acknowledgments arrives at Host A before the timeout==. When the timeout event occurs, Host A resends the first segment with sequence number 92 and restarts the timer. ==As long as the ACK for the second segment arrives before the new timeout, the second segment will not be retransmitted==.
 
 ![[30-Transport-layer-retransmission-3.png]]
-In a third and final scenario, suppose Host A sends the two segments, exactly as in the second example. The acknowledgment of the first segment is lost in the network, but just before the timeout event, Host A receives an acknowledgment with acknowledgment number 120. Host A therefore knows that Host B has received everything up through byte 119; so Host A does not resend either of the two segments. This scenario is illustrated in Figure 3.36.
-
-产生 TCP ACK 的建议 [RFC 1122, RFC 2581]
-
-| 接收方的事件                                                     | TCP 接收方动作                                                                                                                        |
-| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| 所期望序号的报文段按序到达。所有在期望序号之前的数据都已经被确认 | 延迟的ACK（提高效率，少发一个ACK）。对另一个按序报文段的到达最多等待500ms。如果下一个报文段在这个时间间隔内没有到达，则发送一个ACK。 |
-| 有期望序号的报文段到达。另一个按序报文段等待发送ACK              | 立即发送单个累积ACK，以确认两个按序报文段。                                                                                          |
-| 比期望序号大的报文段乱序到达。检测出数据流中的间隔               | 立即发送重复的ACK，指明下一个期待字节的序号                                                                                          |
-| 能部分或完全填充接收数据间隔的报文段到达                         | 若该报文段起始于间隔(gap)的低端，则立即发送ACK（给确认并反映下一段的需求）。                                                         |
+In a third and final scenario, suppose Host A sends the two segments, exactly as in the second example. 
+- The acknowledgment of the first segment is lost in the network, but just ==before the timeout event, Host A receives an acknowledgment with acknowledgment number 120==. 
+- Host A therefore knows that Host B has received everything up through byte 119; so Host A does not resend either of the two segments. This scenario is illustrated in Figure 3.36.
 
 #### 超时间隔加倍
 
+Whenever the timeout event occurs, TCP retransmits the not-yet-acknowledged segment with the smallest sequence number, as described above. 
+
+>首先重传最小序号的报文段，然后设置超时间隔为之前的两倍。
+
+But each time TCP retransmits, it sets the next timeout interval to twice the previous value, rather than deriving it from the last EstimatedRTT and DevRTT.
+
+>[! example] 超时间隔加倍的举例
+>For example, suppose `TimeoutInterval` associated with the oldest not yet acknowledged segment is 0.75 sec when the timer first expires. TCP will then retransmit this segment and set the new expiration time to 1.5 sec. If the timer expires again 1.5 sec later, TCP will again retransmit this segment, now setting the expiration time to 3.0 sec.
+>
+>Thus, the intervals grow exponentially after each retransmission. 
+>
+>However, ==whenever the timer is started after either of the two other events (that is, data received from application above, and ACK received)==, the TimeoutInterval is derived from the most recent values of `EstimatedRTT` and `DevRTT`.
+
+超时重传提供了一种形式受限的拥塞控制，可以处理由于网络拥塞导致的排队时间过长，并且由于重发时间的延长也一定程度上降低了信道中重传报文的数量。
+
 #### 快速重传
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726083307463.png" style="zoom:80%"/>
-
-- 超时周期往往太长：
-    - 在重传丢失报文段之前的延时太长
-- 通过重复的ACK来检测报文段丢失
+- 超时周期往往太长，
+    - 因此等待超时重传会导致分组的端到端延时过长。
+- 通过冗余 ACK 来检测报文段丢失
     - 发送方通常连续发送大量报文段
-    - 如果报文段丢失，通常会引起多个重复的ACK
-- 如果发送方收到同一数据的3个冗余ACK，重传最小序号的段；
-    - 快速重传：在定时器过时之前重发报文段
+    - 如果报文段频繁丢失（不论发送方报文段还是 ACK 报文段），通常会引起多个重复的 ACK
+    - 更详细的 ACK 生成策略如下表：
+
+| 接收方的事件                                                     | TCP 接收方动作                                                                                                                           |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| 所期望序号的报文段按序到达。所有在期望序号之前的数据都已经被确认 | 延迟的 ACK（提高效率，少发一个 ACK）。对另一个按序报文段的到达最多等待 500ms。如果下一个报文段在这个时间间隔内没有到达，则发送一个 ACK。 |
+| 有期望序号的报文段到达。另一个按序报文段等待发送 ACK             | 立即发送单个累积 ACK，以确认两个按序报文段。                                                                                             |
+| 比期望序号大的报文段乱序到达。检测出数据流中的间隔，出现报文丢失 | 立即发送重复的 ACK，指明下一个期待字节的序号                                                                                             |
+| 能部分或完全填充接收数据间隔的报文段到达                         | 若该报文段起始于间隔 (gap)的低端，则立即发送 ACK（给确认并反映下一段的需求）。                                                           |
+
+- 如果发送方收到同一报文段的 3 个冗余 ACK：
+    - 快速重传：==在定时器过时之前重发报文段==
     - 它假设跟在被确认的数据后面的数据丢失了
         - 第一个ACK是正常的；
         - 收到第二个该段的ACK，表示接收方收到一个该段后的乱序段；
         - 收到第3，4个该段的ack，表示接收方收到该段之后的2、3个乱序段，有非常大的可能性为段丢失了
 
-三重ACK接收后的快速重传
+![[30-Transport-layer-TCP-fast-retransmit.png]]
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726083418896.png" style="zoom:80%" />
+```
+/* 快速重传版：注意看事件——ACK被接收 */ 
+
+NextSeqNum=InitialSeqNumber
+SendBase=InitialSeqNumber
+
+loop (forever) {
+	switch(event) 
+		event: data received from application above
+			create TCP segment with sequence number NextSeqNum 
+			if (timer currently not running) 
+				start timer
+			pass segment to IP 
+			NextSeqNum=NextSeqNum+length(data)
+			break; 
+		event: timer timeout 
+			retransmit not-yet-acknowledged segment with smallest sequence number
+			start timer 
+			break; 
+		event: ACK received, with ACK field value of y 
+			if (y > SendBase) { 
+				SendBase=y 
+				if (there are currently any not yet acknowledged segments) 
+					start timer 
+				}else {/* a duplicate ACK for already ACKed segment */ 
+					increment number of duplicate ACKs received for y 
+					if (number of duplicate ACKS received for y==3) 
+					/* TCP fast retransmit */ 
+					resend segment with sequence number y 
+					} 
+				break; 
+	} /* end of loop forever */
+```
+
+>[! note] 为什么要等到 3 个冗余 ACK 才重传？而不是 1 个冗余 ACK 就重传？
+>Suppose packets n, n+1, and n+2 are sent, and that packet n is received and ACKed. If packets n+1 and n+2 are reordered along the end-to-end-path (i.e., are received in the order n+2, n+1) then the receipt of packet n+2 will generate a duplicate ack for n and would trigger a retransmission under a policy of waiting only for second duplicate ACK for retransmission. By waiting for a triple duplicate ACK, it must be the case that two packets after packet are correctly received, while n+1 was not received.
+>
+>The designers of the triple duplicate ACK scheme probably felt that waiting for two packets (rather than 1) was the right tradeoff between triggering a quick retransmission when needed, but not retransmitting prematurely in the face of packet reordering.
+
+#### TCP: GBN or SR?
+
+- Recall that TCP acknowledgments are cumulative and correctly received but out-of-order segments are not individually ACKed by the receiver. 
+- Consequently, as shown in Figure 3.33, the TCP sender need only maintain the smallest sequence number of a transmitted but unacknowledged byte (`SendBase`) and the sequence number of the next byte to be sent (`NextSeqNum`). In this sense, TCP looks a lot like a GBN-style protocol. 
+- But there are some striking differences between TCP and Go-Back-N. Many TCP implementations will buffer correctly received but out-of-order segments. 
+
+>[!example] TCP 也有 SR 风格
+>Consider also what happens when the sender sends a sequence of segments 1, 2, . . . , N, and all of the segments arrive in order without error at the receiver. 
+>
+>Further suppose that the acknowledgment for packet n < N gets lost, but ==the remaining N - 1 acknowledgments arrive at the sender before their respective timeouts==. In this example, GBN would retransmit not only packet n, but also all of the subsequent packets n + 1, n + 2, . . . , N. ==**TCP, on the other hand, would retransmit at most one segment**==, namely, segment n. 
+>
+>Moreover, TCP would not even retransmit segment n if the acknowledgment for segment n + 1 arrived before the timeout for segment n. 
+
+A proposed modification to TCP, the so-called selective acknowledgment [RFC 2018] , allows a TCP receiver to acknowledge out-of-order segments selectively rather than just cumulatively acknowledging the last correctly received, in-order segment. When combined with selective retransmission—skipping the retransmission of segments that have already been selectively acknowledged by the receiver— ==TCP looks a lot like our generic SR protocol==. Thus, TCP’s error-recovery mechanism is probably best categorized as a hybrid of GBN and SR protocols.
 
 ### 流量控制
 
 目的：接收方控制发送方，不让发送方发送的太多、太快，超过了接收方的处理能力，以至于让接收方的接收缓冲区溢出
 
+>[! warning] 不要混淆流量控制与拥塞控制
+>- 流量控制是由接收方控制发送方，根据接收方缓冲区接收数据的能力提示发送方发送报文的速度，从而达到速度匹配。
+>- 拥塞控制是发送方通过监测信道，由于 IP 网络的拥塞而主动地减缓发送报文的速度。
+>
+>这二者采取的动作非常相似，但概念和针对的情形截然不同。
+
 TCP流量控制
-- 接收方在其向发送方的TCP段头部的rwnd字段“通告”其空闲buffer大小
-    - RcvBuffer大小通过socket选项设置（典型默认大小为4096字节）
-    - 很多操作系统自动调整RcvBuffer
-- 发送方限制未确认(“in-flight”)字节的个数小于等于接收方发送过来的 rwnd 值
-- 保证接收方不会被淹没
-- 假设TCP接收方丢弃乱序的报文段，则缓存中的可用的空间：
-  $RcvWindow = RcvBuffer - [LastByteRcvd - LastByteRead]$
-  
-  <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726115906902.png" style="zoom:60%"/>
+- 通过让发送方维护接收窗口 `receive window` 这一变量，使发送方得知接收方还有多少可用的缓存空间。由于 TCP 是全双工的，因此 the sender at each side of the connection maintains a distinct ` receive window `.
+- 试分析主机 A 通过 TCP 向主机 B 发送一个大文件：
+	- 主机 B 为该连接分配的接收缓存大小 —— `RcvBuffer`
+	- 主机 B 的高层进程不时从该缓存中读取数据，其中以 `LastByteRead` 表示从缓存中读取的数据流的最后一字节之编号，以 `LastByteRcvd` 表示网络中到达并放入接收缓存中数据流的最后一个字节之编号。可见有关系：`LastByteRcvd-LastByteRead <= RcvBuffer`
+	- 接收窗口有如下关系：
+		- `rwnd=RcvBuffer-(LastByteRcvd-LastByteRead)`
+		- ![[30-Transport-layer-TCP-flow-control-rwnd.png]]
+		- `rwnd` 是动态变化的。
+	- 主机 B 通过把当前的 `rwnd` 值放入发送给主机 A 的报文段的接收窗口字段中，通知主机 A 在该连接的接收缓存中还有多少空间。初始时 `rwnd=RcvBuffer`
+	- 主机 A 轮流跟踪两个变量 `LastByteSent` 和 `LastByteAcked`，二者之差就是 A 发送到连接中但未确认的报文段。通过控制这个差值不大于 `rwnd`，就可以保证 B 的接收缓存不会溢出。即 A 在连接整个过程中都要保证 `LastByteSent-LastByteAcked<=rwnd`
+	- 此时，要注意一种特殊情况：
+		- B 的接收缓存满时，`rwnd=0`，且 B 没有任何数据需要发送给 A（即 B 向 A 发送的最后一个报文段是 `rwnd=0` 的 ACK 确认），
+		- 那么即使 B 中缓存区已经清空，A 仍然不会发送报文段，A 被阻塞在此！（只有当 B 向 A 发送报文段时才会更新 `rwnd` 从而 A 恢复发送）
+		- 要解决这一问题，TCP 要求 B 的接收窗口为 0 时，A 继续发送只有一个字节的报文段，从而保证接收方不会停止发送 ACK；
+
+![[TCP-flow-control.mp4]]
 
 ### 连接管理
 
