@@ -266,6 +266,27 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Intro-Exercise.md",
               "subpath": "#更相减损术",
               "title": "更相减损术"
+            },
+            {
+              "type": "file",
+              "ctime": 1697778997653,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/12-Instances-of-recursion.md",
+              "subpath": "#Hanoi 问题",
+              "title": "Hanoi问题"
+            },
+            {
+              "type": "file",
+              "ctime": 1697781942744,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/43-Probing-backtracking.md",
+              "subpath": "#八皇后问题",
+              "title": "八皇后问题"
+            },
+            {
+              "type": "file",
+              "ctime": 1697781955896,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/43-Probing-backtracking.md",
+              "subpath": "#迷宫寻径",
+              "title": "迷宫寻径问题"
             }
           ],
           "title": "算法问题"
@@ -301,6 +322,27 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Intro-Exercise.md",
               "subpath": "#递归与调用 4",
               "title": "递归调用：二分递归实例分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1697785086634,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
+              "subpath": "#平均分析 Vs. 分摊分析",
+              "title": "平均分析 Vs. 分摊分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1697785398564,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
+              "subpath": "#二分查找 b",
+              "title": "二分查找B和C的特点"
+            },
+            {
+              "type": "file",
+              "ctime": 1697785676488,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
+              "subpath": "#2-way merge",
+              "title": "二路归并排序的复杂度、优缺点与改进"
             }
           ],
           "title": "知识点细节"
@@ -335,6 +377,12 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/14-Lowerbound-analyze.md",
               "subpath": "#CBA排序算法下界",
               "title": "CBA排序算法下界分析(比较树)"
+            },
+            {
+              "type": "file",
+              "ctime": 1697784909206,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/13-Dynamic-Programming.md",
+              "title": "动态规划"
             }
           ],
           "title": "拓展延伸"
@@ -475,6 +523,27 @@
               "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
               "subpath": "#Trap 上下文的理解",
               "title": "Trap 上下文的理解"
+            },
+            {
+              "type": "file",
+              "ctime": 1697787508806,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
+              "subpath": "#任务地址空间中的数据和代码段类型",
+              "title": "任务地址空间中的数据和代码段类型"
+            },
+            {
+              "type": "file",
+              "ctime": 1697787611865,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
+              "subpath": "#特权级上下文和任务上下文的异同",
+              "title": "特权级上下文和任务上下文的异同"
+            },
+            {
+              "type": "file",
+              "ctime": 1697787767741,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
+              "subpath": "#上下文切换需要使用汇编语言实现的原因",
+              "title": "上下文切换需要使用汇编语言实现的原因"
             }
           ],
           "title": "简答题"
@@ -510,6 +579,34 @@
               "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
               "subpath": "#RISC-V 支持的中断/异常及细节",
               "title": "RISC-V 支持的中断/异常及细节"
+            },
+            {
+              "type": "file",
+              "ctime": 1697787148044,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
+              "subpath": "#如何判断进入 OS 内核的起因是调用还是异常？",
+              "title": "判断进入 OS 内核的起因是调用还是异常"
+            },
+            {
+              "type": "file",
+              "ctime": 1697787213653,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
+              "subpath": "#中断机制中 PLIC 和 CLINT",
+              "title": "中断机制中 PLIC 和 CLINT 的作用"
+            },
+            {
+              "type": "file",
+              "ctime": 1697787270056,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
+              "subpath": "#RISC-V 中断嵌套",
+              "title": "RISC-V 中断嵌套"
+            },
+            {
+              "type": "file",
+              "ctime": 1697787852695,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
+              "subpath": "#Linux 与 RISC-V",
+              "title": "Linux与RISC-V"
             }
           ],
           "title": "RISC-V相关"

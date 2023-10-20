@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "759ee0d055afbb5f",
+        "id": "8dff5f9f5d8cff99",
         "type": "tabs",
         "children": [
           {
-            "id": "0c82186fcfb55e10",
+            "id": "66e86443360b4879",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
+                "file": "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
                 "mode": "source",
                 "source": false
               }
@@ -97,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
+                "file": "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
+                "file": "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -142,7 +142,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md"
+                "file": "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md"
               }
             }
           },
@@ -177,54 +177,54 @@
       "obsidian-advanced-slides:Show Slide Preview": false
     }
   },
-  "active": "0c82186fcfb55e10",
+  "active": "66e86443360b4879",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets/2-批处理操作系统-RISC-V-exception.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/17-Recursion-Wikipedia.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/17-Recursion-Wikipedia-Recursion-Tree.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/22-In-place-mergeSort.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/30-List.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/24-Bitmap.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/23-N-way-merge.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/assets/图02-16.基于减治策略的有序向量二分查找算法（版本C）.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/14-Lowerbound-analyze.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/13-Dynamic-Programming.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/12-Instances-of-recursion.md",
+    "1-Theory/3-Algorithm/OIWiki/DP/10-Knapsack.md",
+    "1-Theory/3-Algorithm/OIWiki/DP/20-Interval.md",
+    "1-Theory/3-Algorithm/OIWiki/DP/00-Introduction.md",
+    "1-Theory/3-Algorithm/OIWiki/DP",
+    "1-Theory/3-Algorithm/OIWiki",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/16-Stirling-Approximation.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/15-Little-o-notation.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/13-Dynamic-programming.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/43-Probing-backtracking.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/图04-10-2.四皇后问题求解过程.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/图04-10-1.四皇后问题求解过程.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/图04-09.(a)皇后的控制范围，(b)8皇后问题的一个解.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/12-Instances-of-recursion-hanoi.png",
+    "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-retransmission-3.png",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-retransmission-2.png",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-retransmission-1.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-sampleRTT-estimatedRTT.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-telnet-seq-ack-num.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-segments-seq-num.png",
     "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
     "1-Theory/4-Architecture/THU-Liu/11-ALU.md",
-    "1-Theory/4-Architecture/THU-Liu/assets/11-ALU-multiply-instance.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/11-ALU-multiply-circuit-3.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/11-ALU-multiply-circuit-2.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/11-ALU-multiply-flow.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/11-ALU-multiplex.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/0-操作系统概述.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/1-应用程序与基本执行环境.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/40-Time-sharing-preemptive.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/12-Instances-of-recursion.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/13-Dynamic-programming.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/14-Lowerbound-analyze.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/15-Little-o-notation.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/16-Stirling-Approximation.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Intro-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
-    "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-receive-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-send-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN-receive-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN-send-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN.gif.crdownload",
-    "1-Theory/4-Architecture/THU-Liu/10-Intro.md",
     "1-Theory/4-Architecture/THU-Liu/assets",
-    "1-Theory/4-Architecture/THU-Liu/23-Singlecycle.md",
-    "1-Theory/4-Architecture/THU-Liu/22-Datapath.md",
-    "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
-    "1-Theory/4-Architecture/THU-Liu/20-Intruction-x86.md",
-    "1-Theory/4-Architecture/THU-Liu/42-Device.md",
-    "1-Theory/4-Architecture/THU-Liu/41-Bus.md",
-    "1-Theory/4-Architecture/THU-Liu/40-IO.md",
-    "1-Theory/4-Architecture/THU-Liu/35-ARM.md",
-    "1-Theory/4-Architecture/THU-Liu/34-Disk.md",
-    "1-Theory/4-Architecture/THU-Liu/2020计原复习笔记.pdf",
-    "1-Theory/4-Architecture/硬软件接口-riscv/ebook",
-    "1-Theory/4-Architecture/硬软件接口-riscv/ebook/Computer Organization and Design RISC-V edition.pdf",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",

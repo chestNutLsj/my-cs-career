@@ -163,13 +163,3 @@ With an integer M, the aim is to determine the number of approaches to obtain th
 ### Takeaway
 
 Dynamic programming is among the more advanced skills one must learn as a programmer or [DevOps engineer](https://www.spiceworks.com/tech/devops/articles/devops-engineer/), mainly if you specialize in [Python](https://www.spiceworks.com/tech/artificial-intelligence/articles/top-python-machine-learning-libraries/). It is a relatively simple way to solve complex algorithmic problems and a skill you can apply to virtually any language or use case. For example, the viral game, Wordle, follows dynamic programming principles, and users can train an algorithm to resolve it by finding the most optimal combination of alphabets. In other words, the skill has versatile applications and must be part of every DevOps learning kit. 
-
-**_Did this article help you understand how dynamic programming works? Tell us on_** [**_Facebook_**Opens a new window]( https://www.facebook.com/SpiceworksNews/ "Opens a new window") **_,_** [**_Twitter_**Opens a new window]( https://twitter.com/SpiceworksNews "Opens a new window") **_, and_** [**_LinkedIn_**Opens a new window]( https://www.linkedin.com/company/spiceworksdotcom/ "Opens a new window") **_. We’d love to hear from you!_** 
-
-### **MORE ON DEVOPS**
-
-*   [Top 10 Azure DevOps Certifications in 2022](https://www.spiceworks.com/tech/devops/articles/azure-devops-certifications/)
-*   [What Is DevOps Lifecycle? Definition, Key Components, and Management Best Practices](https://www.spiceworks.com/tech/devops/articles/what-is-devops-lifecycle/)
-*   [Top 10 Scrum Master Certifications in 2022](https://www.spiceworks.com/tech/devops/articles/scrum-master-certifications/)
-*   [Top 18 Azure DevOps Interview Questions in 2022](https://www.spiceworks.com/tech/devops/articles/azure-devops-interview-questions/)
-*   [Top 10 DevOps Certifications and Courses in 2022](https://www.spiceworks.com/tech/devops/articles/devops-certifications-and-courses/)
