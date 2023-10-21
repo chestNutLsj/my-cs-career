@@ -975,57 +975,104 @@ TCP流量控制
 ### 连接管理
 
 连接
-- 两个应用进程建立起的TCP连接
+- TCP 连接的建立会显著增加延迟
+- 常见网络攻击如 SYN 洪泛就是攻击了 TCP 连接管理的弱点
 - 连接的本质：
     - 双方知道要和对方通信
     - 为这次通信建立好缓冲区，准备好资源
     - 一些控制变量需要做置位，两者需要互相告知自己的初始序号，初始化的RcvBuffer
 
+#### “三次握手”建立连接
+
 在正式交换数据之前，发送方和接收方握手建立通信关系：
-- 同意建立连接（每一方都知道对方愿意建立连接）
+- 同意建立连接（双方都知道对方愿意建立连接）
 - 同意连接参数
 
-同意建立连接
-- Q：在网络中，2次握手建立连接总是可行吗？不行
-    - 变化的延迟（连接请求的段没有丢，但可能超时）
-    - 由于丢失造成的重传（e.g. req_conn(x)）
-    - 报文乱序
-    - 相互看不到对方
-    - 2次握手的失败场景：
-      
-      <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726121120744.png"/>
+“三次握手”的详细步骤：
+![[30-Transport-layer-TCP-connection-3-handshake.png]]
+1. Step 1. The client-side TCP first sends a special TCP segment to the server-side TCP. ==This special segment contains no application-layer data. But one of the flag bits in the segment’s header, the SYN bit, is set to 1==. For this reason, this special segment is referred to as a **SYN segment**. In addition, the client randomly chooses an initial sequence number (`client_isn`) and puts this number in the sequence number field of the initial TCP SYN segment. This segment is encapsulated within an IP datagram and sent to the server. There has been considerable interest in properly randomizing the choice of the `client_isn` ==in order to avoid certain security attacks== [RFC 4987].
+2. Step 2. Once the IP datagram containing the TCP SYN segment arrives at the server host, the server extracts the TCP SYN segment from the datagram, ==allocates the TCP buffers and variables to the connection==, and sends a connection-granted segment to the client TCP. This connection-granted segment also contains no application-layer data. However, it does contain three important pieces of information in the segment header. 
+	- First, the SYN bit is set to 1. 
+	- Second, the acknowledgment field of the TCP segment header is set to `client_isn+1`.
+	- Finally, the server chooses its own initial sequence number (`server_isn`) and puts this value in the sequence number field of the TCP segment header. ==The connection-granted segment is referred to as a **SYNACK segment==**. 
+3. Step 3. ==Upon receiving the SYNACK segment, the client also allocates buffers and variables to the connection==. The client host then sends the server yet another segment; this last segment acknowledges the server’s connection-granted segment (the client does so by putting the value `server_isn+1` in the acknowledgment field of the TCP segment header). **The SYN bit is set to zero**, since the connection is established. This third stage of the three-way handshake may carry client-to server data in the segment payload.
 
-解决方案：TCP **3次握手**（变化的初始序号+双方确认对方的序号）
+>[! warning] Server allocates buffers too early.
+>We’ll see in Chapter 8 that the allocation of these buffers and variables before completing the third step of the three-way handshake makes TCP vulnerable to a denial-of-service attack known as SYN flooding.
+
+经过三次握手后，连接被建立，之后的报文交换中 SYN 标记位始终是 0。
+
+
+TCP 3次握手中的捎带：（变化的初始序号+双方确认对方的序号）
 - 第一次：client-->server：客户端一方的初始序号 $x$
 - 第二次：server-->client：发送确认 $ACKnum=x+1$ 和服务器一方的初始序号 $y$ （捎带）
 - 第三次：client-->server：发送确认 $ACKnum=y+1$ 和客户端data（捎带）
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726121321781.png" />
+>[! note] 为什么是三次握手而不是两次？
+>![[30-Transport-layer-two-way-handshake-false.png]]
+>
+>三次握手通过变化的初始序号+双方确认对方的序号，解决半连接和接收老数据问题。
+>
+>![[30-Transport-layer-three-way-handshake-right.png]]
+>1. 二次握手：可能发送半连接（只在服务器维护了连接）；三次握手：客户端在第三次握手拒绝连接请求
+>2. 二次握手：老的数据被当成新的数据接收了；三次握手：未建立连接（无半连接），故将发来的数据丢掉（扔掉：连接不存在，没建立起来；连接的序号不在当前连接的范围之内）
+>3. 若一个数据滞留时间足够长导致在TCP第二次连接（两个三次握手后）到来，这个数据包大概率也会被丢弃，因为初始序号seq不一样，而seq又与时间有关（时钟周期的第k位）
 
-3次握手解决：半连接和接收老数据问题
+#### “四次挥手”关闭连接
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726121605926.png" />
 
-1. 二次握手：可能发送半连接（只在服务器维护了连接）；三次握手：客户端在第三次握手拒绝连接请求 服务器二次握手后的连接请求
-2. 二次握手：老的数据被当成新的数据接收了；三次握手：未建立连接（无半连接），故将发来的数据丢掉（扔掉：连接不存在，没建立起来；连接的序号不在当前连接的范围之内）
-3. 若一个数据滞留时间足够长导致在TCP第二次连接（两个三次握手后）到来，这个数据包大概率也会被丢弃，因为初始序号seq不一样，而seq又与时间有关（时钟周期的第k位）
-
-TCP：关闭连接（连接释放）：**4次挥手**
-- 客户端，服务器分别关闭它自己这一侧的连接 
-  - 发送FIN bit = 1的TCP段
-- 一旦接收到FIN，用ACK回应
-  - 接到FIN段，ACK可以和它自己发出的FIN段一起发送
-- 可以处理同时的FIN交换
 - “对称释放，并不完美”
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726124018451.png" />
+![[30-Transport-layer-four-way-handwave.png]]
+TCP：关闭连接（连接释放）：**4 次挥手**
+- 客户端，服务器分别关闭它自己这一侧的连接 
+	- 客户端发送 FIN bit = 1 的特殊 TCP 段
+	- 服务器一旦接收到 FIN 报文，用 ACK 回应，等待一段时间后发送服务器自己的 FIN 报文段
+	- 客户端接到来自服务器的 FIN 报文段，发送 ACK 确认；同时客户端从收到服务器的 FIN 报文开始，等待一段时间后关闭自己的连接
+- 可以处理同时的 FIN 交换
 
-假设Client端发起中断连接请求，也就是发送FIN报文。Server端接到FIN报文后，意思是说“我Client端没有数据要发给你了”，但是如果你还有数据没有发送完成，则不必急着关闭Socket，可以继续发送数据。所以你先发送ACK，告诉Client端：“你的请求我收到了，但是我还没准备好，请继续你等我的消息”。这个时候Client端就进入FIN_WAIT状态，继续等待Server端的FIN报文。当Server端确定数据已发送完成，则向Client端发送FIN报文，告诉Client端：“好了，我这边数据发完了，准备好关闭连接了”。Client端收到FIN报文后，就知道可以关闭连接了，但是他还是不相信网络，怕Server端不知道要关闭，所以发送ACK后进入TIME_WAIT状态，如果Server端没有收到ACK则可以重传。Server端收到ACK后，就知道可以断开连接了。Client端等待了2MSL后依然没有收到回复，则证明Server端已正常关闭，那好，我Client端也可以关闭连接了。Ok，TCP连接就这样关闭了！
+>[! question] 为什么连接的时候是三次握手，关闭的时候却是四次握手
+>
+>答：因为当Server端收到Client端的SYN连接请求报文后，可以直接发送SYN+ACK报文。其中ACK报文是用来应答的，SYN报文是用来同步的。但是关闭连接时，当Server端收到FIN报文时，很可能并不会立即关闭SOCKET，所以只能先回复一个ACK报文，告诉Client端，“你发的FIN报文我收到了”。只有等到我Server端所有的报文都发送完了，我才能发送FIN报文，因此不能一起发送。故需要四步握手。
 
-【问题1】为什么连接的时候是三次握手，关闭的时候却是四次握手？    
-答：因为当Server端收到Client端的SYN连接请求报文后，可以直接发送SYN+ACK报文。其中ACK报文是用来应答的，SYN报文是用来同步的。但是关闭连接时，当Server端收到FIN报文时，很可能并不会立即关闭SOCKET，所以只能先回复一个ACK报文，告诉Client端，“你发的FIN报文我收到了”。只有等到我Server端所有的报文都发送完了，我才能发送FIN报文，因此不能一起发送。故需要四步握手。
+#### TCP 连接的生命周期
+
+![[30-Transport-layer-TCP-client-lifetime.png]]
+- The client TCP begins in the CLOSED state. 
+	- The application on the client side initiates a new TCP connection. 
+	- This causes TCP in the client to send a SYN segment to TCP in the server. After having sent the SYN segment, the client TCP enters the `SYN_SENT` state. 
+	- While in the `SYN_SENT` state, the client TCP waits for a segment from the server TCP that includes an acknowledgment for the client’s previous segment and has the SYN bit set to 1. 
+	- Having received such a segment, the client TCP enters the ESTABLISHED state. While in the ESTABLISHED state, the TCP client can send and receive TCP segments containing payload (that is, application-generated) data.
+- Suppose that the client application decides it wants to close the connection. (Note that the server could also choose to close the connection.) 
+	- This causes the client TCP to send a TCP segment with the FIN bit set to 1 and to enter the `FIN_WAIT_1` state. While in the `FIN_WAIT_1` state, the client TCP waits for a TCP segment from the server with an acknowledgment. 
+	- When it receives this segment, the client TCP enters the `FIN_WAIT_2` state. While in the `FIN_WAIT_2` state, the client waits for another segment from the server with the FIN bit set to 1; after receiving this segment, the client TCP acknowledges the server’s segment and enters the `TIME_WAIT` state. 
+	- The `TIME_WAIT` state lets the TCP client ==resend the final acknowledgment== in case the ACK is lost. The time spent in the `TIME_WAIT` state is implementation-dependent, but typical values are 30 seconds, 1 minute, and 2 minutes. After the wait, the connection formally closes and all resources on the client side (including port numbers) are released.
+
+![[30-Transport-layer-TCP-connection-server-lifetime.png]]
+
+>[! note] 如果收到报文段要求的端口不匹配？
+>Let’s consider what happens when a host receives a TCP segment whose port numbers or source IP address do not match with any of the ongoing sockets in the host. 
+>
+>For example, suppose a host receives a TCP SYN packet with destination port 80, but the host is not accepting connections on port 80 (that is, it is not running a Web server on port 80). 
+>- Then the host will send a special reset segment to the source. This TCP segment has the RST flag bit (see Section 3.5.2) set to 1. 
+>- Thus, when a host sends a reset segment, it is telling the source “I don’t have a socket for that segment. Please do not resend the segment.” 
+>- When a host receives a UDP packet whose destination port number doesn’t match with an ongoing UDP socket, the host sends a special ICMP datagram, as discussed in Chapter 5.
+
+#### SYN cookies
+
+THE SYN FLOOD ATTACK We’ve seen in our discussion of TCP’s three-way handshake that a server allocates and initializes connection variables and buffers in response to a received SYN. The server then sends a SYNACK in response, and awaits an ACK segment from the client. If the client does not send an ACK to complete the third step of this 3-way handshake, eventually (often after a minute or more) the server will terminate the half-open connection and reclaim the allocated resources. 
+
+This TCP connection management protocol sets the stage for a classic Denial of Service (DoS) attack known as the SYN flood attack. ==In this attack, the attacker(s) send a large number of TCP SYN segments, without completing the third handshake step. With this deluge of SYN segments, the server’s connection resources become exhausted as they are allocated (but never used!) for half-open connections; legitimate clients are then denied service==. Such SYN flooding attacks were among the first documented DoS attacks [CERT SYN 1996]. Fortunately, an effective defense known as SYN cookies [RFC 4987] are now deployed in most major operating systems. ***SYN cookies*** work as follows:
+
+- When the server receives a SYN segment, it does not know if the segment is coming from a legitimate user or is part of a SYN flood attack. So, ==instead of creating a half-open TCP connection for this SYN, the server creates an initial TCP sequence number that is a complicated function (hash function) of source and destination IP addresses and port numbers of the SYN segment, as well as a secret number only known to the server==. This carefully crafted initial sequence number is the so-called “cookie.” The server then sends the client a SYNACK packet with this special initial sequence number. **Importantly, the server does not remember the cookie or any other state information corresponding to the SYN**. 
+- A legitimate client will return an ACK segment. When the server receives this ACK, it must verify that the ACK corresponds to some SYN sent earlier. But how is this done if the server maintains no memory about SYN segments? As you may have guessed, it is done with the cookie. Recall that for a legitimate ACK, the value in the acknowledgment field is equal to the initial sequence number in the SYNACK (the cookie value in this case) plus one (see Figure 3.39). The server can then run the same hash function using the source and destination IP address and port numbers in the SYNACK (which are the same as in the original SYN) and the secret number. ==If the result of the function plus one is the same as the acknowledgment (cookie) value in the client’s SYNACK, the server concludes that the ACK corresponds to an earlier SYN segment and is hence valid. The server then creates a fully open connection along with a socket==. 
+- On the other hand, if the client does not return an ACK segment, then the original SYN has done no harm at the server, since the server hasn’t yet allocated any resources in response to the original bogus SYN.
 
 ## 3.6 拥塞控制原理
+
+丢包通常是网络拥塞时路由器缓存区溢出而引起，因此分组重传往往是拥塞的预兆，但重传并不能解决拥塞反而会进一步加重拥塞。
+
+### 拥塞原因与代价
 
 拥塞：
 - 非正式的定义：“太多的数据需要网络传输，超过了网络的处理能力”
@@ -1033,36 +1080,43 @@ TCP：关闭连接（连接释放）：**4次挥手**
 - 拥塞的表现：
     - 分组丢失（路由器缓冲区溢出）
     - 分组经历比较长的延迟（在路由器的队列中排队）
-- 网络中前10位的问题！
 
-拥塞的原因/代价：场景1
-- 2个发送端，2个接收端
-- 1个路由器，具备无限大的缓冲
-- 输出链路带宽： $R$ 
-- 没有重传
-- 每个连接的最大吞吐量： $R/2$ ；当进入的速率 $\lambda_{in}$ 接近链路链路带宽 $R$ 时，延迟增大（此时流量强度趋于1）
+#### Case 1: Two Senders, a Router with Infinite Buffers
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726125936998.png" />
+![[30-Transport-layer-congestion-case-1.png]]
+- 2个发送端，2个接收端，共享 1 个单跳路由，路由器具备无限大的缓冲
+- 主机 A 和 B 的应用输入连接中的数据速率为 $\lambda_{in}$ Bytes/s  
+- 传输层协议简单封装即发送，不做差错恢复（没有重传）、流量控制、拥塞控制
 
-拥塞的原因/代价：场景2
-- 1个路由器，有限的缓冲
-- 分组丢失时，发送端重传
-    - 应用层的输入=应用层输出： $\lambda_{in} = \lambda_{out}$
-    - 传输层的输入包括重传： $\lambda_{in}^{'} \geq \lambda_{in}$，且当流量强度越趋于1， $\lambda_{in}^{'}$ 将比 $\lambda_{in}$ 大得多（很多都需要重传）
+![[30-Transport-layer-congestion-case-1-performance.png]]
+- 左图是每连接的吞吐量 $\lambda_{out}$ 与连接发送速率 $\lambda_{in}$ 的关系，发送速率处于 0~R/2 时二者相等，一旦发送速率超过 R/2，吞吐量不再增加；
+- 无论 A 和 B 将发送速率提升到多高，各自的吞吐量也不会超过 R/2
+- 右图显示，当吞吐量接近链路容量时，时延快速增大：当进入的速率 $\lambda_{in}$ 接近链路链路带宽 $R$ 时，延迟增大（此时流量强度趋于1）
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726130345272.png" />
 
-场景2：
-1. 理想化：发送端有完美的信息
-- 发送端知道什么时候路由器的缓冲是可用的
-    - 只在缓冲可用时发送
-    - 不会丢失：$\lambda_{in}^{'} = \lambda_{in}$
-2. 理想化：掌握丢失信息
-- 分组可以丢失，在路由器由于缓冲器满而被丢弃
-- 如果知道分组丢失了，发送方重传分组
-3. 现实情况：重复
-- 分组可能丢失，由于缓冲器满而被丢弃
-- 发送端最终超时，发送第2个拷贝，2个分组都被传出
+#### Case 2: Two Senders and a Router with Finite Buffers
+![[30-Transport-layer-congestion-case-2.png]]
+- 1个路由器，有限的缓冲: 缓冲区满时到达的分组会被丢弃
+- 为了可靠，分组丢失时，发送端会重传
+    - 应用层的发送速率 $\lambda_{in}$
+    - 传输层的发送速率 $\lambda_{in}^{'} = \lambda_{in} + \lambda_{resend}$ ，$\lambda_{in}^{'}$ 称为供给载荷 offered load
+    -  $\lambda_{in}^{'} \geq \lambda_{in}$，等号当且仅当 A 和 B 的发送速率都不超过 R/2 时才成立，
+    - 一旦发送速率 $\lambda_{in}>R/2$ 时，缓存区溢出会导致重传分组，重传一旦产生就会逐渐累积，情况渐渐恶化。
+![[30-Transport-layer-congestion-case-2-performance.png]]
+
+1. First, consider the unrealistic case that Host A is able to somehow determine whether or not a buffer is free in the router and thus ==sends a packet only when a buffer is free==. In this case, no loss would occur, $\lambda_{in}$ would be equal to $\lambda_{in}^{'}$, and the throughput of the connection would be equal to $\lambda_{in}$. This case is shown in Figure 3.46(a). ***Note that the average host sending rate cannot exceed R/2 under this scenario, since packet loss is assumed never to occur***. ($\lambda_{out}=\lambda_{in}^{'}$ 代表着路由器输出分组速度和应用层发送分组的速度相同)
+
+2. Consider the case that the sender ==retransmits only when a packet is known for certain to be lost==. In this case, the offered load, $\lambda_{in}^{'}$ (the rate of original data transmission plus retransmissions), equals R/2. 
+	- According to Figure 3.46 (b), at this value of the offered load, the rate at which data are delivered to the receiver application is $\lambda_{out}=R/3$. 
+	- Thus, out of the 0.5R units of data transmitted, 0.333R bytes/sec (on average) are original data and 0.166R bytes/sec (on average) are retransmitted data. 
+	- We see here another cost of a congested network — ***the sender must perform retransmissions in order to compensate for dropped (lost) packets due to buffer overflow.***
+
+3. Consider the case that the ==sender may time out prematurely and retransmit a packet that has been delayed in the queue but not yet lost==. In this case, both the original data packet and the retransmission may reach the receiver.
+	- The work done by the router in forwarding the retransmitted copy of the original packet was wasted, as the receiver will have already received the original copy of this packet.
+	- Here then is yet another cost of a congested network—***unneeded retransmissions by the sender in the face of large delays may cause a router to use its link bandwidth to forward unneeded copies of a packet***. 
+	- Figure 3.46 (c) shows the throughput versus offered load when each packet is assumed to be forwarded (on average) twice by the router. Since each packet is forwarded twice, the throughput will have an asymptotic value of R/4 as the offered load approaches R/2
+
+
 - 此时随着 $\lambda_{in}$ 的增大， $\lambda_{out}$ 也增大，但是由于超时重传的比例越来越大， $\lambda_{out}$ 越来越小于 $\lambda_{in}$
     - 输出比输入少原因：1）重传的丢失分组；2）没有必要重传的重复分组
 
@@ -1070,21 +1124,40 @@ TCP：关闭连接（连接释放）：**4次挥手**
 - 延时大
 - 为了达到一个有效输出，网络需要做更多的泵入（重传）
 - 没有必要的重传，链路中包括了多个分组的拷贝
-    - 是那些没有丢失，经历的时间比较长（拥塞状态）但是超时的分组，重发没有必要，对本就拥塞的网络雪上加霜（网络加速变坏，非线性）
+    - 是那些没有丢失，经历的时间比较长（拥塞状态）但是超时的分组，重发没有必要，对本就拥塞的网络雪上加霜（**网络加速变坏，非线性**）
     - 降低了的“goodput”
 
-拥塞的原因/代价：场景3
+#### Case 3: Four Senders, Routers with Finite Buffers, and Multihop Paths
+
+![[30-Transport-layer-congestion-case-3.png]]
 - 4个发送端
-- 多重路径
+- 多重路径，多跳连接，所有主机 $\lambda_{in}$ 相同，所有链路容量都是 $R$
 - 超时/重传
-- Q：当 $\lambda_{in}^{'}$ 、 $\lambda_{in}$ 增加时，会发生什么？    
-    A：当红色的 $\lambda_{in}^{'}$ 增加时，所有到来的蓝色分组都在最上方的队列中丢弃了，蓝色吞吐->0
+- Let’s consider the connection from Host A to Host C, passing through routers R1 and R2. The A–C connection shares router R1 with the D–B connection and shares router R2 with the B–D connection. 
+	- For extremely small values of $\lambda_{in}$, buffer overflows are rare (as in congestion cases 1 and 2), and the throughput approximately equals the offered load. 
+	- For slightly larger values of $\lambda_{in}$, the corresponding throughput is also larger, since more original data is being transmitted into the network and delivered to the destination, and overflows are still rare. Thus, for small values of $\lambda_{in}$, an increase in $\lambda_{in}$ results in an increase in $\lambda_{in}$. （较小的 $\lambda_{in}$，其增大会导致 $\lambda_{out}$ 增大，但不会有太多缓存溢出）
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726131141125.png" height=200/><img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726131409102.png" height=200 />
+- Having considered the case of extremely low traffic, let’s next examine the case that $\lambda_{in}$ / $\lambda_{in}^{'}$ is extremely large. Consider router R2. 
+	- The A–C traffic arriving to router R2 (which arrives at R2 after being forwarded from R1) can have an arrival rate at R2 that is at most R, the capacity of the link from R1 to R2, regardless of the value of $\lambda_{in}$. 
+	- If $\lambda_{in}^{'}$ is extremely large for all connections (including the B–D connection), then the arrival rate of B–D traffic at R2 can be much larger than that of the A–C traffic. Because the A–C and B–D traffic must ==compete at router R2 for the limited amount of buffer space==, the amount of A–C traffic that successfully gets through R2 (that is, is not lost due to buffer overflow) becomes smaller and smaller as the offered load from B–D gets larger and larger. (B-D 连接的供给载荷 $\lambda_{in}^{'}$ 逐渐增大时，A-C 连接的流量逐渐减小) 
+	- In the limit, as the offered load approaches infinity, an empty buffer at R2 is immediately filled by a B–D packet, and the throughput of the A–C connection at R2 goes to zero. These considerations give rise to the offered load versus throughput tradeoff shown in Figure 3.48.
+![[30-Transport-layer-congestion-case-3-performance.png]]
 
-又一个拥塞的代价：当分组丢失时，任何“关于这个分组的上游传输能力”都被浪费了，严重时导致整个网络死锁
+In the high-traffic scenario outlined above, ==whenever a packet is dropped at a second-hop router, the work done by the first-hop router in forwarding a packet to the second-hop router ends up being “wasted.”== The network would have been equally well off (more accurately, equally bad off) if the first router had simply discarded that packet and remained idle. 
 
-2种常用的拥塞控制方法：
+More to the point, the transmission capacity used at the first router to forward the packet to the second router could have been much more profitably used to transmit a different packet. (For example, ==when selecting a packet for transmission, it might be better for a router to give priority to packets that have already traversed some number of upstream routers==.) 
+
+So here we see yet another cost of dropping a packet due to congestion—***when a packet is dropped along a path, the transmission capacity that was used at each of the upstream links to forward that packet to the point at which it is dropped ends up having been wasted***.
+
+| 情况   | 拥塞的代价                                                                         |
+| ------ | ---------------------------------------------------------------------------------- |
+| Case 1 | 分组到达速率接近链路容量时，分组的排队时延相当大                                   |
+| Case 2 | 发送方必须执行重传以补偿因缓存溢出而丢弃的分组                                     |
+| Case 3 | 当分组丢失时，任何“关于这个分组的上游传输能力”都被浪费了，严重时导致整个网络死锁。 | 
+
+
+### 拥塞控制方法
+
 - **端到端拥塞控制**（自身判断）
     - 没有来自网络的显式反馈
     - 端系统根据延迟和丢失事件自身推断是否有拥塞
