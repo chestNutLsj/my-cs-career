@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "62dc8b52ec07cfff",
+        "id": "f143d0dd262f285b",
         "type": "tabs",
         "children": [
           {
-            "id": "36551542d90d5b0b",
+            "id": "15775c909b84fbd4",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -72,12 +72,12 @@
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 316.5
+    "width": 316.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -150,7 +150,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -168,8 +169,17 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "36551542d90d5b0b",
+  "active": "15775c909b84fbd4",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/5-进程.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets/4-地址空间-set-preempt-count.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets/4-地址空间-preempt-cout.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets/4-地址空间-in_atomic.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets/4-地址空间-linux-nested-ISR.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets/4-地址空间-ISR-exception-2.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets/4-地址空间-ISR-Exception.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/70-Beyond-physical-memory.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/30-List.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/24-Bitmap.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/23-N-way-merge.md",
@@ -185,17 +195,12 @@
     "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
     "1-Theory/4-Architecture/THU-Liu/assets/12-Data-Expression-and-EDC-question.png",
     "1-Theory/4-Architecture/THU-Liu/assets/12-Data-Expression-and-EDC-truetype.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/12-Data-Expression-and-EDC-utf8.png",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/40-Semaphore.md",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
     "1-Theory/1-ProgramLanguage/Rust/30-Rustlings/安装与报错解决.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets/2-批处理操作系统-RISC-V-exception.png",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/17-Recursion-Wikipedia.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/17-Recursion-Wikipedia-Recursion-Tree.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/assets/图02-16.基于减治策略的有序向量二分查找算法（版本C）.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/14-Lowerbound-analyze.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/13-Dynamic-Programming.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/12-Instances-of-recursion.md",
@@ -206,10 +211,6 @@
     "1-Theory/3-Algorithm/OIWiki",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/16-Stirling-Approximation.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/15-Little-o-notation.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/13-Dynamic-programming.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/图04-10-2.四皇后问题求解过程.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/图04-10-1.四皇后问题求解过程.png",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-receive-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-send-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR.gif.crdownload",

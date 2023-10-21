@@ -667,6 +667,69 @@
               "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
               "subpath": "#上下文切换需要使用汇编语言实现的原因",
               "title": "上下文切换需要使用汇编语言实现的原因"
+            },
+            {
+              "type": "file",
+              "ctime": 1697877532017,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
+              "subpath": "#覆盖、交换、虚存的异同",
+              "title": "覆盖、交换、虚存的异同"
+            },
+            {
+              "type": "file",
+              "ctime": 1697877938747,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
+              "subpath": "#缺页异常的次数",
+              "title": "一次load会最多触发多少次缺页异常？"
+            },
+            {
+              "type": "file",
+              "ctime": 1697878281487,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
+              "subpath": "#嵌套 page fault",
+              "title": "当中断处理函数中发生缺页异常"
+            },
+            {
+              "type": "file",
+              "ctime": 1697879576225,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
+              "subpath": "#全局置换算法与局部置换算法",
+              "title": "全局置换算法与局部置换算法"
+            },
+            {
+              "type": "file",
+              "ctime": 1697879707628,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
+              "subpath": "#belady 现象",
+              "title": "Belady现象出现的原因"
+            },
+            {
+              "type": "file",
+              "ctime": 1697879885779,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
+              "subpath": "#SV39 页表项的标志位作用",
+              "title": "SV39页表项的标志位作用"
+            },
+            {
+              "type": "file",
+              "ctime": 1697880157385,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
+              "subpath": "#页面置换的 lazy 和 swap 策略",
+              "title": "页面置换的 lazy 和 swap 策略"
+            },
+            {
+              "type": "file",
+              "ctime": 1697880643117,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
+              "subpath": "#内核与进程共用/各有页表的分析",
+              "title": "内核与进程共用/各有页表的分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1697882082376,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/5-进程.md",
+              "subpath": "#fork + exec 的问题与改进",
+              "title": "fork + exec 的问题与改进"
             }
           ],
           "title": "简答题"
