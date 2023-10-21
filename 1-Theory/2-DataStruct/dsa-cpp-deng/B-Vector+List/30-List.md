@@ -45,6 +45,7 @@ template <typename T> struct ListNode { //简洁起见，完全开放而不再�
 自前向后：
 ![[30-List-traverse.png]]
 - O (n x opt)
+
 ## 有序向量
 ### 唯一化
 ![[30-List-uniquify.png]]

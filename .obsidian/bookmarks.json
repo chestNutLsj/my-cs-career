@@ -371,6 +371,13 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
               "subpath": "#2-41 基数排序思想",
               "title": "基数排序的思想基础"
+            },
+            {
+              "type": "file",
+              "ctime": 1697875023215,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/30-List.md",
+              "subpath": "#循环节",
+              "title": "循环节"
             }
           ],
           "title": "知识点细节"

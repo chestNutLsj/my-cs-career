@@ -90,6 +90,7 @@ module.exports = __toCommonJS(main_exports);
 var import_obsidian5 = require("obsidian");
 
 // src/comments/ConstantsAndUtils.ts
+var crypto2 = __toESM(require("crypto"));
 var import_escape_html = __toESM(require_escape_html());
 
 // node_modules/uuid/dist/esm-browser/rng.js
@@ -144,11 +145,19 @@ var v4_default = v4;
 var ConstantsAndUtils = class {
   constructor() {
     this.regExpCommentSingleLine = /\<(?:div|span) class\=\"ob-html-comment\" id\=\"comment-([0-9a-fA-F\-]+)\" data\-tags\=\"\[(.*?)\]\"\>\<span class\=\"ob-html-comment-body\"\>([\s\S]+?)\<\/span\>/gm;
+    this.regExpNativeComment = /%%(.+?)%%/gm;
     this.regExpCommentWithCommentedText = /\<(?:div|span) class\=\"ob-html-comment\" id\=\"comment-([0-9a-fA-F\-]+)\" data\-tags\=\"\[(.*?)\]\"\>\<span class\=\"ob-html-comment-body\"\>([\s\S]+?)\<\/span\>([\s\S]+?)\<\/(?:div|span)\>/gm;
     this.regExpTagToggle = /^\<(div|span)( class\=\"ob-html-comment\" id\=\"comment-[0-9a-fA-F\-]+\" data\-tags\=\"\[.*?\]\"\>\<span class\=\"ob-html-comment-body\"\>[\s\S]+?\<\/span\>([\s\S]+?))\<\/(div|span)\>$/;
     this.customColorStyleElementId = "ob-html-comment-custom-style";
   }
-  generateCommentId() {
+  generateNativeCommentId(lineNumber, commentBody) {
+    if (commentBody && commentBody.length > 0) {
+      const hash = crypto2.createHash("md5").update(commentBody).digest("hex");
+      return `${lineNumber}-${hash}`;
+    }
+    return null;
+  }
+  generateCommentIdWithPrefix() {
     return `comment-${v4_default()}`;
   }
   selectionToComment(containerTag, selection) {
@@ -156,7 +165,7 @@ var ConstantsAndUtils = class {
       return null;
     }
     const escapedSelection = (0, import_escape_html.default)(selection);
-    return `<${containerTag} class="ob-html-comment" id="${this.generateCommentId()}" data-tags="[comment,]"><span class="ob-html-comment-body">CommentPlaceholder</span>${escapedSelection}</${containerTag}>`;
+    return `<${containerTag} class="ob-html-comment" id="${this.generateCommentIdWithPrefix()}" data-tags="[comment,]"><span class="ob-html-comment-body">CommentPlaceholder</span>${escapedSelection}</${containerTag}>`;
   }
   toggleCommentContainerInSelection(selection) {
     const matches = this.regExpTagToggle.exec(selection);
@@ -362,7 +371,7 @@ var OrganaizedTagsAndComments = class {
 
 // src/comments/TextToTreeDataParser.ts
 var TextToTreeDataParser = class {
-  constructor(text) {
+  constructor(text, parseNativeComments) {
     const parsedCommentsWithTags = new Array();
     let arrayMatch;
     const lines = text.split("\n");
@@ -378,6 +387,16 @@ var TextToTreeDataParser = class {
           parsed = new HtmlComment(commentId, null, commentBody, lineNumber);
         }
         parsedCommentsWithTags.push(parsed);
+      }
+      if (parseNativeComments) {
+        while ((arrayMatch = constantsAndUtils.regExpNativeComment.exec(lineContent)) !== null) {
+          const commentBody = arrayMatch[1];
+          const commentId = constantsAndUtils.generateNativeCommentId(lineNumber, commentBody);
+          if (commentId != null) {
+            let parsed = new HtmlComment(commentId, null, commentBody, lineNumber);
+            parsedCommentsWithTags.push(parsed);
+          }
+        }
       }
     });
     this.parsedComments = new OrganaizedTagsAndComments(parsedCommentsWithTags);
@@ -448,6 +467,7 @@ var DEFAULT_SETTINGS = {
   autoExpand: false,
   liveReloadOnEdit: true,
   container: "span",
+  parseNativeComments: true,
   commentedTextColorLight: "#f16e6e",
   commentedTextColorDark: "#585809",
   commentColorLight: "#f3f367",
@@ -465,6 +485,10 @@ var HtmlCommentsSettingTab = class extends import_obsidian2.PluginSettingTab {
     containerEl.createEl("h2", { text: "Settings for Reading comments plugin." });
     new import_obsidian2.Setting(containerEl).setName("Show comment in Hover Popower Window on Ctrl (Command) + Hover").setDesc("Previously comment shown just by cursor hover on commented text.").addToggle((toggle) => toggle.setValue(this.plugin.settings.showCommentWhenCtrlKeyPressed).onChange(async (value) => {
       this.plugin.settings.showCommentWhenCtrlKeyPressed = value;
+      await this.plugin.saveSettings();
+    }));
+    new import_obsidian2.Setting(containerEl).setName("Parse native obsidian comments").setDesc("Native %%Comments%% will be added to the panel").addToggle((toggle) => toggle.setValue(this.plugin.settings.parseNativeComments).onChange(async (value) => {
+      this.plugin.settings.parseNativeComments = value;
       await this.plugin.saveSettings();
     }));
     new import_obsidian2.Setting(containerEl).setName("Auto Expand Tags").setDesc("Automatically expand all tags").addToggle((toggle) => toggle.setValue(this.plugin.settings.autoExpand).onChange(async (value) => {
@@ -25087,7 +25111,7 @@ var HtmlCommentsPlugin = class extends import_obsidian5.Plugin {
       return;
     }
     const text = await this.app.vault.cachedRead(file);
-    const parsedText = new TextToTreeDataParser(text);
+    const parsedText = new TextToTreeDataParser(text, this.settings.parseNativeComments);
     viewState.viewTreeOptions.value.length = 0;
     viewState.viewTreeOptions.value.push(...parsedText.parsedComments.treeOptions);
   }
@@ -25116,7 +25140,7 @@ var HtmlCommentsPlugin = class extends import_obsidian5.Plugin {
     let extractedNoteCommentsName = `${fileNameWithoutExtension} Comments.md`;
     let extractedCommentsNotePath = `${parentPath}${extractedNoteCommentsName}`;
     const noteText = await this.app.vault.cachedRead(file);
-    const parsedText = new TextToTreeDataParser(noteText);
+    const parsedText = new TextToTreeDataParser(noteText, this.settings.parseNativeComments);
     const commentsFileContent = constantsAndUtils.convertParsedCommentsToCommentsNote(parsedText.parsedComments);
     const originalFileContent = constantsAndUtils.convertNoteWithCommentsToOriginalNote(noteText, extractedNoteCommentsName);
     const commentsFile = this.app.vault.getAbstractFileByPath(extractedCommentsNotePath);

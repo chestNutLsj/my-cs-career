@@ -21,7 +21,8 @@
     },
     "emojiStyle": "twemoji",
     "iconInTabsEnabled": false,
-    "iconsBackgroundCheckEnabled": false
+    "iconsBackgroundCheckEnabled": false,
+    "iconInTitleEnabled": false
   },
   "0-Assets": "SiDatabricks",
   "5-Tools": "RiToolsFill",

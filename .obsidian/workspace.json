@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "1bf865bc8ea819e8",
+        "id": "62dc8b52ec07cfff",
         "type": "tabs",
         "children": [
           {
-            "id": "81e03c43c0f219cc",
+            "id": "36551542d90d5b0b",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -72,12 +72,12 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
-    "width": 316.5,
-    "collapsed": true
+    "width": 316.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -162,17 +162,19 @@
       "markdown-importer:打开 Markdown 格式转换器": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "oz-clear-unused-images:Clear Unused Images": false,
-      "obsidian-excalidraw-plugin:新建绘图文件": false,
       "obsidian42-brat:BRAT": false,
-      "obsidian-importer:Open Importer": false,
-      "obsidian-advanced-slides:Show Slide Preview": false
+      "obsidian-advanced-slides:Show Slide Preview": false,
+      "obsidian-excalidraw-plugin:新建绘图文件": false,
+      "obsidian-importer:Open Importer": false
     }
   },
-  "active": "81e03c43c0f219cc",
+  "active": "36551542d90d5b0b",
   "lastOpenFiles": [
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/23-N-way-merge.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/22-In-place-mergeSort.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/30-List.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/24-Bitmap.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/23-N-way-merge.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/25.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/22-In-place-mergeSort.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
@@ -193,7 +195,6 @@
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/17-Recursion-Wikipedia.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/17-Recursion-Wikipedia-Recursion-Tree.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/30-List.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/assets/图02-16.基于减治策略的有序向量二分查找算法（版本C）.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/14-Lowerbound-analyze.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/13-Dynamic-Programming.md",
@@ -207,7 +208,6 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/15-Little-o-notation.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/13-Dynamic-programming.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/43-Probing-backtracking.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/图04-10-2.四皇后问题求解过程.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/图04-10-1.四皇后问题求解过程.png",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-receive-loss.gif.crdownload",

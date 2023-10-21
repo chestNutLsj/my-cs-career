@@ -272,11 +272,11 @@
         "lineNumbers": true,
         "unwrapLines": true,
         "wrapLinesActive": false,
-        "curvature": 4
+        "curvature": 12
       },
       "gutter": {
         "highlight": true,
-        "activeLine": true
+        "activeLine": false
       },
       "header": {
         "title": {
@@ -285,10 +285,10 @@
           "textItalic": true
         },
         "languageTag": {
-          "display": "if_header_shown",
+          "display": "none",
           "textFont": "",
           "textBold": true,
-          "textItalic": true
+          "textItalic": false
         },
         "languageIcon": {
           "display": "always",
@@ -298,22 +298,22 @@
         "foldPlaceholder": ""
       },
       "highlights": {
-        "activeCodeblockLine": true,
+        "activeCodeblockLine": false,
         "activeEditorLine": false
       },
       "inline": {
         "syntaxHighlight": true,
         "style": true,
         "fontWeight": 4,
-        "curvature": 5,
-        "paddingVertical": 3,
+        "curvature": 6,
+        "paddingVertical": 5,
         "paddingHorizontal": 5,
         "marginHorizontal": 0,
-        "titleFontWeight": 2
+        "titleFontWeight": 8
       },
       "advanced": {
-        "gradientHighlights": true,
-        "gradientHighlightsColourStop": "29%",
+        "gradientHighlights": false,
+        "gradientHighlightsColourStop": "70%",
         "languageBorderColour": true,
         "languageBorderWidth": 5,
         "iconSize": 28
@@ -328,7 +328,7 @@
         "gutter": {
           "backgroundColour": "--code-background",
           "textColour": "--text-faint",
-          "activeTextColour": "#323231"
+          "activeTextColour": "--text-muted"
         },
         "header": {
           "backgroundColour": "--code-background",
@@ -344,11 +344,8 @@
         "highlights": {
           "activeCodeblockLineColour": "--color-base-30",
           "activeEditorLineColour": "--color-base-20",
-          "defaultColour": "#15EF138F",
-          "alternativeHighlights": {
-            "error": "#E5480FAB",
-            "warning": "#EFDC50B3"
-          }
+          "defaultColour": "--text-highlight-bg",
+          "alternativeHighlights": {}
         },
         "inline": {
           "backgroundColour": "--code-background",
@@ -386,10 +383,7 @@
           "activeCodeblockLineColour": "--color-base-30",
           "activeEditorLineColour": "--color-base-20",
           "defaultColour": "--text-highlight-bg",
-          "alternativeHighlights": {
-            "error": "#5978BDFF",
-            "warning": "#D9C84EFF"
-          }
+          "alternativeHighlights": {}
         },
         "inline": {
           "backgroundColour": "--code-background",
