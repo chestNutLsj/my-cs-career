@@ -160,13 +160,6 @@
       "items": [
         {
           "type": "file",
-          "ctime": 1694013820245,
-          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
-          "subpath": "#2-21 指数查找 expSearch",
-          "title": "指数查找"
-        },
-        {
-          "type": "file",
           "ctime": 1694350318696,
           "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/31-List-Exercise.md",
           "subpath": "#3-19 Josephus 环问题",
@@ -343,6 +336,41 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
               "subpath": "#2-way merge",
               "title": "二路归并排序的复杂度、优缺点与改进"
+            },
+            {
+              "type": "file",
+              "ctime": 1697866859992,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+              "subpath": "#2-18 binSearch 查找长度分析",
+              "title": "二分搜索的平均查找长度"
+            },
+            {
+              "type": "file",
+              "ctime": 1697866943951,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+              "subpath": "#2-20 对比 binSearch-A 与 fibSearch",
+              "title": "二分查找A与Fib查找对比"
+            },
+            {
+              "type": "file",
+              "ctime": 1697867412297,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+              "subpath": "#2-24-c 插值查找搜索区间与复杂度分析",
+              "title": "插值查找: 查找区间宽度缩减速度和整体复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1697867736802,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+              "subpath": "#2-27 改进 mergeSort ()适应于大致有序情况",
+              "title": "大致有序情况时归并排序的改进策略"
+            },
+            {
+              "type": "file",
+              "ctime": 1697868459569,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+              "subpath": "#2-41 基数排序思想",
+              "title": "基数排序的思想基础"
             }
           ],
           "title": "知识点细节"
@@ -383,9 +411,97 @@
               "ctime": 1697784909206,
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/13-Dynamic-Programming.md",
               "title": "动态规划"
+            },
+            {
+              "type": "file",
+              "ctime": 1697866313856,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+              "subpath": "#2-6 permute 生成随机排列",
+              "title": "Fisher 随机数生成算法与分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1697866597733,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+              "subpath": "#2-12-d deduplicate ()可以改进到什么地步？",
+              "title": "无序向量唯一化的时间下界"
+            },
+            {
+              "type": "file",
+              "ctime": 1694013820245,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+              "subpath": "#2-21 指数查找 expSearch",
+              "title": "指数查找"
+            },
+            {
+              "type": "file",
+              "ctime": 1697867052780,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+              "subpath": "#2-22 马鞍查找——二维向量查找",
+              "title": "马鞍查找"
+            },
+            {
+              "type": "file",
+              "ctime": 1697867457235,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+              "subpath": "#2-23 判断分支深入的代价严重不对称的查找",
+              "title": "鸡蛋查找：分支深入代价严重不对称"
+            },
+            {
+              "type": "file",
+              "ctime": 1697868571905,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/24-Bitmap.md",
+              "title": "Bitmap"
+            },
+            {
+              "type": "file",
+              "ctime": 1697870106803,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/22-In-place-mergeSort.md",
+              "title": "In-place mergesort"
+            },
+            {
+              "type": "file",
+              "ctime": 1697870122531,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/23-N-way-merge.md",
+              "title": "N-way merge"
             }
           ],
           "title": "拓展延伸"
+        },
+        {
+          "type": "group",
+          "ctime": 1697865861190,
+          "items": [
+            {
+              "type": "file",
+              "ctime": 1697865876536,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+              "subpath": "#2-5 分摊分析——二进制整数递增",
+              "title": "分摊分析实例：二进制整数递增"
+            },
+            {
+              "type": "file",
+              "ctime": 1697866739521,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+              "subpath": "#2-15 CBA 算法下界分析",
+              "title": "比较树高度分析: CBA排序"
+            },
+            {
+              "type": "file",
+              "ctime": 1697868071618,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+              "subpath": "#2-39 CBA 插入两元素到有序序列的比较次数分析",
+              "title": "插入多个元素到有序序列的比较次数"
+            },
+            {
+              "type": "file",
+              "ctime": 1697868166055,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+              "subpath": "#2-40 CBA 找出最大者、次大者",
+              "title": "找出向量中最大者、次大者的策略优化"
+            }
+          ],
+          "title": "习题解析好题"
         }
       ],
       "title": "DSA-cpp-deng"

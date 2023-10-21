@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "de319b1d2c488b83",
+        "id": "1bf865bc8ea819e8",
         "type": "tabs",
         "children": [
           {
-            "id": "c6977f6207f3a2f5",
+            "id": "81e03c43c0f219cc",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -76,7 +76,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 276.5
+    "width": 316.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -92,7 +93,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -109,7 +109,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,9 +135,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md"
-              }
+              "state": {}
             }
           },
           {
@@ -153,8 +150,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -172,8 +168,15 @@
       "obsidian-advanced-slides:Show Slide Preview": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "81e03c43c0f219cc",
   "lastOpenFiles": [
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/23-N-way-merge.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/22-In-place-mergeSort.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/24-Bitmap.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
     "1-Theory/6-Network/Top-to-down/assets/TCP-flow-control.mp4",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-flow-control-rwnd.png",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-fast-retransmit.png",
@@ -190,12 +193,7 @@
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/17-Recursion-Wikipedia.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/17-Recursion-Wikipedia-Recursion-Tree.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/22-In-place-mergeSort.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/30-List.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/24-Bitmap.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/23-N-way-merge.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/assets/图02-16.基于减治策略的有序向量二分查找算法（版本C）.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/14-Lowerbound-analyze.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/13-Dynamic-Programming.md",
@@ -212,14 +210,12 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/43-Probing-backtracking.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/图04-10-2.四皇后问题求解过程.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/assets/图04-10-1.四皇后问题求解过程.png",
-    "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-receive-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-send-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN-receive-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN-send-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-GBN.gif.crdownload",
-    "1-Theory/4-Architecture/THU-Liu/assets",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",

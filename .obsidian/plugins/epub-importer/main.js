@@ -25825,28 +25825,21 @@ var require_main = __commonJS({
 __export(exports, {
   default: () => EpubImporterPlugin
 });
-var import_obsidian4 = __toModule(require("obsidian"));
+var import_obsidian3 = __toModule(require("obsidian"));
 
 // src/lib/EpubParser.ts
 var xml2js = __toModule(require_xml2js());
 var path = __toModule(require("path"));
 var unzipper = __toModule(require_unzip2());
-var import_obsidian = __toModule(require("obsidian"));
 var import_fs_jetpack = __toModule(require_main());
 var Chapter = class {
   constructor(name, url, subItems = new Array()) {
     this.name = name;
     this.url = url;
+    const [urlPath, urlHref] = url.split("#");
+    this.urlHref = urlHref;
+    this.urlPath = urlPath;
     this.subItems = subItems;
-  }
-  getHtml() {
-    return import_fs_jetpack.default.read(this.url.split("#")[0]);
-  }
-  getMarkdown() {
-    return (0, import_obsidian.htmlToMarkdown)(this.getHtml());
-  }
-  getFileName() {
-    return path.basename(this.url).split("#")[0];
   }
 };
 var EpubParser = class {
@@ -25869,13 +25862,8 @@ var EpubParser = class {
     const parseNavPoint = (navPoint) => {
       const tocParentPath = path.dirname(tocFile);
       const item = new Chapter(navPoint.navLabel[0].text[0], tocParentPath + "/" + navPoint.content[0].$["src"]);
-      const subNavPoints = navPoint["navPoint"];
-      if (subNavPoints) {
-        for (let i = 0; i < subNavPoints.length; i++) {
-          const child = subNavPoints[i];
-          item.subItems.push(parseNavPoint(child));
-        }
-      }
+      if (navPoint["navPoint"])
+        item.subItems.push(...navPoint["navPoint"].map(parseNavPoint));
       return item;
     };
     const toc = [];
@@ -25883,6 +25871,53 @@ var EpubParser = class {
       const item = navPoints[i];
       toc.push(parseNavPoint(item));
     }
+    const urlMap = new Map();
+    const parseChapter = (chapter) => {
+      if (!urlMap.has(chapter.urlPath)) {
+        urlMap.set(chapter.urlPath, chapter.urlHref ? [chapter.urlHref] : []);
+      } else {
+        urlMap.get(chapter.urlPath).push(chapter.urlHref);
+        if (urlMap.get(chapter.urlPath)[0] != "firstHref") {
+          urlMap.get(chapter.urlPath).unshift("firstHref");
+        }
+      }
+      chapter.subItems.forEach((subItem) => {
+        parseChapter(subItem);
+      });
+    };
+    toc.forEach((chapter) => {
+      parseChapter(chapter);
+    });
+    console.log("urlMap", urlMap);
+    const htmlMap = new Map();
+    urlMap.forEach((urlHrefs, urlPath) => {
+      const urlPathHtml = import_fs_jetpack.default.read(urlPath);
+      const html = urlPathHtml;
+      console.log("urlHref", urlHrefs);
+      if (urlHrefs.length) {
+        const urlHrefs2 = urlHrefs.slice(1);
+        const reg = new RegExp(`(?<=<[^>]*id=['"])(?:${urlHrefs.join("|")})(?=['"][^>]*>)`, "g");
+        const htmls = html.split(reg);
+        htmls.forEach((html2, index) => {
+          htmlMap.set(urlPath + "#" + urlHrefs[index], html2);
+        });
+      } else {
+        htmlMap.set(urlPath, html);
+      }
+    });
+    const parseChapterHtml = (chapter) => {
+      if (!chapter.urlHref && urlMap.get(chapter.urlPath).length > 1) {
+        chapter.urlHref = "firstHref";
+        chapter.url = chapter.urlPath + "#" + chapter.urlHref;
+      }
+      chapter.html = htmlMap.get(chapter.url);
+      chapter.subItems.forEach((subItem) => {
+        parseChapterHtml(subItem);
+      });
+    };
+    toc.forEach((chapter) => {
+      parseChapterHtml(chapter);
+    });
     this.toc = toc;
     console.log(toc);
   }
@@ -25904,9 +25939,9 @@ var EpubParser = class {
 };
 
 // src/modal.ts
-var import_obsidian2 = __toModule(require("obsidian"));
+var import_obsidian = __toModule(require("obsidian"));
 var import_fs_jetpack2 = __toModule(require_main());
-var EpubImporterModal = class extends import_obsidian2.SuggestModal {
+var EpubImporterModal = class extends import_obsidian.SuggestModal {
   constructor(app, plugin, onSubmit) {
     super(app);
     this.emptyStateText = "No .epub files found in librarys.";
@@ -25937,10 +25972,10 @@ var EpubImporterModal = class extends import_obsidian2.SuggestModal {
     const epubPath = path3.replace(/^"(.+(?="$))"$/, "$1");
     try {
       this.onSubmit(epubPath);
-      new import_obsidian2.Notice(`imported: ${epubPath}`);
+      new import_obsidian.Notice(`imported: ${epubPath}`);
       this.close();
     } catch (error) {
-      new import_obsidian2.Notice("Invalid path.");
+      new import_obsidian.Notice("Invalid path.");
     }
   }
 };
@@ -25975,8 +26010,8 @@ var DEFAULT_SETTINGS = {
 };
 
 // src/settings/settingsTab.ts
-var import_obsidian3 = __toModule(require("obsidian"));
-var EpubImporterSettingsTab = class extends import_obsidian3.PluginSettingTab {
+var import_obsidian2 = __toModule(require("obsidian"));
+var EpubImporterSettingsTab = class extends import_obsidian2.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
     this.plugin = plugin;
@@ -25984,17 +26019,17 @@ var EpubImporterSettingsTab = class extends import_obsidian3.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    new import_obsidian3.Setting(containerEl).setName("Tags").setDesc("The tags that will be added to the imported books.").addText((text) => text.setPlaceholder("book").setValue(this.plugin.settings.tags.join(", ")).onChange(async (value) => {
+    new import_obsidian2.Setting(containerEl).setName("Tags").setDesc("The tags that will be added to the imported books.").addText((text) => text.setPlaceholder("book").setValue(this.plugin.settings.tags.join(", ")).onChange(async (value) => {
       this.plugin.settings.tags = value.split(",").map((tag) => tag.trim());
       await this.plugin.saveSettings();
     }));
-    new import_obsidian3.Setting(containerEl).setName("Library").setDesc("The plugin will search for .epub files from these paths.").addTextArea((text) => {
+    new import_obsidian2.Setting(containerEl).setName("Library").setDesc("The plugin will search for .epub files from these paths.").addTextArea((text) => {
       text.setValue(this.plugin.settings.libratys.join("\n")).onChange(async (value) => {
         this.plugin.settings.libratys = value.split("\n").map((lib) => lib.trim());
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian3.Setting(containerEl).setName("Auto open right panel").setDesc("The plugin will open the book note on right panel when you open a book.").addToggle((toggle) => {
+    new import_obsidian2.Setting(containerEl).setName("Auto open right panel").setDesc("The plugin will open the book note on right panel when you open a book.").addToggle((toggle) => {
       toggle.setValue(this.plugin.settings.autoOpenRightPanel).onChange(async (value) => {
         this.plugin.settings.autoOpenRightPanel = value;
         await this.plugin.saveSettings();
@@ -26006,7 +26041,7 @@ var EpubImporterSettingsTab = class extends import_obsidian3.PluginSettingTab {
 // src/main.ts
 var path2 = __toModule(require("path"));
 var import_fs_jetpack3 = __toModule(require_main());
-var EpubImporterPlugin = class extends import_obsidian4.Plugin {
+var EpubImporterPlugin = class extends import_obsidian3.Plugin {
   async onload() {
     this.vaultPath = this.app.vault.adapter.basePath;
     await this.loadSettings();
@@ -26058,7 +26093,7 @@ var EpubImporterPlugin = class extends import_obsidian4.Plugin {
         }
       });
       const allBooks = this.app.vault.getAbstractFileByPath("AllBooks.md");
-      if (allBooks && allBooks instanceof import_obsidian4.TFile) {
+      if (allBooks && allBooks instanceof import_obsidian3.TFile) {
         this.app.vault.modify(allBooks, files_with_tag.map((file2) => `- [[${file2.path}|${file2.parent?.name}]]`).join("\n"));
       } else {
         this.app.vault.create("AllBooks.md", files_with_tag.map((file2) => `[[${file2.path}|${file2.parent?.name}]]`).join("\n"));
@@ -26080,35 +26115,46 @@ var EpubImporterPlugin = class extends import_obsidian4.Plugin {
     this.propertys = {};
     await this.app.vault.createFolder(epubName);
     this.parser.toc.forEach((element) => {
-      this.createChapter(epubName, element, path2.join(epubName, (0, import_obsidian4.normalizePath)(element.name)));
+      this.createChapter(epubName, element, path2.join(epubName, (0, import_obsidian3.normalizePath)(element.name.replace("/", "&"))));
     });
     this.copyImages(epubName);
     this.propertys.tags = this.settings.tags;
-    this.BookNote = "---\n" + (0, import_obsidian4.stringifyYaml)(this.propertys) + "\n---\n" + this.BookNote;
+    this.BookNote = "---\n" + (0, import_obsidian3.stringifyYaml)(this.propertys) + "\n---\n" + this.BookNote;
     this.app.vault.create(epubName + `//${epubName}.md`, this.BookNote);
   }
   copyImages(epubName) {
     const imagesPath = path2.join(this.vaultPath, epubName, "images");
-    import_fs_jetpack3.default.copy(this.parser.tmpPath, imagesPath, { matching: ["*.jpg", "*.jpeg", "*.png"] });
+    import_fs_jetpack3.default.copy(this.parser.tmpPath, imagesPath, {
+      matching: ["*.jpg", "*.jpeg", "*.png"]
+    });
+    const files = import_fs_jetpack3.default.find(imagesPath, {
+      matching: ["*.jpg", "*.jpeg", "*.png"]
+    });
+    files.forEach((file) => {
+      const fileName = path2.basename(file);
+      import_fs_jetpack3.default.move(file, path2.join(imagesPath, fileName));
+    });
+    const folders = import_fs_jetpack3.default.find(imagesPath, {
+      matching: ["*"],
+      directories: true,
+      files: false
+    });
+    folders.forEach((folder) => {
+      import_fs_jetpack3.default.remove(folder);
+    });
+    import_fs_jetpack3.default.remove(this.parser.tmpPath);
     this.propertys.cover = path2.basename(this.parser.coverPath);
   }
   createChapter(epubName, cpt, notePath) {
     const noteName = path2.basename(notePath);
     const level = notePath.split(path2.sep).length - 2;
-    let content = NoteParser.getParseredNote(cpt.getMarkdown(), epubName);
+    const content = NoteParser.getParseredNote((0, import_obsidian3.htmlToMarkdown)(cpt.html), epubName);
     if (cpt.subItems.length) {
-      const vaildSubItems = cpt.subItems.filter((element) => {
-        return element.getFileName() != cpt.getFileName();
+      this.app.vault.createFolder(notePath);
+      cpt.subItems.forEach((element) => {
+        this.createChapter(epubName, element, path2.join(notePath, (0, import_obsidian3.normalizePath)(element.name.replace("/", "&"))));
       });
-      if (vaildSubItems.length == 1 && cpt.subItems.length > 1) {
-        content += "\n" + NoteParser.getParseredNote(vaildSubItems[0].getMarkdown(), epubName);
-      } else if (vaildSubItems.length != 0) {
-        this.app.vault.createFolder(notePath);
-        vaildSubItems.forEach((element) => {
-          this.createChapter(epubName, element, path2.join(notePath, (0, import_obsidian4.normalizePath)(element.name)));
-        });
-        notePath = path2.join(notePath, noteName);
-      }
+      notePath = path2.join(notePath, noteName);
     }
     this.app.vault.create(notePath + ".md", content);
     this.BookNote += `${"	".repeat(level)}- [[${notePath.replace(/\\/g, "/")}|${noteName}]]
