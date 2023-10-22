@@ -3,23 +3,26 @@
 2. 描述：T=(V; E) ，节点数 n=|V|，边数 e=|E|
 3. 有根树：任一节点 $r \in V$ 指定为根，树都称为有根树：
 	- ![[50-Tree-subtree.png]]
+
 4. 节点和边的关系：
 	1. $r_i$ 是 r 的孩子，$r_i$ 互称兄弟，
 	2. r 称为父亲，$d=degree(r)$ 为 r 的 (出)度
 	3. 可以证明，$e=\sum\limits_{v\in V}degree(v)=n-1=\Theta(n)$
 	4. 指定 $T_i$ 为 T 的第 i 棵子树，$r_i$ 为 r 的第 i 个孩子，则称树 T 为有序树
+
 5. 路径/通路 path：节点集 V 中 k+1 个节点，通过 k 条边相连
 	1. 通路 $\pi=\{(v_{0},v_{1}),(v_{1},v_{2}),...,(v_{k-1},v_{k})\}$
 	2. 路径长度：所含边数 $|\pi|=k$
 	3. 环路 loop/cycle：$v_{k}=v_{0}$
 6. 极小连通图：节点之间均有路径，且边数最少的情况
 7. 极大无环图：不存在环路，且边数最多的情况
+
 8. 树任一节点都与根存在唯一路径：path (v, r)=path (v)，
 	1. 按照 |path (v)|的大小可以将节点作等价类划分——相同深度
 	2. 节点 v 的深度 depth (v)=|path (v)|
 	3. path (v)上节点，均为 v 的祖先（ancestor）, v 是它们的后代（descendent）
 	4. 除自身以外，都是真（proper）祖先/后代
-9. 根节点 r 是所有节点的公共祖先，深度为 0
+9. 根节点 r 是所有节点的公共祖先，深度为 0  ^d0cd9e
 	1. 没有后代的节点称为叶子
 	2. 叶子深度的最大者称为树的高度 height (v)=height (subtree (v))
 	3. 空树的高度取作-1，
@@ -46,6 +49,7 @@
 		- root ()为 O (depth (v))
 		- firstChild () 无法实现
 		- nextSibling () 无法实现
+
 - 孩子表示：同一节点的所有孩子，各成一个序列，各序列的长度，即对应节点的度数：
 	- ![[图05-04.多叉树的“孩子节点”表示法.png]]
 	- 性能：
@@ -53,6 +57,7 @@
 		- root ()无法实现
 		- firstChild ()为 O (1)
 		- nextSibling ()为 O (1)
+
 - 因此综合考虑，使用父亲-孩子表示法：
 	- ![[图05-05.多叉树的“父节点+孩子节点”表示法.png]]
 	- 性能：
@@ -76,6 +81,7 @@
 1. Binary Tree 的度数不超过 2，孩子左右区分
 2. 多叉树都可以通过长子兄弟表示法转化为二叉树：长子~左孩子，兄弟~右孩子
 3. 深度为 k 的节点，至多有 2^k 个
+
 4. n 个节点，高度 h 的二叉树满足：$h+1\le n\le 2^{h+1}-1$
 5. 度数、节点数、边数的关系： ^b26f71
 	1. 设度数为 0、1、2 的节点各有 $n_0$， $n_1$， $n_2$ 个
@@ -86,7 +92,8 @@
 		2. h=0 时，$n_0$=1=$n_2$+1，此后 $n_0$ 与 $n_2$ 同步递增；
 	4. 节点数 n= $n_0$ + $n_1$ + $n_2$ = $n_1$ + $2n_2$
 	5. $n_1$ =0 时，所有节点的度数都是偶数，此时 e=$2n_2$, $n_0$=$n_2+1$=(n+1)/2
-5. 满二叉树：$n=2^{k+1}-1$，每一层都是 2^k 个节点
+
+5. 满二叉树：$n=2^{k+1}-1$，每一层都是 2^k 个节点 ^c031da
 6. 真二叉树：引入 $n_1+2n_0$ 个外部节点，将所有节点度数转换为 2
 	- ![[50-Tree-proper-binary-tree.png]]
 
@@ -194,6 +201,23 @@ template <typename T> BinTree<T>* BinTree<T>::secede( BinNodePosi<T> x ) {
 	S->_size = x->size(); _size -= S->_size; //更新规模
 	return S; //返回封装后的子树
 }
+```
+
+#### Delete
+
+```
+template <typename T> //删除二叉树中位置x处的节点及其后代，返回被删除节点的数值
+Rank BinTree<T>::remove( BinNodePosi<T> x ) { // assert: x为二叉树中的合法位置
+   FromParentTo( *x ) = NULL; //切断来自父节点的指针
+   updateHeightAbove( x->parent ); //更新祖先高度
+   Rank n = removeAt( x ); _size -= n; return n; //删除子树x，更新规模，返回删除节点总数
+}
+template <typename T> //删除二叉树中位置x处的节点及其后代，返回被删除节点的数值
+static Rank removeAt( BinNodePosi<T> x ) { // assert: x为二叉树中的合法位置
+   if ( !x ) return 0; //递归基：空树
+   Rank n = 1 + removeAt( x->lc ) + removeAt( x->rc ); //递归释放左、右子树
+   release( x->data ); release( x ); return n; //释放被摘除节点，并返回删除节点总数
+} // release()负责释放复杂结构，与算法无直接关系，具体实现详见代码包
 ```
 
 ## 遍历

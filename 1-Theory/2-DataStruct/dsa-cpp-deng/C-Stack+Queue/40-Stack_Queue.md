@@ -86,7 +86,7 @@ int fib(int n){
 ![[40-Stack_Queue-fib.png]]
 
 #### 空间复杂度
-递归算法所需的空间，主要取决于递归深度，而非递归实例总数：
+**递归算法所需的空间，主要取决于递归深度**，而非递归实例总数：
 ```
 hailstone(int n) {
 	if ( 1 < n )
@@ -489,6 +489,8 @@ int main() {
 [[40-Stack_Queue#Queap]]
 
 ## 直方图最大矩形
+
+[[44-Histogram-MaxRectangle-impl]]
 ### 问题描述
 ![[40-Stack_Queue-largest-rectangle-in-histogram.png]]
 在非负整数值的直方图区间 `H[0, n)` 中，如何找到最大的竖直矩形？

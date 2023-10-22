@@ -160,34 +160,6 @@
       "items": [
         {
           "type": "file",
-          "ctime": 1694350318696,
-          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/31-List-Exercise.md",
-          "subpath": "#3-19 Josephus 环问题",
-          "title": "Josephus problem"
-        },
-        {
-          "type": "file",
-          "ctime": 1694436283432,
-          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
-          "subpath": "#catalan 数应用",
-          "title": "catalan(n)"
-        },
-        {
-          "type": "file",
-          "ctime": 1694519382981,
-          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/41-Stack-queue-Exercise.md",
-          "subpath": "#4-11 中缀表达式运算中栈内括号数问题",
-          "title": "中缀表达式运算中括号数问题"
-        },
-        {
-          "type": "file",
-          "ctime": 1694776343320,
-          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
-          "subpath": "#^b26f71",
-          "title": "二叉树度数、节点数、边数的关系"
-        },
-        {
-          "type": "file",
           "ctime": 1695034666607,
           "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
           "subpath": "#5-16 分析 travIn_I3 的时间复杂度",
@@ -280,6 +252,55 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/43-Probing-backtracking.md",
               "subpath": "#迷宫寻径",
               "title": "迷宫寻径问题"
+            },
+            {
+              "type": "file",
+              "ctime": 1697953830318,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/31-List-Exercise.md",
+              "subpath": "#3-18 实现列表逆置",
+              "title": "如何实现列表/向量逆置？"
+            },
+            {
+              "type": "file",
+              "ctime": 1697954686096,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
+              "subpath": "#进制转换",
+              "title": "进制转换"
+            },
+            {
+              "type": "file",
+              "ctime": 1697954697665,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
+              "subpath": "#括号匹配",
+              "title": "括号匹配"
+            },
+            {
+              "type": "file",
+              "ctime": 1697954718353,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
+              "subpath": "#中缀表达式求值",
+              "title": "中缀表达式求值"
+            },
+            {
+              "type": "file",
+              "ctime": 1697954778130,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
+              "subpath": "#自动",
+              "title": "中缀表达式转后缀表达式"
+            },
+            {
+              "type": "file",
+              "ctime": 1697954828033,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
+              "subpath": "#直方图最大矩形",
+              "title": "直方图最大矩形"
+            },
+            {
+              "type": "file",
+              "ctime": 1697954874491,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
+              "subpath": "#栈堆与队列堆",
+              "title": "Steap&Queap:维护栈和队列的getMax()接口"
             }
           ],
           "title": "算法问题"
@@ -374,10 +395,115 @@
             },
             {
               "type": "file",
-              "ctime": 1697875023215,
+              "ctime": 1697951849819,
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/30-List.md",
-              "subpath": "#循环节",
-              "title": "循环节"
+              "subpath": "#稳定性",
+              "title": "选择排序的稳定性如何保证？"
+            },
+            {
+              "type": "file",
+              "ctime": 1697952076748,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/30-List.md",
+              "subpath": "#性能",
+              "title": "插入排序的性能、交换次数分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1697952345173,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/30-List.md",
+              "subpath": "#无效交换",
+              "title": "循环节：选择排序过程中出现无需交换的情形可能有多少次？"
+            },
+            {
+              "type": "file",
+              "ctime": 1697952541213,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/30-List.md",
+              "subpath": "#冒泡排序与逆序对",
+              "title": "逆序对与冒泡排序、插入排序"
+            },
+            {
+              "type": "file",
+              "ctime": 1697952782909,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/31-List-Exercise.md",
+              "subpath": "#3-4 deduplicate ()分析",
+              "title": "无序列表唯一化的最好情况是什么？"
+            },
+            {
+              "type": "file",
+              "ctime": 1697953157025,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/31-List-Exercise.md",
+              "subpath": "#3-12 插入算法的比较次数",
+              "title": "插入排序的比较次数"
+            },
+            {
+              "type": "file",
+              "ctime": 1697954276890,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
+              "subpath": "#栈混洗",
+              "title": "栈混洗：总数、禁形判断、与括号匹配的关系"
+            },
+            {
+              "type": "file",
+              "ctime": 1697954503197,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
+              "subpath": "#catalan 数应用",
+              "title": "Catalan数的实例"
+            },
+            {
+              "type": "file",
+              "ctime": 1697954588735,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
+              "subpath": "#实例",
+              "title": "中缀表达式求值实例"
+            },
+            {
+              "type": "file",
+              "ctime": 1697954640440,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
+              "subpath": "#中缀表达式转后缀表达式",
+              "title": "中缀表达式转后缀表达式"
+            },
+            {
+              "type": "file",
+              "ctime": 1697954922844,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
+              "subpath": "#双栈当队",
+              "title": "双栈当队：实现与性能分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1697955522554,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/41-Stack-queue-Exercise.md",
+              "subpath": "#4-2 向量实现队列",
+              "title": "循环向量实现队列"
+            },
+            {
+              "type": "file",
+              "ctime": 1697957241642,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#^d0cd9e",
+              "title": "树的深度与高度关系"
+            },
+            {
+              "type": "file",
+              "ctime": 1694776343320,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#^b26f71",
+              "title": "二叉树度数、节点数、边数的关系"
+            },
+            {
+              "type": "file",
+              "ctime": 1697957437151,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#长子-兄弟表示法",
+              "title": "长子兄弟表示法：找到根的复杂度、遍历复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1697957648108,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#^c031da",
+              "title": "满二叉树与真二叉树的区别"
             }
           ],
           "title": "知识点细节"
@@ -471,6 +597,34 @@
               "ctime": 1697870122531,
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/23-N-way-merge.md",
               "title": "N-way merge"
+            },
+            {
+              "type": "file",
+              "ctime": 1697952814125,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/31-List-Exercise.md",
+              "subpath": "#3-6 自调整列表",
+              "title": "自调整列表"
+            },
+            {
+              "type": "file",
+              "ctime": 1697955817752,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/41-Stack-queue-Exercise.md",
+              "subpath": "#4-24 孪生栈",
+              "title": "孪生栈"
+            },
+            {
+              "type": "file",
+              "ctime": 1697955872643,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/41-Stack-queue-Exercise.md",
+              "subpath": "#4-18 费马-拉格朗日分解",
+              "title": "费马-拉格朗日分解"
+            },
+            {
+              "type": "file",
+              "ctime": 1697955909625,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/42-Catalan.md",
+              "subpath": "#Applications",
+              "title": "Catalan数实例(14个)"
             }
           ],
           "title": "拓展延伸"
@@ -506,6 +660,48 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
               "subpath": "#2-40 CBA 找出最大者、次大者",
               "title": "找出向量中最大者、次大者的策略优化"
+            },
+            {
+              "type": "file",
+              "ctime": 1697952924193,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/31-List-Exercise.md",
+              "subpath": "#3-10 插入排序性能分析",
+              "title": "插入排序性能分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1697953137376,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/31-List-Exercise.md",
+              "subpath": "#3-11 逆序对与插入排序分析",
+              "title": "逆序对与插入排序分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1697953387280,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/31-List-Exercise.md",
+              "subpath": "#3-14 循环节的应用",
+              "title": "循环节：选择排序中无需交换的元素的数量"
+            },
+            {
+              "type": "file",
+              "ctime": 1697953692487,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/31-List-Exercise.md",
+              "subpath": "#3-16 mergeSort 划分的影响",
+              "title": "mergeSort不平衡划分的影响:O(n^2)"
+            },
+            {
+              "type": "file",
+              "ctime": 1697955224088,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/41-Stack-queue-Exercise.md",
+              "subpath": "#4-3 栈混洗与禁形",
+              "title": "栈混洗与禁形"
+            },
+            {
+              "type": "file",
+              "ctime": 1697955649255,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/41-Stack-queue-Exercise.md",
+              "subpath": "#4-11 中缀表达式运算中根据括号数求栈规模",
+              "title": "中缀表达式运算中根据括号数求栈规模"
             }
           ],
           "title": "习题解析好题"
