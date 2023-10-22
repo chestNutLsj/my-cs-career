@@ -782,13 +782,6 @@
           "items": [
             {
               "type": "file",
-              "ctime": 1696258321098,
-              "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
-              "subpath": "#^b901a9",
-              "title": "Stride调度"
-            },
-            {
-              "type": "file",
               "ctime": 1696257570879,
               "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
               "subpath": "#^439fb0",
@@ -926,6 +919,68 @@
               "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/5-进程.md",
               "subpath": "#fork + exec 的问题与改进",
               "title": "fork + exec 的问题与改进"
+            },
+            {
+              "type": "file",
+              "ctime": 1697960611950,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/5-进程.md",
+              "subpath": "#RR 算法时间片长短的性能影响",
+              "title": "RR 算法时间片长短的性能影响"
+            },
+            {
+              "type": "file",
+              "ctime": 1697960661895,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/5-进程.md",
+              "subpath": "#欺骗 MLFQ 算法的方式",
+              "title": "欺骗 MLFQ 算法的方式"
+            },
+            {
+              "type": "file",
+              "ctime": 1697960706629,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/5-进程.md",
+              "subpath": "#多核处理器对线程调度的挑战",
+              "title": "多核处理器对线程调度的挑战"
+            },
+            {
+              "type": "file",
+              "ctime": 1697964075184,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/5-Process/41-Stride-schedule.md",
+              "title": "stride调度"
+            },
+            {
+              "type": "file",
+              "ctime": 1697964590808,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/6-文件系统.md",
+              "subpath": "#为什么要同时维护进程的打开文件表和操作系统的打开文件表",
+              "title": "为什么要同时维护进程的打开文件表和操作系统的打开文件表"
+            },
+            {
+              "type": "file",
+              "ctime": 1697964607560,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/6-文件系统.md",
+              "subpath": "#文件目录中出现环路",
+              "title": "文件目录中出现环路怎么解决？"
+            },
+            {
+              "type": "file",
+              "ctime": 1697964656080,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/6-文件系统.md",
+              "subpath": "#文件分配的三种方式",
+              "title": "文件分配的三种方式"
+            },
+            {
+              "type": "file",
+              "ctime": 1697964694498,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/6-文件系统.md",
+              "subpath": "#没有及时关闭文件描述符的后果",
+              "title": "没有及时关闭文件描述符的后果"
+            },
+            {
+              "type": "file",
+              "ctime": 1697964775424,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/6-文件系统.md",
+              "subpath": "#实现用户态文件系统的思路",
+              "title": "实现用户态文件系统的思路"
             }
           ],
           "title": "简答题"

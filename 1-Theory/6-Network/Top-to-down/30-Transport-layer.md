@@ -1159,15 +1159,20 @@ So here we see yet another cost of dropping a packet due to congestion—***when
 ### 拥塞控制方法
 
 - **端到端拥塞控制**（自身判断）
-    - 没有来自网络的显式反馈
-    - 端系统根据延迟和丢失事件自身推断是否有拥塞
-    - TCP采用的方法
-- **网络辅助的拥塞控制**（路由器反馈）
-    - 路由器提供给端系统以反馈信息
-        - 单个bit置位，显示有拥塞 (SNA, DECbit, TCP/IP ECN, ATM)
-        - 显式提供发送端可以采用的速率
+    - 没有来自网络层的显式反馈
+    - 端系统根据网络行为的观察，如反组丢失频率和延迟，推断是否有拥塞
+    - TCP 采用的方法：超时或 3 次冗余确认，推断出网络拥塞的迹象
 
-> 案例：ATM ABR 拥塞控制（网络辅助的拥塞控制）
+- **网络辅助的拥塞控制**（路由器反馈）
+    - 路由器显式地提供给端系统以网络拥塞状态相关的信息
+	    - 单个 bit 置位，显示有拥塞 (SNA, DECbit, TCP/IP ECN, ATM 等体系结构)
+	    - 显式提供发送端可以采用的速率也可以，只是实现起来更复杂
+	- 拥塞信息从网络反馈给发送方的两种方式：
+		- ![[30-Transport-layer-congestion-feedback.png]]
+		1. 采用阻塞分组 choke packet 的形式，网络路由器直接反馈信息给发送方
+		2. 路由器标记或更新从发送方流向接收方的分组中的某个字段来指示拥塞的产生。一旦收到一个标记分组后，接收方就会向发送方通知该网络拥塞指示，这种通知至少经过一个完整的往返时间。
+
+> [! example] ATM ABR 拥塞控制（网络辅助的拥塞控制）
 > 
 > ATM网络数据交换的单位叫 信元（一个小分组，53字节：5字节的头部+48字节的数据载荷）。
 > 
@@ -1201,92 +1206,143 @@ So here we see yet another cost of dropping a packet due to congestion—***when
 ## 3.7 TCP拥塞控制
 
 - TCP拥塞控制采用端到端的拥塞控制机制
-    - 路由器不向主机有关拥塞的反馈信息
+    - 因为 IP 层不向端系统提供显式的网络拥塞反馈
         - 路由器的负担较轻
         - 符合网络核心简单的TCP/IP架构原则，网络核心提供最小的服务集
-    - 端系统根据自身得到的信息，判断是否发生拥塞，从而采取动作
-- 拥塞控制的几个问题
-    - 如何检测拥塞
-        - 轻微拥塞
-        - 拥塞
-    - 控制策略
-        - 在拥塞发送时如何动作，降低速率
-            - 轻微拥塞，如何降低
-            - 拥塞时，如何降低
-        - 在拥塞缓解时如何动作，尽可能增加速率
+    - 端系统根据自身得到的信息，判断是否发生拥塞，从而采取动作：增加 or 降低发送速率
 
-拥塞感知：发送端如何探测到拥塞？
+- 拥塞控制的几个问题
+    - 如何限制向连接发送流量的速率？
+    - 如何检测拥塞的情况？
+        - 轻微拥塞
+        - 严重拥塞
+    - 采用何种算法改变发送速率？
+
+### TCP 发送方如何限制向连接发送流量的速率？
+[[#流量控制]] 
+
+TCP 拥塞控制机制跟踪拥塞窗口 `cwnd`，其对 TCP 发送方能向网络中发送流量的速率进行了限制：`LastByteSent - LastByteAcked <= min(cwnd,rwnd)`
+- 以关注拥塞控制为目的，假设 TCP 连接方的接收缓存足够大，从而忽略 `rwnd` 的限制，使发送方未被确认的数据量仅受限于 `cwnd`
+- **通过限制发送方窗口中未被确认的数据量，因此间接地限制发送方的发送速率**
+	- 忽略丢包和发送时延，在每个往返时间 RTT 的起始点，根据 `cwnd` 的限制，发送方的发送速率为 `cwnd/RTT` byte/sec，因此通过调整 `cwnd` 的值可以限定发送速率的大小。
+
+- `cwnd` 是动态的，是感知到的网络拥塞程度的函数
+    - 超时或者 3 个冗余 ack，`cwnd` 下降
+        - 超时：`cwnd` 降为 1MSS，进入 SS 阶段然后再倍增到 `cwnd/2`（每个 RTT），从而进入 CA 阶段
+        - 3 个冗余 ack：`cwnd` 降为 `cwnd/2`, CA 阶段
+    - 否则（正常收到 Ack，没有发送以上情况）：`cwnd` 跃跃欲试（上升）
+        - SS 阶段（慢启动阶段）：每经过一个 RTT 进行 `cwnd` 的加倍
+        - CA 阶段（拥塞避免阶段）：每经过一个 RTT 进行 1 个 MSS 的线性增加
+
+TCP 拥塞控制和流量控制的联合动作
+- 联合控制的方法：
+    - 发送端控制发送但是未确认的量同时也不能够超过接收窗口的空闲尺寸（接收方在返回给发送方的报文中捎带），满足流量控制要求
+        - $SendWin = \min(cwnd, rwnd)$
+        - 同时满足 ***拥塞控制*** 和 ***流量控制*** 要求
+
+### 发送方如何探测到拥塞？
+
+- **丢包事件**：超时或接收到 3 个冗余 ACK
+- 若 TCP 持续收到未确认分组的 ACK，则根据收到确认的速率动态地调整拥塞窗口的大小
 - 某个段超时了（丢失事件）：拥塞
     - 超时时间到，某个段的确认没有来
     - 原因1：网络拥塞（某个路由器缓冲区没空间了，被丢弃） 概率大
     - 原因2：出错被丢弃了（各级错误，没有通过校验，被丢弃） 概率小。此时不应该降低发送速率
     - 一旦超时，就认为拥塞了，有一定误判（原因2，但概率小），但是总体控制方向是对的
 - 有关某个段的3次重复ACK：轻微拥塞
+    - ![[30-Transport-layer-tcp-congestion-perception.png]]
     - 段的第1个ack，正常，确认绿段，期待红段
     - 段的第2个重复ack，意味着红段的后一段收到了，蓝段乱序到达
     - 段的第2、3、4个ack重复，意味着红段的后第2、3、4个段收到了，橙段乱序到达，同时红段丢失的可能性很大（后面3个段都到了，红段都没到）
     - 网络这时还能够进行一定程度的传输，拥塞但情况要比第一种好
 
-速率控制方法：如何控制发送端发送的速率
-- 维持一个拥塞窗口的值：CongWin（以字节为单位，表示发送方在对方未确认的情况下往网络中注入多少字节）
-- 发送端限制已发送但是未确认的数据量（的上限）：
-$$LastByteSent - LastByteAcked \leq CongWin$$
-- 从而粗略地控制发送方的往网络中注入的速率
+TCP 关于拥塞的原则：
+1. 一个丢失的报文段意味着拥塞，因此当丢失报文段时应当降低 TCP 发送方的速率
+2. 一个确认报文段指示该网络正在向接收方交付发送方的报文段，因此对先前未确认报文段的确认到达时，应当增加发送方速率
+3. 带宽周期性检测：The TCP sender increases its transmission rate to probe for the rate that at which congestion onset begins, backs off from that rate, and then to begins probing again to see if the congestion onset rate has changed.
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20210726150610364.png" style="zoom:80%"/>
+### TCP 拥塞控制：策略概述
+#### 慢启动
+- 连接刚建立， `cwnd` 设置为根据 MSS 计算的较小值
+	- 如：$MSS = 1460bytes$ ，$RTT = 200msec$
+	- 则可计算得初始速率为 $MSS/RTT = 58.4kbps$ ，这是一个很小的速率，可用带宽可能远远大于它，应当尽快着手增速，到达希望的速率
+- 当连接开始时，指数性（后一次速率是前一次的2倍）增加发送速率，直到发生丢失的事件
+	- ![[30-Transport-layer-tcp-slow-start.png]]
+	- 启动初值很低
+	- 但是增长速度很快（指数增加，SS 时间很短，长期来看可以忽略）
+	- ***注意：每个报文段被确认，就对该报文段加 1 个 MSS，即指数增长，每一个 RTT，`cwnd` 加倍***
 
-- CongWin是动态的，是感知到的网络拥塞程度的函数
-    - 超时或者3个重复ack，CongWin下降
-        - 超时：CongWin降为1MSS，进入SS阶段然后再倍增到CongWin/2（每个RTT），从而进入CA阶段
-        - 3个重复ack：CongWin降为CongWin/2, CA阶段
-    - 否则（正常收到Ack，没有发送以上情况）：CongWin跃跃欲试（上升）
-        - SS阶段（慢启动阶段）：每经过一个RTT进行CongWin的加倍
-        - CA阶段（拥塞避免阶段）：每经过一个RTT进行1个MSS的线性增加
+何时停止指数增长？三种策略：
+1. 出现超时指示的丢包事件，意味着大概率出现了拥塞。
+	- TCP 发送方将 `cwnd` 重置为 1 个 MSS 并重新开始慢启动
+	- 将第二个状态变量 `ssthresh` 设置为 `cwnd/2`
 
-TCP拥塞控制和流量控制的联合动作
-- 联合控制的方法：
-    - 发送端控制发送但是未确认的量同时也不能够超过接收窗口的空闲尺寸（接收方在返回给发送方的报文中捎带），满足流量控制要求
-        - $SendWin = \min(CongWin, RecvWin)$
-        - 同时满足 拥塞控制 和 流量控制 要求
+2. 直接与 `ssthresh` 的值相关联
+	- 当检测到拥塞时，`ssthresh` 设置为 `cwnd/2`，之后再次达到或超过 `ssthresh` 时，不宜继续使用翻番的 `cwnd` 的值；
+	- 结束慢启动转移到拥塞避免模式；
 
-TCP 拥塞控制：策略概述
-- 慢启动
-    - 连接刚建立， $CongWin = 1MSS$
-        - 如： $MSS = 1460bytes$ & $RTT = 200msec$
-        - 则可计算得初始速率为 $MSS/RTT = 58.4kbps$ ，这是一个很小的速率，可用带宽可能远远大于它，应当尽快着手增速，到达希望的速率
-    - 当连接开始时，指数性（后一次速率是前一次的2倍）增加发送速率，直到发生丢失的事件
-        - 启动初值很低
-        - 但是速度很快（指数增加，SS时间很短，长期来看可以忽略）
-    - 当连接开始时，指数性增加（每个RTT）发送速率直到发生丢失事件
-        - 每一个RTT，CongWin加倍
-        - 每收到一个ACK时，CongWin加1（等价于每个RTT，CongWin翻倍）
-        - 慢启动阶段：只要不超时或3个重复ack，一个RTT后CongWin加倍
-- AIMD：线性增、乘性减少
-    - 乘性减：
-        - 丢失事件后将CongWin降为1，将CongWin/2作为阈值，进入慢启动阶段（倍增直到CongWin/2）
-    - 加性增：
-        - 当CongWin>阈值时，一个RTT如没有发生丢失事件，将CongWin加1MSS：探测
-    - 当收到3个重复的ACKs：（3个重复的ACK表示网络还有一定的段传输能力（轻微拥塞），超时之前的3个重复的ACK表示“警报”）
-        - CongWin减半
-        - 窗口（缓冲区大小）之后线性增长
-    - 当超时事件发生时：
-        - CongWin被设置成 1MSS，进入SS阶段
-        - 之后窗口指数增长
-        - 增长到一个阈值（上次发生拥塞的窗口的一半）时，再线性增加
-- 超时事件后的保守策略
-    - Q：什么时候应该将指数性增长变成线性？
-    - A：在超时之前，当CongWin变成上次发生超时的窗口的一半
-    - 实现：
-        - 变量：Threshold
-        - 出现丢失，Threshold设置成CongWin的1/2
+3. 如果检测到 3 个冗余 ACK，则执行快速重传并进入快速回复状态
 
-总结：TCP拥塞控制
-- 当CongWin < Threshold，发送端处于慢启动阶段(slow-start)，窗口指数性增长。
-- 当CongWin > Threshold，发送端处于拥塞避免阶段(congestion-avoidance)，窗口线性增长。
-- 当收到三个重复的ACKs(triple duplicate ACK)，Threshold设置成CongWin/2，CongWin=Threshold+3。
-- 当超时事件发生时timeout，Threshold=CongWin/2，CongWin=1MSS，进入SS阶段
+TCP 的 FSM：
+- ![[30-Transport-layer-TCP-congestion-control-fsm.png]]
+
+#### 拥塞避免
+
+On entry to the *congestion-avoidance* state, the value of `cwnd` is approximately half its value when congestion was last encountered — congestion could be just around the corner! Thus, rather than doubling the value of `cwnd` every RTT, TCP adopts a more conservative approach and ***increases the value of `cwnd` by just a single MSS every RTT***. 
+
+A common approach is for the TCP sender to increase `cwnd` by MSS bytes ==(MSS/cwnd) whenever a new acknowledgment arrives==. 
+- For example, if MSS is 1,460 bytes and `cwnd` is 14,600 bytes, then 10 segments are being sent within an RTT. 
+- Each arriving ACK (assuming one ACK per segment) ==increases the congestion window size by 1/10 MSS==, and thus, the value of the congestion window will have increased by one MSS after ACKs when all 10 segments have been received.
+
+> 线性增长也有尽头，至少不会高过之前的阈值，事实上拥塞避免状态中的增长行为，与慢启动状态中的增长行为类似：
+
+But when should congestion avoidance’s linear increase (of 1 MSS per RTT) end? TCP’s congestion-avoidance algorithm behaves the same when a timeout occurs as in the case of slow start: ==The value of `cwnd` is set to 1 MSS, and the value of ssthresh is updated to half the value of `cwnd` when the loss event occurred==. 
+
+> 但是丢包事件还可能由 3 个冗余 ACK 得知，此时的拥塞情况并没有超时那么严重：
+
+Recall, however, that a loss event also can be triggered by a triple duplicate ACK event.In this case, the network is continuing to deliver some segments from sender to receiver (as indicated by the receipt of duplicate ACKs). So TCP’s behavior to this type of loss event should be less drastic than with a timeout-indicated loss: ==TCP halves the value of `cwnd` (adding in 3 MSS for good measure to account for the triple duplicate ACKs received) and records the value of `ssthresh` to be half the value of `cwnd` when the triple duplicate ACKs were received==. The fast-recovery state is then entered.
+
+#### 快速恢复
+
+In fast recovery, ==the value of `cwnd` is increased by 1 MSS for every duplicate ACK received for the missing segment== that caused TCP to enter the fast-recovery state. 
+
+Eventually, 
+- ==when an ACK arrives for the missing segment, TCP enters the congestion-avoidance state== after deflating `cwnd`. 
+- If a timeout event occurs, fast recovery transitions to the slow-start state after performing the same actions as in slow start and congestion avoidance: The value of cwnd is set to 1 MSS, and the value of ssthresh is set to half the value of cwnd when the loss event occurred.
+
+>[! example] 不同版本的 TCP 如何处理拥塞？
+> 
+> - 早期版本的 TCP Tahoe，只要发生丢包事件（超时 or 3 冗余）都无条件地进入慢启动阶段；
+> - Reno 版则综合了快速回复这一特性；
+> 
+> ![[30-Transport-layer-TCP-congestion-window-tahoe-reno.png]]
+> 
+> In this figure, the threshold is initially equal to 8 MSS. 
+> - For the first eight transmission rounds, Tahoe and Reno take identical actions. The congestion window climbs exponentially fast during slow start and hits the threshold at the fourth round of transmission. 
+> - The congestion window then climbs linearly until a triple duplicate - ACK event occurs, just after transmission round 8. 
+> - Note that the congestion window is `12*MSS` when this loss event occurs. The value of `ssthresh` is then set to `0.5*cwnd = 6*MSS`. 
+> - Under TCP Reno, the congestion window is set to `cwnd = 9*MSS` and then grows linearly. 
+> - Under TCP Tahoe, the congestion window is set to `1 MSS` and grows exponentially until it reaches the value of `ssthresh` (which is now set to 6), at which point it grows linearly.
+
+### AIMD：线性增、乘性减少
+
+Ignoring the initial slow-start period when a connection begins and assuming that losses are indicated by triple duplicate ACKs rather than timeouts, TCP’s congestion control consists of ***linear (additive) increase in `cwnd` of 1 MSS per RTT and then a halving (multiplicative decrease) of `cwnd` on a triple duplicate-ACK event***. For this reason, TCP congestion control is often referred to as an additive-increase, multiplicative-decrease (AIMD) form of congestion control. 
+
+![[30-Transport-layer-AMID.png]]
+
+AIMD congestion control gives rise to the “saw tooth” behavior shown in Figure 3.53, which also nicely illustrates our earlier intuition of TCP “probing” for bandwidth—TCP linearly increases its congestion window size (and hence its transmission rate) until a triple duplicate-ACK event occurs. It then decreases its congestion window size by a factor of two but then again begins increasing it linearly, probing to see if there is additional available bandwidth.
+
+### 总结：TCP 拥塞控制
+
+- 当 `cwnd < ssthresh` ，发送端处于慢启动阶段(slow-start)，窗口指数性增长。
+- 当 `cwnd > ssthresh` ，发送端处于拥塞避免阶段(congestion-avoidance)，窗口线性增长。
+- 当收到三个冗余 ACKs 时，
+	- Reno 策略：`ssthresh = cwnd/2`，`cwnd = ssthresh+3`
+	- Tahoe 策略：`ssthresh = cwnd/2`，`cwnd = 1`
+- 当超时事件发生时，`ssthresh = cwnd/2`，`cwnd = 1`，进入 SS 阶段
 
 TCP 发送端拥塞控制
+
 | 事件 | 状态 | TCP 发送端行为 | 解释|
 | --- | --- | --- | --- |
 | 以前没有收到ACK的data被ACKed | 慢启动(SS) | CongWin = CongWin + MSS <br> If (CongWin > Threshold) <br>    状态变成 “CA” | 每一个RTT，CongWin加倍 |
@@ -1295,7 +1351,7 @@ TCP 发送端拥塞控制
 | 超时 | SS or CA | Threshold = CongWin/2 <br> CongWin = 1MSS <br> 状态变成“SS” | 进入slow start|
 | 重复的ACK | SS or CA | 对被ACKed的segment，增加重复ACK的计数 | CongWin and Threshold 不变 |
 
-TCP 吞吐量
+### TCP 吞吐量
 - TCP的平均吞吐量是多少，使用窗口window尺寸W和RTT来描述？
     - 忽略慢启动阶段，假设发送端总有数据传输
 - 定义W为发生丢失事件时的窗口尺寸（单位：字节），则全过程在W/2和W之间变化
@@ -1303,7 +1359,7 @@ TCP 吞吐量
     - 平均吞吐量：RTT时间吞吐3/4W 
         $$avg TCP thruput = \frac{3}{4} \frac{W}{RTT} bytes/sec$$
 
-TCP公平性
+### TCP公平性
 - 公平性目标：如果 $K$ 个TCP会话分享一个链路带宽为 $R$ 的瓶颈，每一个会话的有效带宽为 $R/K$ 
 - TCP为什么是公平的？
     - 考虑2个竞争的TCP会话：
@@ -1321,49 +1377,3 @@ TCP公平性
     - 例如：带宽为R的链路支持了9个连接 
         - 如果新的应用要求建1个TCP连接，获得带宽R/10
         - 如果新的应用要求建11个TCP连接，获得带宽R/2
-
-## 3.8 总结 & 展望
-
-- 传输层提供的服务 
-    - 应用进程间的逻辑通信
-        - Vs 网络层提供的是主机到主机的通信服务 
-    - 互联网上传输层协议：UDP TCP 
-        - 特性 
-- 多路复用和解复用 
-    - 端口：传输层的SAP 
-    - 无连接的多路复用和解复用 
-    - 面向连接的多路复用和解复用 
-- 实例1：无连接传输层协议 UDP 
-    - 多路复用解复用
-    - UDP报文格式
-    - 检错机制：校验和
-- 可靠数据传输原理
-    - 问题描述
-    - 停止等待协议
-        - Rdt 1.0, 2.0, 2.1, 2.2, 3.0 
-    - 流水线协议 
-        - GBN
-        - SR(Selective Repeat)
-- 实例2：面向连接的传输层协议-TCP 
-    - 概述：TCP特性 
-    - 报文段格式
-        - 序号，超时机制及时间
-    - TCP可靠传输机制
-    - 重传，快速重传
-    - 流量控制
-    - 连接管理
-        - 三次握手
-        - 对称连接释放
-- 拥塞控制原理
-    - 网络辅助的拥塞控制
-    - 端到端的拥塞控制
-- TCP的拥塞控制
-    - AIMD
-    - 慢启动
-    - 超时之后的保守策略
-- 展望下2章：
-    - 离开网络“边缘”（应用层和传输层）
-    - 深入到网络的“核心”
-    - 2个关于网络层的章
-        - 数据平面
-        - 控制平面

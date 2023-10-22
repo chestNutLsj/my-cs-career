@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "5980c0d4ad2577e3",
+        "id": "57b1232cf609f1d4",
         "type": "tabs",
         "children": [
           {
-            "id": "63991c27fd373be7",
+            "id": "a4ab929972ea1a37",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/Practice/5-进程.md",
+                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
                 "mode": "source",
                 "source": false
               }
@@ -80,7 +80,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 340.5
+    "width": 242.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -96,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/Practice/5-进程.md",
+                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/Practice/5-进程.md",
+                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -141,7 +142,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/Practice/5-进程.md"
+                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md"
               }
             }
           },
@@ -157,7 +158,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 287.5
+    "width": 221.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -175,9 +177,28 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "63991c27fd373be7",
+  "active": "a4ab929972ea1a37",
   "lastOpenFiles": [
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-AMID.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-congestion-window-tahoe-reno.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-congestion-control-fsm.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-tcp-slow-start.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-tcp-congestion-perception.png",
+    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-congestion-feedback.png",
+    "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
+    "1-Theory/4-Architecture/THU-Liu/assets/12-Data-Expression-and-EDC-parity-check.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/12-Data-Expression-and-EDC-floating-rounding.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/12-Data-Expression-and-EDC-floating-numbers-example.png",
+    "1-Theory/4-Architecture/THU-Liu/20-Intruction-x86.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/72-符号链接与硬链接.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/mindmap/70-文件系统-mindmap-compressed.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/6-文件系统.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/41-Stride-schedule.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/5-进程.md",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/84-并查集.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets/5-进程-costs-of-fork-vs-spawn.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/44-Histogram-MaxRectangle-impl.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/43-Probing-backtracking.md",
@@ -190,30 +211,11 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
     "5-Tools/Dev-Tools/Git/Git小结.md",
     "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-congestion-case-3-performance.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-congestion-case-3.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-congestion-case-2-performance.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-congestion-case-2.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-congestion-case-1-performance.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-congestion-case-1.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-connection-server-lifetime.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-client-lifetime.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-four-way-handwave.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-three-way-handshake-right.png",
     "1-Theory/6-Network/Top-to-down/assets/TCP-flow-control.mp4",
-    "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/5-进程.md",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/70-Beyond-physical-memory.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/24-Bitmap.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/23-N-way-merge.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/25.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/22-In-place-mergeSort.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/40-Semaphore.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
-    "1-Theory/1-ProgramLanguage/Rust/30-Rustlings/安装与报错解决.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets",
     "1-Theory/3-Algorithm/OIWiki/DP",
     "1-Theory/3-Algorithm/OIWiki",
