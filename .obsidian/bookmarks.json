@@ -159,20 +159,6 @@
       "ctime": 1693927604603,
       "items": [
         {
-          "type": "file",
-          "ctime": 1695034666607,
-          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
-          "subpath": "#5-16 分析 travIn_I3 的时间复杂度",
-          "title": "分析travIn_I3的时间复杂度"
-        },
-        {
-          "type": "file",
-          "ctime": 1695037210155,
-          "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
-          "subpath": "#5-30 键树 Trie",
-          "title": "Trie键树"
-        },
-        {
           "type": "group",
           "ctime": 1697701223496,
           "items": [
@@ -301,6 +287,27 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
               "subpath": "#栈堆与队列堆",
               "title": "Steap&Queap:维护栈和队列的getMax()接口"
+            },
+            {
+              "type": "file",
+              "ctime": 1698045817997,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#Huffman 树",
+              "title": "Huffman树的构造策略"
+            },
+            {
+              "type": "file",
+              "ctime": 1698046346486,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#圆桌骑士问题",
+              "title": "圆桌骑士问题"
+            },
+            {
+              "type": "file",
+              "ctime": 1698046369994,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#旅行骑士问题",
+              "title": "旅行骑士问题"
             }
           ],
           "title": "算法问题"
@@ -504,6 +511,104 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
               "subpath": "#^c031da",
               "title": "满二叉树与真二叉树的区别"
+            },
+            {
+              "type": "file",
+              "ctime": 1698044732343,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#完全二叉树",
+              "title": "完全二叉树的定义与特点"
+            },
+            {
+              "type": "file",
+              "ctime": 1698040314562,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#迭代版",
+              "title": "先序遍历迭代版"
+            },
+            {
+              "type": "file",
+              "ctime": 1698040587191,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#中序遍历迭代版的思路",
+              "title": "中序遍历迭代版"
+            },
+            {
+              "type": "file",
+              "ctime": 1698043598126,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#后序遍历特点",
+              "title": "后序遍历特点、迭代版"
+            },
+            {
+              "type": "file",
+              "ctime": 1698044385902,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#应用：表达式树",
+              "title": "后序遍历应用：表达式树"
+            },
+            {
+              "type": "file",
+              "ctime": 1698044890283,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#结论速查",
+              "title": "二叉树重构的结论"
+            },
+            {
+              "type": "file",
+              "ctime": 1698045263031,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#先序 + 后序",
+              "title": "为什么先序+后序不能唯一确定二叉树？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698045366338,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#(先序+后序) x 真二叉树",
+              "title": "为什么真二叉树能够使先序+后序唯一确定二叉树？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698045519205,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#PFC 解码",
+              "title": "PFC解码的流程，且是在线算法吗？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698045673435,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#最优编码树",
+              "title": "最优编码树是真完全树？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698045749083,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#最优带权编码树",
+              "title": "考虑权重，真完全树还是最优编码树吗？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698046103844,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#Huffman 树的特性",
+              "title": "Huffman 树的特性：双子性、层次性"
+            },
+            {
+              "type": "file",
+              "ctime": 1698046133899,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#Huffman 树构造的改进方案",
+              "title": "Huffman树构造的改进方案：优先级队列改进方案的时间复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698046220572,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+              "subpath": "#树的半径与BFS",
+              "title": "树的半径与BFS"
             }
           ],
           "title": "知识点细节"
@@ -625,6 +730,13 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/42-Catalan.md",
               "subpath": "#Applications",
               "title": "Catalan数实例(14个)"
+            },
+            {
+              "type": "file",
+              "ctime": 1698050231098,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
+              "subpath": "#5-30 键树 Trie",
+              "title": "键树Trie"
             }
           ],
           "title": "拓展延伸"
@@ -702,6 +814,69 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/41-Stack-queue-Exercise.md",
               "subpath": "#4-11 中缀表达式运算中根据括号数求栈规模",
               "title": "中缀表达式运算中根据括号数求栈规模"
+            },
+            {
+              "type": "file",
+              "ctime": 1698046486758,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
+              "subpath": "#5.2 二叉树深度、节点数与高度关系",
+              "title": "二叉树高度与节点数问题：引伸到真二叉树"
+            },
+            {
+              "type": "file",
+              "ctime": 1698049443932,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
+              "subpath": "#5-6 PFC 编码一定解码成功吗？",
+              "title": "PFC 编码一定解码成功吗？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698049555328,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
+              "subpath": "#5-15 迭代式遍历算法的栈的最小容量",
+              "title": "易错：迭代式树遍历算法的栈的最小容量"
+            },
+            {
+              "type": "file",
+              "ctime": 1698049659714,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
+              "subpath": "#5-16 分析 travIn_I3 的时间复杂度",
+              "title": "分析 travIn_I3 的时间复杂度（succ接口对复杂度的影响）"
+            },
+            {
+              "type": "file",
+              "ctime": 1698049708773,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
+              "subpath": "#5-18 层次遍历辅助队列容量问题",
+              "title": "层次遍历辅助队列容量问题"
+            },
+            {
+              "type": "file",
+              "ctime": 1698049834603,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
+              "subpath": "#5-19 证明完全二叉树层次遍历过程中辅助队列规模单峰对称",
+              "title": "层次遍历过程中辅助队列规模单峰对称的性质"
+            },
+            {
+              "type": "file",
+              "ctime": 1698049946134,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
+              "subpath": "#5-20 如何判断任一对节点间存在“祖先-后代”关系？",
+              "title": "如何判断任一对节点间存在“祖先-后代”关系？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698050097396,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
+              "subpath": "#5-24 O (n)时间内判断是否树中所有节点的数值均不小于其真祖先的数值总和",
+              "title": "O (n)时间内判断是否树中所有节点的数值均不小于其真祖先的数值总和"
+            },
+            {
+              "type": "file",
+              "ctime": 1698050110918,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
+              "subpath": "#5-25 O (n)时间内将每个节点的数值替换为后代中最大数值",
+              "title": "O (n)时间内将每个节点的数值替换为后代中最大数值"
             }
           ],
           "title": "习题解析好题"
@@ -981,6 +1156,62 @@
               "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/6-文件系统.md",
               "subpath": "#实现用户态文件系统的思路",
               "title": "实现用户态文件系统的思路"
+            },
+            {
+              "type": "file",
+              "ctime": 1698054130829,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/7-进程间通信与IO重定向.md",
+              "subpath": "#直接通信和间接通信的本质区别",
+              "title": "直接通信和间接通信的本质区别是什么？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698054190510,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/7-进程间通信与IO重定向.md",
+              "subpath": "#signal 机制的内核实现思路",
+              "title": "signal 机制的内核实现思路"
+            },
+            {
+              "type": "file",
+              "ctime": 1698054456903,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/7-进程间通信与IO重定向.md",
+              "subpath": "#普通管道和匿名管道的异同",
+              "title": "普通管道和匿名管道的异同"
+            },
+            {
+              "type": "file",
+              "ctime": 1698056043378,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/7-进程间通信与IO重定向.md",
+              "subpath": "#消息队列的特征与适用场景",
+              "title": "消息队列的特征与适用场景"
+            },
+            {
+              "type": "file",
+              "ctime": 1698056410341,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/7-进程间通信与IO重定向.md",
+              "subpath": "#共享机制的特征和适用场景",
+              "title": "共享内存机制的特征和适用场景"
+            },
+            {
+              "type": "file",
+              "ctime": 1698057884075,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/7-进程间通信与IO重定向.md",
+              "subpath": "#Bash 中 Ctrl+C 产生的信号和处理流程",
+              "title": "Bash 中 Ctrl+C 产生的信号和处理流程"
+            },
+            {
+              "type": "file",
+              "ctime": 1698057900051,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/7-进程间通信与IO重定向.md",
+              "subpath": "#Bash 中 Ctrl+Z 产生的信号和处理流程",
+              "title": "Bash 中 Ctrl+Z 产生的信号和处理流程"
+            },
+            {
+              "type": "file",
+              "ctime": 1698058116761,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/7-进程间通信与IO重定向.md",
+              "subpath": "#问答作业",
+              "title": "_sync_synchronize()的作用"
             }
           ],
           "title": "简答题"

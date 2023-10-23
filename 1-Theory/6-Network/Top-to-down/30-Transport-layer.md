@@ -1343,37 +1343,166 @@ AIMD congestion control gives rise to the “saw tooth” behavior shown in Figu
 
 TCP 发送端拥塞控制
 
-| 事件 | 状态 | TCP 发送端行为 | 解释|
-| --- | --- | --- | --- |
-| 以前没有收到ACK的data被ACKed | 慢启动(SS) | CongWin = CongWin + MSS <br> If (CongWin > Threshold) <br>    状态变成 “CA” | 每一个RTT，CongWin加倍 |
-| 以前没有收到ACK的data被ACKed | 拥塞避免(CA) | CongWin = CongWin + MSS*(MSS/CongWin)| 加性增加，每一个RTT对CongWin加一个1MSS |
-| 通过收到3个重复的ACK，发现丢失的事件 | SS or CA |Threshold = CongWin/2 <br> CongWin = Threshold+3 <br> 状态变成“CA” | 快速重传，实现乘性的减。<br> CongWin没有变成1MSS。|
-| 超时 | SS or CA | Threshold = CongWin/2 <br> CongWin = 1MSS <br> 状态变成“SS” | 进入slow start|
-| 重复的ACK | SS or CA | 对被ACKed的segment，增加重复ACK的计数 | CongWin and Threshold 不变 |
+| 事件                                  | 状态         | TCP 发送端行为                                                   | 解释                                             |
+| ------------------------------------- | ------------ | ---------------------------------------------------------------- | ------------------------------------------------ |
+| 以前没有收到 ACK 的 data 被 ACKed     | 慢启动(SS)   | cwnd = cwnd + MSS <br> If (cwnd >ssthresh) <br>    状态变成 “CA” | 每一个 RTT，cwnd 加倍                            |
+| 以前没有收到 ACK 的 data 被 ACKed     | 拥塞避免(CA) | cwnd = cwnd + MSS*(MSS/cwnd)                                     | 加性增加，每一个 RTT 对 cwnd 加一个1MSS          |
+| 通过收到3个重复的 ACK，发现丢失的事件 | SS or CA     | ssthresh = cwnd/2 <br> cwnd = ssthresh+3 <br> 状态变成“CA”       | 快速重传，实现乘性的减。<br> cwnd 没有变成1MSS。 |
+| 超时                                  | SS or CA     | ssthresh = cwnd/2 <br> cwnd = 1MSS <br> 状态变成“SS”             | 进入 slow start                                  | 
+| 重复的 ACK                             | SS or CA     | 对被 ACKed 的 segment，增加重复 ACK 的计数                            | cwnd and ssthresh 不变                       |
 
-### TCP 吞吐量
-- TCP的平均吞吐量是多少，使用窗口window尺寸W和RTT来描述？
-    - 忽略慢启动阶段，假设发送端总有数据传输
-- 定义W为发生丢失事件时的窗口尺寸（单位：字节），则全过程在W/2和W之间变化
-    - 平均窗口尺寸（#in-flight字节）：3/4W
-    - 平均吞吐量：RTT时间吞吐3/4W 
-        $$avg TCP thruput = \frac{3}{4} \frac{W}{RTT} bytes/sec$$
+### TCP Cubic
+
+Given TCP Reno’s additive-increase, multiplicative-decrease approach to congestion control, one might naturally wonder whether this is the best way to “probe” for a packet sending rate that is just below the threshold of triggering packet loss. 
+> TCP Reno 的策略是最佳吗？
+
+Indeed, cutting the sending rate in half (or even worse, cutting the sending rate to one packet per RTT as in an earlier version of TCP known as TCP Tahoe) and then increasing rather slowly over time may be overly cautious. If the state of the congested link where packet loss occurred hasn’t changed much, then perhaps it’s better to more quickly ramp up the sending rate to get close to the pre-loss sending rate and only then probe cautiously for bandwidth. 
+> 将发送速率砍半再线性增加的策略未免过于保守。如果拥塞链路的状态没有多大变化，那么快速地增加发送速率接近之前丢包时的速率，再小心地探索发送带宽，可能更佳。
+
+This insight lies at the heart of a flavor of TCP known as TCP CUBIC `[Ha 2008, RFC 8312]`. TCP CUBIC differs only slightly from TCP Reno. Once again, the congestion window is increased only on ACK receipt, and the slow start and fast recovery phases remain the same. 
+> TCP CUBIC 策略大部分与 Reno 策略一致。
+
+CUBIC only changes the congestion avoidance phase, as follows: 
+- Let $W_{max}$ be size of TCP’s congestion control window when loss was last detected, and let $K$ be the future point in time when TCP CUBIC’s window size will again reach $W_{max}$, assuming no losses. Several tunable CUBIC parameters determine the value $K$, that is, how quickly the protocol’s congestion window size would reach $W_{max}$. 
+- CUBIC ==increases the congestion window as a function of cube of the distance between the current time==, $t$, and $K$. Thus, when $t$ is further away from $K$, the congestion window size increases are much larger than when $t$ is close to $K$. That is, CUBIC quickly ramps up TCP’s sending rate to get close to the pre-loss rate, $W_{max}$, and only then probes cautiously for bandwidth as it approaches $W_{max}$. 
+- When $t$ is greater than $K$, the cubic rule implies that CUBIC’s congestion window increases are small when $t$ is still close to $K$ (which is good if the congestion level of the link causing loss hasn’t changed much) but then increases rapidly as $t$ exceeds $K$ (which allows CUBIC to more quickly find a new operating point if the congestion level of the link that caused loss has changed significantly). 
+
+![[30-Transport-layer-TCP-cubic.png]]
+Under these rules, the idealized performance of TCP Reno and TCP CUBIC are compared in Figure 3.54, adapted from `[Huston 2017]`. We see the slow start phase ending at $t_0$. Then, when congestion loss occurs at $t_1$, $t_2$, and $t_3$, CUBIC more quickly ramps up close to $W_{max}$ (thereby enjoying more overall throughput than TCP Reno). ==We can see graphically how TCP CUBIC attempts to maintain the flow for as long as possible just below the (unknown to the sender) congestion threshold==. 
+> TCP CUBIT 策略能够尽力维持略低于拥塞发生时的发送速率，从而提高平均吞吐率，在后文可以看到 Reno 的线性策略，使得平均吞吐率仅 $\frac{3}{4}\times \frac{W_{max}}{RTT}$
+
+Note that at $t_3$, the congestion level has presumably decreased appreciably, allowing both TCP Reno and TCP CUBIC to achieve sending rates higher than $W_{max}$. 
+> 在拥塞解除后，Reno 策略一开始增长速度线性是快于 CUBIC 策略的，但很快 CUBIC 策略就会反超，并更快地到达下一个拥塞点。
+
+TCP CUBIC has recently gained wide deployment. While measurements taken around 2000 on popular Web servers showed that nearly all were running some version of TCP Reno [Padhye 2001], more recent measurements of the 5000 most popular Web servers shows that nearly 50% are running a version of TCP CUBIC [Yang 2014], which is also the default version of TCP used in the Linux operating system.
+
+### 宏观视角的 TCP Reno 吞吐量
+
+对估算作出的假设：
+- TCP 的平均吞吐量（平均发送速率）是拥塞窗口 w 和当前 RTT 的函数
+    - 忽略慢启动阶段，因为这一阶段的持续时间非常短
+    - 假设发送端总有数据传输
+- 当前窗口长度是 w 字节，且当前往返时间是 RTT 秒时，TCP 的发送速率大概是 w/RTT
+- TCP 通过每经过一个 RTT 将 w 增加一个 MSS 探测出带宽，直到丢包事件发生为止，当一个丢包事件发生时，用 W 表示 w 的值。
+- 假设连接持续期间 RTT 和 W 保持稳定，那么 TCP 的传输速率将在 W/2RTT 和 W/RTT 之间变化
+
+TCP 稳态动态性模型：
+1. 速率增长至 W/RTT 时，网络丢弃来自连接的分组
+2. 发送速率减半，进而每过一个 RTT 就发送速率增加 MSS/RTT，直到再次增长到 W/RTT 为止，这一过程不断重复
+3. 而 TCP 吞吐量在这两个极值之间线性增长，于是平均吞吐量 $Throughput_{avg} = \frac{3}{4}\times \frac{W}{RTT}$
+
+### 高带宽下的 TCP 策略研究
+> 这个话题仅是一个拓展性的讨论，并没有考试价值。
+
+The need for continued evolution of TCP can be illustrated by considering the high-speed TCP connections that are needed for grid- and cloud-computing applications. For example, consider a TCP connection with 1,500-byte segments and a 100 ms RTT, and suppose we want to send data through this connection at 10 Gbps. Following `[RFC 3649]`, we note that using the TCP throughput formula above, in order to achieve a 10 Gbps throughput, the average congestion window size would need to be 83,333 segments. That’s a lot of segments, leading us to be rather concerned that one of these 83,333 in-flight segments might be lost. What would happen in the case of a loss? Or, put another way, what fraction of the transmitted segments could be lost that would allow the TCP congestion-control algorithm specified in Figure 3.52 still to achieve the desired 10 Gbps rate? In the homework questions for this chapter, you are led through the derivation of a formula relating the throughput of a TCP connection as a function of the loss rate (L), the round-trip time (RTT), and the maximum segment size (MSS):
+
+$$
+\text{average throughput of a connection}=\frac{1.22\times MSS}{RTT\sqrt{L}}
+$$
+
+Using this formula, we can see that in order to achieve a throughput of 10 Gbps, today’s TCP congestion-control algorithm can only tolerate a segment loss probability of 2 · 10–10 (or equivalently, one loss event for every 5,000,000,000 segments)—a very low rate. This observation has led a number of researchers to investigate new versions of TCP that are specifically designed for such high-speed environments; see [Jin 2004; Kelly 2003; Ha 2008; RFC 7323] for discussions of these efforts.
 
 ### TCP公平性
-- 公平性目标：如果 $K$ 个TCP会话分享一个链路带宽为 $R$ 的瓶颈，每一个会话的有效带宽为 $R/K$ 
-- TCP为什么是公平的？
-    - 考虑2个竞争的TCP会话：
-        - 加性增加，斜率为1，吞吐量增加
-        - 乘性减，吞吐量比例减少
+- 公平性目标：如果 $K$ 个 TCP 会话分享一个链路带宽为 $R$ 的瓶颈，每一个会话的有效带宽为 $R/K$ —— 即每条连接都得到相同份额的链路带宽。
+> 瓶颈链路： By bottleneck link, we mean that for each connection, all the other links along the connection’s path are not congested and have abundant transmission capacity as compared with the transmission capacity of the bottleneck link.
+
+> [! example] AIMD 策略是公平的吗？
+> ![[30-Transport-layer-TCP-fairness-1.png]]
+> Let’s consider the simple case of two TCP connections sharing a single link with transmission rate R, as shown in Figure 3.54. 
+> - Assume that the two connections have the same MSS and RTT (so that if they have the same congestion window size, then they have the same throughput), 
+> - that they have a large amount of data to send, 
+> - and that no other TCP connections or UDP datagrams traverse this shared link. 
+> - Also, ignore the slow-start phase of TCP and assume the TCP connections are operating in CA mode (AIMD) at all times.
+> > 对公平性探讨作出一些理想性的假设。
+> 
+> ![[30-Transport-layer-TCP-fairness-2.png]]
+> Figure 3.55 plots the throughput realized by the two TCP connections. ==If TCP is to share the link bandwidth equally between the two connections, then the realized throughput should fall along the 45-degree arrow (equal bandwidth share)== emanating from the origin. Ideally, ***the sum of the two throughputs should equal R***. So the goal should be to have the achieved throughputs fall somewhere near the intersection of the equal bandwidth share line and the full bandwidth utilization line in Figure 3.55.
+> > 若 TCP 公平性可以保证，那么吞吐量曲线应该是从远点向 45°方向辐射，并且吞吐量总和为 R。
+> 
+> Suppose that the TCP window sizes are such that at a given point in time, 
+> - connections 1 and 2 realize throughputs indicated by point A in Figure 3.55. Because the amount of link bandwidth jointly consumed by the two connections is less than R, ==no loss will occur, and both connections will increase their window== by 1 MSS per RTT as a result of TCP’s congestion-avoidance algorithm. Thus, the joint throughput of the two connections proceeds along a 45-degree line (equal increase for both connections) starting from point A. 
+> - Eventually, the link bandwidth jointly consumed by the two connections will be greater than R, and eventually packet loss will occur. Suppose that connections 1 and 2 experience packet loss when they realize throughputs indicated by point B. 
+> - Connections 1 and 2 then decrease their windows by a factor of two. The resulting throughputs realized are thus at point C, halfway along a vector starting at B and ending at the origin. Because the joint bandwidth use is less than R at point C, the two connections again increase their throughputs along a 45-degree line starting from C. 
+> - Eventually, loss will again occur, for example, at point D, and the two connections again decrease their window sizes by a factor of two, and so on. 
+> > 在诸多理想条件的加持下，连接 1 和 2 在全带宽利用率曲线附近来回波动，即从宏观视角而言，AIMD 策略确实做到了公平。
+> 
+> You should convince yourself that the bandwidth realized by the two connections eventually fluctuates along the equal bandwidth share line. You should also convince yourself that ==the two connections will converge to this behavior regardless of where they are in the two-dimensional space==! Although a number of idealized assumptions lie behind this scenario, it still provides an intuitive feel for why TCP results in an equal sharing of bandwidth among connections.
+> 
+> In practice, these idealized conditions are typically not met, and ***client-server applications can thus obtain very unequal portions of link bandwidth***. In particular, it has been shown that when multiple connections share a common bottleneck, ==those sessions with a smaller RTT are able to grab the available bandwidth at that link more quickly as it becomes free== (that is, open their congestion windows faster) and thus will enjoy higher throughput than those connections with larger RTTs `[Lakshman 1997]`.
+> > 实践中这些理想条件并不总能达成，通常较小 RTT 的连接能在链路空闲时更快地抢到可用带宽，从而享有更高的吞吐量。
+
+
 - 公平性和UDP
     - 多媒体应用通常不是用TCP
-        - 应用发送的数据速率希望不受拥塞控制的节制
+        - 应用发送的数据速率希望不受拥塞控制的节制，而宁愿在网络拥塞时出现丢包
     - 使用UDP：
         - 音视频应用泵出数据的速率是恒定的，忽略数据的丢失
-    - 研究领域：TCP友好性
+    - 研究领域：TCP 友好性
+        - 由于 UDP 会压制 TCP 流量——UDP 不与其他连接合作，也不适时地调整传输速率，一股脑地发送报文到链路中，而不管是否拥塞，
+        - 因此如何开发网络拥塞机制以组织 UDP 流量的压制行为，是网络研究的热点。
+
 - 公平性和并行TCP连接
-    - 2个主机间可以打开多个并行的TCP连接
-    - Web浏览器
-    - 例如：带宽为R的链路支持了9个连接 
-        - 如果新的应用要求建1个TCP连接，获得带宽R/10
-        - 如果新的应用要求建11个TCP连接，获得带宽R/2
+    - 另一个公平性的重要问题：主机间可以打开多个并行的 TCP 连接，具有多个连接的应用事实上地占用了链路中的较大比例带宽（而不是前文的理想性地假设，应用公平地平分链路带宽）
+    - 例如：Web 浏览器中，带宽为 R 的链路已经支持了9个连接 
+        - 如果新的应用要求建1个 TCP 连接，获得带宽 R/10
+        - 如果新的应用要求建11个 TCP 连接，获得带宽 R/2
+
+### 明确拥塞通告：网络辅助拥塞控制
+
+Since the initial standardization of slow start and congestion avoidance in the late 1980’s `[RFC 1122]`, TCP has implemented the form of end-end congestion control that we studied in Section 3.7.1: a TCP sender receives no explicit congestion indications from the network layer, and instead infers congestion through observed packet loss. 
+
+More recently, extensions to both IP and TCP `[RFC 3168]` have been proposed, implemented, and deployed that allow the network to explicitly signal congestion to a TCP sender and receiver. In addition, a number of variations of TCP congestion control protocols have been proposed that infer congestion using measured packet delay. We’ll take a look at both network-assisted and delay-based congestion control in this section. 
+> [RFC 3168]中提出、实现了允许网络显式通知 TCP 发送方和接收方拥塞情况的扩展，这一扩展涉及 TCP 和 IP 两大协议。此后大量的 TCP 拥塞控制策略的变体被提出，不过大多数都是基于网络支持和延后分组策略的实现。
+
+#### Explicit Congestion Notification
+
+![[30-Transport-layer-ECN.png]]
+Explicit Congestion Notification `[RFC 3168]` is the form of network-assisted congestion control performed within the Internet. As shown in Figure 3.55, ==both TCP and IP are involved==. At the network layer, two bits (with four possible values, overall) in the Type of Service field of the IP datagram header (which we’ll discuss in Section 4.3) are used for ECN. 
+> 网络层中使用 IP 数据报首部的服务类型字段中的两个 bit 来实现 ECN。
+
+One setting of the ECN bits is used by a router to indicate that it (the router) is experiencing congestion. This congestion indication is then carried in the marked IP datagram to the destination host, which then informs the sending host, as shown in Figure 3.55.
+> ECN 拥塞指示被 IP 数据报发送给目的主机，再由目的主机通知发送主机。
+
+`RFC 3168` does not provide a definition of when a router is congested; that decision is a configuration choice made possible by the router vendor, and decided by the network operator. However, the intuition is that the congestion indication bit can be set to signal the onset of congestion to the send before loss actually occurs.
+> ECN 标志是否设立有路由器和网络操作员决定，直觉上设置 ECN 标志，可以在丢包事件实际发生前告知发送端拥塞现象发生。
+
+A second setting of the ECN bits is used by the sending host to inform routers that the sender and receiver are ECN-capable, and thus capable of taking action in response to ECN-indicated network congestion. 
+> 发送方主机对 ECN 标志的另一种选择是通知路由器——发送方和接收方都是能够对 ECN 通知采取行动的。
+
+As shown in Figure 3.55, when the TCP in the receiving host receives an ECN congestion indication via a received datagram, the TCP in the receiving host informs the TCP in the sending host of the congestion indication by setting the ECE (Explicit Congestion Notification Echo) bit (see [[#段结构|Figure 3.29]]) in a receiver-to-sender TCP ACK segment. 
+> TCP 接收方收到带有 ECN 标记的数据报时，会通过 ECE 标志回送告知 TCP 发送方——拥塞发生了。
+
+The TCP sender, in turn, reacts to an ACK with a congestion indication by halving the congestion window, as it would react to a lost segment using fast retransmit, and sets the CWR (Congestion Window Reduced) bit in the header of the next transmitted TCP sender-to-receiver segment.
+> TCP 发送方对具有 ECE 指示的 ACK 做出响应——减少拥塞窗口到之前的一半，并设置下一个发送的报文以 CWR 比特。
+
+Other transport-layer protocols besides TCP may also make use of network layer-signaled ECN. 
+- The Datagram Congestion Control Protocol (DCCP) `[RFC 4340]` provides a low-overhead, congestion-controlled UDP-like unreliable service that utilizes ECN. 
+- DCTCP (Data Center TCP) `[Alizadeh 2010, RFC 8257]` and DCQCN (Data Center Quantized Congestion Notification) `[Zhu 2015]` designed specifically for data center networks, also makes use of ECN. 
+- Recent Internet measurements show increasing deployment of ECN capabilities in popular servers as well as in routers along paths to those servers `[Kühlewind 2013]`
+
+#### Delay-based Congestion Control
+
+Recall from our ECN discussion above that ==a congested router can set the congestion indication bit to signal congestion onset to senders before full buffers cause packets to be dropped at that router==. This allows senders to decrease their sending rates earlier, hopefully before packet loss, thus avoiding costly packet loss and retransmission. ==A second congestion-avoidance approach takes a delay-based approach to also proactively detect congestion onset before packet loss occurs==. 
+
+In TCP Vegas `[Brakmo 1995]`, the sender measures the RTT of the source-to-destination path for all acknowledged packets. Let $RTT_{min}$ be the minimum of these measurements at a sender; this occurs when the path is uncongested and packets experience minimal queueing delay. If TCP Vegas’ congestion window size is `cwnd`, then the uncongested throughput rate would be $cwnd/RTT_{min}$. The intuition behind TCP Vegas is that if the actual sender-measured throughput is close to this value, the TCP sending rate can be increased since (by definition and by measurement) the path is not yet congested. However, if the actual sender-measured throughput is significantly less than the uncongested throughput rate, the path is congested and the Vegas TCP sender will decrease its sending rate. Details can be found in `[Brakmo 1995]`
+> TCP Vegas 的策略是测量不拥塞、不排队时最小的 RTT，以此得出不拥塞时吞吐率将是 $cwnd/RTT_{min}$，因此只要吞吐率在这个值附近，表明链路不拥塞，如果远小于这个值，则拥塞发生。
+
+TCP Vegas operates under the intuition that TCP senders should “Keep the pipe just full, but no fuller” `[Kleinrock 2018]`. “Keeping the pipe full” means that links (in particular the bottleneck link that is limiting a connection’s throughput) are kept busy transmitting, doing useful work; “but no fuller” means that there is nothing to gain (except increased delay!) if large queues are allowed to build up while the pipe is kept full.
+
+The BBR congestion control protocol `[Cardwell 2017]` builds on ideas in TCP Vegas, and incorporates mechanisms that allows it compete fairly (see [[#TCP公平性]]) with TCP non-BBR senders. `[Cardwell 2017]` reports that in 2016, Google began using BBR for all TCP traffic on its private B4 network `[Jain 2013]` that interconnects Google data centers, replacing CUBIC. It is also being deployed on Google and YouTube Web servers. Other delay-based TCP congestion control protocols include TIMELY for data center networks `[Mittal 2015]`, and Compound TCP (CTPC) `[Tan 2006]` and FAST `[Wei 2006]` for high-speed and long distance networks.
+
+## 3.8 传输层功能的演进
+
+Our discussion of specific Internet transport protocols in this chapter has focused on UDP and TCP—the two “work horses” of the Internet transport layer. However, as we’ve seen, three decades of experience with these two protocols has identified circumstances in which neither is ideally suited, and so the design and implementation of transport layer functionality has continued to evolve. We’ve seen a rich evolution in the use of TCP over the past decade. In Sections 3.7.1 and 3.7.2, we learned that in addition to “classic” versions of TCP such as TCP Tahoe and Reno, there are now several newer versions of TCP that have been developed, implemented, deployed, and are in significant use today. These include TCP CUBIC, DCTCP, CTCP, BBR, and more. Indeed, measurements in [Yang 2014] indicate that CUBIC (and its predecessor, BIC [Xu 2004]) and CTCP are more widely deployed on Web servers than classic TCP Reno; we also saw that BBR is being deployed in Google’s internal B4 network, as well as on many of Google’s public-facing servers. And there are many (many!) more versions of TCP! There are versions of TCP specifically designed for use over wireless links, over high-bandwidth paths with large RTTs, for paths with packet re-ordering, and for short paths strictly within data centers. There are versions of TCP that implement different priorities among TCP connections competing for bandwidth at a bottleneck link, and for TCP connections whose segments are being sent over different source-destination paths in parallel. There are also variations of TCP that deal with packet acknowledgment and TCP session establishment/closure differently than we studied in Section 3.5.6. Indeed, it’s probably not even correct anymore to refer to “the” TCP protocol; perhaps the only common features of these protocols is that they use the TCP segment format that we studied in Figure 3.29, and that they should compete “fairly” amongst themselves in the face of network congestion! For a survey of the many flavors of TCP, see [Afanasyev 2010] and [Narayan 2018].
+
+### QUIC: Quick UDP Internet Connections
+If the transport services needed by an application don’t quite fit either the UDP or TCP service models—perhaps an application needs more services than those provided by UDP but does not want all of the particular functionality that comes with TCP, or may want different services than those provided by TCP—application designers can always “roll their own” protocol at the application layer. This is the approach taken in the QUIC (Quick UDP Internet Connections) protocol [Langley 2017, QUIC 2020]. Specifically, QUIC is a new application-layer protocol designed from the ground up to improve the performance of transport-layer services for secure HTTP. QUIC has already been widely deployed, although is still in the process of being standardized as an Internet RFC [QUIC 2020]. Google has deployed QUIC on many of its public-facing Web servers, in its mobile video streaming YouTube app, in its Chrome browser, and in Android’s Google Search app. With more than 7% of Internet traffic today now being QUIC [Langley 2017], we’ll want to take a closer look. Our study of QUIC will also serve as a nice culmination of our study of the transport layer, as QUIC uses many of the approaches for reliable data transfer, congestion control, and connection management that we’ve studied in this chapter. 
+
+![[30-Transport-layer-QUIC-HTTP3.png]]
+As shown in Figure 3.58, QUIC is an application-layer protocol, using UDP as its underlying transport-layer protocol, and is designed to interface above specifically to a simplified but evolved version of HTTP/2. In the near future, HTTP/3 will natively incorporate QUIC [HTTP/3 2020]. Some of QUIC’s major features include: • Connection-Oriented and Secure. Like TCP, QUIC is a connection-oriented protocol between two endpoints. This requires a handshake between endpoints to set up the QUIC connection state. Two pieces of connection state are the source and destination connection ID. All QUIC packets are encrypted, and as suggested in Figure 3.58, QUIC combines the handshakes needed to establish connection state with those needed for authentication and encryption (transport layer security topics that we’ll study in Chapter 8), thus providing faster establishment than the protocol stack in Figure 3.58(a), where multiple RTTs are required to first establish a TCP connection, and then establish a TLS connection over the TCP connection.
+- ***Streams***. QUIC allows several different application-level “streams” to be multiplexed through a single QUIC connection, and once a QUIC connection is established, new streams can be quickly added. A stream is an abstraction for the reliable, in-order bi-directional delivery of data between two QUIC endpoints. In the context of HTTP/3, there would be a different stream for each object in a Web page. Each connection has a connection ID, and each stream within a connection has a stream ID; both of these IDs are contained in a QUIC packet header (along with other header information). Data from multiple streams may be contained within a single QUIC segment, which is carried over UDP. The Stream Control Transmission Protocol (SCTP) [RFC 4960, RFC 3286] is an earlier reliable, message-oriented protocol that pioneered the notion of multiplexing multiple application-level “streams” through a single SCTP connection. We’ll see in Chapter 7 that SCTP is used in control plane protocols in 4G/5G cellular wireless networks. 
+
+![[30-Transport-layer-HTTP11-vs-HTTP3.png]]
+- ***Reliable***, TCP-friendly congestion-controlled data transfer. As illustrated in Figure 3.59 (b), QUIC provides reliable data transfer to each QUIC stream separately. Figure 3.59 (a) shows the case of HTTP/1.1 sending multiple HTTP requests, all over a single TCP connection. Since TCP provides reliable, in-order byte delivery, this means that the multiple HTTP requests must be delivered inorder at the destination HTTP server. Thus, if bytes from one HTTP request are lost, the remaining HTTP requests can not be delivered until those lost bytes are retransmitted and correctly received by TCP at the HTTP server—the so-called HOL blocking problem that we encountered earlier in Section 2.2.5. Since QUIC provides a reliable in-order delivery on a per-stream basis, a lost UDP segment only impacts those streams whose data was carried in that segment; HTTP messages in other streams can continue to be received and delivered to the application. QUIC provides reliable data transfer using acknowledgment mechanisms similar to TCP’s, as specified in [RFC 5681].
+
+QUIC’s congestion control is based on TCP NewReno [RFC 6582], a slight modification to the TCP Reno protocol that we studied in Section 3.7.1. QUIC’s Draft specification [QUIC-recovery 2020] notes “Readers familiar with TCP’s loss detection and congestion control will find algorithms here that parallel wellknown TCP ones.” Since we’ve carefully studied TCP’s congestion control in Section 3.7.1, we’d be right at home reading the details of QUIC’s draft specification of its congestion control algorithm! In closing, it’s worth highlighting again that QUIC is an application-layer protocol providing reliable, congestion-controlled data transfer between two endpoints. The authors of QUIC [Langley 2017] stress that this means that changes can be made to QUIC at “application-update timescales,” that is, much faster than TCP or UDP update timescales.

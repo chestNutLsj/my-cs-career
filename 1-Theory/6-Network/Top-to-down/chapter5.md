@@ -1,17 +1,3 @@
-# 计算机网络——自顶向下方法 7th
-
-中国科学技术大学 郑烇教授 2020年秋季 自动化系
-
-## 5. 网络层——控制平面
-
-本章目标：
-- 理解网络层控制平面的工作原理
-    - 传统路由选择算法
-    - SDN控制器
-    - ICMP:Internet Control Message Protocol
-    - 网络管理（略）
-- 以及它们在互联网上的实例和实现：
-    - OSPF, BGP, OpenFlow, ODL 和ONOS控制器, ICMP, SNMP
 
 ### 5.1 导论
 

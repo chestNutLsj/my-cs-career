@@ -655,8 +655,7 @@ void Graph<Tv, Te>::dfs( Rank s ) { // s < n
 	- 对每一连通/可达分量，从其其实顶点 v 进入 DFS (v)恰好一次，
 	- 最终生成一个 DFS 森林，包含 c 棵树，n-c 条树边；
 
-#### 性质与应用
-##### DFS-Tree/Forest
+#### DFS-Tree/Forest
 从顶点 s 出发的 DFS 
 - 在无向图中将访问与 s 连通的所有顶点（connectivity）
 - 在有向图中将访问由 s 可达的所有顶点（reachability）

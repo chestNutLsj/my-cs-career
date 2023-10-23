@@ -1,0 +1,1 @@
+![[23-Singlecycle-Single-cycle-cpu-datapath.png]]

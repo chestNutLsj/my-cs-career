@@ -129,46 +129,70 @@ BinNodePosi<T> BinNode<T>::insertAsRC( T const & e )
 
 ### ADT: BinTree
 ```
-template <typename T> class BinTree {
-protected: 
-	Rank _size; //规模
-	BinNodePosi<T> _root; //根节点
-	virtual Rank updateHeight( BinNodePosi<T> x ); //更新节点x的高度
-	void updateHeightAbove( BinNodePosi<T> x ); //更新x及祖先的高度
-public: 
-	Rank size() const { return _size; } //规模
-	bool empty() const { return !_root; } //判空
-	BinNodePosi<T> root() const { return _root; } //树根
-	/* ... 子树接入、删除和分离接口；遍历接口 ... */
-}
+#include "BinNode.h" //引入二叉树节点类
+template <typename T> class BinTree { //二叉树模板类
+protected:
+   Rank _size; BinNodePosi<T> _root; //规模、根节点
+   virtual Rank updateHeight( BinNodePosi<T> x ); //更新节点x的高度
+   void updateHeightAbove( BinNodePosi<T> x ); //更新节点x及其祖先的高度
+public:
+   BinTree() : _size( 0 ), _root( NULL ) {} //构造函数
+   ~BinTree() { if ( 0 < _size ) remove( _root ); } //析构函数
+   Rank size() const { return _size; } //规模
+   bool empty() const { return !_root; } //判空
+   BinNodePosi<T> root() const { return _root; } //树根
+   BinNodePosi<T> insert( T const& ); //插入根节点
+   BinNodePosi<T> insert( T const&, BinNodePosi<T> ); //插入左孩子
+   BinNodePosi<T> insert( BinNodePosi<T>, T const& ); //插入右孩子
+   BinNodePosi<T> attach( BinTree<T>*&, BinNodePosi<T> ); //接入左子树
+   BinNodePosi<T> attach( BinNodePosi<T>, BinTree<T>*& ); //接入右子树
+   Rank remove ( BinNodePosi<T> ); //子树删除
+   BinTree<T>* secede ( BinNodePosi<T> ); //子树分离
+   template <typename VST> //操作器
+   void travLevel( VST& visit ) { if ( _root ) _root->travLevel( visit ); } //层次遍历
+   template <typename VST> //操作器
+   void travPre( VST& visit ) { if ( _root ) _root->travPre( visit ); } //先序遍历
+   template <typename VST> //操作器
+   void travIn( VST& visit ) { if ( _root ) _root->travIn( visit ); } //中序遍历
+   template <typename VST> //操作器
+   void travPost( VST& visit ) { if ( _root ) _root->travPost( visit ); } //后序遍历
+   template <typename VST> //操作器
+   void traverse ( VST& ); //自定义遍历
+   bool operator<( BinTree<T> const& t ) //比较器（其余自行补充）
+      { return _root && t._root && lt( _root, t._root ); }
+   bool operator==( BinTree<T> const& t ) //判等器
+      { return _root && t._root && ( _root == t._root ); }
+}; //BinTree
 ```
 
-#### Insert
+#### Insert/Attach
 ```
 // Insert node
-BinNodePosi<T> BinTree<T>::insert( BinNodePosi<T> x, T const & e ); //作为右孩子
+template <typename T> BinNodePosi<T> BinTree<T>::insert( T const& e )
+   { _size = 1; return _root = new BinNode<T>( e ); } //将e当作根节点插入空的二叉树
 
-BinNodePosi<T> BinTree<T>::insert( T const & e, BinNodePosi<T> x ) { //作为左孩子
-	_size++;
-	x->insertAsLC( e );
-	updateHeightAbove( x );
-	return x->lc;
-}
+template <typename T> BinNodePosi<T> BinTree<T>::insert( T const& e, BinNodePosi<T> x )
+   { _size++; x->insertAsLC( e ); updateHeightAbove( x ); return x->lc; } // e插入为x的左孩子
+
+template <typename T> BinNodePosi<T> BinTree<T>::insert( BinNodePosi<T> x, T const& e )
+   { _size++; x->insertAsRC( e ); updateHeightAbove( x ); return x->rc; } // e插入为x的右孩子
 ```
 ![[50-Tree-insert-node.png]]
 
 ```
 // 插入子树
-BinNodePosi<T> BinTree<T>::attach( BinTree<T>* &S, BinNodePosi<T> x ); //接入左子树
+template <typename T> //将S当作节点x的左子树接入二叉树，S本身置空
+BinNodePosi<T> BinTree<T>::attach( BinTree<T>*& S, BinNodePosi<T> x ) { // x->lc == NULL
+   if ( x->lc = S->_root ) x->lc->parent = x; //接入
+   _size += S->_size; updateHeightAbove( x ); //更新全树规模与x所有祖先的高度
+   S->_root = NULL; S->_size = 0; release( S ); S = NULL; return x; //释放原树，返回接入位置
+}
 
-BinNodePosi<T> BinTree<T>::attach( BinNodePosi<T> x, BinTree<T>* &S ) { //接入右子树
-	if ( x->rc = S->_root )
-		x->rc->parent = x;
-	_size += S->_size;
-	updateHeightAbove(x);
-	S->_root = NULL; S->_size = 0;
-	release(S); S = NULL;
-	return x;
+template <typename T> //将S当作节点x的右子树接入二叉树，S本身置空
+BinNodePosi<T> BinTree<T>::attach( BinNodePosi<T> x, BinTree<T>*& S ) { // x->rc == NULL
+   if ( x->rc = S->_root ) x->rc->parent = x; //接入
+   _size += S->_size; updateHeightAbove( x ); //更新全树规模与x所有祖先的高度
+   S->_root = NULL; S->_size = 0; release( S ); S = NULL; return x; //释放原树，返回接入位置
 }
 ```
 ![[50-Tree-insert-subtree.png]]
@@ -191,19 +215,7 @@ template <typename T> void BinTree<T>::updateHeightAbove( BinNodePosi<T> x ) //�
 } //从x出发，覆盖历代祖先。可优化
 ```
 
-#### Split subtree
-```
-template <typename T> BinTree<T>* BinTree<T>::secede( BinNodePosi<T> x ) {
-	FromParentTo( * x ) = NULL; updateHeightAbove( x->parent );
-	// 以上与BinTree<T>::remove()一致；以下还需对分离出来的子树重新封装
-	BinTree<T> * S = new BinTree<T>; //创建空树
-	S->_root = x; x->parent = NULL; //新树以x为根
-	S->_size = x->size(); _size -= S->_size; //更新规模
-	return S; //返回封装后的子树
-}
-```
-
-#### Delete
+#### Remove
 
 ```
 template <typename T> //删除二叉树中位置x处的节点及其后代，返回被删除节点的数值
@@ -218,6 +230,18 @@ static Rank removeAt( BinNodePosi<T> x ) { // assert: x为二叉树中的合法�
    Rank n = 1 + removeAt( x->lc ) + removeAt( x->rc ); //递归释放左、右子树
    release( x->data ); release( x ); return n; //释放被摘除节点，并返回删除节点总数
 } // release()负责释放复杂结构，与算法无直接关系，具体实现详见代码包
+```
+
+#### Split subtree
+```
+template <typename T> BinTree<T>* BinTree<T>::secede( BinNodePosi<T> x ) {
+	FromParentTo( * x ) = NULL; updateHeightAbove( x->parent );
+	// 以上与BinTree<T>::remove()一致；以下还需对分离出来的子树重新封装
+	BinTree<T> * S = new BinTree<T>; //创建空树
+	S->_root = x; x->parent = NULL; //新树以x为根
+	S->_size = x->size(); _size -= S->_size; //更新规模
+	return S; //返回封装后的子树
+}
 ```
 
 ## 遍历
@@ -256,27 +280,29 @@ void traverse( BinNodePosi<T> x, VST & visit ) {
 ![[图05-32.先序遍历过程：先沿左侧通路自顶而下访问沿途节点，再自底而上依次遍历这些节点的右子树.png]]
 - 沿着左侧藤，整个遍历过程可分解为：
 	- 自上而下访问藤上节点，
-	- 再逆转方向，自下而上遍历各右子树，各右子树的遍历彼此独立自成子任务；
+	- 再逆转方向，自下而上遍历各右子树，各右子树的遍历彼此递归地、独立地自成子任务；
 
 #### 迭代版
-```
+``` hl:17
 template <typename T, typename VST>
 void travPre_I2( BinNodePosi<T> x, VST & visit ) {
 	Stack < BinNodePosi<T> > S; //辅助栈
 	while ( true ) { //以右子树为单位，逐批访问节点
 		visitAlongVine( x, visit, S ); //访问子树x的藤蔓，各右子树（根）入栈缓冲
 		if ( S.empty() ) break; //栈空即退出
-		x = S.pop(); //弹出下一右子树（根）
-	} //#pop = #push = #visit = O(n) = 分摊O(1)
+		x = S.pop(); //弹出下一右子树（根），作为下一批的起点
+	} //#pop = #push = #visit = O(n) = 分摊O(1) ，总数不过O(n)
 }
 
-template <typename T, typename VST> static void visitAlongVine
+//从当前节点出发，沿左分支不断深入，直至没有左分支的节点；沿途节点遇到后立即访问
+template <typename T, typename VST>
+static void visitAlongVine
 ( BinNodePosi<T> x, VST & visit, Stack < BinNodePosi<T> > & S ) { //分摊O(1)
 	while ( x ) { //反复地
 		visit( x->data ); //访问当前节点
 		S.push( x->rc ); //右孩子（右子树）入栈（将来逆序出栈）
 		x = x->lc; //沿藤下行
-	} //只有右孩子、NULL可能入栈——增加判断以剔除后者，是否值得？
+	} //只有右孩子、NULL可能入栈——增加判断以剔除后者，是否值得？——不必
 }
 ```
 
@@ -312,14 +338,15 @@ void traverse( BinNodePosi<T> x, VST & visit ) {
 
 ![[50-Tree-inorder.png]]
 
-#### 中序遍历特点
+#### 中序遍历迭代版的思路
+
 - 右子树的递归遍历是尾递归，但左子树不是；因此不能直接套用先序遍历中使用栈直接消除尾递归的思路；
-- 因此中序遍历的递归转迭代的解决思路是：找到第一个被访问的节点，将其祖先用栈保存，于是化问题为依次对若干棵右子树的遍历问题（依从最"左"节点向上的次）
+- 因此==中序遍历的递归转迭代的解决思路是==：找到第一个被访问的节点，将其祖先用栈保存，于是化问题为依次对若干棵右子树的遍历问题（依从最"左"节点向上的次）
 - 于是问题关键在于，中序遍历任一二叉树 T 时，首先被访问的节点是哪个？如何找到它？
 
 ![[图05-33.中序遍历过程：顺着左侧通路，自底而上依次访问沿途各节点及其右子树.png]]
-- 沿着左侧藤，遍历可自底向上分解为 d+1 步迭代：每访问藤上一个节点，再遍历其右子树
-- 各右子树的遍历彼此独立，自成子任务；
+- 沿着左侧藤，==遍历可自底向上分解为 d+1 步迭代：每访问藤上一个节点，再遍历其右子树==
+- 各右子树的遍历彼此独立，递归地自成子任务；
 
 #### 迭代版
 ```
@@ -347,7 +374,7 @@ static void goAlongVine(BinNodePosi<T> x,Stack < BinNodePosi<T>> & S){
 ![[50-Tree-inorder-recurrence.png]]
 
 #### 分析
-1. 每个节点出栈时，其左子树或不存在，或已完全遍历，而右子树尚未入栈；
+1. ==每个节点出栈时，其左子树或不存在，或已完全遍历，而右子树尚未入栈==；
 2. 于是每当节点出栈，只需访问它，然后从其右孩子出发继续按先左后右子树的次序访问；
 3. `goAlongVine()` 最多需要调用Ω(n)次，单次调用最多需要最多Ω(n)次 push 入栈。纵观整个遍历过程中所有对 `goAlongVine()` 的调用，实质的操作只有辅助栈的 push 和 pop：
 	1. 每次调用 `goAlongVine()` 都恰有一次 pop，全程不超过 O (n)次
@@ -417,6 +444,7 @@ void travIn_I4( BinNodePosi<T> x, VST& visit ) { //二叉树中序遍历（迭�
 #### 后继与前驱
 ![[50-Tree-inorder-succ-pre.png]]
 - 直接后继：最靠左的右后代，或最低的左祖先（将节点包含于其左子树中的最低祖先）
+
 ```
 template <typename T> BinNodePosi<T> BinNode<T>::succ() { //定位节点v的直接后继
    BinNodePosi<T> s = this; //记录后继的临时变量
@@ -477,9 +505,9 @@ void traverse( BinNodePosi<T> x, VST & visit ) {
 
 #### 后序遍历特点
 - 左右子树的递归遍历都不是尾递归，因此解决办法是找到第一个被访问的节点，将其祖先及右兄弟用栈保存；
-- 于是后序遍历分解为依次对若干棵右子树遍历的问题，此处次序是沿左侧藤最底部左节点向上的次序。此时问题的关键是找到首先被访问的节点；
+- 于是==后序遍历分解为依次对若干棵右子树遍历的问题，此处次序是沿左侧藤最底部左节点向上的次序==。此时问题的关键是找到首先被访问的节点；
 - 从根出发下行，尽可能沿左分支前进，实不得以再沿右分支，左右分支都不存在，才返回；
-- 第一个找到的节点，是每个子树的叶子，并且是其中序遍历次序的最靠左者；
+- ==第一个找到的节点，是每个子树的叶子，并且是其中序遍历次序的最靠左者==；
 
 ![[50-Tree-postorder-leftmost-leaf.png]]
 
@@ -551,18 +579,18 @@ void BinNode<T>::travLevel( VST & visit ) { //二叉树层次遍历
 - 正确性：
 	- 实质上是树的广度优先遍历；
 		- 每次迭代，入队节点都是出队节点的孩子，深度增加一层；
-		- 任何时刻，队列中各节点按照深度单调排列，并且相邻节点的深度相差不超过 1 层；
+		- ==任何时刻，队列中各节点按照深度单调排列，并且相邻节点的深度相差不超过 1 层；==
 		- 所有节点都迟早会入队，越高、靠左的节点，越早入队；
-		- 每个节点都入队、出队恰好一次，故总时间为 O (n)
-	- 先序、中序、后续遍历都是树的深度优先遍历；
-- 
+		- ==每个节点都入队、出队恰好一次，故总时间为 O (n)==
+- 先序、中序、后续遍历都是树的深度优先遍历；
+
 
 #### 完全二叉树
 - 特点：
 	- 完全二叉树是二叉树的紧凑表示，
 	- 叶节点只在于最低两层，且底层叶子均居于次底层叶子的左侧；
 	- 除末节点的父亲，其余 (内部)节点都有双子
-	- 叶节点数不少于内部节点数，但至多多出一个
+	- **叶节点数不少于内部节点数，但至多多出一个**
 ![[50-Tree-complete-tree.png]]
 
 ![[50-Tree-complete-tree-instance.png]]
@@ -638,16 +666,16 @@ A
 文件的大小=字符数量 x 各字符编码时的二进制串的长短。因此如何对各字符编码，使得文件最小？
 ### PFC 编码
 ![[50-Tree-pfc.png]]
-- 将字符集 Σ 中的字符组织成一棵二叉树，以 0/1 表示左/右孩子，各字符 x 分别存放于对应的叶子 v (x)中
+- 将字符集 Σ 中的字符组织成一棵二叉树，以 0/1 表示左/右孩子，**各字符 x 分别存放于对应的叶子 v (x)中**
 - 字符 x 的编码串 $rps(v(x))=rps(x)$ 则由根到叶子的通路唯一确定；
-- 字符编码不是等长，且不同字符的编码互不为前缀（Prefix-Free Code）（因为所有字符都在叶节点，而不是中间节点），故没有歧义；
+- **字符编码不是等长，且不同字符的编码互不为前缀**（Prefix-Free Code）（因为所有字符都在叶节点，而不是中间节点），故没有歧义；
 - 但是缺点是，如果使用频繁的字符放在最底层，意味着这个字符本身占用的“长”二进制串将反复调用，使得文件大小不是最优。
 - 考查平均编码长度：$ald(T)=\sum\limits_{x\in\Sigma}\frac{depth(v(x))}{|\Sigma|}$
 - 最优编码树 $T_{opt}$ 即为使 $ald()$ 最小者，显然它一定存在且未必唯一。
 
 ### PFC 解码
 反过来，依据 PFC 编码树可便捷地完成编码串的解码:
-1. PFC 编码中的编码树为例，设对编码串"101001100"解码。从前向后扫描该串，同时在树中相应移动。
+1. PFC 编码中的编码树为例，设对编码串"101001100"解码。**从前向后扫描该串，同时在树中相应移动**。
 2. 起始时从树根出发，视各比特位的取值相应地向左或右深入下一层，直到抵达叶节点。比如，在扫描过第 1 位 "1"后将抵达叶节点'M'。此时，可以输出其对应的字符'M'，然后重新回到树根，并继续扫描编码串的剩余部分。
 3. 再经过接下来的 3 位"010"后将抵达叶节点'A'，同样地输出字符'A' 并回到树根。
 4. 如此迭代，即可无歧义地解析出原文中的所有字符。
@@ -678,7 +706,7 @@ A
 			- lc (T) = T1 且 rc (T) = T2
 			- w( root(T) ) = w( root(T1) ) + w( root(T2) )
 
-- 尽管贪心策略未必总能得到最优解，但非常幸运，如上算法的确能够得到最优编码树之一。
+- 尽管贪心策略未必总能得到最优解，但非常幸运，如上算法的确能够得到最优带权编码树之一。
 
 ![[50-Tree-huffman-pfc.png]]
 
@@ -687,10 +715,12 @@ A
 	- 每个内部节点都有两个孩子——==真二叉树==
 	- 否则将 1 度节点替换成唯一的孩子，得到的新树 wald 更小（注意叶节点才保存字符信息）：
 	- ![[50-Tree-huffman-true-tree.png]]
+
 2. 不唯一性：
 	- 对任一内部节点而言，左右子树互换后 wald 不变，故 Huffman 算法中兄弟子树的次序若随机选取，则可能出现歧义——不同的最优带权编码树；
-	- 为了消除这种歧义，可以要求左子树的频率不低于右子树；
+	- 为了消除这种歧义，可以==要求左子树的频率不低于右子树==；
 	- ![[50-Tree-huffman-!unique.png]]
+
 3. 层次性：
 	- 出现频率最低的字符 x 和 y ，必在某棵最优编码树中处于最底层，且互为兄弟；
 	- 否则，任取一棵最优编码树，并在其最底层任取一对兄弟 a 和 b，a 和 x 、 b 和 y 交换之后，wald 也不会增加
@@ -776,7 +806,7 @@ static void generateCT //通过遍历获取各字符的编码
 	1. 初始化时，通过排序得到一个非升序向量 //O (nlogn) 
 	2. 每次（从后端）取出频率最低的两个节点 //O (1)
 	3. 将合并得到的新树插入向量，并保持有序 //O (n)
-2. 非将序列表：O (n^2)
+2. 非降序列表：O (n^2)
 	1. 初始化时，通过排序得到一个非降序列表 //O (nlogn)
 	2. 每次（从前端）取出频率最低的两个节点 //O (1)
 	3. 将合并得到的新树插入列表，并保持有序 //O (n)

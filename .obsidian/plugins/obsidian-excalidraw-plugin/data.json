@@ -81343,10 +81343,9 @@
     }
   },
   "defaultTrayMode": true,
-  "previousRelease": "1.9.24",
+  "previousRelease": "1.9.25",
   "showReleaseNotes": true,
   "showNewVersionNotification": true,
-  "mathjaxSourceURL": "https://cdn.jsdelivr.net/npm/mathjax@3.2.1/es5/tex-svg.js",
   "latexBoilerplate": "\\color{blue}",
   "taskboneEnabled": false,
   "taskboneAPIkey": "",
@@ -81671,5 +81670,6 @@
   "pdfGapSize": 20,
   "pdfLockAfterImport": true,
   "pdfNumColumns": 1,
-  "pdfImportScale": 0.3
+  "pdfImportScale": 0.3,
+  "mathjaxSourceURL": "https://cdn.jsdelivr.net/npm/mathjax@3.2.1/es5/tex-svg.js"
 }
