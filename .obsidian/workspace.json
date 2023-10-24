@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "57e0db24ae2d48b0",
+        "id": "0d756c91e0f36b9b",
         "type": "tabs",
         "children": [
           {
-            "id": "1000921d19e94183",
+            "id": "835299e1166d3635",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -72,12 +72,11 @@
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 285.5
+    "width": 265.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -150,7 +149,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 221.5
+    "width": 221.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -168,13 +168,22 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "1000921d19e94183",
+  "active": "835299e1166d3635",
   "lastOpenFiles": [
+    "1-Theory/4-Architecture/THU-Liu/20-Intruction.md",
+    "1-Theory/4-Architecture/THU-Liu/assets/20-Intruction-extension-example.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/20-Intruction-instruction-extension.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/20-Intruction-ISA-kinds.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/20-Intruction-mips-instruction-format.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/20-Intruction-riscv-instruction-format.png",
+    "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/9-设备IO.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/8-并发.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/7-进程间通信与IO重定向.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/66-Fib-AVL-Tree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/7-进程间通信与IO重定向.md",
     "1-Theory/3-Algorithm/OIWiki/String/50-Trie-Tree.md",
     "1-Theory/3-Algorithm/OIWiki/String/A0-AC-automaton.md",
     "1-Theory/3-Algorithm/OIWiki/String/assets/trie1.png",
@@ -189,27 +198,17 @@
     "1-Theory/6-Network/Top-to-down/chapter6.md",
     "1-Theory/6-Network/Top-to-down/chapter5.md",
     "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
-    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-network-layer-instance.png",
     "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
     "1-Theory/6-Network/Top-to-down/practice/30-Transport-layer.md",
-    "1-Theory/6-Network/Top-to-down/practice/assets/30-Transport-layer-fig-3.61.png",
-    "1-Theory/6-Network/Top-to-down/practice/assets/30-Transport-layer-fig-3.60.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-HTTP11-vs-HTTP3.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-QUIC-HTTP3.png",
-    "1-Theory/4-Architecture/THU-Liu/20-Intruction.md",
     "1-Theory/4-Architecture/THU-Liu/13-Hamming-code.md",
     "1-Theory/4-Architecture/THU-Liu/23-Singlecycle.md",
-    "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
     "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
     "8-SimpRead/【整理】 Linux 进程间通信的方式、应用场景及优缺点/【整理】 Linux 进程间通信的方式、应用场景及优缺点.md",
     "8-SimpRead/【整理】 Linux 进程间通信的方式、应用场景及优缺点/assets",
     "8-SimpRead/【整理】 Linux 进程间通信的方式、应用场景及优缺点",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/8-并发.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/9-设备IO.md",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/6-文件系统.md",
     "1-Theory/3-Algorithm/OIWiki/String",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
     "1-Theory/6-Network/Top-to-down/assets/TCP-flow-control.mp4",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets",
     "1-Theory/3-Algorithm/OIWiki/DP",

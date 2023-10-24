@@ -1261,6 +1261,55 @@
               "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/7-进程间通信与IO重定向.md",
               "subpath": "#问答作业",
               "title": "_sync_synchronize()的作用"
+            },
+            {
+              "type": "file",
+              "ctime": 1698143134509,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/8-并发.md",
+              "subpath": "#单核和多核的并发处理",
+              "title": "单核和多核的并发处理"
+            },
+            {
+              "type": "file",
+              "ctime": 1698145422608,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/8-并发.md",
+              "subpath": "#互斥锁和自旋锁的差异",
+              "title": "互斥锁和自旋锁的差异"
+            },
+            {
+              "type": "file",
+              "ctime": 1698145618017,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/8-并发.md",
+              "subpath": "#Peterson 算法的 safety 和 liveness 性质",
+              "title": "Peterson 算法的 safety 和 liveness 性质"
+            },
+            {
+              "type": "file",
+              "ctime": 1698146712301,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/8-并发.md",
+              "subpath": "#PV 操作的原子性如何实现？",
+              "title": "PV 操作的原子性如何实现？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698146853419,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/8-并发.md",
+              "subpath": "#条件变量 wait 操作",
+              "title": "条件变量 wait 操作为什么必须关联锁？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698147027825,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/8-并发.md",
+              "subpath": "#死锁预防如何实现？",
+              "title": "死锁预防如何实现？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698147072429,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/8-并发.md",
+              "subpath": "#银行家算法如何判断安全性？",
+              "title": "银行家算法如何判断安全性？"
             }
           ],
           "title": "简答题"
