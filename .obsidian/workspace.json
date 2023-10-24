@@ -4,15 +4,31 @@
     "type": "split",
     "children": [
       {
-        "id": "8c8ec9e9910a76c1",
+        "id": "cf8a7f41d4e415b5",
         "type": "tabs",
         "children": [
           {
-            "id": "38b66f4725440098",
+            "id": "e86cda2c0a796e3d",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "2a1e587c94a0fd25",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -72,11 +88,12 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
-    "width": 253.5
+    "width": 326.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -92,6 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,6 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +153,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md"
+              }
             }
           },
           {
@@ -167,8 +188,22 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "38b66f4725440098",
+  "active": "de0f37b73b7ef6dc",
   "lastOpenFiles": [
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/7-进程间通信与IO重定向.md",
+    "1-Theory/3-Algorithm/OIWiki/String/50-Trie-Tree.md",
+    "1-Theory/3-Algorithm/OIWiki/String/A0-AC-automaton.md",
+    "1-Theory/3-Algorithm/OIWiki/String/assets/trie1.png",
+    "1-Theory/3-Algorithm/OIWiki/String/assets",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A2-Trie-Tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A2-Trie-Tree-patricia-tree.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A2-Trie-Tree-patricia-trees.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A2-Trie-Tree-implementation.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A2-Trie-Tree-representation.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-c-yan/93-键树.md",
     "1-Theory/6-Network/Top-to-down/chapter6.md",
     "1-Theory/6-Network/Top-to-down/chapter5.md",
     "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
@@ -179,12 +214,7 @@
     "1-Theory/6-Network/Top-to-down/practice/assets/30-Transport-layer-fig-3.60.png",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-HTTP11-vs-HTTP3.png",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-QUIC-HTTP3.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-ECN.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-fairness-2.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-fairness-1.png",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-TCP-cubic.png",
     "1-Theory/4-Architecture/THU-Liu/20-Intruction.md",
-    "1-Theory/4-Architecture/THU-Liu/assets/20-Intruction-ISA.png",
     "1-Theory/4-Architecture/THU-Liu/13-Hamming-code.md",
     "1-Theory/4-Architecture/THU-Liu/23-Singlecycle.md",
     "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
@@ -194,27 +224,18 @@
     "8-SimpRead/【整理】 Linux 进程间通信的方式、应用场景及优缺点",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/8-并发.md",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/9-设备IO.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/7-进程间通信与IO重定向.md",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/6-文件系统.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A2-Trie-Tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-c-yan/93-键树.md",
-    "1-Theory/3-Algorithm/OIWiki/String/50-Trie-Tree.md",
     "1-Theory/3-Algorithm/OIWiki/String",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/71-Hash-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
     "1-Theory/6-Network/Top-to-down/assets/TCP-flow-control.mp4",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets",
     "1-Theory/3-Algorithm/OIWiki/DP",
     "1-Theory/3-Algorithm/OIWiki",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-receive-loss.gif.crdownload",
     "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-send-loss.gif.crdownload",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR.gif.crdownload",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",

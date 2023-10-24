@@ -13,7 +13,7 @@ url: https://en.wikipedia.org/wiki/Trie?useskin=vector
 | Delete      | $O(n)$  | $O(n)$ |
 <center>Table. Time complexity</center>
 
-In computer science, a **trie** (/ˈtriː/, /ˈtraɪ/), also called **digital tree** or **prefix tree**, is a type of [k-ary](https://en.wikipedia.org/wiki/M-ary_tree) search tree, a tree data structure used for locating specific keys from within a set. These keys are most often strings, with links between nodes defined not by the entire key, but by individual characters. ==In order to access a key (to recover its value, change it, or remove it), the trie is traversed depth-first, following the links between nodes, which represent each character in the key==.
+In computer science, a **trie** (/ˈtriː/, /ˈtraɪ/), also called **digital tree** or **prefix tree**[^1], is a type of [k-ary](https://en.wikipedia.org/wiki/M-ary_tree) search tree, a tree data structure used for locating specific keys from within a set. These keys are most often strings, with links between nodes defined not by the entire key, but by individual characters. ==In order to access a key (to recover its value, change it, or remove it), the trie is traversed depth-first, following the links between nodes, which represent each character in the key==.
 
 Unlike a binary search tree, nodes in the trie do not store their associated key. Instead, a node's position in the trie defines the key with which it is associated. This distributes the value of each key across the data structure, and means that not every node necessarily has an associated value.
 
@@ -23,44 +23,75 @@ Though tries can be keyed by character strings, they need not be. The same algor
 
 ## History, etymology, and pronunciation
 
-The idea of a trie for representing a set of strings was first abstractly described by Axel Thue in 1912. Tries were first described in a computer context by René de la Briandais in 1959.
+The idea of a trie for representing a set of strings was first abstractly described by Axel Thue in 1912[^2] [^3]. Tries were first described in a computer context by René de la Briandais in 1959.
 
 The idea was independently described in 1960 by Edward Fredkin, who coined the term _trie_, pronouncing it /ˈtriː/ (as "tree"), after the middle syllable of _retrieval_. However, other authors pronounce it /ˈtraɪ/ (as "try"), in an attempt to distinguish it verbally from "tree".
 
-Overview
---------
+## Overview
 
 Tries are a form of string-indexed look-up data structure, which is used to store a dictionary list of words that can be searched on in a manner that allows for efficient generation of completion lists. A prefix trie is an ordered tree data structure used in the representation of a set of strings over a finite alphabet set, which allows efficient storage of words with common prefixes.
 
-Tries can be efficacious on string-searching algorithms such as predictive text, approximate string matching, and spell checking in comparison to a binary search trees. A trie can be seen as a tree-shaped deterministic finite automaton.
+Tries can be efficacious on string-searching algorithms such as predictive text, [approximate string matching](https://en.wikipedia.org/wiki/Approximate_string_matching), and spell checking in comparison to a binary search trees. A trie can be seen as a tree-shaped deterministic finite automaton[^4].
 
-Operations
-----------
+## Operations
 
-![](//upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Trie_representation.png/400px-Trie_representation.png)Fig. 2: Trie representation of the string sets: sea, sells, and she.
+![[A2-Trie-Tree-representation.png]]
+Fig. 2: Trie representation of the string sets: sea, sells, and she.
 
-Tries support various operations: insertion, deletion, and lookup of a string key. Tries are composed of  ![{\displaystyle {\text{nodes}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/7024caeb0641d8a1d5cc551cfd4b100a3b65008a) that contain _links_ that are either references to other suffix child nodes, or  ![{\displaystyle {\text{nil}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/1bed082db02b6e83a9bc91a2059ba56ff20860ed) . Except for _root_, each node is pointed to by just one other node, called the _parent_. Each node contains  ![{\displaystyle {\text{R}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/c700863df3475c1c03b32a1f5e857b1daa36a025) links, where  ![{\displaystyle {\text{R}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/c700863df3475c1c03b32a1f5e857b1daa36a025) is the cardinality of the applicable alphabet, although tries have a substantial number of  ![{\displaystyle {\text{nil}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/1bed082db02b6e83a9bc91a2059ba56ff20860ed) links. In most cases, the size of  ![{\displaystyle {\text{Children}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/a082024895bf43c3fdd7317d4aaf08a1d1cdd5d1) array is bitlength of the character encoding - 256 in the case of (unsigned) ASCII.
+Tries support various operations: insertion, deletion, and lookup of a string key. Tries are composed of ${\displaystyle {\text{nodes}}}$ that contain _links_ that are either references to other suffix child nodes, or  ${\displaystyle {\text{nil}}}$ . Except for _root_, each node is pointed to by just one other node, called the _parent_. Each node contains ${\displaystyle {\text{R}}}$ links, where ${\displaystyle {\text{R}}}$ is the cardinality of the applicable alphabet, although tries have a substantial number of ${\displaystyle {\text{nil}}}$ links. In most cases, the size of ${\displaystyle {\text{Children}}}$ array is bitlength of the character encoding - 256 in the case of (unsigned) ASCII.
 
-The  ![{\displaystyle {\text{nil}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/1bed082db02b6e83a9bc91a2059ba56ff20860ed) links within  ![{\displaystyle {\text{Children}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/a082024895bf43c3fdd7317d4aaf08a1d1cdd5d1) in  ![{\displaystyle {\text{Node}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/6cabf40beef6b74eccc3111ca1d3ad46e193b891) emphasizes the following characteristics:
+The ${\displaystyle {\text{nil}}}$ links within ${\displaystyle {\text{Children}}}$ in ${\displaystyle {\text{Node}}}$ emphasizes the following characteristics:
 
-1.  Characters and string keys are implicitly stored in the trie data structure representation, and include a character sentinel value indicating string-termination.
-2.  Each node contains one possible link to a prefix of strong keys of the set.
+1. Characters and string keys are implicitly stored in the trie data structure representation, and include a character sentinel value indicating string-termination.
+2. Each node contains one possible link to a prefix of strong keys of the set.
 
-A basic structure type of nodes in the trie is as follows;  ![{\displaystyle {\text{Node}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/6cabf40beef6b74eccc3111ca1d3ad46e193b891) may contain an optional  ![{\displaystyle {\text{Value}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/59e4e2326758050572cdc00ba44c87ca4cf5fb86), which is associated with each key stored in the last character of string, or terminal node.
+A basic structure type of nodes in the trie is as follows:
+```
+structure Node
+    Children Node[Alphabet-Size]
+    Is-Terminal Boolean
+    Value Data-Type
+end structure
+```
+- ${\displaystyle {\text{Node}}}$ may contain an optional 
+- ${\displaystyle {\text{Value}}}$, which is associated with each key stored in the last character of string, or terminal node.
 
 ### Searching
 
-Searching a  ![{\displaystyle {\text{Value}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/59e4e2326758050572cdc00ba44c87ca4cf5fb86) in a trie is guided by the characters in the search string key, as each node in the trie contains a corresponding link to each possible character in the given string. Thus, following the string within the trie yields the associated  ![{\displaystyle {\text{Value}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/59e4e2326758050572cdc00ba44c87ca4cf5fb86) for the given string key. A  ![{\displaystyle {\text{nil}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/1bed082db02b6e83a9bc91a2059ba56ff20860ed) link within search execution indicates the inexistence of the key.
+Searching a ${\displaystyle {\text{Value}}}$ in a trie is guided by the characters in the search string key, as each node in the trie contains a corresponding link to each possible character in the given string. Thus, following the string within the trie yields the associated ${\displaystyle {\text{Value}}}$ for the given string key. A ${\displaystyle {\text{nil}}}$ link within search execution indicates the inexistence of the key.
 
-Following pseudocode implements the search procedure for a given string key (  ![{\displaystyle {\text{key}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/cc268562460c208c54914d6659d7ca87231c4770)) in a rooted trie (  ![{\displaystyle {\text{x}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/c2a4fbdc25a6c0296d5c0e28e9548e17558882dc)).
+Following pseudocode implements the search procedure for a given string key (${\displaystyle {\text{key}}}$) in a rooted trie (${\displaystyle {\text{x}}}$).
 
-In the above pseudocode,  ![{\displaystyle {\text{x}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/c2a4fbdc25a6c0296d5c0e28e9548e17558882dc) and  ![{\displaystyle {\text{key}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/cc268562460c208c54914d6659d7ca87231c4770) correspond to the pointer of trie's root node and the string key respectively. The search operation, in a standard trie, takes  ![{\displaystyle O({\text{dm}})}](https://wikimedia.org/api/rest_v1/media/math/render/svg/0dd01f3d292bc51089f1f5d7f71f2c50ae734c9b),  ![{\displaystyle {\text{m}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/1f0bc572b5b756f7664b00d78664d45ffd067ab2) is the size of the string parameter  ![{\displaystyle {\text{key}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/cc268562460c208c54914d6659d7ca87231c4770), and  ![\text{d}](https://wikimedia.org/api/rest_v1/media/math/render/svg/456bbc5b1f688ef084982272e2f620fbd6634324) corresponds to the alphabet size. Binary search trees, on the other hand, take  ![{\displaystyle O(m\log n)}](https://wikimedia.org/api/rest_v1/media/math/render/svg/b5506080ab4729276d04139ae5593fbbe9571884) on the worst case, since the search depends on the height of the tree (  ![\log n](https://wikimedia.org/api/rest_v1/media/math/render/svg/317ab5292da7c7935aec01a570461fe0613b21d5)) of the BST (in case of balanced trees), where  ![{\displaystyle {\text{n}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/eaaf79c97c17e3d4d0a55bc13e965bacfbff279e) and  ![{\displaystyle {\text{m}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/1f0bc572b5b756f7664b00d78664d45ffd067ab2) being number of keys and the length of the keys.
+```
+Trie-Find(x, key)
+    for 0 ≤ i < key.length do
+        if x.Children[key[i]] = nil then
+            return false
+        end if
+        x := x.Children[key[i]]
+    repeat
+    return x.Value
+```
+
+In the above pseudocode, ${\displaystyle {\text{x}}}$ and ${\displaystyle {\text{key}}}$ correspond to the pointer of trie's root node and the string key respectively. The search operation, in a standard trie, takes ${\displaystyle {\text{O(dm)}}}$,  ![{\displaystyle {\text{m}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/1f0bc572b5b756f7664b00d78664d45ffd067ab2) is the size of the string parameter  ![{\displaystyle {\text{key}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/cc268562460c208c54914d6659d7ca87231c4770), and  ![\text{d}](https://wikimedia.org/api/rest_v1/media/math/render/svg/456bbc5b1f688ef084982272e2f620fbd6634324) corresponds to the alphabet size. Binary search trees, on the other hand, take  ![{\displaystyle O(m\log n)}](https://wikimedia.org/api/rest_v1/media/math/render/svg/b5506080ab4729276d04139ae5593fbbe9571884) on the worst case, since the search depends on the height of the tree (  ![\log n](https://wikimedia.org/api/rest_v1/media/math/render/svg/317ab5292da7c7935aec01a570461fe0613b21d5)) of the BST (in case of balanced trees), where  ![{\displaystyle {\text{n}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/eaaf79c97c17e3d4d0a55bc13e965bacfbff279e) and  ![{\displaystyle {\text{m}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/1f0bc572b5b756f7664b00d78664d45ffd067ab2) being number of keys and the length of the keys.
 
 Tries occupy less space in comparison with BST if it encompasses a large number of short strings, since nodes share common initial string subsequences and stores the keys implicitly on the structure. The terminal node of the tree contains a non-nil  ![{\displaystyle {\text{Value}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/59e4e2326758050572cdc00ba44c87ca4cf5fb86), and it is a _search hit_ if the associated value is found in the trie, and _search miss_ if it is not.
 
 ### Insertion
 
 Insertion into trie is guided by using the character sets as the indexes into the  ![{\displaystyle {\text{Children}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/a082024895bf43c3fdd7317d4aaf08a1d1cdd5d1) array until last character of the string key is reached. Each node in the trie corresponds to one call of the radix sorting routine, as the trie structure reflects the execution of pattern of the top-down radix sort.
+
+```
+Trie-Insert(x, key, value)
+    for 0 ≤ i < key.length do
+        if x.Children[key[i]] = nil then
+            x.Children[key[i]] := Node()
+        end if
+        x := x.Children[key[i]]
+    repeat
+    x.Value := value
+    x.Is-Terminal := True
+```
 
 If a  ![{\displaystyle {\text{nil}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/1bed082db02b6e83a9bc91a2059ba56ff20860ed) link is encountered prior to reaching the last character of the string key, a new  ![{\displaystyle {\text{Node}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/6cabf40beef6b74eccc3111ca1d3ad46e193b891) is created, such along lines 3–5.  ![{\displaystyle {\text{x.Value}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/1d996ab0bc76d85c3ca352a7788374532bace07c) gets assigned to input  ![{\displaystyle {\text{value}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/63635d3af314d31e35703ccc8fbf9668020b55bc); if  ![{\displaystyle {\text{x.Value}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/1d996ab0bc76d85c3ca352a7788374532bace07c) wasn't  ![{\displaystyle {\text{nil}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/1bed082db02b6e83a9bc91a2059ba56ff20860ed) at the time of insertion, the value associated with the given string key gets substituted with the current one.
 
@@ -70,10 +101,27 @@ Deletion of a key–value pair from a trie involves finding the terminal node wi
 
 Following is a recursive procedure for removing a string key (  ![{\displaystyle {\text{key}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/cc268562460c208c54914d6659d7ca87231c4770)) from rooted trie (  ![{\displaystyle {\text{x}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/c2a4fbdc25a6c0296d5c0e28e9548e17558882dc)).
 
+```
+Trie-Delete(x, key)
+    if key = nil then
+        if x.Is-Terminal = True then
+            x.Is-Terminal := False
+            x.Value := nil
+        end if
+        for 0 ≤ i < x.Children.length
+            if x.Children[i] != nil
+                return x
+            end if
+        repeat
+        return nil
+    end if
+    x.Children[key[0]] := Trie-Delete(x.Children[key[0]], key[1:])
+    return x
+```
+
 The procedures begins by examining the  ![{\displaystyle {\text{key}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/cc268562460c208c54914d6659d7ca87231c4770);  ![{\displaystyle {\text{nil}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/1bed082db02b6e83a9bc91a2059ba56ff20860ed) denotes the arrival of a terminal node or end of string key. If terminal and if it has no children, the node gets removed from the trie (line 14 assign the character index to  ![{\displaystyle {\text{nil}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/1bed082db02b6e83a9bc91a2059ba56ff20860ed)). However, an end of string key without the node being terminal indicates that the key does not exist, thus the procedure does not modify the trie. The recursion proceeds by incrementing  ![{\displaystyle {\text{key}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/cc268562460c208c54914d6659d7ca87231c4770) 's index.
 
-Replacing other data structures
--------------------------------
+## Replacing other data structures
 
 ### Replacement for hash tables
 
@@ -88,8 +136,8 @@ However, tries are less efficient than a hash table when the data is directly ac
 
 Implementation strategies
 -------------------------
-
-![](//upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Pointer_implementation_of_a_trie.svg/220px-Pointer_implementation_of_a_trie.svg.png)Fig. 3: A trie implemented as a left-child right-sibling binary tree: vertical arrows are {baby, bad, bank, box, dad, dance}. The lists are sorted to allow traversal in lexicographic order.
+![[A2-Trie-Tree-implementation.png]]
+Fig. 3: A trie implemented as a left-child right-sibling binary tree: vertical arrows are {baby, bad, bank, box, dad, dance}. The lists are sorted to allow traversal in lexicographic order.
 
 Tries can be represented in several ways, corresponding to different trade-offs between memory use and speed of the operations. Using a vector of pointers for representing a trie consumes enormous space; however, memory space can be reduced at the expense of running time if a singly linked list is used for each node vector, as most entries of the vector contains  ![{\displaystyle {\text{nil}}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/1bed082db02b6e83a9bc91a2059ba56ff20860ed).
 
@@ -108,7 +156,8 @@ Radix tree, also known as a **compressed trie**, is a space-optimized variant of
 One more approach is to "pack" the trie, in which a space-efficient implementation of a sparse packed trie applied to automatic hyphenation, in which the descendants of each node may be interleaved in memory.
 
 #### Patricia trees
-
+![[A2-Trie-Tree-patricia-trees.png]]
+![[A2-Trie-Tree-patricia-tree.png]]
 Fig. 4: Patricia tree representation of string keys: in, integer, interval, string, and structure.
 
 Patricia trees are a particular implementation of compressed binary trie that utilize binary encoding of the string keys in its representation. Every node in a Patricia tree contains an index, known as a "skip number", that stores the node's branching index to avoid empty subtrees during traversal. A naive implementation of a trie consumes immense storage due to larger number of leaf-nodes caused by sparse distribution of keys; Patricia trees can be efficient for such cases.
@@ -190,3 +239,8 @@ External links
 --------------
 
 *   NIST's Dictionary of Algorithms and Data Structures: Trie
+
+[^1]: Maabar, Maha (17 November 2014). "[Trie Data Structure](https://bioinformatics.cvr.ac.uk/trie-data-structure/)". CVR, University of Glasgow. Archived from the original on 27 January 2021. Retrieved 17 April 2022.
+[^2]: Thue, Axel (1912). "[Über die gegenseitige Lage gleicher Teile gewisser Zeichenreihen](https://archive.org/details/skrifterutgitavv121chri/page/n11/mode/2up)". Skrifter Udgivne Af Videnskabs-Selskabet I Christiania. 1912 (1): 1–67. Cited by Knuth.
+[^3]: Knuth, Donald (1997). "6.3: Digital Searching". The Art of Computer Programming Volume 3: Sorting and Searching (2nd ed.). Addison-Wesley. p. 492. ISBN 0-201-89685-0.
+[^4]: Daciuk, Jan (24 June 2003). [Comparison of Construction Algorithms for Minimal, Acyclic, Deterministic, Finite-State Automata from Sets of Strings](https://link.springer.com/chapter/10.1007/3-540-44977-9_26). International Conference on Implementation and Application of Automata. Springer Publishing. pp. 255–261. doi: 10.1007/3-540-44977-9_26. ISBN 978-3-540-40391-3.
