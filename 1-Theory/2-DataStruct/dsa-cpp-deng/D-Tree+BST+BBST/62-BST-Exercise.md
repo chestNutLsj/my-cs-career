@@ -101,6 +101,8 @@ h' <= |ap| + 1 <= h + 1
 失衡节点的总数为： $h = fib^{-1} (n + 1) - 3 = \log_{\Phi}n = O(\log n)$ 
 其中， Φ = (√5 + 1) / 2 = 1.618
 
+More detailed formulation about Fib-AVL tree: [[66-Fib-AVL-Tree]]
+
 ## 7-13-b 证明 AVL 中删除一个节点后失衡祖先至多 1 个
 节点的失衡与否，取决于其左、右子树高度之差。因此反过来，只要子树的高度不变，则节点不可能失衡。
 

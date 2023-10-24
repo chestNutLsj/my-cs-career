@@ -609,6 +609,55 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
               "subpath": "#树的半径与BFS",
               "title": "树的半径与BFS"
+            },
+            {
+              "type": "file",
+              "ctime": 1698138381040,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md",
+              "subpath": "#插入",
+              "title": "BST插入的节点一定是叶节点吗？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698138463451,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md",
+              "subpath": "#删除",
+              "title": "BST删除操作的两种情况"
+            },
+            {
+              "type": "file",
+              "ctime": 1698138617712,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md",
+              "subpath": "#期望树高",
+              "title": "BST随机生成和随机组成的区别"
+            },
+            {
+              "type": "file",
+              "ctime": 1698140736291,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#高度与节点数",
+              "title": "AVL-tree的高度与节点数关系"
+            },
+            {
+              "type": "file",
+              "ctime": 1698140879488,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+              "subpath": "#7-13 证明 AVL 树插入节点后失衡的祖先数可能多达Ω(logn)个",
+              "title": "Fib-AVL树的形态"
+            },
+            {
+              "type": "file",
+              "ctime": 1698141137487,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#插入",
+              "title": "AVL-tree树高增长的可能性：一定要失衡吗？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698141578780,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#删除",
+              "title": "AVL-tree树高降低的可能性：一定要失衡吗？"
             }
           ],
           "title": "知识点细节"

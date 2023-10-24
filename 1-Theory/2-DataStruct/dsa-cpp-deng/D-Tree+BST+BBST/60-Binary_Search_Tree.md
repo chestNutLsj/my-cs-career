@@ -76,6 +76,7 @@ BinNodePosi<T> & BST<T>::search( const T & e ) {
 插入操作有两种情况：
 1. 插入位置低于叶节点：
 	-  ![[60-Binary_Search_Tree-bst-insert.png]]
+
 2. 插入位置位于中间节点，且位置为空：
 	- ![[60-Binary_Search_Tree-bst-insert2.png]]
 
@@ -140,10 +141,11 @@ static BinNodePosi<T> removeAt( BinNodePosi<T> & x, BinNodePosi<T> & hot ) {
 从 BST 中删除有两种情况：
 1. 删除节点是其父节点的唯一孩子（分支）：
 	- ![[60-Binary_Search_Tree-bst-delete1.png]]
+
 2. 删除节点有兄弟及兄弟的分支：
 	- ![[60-Binary_Search_Tree-bst-delete2.png]]
 	- 思路是直接后继一定没有左孩子（有左孩子则其左孩子就成为直接后继），交换之，
-	- 由此可以保证，除了直接后继极其后代，其余 BST 的部分均不受影响；
+	- 由此可以保证，除了直接后继及直接后继的后代，其余 BST 的部分均不受影响；
 	- 此时由于直接后继转换为没有兄弟的第一类情况，直接复用第一类的思想即可。
 
 ## 期望树高
@@ -152,12 +154,12 @@ static BinNodePosi<T> removeAt( BinNodePosi<T> & x, BinNodePosi<T> & hot ) {
 考虑**随机生成** n 个词条并按随机排列 $\sigma=(e_{i1},e_{i2},...,e_{i3})$ 的顺序依次插入，且==每种排列出现的概率相同==—— $\frac{1}{n!}$，则 BST 的平均高度为 $\Theta(\log n)$。
 - ![[60-Binary_Search_Tree-bst-height-equal-probability.png]]
 - 上图情况中，{1,2,3}序列的平均树高为 (2+2+2+2+1+1)/6 = 1.67
-- 多数实际应用中的 BST 总体上都是如此生成和演化的，即便计入 remove()，也可通过随机使用 succ()和 pred()，避免逐渐倾侧的趋势——若固定使用 succ()进行删除算法，则每棵 BST 有逐渐左倾的趋势；
+- 多数实际应用中的 BST 总体上都是如此生成和演化的，即便计入 remove()，也**可通过随机使用 succ()和 pred()**，避免逐渐倾侧的趋势——若固定使用 succ()进行删除算法，则每棵 BST 有逐渐左倾的趋势；
 
 但若排列出现的概率不均等时，情况会有差别。考虑 n 个互异节点在遵守 BST 的顺序条件下，**随机组成**确定拓扑关系：
 - n 个互异节点组成的 BST 的种类有 S (n)棵，其递推公式为：
 - $S(n)=\sum\limits_{k=1}^{n}S(k-1)\cdot S(n-k)=catalan(n)=\frac{(2n)!}{(n+1)!\cdot n!}$ 
-- 同样以 {1,2,3} 序列，共五种拓扑，因此以拓扑数分析平均树高为：(2+2+2+2+1)/5 = 1.8
+- 同样以 {1,2,3} 序列，**共五种拓扑**，因此以拓扑数分析平均树高为：(2+2+2+2+1)/5 = 1.8
 - 假设所有 BST 等概率出现，则平均高度为 $\Theta(\sqrt{n})$ 
 
 ![[60-Binary_Search_Tree-bst-height.png]]
@@ -175,6 +177,7 @@ static BinNodePosi<T> removeAt( BinNodePosi<T> & x, BinNodePosi<T> & hot ) {
 	- 由 n 个节点组成的二叉树，高度不致低于 $\lfloor \log_{2}n\rfloor$ ，达到这个下界时，称作理想平衡；
 	- ![[60-Binary_Search_Tree-ideal-balance.png]]
 	- 大致相当于完全树甚至满树：叶节点只能出现于最底部的两层——条件过于苛刻
+
 2. **渐进平衡**：
 	- 适当地放松标准——退一步海阔天空：高度渐近地不超过 O (logn)，即可接受；
 	- ![[60-Binary_Search_Tree-asymptotic-balance.png]]
@@ -183,8 +186,9 @@ static BinNodePosi<T> removeAt( BinNodePosi<T> & x, BinNodePosi<T> & hot ) {
 - 父子兄弟节点的连接关系可以改变、颠倒；
 - 但中序遍历的序列不可破坏，全局仍然单调非降：
 - ![[60-Binary_Search_Tree-bst-balanceing.png]]
+
 BBST 是 BST 的子集，同样满足左小右大的顺序性：
-- 单次动态修改后，至多 O (logn)处局部不再满足顺序性——可能修复一处上升到上一层，相继违反，不一定同时；
+- 单次动态修改后，至多 O (logn)处局部不再满足顺序性——可能修复一处上升到上一层，**相继违反，不一定同时**；
 - 因此可以在 O (logn)时间内修复这些局部以满足 BST 的要求；
 - 修复操作是通过旋转局部的父子兄弟完成：
 - ![[60-Binary_Search_Tree-bst-rebalance.png]] ^fef5a1

@@ -4,31 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "cf8a7f41d4e415b5",
+        "id": "57e0db24ae2d48b0",
         "type": "tabs",
         "children": [
           {
-            "id": "e86cda2c0a796e3d",
+            "id": "1000921d19e94183",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2a1e587c94a0fd25",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -93,7 +77,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 326.5
+    "width": 285.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -109,7 +93,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -126,7 +109,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -153,9 +135,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md"
-              }
+              "state": {}
             }
           },
           {
@@ -188,9 +168,11 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "de0f37b73b7ef6dc",
+  "active": "1000921d19e94183",
   "lastOpenFiles": [
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/66-Fib-AVL-Tree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/7-进程间通信与IO重定向.md",
     "1-Theory/3-Algorithm/OIWiki/String/50-Trie-Tree.md",
@@ -228,8 +210,6 @@
     "1-Theory/3-Algorithm/OIWiki/String",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/71-Hash-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
     "1-Theory/6-Network/Top-to-down/assets/TCP-flow-control.mp4",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets",
     "1-Theory/3-Algorithm/OIWiki/DP",
