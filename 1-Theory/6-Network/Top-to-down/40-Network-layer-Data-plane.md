@@ -1,8 +1,14 @@
 
 ## 4.1 网络层概述
 
+### 网络层服务
 ![[40-Network-layer-Data-plane-network-layer-instance.png]]
-Figure 4.1 shows a simple network with two hosts, H1 and H2, and several routers on the path between H1 and H2. Let’s suppose that H1 is sending information to H2, and consider the role of the network layer in these hosts and in the intervening routers. The network layer in H1 takes segments from the transport layer in H1, encapsulates each segment into a datagram, and then sends the datagrams to its nearby router, R1. At the receiving host, H2, the network layer receives the datagrams from its nearby router R2, extracts the transport-layer segments, and delivers the segments up to the transport layer at H2. The primary data-plane role of each router is to forward datagrams from its input links to its output links; the primary role of the network control plane is to coordinate these local, per-router forwarding actions so that datagrams are ultimately transferred end-to-end, along paths of routers between source and destination hosts. Note that the routers in Figure 4.1 are shown with a truncated protocol stack, that is, with no upper layers above the network layer, because routers do not run applicationand transport-layer protocols such as those we examined in Chapters 2 and 3.
+Figure 4.1 shows a simple network with two hosts, H1 and H2, and several routers on the path between H1 and H2. Let’s suppose that H1 is sending information to H2, and consider the role of the network layer in these hosts and in the intervening routers. 
+- The network layer in H1 takes segments from the transport layer in H1, encapsulates each segment into a datagram, and then sends the datagrams to its nearby router, R1. 
+- At the receiving host, H2, the network layer receives the datagrams from its nearby router R2, extracts the transport-layer segments, and delivers the segments up to the transport layer at H2. 
+- The primary data-plane role of each router is to forward datagrams from its input links to its output links; 
+- the primary role of the network control plane is to coordinate these local, per-router forwarding actions so that datagrams are ultimately transferred end-to-end, along paths of routers between source and destination hosts. 
+- Note that the **routers** in Figure 4.1 are shown with a truncated protocol stack, that is, **with no upper layers above the network layer, because routers do not run application and transport-layer protocols** such as those we examined in Chapters 2 and 3.
 
 网络层服务
 - 在发送主机和接收主机对之间传送段(segment)
@@ -11,11 +17,9 @@ Figure 4.1 shows a simple network with two hosts, H1 and H2, and several routers
 - 网络层协议存在于**每一个**主机和路由器（每一个都需要封装和解封装）
 - 路由器检查每一个经过它的IP数据报的头部
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001100723126.png" alt="image-20211001100723126" style="zoom:80%;" />
-
 网络层的关键功能
 - 网络层功能：
-    - **转发**（一个局部的概念，数据平面）：将分组从路由器的输入接口转发到合适的输出接口
+    - **转发**（一个局部的概念，数据平面）：将分组从路由器的输入接口转发到合适的输出接口的路由器本地动作
     - **路由**（一个全局的功能，控制平面）：使用路由算法来决定分组从发送主机到目标接收主机的路径
         - 路由选择算法
         - 路由选择协议
@@ -23,48 +27,71 @@ Figure 4.1 shows a simple network with two hosts, H1 and H2, and several routers
     - 转发：通过单个路口的过程
     - 路由：从源到目的的路由路径规划过程
 
-网络层：数据平面、控制平面
-- 数据平面：分组从哪个端口输入，从哪个端口输出
-    - 本地，每个路由器功能
-    - 决定从路由器输入端口到达的分组如何转发到输出端口
+### 网络层：数据平面、控制平面
+
+- 数据平面：分组从哪个端口输入，从哪个端口输出（微观，局部）
+    - 本地进行的动作，每个路由器都要实现的功能
+    - 转发发生的时间尺度很短（几纳秒），通常用硬件实现。
     - 转发功能：
-        - 传统方式：基于目标IP地址得知哪个端口输入 + 转发表（路由表）决定哪个端口输出
-        - SDN方式：基于多个字段 + 与 流表 做匹配，通过匹配的表象进行相应的动作（如转发、阻止、泛洪、修改等）（不像传统方式只进行转发，更加灵活）
-- 控制平面：决定分组在整个网络中的路径
-    - 控制网络范围内的逻辑
-    - 决定数据报如何在路由器之间路由，决定数据报从源到目标主机之间的端到端路径
+        - 传统方式：基于目标 IP 地址得知哪个端口输入 + 转发表 forwarding table（路由表，router table）决定哪个端口输出
+        - SDN方式：基于多个字段 + 与 **流表** 做匹配，通过匹配的表象进行相应的动作（如转发、阻止、泛洪、修改等）（不像传统方式只进行转发，更加灵活）
+
+- 控制平面：决定分组在整个网络中的路径（宏观，全局）
+    - 确定分组从源到目的地所采取的端到端路径的网络范围处理过程
+    - 路由选择的时间尺度很长（几秒），通常用软件实现
     - 2个控制平面方法：
         - 传统的路由算法：在路由器中被实现，得到路由表
         - software-defined networking (SDN，软件定义网络)：在远程的服务器中实现，计算出流表通过南向接口交给分组交换设备，进而与分组的多个字段相匹配并根据匹配结果进行相应的动作
 
-传统方式：每-路由器(Per-router)控制平面
-- 在每一个路由器中的单独路由器算法元件，在控制平面进行交互
-- 控制平面和数据平面紧耦合（集中于一台设备上实现），分布式计算路由表，难以修改路由设备的运行逻辑，模式僵化
+> [! example] forwarding table
+> ![[40-Network-layer-Data-plane-forwarding-table.png]]
+> 
+> 路由器检查到达分组的首部的一个或多个字段值，
+> - 进而使用这些值在转发表中进行索引，通过这种方式转发分组。
+> - 这些值对应存储在转发表项中的值，指出了该分组将被转发的路由器的输出链路接口。
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001102609192.png" style="zoom:60%"/>
 
-传统方式：路由和转发的相互作用
+#### 控制平面：传统方法
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001102633237.png" />
+转发表是网络层能够正常运行的关键，而如何配置转发表，是路由选择和转发间协调工作的核心问题。
+- 暴力地，人类网络操作员可以配置物理上所有路由器的转发表内容，这意味着路由转发算法并不必需。
+- 但实际上这一方法既不可为也不可行——人工配置极易出错、对于网络拓扑变化的响应极慢……
+- 如果设计全局的路由选择算法，在每台路由器中根据路由选择算法进行转发与路由的协调、计算转发表的表项，是传统的改进方法。
+	- 这种协调的通信是如何实现的呢？通过根据路由选择算法交换包含路由选择信息的路由选择报文。
+	- 使用该方法，需要每台路由器都有一个与其它路由器的路由选择组件通信的路由选择组件。
+	- 这在事实上，是控制平面和数据平面的紧耦合（集中于一台设备上实现），分布式地计算路由表，缺点是计算量大、难以修改路由设备的运行逻辑、模式僵化。
 
-SDN方式：逻辑集中的控制平面
-- 一个不同的（通常是远程的）控制器与本地控制代理（CAs）交互，只用在控制器处改变流表就可以改变网络设备的行为逻辑，易修改、可编程
 
-    <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001102716772.png" />
+***SDN 方法应运而生！***
 
-网络服务模型
+#### 控制平面：SDN 方法
+
+![[40-Network-layer-Data-plane-SDN-method.png]]
+- 一个不同的（通常是远程的）**控制器计算和分发转发表以供每台路由器使用**；
+- 远程控制器与本地控制代理（CAs）交互，只用在控制器处改变流表就可以改变网络设备的行为逻辑，易修改、可编程；
+- 注意到图 4.3 和 4.2 的区别：4.2 中路由选择算法和转发表是紧耦合的，而 4.3 中控制平面的路由选择功能与物理的路由器是分离的；
+
+路由器与远程控制器是如何通信的呢？
+- 通过交换包含转发表和其它路由信息的报文。
+- 图 4.3 中的控制平面方法是 SDN (Software-Defined Networking)，顾名思义，计算转发表并与路由器交互的控制器是用软件实现的。
+
+### 网络服务模型
+
 - Q：从发送方主机到接收方主机传输数据报的“通道”，网络提供什么样的服务模型(service model)？服务模型有一系列的指标
     - 对于单个数据报的服务：
-        - 可靠传送
+        - 确保交付
         - 延迟保证，如：少于40ms的延迟
     - 对于数据报流（一系列分组的序列）的服务：
-        - 保序数据报传送
+        - 有序分组交付
         - 保证流的最小带宽
-        - 分组之间的延迟差(jitter)
+        - 安全性
+        - 分组之间的延迟差 (jitter)
 
 连接建立
-- 在某些网络架构中是第三个重要的功能（继 路由、转发 之后）
-    - ATM（有连接：建立连接&路径上所有主机进行维护）, frame relay, X.25
+- 在某些网络架构中是第三个重要的功能（继 **路由**、**转发** 之后）
+    - ATM（有连接：建立连接&路径上所有主机进行维护）, 
+    - frame relay, 
+    - X.25
 - 在分组传输之前，在两个主机之间，在通过一些路由器所构成的路径上建立一个网络层连接
     - 涉及到路由器
 - 网络层和传输层连接服务区别:
@@ -72,19 +99,28 @@ SDN方式：逻辑集中的控制平面
     - 传输层：在2个进程之间，很可能只体现在端系统上（TCP连接），面向连接
 
 网络层服务模型：
-|网络架构|服务模型|保证带宽|不丢失|保序|延迟保证|拥塞反馈|
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|Internet|best effort “尽力而为”|none|no|no|no|no (inferred via loss)|
-|ATM|CBR(恒定速率)|constant rate|yes|yes|yes|no congestion|
-|ATM|VBR(变化速率)|guaranteed rate|yes|yes|yes|no congestion|
-|ATM|ABR(可用比特率)|guaranteed minimum|no|yes|no|yes|
-|ATM|UBR(不指名比特率)|none|no|yes|no|no|
 
-## 4.2 路由器组成
+| 网络架构 |        服务模型        |      保证带宽      | 不丢失 | 保序 | 延迟保证 |        拥塞反馈        |
+|:--------:|:----------------------:|:------------------:|:------:|:----:|:--------:|:----------------------:|
+| Internet | best effort “尽力而为” |        none        |   no   |  no  |    no    | no (inferred via loss) |
+|   ATM    |     CBR(恒定速率)      |   constant rate    |  yes   | yes  |   yes    |     no congestion      |
+|   ATM    |     VBR(变化速率)      |  guaranteed rate   |  yes   | yes  |   yes    |     no congestion      |
+|   ATM    |    ABR(可用比特率)     | guaranteed minimum |   no   | yes  |    no    |          yes           |
+|   ATM    |   UBR(不指名比特率)    |        none        |   no   | yes  |    no    |           no           |
+
+The Internet’s network layer provides a single service, known as ***best-effort service***. With best-effort service, packets are neither guaranteed to be received in the order in which they were sent, nor is their eventual delivery even guaranteed. There is no guarantee on the end-to-end delay nor is there a minimal bandwidth guarantee. It might appear that best-effort service is a euphemism for no service at all—==a network that delivered no packets to the destination would satisfy the definition of best-effort delivery service==! 
+> hah😆
+
+Other network architectures have defined and implemented service models that go beyond the Internet’s best-effort service. For example, the ATM network architecture `[Black 1995]` provides for guaranteed in-order delay, bounded delay, and guaranteed minimal bandwidth. There have also been proposed service model extensions to the Internet architecture; for example, the Intserv architecture `[RFC 1633]` aims to provide end-end delay guarantees and congestion-free communication. 
+
+Interestingly, in spite of these well-developed alternatives, the Internet’s basic best-effort service model combined with adequate bandwidth provisioning and bandwidth-adaptive application-level protocols such as the DASH protocol we encountered in Section 2.6.2 have arguably proven to be more than “good enough” to enable an amazing range of applications, including streaming video services such as Netflix and video-over-IP, real-time conferencing applications such as Skype and Facetime.
+> 能用就是好！😠
+
+## 4.2 路由器内究
 
 路由器结构概况
 - 高层面（非常简化的）通用路由器体系架构：输入端口 + 输出端口 + 交换结构 
-    - 路由：运行路由选择算法／协议 (RIP, OSPF, BGP)-生成路由表
+    - 路由：运行路由选择算法/协议 (RIP, OSPF, BGP) - 生成路由表
     - 转发：从输入到输出链路交换数据报-根据路由表进行分组的转发
 
 <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001103919273.png" />

@@ -11,8 +11,12 @@
             "id": "835299e1166d3635",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -44,8 +48,8 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
-                "matchingCase": false,
+                "query": "HOL",
+                "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
@@ -76,7 +80,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 265.5
+    "width": 265.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -92,6 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,6 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +141,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md"
+              }
             }
           },
           {
@@ -170,6 +179,11 @@
   },
   "active": "835299e1166d3635",
   "lastOpenFiles": [
+    "1-Theory/6-Network/Data-communication-and-network/DCN-summary.pdf",
+    "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-SDN-method.png",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-forwarding-table.png",
+    "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
     "1-Theory/4-Architecture/THU-Liu/20-Intruction.md",
     "1-Theory/4-Architecture/THU-Liu/assets/20-Intruction-extension-example.png",
     "1-Theory/4-Architecture/THU-Liu/assets/20-Intruction-instruction-extension.png",
@@ -191,14 +205,10 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A2-Trie-Tree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A2-Trie-Tree-patricia-tree.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A2-Trie-Tree-patricia-trees.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A2-Trie-Tree-implementation.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A2-Trie-Tree-representation.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
     "1-Theory/2-DataStruct/dsa-c-yan/93-键树.md",
     "1-Theory/6-Network/Top-to-down/chapter6.md",
     "1-Theory/6-Network/Top-to-down/chapter5.md",
-    "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
-    "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
     "1-Theory/6-Network/Top-to-down/practice/30-Transport-layer.md",
     "1-Theory/4-Architecture/THU-Liu/13-Hamming-code.md",
     "1-Theory/4-Architecture/THU-Liu/23-Singlecycle.md",
