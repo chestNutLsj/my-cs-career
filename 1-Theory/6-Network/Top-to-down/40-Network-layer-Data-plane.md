@@ -118,72 +118,149 @@ Interestingly, in spite of these well-developed alternatives, the Internet’s b
 
 ## 4.2 路由器内究
 
-路由器结构概况
-- 高层面（非常简化的）通用路由器体系架构：输入端口 + 输出端口 + 交换结构 
+### 路由器结构概况
+![[40-Network-layer-Data-plane-router-structure.png]]
+
+- 通用路由器体系架构：输入端口 + 输出端口 + 交换结构 + 路由选择处理器
     - 路由：运行路由选择算法/协议 (RIP, OSPF, BGP) - 生成路由表
     - 转发：从输入到输出链路交换数据报-根据路由表进行分组的转发
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001103919273.png" />
+- 输入端口：（从左到右三个功能块，分别完成以下三个任务）
+	- 终结物理链路的物理层功能
+	- 与位于入链路远端的数据链路层交互，来执行数据链路层功能
+	- 在输入端口执行查找功能（通过查询转发表决定路由器的输出端口）
+		- 普通分组通过路由器的交换结构转发到输出端口
+		- 控制分组（携带路由选择协议信息的分组）转发到路由选择处理器
+- 交换结构：
+	- 将路由器的输入端口连接到输出端口
+	- 是一个网络路由器中的网络，完全包含在路由器之中
+- 输出端口：
+	- 存储从交换结构接收的分组，并通过执行必要的链路层和物理层功能在输出链路上传输这些分组
+	- 一条链路是双向的时，输出端口和输入端口成对地出现在同一线路卡上
+- 路由选择处理器：
+	- 执行控制平面功能。
+		- 在传统路由器中，执行路由选择协议，维护路由选择表与关联链路状态信息，并为该路由器计算转发表
+		- SDN 路由器中，路由选择处理器负责与远程控制器通信，目的是接收由远程控制器计算的转发表项，并在该路由器的输入端口安装这些表项
+	- 还执行网络管理功能。
 
-注：输入/出端口的三个块代表网络层（红色）、链路层、物理层      
-注2：输入/出端口通常是整合在一起的，分开描述是为了方便
+>[! warning] 路由器端口是物理端口！
+>与应用层和传输层所说的端口不同，路由器端口指的是物理上可以插拔网线、控制线的实体接口，而应用层等端口是软件实现的、socket 端口。不要混淆。
 
-输入端口
-- 输入端口功能：物理层链路上的物理信号转换为数字信号，数据链路层封装成帧并进行一定的判断，将帧当中的数据部分取出，交给网络层实体
+>[! note] 输入端口、输出端口、交换结构用硬件实现！
+>To appreciate why a hardware implementation is needed, consider that with a 100 Gbps input link and a 64-byte IP datagram, ==the input port has only 5.12 ns to process the datagram before another datagram may arrive==.
+>
+>If N ports are combined on a line card (as is often done in practice), ***the datagram-processing pipeline must operate N times faster—far too fast for software implementation***. Forwarding hardware can be implemented either using a router vendor’s own hardware designs, or constructed using purchased merchant-silicon chips (for example, as sold by companies such as Intel and Broadcom).
 
-    <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001104327835.png" />
+>[!note] 控制平面的功能用软件实现！
+>While the data plane operates at the nanosecond time scale, a router’s **control functions**—executing the routing protocols, responding to attached links that go up or down, communicating with the remote controller (in the SDN case) and performing management functions—operate at the millisecond or second timescale.
+>
+>These ***control plane functions are thus usually implemented in software and execute on the routing processor*** (typically a traditional CPU).
 
-- 输入端口需要有一个队列——输入端口缓存：下层交上来的速度于与交给分组交换结构的速度可能不匹配
-    -  当交换机构的速率小于输入端口的汇聚速率时，在输入端口可能要排队
-          - 排队延迟以及由于输入缓存溢出造成丢失！
-    - Head-of-the-Line (HOL) blocking：排在队头的数据报阻止了队列中其他数据报向前移动
+> [! note] 区分基于目的地的转发和通用转发
+> 
+> ***Destination-based forwarding***. Suppose the car stops at an entry station and ==indicates its final destination== (not at the local roundabout, but the ultimate destination of its journey). An attendant at the entry station looks up the final destination, determines the roundabout exit that leads to that final destination, and tells the driver which roundabout exit to take. 
+> 
+> ***Generalized forwarding***. The attendant could also determine the car’s exit ramp on the basis of many other factors besides the destination. For example, the selected exit ramp might depend on the car’s origin, for example the state that issued the car’s license plate. Cars from a certain set of states might be directed to use one exit ramp (that leads to the destination via a slow road), while cars from other states might be directed to use a different exit ramp (that leads to the destination via superhighway). The same decision might be made based on the model, make and year of the car. Or a car not deemed roadworthy might be blocked and not be allowed to pass through the roundabout. In the case of generalized forwarding, any number of factors may contribute to the attendant’s choice of the exit ramp for a given car.
 
-    <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001104653702.png" />
+### 输入端口处理和基于目的地的转发
 
-交换结构：将分组从输入缓冲区传输到合适的输出端口
+![[40-Network-layer-Data-plane-input-port-processing.png]]
+
+- 正是在输入端口，路由器使用转发表来查找输出端口，使得到达的分组能够经过交换结构转发到该输出端口。
+- 转发表由路由选择处理器经过独立的总线（如 PCI）复制到线路卡（4.4 图中的虚线流向）。
+- 使用在**每个输入端口**的 copy，转发决策能在每个输入端口本地做出，无须基于每个分组调用集中式的路由选择处理器
+
+![[40-Network-layer-Data-plane-input-function.png]]
+
+>[! note] 转发表基于目的地的转发规则
+>显然，暴力地将每个目标地址的 IP 作为一个转发表的表项，是过于庞大、不可行的。
+>
+>通常使用基于前缀的转发规则：
+> ![[40-Network-layer-Data-plane-ip-based-forward-rules.png]]
+>如果分组的目标地址的 IP 的前缀与某个转发表表项相同，则向对应的输出端口转发。如果不满足任何表项，则向默认端口转发。
+>For example, suppose the packet’s destination address is 11001000 00010111 00010110 10100001; because the 21-bit prefix of this address matches the first entry in the table, the router forwards the packet to link interface 0. If a prefix doesn’t match any of the first three entries, then the router forwards the packet to the default interface 3.
+>
+>当有多个前缀匹配时，遵循**最长前缀匹配原则**longest prefix matching rule)：即在转发表中寻找最长的匹配项，并向与最长前缀匹配相关联的链路接口转发分组。
+>映射到现实就很好理解这一原则：我（分组）从太原（源地址）开车前往深圳（目的地址），每个高速路口（路由器）时都要决定下一个岔路往哪里开。比如到郑州时，有三个岔路，分别通向武汉、上海、西安，那么我的目标前缀（向南前进）决定了我要开向武汉岔口。每到一个岔口，我的路线就更进一步地细分——如何准确地到达深圳，而不走向其它岔路。所谓前缀匹配，就是看目标方向是否一致，前缀匹配得越长，与目标所在方向越精确。
+
+由于查找要求的时间非常苛刻，因此不仅要使用硬件查找，而且对于大型转发表要使用超出简单线性搜索的技术：
+- surveys of fast lookup algorithms can be found in `[Gupta 2001, Ruiz-Sanchez 2001]`. 
+- Special attention must also be paid to memory access times, resulting in designs with embedded on-chip DRAM and faster SRAM memories. In practice, ***Ternary Content Addressable Memories (TCAMs)*** are also often used for lookup `[Yu 2004]`. 
+- With a TCAM, a 32-bit IP address is presented to the memory, which returns the content of the forwarding table entry for that address in essentially constant time. 
+	- The Cisco Catalyst 6500 and 7600 Series routers and switches can hold upwards of a million TCAM forwarding table entries `[Cisco TCAM 2014]`.
+
+### 交换
+
+![[40-Network-layer-Data-plane-switch-three-techniques.png]]
+- 3 种典型的交换机构：memory, bus, interconnection
+- 通过内存交换（**memory**） —— 第一代路由器：
+	- 在 CPU (路由选择处理器) 直接控制下的交换，
+	- 与传统的计算机类似，输入端口和输出端口就像传统的 I/O 设备一样，一个分组到达一个输入端口时，该端口先通过中断的方式向路由选择器发出信号，于是该分组从输入端口被复制到处理器的内存中，路由选择处理器从分组的首部提取出目的地址，在转发表中找到适当的输出端口，并将该分组复制到输出端口的缓存中。
+	- 缺点：
+		- 内存带宽为 B 时，总的转发吞吐量不会超过 B/2
+		- 转发速率被内存的带宽限制（数据报通过 BUS 两遍（进+出），系统总线本身就会成为瓶颈，速率低）
+		- 共享的系统总线一次仅能执行一个内存读/写——即一次只能转发一个分组
+	- 一种改进方式是：目的地址的查找和将分组存储到适当的内存存储位置由输入线路卡来处理——类似共享内存的多处理器
+
+- 通过总线交换（**bus**） —— 第二代路由器
+	- 数据报通过共享总线，从输入端口转发到输出端口，不需要路由选择处理器的干预
+	- 输入端口为分组预先计划一个交换机内部标签，指示本地输出端口，使分组在总线上传送到输出端口，所有输出端口都能查看分组，但只有指定的与标签匹配的端口才能接收、完成转发
+	- 缺点：
+		- 虽然相比于 memory 方式，只经过 bus 一次，交换速率大大提升，但是还是有问题 —— **总线竞争**：即使有多个分组等待交换，但一次只能有一个分组使用总线进行传送——交换速度受限于总线带宽
+	- 1 Gbps bus, Cisco 1900； 32 Gbps bus, Cisco 5600；对于接入或企业级路由器，速度足够（但不适合区域或骨干网络）
+
+- 通过互联网络（**interconnection**等）的交换
+	- 通过 2N 条总线组成互联网络，连接 N 个输入端口和 N 个输出端口，每条垂直的总线在交叉点与每条水平的总线交叉，交叉点通过交换结构控制器（交换结构自身的一部分）能够在任何时间开启和闭合
+	- When a packet arrives from port A and needs to be forwarded to port Y, the switch controller closes the crosspoint at the intersection of busses A and Y, and port A then sends the packet onto its bus, which is picked up (only) by bus Y. Note that a packet from port B can be forwarded to port X at the same time, since the A-to-Y and B-to-X packets use different input and output busses.
+	- 同时并发转发多个分组，克服总线带宽限制，并且是非阻塞式的——a packet being forwarded to an output port will not be blocked from reaching that output port as long as no other packet is currently being forwarded to that output port. However, if two packets from two different input ports are destined to that same output port, then one will have to wait at the input, since only one packet can be sent over any given bus at a time.
+
+
+>[! note] 多级交换策略
+>The Cisco CRS employs a three-stage non-blocking switching strategy. A router’s switching capacity can also be scaled by running multiple switching fabrics in parallel.
+>
+>In this approach, input ports and output ports are connected to N switching fabrics that operate in parallel. An input port breaks a packet into K smaller chunks, and sends (“sprays”) the chunks through K of these N switching fabrics to the selected output port, which reassembles the K chunks back into the original packet.
+>> 在路由器内部的、通过交换结构的复用与解复用。
+
 - 交换速率：分组可以按照该速率从输入传输到输出
     - 运行速度经常是输入/输出链路速率的若干倍
     - N个输入端口：交换机构的交换速度是输入线路速度的N倍比较理想，才不会成为瓶颈
-- 3种典型的交换机构：memory, bus, crossbar
 
-    <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001104817961.png" />
 
-    - 通过内存交换（**memory**） —— 第一代路由器：
-        - 在CPU直接控制下的交换，采用传统的计算机
-        - 分组被拷贝到系统内存，CPU从分组的头部提取出目标地址，查找转发表，找到对应的输出端口，拷贝到输出端口
-        - 转发速率被内存的带宽限制（数据报通过BUS两遍（进+出），系统总线本身就会成为瓶颈，速率低）
-        - 一次只能转发一个分组
+### 输出端口处理
 
-        <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001104907438.png" style="zoom:80%"/>
+![[40-Network-layer-Data-plane-output-port-processing.png]]
+- 取出已存放在输出端口缓冲中的分组并将其发送到输出链路上
+- 包括选择和取出排队的分组进行传输，执行所需的链路层和物理层传输功能
 
-    - 通过总线交换（**bus**） —— 第二代路由器
-        - 数据报通过共享总线，从输入端口转发到输出端口
-        - 虽然相比于memory方式，只经过bus一次，交换速率大大提升，但是还是有问题 —— 总线竞争：交换速度受限于总线带宽
-        - 1次处理一个分组
-        - 1 Gbps bus, Cisco 1900； 32 Gbps bus, Cisco 5600；对于接入或企业级路由器，速度足够（但不适合区域或骨干网络）
+### 排队
 
-        <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001104959142.png" />
+输入端口和输出端口都需要一个队列——输入/输出端口缓存：输入链路交给输入端口的速度、或输出端口交付给输出链路的速度与分组交换结构的速度可能不匹配。
 
-    - 通过互联网络（**crossbar**等）的交换
-        - 同时并发转发多个分组，克服总线带宽限制
-        - Banyan(榕树)网络，crossbar(纵横)和其它的互联网络被开发，将多个处理器连接成多处理器
-        - 当分组从端口A到达，转给端口Y；控制器短接相应的两个总线
-        - 高级设计：将数据报分片为固定长度的信元，通过交换网络交换
-        - Cisco12000：以60Gbps的交换速率通过互联网络
+而队列的位置和长度取决于流量负载、交换结构的相对速率和输出速率——由于排队队列的增长会耗尽缓冲区，进而导致丢包——由于输入缓存溢出造成的丢失！
 
-        <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001105151671.png" />
+- 假设输入线路速度和输出线路速度相同，均为 $R_{line}$，并且有 N 个输入端口和 N 个输出端口；
+- 定义交换接口的传送速率为 $R_{switch}$，若是 $R_{line}$ 的 N 倍，此时输入端口的排队情况可以忽略不计，因为即使在最坏情况（N 个输入端口同时有分组到达），也会在下一轮分组到达前转发完成
 
-输出端口
+#### 输入端口排队
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001105403564.png" />
+- 当交换结构转发给输出端口的速率小于输入端口的汇聚速率时，在输入端口需要排队
+- 或者当交换结构正在被其它输入端口的分组使用时，新的分组会被阻塞，这会占据缓存的区域
+- 如此，造成排队延迟，甚至输入端口缓冲区的溢出！
+- 不要忘记在 HTTP/1.1 中提及的 Head-of-the-Line (HOL) blocking：排在队头的数据报阻止了队列中其他数据报向前移动
 
-- 当数据报从交换机构的到达速度比传输速率快就需要输出端口缓存（输出端口排队）
-    - 假设交换速率 $R_{switch}$ 是 $R_{line}$ 的N倍（N：输入端口的数量）
-    - 当多个输入端口同时向输出端口发送时，缓冲该分组（当通过交换网络到达的速率超过输出速率则缓存）
-    - 排队带来延迟，由于输出端口缓存溢出则丢弃数据报
+![[40-Network-layer-Data-plane-HOL-input-port.png]]
+- 分组策略是 FCFS，发向同一输出端口的分组会阻塞等待，不同输出端口的分组则并行传输；
+- Figure 4.8 shows an example in which two packets (darkly shaded) at the front of their input queues are destined for the same upper-right output port. Suppose that the switch fabric chooses to transfer the packet from the front of the upper-left queue. In this case, the darkly shaded packet in the lower-left queue must wait.
+- But not only must this darkly shaded packet wait, so too must the lightly shaded packet that is queued behind that packet in the lower-left queue, even though there is no contention for the middle-right output port (the destination for the lightly shaded packet). This phenomenon is known as ***head-of-the-line*** (HOL) blocking in an input-queued switch—a queued packet in an input queue must wait for transfer through the fabric (even though its output port is free) because it is blocked by another packet at the head of the line. 
+- `[Karol 1987]` shows that ==due to HOL blocking, the input queue will grow to unbounded length== (informally, this is equivalent to saying that significant packet loss will occur) ==under certain assumptions as soon as the packet arrival rate on the input links reaches only 58 percent of their capacity==. A number of solutions to HOL blocking are discussed in `[McKeown 1997]`.
 
-    <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001105440439.png" >
+#### 输出端口排队
+- 当数据报从交换结构的到达输出端口的速度比输出端口向外传输数据的速率快时，就需要输出端口缓存
 
+#### 缓冲多大才是“足够”？
+
+
+### 分组调度
 - 由**调度规则**选择排队的数据报进行传输（先来的不一定先传）
     - 调度：选择下一个要通过链路传输的分组
     - 调度策略：
@@ -200,26 +277,19 @@ Interestingly, in spite of these well-developed alternatives, the Internet’s b
                 - 高（低）优先权中的分组传输次序：FIFO
                 - 现实生活中的例子？
 
-            <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001110210112.png" style="zoom:70%"/>
-
-            如上图：只要有红的就不传绿的，直到红色传完才开始传绿的
 
         - Round Robin (RR) scheduling:
             - 多类
             - 循环扫描不同类型的队列，发送完一类的一个分组，再发送下一个类的一个分组，循环所有类
             - 现实例子？
 
-            <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001111117490.png" style="zoom:70%"/>
 
-            如上图：第一轮传完红的传绿的，第二轮传完绿的传红的，如此往复
-        
         - Weighted Fair Queuing (WFQ): 
             - 一般化的Round Robin
             - 在一段时间内，每个队列得到的服务时间是： $(W_i/\sum{W_i}) * t$ ，和权重成正比
             - 每个类在每一个循环中获得不同权重的服务量
             - 现实例子？
 
-            <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001111153165.png" style="zoom:70%"/>
 
             如上图：一个传输周期内，蓝色传输时间占 $40\%$ ，红色传输时间占 $40\%$ ，绿色传输时间占 $20\%$
 

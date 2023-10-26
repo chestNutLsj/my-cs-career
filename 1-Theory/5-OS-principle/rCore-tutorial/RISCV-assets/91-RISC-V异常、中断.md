@@ -26,23 +26,48 @@ M-mode 的寄存器
 
 `mstatus`，`mtvec`，`medeleg`，`mideleg`，`mip`，`mie`，`mepc`，`mcause`，`mtval`
 
+>[!note] 各 M-mode 寄存器功能
+>八个控制状态寄存器（CSR）是机器模式下异常处理的必要部分：
+>- mtvec（Machine Trap Vector）它保存发生异常时处理器需要跳转到的地址。
+>- mepc（Machine Exception PC）它指向发生异常的指令。
+>- mcause（Machine Exception Cause）它指示发生异常的种类。
+>- mie（Machine Interrupt Enable）它指出处理器目前能处理和必须忽略的中断。
+>- mip（Machine Interrupt Pending）它列出目前正准备处理的中断。
+>- mtval（Machine Trap Value）它保存了陷入（trap）的附加信息：地址例外中出错 的地址、发生非法指令例外的指令本身，对于其他异常，它的值为 0。
+>- mscratch（Machine Scratch）它暂时存放一个字大小的数据。
+>- mstatus（Machine Status）它保存全局中断使能，以及许多其他的状态，
+
 S-mode 的寄存器
 
 `sstatus`，`stvec`，`sip`，`sie`，`sepc`，`scause`，`stval`，`satp`
 
-在后文中，我们可能会有 `xstatus``xtvec` 等的写法，其中 x 表示特权级 m 或者 s 或者 u（u 仅仅在实现了用户态中断的 CPU 上存在）。
+>[! note] S-Mode 寄存器功能
+>S 模式有几个异常处理 CSR：sepc、stvec、scause、sscratch、stval 和 sstatus，它们执行与 M 模式 CSR 相同的功能。
+>
+>![[91-RISC-V异常中断-sstatus.png]]
+>
+>图 10.9 显示了 sstatus 寄存器的布局。
+>
+>- 监管者异常返回指令 sret 与 mret 的行为相同，但它作用于 S 模式的异常处理 CSR，而不是 M 模式的 CSR。
+>- S 模式处理异常的行为已和 M 模式非常相似。如果 hart 接受了异常并且把它委派给了 S 模式，则硬件会原子地经历几个类似的状态转换，其中用到了 S 模式而不是 M 模式的 CSR：
+>	- 发生例外的指令的 PC 被存入 sepc，且 PC 被设置为 stvec。 
+>	- scause 根据异常类型设置，stval 被设置成出错的地址或者其它特定异 常的信息字。
+>	- 把 sstatus CSR 中的 SIE 置零，屏蔽中断，且 SIE 之前的值被保存在 SPIE 中。
+>	- 发生例外时的权限模式被保存在 sstatus 的 SPP 域，然后设置当前模式为 S 模式。
 
-#### mcause
+在后文中，我们可能会有 `xstatus` `xtvec` 等的写法，其中 x 表示特权级 m 或者 s 或者 u（u 仅仅在实现了用户态中断的 CPU 上存在）。
 
-![](1698236799286.png)
+### mcause
+
+![](91-RISC-V异常、中断-mcause.png)
 
 如果陷阱是由中断引起的，则 mcause 寄存器中的 “Interrupt” 位被设置。Exception Code 字段用于标识最后一个异常或中断的代码。下表列出了可能的机器级异常代码。异常代码是 WLRL 字段，因此仅保证包含受支持的异常代码。
 
-(PS: 读者可能疑惑为啥在 `mcause` 中会存在 Supervissor software interrupt [TODO])
+![[91-RISC-V异常中断-mcause-kinds.png]]
 
-### mstatus[#](#1920779978)
+### mstatus
 
-![](1698236799355.png)
+![](91-RISC-V异常、中断-mstatus.png)
 
 MIE 与 SIE 是全局中断使能位。当 xIE 为 1 时，允许在 x 特权级发生中断，否则不允许中断。
 
@@ -52,69 +77,77 @@ MIE 与 SIE 是全局中断使能位。当 xIE 为 1 时，允许在 x 特权级
 
 在 M 模式或 S 模式中，使用 MRET 或 SRET 指令返回陷阱。执行 xRET 指令时，将 xIE 设置为 xPIE；将 xPIE 设置为 1；假设 xPP 值为 y，则将特权模式更改为 y；将 xPP 设置为 U（如果不支持用户模式，则为 M）。如果 xPP≠M，则 xRET 还会设置 MPRV=0。
 
-### mtvec[#](#1484486759)
+### mtvec
 
-![](1698236799421.png)
+![](91-RISC-V异常、中断-mtvec.png)
 
 `mtvec` 记录的是异常处理函数的起始地址。BASE 字段中的值必须始终对齐于 4 字节边界，并且 MODE 设置可能会对 BASE 字段中的值施加额外的对齐约束。
 
 MODE 目前可以取两种值：
 
-![](1698236799446.png)
+![](91-RISC-V异常、中断-mtvec-mode.png)
 
-如果 MODE 为 0，那么所有的异常处理都有同一个入口地址，否则的话异常处理的入口地址是 BASE+4*CAUSE。（cause 记录在 xcause 中）
+如果 MODE 为 0，那么所有的异常处理都有同一个入口地址，否则的话异常处理的入口地址是 `BASE+4*CAUSE`。（cause 记录在 xcause 中）
 
 要求异常处理函数的入口地址必须是 4 字节对齐的。
 
-### medeleg 与 mideleg[#](#2048899269)
+### medeleg 与 mideleg
 
 默认情况下，各个特权级的陷阱都是被捕捉到了 M-mode，可以通过代码实现将 trap 转发到其它特权级进行处理，为了提高转发的性能在 CPU 级别做了改进并提供了 `medeleg` 和 `mideleg` 两个寄存器。
 
-`medeleg` （machine exception delegation）用于指示转发哪些异常到 S-mode；`mideleg`(machine interrupt delegation) 用于指示转发哪些中断到 S-mode。
+- `medeleg` （machine exception delegation(委托、授权)）用于指示转发哪些异常到 S-mode；
+- `mideleg` (machine interrupt delegation) 用于指示转发哪些中断到 S-mode。
 
-当将陷阱委托给 S 模式时，`scause` 寄存器会写入陷阱原因；`sepc` 寄存器会写入引发陷阱的指令的虚拟地址；`stval` 寄存器会写入特定于异常的数据；`mstatus` 的 SPP 字段会写入发生陷阱时的活动特权级；`mstatus` 的 `SPIE` 字段会写入发生陷阱时的 `SIE` 字段的值；`mstatus` 的 `SIE` 字段会被清除。`mcause`、`mepc` 和 `mtval` 寄存器以及 `mstatus` 的 MPP 和 MPIE 字段不会被写入。
+当将陷阱委托给 S 模式时，
+- `scause` 寄存器会写入陷阱原因；
+- `sepc` 寄存器会写入引发陷阱的指令的虚拟地址；
+- `stval` 寄存器会写入特定于异常的数据；
+- `mstatus` 的 SPP 字段会写入发生陷阱时的活动特权级；
+- `mstatus` 的 `SPIE` 字段会写入发生陷阱时的 `SIE` 字段的值；
+- `mstatus` 的 `SIE` 字段会被清除。
+- `mcause`、`mepc` 和 `mtval` 寄存器以及 `mstatus` 的 MPP 和 MPIE 字段不会被写入。
 
 假如被委托的中断会导致该中断在委托者所在的特权级屏蔽掉。比如说 M-mode 将一些中断委托给了 S-mode，那么 M-mode 就无法捕捉到这些中断了。
 
-### mip 与 mie[#](#745274158)
+### mip 与 mie
 
-`mip` 与 `mie` 是分别用于保存 pending interrupt 和 pending interrupt enable bits。每个中断都有中断号 `i`（定义在 `mcause` 表中），每个中断号如果被 pending 了，那么对应的第 `i` 位就会被置为 1. 因为 RISC v spec 定义了 16 个标准的中断，因此低 16bit 是用于标准用途，其它位则 * 台自定义。
+`mip` 与 `mie` 是分别用于保存 pending interrupt 和 pending interrupt enable bits。每个中断都有中断号 `i`（定义在 `mcause` 表中），每个中断号如果被 pending 了，那么对应的第 `i` 位就会被置为 1. 因为 RISC-V spec 定义了 16 个标准的中断，因此低 16bit 是用于标准用途，其它位则 * 台自定义。
 
 如下图所示是低 16bit 的 `mip` 与 `mie` 寄存器。其实比较好记忆，只需要知道 `mcause` 中的中断源即可。例如 SSIP 就是 supervisor software interrupt pending, SSIE 就是 supervisor software interrupt enable。
 
-![](1698236799489.png)
+![](91-RISC-V异常、中断-mie-sie.png)
 
 如果全局中断被启用了，且 `mie` 和 `mip` 的第 i 位都为 1，那么中断 i 将会被处理。默认情况下，如果当前特权级小于 M 或者当前特权级为 M 切 MIE 是 1 的话，全局中断就是被启用的；如果 `mideleg` 的第 i 位为 1，那么当当前特权级为被委托的特权级 x（或者是小于 x），且 `mstatus` 中的 `xIE` 为 1 那么就认为是全局中断是被启用的。
 
 寄存器 `mip` 中的每个位都可以是可写的或只读的。当 `mip` 中的第 i 位可写时，可以通过向该位写入 0 来清除挂起的中断 i。如果中断 i 可以变为挂起但 `mip` 中的位 i 是只读的，则实现必须提供一些其他机制来清除挂起的中断。如果相应的中断可以变为挂起，则 `mie` 中的位必须是可写的。不可写的 `mie` 位必须硬连线为零。
 
-位 `mip` .MEIP 和 `mie` .MEIE 是 M-mode 外部中断的中断挂起和中断允许位。 MEIP 在 `mip` 中是只读的，由 * 台特定的中断控制器设置和清除。
+位 `mip.MEIP ` 和 ` mie.MEIE` 是 M-mode 外部中断的中断挂起和中断允许位。 MEIP 在 ` mip ` 中是只读的，由 * 台特定的中断控制器设置和清除。
 
-位 `mip` .MTIP 和 `mie` .MTIE 是 M-mode 定时器中断的中断挂起和中断允许位。 MTIP 在 `mip` 中是只读的，通过写入映射到内存的 `mtimecmp` 来清除。
+位 `mip.MTIP` 和 `mie.MTIE` 是 M-mode 定时器中断的中断挂起和中断允许位。 MTIP 在 `mip` 中是只读的，通过写入映射到内存的 `mtimecmp` 来清除。
 
-位 `mip` .MSIP 和 `mie` .MSIE 是机器级软件中断的中断挂起和中断允许位。 MSIP 在 `mip` 中是只读的，通过访问内存映射控制寄存器写入，远程 harts 使用这些寄存器来提供 M-mode 处理器间中断。 hart 可以使用相同的内存映射控制寄存器写入自己的 MSIP 位。
+位 `mip.MSIP` 和 `mie.MSIE` 是机器级软件中断的中断挂起和中断允许位。 MSIP 在 `mip` 中是只读的，通过访问内存映射控制寄存器写入，远程 harts 使用这些寄存器来提供 M-mode 处理器间中断。 hart 可以使用相同的内存映射控制寄存器写入自己的 MSIP 位。
 
-如果实现了 S-mode，位 `mip` .SEIP 和 `mie` .SEIE 是 S-mode 外部中断的中断挂起和中断允许位。 SEIP 在 `mip` 中是可写的，并且可以由 M 模式软件写入以向 S 模式指示外部中断正在挂起。此外，* 台级中断控制器（PLIC）可以生成 S-mode 外部中断。SEIP 位是可写的，因此需要根据 SEIP 和外部中断控制器的信号进行逻辑或运算的结果，来判断是否有挂起的 S-mode 外部中断。当使用 CSR 指令读取 `mip` 时， `rd` 目标寄存器中返回的 SEIP 位的值是 `mip.SEIP` 与来自中断控制器的中断信号的逻辑或。但是，CSRRS 或 CSRRC 指令的读取 - 修改 - 写入序列中使用的值仅包含软件可写 SEIP 位，忽略来自外部中断控制器的中断值。
+如果实现了 S-mode，位 `mip.SEIP` 和 `mie.SEIE` 是 S-mode 外部中断的中断挂起和中断允许位。 SEIP 在 `mip` 中是可写的，并且可以由 M 模式软件写入以向 S 模式指示外部中断正在挂起。此外，* 台级中断控制器（PLIC）可以生成 S-mode 外部中断。SEIP 位是可写的，因此需要根据 SEIP 和外部中断控制器的信号进行逻辑或运算的结果，来判断是否有挂起的 S-mode 外部中断。当使用 CSR 指令读取 `mip` 时， `rd` 目标寄存器中返回的 SEIP 位的值是 `mip.SEIP` 与来自中断控制器的中断信号的逻辑或。但是，CSRRS 或 CSRRC 指令的读取 - 修改 - 写入序列中使用的值仅包含软件可写 SEIP 位，忽略来自外部中断控制器的中断值。
 
 _SEIP 字段行为旨在允许更高权限层干净地模拟外部中断，而不会丢失任何真实的外部中断。因此，CSR 指令的行为与常规 CSR 访问略有不同。_
 
-如果实现了 S-mode， `mip` .STIP 和 `mie` .STIE 是 S-mode 定时器中断的中断挂起和中断允许位。 STIP 在 `mip` 中是可写的，并且可以由 M 模式软件编写以将定时器中断传递给 S 模式。
+如果实现了 S-mode， `mip.STIP` 和 `mie.STIE` 是 S-mode 定时器中断的中断挂起和中断允许位。 STIP 在 `mip` 中是可写的，并且可以由 M 模式软件编写以将定时器中断传递给 S 模式。
 
-位 `mip` .SSIP 和 `mie` .SSIE 是管理级软件中断的中断挂起和中断允许位。 SSIP 在 `mip` 中是可写的。
+位 `mip.SSIP` 和 `mie.SSIE` 是管理级软件中断的中断挂起和中断允许位。 SSIP 在 `mip` 中是可写的。
 
 S-mode 的 interprocessor interrrupts 与实现机制有关，有的是通过调用 System-Level Exception Environment(SEE) 来实现的，调用 SEE 最终会导致在 M-mode 将 MSIP 位置为 1. 我们只允许 hart 修改它自己的 SSIP bit，不允许修改其它 hart 的 SSIP，这是因为其它的 hart 可能处于虚拟化的状态、也可能被更高的 descheduled。因此我们必须通过调用 SEE 来实现 interprocessor interrrupt。M-mode 是不允许被虚拟化的，而且已经是最高特权级了，因此可以直接修改其它位的 MSIP，通常是使用非缓冲 IO 写入 memory-mapped control registers 来实现的，具体依赖于 * 台的实现机制。
 
 多个同时中断按以下优先级递减顺序处理：MEI、MSI、MTI、SEI、SSI、STI。异常的优先级低于所有中断。
 
-### mepc[#](#2636913995)
+### mepc
 
 当 trap 陷入到 M-mode 时，`mepc` 会被 CPU 自动写入引发 trap 的指令的虚拟地址或者是被中断的指令的虚拟地址。
 
-### mtval[#](#415178246)
+### mtval
 
 当 trap 陷入到 M-mode 时，`mtval` 会被置零或者被写入与异常相关的信息来辅助处理 trap。当触发硬件断点、地址未对齐、access fault、page fault 时，`mtval` 记录的是引发这些问题的虚拟地址。
 
-### stastus[#](#2400142568)
+### sstatus
 
 ![](1698236799513.png)
 
@@ -126,9 +159,9 @@ SIE 位在 supervisor 模式下启用或禁用所有中断。当 SIE 为零时�
 
 SPIE 位指示陷入 supervisor 模式之前是否启用了 supervisor 级别的中断。当执行跳转到 supervisor 模式的陷阱时，将 SPIE 设置为 SIE，并将 SIE 设置为 0。当执行 SRET 指令时，将 SIE 设置为 SPIE，然后将 SPIE 设置为 1。
 
-### 其它 s 特权级寄存器[#](#4064724067)
+### 其它 s 特权级寄存器
 
-`stvec`, `sip`, `sie`,`sepc`, `scause`, `stval` 与 m-mode 的相应寄存器区别不大，读者可自行参阅 RISC v 的 spec。
+`stvec`, `sip`, `sie`, `sepc`, `scause`, `stval` 与 m-mode 的相应寄存器区别不大，读者可自行参阅 RISC-V 的 spec。
 
 `satp` 比较特殊，在 M-mode 没有对应的寄存器，因为 M-mode 没有分页，`satp` 记录的是根页表物理地址的页帧号。在从 U 切换到 S 时，需要切换页表，也即是切换 `satp` 的根页表物理地址的页帧号。
 
@@ -136,22 +169,20 @@ SPIE 位指示陷入 supervisor 模式之前是否启用了 supervisor 级别的
 
 我在这里只介绍了 U 和 S 之间的切换，其实 S 和 M 之间的切换过程也是一样的，只不过使用到的寄存器不一样了而已。比如说保存 pc 的寄存，S 保存 U 的 pc 值使用的是 `sepc`，M 保存 S 的 pc 使用的是 `mepc`。此外，U 切换到 S 时一般需要切换页表，而从 S 切换到 M 时不需要切换页表，因为 M 没有实现分页，也没有 `matp` 寄存器（页表根地址存储在 `satp` 寄存器中，所以我这里胡诌了个 `matp`）。
 
-[回到顶部](#_labelTop)
+## U 与 S 之间的切换
 
-## U 与 S 之间的切换[#](#1696273634)
-
-### U 切换到 S[#](#45549276)
+### U 切换到 S
 
 当执行一个 trap 时，除了 timer interrupt，所有的过程都是相同的，硬件会自动完成下述过程：
 
-1.  如果该 trap 是一个设备中断并且 `sstatus` 的 SIE bit 为 0，那么不再执行下述过程
-2.  通过置零 SIE 禁用中断
-3.  将 pc 拷贝到 `sepc`
-4.  保存当前的特权级到 `sstatus` 的 SPP 字段
-5.  将 `scause` 设置成 trap 的原因
-6.  设置当前特权级为 supervisor
-7.  拷贝 `stvec`（中断服务程序的首地址）到 pc
-8.  开始执行中断服务程序
+1. 如果该 trap 是一个设备中断并且 `sstatus` 的 SIE bit 为 0，那么不再执行下述过程
+2. 通过置零 SIE 禁用中断
+3. 将 pc 拷贝到 `sepc`
+4. 保存当前的特权级到 `sstatus` 的 SPP 字段
+5. 将 `scause` 设置成 trap 的原因
+6. 设置当前特权级为 supervisor
+7. 拷贝 `stvec`（中断服务程序的首地址）到 pc
+8. 开始执行中断服务程序
 
 CPU 不会自动切换到内核的页表，也不会切换到内核栈，也不会保存除了 pc 之外的寄存器的值，内核需要自行完成。对于 Linux 而言，内核空间与用户态空间是使用的同一套页表，不需要切换页表。详情可以参考用户态进程的虚拟内存布局。内核空间一般位于进程的高虚拟地址空间。
 
@@ -163,27 +194,24 @@ CPU 不会自动切换到内核的页表，也不会切换到内核栈，也不�
 
 在执行中断服务例程时还需要首先判断 `sstatus` 的 SPP 字段是不是 0，如果是 0 表示之前是 U 模式，否则表示 S 模式。如果 SPP 是 1 那就出现了严重错误（因为既然是从 U 切换到 S 的过程，怎么可以 SPP 是 S 模式呢？当然，如果是内核执行时发生了中断 SPP 是 1 那自然是对的，内核执行时发生中断时如果检查 SPP 是 0 那也是严重的错误）。
 
-### S 切换到 U[#](#868263254)
+### S 切换到 U
 
 在从 S 切换到 U 时，要手动清除 `sstatus` 的 SPP 字段，将其置为零；将 `sstatus` 的 SPIE 字段置为 1，启用用户中断；设置 `sepc` 为用户进程的 PC 值（你可能疑惑在 U 转换到 S 时不是已经将用户进程的保存在了 `sepc` 了吗? 因为在 S-mode 也会发生中断呀，那么 `sepc` 就会被用来保存发生中断位置时的 PC 了）。如果启用了页表，就需要想还原用户进程的页表，即将用户进程的页表地址写入 `satp`，之后恢复上下文，然后执行 `sret` 指令，硬件会自动完成以下操作：
 
-1.  从 `sepc` 寄存器中取出要恢复的下一条指令地址，将其复制到程序计数器 `pc` 中，以恢复现场；
-2.  从 `sstatus` 寄存器中取出用户模式的相关状态，包括中断使能位、虚拟存储模式等，以恢复用户模式的状态；
-3.  将当前特权模式设置为用户模式，即取消特权模式，回到用户模式。
+1. 从 `sepc` 寄存器中取出要恢复的下一条指令地址，将其复制到程序计数器 `pc` 中，以恢复现场；
+2. 从 `sstatus` 寄存器中取出用户模式的相关状态，包括中断使能位、虚拟存储模式等，以恢复用户模式的状态；
+3. 将当前特权模式设置为用户模式，即取消特权模式，回到用户模式。
 
-[回到顶部](#_labelTop)
-
-## S 与 M 之间的切换[#](#1727141086)
-
-### S 切换到 M[#](#3390946595)
+## S 与 M 之间的切换
+### S 切换到 M
 
 S 切换到 M 与从 U 切换到 M 类似，都是从低特权级到高特权级的切换。在 S 运行的代码，也可以通过 `ecall` 指令陷入到 M 中。
 
-1.  S-mode 的代码执行一个指令触发了异常或陷阱，例如环境调用（ECALL）指令
-2.  处理器将当前的 S-mode 上下文的状态保存下来，包括程序计数器 (PC)、S-mode 特权级别和其他相关寄存器，保存在当前特权级别堆栈中的 S-MODE 陷阱帧（trap frame，其实就是一个页面）中
-3.  处理器通过将 mstatus 寄存器中的 MPP 字段设置为 0b11（表示先前的模式是 S 模式）将特权级别设置为 M-mode
-4.  处理器将程序计数器设置为在 M-mode 中的陷阱处理程序例程的地址
-5.  处理器还在 mstatus 寄存器中设置 M-mode 中断使能位 (MIE) 为 0，以在陷阱处理程序中禁用中断
+1. S-mode 的代码执行一个指令触发了异常或陷阱，例如环境调用（ECALL）指令
+2. 处理器将当前的 S-mode 上下文的状态保存下来，包括程序计数器 (PC)、S-mode 特权级别和其他相关寄存器，保存在当前特权级别堆栈中的 S-MODE 陷阱帧（trap frame，其实就是一个页面）中
+3. 处理器通过将 mstatus 寄存器中的 MPP 字段设置为 0b11（表示先前的模式是 S 模式）将特权级别设置为 M-mode
+4. 处理器将程序计数器设置为在 M-mode 中的陷阱处理程序例程的地址
+5. 处理器还在 mstatus 寄存器中设置 M-mode 中断使能位 (MIE) 为 0，以在陷阱处理程序中禁用中断
 
 # 系统调用的实现
 
@@ -191,9 +219,7 @@ S 切换到 M 与从 U 切换到 M 类似，都是从低特权级到高特权级
 
 异常触发之后，就会被捕捉到 M-mode（我之前提过，RISC v 下默认是把所有的异常、中断捕捉到 M-mode，当且仅当对应的陷阱被委托给了其它模式才会陷入到被委托的模式中）。假如说
 
-[回到顶部](#_labelTop)
-
-## 地址空间布局[#](#2118930719)
+## 地址空间布局
 
 启用分页模式下，内核代码的访存地址也会被视为一个虚拟地址并需要经过 MMU 的地址转换，因此我们也需要为内核对应构造一个地址空间，它除了仍然需要允许内核的各数据段能够被正常访问之后，还需要包含所有应用的内核栈以及一个 **跳板** (Trampoline) 。
 
@@ -203,9 +229,8 @@ S 切换到 M 与从 U 切换到 M 类似，都是从低特权级到高特权级
 
 <table><thead><tr><th>应用程序高 256GB 地址空间</th><th>应用程序低 256GB 地址空间</th></tr></thead><tbody><tr><td><div class="sr-rd-content-center"><img class="" src="https://img2023.cnblogs.com/blog/1653979/202307/1653979-20230712210015683-979795453.png"></div></td><td><a href="https://img2023.cnblogs.com/blog/1653979/202307/1653979-20230712210016165-419532978.png" data-title="" data-alt="" data-lightbox="roadtrip"><div class="sr-rd-content-center-small"><img class="" src="https://img2023.cnblogs.com/blog/1653979/202307/1653979-20230712210016165-419532978.png"></div></a></td></tr></tbody></table>
 
-[回到顶部](#_labelTop)
 
-## 跳板机制[#](#1727500621)
+## 跳板机制
 
 使能了分页机制之后，我们必须在 trap 过程中同时完成地址空间的切换。具体来说，当 `__alltraps` 保存 Trap 上下文的时候，我们必须通过修改 satp 从应用地址空间切换到内核地址空间，因为 trap handler 只有在内核地址空间中才能访问；同理，在 `__restore` 恢复 Trap 上下文的时候，我们也必须从内核地址空间切换回应用地址空间，因为应用的代码和数据只能在它自己的地址空间中才能访问，应用是看不到内核地址空间的。这样就要求地址空间的切换不能影响指令的连续执行，即要求应用和内核地址空间在切换地址空间指令附 * 是 * 滑的。
 
@@ -225,9 +250,7 @@ Cow(copy on write) Fork 中的基本方案是让父子进程在最开始时共�
 
 当需要返回 `usertrap` 时，`usertrap` 会调用 `usertrapret`，`usertrapret` 会重新设置 stvec 的值使其指向 `uservec`，之后跳转到 `userret`，恢复上下文和切换页表。
 
-[回到顶部](#_labelTop)
-
-## 第一次的 stvec 是如何设置的[#](#4195045780)
+## 第一次的 stvec 是如何设置的
 
 在 `main` 中，cpu0 调用了 `userinit()` 创建了第一个用户进程，并在 `scheduler` 中会切换到该进程。该进程的上下文中的 `ra`(返回地址) 被设置成了 `forkret()`，当 `scheduler` 执行 `swtch` 函数时，会将进程上下文中的 `ra` 写入到 `ra` 寄存器中，这样当要从 `swtch()` 中返回时，就会返回到了 `forkret()`，在 `forkret()` 中会直接调用 `usertrapret` 以实现 `stvec` 的设置和页表的切换。
 
@@ -243,27 +266,21 @@ PLIC 的全称 Platform-Level Interrupt Controller。
 
 PLIC 和 CLIC 的区别在于，前者负责的是整个 * 台的外部中断，CLIC 负责的是每个 HART 的本地中断。
 
-[回到顶部](#_labelTop)
+## PLIC
 
-## PLIC[#](#2509024013)
-
-[回到顶部](#_labelTop)
-
-## ACLINT[#](#1124455707)
+## ACLINT
 
 ACLINT 的规范翻译参见 [RISC-V ACLIT](https://wbc3ji2vof.feishu.cn/wiki/wikcnLbXPxSlB2x1kCV3jU2WiXf)
 
 根据 [Linux RISC-V ACLINT Support](https://lore.kernel.org/lkml/20211007123632.697666-1-anup.patel@wdc.com/) 的说法，大多数现有的 RISC-V * 台使用 SiFive CLINT 来提供 M 级定时器和 IPI 支持，而 S 级使用 SBI 调用定时器和 IPI。此外，SiFive CLINT 设备是一个单一的设备，所以 RISC-V * 台不能部分实现提供定时器和 IPI 的替代机制。RISC-V 高级核心本地中断器 (ACLINT) 尝试通过以下方式解决 SiFive CLINT 的限制:
 
-1.  采用模块化方法，分离定时器和 IPI 功能为不同的设备，以便 RISC-V * 台可以只包括所需的设备
-2.  为 S 级 IPI 提供专用的 MMIO 设备，以便 SBI 调用可以避免在 Linux RISC-V 中使用 IPI
-3.  允许定时器和 IPI 设备的多个实例多 sockets NUMA 系统
+1. 采用模块化方法，分离定时器和 IPI 功能为不同的设备，以便 RISC-V * 台可以只包括所需的设备
+2. 为 S 级 IPI 提供专用的 MMIO 设备，以便 SBI 调用可以避免在 Linux RISC-V 中使用 IPI
+3. 允许定时器和 IPI 设备的多个实例多 sockets NUMA 系统
 
 RISC-V ACLINT 规范向后兼容 SiFive CLINT。
 
-[回到顶部](#_labelTop)
-
-## CLIC[#](#751607000)
+## CLIC
 
 spec 参见 [riscv-fast-interrupt/clic.adoc](https://github.com/riscv/riscv-fast-interrupt/blob/master/clic.adoc#background-and-motivation)
 
@@ -271,7 +288,7 @@ RISC-V 特权架构规范定义了 CSR，例如 **x** `ip` 、 **x** `ie` 和中
 
 在前文介绍 `mtvec` 时提到了 mode 字段，在 RISC-V 目前的特权级规范中，mode 字段只能取 00 或 01，其它值是 reserved。从 spec 的描述中我们可以看出，mode 字段无论是 00 还是 01，都是 CLINT 模式，因此我们在前文介绍的有关中断的介绍都是 CLINT 模式（包括 ACLINT）。
 
-我目前不太清除 CLIC 是否在
+我目前不太清楚 CLIC 是否在
 
 # 时钟中断
 
@@ -279,18 +296,15 @@ RISC-V 特权架构规范定义了 CSR，例如 **x** `ip` 、 **x** `ie` 和中
 
 我相信你已经在 [RISC-V ACLIT](https://wbc3ji2vof.feishu.cn/wiki/wikcnLbXPxSlB2x1kCV3jU2WiXf) 已经了解到了时钟中断的基本原理，现在我们看一下如何处理时钟中断。
 
-[回到顶部](#_labelTop)
-
-## 时钟中断相关的寄存器[#](#657752464)
+## 时钟中断相关的寄存器
 
 [https://tinylab.org/riscv-timer/](https://tinylab.org/riscv-timer/)  
+
 `mtime` 需要以固定的频率递增，并在发生溢出时回绕。当 `mtime` 大于或等于 `mtimecmp` 时，由核内中断控制器 (CLINT, Core-Local Interrupt Controller) 产生 timer 中断。中断的使能由 `mie` 寄存器中的 `MTIE` 和 `STIE` 位控制，`mip` 中的 `MPIE` 和 `SPIE` 则指示了 timer 中断是否处于 pending。在 RV32 中读取 `mtimecmp` 结果为低 32 位， `mtimecmp` 的高 32 位需要读取 `mtimecmph` 得到。  
 由于 `mtimecmp` 只能在 M 模式下访问，对于 S/HS 模式下的内核和 VU/VS 模式下的虚拟机需要通过 SBI 才能访问，会造成较大的中断延迟和性能开销。为了解决这一问题，RISC-V 新增了 Sstc 拓展支持（已批准但尚未最终集成到规范中）。  
 [Sstc 扩展](https://github.com/riscv/riscv-time-compare)为 HS 模式和 VS 模式分别新增了 `stimecmp` 和 `vstimecmp` 寄存器，当 time>=stimecmp$time >= stimecmp$或者 time+htimedelta>=vstimecmp$time + htimedelta >= vstimecmp$是会产生 timer 中断，不再需要通过 SBI 陷入到其它模式。
 
-[回到顶部](#_labelTop)
-
-## 时钟中断的基本处理过程[#](#2300945285)
+## 时钟中断的基本处理过程
 
 如下图所示是时钟中断的基本过程 (xv6 的处理过程)：
 
@@ -304,13 +318,11 @@ RISC-V 特权架构规范定义了 CSR，例如 **x** `ip` 、 **x** `ie` 和中
 
 `mtimecmp` 寄存器用于存储定时器中断应该发生的时间间隔。`mtimecmp` 的值与 `mtime` 寄存器进行比较。当 `mtime` 值变得大于 `mtimecmp` 时，就会产生一个定时器中断。`mtime` 和 `mtimecmp` 寄存器都是 64 位内存映射寄存器，因此可以直接按照内存读写的方式修改这两个寄存器的值。
 
-[回到顶部](#_labelTop)
-
-## xv6 的实现[#](#1735100096)
+## xv6 的实现
 
 xv6 对于时钟中断的处理方式是这样的：在 M-mode 设置好时钟中断的处理函数，当发生时钟中断时就由 M-mode 的代码读写 `mtime` 和 `mtimecmp`，然后激活 `sip.SSIP` 以软件中断的形式通知内核。内核在收到软件中断之后会递增 `ticks` 变量，并调用 `wakeup` 函数唤醒沉睡的进程。 内核本身也会收到时钟中断，此时内核会判断当前运行的是不是进程号为 0 的进程，如果不是就会调用 `yield()` 函数使当前进程放弃 CPU 并调度下一个进程；如果使进程号为 0 的进程，那就不做处理。
 
-### timer_init[#](#2818841118)
+### timer_init
 
 ```
 // core local interruptor (CLINT), which contains the timer.
@@ -358,7 +370,7 @@ timerinit()
 }
 ```
 
-### 时钟中断处理函数[#](#2035897504)
+### 时钟中断处理函数
 
 在下面的代码中，首先是将 `mscratch` 与 `a0` 寄存器交换了值，此时 `a0` 保存的值就是个数组指针 (这一点在前面的 `timer_init` 中已经分析了)。
 
@@ -399,27 +411,24 @@ timervec:
         mret
 ```
 
-[回到顶部](#_labelTop)
 
-## Linux 的时钟中断的实现[#](#854318807)
+
+## Linux 的时钟中断的实现
 
 参见 [RISC-V timer 在 Linux 中的实现 - 泰晓科技](https://tinylab.org/riscv-timer/)
 
-[回到顶部](#_labelTop)
-
-## QEMU 的时钟中断的逻辑[#](#531465597)
+## QEMU 的时钟中断的逻辑
 
 参见 [https://wangzhou.github.io/riscv-timer%E7%9A%84%E5%9F%BA%E6%9C%AC%E9%80%BB%E8%BE%91/](https://wangzhou.github.io/riscv-timer%E7%9A%84%E5%9F%BA%E6%9C%AC%E9%80%BB%E8%BE%91/)
 
-[回到顶部](#_labelTop)
 
-## 参考文献[#](#974934177)
+## 参考文献
 
-*   [wangzhou.github.io](https://wangzhou.github.io/riscv-timer%E7%9A%84%E5%9F%BA%E6%9C%AC%E9%80%BB%E8%BE%91/)
-*   [RISC-V timer 在 Linux 中的实现 - 泰晓科技](https://tinylab.org/riscv-timer/)
-*   [https://shakti.org.in/docs/risc-v-asm-manual.pdf](https://shakti.org.in/docs/risc-v-asm-manual.pdf)
-*   RISC-V ACLINT Spec
-*   RISC-V Privileged Spec
+* [wangzhou.github.io](https://wangzhou.github.io/riscv-timer%E7%9A%84%E5%9F%BA%E6%9C%AC%E9%80%BB%E8%BE%91/)
+* [RISC-V timer 在 Linux 中的实现 - 泰晓科技](https://tinylab.org/riscv-timer/)
+* [https://shakti.org.in/docs/risc-v-asm-manual.pdf](https://shakti.org.in/docs/risc-v-asm-manual.pdf)
+* RISC-V ACLINT Spec
+* RISC-V Privileged Spec
 
 # 软件中断
 
@@ -427,11 +436,9 @@ timervec:
 
 下面以 Linux 和 opensbi 为例介绍 S-MODE 的软件中断的实现。
 
-[回到顶部](#_labelTop)
+## 中断发送
 
-## 中断发送[#](#774511774)
-
-### Linux 内核实现[#](#2006270691)
+### Linux 内核实现
 
 在 `arch/riscv/kernel/smp.c` 中实现了 ipi 发送和处理的若干函数。
 
@@ -492,7 +499,7 @@ static void send_ipi_single(int cpu, enum ipi_message_type op) {
 
 无论是哪种规范吧，反正最终是调用到了 sbi，下面我们以 opensbi 为例继续介绍软件中断的过程。
 
-### Opensbi[#](#573217928)
+### Opensbi
 
 在 `opensbi/lib/sbi/sbi_ipi.c` 中实现了 ipi send 的相关函数。
 
@@ -519,9 +526,7 @@ static void mswi_ipi_send(u32 target_hart) {
 
 通过将 `CSR_MIP.SSIP` 置为就实现了 S-MODE 软件中断，因为根据 RISC v 的中断委托机制，中断会最终拉高 `CSR_SIP.SSIP`，并在 S-MODE 对软件中断进行处理。下面我们来看 Linux 是如何对软件中断进行处理的。
 
-[回到顶部](#_labelTop)
-
-## 中断处理[#](#1764258257)
+## 中断处理
 
 S-MODE 的软件中断处理自然在 Linux 内核中。在 `arch/riscv/kernel/smp.c` 的 `handle_IPI` 函数就是软件中断处理函数。
 
@@ -588,13 +593,13 @@ void handle_IPI(struct pt_regs *regs) {
 
 `uscratch/uepc/utevc/utval` 与相应的 M-mode 的寄存器也是一致的，不再赘述。这里仅重点介绍 `ustatus`, `uip`, `uie`。
 
-### ustatus[#](#2918197014)
+### ustatus
 
 ![](1698236799672.png)
 
 `ustatus` 是很简单的，就两个值得注意的字段 UPIE 和 UIE。如果 UIE 为 0 就禁用用户态中断，否则启用用户态中断。在处理用户态中断时，使用 UPIE 记录 UIE，之后会将 UIE 置零。值得注意的是，`ustatus` 里面没有 UPP，因为没有比 U-mode 更低的特权级了，陷入到 U-mode 的一定是 U-mode 的特权级，因此也就没有必要记录发生中断前的特权级了。
 
-### uip 与 uie[#](#503116071)
+### uip 与 uie
 
 ![](1698236799699.png)
 
@@ -610,8 +615,5 @@ ABI 应该提供一种机制，以发送处理器间中断到其他处理器，�
 
 uip 和 uie 寄存器是 mip 和 mie 寄存器的子集。读取 uip/uie 的任何字段或写入其任何可写字段，都会导致 mip/mie 中同名字段的读写。如果实现了 S 模式，则 uip 和 uie 寄存器也是 sip 和 sie 寄存器的子集。
 
-[回到顶部](#_labelTop)
-
-## 参考资料[#](#601644690)
-
+## 参考资料
 *   [User Interrupt](https://0x10.sh/user-interrupt)

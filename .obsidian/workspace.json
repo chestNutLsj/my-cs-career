@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "9f5f0f1daeb78ac6",
+        "id": "a4b04d1c0de99879",
         "type": "tabs",
         "children": [
           {
-            "id": "d0e3453fab069aff",
+            "id": "478d89392af23d97",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -76,7 +80,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 378.5
+    "width": 378.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -92,6 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,6 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +141,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md"
+              }
             }
           },
           {
@@ -168,28 +177,32 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "d0e3453fab069aff",
+  "active": "478d89392af23d97",
   "lastOpenFiles": [
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-HOL-input-port.png",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-output-port-processing.png",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-switch-three-techniques.png",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-ip-based-forward-rules.png",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-input-function.png",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-input-port-processing.png",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-router-structure.png",
+    "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
+    "1-Theory/4-Architecture/THU-Liu/assets/21-RISC-V-pseduo-instruction.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/21-RISC-V-lh-sh.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/21-RISC-V-lb-sb.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/21-RISC-V-little-endian.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/RISCV-assets/RISC-V.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/RISCV-assets/assets",
+    "1-Theory/5-OS-principle/rCore-tutorial/RISCV-assets",
+    "1-Theory/5-OS-principle/rCore-tutorial/RISCV-assets/91-RISC-V异常、中断.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/62-BST-Exercise-8-16.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/91-PQ-Exercise-d-heap-prim-complexity.jpg",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-44.基于2d-树的平面范围查询实例.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-43.2d-树的构造过程，就是对平面递归划分的过程.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-42.2d-树中各节点对应的区域，逐层递归地按所包含的输入点数均衡切分.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/65-Lowest-Common-Ancestor.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-41.借助平衡二叉搜索树解决一维范围查询问题（针对区间端点的两条查找路径加粗示意）.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-40.将待查询的一维点集预处理为一棵平衡二叉搜索树.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-39.平面范围查询（planar range query）.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-38.通过预处理排序，高效地解决一维范围查询.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-37.一维范围查询.png",
     "1-Theory/4-Architecture/THU-Liu/20-Intruction.md",
-    "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
     "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/91-RISC-V异常、中断.md",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/9-设备IO.md",
     "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/60-VirtIO_GPU-drivers.md",
     "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/20-External-devices.md",
@@ -206,15 +219,12 @@
     "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/40-VirtIO-devices-driver.md",
     "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/30-UART-driver.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/18-Fisher-Yates-shuffle.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/63-B*Tree.md",
     "8-SimpRead/Insertion in a Red-Black Tree/assets",
     "8-SimpRead/Insertion in a Red-Black Tree",
     "8-SimpRead/Deletion in a Red-Black Tree/assets",
     "8-SimpRead/Deletion in a Red-Black Tree",
     "0-Assets/Epubook",
     "1-Theory/6-Network/Data-communication-and-network/DCN-summary.pdf",
-    "1-Theory/3-Algorithm/OIWiki/String/assets",
-    "8-SimpRead/【整理】 Linux 进程间通信的方式、应用场景及优缺点/assets",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
