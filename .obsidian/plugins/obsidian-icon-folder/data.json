@@ -5,11 +5,11 @@
     "fontSize": 16,
     "iconColor": null,
     "recentlyUsedIcons": [
+      "LiCpu",
+      "TiBinaryTree",
+      "SiLeanpub",
       "TiFileExport",
-      "LiImport",
-      "TiTemplate",
-      "TiChartArea",
-      "🧜‍♀️"
+      "LiImport"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -81,5 +81,6 @@
   "0-Assets/Templates": "TiTemplate",
   "0-Assets/Import": "LiImport",
   "0-Assets/Export": "TiFileExport",
-  "1-Theory/1-ProgramLanguage/Rust/Cargo": "SiCargo"
+  "1-Theory/1-ProgramLanguage/Rust/Cargo": "SiCargo",
+  "0-Assets/Epubook": "SiLeanpub"
 }

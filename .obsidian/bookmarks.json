@@ -658,6 +658,104 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
               "subpath": "#删除",
               "title": "AVL-tree树高降低的可能性：一定要失衡吗？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698210198986,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#双层伸展",
+              "title": "Splay-tree双层伸展的细节、单层伸展最多发生多少次？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698210440265,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#插入",
+              "title": "Splay-tree的插入：在根部直接插入节点，省去第二次伸展"
+            },
+            {
+              "type": "file",
+              "ctime": 1698210506314,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#删除",
+              "title": "Splay-tree删除：先伸展再根部删除之"
+            },
+            {
+              "type": "file",
+              "ctime": 1698211751941,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#势能分摊分析",
+              "title": "Splay-tree的势能分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1698212457549,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#准确定义",
+              "title": "BTree定义的细节：深度、高度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698212708019,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#树高",
+              "title": "BTree树高、胖瘦问题"
+            },
+            {
+              "type": "file",
+              "ctime": 1698212848696,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#分裂",
+              "title": "BTree插入引起的上溢修复、树高增加的可能性"
+            },
+            {
+              "type": "file",
+              "ctime": 1698213033732,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#删除",
+              "title": "BTree删除引起的下溢修复、下溢到根的可能"
+            },
+            {
+              "type": "file",
+              "ctime": 1698213386534,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#并发性",
+              "title": "BST结构与并发性(访问延迟)的关系"
+            },
+            {
+              "type": "file",
+              "ctime": 1698214183309,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#红黑树的高度",
+              "title": "红黑树的高度、黑高度、黑深度、红高度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698214774245,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#双红修正",
+              "title": "红黑树双红修正：黑高度增加的可能性"
+            },
+            {
+              "type": "file",
+              "ctime": 1698215771840,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#删除",
+              "title": "红黑树的删除操作如何引起双黑冲突"
+            },
+            {
+              "type": "file",
+              "ctime": 1698215825457,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#双黑修复",
+              "title": "红黑树双黑修复：黑高度降低的可能性"
+            },
+            {
+              "type": "file",
+              "ctime": 1698216303142,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+              "subpath": "#^217ccd",
+              "title": "红黑树插入、删除操作的总结"
             }
           ],
           "title": "知识点细节"
@@ -1310,6 +1408,20 @@
               "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/8-并发.md",
               "subpath": "#银行家算法如何判断安全性？",
               "title": "银行家算法如何判断安全性？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698235864603,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/9-设备IO.md",
+              "subpath": "#五种 I/O 模型",
+              "title": "五种 I/O 模型"
+            },
+            {
+              "type": "file",
+              "ctime": 1698235935268,
+              "path": "1-Theory/5-OS-principle/rCore-tutorial/Practice/9-设备IO.md",
+              "subpath": "#I/O 的三种传输方式",
+              "title": "I/O 的三种传输方式"
             }
           ],
           "title": "简答题"

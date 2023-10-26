@@ -168,6 +168,7 @@ HuffTree* generateTree ( HuffForest* forest ) {
 2. ==试证明，若取 d=e/n+2，则基于 d-heap 实现的 Prim 算法时间复杂度可降低至== $O(e\cdot\log_{d}n)$
 根据以上分析，使用基于 d 叉堆的 Prim 算法，总体时间复杂度应为： $n\cdot d\cdot \log_{d}n + e\cdot\log_{d}n = (n\cdot d + e)\cdot\log_{d}n$ 
 
+![[91-PQ-Exercise-d-heap-prim-complexity.jpg]]
 特别地，当取： d = e/n + 2 时，总体的渐进性能将达到渐进最优的： $O(e\cdot\log_{d}n) = O(e\cdot\log_{\frac{e}{n + 2}}n)$
 
 3. ==这种改进策略是否适用于 Dijkstra 算法==？

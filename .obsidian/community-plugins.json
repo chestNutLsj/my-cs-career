@@ -24,5 +24,7 @@
   "epub-importer",
   "obsidian-importer",
   "obsidian-advanced-slides",
-  "codeblock-customizer"
+  "codeblock-customizer",
+  "obsidian-banners",
+  "obsidian-regex-replace"
 ]

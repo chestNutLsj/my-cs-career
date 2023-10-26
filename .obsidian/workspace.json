@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "0d756c91e0f36b9b",
+        "id": "9f5f0f1daeb78ac6",
         "type": "tabs",
         "children": [
           {
-            "id": "835299e1166d3635",
+            "id": "d0e3453fab069aff",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -48,7 +44,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "HOL",
+                "query": "",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -80,8 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 265.5,
-    "collapsed": true
+    "width": 378.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -97,7 +92,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +108,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -141,9 +134,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md"
-              }
+              "state": {}
             }
           },
           {
@@ -177,54 +168,53 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "835299e1166d3635",
+  "active": "d0e3453fab069aff",
   "lastOpenFiles": [
-    "1-Theory/6-Network/Data-communication-and-network/DCN-summary.pdf",
-    "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
-    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-SDN-method.png",
-    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-forwarding-table.png",
-    "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
-    "1-Theory/4-Architecture/THU-Liu/20-Intruction.md",
-    "1-Theory/4-Architecture/THU-Liu/assets/20-Intruction-extension-example.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/20-Intruction-instruction-extension.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/20-Intruction-ISA-kinds.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/20-Intruction-mips-instruction-format.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/20-Intruction-riscv-instruction-format.png",
-    "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/9-设备IO.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/8-并发.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/7-进程间通信与IO重定向.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/66-Fib-AVL-Tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md",
-    "1-Theory/3-Algorithm/OIWiki/String/50-Trie-Tree.md",
-    "1-Theory/3-Algorithm/OIWiki/String/A0-AC-automaton.md",
-    "1-Theory/3-Algorithm/OIWiki/String/assets/trie1.png",
-    "1-Theory/3-Algorithm/OIWiki/String/assets",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A2-Trie-Tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A2-Trie-Tree-patricia-tree.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/A2-Trie-Tree-patricia-trees.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/62-BST-Exercise-8-16.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/91-PQ-Exercise-d-heap-prim-complexity.jpg",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-44.基于2d-树的平面范围查询实例.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-43.2d-树的构造过程，就是对平面递归划分的过程.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-42.2d-树中各节点对应的区域，逐层递归地按所包含的输入点数均衡切分.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-c-yan/93-键树.md",
-    "1-Theory/6-Network/Top-to-down/chapter6.md",
-    "1-Theory/6-Network/Top-to-down/chapter5.md",
-    "1-Theory/6-Network/Top-to-down/practice/30-Transport-layer.md",
-    "1-Theory/4-Architecture/THU-Liu/13-Hamming-code.md",
-    "1-Theory/4-Architecture/THU-Liu/23-Singlecycle.md",
-    "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
-    "8-SimpRead/【整理】 Linux 进程间通信的方式、应用场景及优缺点/【整理】 Linux 进程间通信的方式、应用场景及优缺点.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/65-Lowest-Common-Ancestor.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-41.借助平衡二叉搜索树解决一维范围查询问题（针对区间端点的两条查找路径加粗示意）.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-40.将待查询的一维点集预处理为一棵平衡二叉搜索树.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-39.平面范围查询（planar range query）.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-38.通过预处理排序，高效地解决一维范围查询.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/图08-37.一维范围查询.png",
+    "1-Theory/4-Architecture/THU-Liu/20-Intruction.md",
+    "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
+    "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/91-RISC-V异常、中断.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/9-设备IO.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/60-VirtIO_GPU-drivers.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/20-External-devices.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/10-Interface.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/10-IO-devices.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/00-IO-Overview.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/92-Linux-softirq.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Appendix/D-RISC-V.md",
+    "8-SimpRead/详解 RISC v 中断/详解 RISC v 中断.md",
+    "8-SimpRead/详解 RISC v 中断/assets",
+    "8-SimpRead/详解 RISC v 中断",
+    "1-Theory/5-OS-principle/Internal&design-principle/60-IO管理与磁盘.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/50-VirtIO-blk-driver.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/40-VirtIO-devices-driver.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/30-UART-driver.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/18-Fisher-Yates-shuffle.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/63-B*Tree.md",
+    "8-SimpRead/Insertion in a Red-Black Tree/assets",
+    "8-SimpRead/Insertion in a Red-Black Tree",
+    "8-SimpRead/Deletion in a Red-Black Tree/assets",
+    "8-SimpRead/Deletion in a Red-Black Tree",
+    "0-Assets/Epubook",
+    "1-Theory/6-Network/Data-communication-and-network/DCN-summary.pdf",
+    "1-Theory/3-Algorithm/OIWiki/String/assets",
     "8-SimpRead/【整理】 Linux 进程间通信的方式、应用场景及优缺点/assets",
-    "8-SimpRead/【整理】 Linux 进程间通信的方式、应用场景及优缺点",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/6-文件系统.md",
-    "1-Theory/3-Algorithm/OIWiki/String",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
-    "1-Theory/6-Network/Top-to-down/assets/TCP-flow-control.mp4",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/assets",
-    "1-Theory/3-Algorithm/OIWiki/DP",
-    "1-Theory/3-Algorithm/OIWiki",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-receive-loss.gif.crdownload",
-    "1-Theory/6-Network/Top-to-down/assets/30-Transport-layer-SR-send-loss.gif.crdownload",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",

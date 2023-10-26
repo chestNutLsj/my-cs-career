@@ -1,3 +1,7 @@
+---
+url: https://www.geeksforgeeks.org/b-trees-implementation-in-c/
+---
+## Introduction
 B*-tree of order m is a search tree that is either empty or that satisfies three properties:
 
 - The root node has minimum two and maximum 2 floor ((2m-2)/3) +1 children
@@ -11,7 +15,7 @@ Below is a basic implementation of the B-star insertion function – just to dem
 
 **The unique parts of the algorithm for B* Tree insertion are as follows:**
 
-**Two-Three Split**
+## **Two-Three Split**
 
 **1.** If inserting into a full leaf node (which is not the root) and which has a full right sibling (and whose parent has at least one free key):
 
@@ -29,17 +33,17 @@ Below is a basic implementation of the B-star insertion function – just to dem
 
 **Before Insertion :**
 
-![](https://media.geeksforgeeks.org/wp-content/uploads/20190723212508/gfg16.jpg)
+![[63-B*Tree-before-insertion.png]]
 
 **After insertion:**
 
-![](https://media.geeksforgeeks.org/wp-content/uploads/20190723212533/gfg23.jpg)
+![[63-B*Tree-after-insertion.png]]
 
 **2.** If inserting into a full leaf node (which is not the root) with empty/non-full right sibling.
 
 - Simply shift the last element of the current node to the position of the parent, shift all the keys in the right sibling to the right, and insert the previous parent. Now, use the gap in your own node to rearrange and fit in the new key.
 
-![](https://media.geeksforgeeks.org/wp-content/uploads/20190723212601/gfg32.jpg)
+![[63-B*Tree-2.png]]
 
 **3.** The other cases are the same as for B-Trees.
 
@@ -53,7 +57,10 @@ Below is a basic implementation of the B-star insertion function – just to dem
 > **Output :** 2 3 L 4 8 R 5 6 R 9 11  
 > 3 and 6 become the parent keys by the two-three split
 
+## Implementation
+
 Below is the implementation of the above approach:
+
 ```cpp
 // CPP program to implement B* tree
 #include <bits/stdc++.h>
@@ -341,4 +348,14 @@ int main()
 	return 0;
 }
 
+```
+
+**Output:**
+```
+Original Tree:
+6
+1 2 4 7 8 9
+After adding 5:
+4 7
+1 2 5 6 8 9
 ```

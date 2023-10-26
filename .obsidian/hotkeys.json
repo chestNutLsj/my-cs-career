@@ -83,5 +83,14 @@
   "workspace:goto-tab-4": [],
   "workspace:goto-tab-6": [],
   "workspace:goto-tab-7": [],
-  "workspace:goto-tab-8": []
+  "workspace:goto-tab-8": [],
+  "global-search:open": [],
+  "obsidian-regex-replace:obsidian-regex-replace": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "R"
+    }
+  ]
 }
