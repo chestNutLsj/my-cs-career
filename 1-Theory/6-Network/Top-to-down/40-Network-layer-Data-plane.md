@@ -239,7 +239,7 @@ Interestingly, in spite of these well-developed alternatives, the Internet’s b
 而队列的位置和长度取决于流量负载、交换结构的相对速率和输出速率——由于排队队列的增长会耗尽缓冲区，进而导致丢包——由于输入缓存溢出造成的丢失！
 
 - 假设输入线路速度和输出线路速度相同，均为 $R_{line}$，并且有 N 个输入端口和 N 个输出端口；
-- 定义交换接口的传送速率为 $R_{switch}$，若是 $R_{line}$ 的 N 倍，此时输入端口的排队情况可以忽略不计，因为即使在最坏情况（N 个输入端口同时有分组到达），也会在下一轮分组到达前转发完成
+- 定义交换接口的传送速率为 $R_{switch}$，若比 $R_{line}$ 快 N 倍，此时输入端口的排队情况可以忽略不计，因为即使在最坏情况（N 个输入端口同时有分组到达），也会在下一轮分组到达前通过交换结构的处理
 
 #### 输入端口排队
 
@@ -256,6 +256,13 @@ Interestingly, in spite of these well-developed alternatives, the Internet’s b
 
 #### 输出端口排队
 - 当数据报从交换结构的到达输出端口的速度比输出端口向外传输数据的速率快时，就需要输出端口缓存
+- 具体地，$R_{switch}$ 最大不应超过 $R_{\text{out line}}$ ，否则在转发出输出端口前，新的分组就会到达，从而拥挤在缓冲区，渐渐地耗尽可用缓冲区。
+- 没有足够的缓存接收分组时，就要做出决定：丢弃到达的分组，或者删除一个或多个已排队的分组来腾出空间
+	- 某些情况下，在缓存即将填满之前丢弃一个分组是有利的，这样的丢包最终会向发送方提供一个拥塞信号，这样的策略称为主动队列管理 Active Queue Management, AQM
+	- One of the most widely studied and implemented AQM algorithms is the ***Random Early Detection*** (RED) algorithm `[Christiansen 2001]`. More recent AQM policies include PIE (the Proportional Integral controller Enhanced `[RFC 8033]`), and CoDel `[Nichols 2012]`.
+
+![[40-Network-layer-Data-plane-output-queuing.png]]
+
 
 #### 缓冲多大才是“足够”？
 

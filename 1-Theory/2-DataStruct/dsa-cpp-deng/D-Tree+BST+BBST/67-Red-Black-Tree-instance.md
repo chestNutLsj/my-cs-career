@@ -1,5 +1,5 @@
 ---
-url: https://www.programi`z`.com/dsa/red-black-tree
+url: https://www.programiz.com/dsa/red-black-tree
 ---
 ## Introduction
 

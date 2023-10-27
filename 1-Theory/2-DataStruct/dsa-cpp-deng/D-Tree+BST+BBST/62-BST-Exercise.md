@@ -28,7 +28,7 @@ h >= $\lceil \log_{2}(n+1)\rceil-1$ = $\lfloor \log_{2}(n)\rfloor$
 
 ## 7-5 证明 insert 在 BST 中插入节点 v 后的高度问题
 1. ==除 v 的历代祖先外，其余节点的高度无需更新==；
-节点的高度仅取决于其后代更确切地，等于该节点与其最深后代之间的距离。 因此在插入节点 v 之后，节点 a 的高度可能发生变化（增加），当且仅当 v 是 a 的后代，或反过来 等价地，a 是 v 的祖先。
+节点的高度仅取决于其后代——更确切地，等于该节点与其最深后代之间的距离。 因此在插入节点 v 之后，节点 a 的高度可能发生变化（增加），当且仅当 v 是 a 的后代，或反过来 等价地，a 是 v 的祖先。
 
 2. ==祖先高度不会降低，但至多+1==
 插入节点 v 之后，所有节点的后代集不致缩小。而正如前述，高度取决于后代深度的最大值，故不致下降。 另一方面，假定节点 a 的高度由 h 增加至 h'。若将 v 的父节点记作 p，则 a 到 p 的距离不大于 a 在此之前的高度 h，于是必有：
@@ -61,7 +61,7 @@ h' <= |ap| + 1 <= h + 1
 针对这一问题，实现随机选取的一种简明方法是： 
 ==调用 rand()取（伪）随机数，根据其奇偶，相应地调用 succ()或 pred()接口 ==
 
-从理论上讲，如此可以保证各有50%的概率使用直接后继或直接前驱，从而在很大程度上消 除题中指出的“天然”不均衡性。 removeAt()算法的后续部分，除了左、右孩子对称反转之外，无需更多修改
+从理论上讲，如此可以保证各有50%的概率使用直接后继或直接前驱，从而在很大程度上消除题中指出的“天然”不均衡性。 removeAt()算法的后续部分，除了左、右孩子对称反转之外，无需更多修改
 
 ## 7-10 扩充 searchAll(e)接口
 ![[60-Binary_Search_Tree#^dc6a84]]
@@ -101,7 +101,7 @@ h' <= |ap| + 1 <= h + 1
 失衡节点的总数为： $h = fib^{-1} (n + 1) - 3 = \log_{\Phi}n = O(\log n)$ 
 其中， Φ = (√5 + 1) / 2 = 1.618
 
-More detailed formulation about Fib-AVL tree: [[66-Fib-AVL-Tree]]
+More detailed formulation about Fib-AVL tree: [[66-Fib-sequence-and-worst-AVL-trees]]
 
 ## 7-13-b 证明 AVL 中删除一个节点后失衡祖先至多 1 个
 节点的失衡与否，取决于其左、右子树高度之差。因此反过来，只要子树的高度不变，则节点不可能失衡。
@@ -170,7 +170,7 @@ template <typename T> void stretchByZag ( BinNodePosi(T) & x ) {
 
 若从该树中删除最小的节点（亦即中序遍历序列中的首节点） m，则首先会导致 m 的父节点 p 失衡。
 
-在树高 h 为奇数时，m 虽不是叶节点，但按照二叉搜索树的删除算法，在实际摘除 m 之前，必然已经将 m 与其直接后继（此时亦即其右孩子）交换，从而等效于 删除其右孩子。
+在树高 h 为奇数时，m 虽不是叶节点，但按照二叉搜索树的删除算法，在实际摘除 m 之前，必然已经将 m 与其直接后继（此时亦即其右孩子）交换，从而等效于删除其右孩子。
 
 不难验证，在父节点 p 恢复平衡之后，其高度必然减一，从而造成 m 祖父节点 g 的失衡。同样地，尽管节点 g 可以恢复平衡，但其高度必然减一，从而造成更高层祖先的失衡。这种现象，可以一直传播至树根。
 
@@ -199,7 +199,7 @@ $\lfloor \frac{h}{2}\rfloor= \lfloor \frac{fib^{-1}(n+1)-3}{2}\rfloor=\frac{\log
 
 由此反观 ==AVL-树的插入操作，之所以能够在首次重平衡之后随即终止上溯，原因在于此时不仅局部子树的平衡性能够恢复，而且局部子树的高度亦必然同时恢复==。
 
-## 7-20 证明递增插入 2^(n+1)-1 个关键码到空 AVL 树中必然得到高度 h 的满树
+## 7-20 证明递增插入 2^(h+1)-1 个关键码到空 AVL 树中必然得到高度 h 的满树
 首先，考察 AVL 的右侧分支。对照 AVL 树的重平衡算法不难发现，在这样的插入过程中，该分支上沿途上各节点 v 始终满足以下不变性：
 1) v 的左子树必为满树；
 2) height (rc (v)) - 1 <= height (lc (v)) <= height (rc (v))
@@ -258,7 +258,7 @@ $A_{i}=T_{i}+\Delta\Phi_{i}$
 
 如此，总体的实际运行时间 $\sum\limits_{i=1}^{m}T_{i}$，将不会超过总体的分摊运行时间 $\sum\limits_{i=1}^{m}A_{i}$，故后者可以视作前者的一个上界。
 
-比如，R. E. Tarjan 使用如下势能函数：$\Phi(S)=\sum\limits_{v\in S}\log|v|$ , 其中|v| = 节点 v 的后代数目，证明了伸展树单次操作的分摊时间复杂度为 O(logn)。为此，以下将分三种情况（其余情况不过 是它们的对称形式）证明：
+比如，R.E.Tarjan 使用如下势能函数：$\Phi(S)=\sum\limits_{v\in S}\log|v|$ , 其中|v| = 节点 v 的后代数目，证明了伸展树单次操作的分摊时间复杂度为 O(logn)。为此，以下将分三种情况（其余情况不过 是它们的对称形式）证明：
 ==在对节点 v 的伸展过程中，每一步调整所需时间均不超过 v 的势能变化的3倍，即：$3\cdot[\Phi'(v)-\Phi(v)]$ ==
 
 **情况 A) zig** 
@@ -597,267 +597,10 @@ Test:
 - insertion by random:
 - ![[61B-Exercise-insert-random-bTree4.png]]
 
-### solution 3 (wrong)
-> So is there a particular way to determine sequence of insertion which would reduce **space consumption**?
-
-**Edit note**: since the question was quite interesting, I try to improve my answer with a bit of Haskell.
-
-Let `k` be the Knuth order of the B-Tree and `list` a list of keys
-
-The minimization of space consumption has a trivial solution:
-
-```haskell
--- won't use point free notation to ease haskell newbies
-trivial k list = concat $ reverse $ chunksOf (k-1) $ sort list
-```
-
-```cpp
-// 这段 Haskell 代码的功能是将一个列表按照指定的步长 `k` 进行分组，然后对每个分组进行排序，并最终将这些排序后的分组连接成一个新的列表。
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <iterator>
-
-// 定义一个函数用于分组并排序
-std::vector<int> trivial(int k, std::vector<int> list) {
-    std::vector<int> result;
-
-    // 反转输入列表
-    std::reverse(list.begin(), list.end());
-
-    // 按步长 k-1 分组并排序
-    for (int i = 0; i < list.size(); i += (k - 1)) {
-        int endIndex = std::min(i + (k - 1), static_cast<int>(list.size()));
-        std::vector<int> chunk(list.begin() + i, list.begin() + endIndex);
-        std::sort(chunk.begin(), chunk.end());
-        
-        // 将排序后的分组添加到结果列表
-        result.insert(result.end(), chunk.begin(), chunk.end());
-    }
-
-    return result;
-}
-
-int main() {
-    std::vector<int> input = {5, 2, 8, 1, 3, 7, 4, 6};
-    int k = 3;
-    
-    std::vector<int> output = trivial(k, input);
-
-    // 输出结果
-    for (int num : output) {
-        std::cout << num << " ";
-    }
-
-    return 0;
-}
-//这段 C++ 代码实现了与原始 Haskell 代码相同的功能。它首先反转了输入列表，然后按照指定的步长 `k-1` 对列表进行分组，并对每个分组进行排序。最后，将排序后的分组连接起来，形成一个新的列表。
-
-//例如，如果输入列表为 `{5, 2, 8, 1, 3, 7, 4, 6}`，而步长 `k` 为 `3`，则输出结果为 `{2, 5, 1, 3, 4, 6, 7, 8}`。这段代码可以帮助你按照指定规则对列表进行处理和排序。
-```
-
-Such algorithm will **efficiently** produce a **time-inefficient** B-Tree, unbalanced on the left but with minimal **space** consumption.
-
-A lot of non trivial solutions exist that are less efficient to produce but show better lookup performance (lower height/depth). As you know, **it's all about trade-offs**!
-
-A simple algorithm that minimizes both the B-Tree depth and the space consumption (but it doesn't **minimize** lookup performance!), is the following
-
-```haskell
--- Sort the list in increasing order and call sortByBTreeSpaceConsumption 
--- with the result
-smart k list = sortByBTreeSpaceConsumption k $ sort list
-
--- Sort list so that inserting in a B-Tree with Knuth order = k 
--- will produce a B-Tree  with minimal space consumption minimal depth 
--- (but not best performance)
-sortByBTreeSpaceConsumption :: Ord a => Int -> [a] -> [a]
-sortByBTreeSpaceConsumption _ [] = []
-sortByBTreeSpaceConsumption k list
-    | k - 1 >= numOfItems = list  -- this will be a leaf
-    | otherwise = heads ++ tails ++ sortByBTreeSpaceConsumption k remainder
-    where requiredLayers = minNumberOfLayersToArrange k list
-          numOfItems = length list
-          capacityOfInnerLayers = capacityOfBTree k $ requiredLayers - 1
-          blockSize = capacityOfInnerLayers + 1 
-          blocks = chunksOf blockSize balanced
-          heads = map last blocks
-          tails = concat $ map (sortByBTreeSpaceConsumption k . init) blocks
-          balanced = take (numOfItems - (mod numOfItems blockSize)) list
-          remainder = drop (numOfItems - (mod numOfItems blockSize)) list
-
--- Capacity of a layer n in a B-Tree with Knuth order = k
-layerCapacity k 0 = k - 1
-layerCapacity k n = k * layerCapacity k (n - 1)
-
--- Infinite list of capacities of layers in a B-Tree with Knuth order = k
-capacitiesOfLayers k = map (layerCapacity k) [0..]
-
--- Capacity of a B-Tree with Knut order = k and l layers
-capacityOfBTree k l = sum $ take l $ capacitiesOfLayers k
-
--- Infinite list of capacities of B-Trees with Knuth order = k 
--- as the number of layers increases
-capacitiesOfBTree k = map (capacityOfBTree k) [1..]
-
--- compute the minimum number of layers in a B-Tree of Knuth order k 
--- required to store the items in list
-minNumberOfLayersToArrange k list = 1 + f k
-    where numOfItems = length list
-          f = length . takeWhile (< numOfItems) . capacitiesOfBTree
-```
-
-```cpp
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <iterator>
-
-// Capacity of a layer n in a B-Tree with Knuth order k
-int layerCapacity(int k, int n) {
-    if (n == 0) {
-        return k - 1;
-    } else {
-        return k * layerCapacity(k, n - 1);
-    }
-}
-
-// Infinite list of capacities of layers in a B-Tree with Knuth order k
-std::vector<int> capacitiesOfLayers(int k) {
-    std::vector<int> capacities;
-    for (int n = 0; ; ++n) {
-        capacities.push_back(layerCapacity(k, n));
-    }
-    return capacities;
-}
-
-// Capacity of a B-Tree with Knuth order k and l layers
-int capacityOfBTree(int k, int l) {
-    std::vector<int> capacities = capacitiesOfLayers(k);
-    int capacity = 0;
-    for (int i = 0; i < l; ++i) {
-        capacity += capacities[i];
-    }
-    return capacity;
-}
-
-// Infinite list of capacities of B-Trees with Knuth order k 
-// as the number of layers increases
-std::vector<int> capacitiesOfBTree(int k) {
-    std::vector<int> capacities;
-    for (int l = 1; ; ++l) {
-        capacities.push_back(capacityOfBTree(k, l));
-    }
-    return capacities;
-}
-
-// Compute the minimum number of layers in a B-Tree of Knuth order k 
-// required to store the items in list
-int minNumberOfLayersToArrange(int k, int numOfItems) {
-    std::vector<int> bTreeCapacities = capacitiesOfBTree(k);
-    int layers = 1;
-    for (int capacity : bTreeCapacities) {
-        if (capacity >= numOfItems) {
-            break;
-        }
-        layers++;
-    }
-    return layers;
-}
-
-// Sort list so that inserting in a B-Tree with Knuth order = k 
-// will produce a B-Tree with minimal space consumption minimal depth 
-// (but not best performance)
-std::vector<int> sortByBTreeSpaceConsumption(int k, std::vector<int> list) {
-    std::vector<int> result;
-
-    // Calculate the required number of layers for the B-Tree
-    int requiredLayers = minNumberOfLayersToArrange(k, list.size());
-
-    // Calculate the capacity of inner layers
-    int capacityOfInnerLayers = capacityOfBTree(k, requiredLayers - 1);
-    int blockSize = capacityOfInnerLayers + 1;
-
-    // Divide the list into blocks
-    std::vector<std::vector<int>> blocks;
-    for (int i = 0; i < list.size(); i += blockSize) {
-        int endIndex = std::min(i + blockSize, static_cast<int>(list.size()));
-        std::vector<int> block(list.begin() + i, list.begin() + endIndex);
-        blocks.push_back(block);
-    }
-
-    // Rearrange the blocks to minimize space consumption
-    std::vector<int> heads;
-    for (const auto& block : blocks) {
-        heads.push_back(block.back());
-    }
-
-    std::vector<int> tails;
-    for (const auto& block : blocks) {
-        std::vector<int> blockWithoutLast(block.begin(), block.end() - 1);
-        tails.insert(tails.end(), blockWithoutLast.begin(), blockWithoutLast.end());
-    }
-
-    // Concatenate the rearranged blocks
-    for (const auto& block : blocks) {
-        result.insert(result.end(), block.begin(), block.end());
-    }
-
-    return result;
-}
-
-int main() {
-    std::vector<int> input = {5, 2, 8, 1, 3, 7, 4, 6};
-    int k = 3;
-
-    std::vector<int> output = sortByBTreeSpaceConsumption(k, input);
-
-    // Output the result
-    for (int num : output) {
-        std::cout << num << " ";
-    }
-
-    return 0;
-}
-//这段 C++ 代码实现了与原始 Haskell 代码相同的功能，包括计算 B-Tree 层数，按照最小空间消耗重新排列列表，并进行排序。注释提供了对代码功能的详细解释
-```
-
-With this `smart` function given a `list = [21, 18, 16, 9, 12, 7, 6, 5, 1, 2]` and a B-Tree with knuth order = 3 we should obtain `[18, 5, 9, 1, 2, 6, 7, 12, 16, 21]` with a resulting B-Tree like
-
-```
-              [18, 21]
-             /
-      [5 , 9]
-     /   |   \
- [1,2] [6,7] [12, 16]
-```
-
-Obviously this is suboptimal from a performance point of view, but should be acceptable, since obtaining a better one (like the following) would be far more expensive (computationally and economically):
-
-```
-          [7 , 16]
-         /   |   \
-     [5,6] [9,12] [18, 21]
-    /
-[1,2]
-```
-
-If you want to run it, compile the previous code in a Main.hs file and compile it with ghc after prepending
-
-```haskell
-import Data.List (sort)
-import Data.List.Split
-import System.Environment (getArgs)
-
-main = do
-    args <- getArgs
-    let knuthOrder = read $ head args
-    let keys = (map read $ tail args) :: [Int]
-    putStr "smart: "
-    putStrLn $ show $ smart knuthOrder keys
-    putStr "trivial: "
-    putStrLn $ show $ trivial knuthOrder keys
-```
-
+### 好节点策略
+证明存在一种插入方式使得 B 树的高度最小：
+![[26379328603383702313b9a23c5de8e9.png]]
+但是这个序列非常难以描述，只做拓展性的思考题。
 
 ## 8-6 考查 BTree 节点插入导致的分裂次数
 1. ==对任意阶 BTree T，若 T 的初始高度为 1，在经历连续若干次插入操作后，高度增加至 h 且共有 n 个内部节点，则在此过程中 T 总共分裂多少次==？
@@ -866,7 +609,7 @@ main = do
 1. 若它不是根节点，则树中的节点增加一个，同时树高保持不变，故有： n += 1 和 h += 0 
 2. 否则若是根节点，则除了原节点一分为二，还会新生出一个（仅含单关键码的）树根，同时树的高度也将相应地增加一层，故有： n += 2 和 h += 1 
 
-可见，无论如何，n 与 h 的差值均会恰好地增加一个单位——因此，n - h 可以视作为分裂操作的一个计数器。该计数器的初始值为1 - 1 = 0，故最终的 n - h 即是从初始状态之最后，整个过程中所做分裂操作的总次数。
+可见，无论如何，n 与 h 的差值均会恰好地增加一个单位——因此，n - h 可以视作为分裂操作的一个计数器。该计数器的初始值为1 - 1 = 0，故最终的 **n - h 即是从初始状态之最后，整个过程中所做分裂操作的总次数**。
 
 请注意，==以上结论与各关键码的数值大小以及具体的插入过程均无关，仅取决于 B-树最初和最终的状态——高度和内部节点数==。
 
@@ -878,19 +621,19 @@ main = do
 
 因此，在如上连续的 N 次插入操作中，分裂操作的平均次数必然不超过： $\frac{n - h}{N} < \frac{n}{N} < \frac{1}{\lceil\frac{m}{2}\rceil-1}$ 
 
-可见，平均而言，大致每经过 $\lceil\frac{m}{2}\rceil-1$ 次插入，才会发生一次分裂。
+可见，**平均而言，大致每经过 $\lceil\frac{m}{2}\rceil-1$ 次插入，才会发生一次分裂**。
 
 根据习题8-4的结论，某一关键码的插入，在最坏情况下可能引发多达 $\Omega(\log_{m}N)$ 次的分 裂。对照本题的结论可知，这类最坏情况发生的概率实际上极低。
 
 3. ==若 T 的初始高度为 h 且含有 n 个内部节点，而在经过连续若干次删除操作后高度下降至 1，则此过程中 T 总共合并过多少次==？
 与 1) 同理，若合并后的节点不是树根，则有 n -= 1 和 h -= 0 , 否则若是根节点，则有： n -= 2 和 h -= 1 可见，无论如何，n 与 h 的差值 n - h 均会恰好地减少一个单位。
 
-既然最终有： n = h = 1 或等价地 n - h = 0 故其间所发生合并操作的次数，应恰好等于 n - h 的初值。
+既然最终有： n = h = 1 或等价地 n - h = 0 故**其间所发生合并操作的次数，应恰好等于 n - h 的初值**。
 
 同样请注意，以上结论与各关键码的数值大小以及具体的删除过程均无关，仅取决于 B-树 最初和最终的状态——高度和内部节点数。
 
 4. ==设 T 的初始高度为 1，而且在随后经过若干次插入和删除操作——次序随意，且可能彼此相同。试证明：若在此期间总共做过 S 次分裂和 M 次合并，且最终共有 n 个内部节点、高度为 h，则必有 S-M=n-h==
-综合 1) 和 3) 的结论可知：在 B-树的整个生命期内，n - h 始终忠实反映了分裂操作次数与合并操作次数之差。 
+综合 1) 和 3) 的结论可知：在 B-树的整个生命期内，**n - h 始终忠实反映了分裂操作次数与合并操作次数之差**。 
 
 需要特别说明的是，以上前三问只讨论了连续插入和连续删除的情况，其结论并不适用于本问的情况——两种操作可以任意次序执行。下题将要考查的，即是其中的极端情况。
 
@@ -923,15 +666,16 @@ main = do
 当然，实际上不必真的先合二为一，再一分为三，可通过更快捷的方式，达到同样的效果：从来自原先两个节点极其父节点的共计 m+(m-1)+1=2m 个关键码中，取出两个上交给父节点，其余 2m-2 个尽可能均衡地分配给三个新节点。
 
 1. ==按照上述思路，实现 B* 树的关键码插入算法==。
+[[63-B*Tree]]
 
 2. ==与 B 树相比，B* 树的关键码删除算法有何不同==？
 与插入过程对称地，从节点 v 中删除关键码后若发生下溢，且其左、右兄弟均无法借出关键码，则先将 v 与左、右兄弟合并，再将合并节点等分为两个节点。同样地，实际上不必真地先合三为一，再一分为二。可通过更为快捷的方式，达到同样的效果：从来自原先三个节点及其父节点的共计：$(\lceil \frac{m}{2}\rceil-1)+1+(\lceil \frac{m}{2}\rceil-2)+1+(\lceil \frac{m}{2}\rceil-1)=3\cdot \lceil \frac{m}{2}\rceil-2$ 个关键码中，取一个上交给父节点，其余 $3\cdot\lceil \frac{m}{2}\rceil-3$ 个则尽可能均衡地分摊给两个新节点。
 
-注意，以上所建议的方法，不再是每次仅转移单个关键码，而是一次性地转移多个——等效于上溢或下溢节点与其兄弟平摊所有的关键码。采用这一策略，可以充分地利用实际应用中普遍存在的高度数据局部性，大大减少读出或写入节点的 I/O 操作。
+注意，以上所建议的方法，**不再是每次仅转移单个关键码，而是一次性地转移多个——等效于上溢或下溢节点与其兄弟平摊所有的关键码**。采用这一策略，可以充分地利用实际应用中普遍存在的高度数据局部性，大大减少读出或写入节点的 I/O 操作。
 
 不难看出，单关键码的转移尽管也可以修复上溢或下溢的节点，但经如此修复之后的节点将依然处于上溢或下溢的临界状态。接下来一旦继续插入或删除近似甚至重复的关键码（在局部性 较强的场合，这种情况往往会反复出现），该节点必将再次发生上溢或下溢。由此可见，就修效果而言，多关键码的成批转移，相对单关键码的转移更为彻底——尽管还不是一劳永逸。
 
-针对数据局部性的另一改进策略，是使用所谓的页面缓冲池（buffer pool of pages）。这是在内存中设置的一个缓冲区，用以保存近期所使用过节点（页面）的副本。只要拟访问的节点仍在其中（同样地，在局部性较强的场合，这种情况也往往会反复出现），即可省略 I/O 操作并直接访问；否则，才照常规方法处理，通过 I/O 操作从外存取出对应的节点（页面）。缓冲池的规模确定后，一旦需要读入新的节点，只需将其中最不常用的节点删除即可腾出空间。实际上，不大的页面缓冲池即可极大地提高效率。
+**针对数据局部性的另一改进策略，是使用所谓的页面缓冲池**（buffer pool of pages）。这是在内存中设置的一个缓冲区，用以保存近期所使用过节点（页面）的副本。只要拟访问的节点仍在其中（同样地，在局部性较强的场合，这种情况也往往会反复出现），即可省略 I/O 操作并直接访问；否则，才照常规方法处理，通过 I/O 操作从外存取出对应的节点（页面）。缓冲池的规模确定后，一旦需要读入新的节点，只需将其中最不常用的节点删除即可腾出空间。实际上，不大的页面缓冲池即可极大地提高效率。
 
 3. ==实现 B* 树的关键码删除算法==。
 
@@ -1052,8 +796,18 @@ Q(n) <= 2 + 2∙Q(n/4) ................................ ( * )
 参考论文：J. L. Bentley. Multidimensional Binary Search Trees Used for Associative Searching. Communications of the ACM (1975), 18(9):509-517
 
 ## 8-17 `kdTree` 缺陷改进：即使范围相交输入点也未必在查询范围内
+**说明**：kd-树中节点 v 所对应的矩形区域即便与查询范围 R 相交，其中所含的输入点也不见得会落在 R 之内。比如在极端情况下，v 中可能包含大量的输入点，但却没有一个落在 R 之内。当然，`kdSearch()` 在这类情况下所做的递归，都是不必进行的。
+
+**思路**：克服这一缺陷的一种简明方法，如图 x8.7 所示：
+![[62-BST-Exercise-8-17.png]]
+在依然保持各边平行于坐标轴，同时所包含输入点子集不变的前提下，尽可能地收缩各矩形区域。其效果等同于，将原矩形替换为依然覆盖其中所有输入点的最小矩形——即所谓包围盒（bounding-box）。其实，在如教材图![[图08-44.基于2d-树的平面范围查询实例.png]]
+
+所示实例中，正因为采用了这一技巧，才得以在节点{F, H}处，有效地避免了一次无意义的递归。
 
 ## 8-18 仅需报告落入指定范围内点的数目的时间复杂度
+**说明**：若仅需报告落在指定范围内点的数目，而不必给出它们的具体信息，则借助 kdtree 需要多长时间？
+
+只需 O (√n)时间。 既然无需具体地枚举所命中的点，故可令 kd-树的每一节点分别记录其对应子树中所存放的点数。这样，对于经查找而被筛选出来的每一棵子树，都可以直接累计其对应的点数，而不必对其进行遍历。如此，原先**消耗于遍历枚举的 O(r)时间即可节省**；同时，对各子树所含点数的累加，耗时不超过被筛选出来的子集（子树）总数——亦即 O(√n)
 
 ## 8-19 四叉树的思路
 

@@ -308,6 +308,12 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
               "subpath": "#旅行骑士问题",
               "title": "旅行骑士问题"
+            },
+            {
+              "type": "file",
+              "ctime": 1698390585900,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/65-Lowest-Common-Ancestor.md",
+              "title": "最低公共祖先LCA问题"
             }
           ],
           "title": "算法问题"
@@ -756,6 +762,55 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
               "subpath": "#^217ccd",
               "title": "红黑树插入、删除操作的总结"
+            },
+            {
+              "type": "file",
+              "ctime": 1698387650792,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+              "subpath": "#7-12 高度 h 的 AVL 树任一叶节点深度均不小于 $ lceil frac{h}{2} rceil$",
+              "title": "AVL树叶节点深度不小于h/2的证明"
+            },
+            {
+              "type": "file",
+              "ctime": 1698387975793,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+              "subpath": "#7-15 证明 BST 在 n-1 次旋转内可以等价变换为左侧链",
+              "title": "BST在n-1次旋转内就可以转换为左侧链"
+            },
+            {
+              "type": "file",
+              "ctime": 1698388123241,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+              "subpath": "#7-15-b 规模 n 的任何两棵等价 BST 至多 2n-2 次调整就可彼此转换",
+              "title": "任何两棵等价BST在2n-2次调整内即可彼此转换"
+            },
+            {
+              "type": "file",
+              "ctime": 1698388424137,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+              "subpath": "#7-17 证明对于规模 n 的 AVL 树删除一节点后最多需要Ω(logn)次旋转才能恢复平衡",
+              "title": "AVL树何种情况下删除节点需要调整O(logn)次才会复平衡？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698388492211,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+              "subpath": "#7-19 AVL 树中删除一个节点且调整后某祖先 g(x) 复平衡，是否可以停止上溯？",
+              "title": "AVL树删除节点后调整至某一祖先复衡，是否可以停止上溯？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698388674696,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+              "subpath": "#7-20 证明递增插入 2 (h+1)-1 个关键码到空 AVL 树中必然得到高度 h 的满树",
+              "title": "证明递增插入2^(h+1)-1个关键码到AVL树必能得到满树"
+            },
+            {
+              "type": "file",
+              "ctime": 1698389602434,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+              "subpath": "#8-6 考查 BTree 节点插入导致的分裂次数",
+              "title": "BTree 节点插入过程中导致的分裂次数的分析"
             }
           ],
           "title": "知识点细节"
@@ -884,6 +939,45 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
               "subpath": "#5-30 键树 Trie",
               "title": "键树Trie"
+            },
+            {
+              "type": "file",
+              "ctime": 1698388167554,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+              "subpath": "#7-15-补 证明对等价 BBST 不能在 O (logn)时间内互相转换",
+              "title": "如何证明两棵等价BBST在O(logn)时间内不能完成彼此转换"
+            },
+            {
+              "type": "file",
+              "ctime": 1698389275521,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+              "subpath": "#soulution 2 (correct)",
+              "title": "何种插入关键码的次序使 BTree 高度最小"
+            },
+            {
+              "type": "file",
+              "ctime": 1698390001005,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+              "subpath": "#8-9 B* 树",
+              "title": "B* 树及其优点"
+            },
+            {
+              "type": "file",
+              "ctime": 1698390613991,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/68-B+Tree.md",
+              "title": "B+树"
+            },
+            {
+              "type": "file",
+              "ctime": 1698395225288,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/64-Height-BBST-vs-Weight-BBST.md",
+              "title": "Height-BBST vs. Weight-BBST"
+            },
+            {
+              "type": "file",
+              "ctime": 1698395341507,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/66-Fib-sequence-and-worst-AVL-trees.md",
+              "title": "斐波那契序列与最差AVL树的证明"
             }
           ],
           "title": "拓展延伸"
@@ -1024,6 +1118,27 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
               "subpath": "#5-25 O (n)时间内将每个节点的数值替换为后代中最大数值",
               "title": "O (n)时间内将每个节点的数值替换为后代中最大数值"
+            },
+            {
+              "type": "file",
+              "ctime": 1698387502215,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+              "subpath": "#7-10 扩充 searchAll(e)接口",
+              "title": "如何在关键码可重复的BST中找到目标项的全部？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698390315793,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+              "subpath": "#8-13 考察 2012 个内部节点的红黑树高度",
+              "title": "2012个内部节点的红黑树(黑)高度的极值问题"
+            },
+            {
+              "type": "file",
+              "ctime": 1698390456954,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+              "subpath": "#8-14 考察红黑树重染色节点的数量",
+              "title": "证明：分摊意义上红黑树重平衡中需要重染色的节点数为O(1)"
             }
           ],
           "title": "习题解析好题"
