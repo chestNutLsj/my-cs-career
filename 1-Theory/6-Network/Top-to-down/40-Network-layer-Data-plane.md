@@ -262,79 +262,130 @@ Interestingly, in spite of these well-developed alternatives, the Internet’s b
 	- One of the most widely studied and implemented AQM algorithms is the ***Random Early Detection*** (RED) algorithm `[Christiansen 2001]`. More recent AQM policies include PIE (the Proportional Integral controller Enhanced `[RFC 8033]`), and CoDel `[Nichols 2012]`.
 
 ![[40-Network-layer-Data-plane-output-queuing.png]]
-
+- At time *t*, a packet has arrived at each of the incoming input ports, each destined for the uppermost outgoing port.
+- Assuming identical line speeds and a switch operating at three times the line speed, one time unit later (that is, in the time needed to receive or send a packet), all three original packets have been transferred to the outgoing port and are queued awaiting transmission. 
+- In the next time unit, one of these three packets will have been transmitted over the outgoing link.
+- In our example, two new packets have arrived at the incoming side of the switch; one of these packets is destined for this uppermost output port. A consequence of such queuing is that a ***packet scheduler*** at the output port must choose one packet, among those queued, for transmission.
 
 #### 缓冲多大才是“足够”？
 
+Our study above has shown how a packet queue forms when bursts of packets arrive at a router’s input or (more likely) output port, and the packet arrival rate temporarily exceeds the rate at which packets can be forwarded. ***The longer the amount of time that this mismatch persists, the longer the queue will grow, until eventually a port’s buffers become full and packets are dropped***. 
+> 之前的讨论说明了突发的分组到达时输出队列是如何形成的。当分组到达速率大于输出端口分发速率时，这个时间持续越久，队列越长，直至耗尽缓冲区、产生丢包。
+
+One natural question is how much buffering should be provisioned at a port. It turns out the answer to this question is much more complicated than one might imagine and can teach us quite a bit about the subtle interaction among congestion-aware senders at the network’s edge and the network core!
+
+For many years, ***the rule of thumb*** `[RFC 3439]` for buffer sizing was that ==the amount of buffering (B) should be equal to an average round-trip time (RTT) times the link capacity (C)==. Thus, a 10-Gbps link with an RTT of 250 msec would need an amount of buffering equal to $B = RTT\times  C = 2.5 Gbits$ of buffers. This result was based on an analysis of the queueing dynamics of a relatively small number of TCP flows `[Villamizar 1994]`. 
+> RFC 3439 提出的拇指理论给出了缓冲区大小与平均 RTT、链路容量的关系：$B=RTT\times C$。但是这一规律基于相对少量的 TCP 流的动态排队分析。
+
+More recent theoretical and experimental efforts `[Appenzeller 2004]`, however, suggest that when a large number of independent TCP flows (N) pass through a link, the amount of buffering needed is $B = RTT \times C / \sqrt{N}$. In core networks, where a large number of TCP flows typically pass through large backbone router links, the value of N can be large, with the decrease in needed buffer size becoming quite significant. `[Appenzeller 2004; Wischik 2005; Beheshti 2008]` provide very readable discussions of the buffer-sizing problem from a theoretical, implementation, and operational standpoint. 
+> 然而基于大量 TCP 流的链路研究表明，其所需的缓冲区大小仅是 $B=RTT \times C / \sqrt{N}$ ，即随着 TCP 流的数量增多，缓冲区所需大小实际上在下降。
+
+It’s temping to think that more buffering must be better—larger buffers would allow a router to absorb larger fluctuations in the packet arrival rate, thereby decreasing the router’s packet loss rate. ==But larger buffers also mean potentially longer queueing delays==. For gamers and for interactive teleconferencing users, tens of milliseconds count. Increasing the amount of per-hop buffer by a factor of 10 to decrease packet loss could increase the end-end delay by a factor of 10! Increased RTTs also make TCP senders less responsive and slower to respond to incipient congestion and/or packet loss. These delay-based considerations show that buffering is a double-edged sword—==buffering can be used to absorb short-term statistical fluctuations in traffic but can also lead to increased delay and the attendant concerns==. Buffering is a bit like salt—just the right amount of salt makes food better, but too much makes it inedible!
+> 缓冲区并非越大越好。大缓冲区意味着更长的排队时延、更长的 RTT，这对延迟敏感的用户来说不可接受，会显著降低他们的响应性体验。
+> 缓冲区是一把双刃剑——大缓冲区意味着有效应对突发流量，但同样会导致过长的延迟。
+
+![[40-Network-layer-Data-plane-bufferbloat.png]]
+In the discussion above, we’ve implicitly assumed that many independent senders are competing for bandwidth and buffers at a congested link. While this is probably an excellent assumption for routers within the network core, at the network edge this may not hold.
+> 独立的发送方会竞争带宽和缓冲区，但这一假设对于网络核心中的路由器来说可能是成立的，但对网络边缘的设备来说并非如此。
+
+Figure 4.10(a) shows a home router sending TCP segments to a remote game server. Following `[Nichols 2012]`, suppose that it takes 20ms to transmit a packet (containing a gamer’s TCP segment), that there are negligible queueing delays elsewhere on the path to the game server, and that the RTT is 200 ms. As shown in Figure 4.10(b), suppose that at time t = 0, a burst of 25 packets arrives to the queue. One of these queued packets is then transmitted once every 20 ms, so that at t = 200 msec, the first ACK arrives, just as the 21st packet is being transmitted. 
+> 考虑一种情形，发送分组的延迟是 20ms，暂时忽视排队延迟，RTT 是 200ms，那么突发的 25 个分组需要转发时，每 20ms 会转发一个分组，第一个分组的 ACK 在 200ms 时返回，这时正要发送第 21 个分组。
+
+This ACK arrival causes the TCP sender to send another packet, which is queued at the outgoing link of the home router. At t = 220, the next ACK arrives, and another TCP segment is released by the gamer and is queued, as the 22nd packet is being transmitted, and so on. You should convince yourself that in this scenario, ACK clocking results in a new packet arriving at the queue every time a queued packet is sent, resulting in queue size at the home router’s outgoing link that is always five packets!
+> ACK 到达会导致 TCP 发送方继续发送下一个分组，这个分组一直等待在家庭路由器的输出链路上。第 220ms 时第二个 ACK 分组到达，发送下一个... 以此类推，这时，应当注意到 ACK 时钟导致每发送一个输出队列中的分组，才会有新的分组到达队列，从而家庭路由器的输出链路上的队列始终为 5 个分组大小！
+
+That is, the end-end-pipe is full (delivering packets to the destination at the path bottleneck rate of one packet every 20 ms), but the amount of queueing delay is constant and persistent. As a result, the gamer is unhappy with the delay, and the parent (who even knows wireshark!) is confused because he or she doesn’t understand why delays are persistent and excessively long, even when there is no other traffic on the home network. 
+> 也即，尽管端到端链路确实盈满（确实每 20ms 发送一个分组），但排队延迟却是固定的。（吞吐量能够实现，但延迟却居高不下）
+
+This scenario above of long delay due to persistent buffering is known as ***bufferbloat*** and illustrates that not only is throughput important, but also minimal delay is important as well `[Kleinrock 2018]`, and that the interaction among senders at the network edge and queues within the network can indeed be complex and subtle. 
+> 缓冲膨胀指的是持续地缓冲导致较长的延迟。这表明吞吐量和最小延迟都非常重要。
+
+The DOCSIS 3.1 standard for cable networks that we will study in Chapter 6, recently added a specific AQM mechanism `[RFC 8033, RFC 8034]` to combat bufferbloat, while preserving bulk throughput performance.
 
 ### 分组调度
 - 由**调度规则**选择排队的数据报进行传输（先来的不一定先传）
     - 调度：选择下一个要通过链路传输的分组
     - 调度策略：
-        - FIFO (first in first out) scheduling：按照分组到来的次序发送（先到先服务）
-            - 现实例子？
+        - **==FIFO scheduling==**：按照分组到来的次序发送（先到先服务）
+            - ![[40-Network-layer-Data-plane-fifo.png]]
+            - ![[40-Network-layer-Data-plane-fifo-timeline.png]]
             - 丢弃策略：如果分组到达一个满的队列，哪个分组将会被抛弃？
                 - tail drop：丢弃刚到达的分组（抛尾部）
                 - priority：根据优先权丢失/移除分组
                 - random：随机地丢弃/移除
-        - 优先权调度：发送最高优先权的分组
+        - **==优先权调度==**：发送最高优先权的分组
             - 多类，不同类别有不同的优先权
                 - 类别可能依赖于标记或者其他的头部字段，e.g. IP source/dest, port numbers, ds, etc.
                 - 先传高优先级的队列中的分组，除非没有
                 - 高（低）优先权中的分组传输次序：FIFO
-                - 现实生活中的例子？
-
-
-        - Round Robin (RR) scheduling:
-            - 多类
+            - ![[40-Network-layer-Data-plane-priority.png]]
+            - ![[40-Network-layer-Data-plane-priority-timeline.png]]
+            - Packets 1, 3, and 4 belong to the high-priority class, and packets 2 and 5 belong to the low-priority class.
+            - Packet 4 (a high-priority packet) arrives during the transmission of packet 2 (a low-priority packet). Under a ***non-preemptive priority queuing discipline***, the transmission of a packet is not interrupted once it has begun. In this case, packet 4 queues for transmission and begins being transmitted after the transmission of packet 2 is completed.
+        - **==Round Robin (RR) scheduling==**:
             - 循环扫描不同类型的队列，发送完一类的一个分组，再发送下一个类的一个分组，循环所有类
-            - 现实例子？
-
-
-        - Weighted Fair Queuing (WFQ): 
-            - 一般化的Round Robin
+            - In the simplest form of round robin scheduling, a class 1 packet is transmitted, followed by a class 2 packet, followed by a class 1 packet, followed by a class 2 packet, and so on. 
+            - A so-called ***work-conserving queuing discipline*** will never allow the link to remain idle whenever there are packets (of any class) queued for transmission. A work-conserving round robin discipline that looks for a packet of a given class but finds none will immediately check the next class in the round robin sequence.
+            - ![[40-Network-layer-Data-plane-round-robin-timeline.png]]
+            - In this example, packets 1, 2, and 4 belong to class 1, and packets 3 and 5 belong to the second class.
+        - **==Weighted Fair Queuing==** (WFQ): 
+            - ![[40-Network-layer-Data-plane-wfq.png]]
+            - Arriving packets are classified and queued in the appropriate per-class waiting area. As in round robin scheduling, a WFQ scheduler will serve classes in a circular manner—first serving class 1, then serving class 2, then serving class 3, and then (assuming there are three classes) repeating the service pattern.
+            - WFQ differs from round robin in that *each class may receive a differential amount of service in any interval of time*. Specifically, each class, i, is assigned a weight, $w_i$. Under WFQ, during any interval of time during which there are class i packets to send, class i will then be guaranteed to receive a fraction of service equal to $\frac{w_{i}}{\sum\limits w_{j}}$, where the sum in the denominator is taken over all classes that also have packets queued for transmission.
             - 在一段时间内，每个队列得到的服务时间是： $(W_i/\sum{W_i}) * t$ ，和权重成正比
             - 每个类在每一个循环中获得不同权重的服务量
-            - 现实例子？
 
-
-            如上图：一个传输周期内，蓝色传输时间占 $40\%$ ，红色传输时间占 $40\%$ ，绿色传输时间占 $20\%$
 
 ## 4.3 IP：Internet Protocol
 
 IP协议主要实现数据平面的转发功能
 
-### 4.3.1 数据报格式
+### 数据报格式
 
-主机，路由器中的网络层功能：
+![[40-Network-layer-Data-plane-IP-datagram-format.png]]
+- ***Version number***. These 4 bits ==specify the IP protocol version of the datagram==. By looking at the version number, the router can determine how to interpret the remainder of the IP datagram. Different versions of IP use different datagram formats. The datagram format for IPv4 is shown in Figure 4.17. The datagram format for the new version of IP (IPv6) is discussed in Section 4.3.4. 
+- ***Header length***. Because an IPv4 datagram can contain a variable number of options (which are included in the IPv4 datagram header), these 4 bits are needed to ==determine where in the IP datagram the payload== (for example, the transport-layer segment being encapsulated in this datagram) ==actually begins==. Most IP datagrams do not contain options, so the typical IP datagram has a 20-byte header.
+- ***Type of service***. The type of service (TOS) bits were included in the IPv4 header to ==allow different types of IP datagrams to be distinguished from each other==. For example, it might be useful to distinguish real-time datagrams (such as those used by an IP telephony application) from non-real-time traffic (e.g., FTP). The specific level of service to be provided is a policy issue determined and configured by the network administrator for that router. We also learned in Section 3.7.2 that ==two of the TOS bits are used for Explicit Congestion Notification==.
+- ***Datagram length***. This is the ==total length of the IP datagram (header plus data)==, measured in bytes. Since this field is 16 bits long, the theoretical maximum size of the IP datagram is 65,535 bytes. However, datagrams are rarely larger than 1,500 bytes, which allows an IP datagram to fit in the payload field of a maximally sized Ethernet frame.（数据报实际很少超过 1500 字节，这与以太网帧的长度有关）
+- ***Identifier, flags, fragmentation offset***. These three fields have to do with so-called ==IP fragmentation==, when a large IP datagram is broken into several smaller IP datagrams which are then forwarded independently to the destination, where they are reassembled before their payload data is passed up to the transport layer at the destination host. Interestingly, the new version of IP, ==IPv6, does not allow for fragmentation==. We’ll not cover fragmentation here; but readers can find a detailed discussion online, among the “retired” material from earlier versions of this book.
+- ***Time-to-live***. The time-to-live (TTL) field is included to ==ensure that datagrams do not circulate forever== (due to, for example, a long-lived routing loop) in the network. This field is decremented by one each time the datagram is processed by a router. If the TTL field reaches 0, a router must drop that datagram.
+- ***Protocol***. This field is ==typically used only when an IP datagram reaches its final destination==. The value of this field indicates the specific transport-layer protocol to which the data portion of this IP datagram should be passed. For example, a value of 6 indicates that the data portion is passed to TCP, while a value of 17 indicates that the data is passed to UDP. For a list of all possible values, see `[IANA Protocol Numbers 2016]`. Note that ==the protocol number in the IP datagram has a role that is analogous to the role of the port number field in the transport-layer segment==. The protocol number is the glue that binds the network and transport layers together, whereas the port number is the glue that binds the transport and application layers together. We’ll see in Chapter 6 that the link-layer frame also has a special field that binds the link layer to the network layer.
+- ***Header checksum***. The header checksum ==aids a router in detecting bit errors in a received IP datagram==. The header checksum is computed by treating each 2 bytes in the header as a number and summing these numbers using 1s complement arithmetic. As discussed in Section 3.3, the 1s complement (反码) of this sum, known as the Internet checksum, is stored in the checksum field. A router computes the header checksum for each received IP datagram and detects an error condition if the checksum carried in the datagram header does not equal the computed checksum. ==Routers typically discard datagrams for which an error has been detected==. Note that ==the checksum **must be recomputed and stored again at each router**, since the TTL field, and possibly the options field as well, will change==. An interesting discussion of fast algorithms for computing the Internet checksum is `[RFC 1071]`. 
+	- A question often asked at this point is, why does TCP/IP perform error checking at both the transport and network layers? There are several reasons for this repetition.
+	- First, note that only the IP header is checksummed at the IP layer, while the TCP/ UDP checksum is computed over the entire TCP/UDP segment.
+	- Second, TCP/ UDP and IP do not necessarily both have to belong to the same protocol stack. TCP can, in principle, run over a different network-layer protocol (for example, ATM) and IP can carry data that will not be passed to TCP/UDP.
+- ***Source and destination IP addresses***. When a source creates a datagram, it inserts its IP address into the source IP address field and inserts the address of the ultimate destination into the destination IP address field. Often the source host determines the destination address via a DNS lookup, as discussed in Chapter 2. We’ll discuss IP addressing in detail in Section 4.3.2. 
+- ***Options***. The options fields allow an IP header to be extended. Header options were meant to be used rarely—hence the decision to save overhead by not including the information in options fields in every datagram header. However, the mere existence of options does complicate matters—since datagram headers can be of variable length, one cannot determine a priori where the data field will start. Also, since some datagrams may require options processing and others may not, ==the amount of time needed to process an IP datagram at a router can vary greatly==. These considerations become particularly important for IP processing in high-performance routers and hosts. For these reasons and others, ==IP options were not included in the IPv6 header==, as discussed in Section 4.3.4.
+- ***Data (payload)***. Finally, we come to the last and most important field—the *raison d’etre*（存在的理由，法语） for the datagram in the first place! In most circumstances, the data field of the IP datagram contains the transport-layer segment (TCP or UDP) to be delivered to the destination. However, the ==data field can carry other types of data, such as ICMP messages== (discussed in Section 5.6).
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001111457486.png" style="zoom:80%"/>
+Note that an IP datagram has a total of 20 bytes of header (assuming no options). If the datagram carries a TCP segment, then each datagram carries a total of 40 bytes of header (20 bytes of IP header plus 20 bytes of TCP header) along with the application-layer message.
+> IP 数据报的头部有 20 字节，TCP 的头部有 20 字节，再加上应用层的数据（应用层当然也有各自协议的头部+数据体）。
 
-ICMP协议：信令协议（如Ping命令等）
+### IPv4分片和重组
+> IPv6 禁止分片
 
-IP数据报格式
-
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001111652067.png" />
-
-### 4.3.2 IP分片和重组(Fragmentation & Reassembly)
-
-IP 分片和重组
-- 网络链路有MTU（最大传输单元） —— 链路层帧所携带的最大数据长度
-    - 不同的链路类型
-    - 不同的MTU 
+- 网络链路有 MTU（Maximum Transmission Unit） —— 链路层帧所携带的最大数据长度
+    - 不同的链路类型有不同的 MTU 
 - 大的IP数据报在网络上被分片(“fragmented”)
     - 一个数据报被分割成若干个小的数据报
         - 相同的ID，知道属于同一个数据报
         - 不同的偏移量(offset)：小数据报的第一个字节在字节流中的位置除以8
-        - 最后一个分片标记为0（fragflag标识位），其他分片的fragflag标识位标记为1
+        - 最后一个分片标记为0（fragmentation flag 标识位），其他分片的 fragmentation flag 标识位标记为1
     - “重组”只在最终的目标主机进行（不占用路由器的资源）
     - IP头部的信息被用于标识，排序相关分片
     - 若某一片丢失，整个全部丢弃
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001133625648.png" style="zoom:60%"/>
-
-> 例：
+> When a destination host receives a series of datagrams from the same source, it needs to determine whether any of these datagrams are fragments of some original, larger datagram. If some datagrams are fragments, it must further determine when it has received the last fragment and how the fragments it has received should be pieced back together to form the original datagram.
 > 
+> To allow the destination host to perform these reassembly tasks, the designers of IPv4 put ***identification, flag, and fragmentation offset fields*** in the IP datagram header. When a datagram is created, the sending host stamps the datagram with an identification number as well as source and destination addresses.
+> 当生成一个数据报时，发送方设置源和目的地址时，同时贴上标识号
+> 
+> Typically, the sending host ==increments the identification number for each datagram it sends==. When a router needs to fragment a datagram, each resulting datagram (that is, fragment) is stamped with the source address, destination address, and identification number of the original datagram. When the destination receives a series of datagrams from the same sending host, it can examine the identification numbers of the datagrams to determine which of the datagrams are actually fragments of the same larger datagram. 
+> 
+> Because IP is an unreliable service, one or more of the fragments may never arrive at the destination. For this reason, in order for the destination host to be absolutely sure it has received the last fragment of the original datagram, ==the last fragment has a flag bit set to 0, whereas all the other fragments have this flag bit set to 1==. Also, in order for the destination host to determine whether a fragment is missing (and also to be able to reassemble the fragments in their proper order), the ==***offset field*** is used to specify where the fragment fits within the original IP datagram==.
+
+> [! example] 例：
+> ![[40-Network-layer-Data-plane-fragmetation.png]]
 > - $4000$ 字节数据报
 >     - $20$ 字节头部
 >     - $3980$ 字节数据
@@ -343,10 +394,10 @@ IP 分片和重组
 >     - 偏移量： $0$
 > - 第二片： $20$ 字节头部 + $1480$ 字节数据（ $1480$ 字节应用数据）
 >     - 偏移量： $1480/8=185$
-> - 第三片： $20$ 字节头部 + $1020$ 字节数据（应用数据）
+> - 第三片： $20$ 字节头部 + $1020$ 字节数据（ $1020$ 字节应用数据）
 >     - 偏移量： $2960/8=370$
 
-### 4.3.3 IPv4地址
+### 4.3.3 IPv4 编址
 
 IP 编址：引论
 - IP地址：32位标示，对主机或者路由器的接口编址（注：标识的是接口而非主机）
@@ -744,22 +795,3 @@ OpenFlow抽象
 > 
 > <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001161835426.png" style="zoom:70%"/>
 
-## 4.5 总结
-
-- 导论
-    - 数据平面
-    - 控制平面
-- 路由器组成
-- IP: Internet Protocol
-    - 数据报格式
-    - 分片
-    - IPv4地址
-    - NAT：网络地址转换
-    - IPv6
-- 通用转发和SDN
-    - SDN架构
-    - 匹配
-    - 行动
-    - OpenFLow有关“匹配+行动”的运行实例
-- 问题：转发表（基于目标的转发）和流表（通用转发）是如何计算出来的？
-    - 答案：通过控制平面，详见chapter5
