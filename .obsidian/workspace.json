@@ -139,8 +139,17 @@
                 "file": "1-Theory/4-Architecture/THU-Liu/22-Datapath.md"
               }
             }
+          },
+          {
+            "id": "48db641d0ed5bfc8",
+            "type": "leaf",
+            "state": {
+              "type": "git-history-view",
+              "state": {}
+            }
           }
-        ]
+        ],
+        "currentTab": 4
       },
       {
         "id": "2aabb86f31957f99",
@@ -168,8 +177,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 284.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -187,7 +195,7 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "19ec84e0556acba0",
+  "active": "48db641d0ed5bfc8",
   "lastOpenFiles": [
     "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-datapath-1.png",
     "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-singlecycle-datapath.png",
