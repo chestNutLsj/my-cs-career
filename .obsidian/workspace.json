@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "2f955ad469ba3dd0",
+        "id": "c0d0c14f73ec8427",
         "type": "tabs",
         "children": [
           {
-            "id": "118d424e5a7e4efe",
+            "id": "19ec84e0556acba0",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/RISCV-assets/30-RISC-V-assembly.md",
+                "file": "1-Theory/4-Architecture/THU-Liu/22-Datapath.md",
                 "mode": "source",
                 "source": false
               }
@@ -80,7 +80,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 542.5
+    "width": 251.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -96,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/RISCV-assets/30-RISC-V-assembly.md",
+                "file": "1-Theory/4-Architecture/THU-Liu/22-Datapath.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/RISCV-assets/30-RISC-V-assembly.md",
+                "file": "1-Theory/4-Architecture/THU-Liu/22-Datapath.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +136,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/RISCV-assets/30-RISC-V-assembly.md"
+                "file": "1-Theory/4-Architecture/THU-Liu/22-Datapath.md"
               }
             }
           }
@@ -151,7 +152,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/RISCV-assets/30-RISC-V-assembly.md"
+                "file": "1-Theory/4-Architecture/THU-Liu/22-Datapath.md"
               }
             }
           },
@@ -167,7 +168,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 354.5
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -185,46 +187,46 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "118d424e5a7e4efe",
+  "active": "19ec84e0556acba0",
   "lastOpenFiles": [
+    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-datapath-1.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-singlecycle-datapath.png",
+    "1-Theory/4-Architecture/THU-Liu/22-Datapath.md",
+    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-Jalr.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-J-type.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-sign-extension.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-U-type.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-B-type-field.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-B-type-instance.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-B-type.png",
+    "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
+    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-S-type-area.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-S-type-instruction.png",
+    "1-Theory/4-Architecture/RISC-V/50-Float-Double.md",
+    "1-Theory/4-Architecture/RISC-V/40-Multiply-Divide-instruction.md",
+    "1-Theory/4-Architecture/RISC-V/30-RISC-V-assembly.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/71-Hash-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/AVL-nums.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/红黑树.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/26379328603383702313b9a23c5de8e9.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/1698220670428.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/1698220630768.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/67-Red-Black-Tree-instance.md",
     "8-SimpRead/Insertion in a Red-Black Tree/Insertion in a Red-Black Tree.md",
     "8-SimpRead/Deletion in a Red-Black Tree/Deletion in a Red-Black Tree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/65-Lowest-Common-Ancestor.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/65-Lowest-Common-Ancestor-912.jpg",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
     "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
-    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-fragmetation.png",
-    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-IP-datagram-format.png",
-    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-wfq.png",
-    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-round-robin-timeline.png",
-    "1-Theory/4-Architecture/THU-Liu/22-Datapath.md",
-    "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/RISCV-assets/30-RISC-V-assembly.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/RISCV-assets/20-RV32I.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/RISCV-assets/10-Why-need-RISC-V?.md",
+    "1-Theory/4-Architecture/RISC-V/20-RV32I.md",
+    "1-Theory/4-Architecture/RISC-V/10-Why-need-RISC-V?.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/66-Fib-sequence-and-worst-AVL-trees.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/68-B+Tree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/64-Height-BBST-vs-Weight-BBST.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/RISCV-assets/assets",
-    "1-Theory/5-OS-principle/rCore-tutorial/RISCV-assets",
-    "1-Theory/5-OS-principle/rCore-tutorial/RISCV-assets/91-RISC-V异常、中断.md",
+    "1-Theory/4-Architecture/RISC-V/assets",
+    "1-Theory/4-Architecture/RISC-V",
+    "1-Theory/4-Architecture/RISC-V/91-RISC-V异常、中断.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
     "1-Theory/4-Architecture/THU-Liu/20-Intruction.md",
-    "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/9-设备IO.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/60-VirtIO_GPU-drivers.md",
     "8-SimpRead/详解 RISC v 中断/assets",
     "8-SimpRead/详解 RISC v 中断",
     "8-SimpRead/Insertion in a Red-Black Tree/assets",
