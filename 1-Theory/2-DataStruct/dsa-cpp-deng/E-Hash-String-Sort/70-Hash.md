@@ -176,7 +176,7 @@ void shuffle( int A[], int n ) {
 ![[70-Hash-fisher-shuffle.png]]
 <center>Fisher shuffle</center>
 
-Fisher 方法可以等概率生成所有 n! 种排列吗？
+Fisher 方法可以等概率生成所有 n! 种排列吗？——当然，[[18-Fisher-Yates-shuffle]]
 
 ### Hashcode 与多项式法
 ```
@@ -428,7 +428,7 @@ Quadratic Probing:
 
 由此导出基数排序的思想——自 $k_{1}$ 到 $k_{d}$，低位优先的顺序依次以各域为序做一趟桶排序：
 ![[70-Hash-radixSort.png]]
-- 正确性：
+- 正确性： ^37f503
 	- 归纳假设：前 i 趟排序后，所有词条关于低 i 位有序
 	- 假设前 i-1 趟均成立，则考查第 i 趟排序之后的情况，无非两种情况：
 		- 凡第 i 位不同的词条，即便此前曾是逆序，现在必已转为有序；
@@ -466,7 +466,7 @@ void List<T>::radixSort(ListNodePosi<T> p, Rank n) {
 - 对数密度= $\frac{\ln n}{\ln n^{d}}=\frac{1}{d}=O(1)$
 - 即这类整数集的对数密度不超过常数；
 - 若取 d=4，则即便是 64 位的 long 型整数，也只需 $n>(2^{64})^{\frac{1}{4}}=2^{16}=65536$ 
-- 对于这类整数集，设计效率 o (nlogn)的排序算法。
+- 对于这类整数集，设计效率 o(nlogn)的排序算法。
 
 利用基数排序设计线性排序算法：
 - 预处理：将所有元素转换为 n 进制形式 $x=(x_d,..., x_2, x_1)$ 
@@ -513,7 +513,7 @@ void List<T>::radixSort(ListNodePosi<T> p, Rank n) {
 ### 分析
 - 时间复杂度=O (n+m+n) // 高效处理大规模数据
 - 空间复杂度=O (n)
-- 最后一步的扫描次序，可否改为自前向后？
+- 最后一步的扫描次序，可否改为自前向后？ ^dd99f2
 	- 可以
 	- 答案来自《算法导论》的习题 8-2-3：The algorithm still works correctly. The order that elements are taken out of C and put into B doesn’t affect the placement of elements with the same key. It will still fill the interval (C\[k − 1], C\[k]] with elements of key k. 
 	- The question of whether it is stable or not is not well phrased. In order for stability to make sense, we would need to be sorting items which have information other than their key, and the sort as written is just for integers, which don’t. We could think of extending this algorithm by placing the elements of A into a collection of elements for each cell in array C. Then, if we use a FIFO collection, the modification of line 10 will make it stable, if we use LILO, it will be anti-stable.
@@ -671,7 +671,7 @@ V* Skiplist<K, V>::get( K k ) {
 	- 既然逐层随机减半，故 $S_0$ 中任意关键码在 $S_k$ 中仍然出现的概率为 $2^{-k}$ ，则第 k 层节点数的期望值 $E(|S_{k}|)=n\cdot 2^{-k}=\frac{n}{2^{k}}$ 
 	- 于是所有节点期望的总数——各层列表所需空间的总和为 $E(\sum\limits_{k}|S_{k}|)=\sum\limits_{k}E(|S_{k}|)=n\times\sum\limits_{k}2^{-k}<2n=O(n)$ 
 	- 于是，跳转表的所需空间为 expected-O (n)，**不会因为塔高而显著影响空间复杂度**
-	- 类比，半衰期为 1 年的放射性物质中，各粒子的平均寿命不过 2年
+	- 类比，半衰期为 1 年的放射性物质中，各粒子的平均寿命不过 2 年
 
 ### 查找
 ![[70B-Hash-application-skiplist-search.png]]
