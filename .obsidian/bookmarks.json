@@ -965,6 +965,160 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
               "subpath": "#邻接矩阵与邻接表的取舍原则",
               "title": "邻接矩阵和邻接表的取舍原则"
+            },
+            {
+              "type": "file",
+              "ctime": 1698557722306,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
+              "subpath": "#实例",
+              "title": "BFS过程中顶点状态、边记号的含义"
+            },
+            {
+              "type": "file",
+              "ctime": 1698557808884,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
+              "subpath": "#推广：全图BFS",
+              "title": "bfs时间复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698558007947,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
+              "subpath": "#最短路径",
+              "title": "图的最短路径思路、BFS过程中队列变化细节"
+            },
+            {
+              "type": "file",
+              "ctime": 1698558264745,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
+              "subpath": "#图的偏心率、半径、直径、中心",
+              "title": "图的偏心率、半径、直径、中心"
+            },
+            {
+              "type": "file",
+              "ctime": 1698558475111,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
+              "subpath": "#实现",
+              "title": "DFS顶点状态dTime、fTime细节、其他状态的含义"
+            },
+            {
+              "type": "file",
+              "ctime": 1698558557778,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
+              "subpath": "#^804025",
+              "title": "DFS过程中边的状态细节"
+            },
+            {
+              "type": "file",
+              "ctime": 1698560412803,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
+              "subpath": "#括号引理",
+              "title": "括号引理与活跃期"
+            },
+            {
+              "type": "file",
+              "ctime": 1698560430836,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
+              "subpath": "#何时选用 BFS/DFS？",
+              "title": "BFS/DFS各自适用的场景"
+            },
+            {
+              "type": "file",
+              "ctime": 1698561341309,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
+              "subpath": "#^02bb00",
+              "title": "如何判断图中出现环路？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698561399974,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-10 DFS 在 O (n+e)内判断是否存在欧拉环路并构造之",
+              "title": "如何判断是否存在欧拉环路？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698561979573,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+              "subpath": "#DAG 中的偏序关系",
+              "title": "DAG与拓扑排序的偏序、全序关系"
+            },
+            {
+              "type": "file",
+              "ctime": 1698564981958,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+              "subpath": "#策略（描述）",
+              "title": "零出度拓扑排序的应用"
+            },
+            {
+              "type": "file",
+              "ctime": 1698565091297,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+              "subpath": "#定义",
+              "title": "关节点、双连通图、双连通分量的定义、特点"
+            },
+            {
+              "type": "file",
+              "ctime": 1698565263766,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+              "subpath": "#改进：利用 DFS",
+              "title": "DFC判断双连通图：内部节点何时为关节点？hca如何判断双连通分量？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698565810942,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+              "subpath": "#复杂度",
+              "title": "优先级搜索的时间复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698566012467,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+              "subpath": "#最短路径树",
+              "title": "最短路径树的概念与Dijkstra算法的局限性"
+            },
+            {
+              "type": "file",
+              "ctime": 1698566753536,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+              "subpath": "#实现",
+              "title": "Dijkstra算法的实例细节"
+            },
+            {
+              "type": "file",
+              "ctime": 1698567038808,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+              "subpath": "#蛮力算法",
+              "title": "MST的蛮力算法：Cayley公式"
+            },
+            {
+              "type": "file",
+              "ctime": 1698567520309,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+              "subpath": "#改进思路：极短跨边",
+              "title": "极短跨边理论：排除环路最长边、容纳割的最短边的思路"
+            },
+            {
+              "type": "file",
+              "ctime": 1698568601731,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+              "subpath": "#正确性",
+              "title": "Prim算法局限性：重复边时未必正确"
+            },
+            {
+              "type": "file",
+              "ctime": 1698568672380,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+              "subpath": "#Kruskal 算法：",
+              "title": "Kruskal算法的思路步骤、正确性、并查集实现"
+            },
+            {
+              "type": "file",
+              "ctime": 1698568821615,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+              "subpath": "#Floyd-Warshall 算法求 SPT",
+              "title": "Floyd-Warshall 算法求 SPT"
             }
           ],
           "title": "知识点细节"
@@ -1132,6 +1286,13 @@
               "ctime": 1698395341507,
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/66-Fib-sequence-and-worst-AVL-trees.md",
               "title": "斐波那契序列与最差AVL树的证明"
+            },
+            {
+              "type": "file",
+              "ctime": 1698558189221,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
+              "subpath": "#二分图",
+              "title": "二分图"
             }
           ],
           "title": "拓展延伸"

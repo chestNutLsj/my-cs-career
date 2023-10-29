@@ -399,41 +399,72 @@ Note that an IP datagram has a total of 20 bytes of header (assuming no options)
 
 ### 4.3.3 IPv4 编址
 
-IP 编址：引论
-- IP地址：32位标示，对主机或者路由器的接口编址（注：标识的是接口而非主机）
+#### 接口
 - 接口：主机/路由器和物理链路的连接处
+    - 一台主机通常只有一条链路连接到网络；当主机中的 IP 想要发送一个数据报时，它就在该链路上发送；
     - 路由器通常拥有多个接口（路由器连接若干个物理网络，在多个物理网络之间进行分组转发）
-    - 主机也有可能有多个接口
-    - IP地址和每一个接口关联
-- 一个IP地址和一个接口相关联
+    - 主机可能有一个或多个接口
+    - IP 要求每台主机和路由器的接口都有自己的 IP 地址——即，IP 地址和每一个接口关联，该接口对应一个“网卡”
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001135955479.png" style="zoom:60%"/>
+每个 IPv4 地址长度为 32 位:
+- 理论上有 2^32 个可能的 IPv4 地址（实际上并没有）
+- 这些地址通常按照点分十进制记法书写——地址中每个字节用它的十进制形式书写，各字节以句点隔开：
+- IPv4 binary:  11000001 00100000 11011000 00001001
+- IPv4 decimal: 193.32.216.9
 
 Q：这些接口是如何连接的？     
 A：有线以太网网口链接到以太网络交换机连接       
 目前：无需担心一个接口是如何接到另外一个接口（中间没有路由器，一跳可达）
 
-子网(Subnets)
+#### 子网(Subnets)
 - IP地址：
     - 子网部分（高位bits）
-    - 主机部分（地位bits）
+    - 主机部分（低位 bits）
 - 什么是子网(subnet)？
     - 一个子网内的节点（主机或者路由器）它们的**IP地址的高位部分相同**，这些节点构成的网络的一部分叫做子网
     - **无需路由器介入**，子网内各主机可以在物理上相互直接到达，在IP层面一跳可达（但是在数据链路层可能需要借助交换机）
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001142106457.png" style="zoom:60%"/>
+![[40-Network-layer-Data-plane-subnets.png]]
 
 子网判断方法：
 - 要判断一个子网，将每一个接口从主机或者路由器上分开，构成了一个个网络的孤岛
-- 每一个孤岛（网络）都是一个都可以被称之为subnet。
+- 每一个孤岛（网络）都是一个都可以被称之为 subnet。
 
-长途链路 —— 点到点的形式   如：中国到日本的链路    
-计算机局域网  ——  多点连接的方式     
+![[40-Network-layer-Data-plane-subnet-mask.png]]
+- 相同高位的一组 IP（包括主机和路由器端口）组成一个子网，它们的划分通过子网掩码来得到：
+- 上图中子网掩码的记号为 `/24`，表明高 24 位相同的 IP 组成一个子网，第 8 位用以区分子网内的主机——一个子网支持 2^8=256 台主机；
 
-子网掩码： 11111111 11111111 11111111 00000000     
-Subnet mask：/24
+![[40-Network-layer-Data-plane-router-port-subset.png]]
+- Three subnets, 223.1.1.0/24, 223.1.2.0/24, and 223.1.3.0/24, are similar to the subnets we encountered in Figure 4.18. 
+- But note that there are three additional subnets in this example as well: 
+	- one subnet, 223.1.9.0/24, for the interfaces that connect routers R1 and R2; 
+	- another subnet, 223.1.8.0/24, for the interfaces that connect routers R2 and R3; 
+	- and a third subnet, 223.1.7.0/24, for the interfaces that connect routers R3 and R1.
+- For a general interconnected system of routers and hosts, we can use the following recipe to define the subnets in the system: ***To determine the subnets, detach each interface from its host or router, creating islands of isolated networks, with interfaces terminating the end points of the isolated networks. Each of these isolated networks is called a subnet***.
+- If we apply this procedure to the interconnected system in Figure 4.20, we get six islands or subnets.
 
-IP地址分类
+互联网中的路由通过网络号进行一个个子网的计算，以网络为单位进行传输，而非具体到单个主机。
+
+#### 因特网地址分配策略
+IP 编址：CIDR (Classless InterDomain Routing, 无类域间路由)
+- 子网部分可以在任意的位置，按需划分
+- 地址格式：a.b.c.d/x，其中 x 是地址中子网号的长度（网络号的长度），前 x 位由此称为该地址的前缀，通常一个组织被分配一块连续的地址——具有相同前缀的一段地址
+- 仅考虑 x 位即可完成转发，极大地减少了路由器中转发表的长度
+- 剩余 32-x 位可认为是用于组织内部的设备分配，只有在组织内部的路由器中转发分组才会考虑这一字段，进一步地，根据这一字段组织可以在内部继续细分子网：
+	- a.b.c.d/21 表示组织的子网
+	- a.b.c.d/24 表示组织内部继续细分的子网
+
+#### 分类编址
+
+CIDR 采用前，IP 地址的网络部分限定长度为 8、16、24 字节——分类编址 classful addressing 方案：
+- Subnets with 8-, 16-, and 24-bit subnet addresses were known as class A, B, and C networks, respectively.
+- Class C (/24) subnet could accommodate only up to `2^8-2=254` hosts (two of the 28 5 256 addresses are reserved for special use)—too small for many organizations. 
+- However, a class B (/16) subnet, which supports up to 65,634 hosts, was too large. 
+- Under classful addressing, an organization with, say, 2,000 hosts was typically allocated a class B (/16) subnet address. This ==led to a rapid depletion of the class B address space and poor utilization of the assigned address space==. 
+	- For example, the organization that used a class B address for its 2,000 hosts was allocated enough of the address space for up to 65,534 interfaces—leaving more than 63,000 addresses that could not be used by other organizations.
+
+#### IP 地址分类
+![[40-Network-layer-Data-plane-ip-address-classify.png]]
 - Class A：126 networks ( $2^7-2$ , 0.0.0.0 and 1.1.1.1 not available), 16 million hosts ( $2^{24}-2$ , 0.0.0.0 and 1.1.1.1 not available)
 - Class B：16382 networks ( $2^{14}-2$ , 0.0.0.0 and 1.1.1.1 not available), 64 K hosts ( $2^{16}-2$ , 0.0.0.0 and 1.1.1.1 not available)
 - Class C：2 million networks, 254 host ( $2^8-2$ , 0.0.0.0 and 1.1.1.1 not available)
@@ -442,18 +473,16 @@ IP地址分类
 
 *注：A、B、C类称为 单播地址 （发送给单个），D类称为 主播地址 （发送给特定的组的所有人）*
 
-互联网中的路由通过网络号进行一个个子网的计算，以网络为单位进行传输，而非具体到单个主机
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001142823822.png" style="80%"/>
-
-特殊IP地址
+![[40-Network-layer-Data-plane-special-ip.png]]
+特殊 IP 地址的约定
 - 一些约定：
     - 子网部分：全为0---本网络
     - 主机部分：全为0---本主机
     - 主机部分：全为1---广播地址，这个网络的所有主机
 - 特殊IP地址
 
-    <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001142922347.png" />
+
 
 内网（专用）IP地址
 - 专用地址：地址空间的一部份供专用地址使用
@@ -465,13 +494,6 @@ IP地址分类
     - Class B 172.16.0.0-172.31.255.255  MASK 255.255.0.0
     - Class C 192.168.0.0-192.168.255.255 MASK 255.255.255.0
 
-IP 编址：CIDR(Classless InterDomain Routing, 无类域间路由)
-- 子网部分可以在任意的位置，按需划分
-- 地址格式：a.b.c.d/x，其中 x 是 地址中子网号的长度（网络号的长度）
-
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001143934822.png" style="zoom:80%"/>
-
-如上图，根据子网掩码，前23位为网络号，后9位为主机号
 
 子网掩码(subnet mask)
 - 32bits , 0 or 1 in each bit
@@ -487,6 +509,7 @@ IP 编址：CIDR(Classless InterDomain Routing, 无类域间路由)
     - /# ： 例如 /22 表示前面22个bit为子网部分
 
 转发表和转发算法
+
 |Destination Subnet Num |Mask |Next hop |Interface|
 |:---:|:---:|:---:|:---:|
 |202.38.73.0 |255.255.255.192 |IPx |Lan1 |

@@ -390,7 +390,7 @@ void CreateDG(OLGraph *G){
 - 依次访问它们尚未访问的邻接顶点
 - 如此反复，直到没有尚未访问的邻接顶点
 
-以上策略完全及过程完全等同于树的层次遍历，实际上 BFS 也会构造出原图的一棵支撑树——称为 [[#BFS-Tree/Forest|BFS-Tree]]：
+以上策略完全及过程完全等同于树的层次遍历，实际上 BFS 会构造出原图的一棵支撑树——称为 [[#BFS-Tree/Forest|BFS-Tree]]：
 ![[80A-Graph-bfs-process.png]]
 
 #### 实现
@@ -495,6 +495,8 @@ void Graph<Tv, Te>::bfs( Rank s ) { // s < n
 [Erdős number - Wikipedia](https://en.wikipedia.org/wiki/Erd%C5%91s_number)
 描述协作距离
 
+埃尔德什·帕尔的埃数是0，与其合写论文的埃数是1，一个人至少要 k 个中间人（合写论文的关系）才能与埃尔德什·帕尔有关联，则他的埃数是 k+1。 例如：埃尔德什·帕尔与 A 合写论文，A 与 B 合写论文，但埃尔德什·帕尔没有与 B 合写论文，则 A 的埃数是1，B 的埃数是2。
+
 ##### Chow Number
 [Chow-Number](http://dsa.cs.tsinghua.edu.cn/~deng/ds/00240074@2004spring/handout/assignment/chownumber/index.htm)：一道 thu-oj 的题目：
 ![[80A-Graph-app-chow-number.png]]
@@ -563,7 +565,7 @@ Bipartite Graph
 
 设G=(V,E)是一个无向图，如果顶点V可分割为两个互不相交的子集(A,B)，并且图中的每条边（i，j）所关联的两个顶点i和j分别属于这两个不同的顶点集(i in A,j in B)，则称图G为一个二分图。
 ##### 图的偏心率、半径、直径、中心
-![[50-Tree]]
+![[50-Tree#图/树的直径、偏心率、半径、中心]]
 
 ### 深度优先搜索
 #### 思路
@@ -619,7 +621,7 @@ DFS 过程中顶点的状态：
 - dTime：顶点被发现的时间
 - fTime：顶点被访问完毕的时间
 
-- DFS 过程中边的状态： ^562460
+- DFS 过程中边的状态：  ^804025
 	- TREE
 	- CROSS：表明边的目的点 u 已经访问完毕，但是当前节点的发现时间晚于 u，这通常出现在有向图中，从 DFSTree 的角度看，当前节点 v 是较上溯到公共祖先的另一支子树中目标节点 u 的深度更深；
 	- FORWARD：表明边的目的点 u 已经访问完毕，并且当前节点的发现时间还要早于 u，这通常出现在有向图中，从 DFSTree 的角度看，当前节点 v 是较上溯到公共祖先的另一支子树中目标节点 u 的深度更浅；
@@ -630,7 +632,7 @@ DFS 过程中顶点的状态：
 - 注意到 A->c 时 c 已经访问完毕，而 dTime (A)<dTime (c)，表明 a 的深度较浅，由此<a, c>是一条FORWARD前向边；
 
 ![[80A-Graph-dfs-directed-graph-instance2.png]]
-- 注意到此处 G->a 的 BACKWARD 出现了 loop，表明 a->f->g 构成了一条环路；
+- 注意到此处 G->a 的 BACKWARD 出现了 loop，表明 a->f->g 构成了一条环路； ^dde3d5
 - 而 G->c 时，c 已访问完毕，且 dTime (G)>dTime (c)，表明 G 的深度更深，由此<g, c>是一条 CROSS 跨边；
 
 ![[80A-Graph-dfs-directed-graph-instance3.png]]
@@ -638,6 +640,11 @@ DFS 过程中顶点的状态：
 - 对后访问的连通分量，其指向前一个访问完毕的连通分量的边都是 CROSS 跨边；
 
 ![[80A-Graph-dfs-directed-graph-instance4.png]]
+
+>[! note] 与拓扑排序的联系
+>注意到，在上图中从 a 开始 DFS，并不能一趟扫描完毕，但若是从 d 开始 DFS，则可以一趟扫描完毕。
+>对于有向无环连通图（这是一个充分条件，但不是必要条件），对应偏序集也就必有入度为 0 和出度为 0 的节点，dfs 能否一趟遍历就和拓扑排序有关。
+>拓扑排序的零入度起点，可以一趟结束，但是其它的不能一趟结束——非 0 入度节点势必不能一趟做完 dfs，因为根据无环性，它没法转回指向它的节点
 
 #### 推广：全图DFS
 ```
@@ -694,11 +701,11 @@ void Graph<Tv, Te>::dfs( Rank s ) { // s < n
 - 判断是否是二分图：都可以
 	- BFS
 
-- 有向图是否存在环路：只能 DFS，因为 BFS 没有 BACKWARD
+- 有向图是否存在环路：只能 DFS，因为 BFS 没有 BACKWARD ^02bb00
 	- 进一步地，如何判断 BACKWARD 是环路？毕竟不是出现 BACKWARD 就代表出现环路—— [[81-Graph-Application#^67e5d3|判断目标节点是否 VISITED]]，即是否是 DAG;
-- 计算图是否构成[[#^e03e5a|欧拉回路]]：DFS [[82-Graph-Exercise#6-10 DFS 在 O (n+e)内判断是否存在欧拉环路并构造之|习题解析6-10]]
+- 计算图是否构成[[#^e03e5a|欧拉回路]]：DFS [[82-Graph-Exercise#6-10 DFS 在 O (n+e)内判断是否存在欧拉环路并构造之|习题解析6-10]] 
 - 给出图的拓扑排序：DFS，方便确定节点是否还有出度
-- [[81-Graph-Application#双连通分量|双连通分量]]、强连通分量的分解：DFS
+- [[81-Graph-Application#双连通分量|双连通分量]]、[[87-Strongly-Connected-Components|强连通分量]] 的分解：DFS
 
 - 顶点之间的最短距离：
 	- BFS，每一层扩散算作 1 个距离，

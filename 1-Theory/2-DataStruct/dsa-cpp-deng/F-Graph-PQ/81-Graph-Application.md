@@ -21,7 +21,7 @@
 ### DAG 中的偏序关系
 - 每个 DAG 对应于一个偏序集，而拓扑排序对应于一个全序集，拓扑排序的过程就是构造一个与指定偏序集相容的全序集。
 
-- 可以拓扑排序的有向图必定无环，反之亦然，DAG 才能做拓扑排序得到线性序列，而且拓扑排序的结果至少一种。
+- **可以拓扑排序的有向图必定无环，反之亦然，DAG 才能做拓扑排序得到线性序列**，而且拓扑排序的结果至少一种。
 
 - 有限的偏序集一定会有极值元素，由此归纳证明可以得到拓扑排序的算法。
 
@@ -188,7 +188,7 @@ void Graph<Tv, Te>::BCC( Rank v, Rank& clock, Stack<Rank>& S ) { // assert: 0 <=
 - 除原图本身，还需一个容量为 O (e)的栈存放已访问的边
 - 为支持递归，另需一个容量为 O (n)的运行栈
 
-如何推广至有向图的强连通分量 （Strongly-connected component）？
+如何推广至有向图的[[87-Strongly-Connected-Components|强连通分量]] （Strongly-connected component）？
 - Kosaraju's algorithm 
 - Tarjan's algorithm
 
@@ -198,6 +198,11 @@ void Graph<Tv, Te>::BCC( Rank v, Rank& clock, Stack<Rank>& S ) { // assert: 0 <=
 ![[80B-Graph-application-bcc-instance2.png]]
 
 ![[80B-Graph-application-bcc-instance3.png]]
+
+> [! note] 如何判断根节点是否为关节点？
+> 这个实例在最后一步判断出发节点 A 是否为关节点时，先将 A 当作关节点处理，再又祛除。但是在代码中不能排除 dfs 根不是关节点的情况，因为算法是 dtime>＝hca，就会被认成关节点，而不会有 hca 小于根节点的 dtime。
+> 
+> 一种比较好的解决思路是：统计根节点的出度——根节点出度为 1 时，必然不会是关节点，而出度为 2 时又必然是关机点。
 
 ## 优先级搜索
 各种遍历算法的区别，仅在于选取顶点进行访问的次序：
@@ -270,9 +275,9 @@ void Graph<Tv, Te>::PFS( Rank v, PU prioUpdater ) { //优先级搜索（单个�
 另外，在以 Dijkstra 方法构建最短路径树之前，需要明确：
 - 各边权重均为正，否则有可能出现总权重非正的环路，以致最短路径无从定义
 - 有负权重的边时，即便所有环路总权重皆为正，Dijkstra 算法依然可能失效
-- 任意两点之间，最短路径唯一，在不影响计算结果的前提下，总可通过适当扰动予以保证（习题 6-17）
+- 任意两点之间，最短路径唯一，在不影响计算结果的前提下，总可通过适当扰动予以保证（[[82-Graph-Exercise#6-17 Prim 算法的极短跨边问题|习题 6-17]]）
 
-最短路径树 SPT：是所有最短路径的并集，并且继承了树的性质——极小连通图，最大无环图：
+最短路径树 SPT：是**所有最短路径的并集**，并且继承了树的性质——极小连通图，最大无环图：
 - $T=T_{n-1}=\bigcup\limits_{0\le i<n}\pi(u_{i})$ 构成的一棵树
 - ![[80C-GraphApp-MST-SPT-dijkstra.png]]
 - ![[80C-GraphApp-SPT-MST-SPT-instance.png]]
@@ -296,6 +301,8 @@ void Graph<Tv, Te>::PFS( Rank v, PU prioUpdater ) { //优先级搜索（单个�
 	2. 将其接入 $T_k$ 即可，随后再更新 $V \text{\\} V_{k+1}$ 中所有顶点的优先级；
 3. 需要注意，优先级随后可能改变（降低）的顶点，必定与 $u_{k}$ 邻接；
 4. 因此只需枚举 $u_k$ 的每一邻接顶点 $v$，并取 $priority(v)=min(priority(v),priority(u_{k})+||u_{k},v||)$ 
+
+![[Dijkstra_Animation.gif]]
 
 因此对应于 Dijkstra 的优先级更新器如下：
 ```
@@ -335,7 +342,7 @@ void Graph<Tv, Te>::dijkstra( Rank s ) { // s < n
 
 ## Prim 算法求 MST
 ### MST 是什么
-- 支撑：对连通网络 N=(V; E)的子图 T=(V; F)，所谓支撑指的是覆盖 N 中所有可达顶点。树即可做到——连通且无环，并且树边数|F|=|V|-1；
+- 支撑：对连通网络 N=(V; E)的子图 T=(V; F)，所谓支撑指的是覆盖 N 中所有可达顶点。树即可做到——连通且无环，并且树边数|F| = |V|-1；
 
 - 最小：总权重 $w (T)=\sum\limits_{e\in F}w(e)$ 达到最小
 	- MST 的优势应用：众多优化问题的基本模型，为许多 NP 问题提供足够好的近似解
@@ -353,6 +360,7 @@ void Graph<Tv, Te>::dijkstra( Rank s ) { // s < n
 - 支撑树虽然可以有很多种，但所含的边数必然是相同的：|V|-1
 - 存在权重相同的边的图中，构造的 MST 可能有多种，为了消除歧义，可以考虑对节点的信息也加入权重考量中：
 	- ![[80C-GraphApp-SPT-MST-composite-number.png]]
+
 ### 蛮力算法
 - 枚举出 N 的所有支撑树，再逐个计算代价
 - 但是包含 n 个顶点的图，可能有多少棵支撑树？
@@ -391,9 +399,10 @@ void Graph<Tv, Te>::dijkstra( Rank s ) { // s < n
 ![[80C-GraphApp-SPT-MST-prim-instance2.png]]
 ![[minimum-spanning-trees-prims-algorithm-8.gif]]
 ### 正确性
+
 - 设 Prim 算法依次选取了边{ e2, e3, ..., en }，其中每一条边 ek，的确都属于某棵 MST 
 - 但在 MST 不唯一时，由此并不能确认，最终的 T 必是 MST（之一），此时由极短跨边构成的支撑树，未必就是一棵 MST
-- 可行的证明：在不增加总权重的前提下，可以将任一 MST 转换为 T，每一 Tk 都是某棵 MST 的子树，1 <= k <= n ——《习题解析》，6-28题
+- 可行的证明：在不增加总权重的前提下，可以将任一 MST 转换为 T，每一 Tk 都是某棵 MST 的子树，1 <= k <= n —— [[82-Graph-Exercise#6-28 Kruskal 算法|6-28题]] 
 
 ![[80C-GraphApp-SPT-MST-prim-iscorrect?.png]]
 
@@ -503,7 +512,7 @@ class UnionFind:
 思路： 图矩阵 --> 最短路径矩阵
 效率： O(n^3)，与执行 n 次 Dijkstra 相同 —— 既如此，F.W.之价值何在？
 优点： 形式简单、算法紧凑、便于实现；允许负权边（尽管仍不能有负权环路）
-
+[[86-SPT-OIwiki#Floyd-Warshall 算法]]
 #### 问题描述
 u 和 v 之间的最短路径可能是
 - 不存在通路，或者 
