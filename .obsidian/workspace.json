@@ -11,8 +11,12 @@
             "id": "f36811998f5fda9f",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -93,6 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -109,6 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -129,7 +135,9 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {}
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md"
+              }
             }
           }
         ]
@@ -143,7 +151,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md"
+              }
             }
           },
           {
@@ -158,7 +168,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 206.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -178,18 +188,19 @@
   },
   "active": "f36811998f5fda9f",
   "lastOpenFiles": [
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-IPv6-datagram-format.png",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-NAT-instance.png",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-NAT.png",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-ISPs-R-Us.png",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-hierarchical-addressing.png",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-DHCP-client-server.png",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-DHCP-interaction.png",
     "1-Theory/4-Architecture/THU-Liu/23-CPU-design.md",
     "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-start.png",
     "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-register-files.png",
     "1-Theory/4-Architecture/THU-Liu/22-Datapath.md",
     "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-pipeline.png",
     "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-multi-cycle-cpu.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-single-cycle-cpu.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-instruction-cycle.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-datapath-6.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-datapath-5.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-datapath-4.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/22-Datapath-datapath-3.png",
     "1-Theory/4-Architecture/RISC-V/80-Vector.md",
     "1-Theory/4-Architecture/RISC-V/70-Compressed-instruction.md",
     "1-Theory/4-Architecture/RISC-V/60-Atomic-instruction.md",
@@ -214,7 +225,6 @@
     "8-SimpRead/Deletion in a Red-Black Tree/Deletion in a Red-Black Tree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/65-Lowest-Common-Ancestor.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
     "1-Theory/4-Architecture/RISC-V/assets",
     "1-Theory/4-Architecture/RISC-V",
     "8-SimpRead/详解 RISC v 中断/assets",

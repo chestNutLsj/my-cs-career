@@ -397,7 +397,7 @@ Note that an IP datagram has a total of 20 bytes of header (assuming no options)
 > - 第三片： $20$ 字节头部 + $1020$ 字节数据（ $1020$ 字节应用数据）
 >     - 偏移量： $2960/8=370$
 
-### 4.3.3 IPv4 编址
+### IPv4 编址
 
 #### 接口
 - 接口：主机/路由器和物理链路的连接处
@@ -445,7 +445,7 @@ A：有线以太网网口链接到以太网络交换机连接
 
 互联网中的路由通过网络号进行一个个子网的计算，以网络为单位进行传输，而非具体到单个主机。
 
-#### 因特网地址分配策略
+#### 因特网地址分配策略：CIDR
 IP 编址：CIDR (Classless InterDomain Routing, 无类域间路由)
 - 子网部分可以在任意的位置，按需划分
 - 地址格式：a.b.c.d/x，其中 x 是地址中子网号的长度（网络号的长度），前 x 位由此称为该地址的前缀，通常一个组织被分配一块连续的地址——具有相同前缀的一段地址
@@ -463,6 +463,13 @@ CIDR 采用前，IP 地址的网络部分限定长度为 8、16、24 字节—�
 - Under classful addressing, an organization with, say, 2,000 hosts was typically allocated a class B (/16) subnet address. This ==led to a rapid depletion of the class B address space and poor utilization of the assigned address space==. 
 	- For example, the organization that used a class B address for its 2,000 hosts was allocated enough of the address space for up to 65,534 interfaces—leaving more than 63,000 addresses that could not be used by other organizations.
 
+#### 层次编址
+This example of an ISP that connects eight organizations to the Internet nicely illustrates how carefully allocated CIDRized addresses facilitate routing. Suppose, as shown in Figure 4.21, that the ISP (which we’ll call Fly-By-Night-ISP) advertises to the outside world that it should be sent any datagrams whose first 20 address bits match 200.23.16.0/20. The rest of the world need not know that within the address block 200.23.16.0/20 there are in fact eight other organizations, each with its own subnets. This ability to use a single prefix to advertise multiple networks is often referred to as address aggregation (also route aggregation or route summarization). 
+![[40-Network-layer-Data-plane-hierarchical-addressing.png]]
+
+Address aggregation works extremely well when addresses are allocated in blocks to ISPs and then from ISPs to client organizations. But what happens when addresses are not allocated in such a hierarchical manner? What would happen, for example, if Fly-By-Night-ISP acquires ISPs-R-Us and then has Organization 1 connect to the Internet through its subsidiary ISPs-R-Us? As shown in Figure 4.21, the subsidiary ISPs-R-Us owns the address block 199.31.0.0/16, but Organization 1’s IP addresses are unfortunately outside of this address block. What should be done here? Certainly, Organization 1 could renumber all of its routers and hosts to have addresses within the ISPs-R-Us address block. But this is a costly solution, and Organization 1 might well be reassigned to another subsidiary in the future. The solution typically adopted is for Organization 1 to keep its IP addresses in 200.23.18.0/23. In this case, as shown in Figure 4.22, Fly-By-Night-ISP continues to advertise the address block 200.23.16.0/20 and ISPs-R-Us continues to advertise 199.31.0.0/16. However, ISPs-R-Us now also advertises the block of addresses for Organization 1, 200.23.18.0/23. When other routers in the larger Internet see the address blocks 200.23.16.0/20 (from Fly-By-Night-ISP) and 200.23.18.0/23 (from ISPsR-Us) and want to route to an address in the block 200.23.18.0/23, they will use longest prefix matching (see Section 4.2.1), and route toward ISPs-R-Us, as it advertises the longest (i.e., most-specific) address prefix that matches the destination address.
+
+![[40-Network-layer-Data-plane-ISPs-R-Us.png]]
 #### IP 地址分类
 ![[40-Network-layer-Data-plane-ip-address-classify.png]]
 - Class A：126 networks ( $2^7-2$ , 0.0.0.0 and 1.1.1.1 not available), 16 million hosts ( $2^{24}-2$ , 0.0.0.0 and 1.1.1.1 not available)
@@ -473,7 +480,6 @@ CIDR 采用前，IP 地址的网络部分限定长度为 8、16、24 字节—�
 
 *注：A、B、C类称为 单播地址 （发送给单个），D类称为 主播地址 （发送给特定的组的所有人）*
 
-
 ![[40-Network-layer-Data-plane-special-ip.png]]
 特殊 IP 地址的约定
 - 一些约定：
@@ -481,7 +487,6 @@ CIDR 采用前，IP 地址的网络部分限定长度为 8、16、24 字节—�
     - 主机部分：全为0---本主机
     - 主机部分：全为1---广播地址，这个网络的所有主机
 - 特殊IP地址
-
 
 
 内网（专用）IP地址
@@ -494,7 +499,7 @@ CIDR 采用前，IP 地址的网络部分限定长度为 8、16、24 字节—�
     - Class B 172.16.0.0-172.31.255.255  MASK 255.255.0.0
     - Class C 192.168.0.0-192.168.255.255 MASK 255.255.255.0
 
-
+#### 子网掩码与转发表
 子网掩码(subnet mask)
 - 32bits , 0 or 1 in each bit
     - 1：bit位置表示子网部分
@@ -510,95 +515,115 @@ CIDR 采用前，IP 地址的网络部分限定长度为 8、16、24 字节—�
 
 转发表和转发算法
 
-|Destination Subnet Num |Mask |Next hop |Interface|
-|:---:|:---:|:---:|:---:|
-|202.38.73.0 |255.255.255.192 |IPx |Lan1 |
-|202.38.64.0 |255.255.255.192 |IPy |Lan2 |
-|...|...|...|...|
-|Default |- |IPz |Lan0 |
+| Destination Subnet Num |      Mask       | Next hop | Interface |
+|:----------------------:|:---------------:|:--------:|:---------:|
+|      202.38.73.0       | 255.255.255.192 |   IPx    |   Lan1    |
+|      202.38.64.0       | 255.255.255.192 |   IPy    |   Lan2    |
+|          ...           |       ...       |   ...    |    ...    |
+|        Default         |        -        |   IPz    |   Lan0    |
 - 获得IP数据报的目标地址
 - 对于转发表中的每一个表项
 - 如 (IP Des addr) & (mask)== destination，则按照表项对应的接口转发该数据报
 - 如果都没有找到，则使用默认表项，通过默认端口（通常是一个网络的出口路由器所对应的IP）转发数据报
 
-主机如何获得一个IP地址?
-- 系统管理员将地址配置在一个文件中
-    - Wintel: control-panel -> network -> configuration -> tcp/ip -> properties
+#### 主机如何分配、得到一个 IP 地址?
+
+为了获取一块 IP 地址用于一个组织的子网内，网络管理员首先会与 ISP 联系，ISP 从自己能够支配的地址块中再划分给网络管理员。
+
+> [! example] 例：IP 地址划分举例     
+> 
+>ISP地址:200.23.16.0/20 <u>11001000 00010111 0001</u>0000 00000000 
+>组织 0: 200.23.16.0/23 <u>11001000 00010111 0001000</u>0 00000000 
+>组织 1: 200.23.18.0/23 <u>11001000 00010111 0001001</u>0 00000000 
+>组织 2: 200.23.20.0/23 <u>11001000 00010111 0001010</u>0 00000000
+> …… 
+>组织 7: 200.23.30.0/23 <u>11001000 00010111 0001111</u>0 00000000
+>
+>地址 21、22、23 一共 3 位，故可划分处 2^3=8 个子网
+
+>[! note] 全球权威机构：管理 IP 总空间
+>ICANN (Internet Corporation for Assigned Names and Numbers)
+>- 分配地址
+>- 管理 DNS 根服务器
+>- 分配域名，解决冲突
+
+#### 如何获取一个主机的地址？
+
+- 网络管理员将组织得到的 IP 配置在主机的一个文件中
+    - Windows: control-panel -> network -> configuration -> tcp/ip -> properties
     - UNIX: /etc/rc.config
-- DHCP(Dynamic Host Configuration Protocol)：从服务器中动态获得一个IP地址（以及子网掩码Mask（ 指示地址部分的网络号和主机号）、local name server（DNS服务器的域名和IP地址）、default getaway（第一跳路由器的IP地址（默认网关）））
-    - “plug-and-play”，自动配置，接上即用；且只用在用户上网时分配IP地址，其余时间该IP可以被其他上网用户使用，提高效率
 
-DHCP(Dynamic Host Configuration Protocol, 动态主机配置协议)
-- 目标：允许主机在加入网络的时候，动态地从服务器那里获得IP地址：
-    - 可以更新对主机在用IP地址的租用期——租期快到了
-    - 重新启动时，允许重新使用以前用过的IP地址
-    - 支持移动用户加入到该网络（短期在网）
-- DHCP工作概况：
-    - 主机上线时广播“DHCP discover” 报文（可选）（目标IP：255.255.255.255，进行广播）
-    - DHCP服务器用 “DHCP offer”提供报文响应（可选）
-    - 主机请求IP地址：发送 “DHCP request” 报文（这第二次握手是因为可能有多个DHCP服务器，要确认用哪一个）
-    - DHCP服务器发送地址：“DHCP ack” 报文
+- DHCP (Dynamic Host Configuration Protocol)：
+	- 从服务器中动态获得一个 IP 地址
+		- 以及子网掩码 Mask、
+		- local name server（DNS 服务器的域名和 IP 地址）、
+		- default getaway（第一跳路由器的 IP 地址（默认网关））
+	- “plug-and-play”，自动配置，接上即用
+		- 另外，根据网络管理员的配置不同，分配得到的 IP 也不同，既可以是固定的 IP，也可以是临时的 IP
+		- 临时的 IP 会变化，只用在用户上网时分配，其余时间该 IP 可以被其他上网用户使用，提高效率
+	- 目标：允许主机在加入网络的时候，动态地从服务器那里获得 IP 地址及相关配置信息：
+		- 可以更新对主机在用 IP 地址的租用期——租期快到了
+		- 重新启动时，允许重新使用以前用过的 IP 地址
+		- 支持移动用户加入到该网络（短期在网）
+	- DHCP 工作概况：
+		- DHCP 是客户-服务器协议；最简单场合下，每个子网都有一个 DHCP 服务器，若子网没有 DHCP 服务器，则需要一个 DHCP 中继代理（通常是路由器），代理知道用于该网络的 DHCP 服务器地址。如下图：
+		- ![[40-Network-layer-Data-plane-DHCP-client-server.png]]
+		- 主机上线时广播“DHCP discover” 报文（可选）（目标 IP：255.255.255.255，进行广播）
+		- DHCP 服务器用 “DHCP offer”提供报文响应（可选）
+		- 主机请求 IP 地址：发送 “DHCP request” 报文（这第二次握手是因为可能有多个 DHCP 服务器，要确认用哪一个）
+		- DHCP 服务器发送地址：“DHCP ack” 报文
 
-DHCP client-server scenario
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001144822831.png" style="zoom:80%"/>
-
-> DHCP实例：
+> [! example] DHCP 实例：
 > 
-> <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001145225819.png" style="zoom:70%"/>
-> 
-> - 第一次握手
->     - 联网笔记本需要获取自己的IP地址，第一跳路由器地址和DNS服务器:采用DHCP协议
->     - DHCP请求被封装在UDP段中,封装在IP数据报中，封装在以太网的帧中
->     - 以太网帧在局域网范围内广播(dest: FFFFFFFFFFFF)，被运行DHCP服务的路由器收到
->     - 以太网帧解封装成IP，IP解封装成UDP，解封装成DHCP
->     - DHCP服务器生成DHCP ACK,包含客户端的IP地址，第一跳路由器的IP地址和DNS域名服务器的IP地址
->     - DHCP服务器封装的报文所在的帧转发到客户端，在客户端解封装成DHCP报文
->     - 客户端知道它自己的IP地址，DNS服务器的名字和IP地址，第一跳路由器的IP地址
-> - 第二次握手 略
+> ![[40-Network-layer-Data-plane-DHCP-interaction.png]]
+>- ***DHCP server discovery***. The first task of a newly arriving host is to find a DHCP server with which to interact. This is done using a ==DHCP discover message==, which a client sends within a **UDP packet** to port 67. The UDP packet is encapsulated in an IP datagram. But to whom should this datagram be sent? The host doesn’t even know the IP address of the network to which it is attaching, much less the address of a DHCP server for this network. ==Given this, the DHCP client creates an IP datagram containing its DHCP discover message along with the broadcast destination IP address of 255.255.255.255 and a “this host” source IP address of 0.0.0.0==. The DHCP client passes the IP datagram to the link layer, which then broadcasts this frame to all nodes attached to the subnet (we will cover the details of link-layer broadcasting in Section 6.4).
+>
+>- ***DHCP server offer***(s). A DHCP server receiving a DHCP discover message responds to the client with a ==DHCP offer message== that is broadcast to all nodes on the subnet, ==again using the IP broadcast address of 255.255.255.255==. (You might want to think about why this server reply must also be broadcast. 因为它也不知道 DHCP 客户端的 IP 地址). Since several DHCP servers can be present on the subnet, the client may find itself in the enviable position of being able to choose from among several offers. (DHCP 客户端可能会收到多份服务端发来的 DHCP server offer，选取其中最近、最好的服务器即可) 
+>	- Each server offer message contains the ==transaction ID== of the received discover message, the ==proposed IP address== for the client, the ==network mask==, and an ==IP address lease time==—the amount of time for which the IP address will be valid. It is common for the server to set the lease time to several hours or days `[Droms 2002]`. 
+>
+>- ***DHCP request***. The newly arriving client will choose from among one or more server offers and ==respond to its selected offer with a DHCP request message, echoing back the configuration parameters==.
+>
+>- ***DHCP ACK***. The server responds to the DHCP request message with a DHCP ACK message, confirming the requested parameters.
+>
+>Once the client receives the DHCP ACK, the interaction is complete and the client can use the DHCP-allocated IP address for the lease duration. Since a client may want to use its address beyond the lease’s expiration, DHCP also provides a mechanism that allows a client to renew its lease on an IP address.（在 IP 租借期内可以使用，并且通过 DHCP 也可以方便地续约租借IP）
 
-如何获得一个IP地址
-- Q1：如何获得一个网络的子网部分？
-    - A1：从ISP获得地址块中分配一个小地址块
+>[! warning] DHCP 的严重缺陷——移动性差
+>From a mobility aspect, DHCP does have one very significant shortcoming. Since a new IP address is obtained from DHCP each time a node connects to a new subnet, a ==TCP connection to a remote application cannot be maintained as a mobile node moves between subnets==. 
+>
+>In Chapter 7, we will learn how mobile cellular networks allow a host to retain its IP address and ongoing TCP connections as it moves between base stations in a provider’s cellular network. Additional details about DHCP can be found in [Droms 2002] and [dhc 2020]. An open source reference implementation of DHCP is available from the Internet Systems Consortium [ISC 2020].
 
-> 例：     
-> 
-> ISP's block 11001000 00010111 00010000 00000000 200.23.16.0/20       
-> *前20位为网络号，后12位为主机号*        
-> Organization0 11001000 00010111 00010000 00000000 200.23.16.0/23           
-> Organization1 11001000 00010111 00010010 00000000 200.23.18.0/23         
-> Organization2 11001000 00010111 00010100 00000000 200.23.20.0/23          
-> ......       
-> Organization7 11001000 00010111 00011110 00000000 200.23.30.0/23       
+### NAT(Network Address Translation)
 
-- Q2：一个ISP如何获得一个地址块？
-    - A2：ICANN(Internet Corporation for Assigned Names and Numbers)
-        - 分配地址
-        - 管理DNS
-        - 分配域名，解决冲突
-
-层次编址：路由聚集(route aggregation)
-- 层次编址允许路由信息的有效广播
-
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001145630149.png" style="zoom:80%" />
-
-层次编址：特殊路由信息(more specific routes)
-- ISPs-R-Us拥有一个对组织1更加精确的路由
-- 匹配冲突时候，采取的是最长前缀匹配（匹配最精确）
-
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001150738412.png" style="zoom:80%"/>
-
-下面来看内网地址。因为内网地址无法路由到，所以通过NAT技术，出去时共用一个机构的IP地址，回来时再转换为内网地址。
-
-NAT(Network Address Translation)
-
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001150949929.png" />
+由前文所述，IPv4 地址其实远远不够用，划分子网时经常利用率极低。因此出现了网络地址转换技术：分组离开子网时共用一个子网的 IP 地址，到达子网的路由器分界时再转换为内网地址。
+![[40-Network-layer-Data-plane-NAT.png]]
 
 - 动机：本地网络只有一个有效IP地址：
     - 不需要从ISP分配一块地址，可用一个IP地址用于所有的（局域网）设备 —— 省钱
     - 可以在局域网改变设备的地址情况下而无须通知外界
     - 可以改变ISP（地址变化）而不需要改变内部的设备地址
     - 局域网内部的设备没有明确的地址，对外是不可见的 —— 安全
+
+![[40-Network-layer-Data-plane-NAT-instance.png]]
+- The NAT-enabled router, residing in the home, has an interface that is part of the home network on the right of Figure 4.25. Addressing within the home network is exactly as we have seen above—all four interfaces in the home network have the same subnet address of 10.0.0.0/24. The address space 10.0.0.0/8 is one of three portions of the IP address space that is reserved in `[RFC 1918]` for a *private network* or a *realm with private addresses*, such as the home network in Figure 4.25. ***A realm with private addresses refers to a network whose addresses only have meaning to devices within that network***. 
+> NAT-enabled 的路由器端口向子网内有一个子网 IP (10.0.0.1/24)，这个子网 IP 专用于子网内的主机之间分组发送。而对外，该端口又有一个公网 IP (128.119.40.186)
+
+- To see why this is important, consider the fact that there are hundreds of thousands of home networks, many using the same address space, 10.0.0.0/24. Devices within a given home network can send packets to each other using 10.0.0.0/24 addressing. However, packets forwarded beyond the home network into the larger global Internet clearly cannot use these addresses (as either a source or a destination address) because there are hundreds of thousands of networks using this block of addresses. ***That is, the 10.0.0.0/24 addresses can only have meaning within the given home network***. But if private addresses only have meaning within a given network, how is addressing handled when packets are sent to or received from the global Internet, where addresses are necessarily unique? The answer lies in understanding NAT.
+
+采用 NAT 技术，如果客户端需要连接在 NAT 后面的服务器，会出现**NAT 穿透问题**：出去没问题，可以找得到服务器，但是若外面想进来和内网的主机通信确做不到，无法找到通信主机。如客户端需要连接地址为 10.0.0.1 的服务器，但是服务器地址 10.0.0.1 是 LAN 本地地址（客户端不能够使用其作为目标地址），整网只有一个外部可见地址：138.76.29.7 。有以下解决方案：
+- 方案 1：静态配置 NAT：转发进来的对服务器特定端口连接请求
+    - e.g. (123.76.29.7, port 2500) 总是转发到 10.0.0.1 port 25000
+- 方案 2：Universal Plug and Play (UPnP) Internet Gateway Device (IGD) 协议。允许 NATted 主机可以：
+    - 获知网络的公共 IP 地址 (138.76.29.7)
+    - 列举存在的端口映射
+    - 增/删端口映射（在租用时间内）
+    - i.e. 自动化静态 NAT 端口映射配置
+- 方案 3：中继
+    - NAT 后面的服务器建立和中继的连接
+    - 外部的客户端链接到中继
+    - 中继在 2 个连接之间桥接
+
+总之：
 - 实现：NAT路由器必须：
     - 数据包外出：替换源地址和端口号为NAT IP地址和新的端口号，目标IP和端口不变
         - 远端的C/S将会用NAP IP地址，新端口号作为目标地址
@@ -606,45 +631,33 @@ NAT(Network Address Translation)
         - 源IP，端口 vs  NAP IP ，新端口
     - 数据包进入：替换目标IP地址和端口号，采用存储在NAT表中的mapping表项，用（源IP，端口）
 
-    <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001152133538.png" style="zoom:70%"/>
-
 *实际上就是用外网的某个IP代替内网里面的网络号*     
 *出去的时候替换 原来IP 和 端口号*       
 *进来的时候替换 目标IP 和 端口号*       
 
-- 16-bit端口字段：
-    - 6万多个同时连接，一个局域网！
-- 对NAT是有争议的：
-    - 路由器只应该对第3层做信息处理，而这里对端口号（4层）作了处理
-    - 违反了end-to-end 原则
-        - 端到端原则：复杂性放到网络边缘
-            - 无需借助中转和变换，就可以直接传送到目标主机
-        - NAT可能要被一些应用设计者考虑, eg, P2P applications
-        - 外网的机器无法主动连接到内网的机器上
-    - 地址短缺问题可以被IPv6 解决
+> ![[40-Network-layer-Data-plane-NAT-instance.png]]
+> Consider the example in Figure 4.25. Suppose a user sitting in a home network behind host 10.0.0.1 requests a Web page on some Web server (port 80) with IP address 128.119.40.186. 
+> 
+> The host 10.0.0.1 assigns the (arbitrary) source port number 3345 and sends the datagram into the LAN. The NAT router receives the datagram, generates a new source port number 5001 for the datagram, replaces the source IP address with its WAN-side IP address 138.76.29.7, and replaces the original source port number 3345 with the new source port number 5001. When generating a new source port number, the NAT router can select any source port number that is not currently in the NAT translation table. (Note that because a port number field is 16 bits long, the NAT protocol can support over 60,000 simultaneous connections with a single WAN-side IP address for the router!) NAT in the router also adds an entry to its NAT translation table. The Web server, blissfully unaware that the arriving datagram containing the HTTP request has been manipulated by the NAT router, responds with a datagram whose destination address is the IP address of the NAT router, and whose destination port number is 5001. When this datagram arrives at the NAT router, the router indexes the NAT translation table using the destination IP address and destination port number to obtain the appropriate IP address (10.0.0.1) and destination port number (3345) for the browser in the home network. The router then rewrites the datagram’s destination address and destination port number, and forwards the datagram into the home network.
 
-同时，采用NAT技术，如果客户端需要连接在NAT后面的服务器，会出现NAT穿透问题：出去没问题，可以找得到服务器，但是若外面想进来和内网的主机通信确做不到，无法找到通信主机。如客户端需要连接地址为10.0.0.1的服务器，但是服务器地址10.0.0.1是LAN本地地址（客户端不能够使用其作为目标地址），整网只有一个外部可见地址：138.76.29.7       
-有以下解决方案：
-- 方案1：静态配置NAT：转发进来的对服务器特定端口连接请求
-    - e.g. (123.76.29.7, port 2500) 总是转发到10.0.0.1 port 25000
-- 方案2：Universal Plug and Play (UPnP)Internet Gateway Device (IGD) 协议。允许NATted主机可以：
-    - 获知网络的公共IP地址(138.76.29.7)
-    - 列举存在的端口映射
-    - 增/删端口映射（在租用时间内）
-    - i.e. 自动化静态NAT端口映射配置
+>[! note] NAT 的弊端，或者说，争议
+>- 路由器只应该对第 3 层做信息处理，而这里对端口号（4 层）作了处理
+>- 违反了 end-to-end 原则
+>	- 端到端原则：复杂性放到网络边缘
+>	- 无需借助中转和变换，就可以直接传送到目标主机
+>	- NAT 可能要被一些应用设计者考虑, eg, P2P applications
+>- 外网的机器无法主动连接到内网的机器上
+>
+>==IPv6 势在必行！NAT 不过是饮鸩止渴==。
 
-    <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001152723380.png" />
+>[! note] NAT 情况下家庭主机和路由器如何获取其 IP 地址？
+>Often, the answer is the same—***DHCP***!
+>
+>The router gets its address from the ISP’s DHCP server, and the router runs a DHCP server to provide addresses to computers within the NAT-DHCP-router-controlled home network’s address space.
 
-- 方案3：中继(used in Skype)
-    - NAT后面的服务器建立和中继的连接
-    - 外部的客户端链接到中继
-    - 中继在2个连接之间桥接
+### IPv6
 
-    <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001152732177.png" style="zoom:80%"/>
-
-### 4.3.4 IPv6
-
-动机
+#### 动机
 - 初始动机：32-bit地址空间将会被很快用完
 - 另外的动机：
     - 头部格式改变帮助加速处理和转发
@@ -653,7 +666,8 @@ NAT(Network Address Translation)
         - 分片
     - 头部格式改变帮助QoS 
 
-IPv6数据报格式：
+#### IPv6数据报格式
+![[40-Network-layer-Data-plane-IPv6-datagram-format.png]]
 - 固定的40字节头部
 - 数据报传输过程中，不允许分片，而是路由器返回一个错误报告告诉源主机分组太大了，需要源主机将分组变小一点
 
@@ -671,7 +685,7 @@ IPv6头部(Cont)
 - 附加了报文类型，e.g. “Packet Too Big”（IPv6无法切片）
 - 多播组管理功能
 
-从IPv4到IPv6的平移（过渡）
+#### 从 IPv4到 IPv6的迁移
 - 不是所有的路由器都能够同时升级的
 - 没有一个标记日 “flag days”，在那一天全部宕机升级
 - 在IPv4和IPv6路由器混合时，网络如何运转？
@@ -685,13 +699,7 @@ IPv6头部(Cont)
 <br>
 <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001153521591.png" width=400/>
 
-IPv6：应用
-- Google估计：8%的客户通过IPv6访问谷歌服务
-- NIST估计：全美国1/3的政府域支持IPv6 
-- 估计还需要很长时间进行部署 
-    - 20年以上！
-    - 看看过去20年来应用层面的变化：WWW, Facebook, streaming media, Skype, … 
-    - 为什么？
+[IPv6中国发展史 —— 温竣岩](https://www.bilibili.com/video/BV1i14y157YV/?spm_id_from=333.999.0.0&vd_source=77e5fb53d88adf1084faadbdb466558d)
 
 ## 4.4 通用转发和SDN
 
