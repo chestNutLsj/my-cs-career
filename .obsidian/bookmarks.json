@@ -328,6 +328,20 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
               "subpath": "#对数密度的整数集排序",
               "title": "对数密度的整数集排序（基数排序思想）"
+            },
+            {
+              "type": "file",
+              "ctime": 1698646641237,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-9 BFS 在 O (n+e)内找到直径（无向图中最长通路）",
+              "title": "BFS 如何在 O (n+e)内找到直径？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698647335337,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-22 旅行商问题：找出哈密尔顿环路",
+              "title": "旅行商问题：找出哈密尔顿环路"
             }
           ],
           "title": "算法问题"
@@ -1101,13 +1115,6 @@
             },
             {
               "type": "file",
-              "ctime": 1698568601731,
-              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
-              "subpath": "#正确性",
-              "title": "Prim算法局限性：重复边时未必正确"
-            },
-            {
-              "type": "file",
               "ctime": 1698568672380,
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
               "subpath": "#Kruskal 算法：",
@@ -1115,10 +1122,52 @@
             },
             {
               "type": "file",
-              "ctime": 1698568821615,
-              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
-              "subpath": "#Floyd-Warshall 算法求 SPT",
-              "title": "Floyd-Warshall 算法求 SPT"
+              "ctime": 1698645781600,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-1 关联矩阵",
+              "title": "有向图、无向图的关联矩阵与邻接矩阵的关系"
+            },
+            {
+              "type": "file",
+              "ctime": 1698646991033,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-16 Prim 算法通过扰动消除由重复边引起的歧义",
+              "title": "Prim 算法通过扰动消除由重复边引起的歧义"
+            },
+            {
+              "type": "file",
+              "ctime": 1698647350425,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-23 合成数法消除 Prim 和 Dijkstra 算法的歧义性",
+              "title": "合成数法消除 Prim 和 Dijkstra 算法的歧义性"
+            },
+            {
+              "type": "file",
+              "ctime": 1698647435151,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-24 考查负权边和负权环对 Prim 和 Dijkstra 算法的影响",
+              "title": "考查负权边和负权环对 Prim 和 Dijkstra 算法的影响"
+            },
+            {
+              "type": "file",
+              "ctime": 1698647587819,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-27 证明 Prim 算法在多边等权时亦然成立",
+              "title": "证明 Prim 算法在多边等权时亦然成立"
+            },
+            {
+              "type": "file",
+              "ctime": 1698647681850,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-29 说明最坏情况的 Kruskal 算法",
+              "title": "最坏情况的 Kruskal 算法"
+            },
+            {
+              "type": "file",
+              "ctime": 1698647723723,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-31 最短路径树不唯一问题",
+              "title": "最短路径树唯一确定吗？"
             }
           ],
           "title": "知识点细节"
@@ -1293,6 +1342,32 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
               "subpath": "#二分图",
               "title": "二分图"
+            },
+            {
+              "type": "file",
+              "ctime": 1698645738805,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/86-SPT-OIwiki.md",
+              "subpath": "#Floyd-Warshall 算法",
+              "title": "Floyd-Warshall 算法求 SPT"
+            },
+            {
+              "type": "file",
+              "ctime": 1698647754898,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-32 欧式最小支撑树",
+              "title": "欧式最小支撑树"
+            },
+            {
+              "type": "file",
+              "ctime": 1698647782394,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/84-并查集.md",
+              "title": "并查集"
+            },
+            {
+              "type": "file",
+              "ctime": 1698659860058,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/87-Strongly-Connected-Components.md",
+              "title": "强连通分量的求解方法"
             }
           ],
           "title": "拓展延伸"
@@ -1496,6 +1571,41 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/71-Hash-Exercise.md",
               "subpath": "#9-18 散列表实例",
               "title": "单向平方试探为什么会陷入死循环"
+            },
+            {
+              "type": "file",
+              "ctime": 1698646169844,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-3 平面图的边数量",
+              "title": "平面图的边数量为O(n)的证明"
+            },
+            {
+              "type": "file",
+              "ctime": 1698646614820,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-7 BFS 辅助队列的特性",
+              "title": "BFS 辅助队列的特性"
+            },
+            {
+              "type": "file",
+              "ctime": 1698647211262,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-18 通过拓扑排序检查是否是 DAG",
+              "title": "通过拓扑排序检查是否是 DAG"
+            },
+            {
+              "type": "file",
+              "ctime": 1698647271292,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-21 以 PFS 设计 prioUpdater 实现 BFS、DFS",
+              "title": "以 PFS 设计 prioUpdater 实现 BFS、DFS"
+            },
+            {
+              "type": "file",
+              "ctime": 1698647450463,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+              "subpath": "#6-25、26 边权重复时极小支撑树问题",
+              "title": "边权重复时极小支撑树问题"
             }
           ],
           "title": "习题解析好题"

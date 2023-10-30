@@ -345,7 +345,7 @@ IP协议主要实现数据平面的转发功能
 ![[40-Network-layer-Data-plane-IP-datagram-format.png]]
 - ***Version number***. These 4 bits ==specify the IP protocol version of the datagram==. By looking at the version number, the router can determine how to interpret the remainder of the IP datagram. Different versions of IP use different datagram formats. The datagram format for IPv4 is shown in Figure 4.17. The datagram format for the new version of IP (IPv6) is discussed in Section 4.3.4. 
 - ***Header length***. Because an IPv4 datagram can contain a variable number of options (which are included in the IPv4 datagram header), these 4 bits are needed to ==determine where in the IP datagram the payload== (for example, the transport-layer segment being encapsulated in this datagram) ==actually begins==. Most IP datagrams do not contain options, so the typical IP datagram has a 20-byte header.
-- ***Type of service***. The type of service (TOS) bits were included in the IPv4 header to ==allow different types of IP datagrams to be distinguished from each other==. For example, it might be useful to distinguish real-time datagrams (such as those used by an IP telephony application) from non-real-time traffic (e.g., FTP). The specific level of service to be provided is a policy issue determined and configured by the network administrator for that router. We also learned in Section 3.7.2 that ==two of the TOS bits are used for Explicit Congestion Notification==.
+- ***Type of service***. The type of service (TOS) bits were included in the IPv4 header to ==allow different types of IP datagrams to be distinguished from each other==. For example, it might be useful to distinguish real-time datagrams (such as those used by an IP telephony application) from non-real-time traffic (e.g., FTP). The specific level of service to be provided is a policy issue determined and configured by the network administrator for that router. We also learned in Section 3.7.2 that ==two of the TOS bits are used for Explicit Congestion Notification==. ^84039d
 - ***Datagram length***. This is the ==total length of the IP datagram (header plus data)==, measured in bytes. Since this field is 16 bits long, the theoretical maximum size of the IP datagram is 65,535 bytes. However, datagrams are rarely larger than 1,500 bytes, which allows an IP datagram to fit in the payload field of a maximally sized Ethernet frame.（数据报实际很少超过 1500 字节，这与以太网帧的长度有关）
 - ***Identifier, flags, fragmentation offset***. These three fields have to do with so-called ==IP fragmentation==, when a large IP datagram is broken into several smaller IP datagrams which are then forwarded independently to the destination, where they are reassembled before their payload data is passed up to the transport layer at the destination host. Interestingly, the new version of IP, ==IPv6, does not allow for fragmentation==. We’ll not cover fragmentation here; but readers can find a detailed discussion online, among the “retired” material from earlier versions of this book.
 - ***Time-to-live***. The time-to-live (TTL) field is included to ==ensure that datagrams do not circulate forever== (due to, for example, a long-lived routing loop) in the network. This field is decremented by one each time the datagram is processed by a router. If the TTL field reaches 0, a router must drop that datagram.
@@ -591,7 +591,7 @@ Address aggregation works extremely well when addresses are allocated in blocks 
 >[! warning] DHCP 的严重缺陷——移动性差
 >From a mobility aspect, DHCP does have one very significant shortcoming. Since a new IP address is obtained from DHCP each time a node connects to a new subnet, a ==TCP connection to a remote application cannot be maintained as a mobile node moves between subnets==. 
 >
->In Chapter 7, we will learn how mobile cellular networks allow a host to retain its IP address and ongoing TCP connections as it moves between base stations in a provider’s cellular network. Additional details about DHCP can be found in [Droms 2002] and [dhc 2020]. An open source reference implementation of DHCP is available from the Internet Systems Consortium [ISC 2020].
+>In Chapter 7, we will learn how mobile cellular networks allow a host to retain its IP address and ongoing TCP connections as it moves between base stations in a provider’s cellular network. Additional details about DHCP can be found in [Droms 2002] and [dhc 2020]. An open source reference implementation of DHCP is available from the Internet Systems Consortium [ISC 2020].
 
 ### NAT(Network Address Translation)
 
@@ -635,10 +635,13 @@ Address aggregation works extremely well when addresses are allocated in blocks 
 *出去的时候替换 原来IP 和 端口号*       
 *进来的时候替换 目标IP 和 端口号*       
 
+> [! example] NAT 进行 IP、端口号替换的例子
 > ![[40-Network-layer-Data-plane-NAT-instance.png]]
 > Consider the example in Figure 4.25. Suppose a user sitting in a home network behind host 10.0.0.1 requests a Web page on some Web server (port 80) with IP address 128.119.40.186. 
 > 
-> The host 10.0.0.1 assigns the (arbitrary) source port number 3345 and sends the datagram into the LAN. The NAT router receives the datagram, generates a new source port number 5001 for the datagram, replaces the source IP address with its WAN-side IP address 138.76.29.7, and replaces the original source port number 3345 with the new source port number 5001. When generating a new source port number, the NAT router can select any source port number that is not currently in the NAT translation table. (Note that because a port number field is 16 bits long, the NAT protocol can support over 60,000 simultaneous connections with a single WAN-side IP address for the router!) NAT in the router also adds an entry to its NAT translation table. The Web server, blissfully unaware that the arriving datagram containing the HTTP request has been manipulated by the NAT router, responds with a datagram whose destination address is the IP address of the NAT router, and whose destination port number is 5001. When this datagram arrives at the NAT router, the router indexes the NAT translation table using the destination IP address and destination port number to obtain the appropriate IP address (10.0.0.1) and destination port number (3345) for the browser in the home network. The router then rewrites the datagram’s destination address and destination port number, and forwards the datagram into the home network.
+> 1. The host 10.0.0.1 assigns the (arbitrary) source port number 3345 and sends the datagram into the LAN. The NAT router receives the datagram, generates a new source port number 5001 for the datagram, replaces the source IP address with its WAN-side IP address 138.76.29.7, and replaces the original source port number 3345 with the new source port number 5001. When generating a new source port number, the NAT router can select any source port number that is not currently in the NAT translation table. (*Note that because a port number field is 16 bits long, the NAT protocol can support over 2^16=65,536 simultaneous connections with a single WAN-side IP address for the router!*) NAT in the router also adds an entry to its NAT translation table.
+> 
+>2. The Web server, blissfully unaware that the arriving datagram containing the HTTP request has been manipulated by the NAT router, ==responds with a datagram whose destination address is the IP address of the NAT router, and whose destination port number is 5001==. When this datagram arrives at the NAT router, the router indexes the NAT translation table using the destination IP address and destination port number to obtain the appropriate IP address (10.0.0.1) and destination port number (3345) for the browser in the home network. The router then rewrites the datagram’s destination address and destination port number, and forwards the datagram into the home network.
 
 >[! note] NAT 的弊端，或者说，争议
 >- 路由器只应该对第 3 层做信息处理，而这里对端口号（4 层）作了处理
@@ -668,42 +671,69 @@ Address aggregation works extremely well when addresses are allocated in blocks 
 
 #### IPv6数据报格式
 ![[40-Network-layer-Data-plane-IPv6-datagram-format.png]]
-- 固定的40字节头部
-- 数据报传输过程中，不允许分片，而是路由器返回一个错误报告告诉源主机分组太大了，需要源主机将分组变小一点
+IPv6 新增的格式变化：
+- ***Expanded addressing capabilities***. IPv6 increases the size of the ==IP address from 32 to 128 bits==. This ensures that the world won’t run out of IP addresses.  In addition to unicast and multicast addresses, IPv6 has introduced a new type of address, called an ==anycast address==, that allows a datagram to be delivered to any one of a group of hosts. (This feature could be used, for example, to send an HTTP GET to the nearest of a number of mirror sites that contain a given document.) 
+> IPv6 最直接的改动就是 IP 地址从 32 位增长到 128 位。其次除了单播和多播外，还引入了任播地址 anycast address，它允许将数据报交付给一组主机中的任何一个，比如用在向镜像网站发送 GET 请求时。
 
-IPv6头部(Cont)
-- Priority：标示流中数据报的优先级
-- Flow Label：标示数据报在一个“flow.” （“flow”的概念没有被严格的定义）
-- Next header标示上层协议
+- ***A streamlined 40-byte header***. The resulting ==40-byte fixed-length header== allows for faster processing of the IP datagram by a router. A new encoding of options allows for more flexible options processing.
+> IPv6 首部长度为定长 40 字节，其中源地址和目的地址各占 16 字节。删减了很多 IPv4 中不必要的标记，请看下文。
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001153026504.png" style="zoom:60%" />
+- ***Flow labeling***. IPv6 has an elusive definition of a flow. RFC 2460 states that this allows “==labeling of packets belonging to particular flows for which the sender requests special handling, such as a non-default quality of service or real-time service==.” For example, audio and video transmission might likely be treated as a flow. On the other hand, the more traditional applications, such as file transfer and e-mail, might not be treated as flows. It is possible that the traffic carried by a high-priority user (for example, someone paying for better service for their traffic) might also be treated as a flow. What is clear, however, is that the designers of IPv6 foresaw the eventual need to be able to differentiate among the flows, even if the exact meaning of a flow had yet to be determined.
+> 所谓流，就是指用于特殊服务的流量，如需要实时服务的流量、或者高优先级用户的流量，而传统的服务一般不是流。这个定义还很模糊。
 
-和IPv4的其它变化
-- Checksum：被移除掉，降低在每一段中的处理速度
-- Options：允许，但是在头部之外，被 “Next Header” 字段标示
-- ICMPv6：ICMP的新版本
-- 附加了报文类型，e.g. “Packet Too Big”（IPv6无法切片）
-- 多播组管理功能
+IPv6 分组各字段的含义：
+- ***Version***. This 4-bit field identifies the IP version number. Not surprisingly, IPv6 carries a value of 6 in this field. Note that putting a 4 in this field does not create a valid IPv4 datagram. (If it did, life would be a lot simpler—see the discussion below regarding the transition from IPv4 to IPv6.)
+> IPv6 头部的 Version 字段值为 6，表明要用 IPv6 的方式解释分组，仅仅修改 Version 6 为 4 不能得到合法的 IPv4 分组。
+
+- ***Traffic class***. The 8-bit traffic class field, like the TOS ([[#^84039d|type of service]]) field in IPv4, can be used to give priority to certain datagrams within a flow, or it can be used to give priority to datagrams from certain applications (for example, voice-over-IP) over datagrams from other applications (for example, SMTP e-mail).
+> 流量类型用于赋予不同的数据报以特定优先级，完成不同的服务。
+
+- ***Flow label***. As discussed above, this 20-bit field is used to identify a flow of datagrams. 
+> 流标签有 20 位长。
+
+- ***Payload length***. This 16-bit value is treated as an unsigned integer giving the number of bytes in the IPv6 datagram following the fixed-length, 40-byte datagram header.
+> 给出有效载荷数据的长度，以无符号整数解释，理论最长为 2^16=65536 个字节
+
+- ***Next header***. ==This field identifies the protocol to which the contents (data field) of this datagram will be delivered (for example, to TCP or UDP)==. The field uses the same values as the protocol field in the IPv4 header.
+>给出该数据报要交付给传输层的哪一个协议。
+
+- ***Hop limit***. The contents of this field are decremented by one by each router that forwards the datagram. If the hop limit count reaches zero, a router must discard that datagram.
+> 每一跳就减一，值为 0 时丢弃数据报，防止在链路中过长时间存在。
+
+- ***Source and destination addresses***. The various formats of the IPv6 128-bit address are described in RFC 4291. 
+- ***Data***. This is the payload portion of the IPv6 datagram. When the datagram reaches its destination, the payload will be removed from the IP datagram and passed on to the protocol specified in the next header field.
+
+相比较 IPv4，IPv6 中少了如下几个字段：
+- ***Fragmentation/reassembly***. IPv6 does not allow for fragmentation and reassembly at intermediate routers; these operations can be performed only by the source and destination. ==If an IPv6 datagram received by a router is too large to be forwarded over the outgoing link, the router simply drops the datagram and sends a “Packet Too Big” ICMP error message (see Section 5.6) back to the sender==. The sender can then resend the data, using a smaller IP datagram size. Fragmentation and reassembly is a time-consuming operation; removing this functionality from the routers and placing it squarely in the end systems considerably speeds up IP forwarding within the network. 
+> IPv6 不允许分组和重整，如果 IPv6 的数据报被接收路由器认为过长，就会将其丢弃并回送一个分组过长的 ICMP 错误信息给发送方。
+> 
+> 分组和重整是一件耗时很长的操作，IPv6 将这项任务交给端系统去做，而不是浪费路由器的关键时间。
+
+- ***Header checksum***. Because the transport-layer (for example, TCP and UDP) and link-layer (for example, Ethernet) protocols in the Internet layers perform checksumming, the designers of IP probably felt that this functionality was sufficiently redundant in the network layer that it could be removed. Once again, fast processing of IP packets was a central concern. Recall from our discussion of IPv4 in Section 4.3.1 that since the IPv4 header contains a TTL field (similar to the hop limit field in IPv6), the IPv4 header checksum needed to be recomputed at every router. As with fragmentation and reassembly, this too was a costly operation in IPv4.
+> 头部校验和也被舍弃，这是考虑到链路层和传输层都提供了足够有效的冗余措施用以检错。并且由于 IPv4 中 TTL 在每一跳的自减，都会导致重新计算校验和并写回，这极大地增加了路由器的处理时间。
+
+- ***Options***. An options field is no longer a part of the standard IP header. However, it has not gone away. ==Instead, the options field is one of the possible next headers pointed to from within the IPv6 header==. That is, just as TCP or UDP protocol headers can be the next header within an IP packet, so too can an options field. The removal of the options field results in a fixed-length, 40-byte IP header.
+> 选项字段并非消失，而是作为 next header 字段的指示目标存在，就像 TCP 或 UDP 可以作为 next header 的指示目标一样。
 
 #### 从 IPv4到 IPv6的迁移
-- 不是所有的路由器都能够同时升级的
-- 没有一个标记日 “flag days”，在那一天全部宕机升级
-- 在IPv4和IPv6路由器混合时，网络如何运转？
-- 隧道：在IPv4路由器之间传输的IPv4数据报中携带IPv6数据报
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001153350960.png" />
-
-隧道(Tunneling)
-
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001153500951.png" width=400/>      
-<br>
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001153521591.png" width=400/>
+- IPv6 是后向兼容的，能够处理 IPv4 的数据报，但 IPv4 不能处理 IPv6 的数据报
+- 不是所有的路由器都能够同时升级的，设置一个标记日 “flag days”，在那一天全部宕机升级，这不现实
+- 在 IPv4和 IPv6路由器混合时，网络如何运转？——建隧道！
+	- 隧道：在 IPv4 路由器之间传输的 IPv4 数据报中携带 IPv6 数据报
+	- ![[40-Network-layer-Data-plane-tunneling.png]]
+	- Suppose two IPv6 nodes (in this example, B and E in Figure 4.27) want to interoperate using IPv6 datagrams but are connected to each other by intervening IPv4 routers. We refer to ==the intervening set of IPv4 routers between two IPv6 routers as a **tunnel**==, as illustrated in Figure 4.27. 
+	- With tunneling, the IPv6 node on the sending side of the tunnel (in this example, B) ==takes the entire IPv6 datagram and puts it in the data (payload) field of an IPv4 datagram==. This IPv4 datagram is then addressed to the IPv6 node on the receiving side of the tunnel (in this example, E) and sent to the first node in the tunnel (in this example, C). 
+	- The intervening IPv4 routers in the tunnel route this IPv4 datagram among themselves, just as they would any other datagram, ==blissfully unaware that the IPv4 datagram itself contains a complete IPv6 datagram==. 
+	- The IPv6 node on the receiving side of the tunnel eventually receives the IPv4 datagram (it is the destination of the IPv4 datagram!), determines that the IPv4 datagram contains an IPv6 datagram (by observing that the protocol number field in the IPv4 datagram is 41 `[RFC 4213]`, indicating that the IPv4 payload is a IPv6 datagram), extracts the IPv6 datagram, and then routes the IPv6 datagram exactly as it would if it had received the IPv6 datagram from a directly connected IPv6 neighbor.
 
 [IPv6中国发展史 —— 温竣岩](https://www.bilibili.com/video/BV1i14y157YV/?spm_id_from=333.999.0.0&vd_source=77e5fb53d88adf1084faadbdb466558d)
 
 ## 4.4 通用转发和SDN
 
-之前介绍的路由大部分都是传统方式，下面来看通用转发和SDN的方式。
+之前介绍的路由大部分都是传统方式，下面来看**通用转发**和**SDN的方式**。
+
+### 传统路由的弊端
 
 传统方式：1. 每台设备上既实现控制功能，又实现数据平面 2. 控制功能分布式实现 3. 路由表-粘连
 - 传统方式的缺陷：
@@ -714,14 +744,20 @@ IPv6头部(Cont)
         - 需要不同的设备去实现不同的网络功能
             - 每台设备集成了控制平面和数据平面的功能
             - 控制平面分布式地实现了各种控制平面功能
-            - 升级和部署网络设备非常困难
-        - 无法改变路由等工作逻辑，设备基本上只能（分布式升级困难）按照固定方式工作，控制逻辑固化，无法实现流量工程等高级特性
+            - **升级和部署网络设备非常困难**
+        - 无法改变路由等工作逻辑，设备基本上只能（分布式升级困难）按照固定方式工作，**控制逻辑固化**，无法实现流量工程等高级特性
         - 配置错误影响全网运行；升级和维护会涉及到全网设备：管理困难
         - 要增加新的网络功能，需要设计、实现以及部署新的特定设备，设备种类繁
 
 考虑到以上缺点，在2005年前后，开始重新思考网络控制平面的处理方式：SDN
 - 集中：远程的控制器集中实现控制逻辑，通过南向接口将流表发送给每个设备中的控制代理
 - 远程：数据平面和控制平面的分离
+### 通用转发
+
+回顾基于目的地的转发：[[#输入端口处理和基于目的地的转发]]
+- 查找目的 IP 地址
+- 然后将分组发送到有特定输出端口的交换结构
+
 
 SDN：逻辑上集中的控制平面
 - 一个不同的（通常是远程）控制器和CA交互，控制器决定分组转发的逻辑（可编程），CA所在设备执行逻辑

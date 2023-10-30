@@ -2,35 +2,35 @@
 
 （还记得这些定义吗？在阅读下列内容之前，请务必了解 [图论相关概念](https://oi-wiki.org/graph/concept/) 中的基础部分。）
 
-*   路径
-*   最短路
-*   有向图中的最短路、无向图中的最短路
-*   单源最短路、每对结点之间的最短路
+* 路径
+* 最短路
+* 有向图中的最短路、无向图中的最短路
+* 单源最短路、每对结点之间的最短路
 
 ## 性质
 
-对于边权为正的图，任意两个结点之间的最短路，不会经过重复的结点。
+- 对于边权为正的图，任意两个结点之间的最短路，不会经过重复的结点。
 
-对于边权为正的图，任意两个结点之间的最短路，不会经过重复的边。
+- 对于边权为正的图，任意两个结点之间的最短路，不会经过重复的边。
 
-对于边权为正的图，任意两个结点之间的最短路，任意一条的结点数不会超过 n，边数不会超过 n-1。
+- 对于边权为正的图，任意两个结点之间的最短路，任意一条的结点数不会超过 n，边数不会超过 n-1。
 
 ## 记号
 
 为了方便叙述，这里先给出下文将会用到的一些记号的含义。
-- n 为图上点的数目，m 为图上边的数目；
-- s 为最短路的源点；
-- D (u) 为 s 点到 u 点的 实际 最短路长度；
-- dis (u) 为 s 点到 u 点的 估计 最短路长度。任何时候都有 $dis (u) \geq D (u)$。特别地，当最短路算法终止时，应有 $dis (u)=D (u)$。
-- w(u,v) 为 (u,v) 这一条边的边权。
+-   $n$ 为图上点的数目，$m$ 为图上边的数目；
+-   $s$ 为最短路的源点；
+-   $D(u)$ 为 $s$ 点到 $u$ 点的 **实际** 最短路长度；
+-   $dis(u)$ 为 $s$ 点到 $u$ 点的 **估计** 最短路长度。任何时候都有 $dis(u) \geq D(u)$。特别地，当最短路算法终止时，应有 $dis(u)=D(u)$。
+-   $w(u,v)$ 为 $(u,v)$ 这一条边的边权。
 
 ## Floyd-Warshall 算法
 
-- 是用来求任意两个结点之间的最短路的。
+是用来求任意两个结点之间的最短路的。
 
-- 复杂度比较高，但是常数小，容易实现（只有三个 `for`）。
+复杂度比较高，但是常数小，容易实现（只有三个 `for`）。
 
-- 适用于任何图，不管有向无向，边权正负，但是最短路必须存在。（不能有负环）
+适用于任何图，不管有向无向，边权正负，但是最短路必须存在。（不能有个负环）
 
 ### 实现
 
@@ -109,31 +109,62 @@ Bellman–Ford 算法是一种基于松弛（relax）操作的最短路算法，
 
 先介绍 Bellman–Ford 算法要用到的松弛操作（Dijkstra 算法也会用到松弛操作）。
 
-对于边 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，松弛操作对应下面的式子：![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)。
+对于边 $(u,v)$，松弛操作对应下面的式子：$dis(v) = \min(dis(v), dis(u) + w(u, v))$。
 
-这么做的含义是显然的：我们尝试用 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)（其中 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的路径取最短路）这条路径去更新 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 点最短路的长度，如果这条路径更优，就进行更新。
+这么做的含义是显然的：我们尝试用 $S \to u \to v$（其中 $S \to u$ 的路径取最短路）这条路径去更新 $v$ 点最短路的长度，如果这条路径更优，就进行更新。
 
 Bellman–Ford 算法所做的，就是不断尝试对图上每一条边进行松弛。我们每进行一轮循环，就对图上所有的边都尝试进行一次松弛操作，当一次循环中没有成功的松弛操作时，算法停止。
 
-每次循环是 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的，那么最多会循环多少次呢？
+每次循环是 $O(m)$ 的，那么最多会循环多少次呢？
 
-在最短路存在的情况下，由于一次松弛操作会使最短路的边数至少 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，而最短路的边数最多为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，因此整个算法最多执行 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 轮松弛操作。故总时间复杂度为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)。
+在最短路存在的情况下，由于一次松弛操作会使最短路的边数至少 $+1$，而最短路的边数最多为 $n-1$，因此整个算法最多执行 $n-1$ 轮松弛操作。故总时间复杂度为 $O(nm)$。
 
-但还有一种情况，如果从 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 点出发，抵达一个负环时，松弛操作会无休止地进行下去。注意到前面的论证中已经说明了，对于最短路存在的图，松弛操作最多只会执行 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 轮，因此如果第 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 轮循环时仍然存在能松弛的边，说明从 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 点出发，能够抵达一个负环。
+但还有一种情况，如果从 $S$ 点出发，抵达一个负环时，松弛操作会无休止地进行下去。注意到前面的论证中已经说明了，对于最短路存在的图，松弛操作最多只会执行 $n-1$ 轮，因此如果第 $n$ 轮循环时仍然存在能松弛的边，说明从 $S$ 点出发，能够抵达一个负环。
 
-负环判断中存在的常见误区
+>[! warning] 负环判断中存在的常见误区
+>需要注意的是，以 $S$ 点为源点跑 Bellman–Ford 算法时，如果没有给出存在负环的结果，只能说明从 $S$ 点出发不能抵达一个负环，而不能说明图上不存在负环。  
+>
+>因此如果需要判断整个图上是否存在负环，最严谨的做法是建立一个超级源点，向图上每个节点连一条权值为 0 的边，然后以超级源点为起点执行 Bellman–Ford 算法。
 
-需要注意的是，以 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 点为源点跑 Bellman–Ford 算法时，如果没有给出存在负环的结果，只能说明从 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 点出发不能抵达一个负环，而不能说明图上不存在负环。
+### 实现
 
-因此如果需要判断整个图上是否存在负环，最严谨的做法是建立一个超级源点，向图上每个节点连一条权值为 0 的边，然后以超级源点为起点执行 Bellman–Ford 算法。
+```cpp
+struct edge {
+  int v, w;
+};
 
-### 实现[](#实现_1 "Permanent link")
+vector<edge> e[maxn];
+int dis[maxn];
+const int inf = 0x3f3f3f3f;
 
-参考实现
+bool bellmanford(int n, int s) {
+  memset(dis, 63, sizeof(dis));
+  dis[s] = 0;
+  bool flag;  // 判断一轮循环过程中是否发生松弛操作
+  for (int i = 1; i <= n; i++) {
+    flag = false;
+    for (int u = 1; u <= n; u++) {
+      if (dis[u] == inf) continue;
+      // 无穷大与常数加减仍然为无穷大
+      // 因此最短路长度为 inf 的点引出的边不可能发生松弛操作
+      for (auto ed : e[u]) {
+        int v = ed.v, w = ed.w;
+        if (dis[v] > dis[u] + w) {
+          dis[v] = dis[u] + w;
+          flag = true;
+        }
+      }
+    }
+    // 没有可以松弛的边时就停止算法
+    if (!flag) break;
+  }
+  // 第 n 轮循环仍然可以松弛时说明 s 点可以抵达一个负环
+  return flag;
+}
 
-C++Python
+```
 
-### 队列优化：SPFA[](#队列优化spfa "Permanent link")
+### 队列优化：SPFA
 
 即 Shortest Path Faster Algorithm。
 
@@ -143,81 +174,109 @@ C++Python
 
 那么我们用队列来维护「哪些结点可能会引起松弛操作」，就能只访问必要的边了。
 
-SPFA 也可以用于判断 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 点是否能抵达一个负环，只需记录最短路经过了多少条边，当经过了至少 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 条边时，说明 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 点可以抵达一个负环。
+SPFA 也可以用于判断 $s$ 点是否能抵达一个负环，只需记录最短路经过了多少条边，当经过了至少 $n$ 条边时，说明 $s$ 点可以抵达一个负环。
 
-实现
+```cpp
+struct edge {
+  int v, w;
+};
 
-C++Python
+vector<edge> e[maxn];
+int dis[maxn], cnt[maxn], vis[maxn];
+queue<int> q;
 
-虽然在大多数情况下 SPFA 跑得很快，但其最坏情况下的时间复杂度为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，将其卡到这个复杂度也是不难的，所以考试时要谨慎使用（在没有负权边时最好使用 Dijkstra 算法，在有负权边且题目中的图没有特殊性质时，若 SPFA 是标算的一部分，题目不应当给出 Bellman–Ford 算法无法通过的数据范围）。
+bool spfa(int n, int s) {
+  memset(dis, 63, sizeof(dis));
+  dis[s] = 0, vis[s] = 1;
+  q.push(s);
+  while (!q.empty()) {
+    int u = q.front();
+    q.pop(), vis[u] = 0;
+    for (auto ed : e[u]) {
+      int v = ed.v, w = ed.w;
+      if (dis[v] > dis[u] + w) {
+        dis[v] = dis[u] + w;
+        cnt[v] = cnt[u] + 1;  // 记录最短路经过的边数
+        if (cnt[v] >= n) return false;
+        // 在不经过负环的情况下，最短路至多经过 n - 1 条边
+        // 因此如果经过了多于 n 条边，一定说明经过了负环
+        if (!vis[v]) q.push(v), vis[v] = 1;
+      }
+    }
+  }
+  return true;
+}
 
-Bellman–Ford 的其他优化
+```
 
-除了队列优化（SPFA）之外，Bellman–Ford 还有其他形式的优化，这些优化在部分图上效果明显，但在某些特殊图上，最坏复杂度可能达到指数级。
+虽然在大多数情况下 SPFA 跑得很快，但其最坏情况下的时间复杂度为 $O(nm)$，将其卡到这个复杂度也是不难的，所以考试时要谨慎使用（在没有负权边时最好使用 Dijkstra 算法，在有负权边且题目中的图没有特殊性质时，若 SPFA 是标算的一部分，题目不应当给出 Bellman–Ford 算法无法通过的数据范围）。
 
-*   堆优化：将队列换成堆，与 Dijkstra 的区别是允许一个点多次入队。在有负权边的图可能被卡成指数级复杂度。
-*   栈优化：将队列换成栈（即将原来的 BFS 过程变成 DFS），在寻找负环时可能具有更高效率，但最坏时间复杂度仍然为指数级。
-*   LLL 优化：将普通队列换成双端队列，每次将入队结点距离和队内距离平均值比较，如果更大则插入至队尾，否则插入队首。
-*   SLF 优化：将普通队列换成双端队列，每次将入队结点距离和队首比较，如果更大则插入至队尾，否则插入队首。
-*   D´Esopo–Pape 算法：将普通队列换成双端队列，如果一个节点之前没有入队，则将其插入队尾，否则插入队首。
+>[! note] Bellman–Ford 的其他优化
+>除了队列优化（SPFA）之外，Bellman–Ford 还有其他形式的优化，这些优化在部分图上效果明显，但在某些特殊图上，最坏复杂度可能达到指数级。
+>- 堆优化：将队列换成堆，与 Dijkstra 的区别是允许一个点多次入队。在有负权边的图可能被卡成指数级复杂度。
+>- 栈优化：将队列换成栈（即将原来的 BFS 过程变成 DFS），在寻找负环时可能具有更高效率，但最坏时间复杂度仍然为指数级。
+>- LLL 优化：将普通队列换成双端队列，每次将入队结点距离和队内距离平均值比较，如果更大则插入至队尾，否则插入队首。
+>- SLF 优化：将普通队列换成双端队列，每次将入队结点距离和队首比较，如果更大则插入至队尾，否则插入队首。
+>- D´Esopo–Pape 算法：将普通队列换成双端队列，如果一个节点之前没有入队，则将其插入队尾，否则插入队首。
+>
+>更多优化以及针对这些优化的 Hack 方法，可以看 [fstqwq 在知乎上的回答](https://www.zhihu.com/question/292283275/answer/484871888)。
 
-更多优化以及针对这些优化的 Hack 方法，可以看 [fstqwq 在知乎上的回答](https://www.zhihu.com/question/292283275/answer/484871888)。
-
-Dijkstra 算法[](#dijkstra-算法 "Permanent link")
---------------------------------------------
+## Dijkstra 算法
 
 Dijkstra（/ˈdikstrɑ/ 或 /ˈdɛikstrɑ/）算法由荷兰计算机科学家 E. W. Dijkstra 于 1956 年发现，1959 年公开发表。是一种求解 **非负权图** 上单源最短路径的算法。
 
-### 过程[](#过程_1 "Permanent link")
+### 过程
 
-将结点分成两个集合：已确定最短路长度的点集（记为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 集合）的和未确定最短路长度的点集（记为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 集合）。一开始所有的点都属于 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 集合。
+将结点分成两个集合：已确定最短路长度的点集（记为 $S$ 集合）的和未确定最短路长度的点集（记为 $T$ 集合）。一开始所有的点都属于 $T$ 集合。
 
-初始化 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，其他点的 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 均为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)。
+初始化 $dis(s)=0$，其他点的 $dis$ 均为 $+\infty$。
 
 然后重复这些操作：
 
-1.  从 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 集合中，选取一个最短路长度最小的结点，移到 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 集合中。
-2.  对那些刚刚被加入 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 集合的结点的所有出边执行松弛操作。
+1. 从 $T$ 集合中，选取一个最短路长度最小的结点，移到 $S$ 集合中。
+2. 对那些刚刚被加入 $S$ 集合的结点的所有出边执行松弛操作。
 
-直到 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 集合为空，算法结束。
+直到 $T$ 集合为空，算法结束。
 
-### 时间复杂度[](#时间复杂度 "Permanent link")
+### 时间复杂度
 
 有多种方法来维护 1 操作中最短路长度最小的结点，不同的实现导致了 Dijkstra 算法时间复杂度上的差异。
 
-在稀疏图中，![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，使用二叉堆实现的 Dijkstra 算法较 Bellman–Ford 算法具有较大的效率优势；而在稠密图中，![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，这时候使用暴力做法较二叉堆实现更优。
+- 暴力：不使用任何数据结构进行维护，每次 2 操作执行完毕后，直接在 $T$ 集合中暴力寻找最短路长度最小的结点。2 操作总时间复杂度为 $O(m)$，1 操作总时间复杂度为 $O(n^2)$，全过程的时间复杂度为 $O(n^2 + m) = O(n^2)$。
+- 二叉堆：每成功松弛一条边 $(u,v)$，就将 $v$ 插入二叉堆中（如果 $v$ 已经在二叉堆中，直接修改相应元素的权值即可），1 操作直接取堆顶结点即可。共计 $O(m)$ 次二叉堆上的插入（修改）操作，$O(n)$ 次删除堆顶操作，而插入（修改）和删除的时间复杂度均为 $O(\log n)$，时间复杂度为 $O((n+m) \log n) = O(m \log n)$。
+- 优先队列：和二叉堆类似，但使用优先队列时，如果同一个点的最短路被更新多次，因为先前更新时插入的元素不能被删除，也不能被修改，只能留在优先队列中，故优先队列内的元素个数是 $O(m)$ 的，时间复杂度为 $O(m \log m)$。
+- Fibonacci 堆：和前面二者类似，但 Fibonacci 堆插入的时间复杂度为 $O(1)$，故时间复杂度为 $O(n \log n + m)$，时间复杂度最优。但因为 Fibonacci 堆较二叉堆不易实现，效率优势也不够大[^3]，算法竞赛中较少使用。
+- 线段树：和二叉堆原理类似，不过将每次成功松弛后插入二叉堆的操作改为在线段树上执行单点修改，而 1 操作则是线段树上的全局查询最小值。时间复杂度为 $O(m \log n)$。
 
-### 正确性证明[](#正确性证明 "Permanent link")
+在稀疏图中，$m = O(n)$，使用二叉堆实现的 Dijkstra 算法较 Bellman–Ford 算法具有较大的效率优势；而在稠密图中，$m = O(n^2)$，这时候使用暴力做法较二叉堆实现更优。
 
-下面用数学归纳法证明，在 **所有边权值非负** 的前提下，Dijkstra 算法的正确性 [2](#fn:2)。
+### 正确性证明
 
-简单来说，我们要证明的，就是在执行 1 操作时，取出的结点 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 最短路均已经被确定，即满足 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)。
+下面用数学归纳法证明，在 **所有边权值非负** 的前提下，Dijkstra 算法的正确性 [^2]。
 
-初始时 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，假设成立。
+简单来说，我们要证明的，就是在执行 1 操作时，取出的结点 $u$ 最短路均已经被确定，即满足 $D(u) = dis(u)$。
+
+初始时 $S = \varnothing$，假设成立。
 
 接下来用反证法。
 
-设 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 点为算法中第一个在加入 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 集合时不满足 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的点。因为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 点一定满足 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，且它一定是第一个加入 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 集合的点，因此将 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 加入 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 集合前，![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，如果不存在 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 到 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的路径，则 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，与假设矛盾。
+设 $u$ 点为算法中第一个在加入 $S$ 集合时不满足 $D(u) = dis(u)$ 的点。因为 $s$ 点一定满足 $D(u)=dis(u)=0$，且它一定是第一个加入 $S$ 集合的点，因此将 $u$ 加入 $S$ 集合前，$S \neq \varnothing$，如果不存在 $s$ 到 $u$ 的路径，则 $D(u) = dis(u) = +\infty$，与假设矛盾。
 
-于是一定存在路径 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，其中 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 路径上第一个属于 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 集合的点，而 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的前驱结点（显然 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)）。需要注意的是，可能存在 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 或 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的情况，即 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 或 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 可能是空路径。
+于是一定存在路径 $s \to x \to y \to u$，其中 $y$ 为 $s \to u$ 路径上第一个属于 $T$ 集合的点，而 $x$ 为 $y$ 的前驱结点（显然 $x \in S$）。需要注意的是，可能存在 $s = x$ 或 $y = u$ 的情况，即 $s \to x$ 或 $y \to u$ 可能是空路径。
 
-因为在 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 结点之前加入的结点都满足 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，所以在 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 点加入到 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 集合时，有 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，此时边 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 会被松弛，从而可以证明，将 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 加入到 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 时，一定有 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)。
+因为在 $u$ 结点之前加入的结点都满足 $D(u) = dis(u)$，所以在 $x$ 点加入到 $S$ 集合时，有 $D(x) = dis(x)$，此时边 $(x,y)$ 会被松弛，从而可以证明，将 $u$ 加入到 $S$ 时，一定有 $D(y)=dis(y)$。
 
-下面证明 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 成立。在路径 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 中，因为图上所有边边权非负，因此 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)。从而 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)。但是因为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 结点在 1 过程中被取出 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 集合时，![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 结点还没有被取出 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 集合，因此此时有 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，从而得到 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，这与 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的假设矛盾，故假设不成立。
+下面证明 $D(u) = dis(u)$ 成立。在路径 $s \to x \to y \to u$ 中，因为图上所有边边权非负，因此 $D(y) \leq D(u)$。从而 $dis(y) \leq D(y) \leq D(u)\leq dis(u)$。但是因为 $u$ 结点在 1 过程中被取出 $T$ 集合时，$y$ 结点还没有被取出 $T$ 集合，因此此时有 $dis(u)\leq dis(y)$，从而得到 $dis(y) = D(y) = D(u) = dis(u)$，这与 $D(u)\neq dis(u)$ 的假设矛盾，故假设不成立。
 
 因此我们证明了，1 操作每次取出的点，其最短路均已经被确定。命题得证。
 
-注意到证明过程中的关键不等式 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 是在图上所有边边权非负的情况下得出的。当图上存在负权边时，这一不等式不再成立，Dijkstra 算法的正确性将无法得到保证，算法可能会给出错误的结果。
+注意到证明过程中的关键不等式 $D(y) \leq D(u)$ 是在图上所有边边权非负的情况下得出的。当图上存在负权边时，这一不等式不再成立，Dijkstra 算法的正确性将无法得到保证，算法可能会给出错误的结果。
 
-### 实现[](#实现_2 "Permanent link")
+### 实现
 
-这里同时给出 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的暴力做法实现和 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的优先队列做法实现。
+这里同时给出 $O(n^2)$ 的暴力做法实现和 $O(m \log m)$ 的优先队列做法实现。
 
-暴力实现
-
-C++Python
-
-```
+```cpp title:"暴力实现"
 struct edge {
   int v, w;
 };
@@ -241,7 +300,7 @@ void dijkstra(int n, int s) {
 }
 ```
 
-```
+```python title:"暴力实现"
 class Edge:
     def __init(self, v = 0, w = 0):
         self.v = v
@@ -264,11 +323,7 @@ def dijkstra(n, s):
                 dis[v] = dis[u] + w
 ```
 
-优先队列实现
-
-C++Python
-
-```
+```cpp title:"优先队列实现"
 struct edge {
   int v, w;
 };
@@ -303,7 +358,7 @@ void dijkstra(int n, int s) {
 }
 ```
 
-```
+```python title:"优先队列实现"
 def dijkstra(e,s):
   '''
   输入：
@@ -327,44 +382,42 @@ def dijkstra(e,s):
   return dis
 ```
 
-Johnson 全源最短路径算法[](#johnson-全源最短路径算法 "Permanent link")
-------------------------------------------------------
+## Johnson 全源最短路径算法
 
 Johnson 和 Floyd 一样，是一种能求出无负环图上任意两点间最短路径的算法。该算法在 1977 年由 Donald B. Johnson 提出。
 
-任意两点间的最短路可以通过枚举起点，跑 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 次 Bellman–Ford 算法解决，时间复杂度是 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的，也可以直接用 Floyd 算法解决，时间复杂度为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)。
+任意两点间的最短路可以通过枚举起点，跑 $n$ 次 Bellman–Ford 算法解决，时间复杂度是 $O(n^2m)$ 的，也可以直接用 Floyd 算法解决，时间复杂度为 $O(n^3)$。
 
-注意到堆优化的 Dijkstra 算法求单源最短路径的时间复杂度比 Bellman–Ford 更优，如果枚举起点，跑 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 次 Dijkstra 算法，就可以在 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)（取决于 Dijkstra 算法的实现）的时间复杂度内解决本问题，比上述跑 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 次 Bellman–Ford 算法的时间复杂度更优秀，在稀疏图上也比 Floyd 算法的时间复杂度更加优秀。
+注意到堆优化的 Dijkstra 算法求单源最短路径的时间复杂度比 Bellman–Ford 更优，如果枚举起点，跑 $n$ 次 Dijkstra 算法，就可以在 $O(nm\log m)$（取决于 Dijkstra 算法的实现）的时间复杂度内解决本问题，比上述跑 $n$ 次 Bellman–Ford 算法的时间复杂度更优秀，在稀疏图上也比 Floyd 算法的时间复杂度更加优秀。
 
 但 Dijkstra 算法不能正确求解带负权边的最短路，因此我们需要对原图上的边进行预处理，确保所有边的边权均非负。
 
-一种容易想到的方法是给所有边的边权同时加上一个正数 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，从而让所有边的边权均非负。如果新图上起点到终点的最短路经过了 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 条边，则将最短路减去 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 即可得到实际最短路。
+一种容易想到的方法是给所有边的边权同时加上一个正数 $x$，从而让所有边的边权均非负。如果新图上起点到终点的最短路经过了 $k$ 条边，则将最短路减去 $kx$ 即可得到实际最短路。
 
 但这样的方法是错误的。考虑下图：
+![[shortest-path1.svg]]
 
-![](https://oi-wiki.org/graph/images/shortest-path1.svg)
+$1 \to 2$ 的最短路为 $1 \to 5 \to 3 \to 2$，长度为 $−2$。
 
-![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的最短路为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，长度为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)。
+但假如我们把每条边的边权加上 $5$ 呢？
 
-但假如我们把每条边的边权加上 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 呢？
+![[shortest-path2.svg]]
 
-![](https://oi-wiki.org/graph/images/shortest-path2.svg)
-
-新图上 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的最短路为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)，已经不是实际的最短路了。
+新图上 $1 \to 2$ 的最短路为 $1 \to 4 \to 2$，已经不是实际的最短路了。
 
 Johnson 算法则通过另外一种方法来给每条边重新标注边权。
 
-我们新建一个虚拟节点（在这里我们就设它的编号为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)）。从这个点向其他所有点连一条边权为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的边。
+我们新建一个虚拟节点（在这里我们就设它的编号为 $0$）。从这个点向其他所有点连一条边权为 $0$ 的边。
 
-接下来用 Bellman–Ford 算法求出从 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 号点到其他所有点的最短路，记为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)。
+接下来用 Bellman–Ford 算法求出从 $0$ 号点到其他所有点的最短路，记为 $h_i$。
 
-假如存在一条从 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 点到 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 点，边权为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的边，则我们将该边的边权重新设置为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)。
+假如存在一条从 $u$ 点到 $v$ 点，边权为 $w$ 的边，则我们将该边的边权重新设置为 $w+h_u-h_v$。
 
-接下来以每个点为起点，跑 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 轮 Dijkstra 算法即可求出任意两点间的最短路了。
+接下来以每个点为起点，跑 $n$ 轮 Dijkstra 算法即可求出任意两点间的最短路了。
 
-一开始的 Bellman–Ford 算法并不是时间上的瓶颈，若使用 `priority_queue` 实现 Dijkstra 算法，该算法的时间复杂度是 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)。
+一开始的 Bellman–Ford 算法并不是时间上的瓶颈，若使用 `priority_queue` 实现 Dijkstra 算法，该算法的时间复杂度是 $O(nm\log m)$。
 
-### 正确性证明[](#正确性证明_1 "Permanent link")
+### 正确性证明
 
 为什么这样重新标注边权的方式是正确的呢？
 
@@ -376,44 +429,42 @@ Johnson 算法则通过另外一种方法来给每条边重新标注边权。
 
 接下来回到正题。
 
-在重新标记后的图上，从 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 点到 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 点的一条路径 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的长度表达式如下：
+在重新标记后的图上，从 $s$ 点到 $t$ 点的一条路径 $s \to p_1 \to p_2 \to \dots \to p_k \to t$ 的长度表达式如下：
 
-![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)
+$(w(s,p_1)+h_s-h_{p_1})+(w(p_1,p_2)+h_{p_1}-h_{p_2})+ \dots +(w(p_k,t)+h_{p_k}-h_t)$
 
 化简后得到：
 
-![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)
+$w(s,p_1)+w(p_1,p_2)+ \dots +w(p_k,t)+h_s-h_t$
 
-无论我们从 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 到 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 走的是哪一条路径，![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的值是不变的，这正与势能的性质相吻合！
+无论我们从 $s$ 到 $t$ 走的是哪一条路径，$h_s-h_t$ 的值是不变的，这正与势能的性质相吻合！
 
-为了方便，下面我们就把 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 称为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 点的势能。
+为了方便，下面我们就把 $h_i$ 称为 $i$ 点的势能。
 
-上面的新图中 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的最短路的长度表达式由两部分组成，前面的边权和为原图中 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的最短路，后面则是两点间的势能差。因为两点间势能的差为定值，因此原图上 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的最短路与新图上 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 的最短路相对应。
+上面的新图中 $s \to t$ 的最短路的长度表达式由两部分组成，前面的边权和为原图中 $s \to t$ 的最短路，后面则是两点间的势能差。因为两点间势能的差为定值，因此原图上 $s \to t$ 的最短路与新图上 $s \to t$ 的最短路相对应。
 
 到这里我们的正确性证明已经解决了一半——我们证明了重新标注边权后图上的最短路径仍然是原来的最短路径。接下来我们需要证明新图中所有边的边权非负，因为在非负权图上，Dijkstra 算法能够保证得出正确的结果。
 
-根据三角形不等式，图上任意一边 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7) 上两点满足：![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)。这条边重新标记后的边权为 ![](data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)。这样我们证明了新图上的边权均非负。
+根据三角形不等式，图上任意一边 $(u,v)$ 上两点满足：$h_v \leq h_u + w(u,v)$。这条边重新标记后的边权为 $w'(u,v)=w(u,v)+h_u-h_v \geq 0$。这样我们证明了新图上的边权均非负。
 
 这样，我们就证明了 Johnson 算法的正确性。
 
-不同方法的比较[](#不同方法的比较 "Permanent link")
-------------------------------------
+## 不同方法的比较
+
+| 最短路算法     | Floyd                | Bellman–Ford | Dijkstra     | Johnson              |
+| -------------- | -------------------- | ------------ | ------------ | -------------------- |
+| 最短路类型     | 每对结点之间的最短路 | 单源最短路   | 单源最短路   | 每对结点之间的最短路 |
+| 作用于         | 任意图               | 任意图       | 非负权图     | 任意图               |
+| 能否检测负环？ | 能                   | 能           | 不能         | 能                   |
+| 时间复杂度     | $O(N^3)$             | $O(NM)$      | $O(M\log M)$ | $O(NM\log M)$        |
 
 注：表中的 Dijkstra 算法在计算复杂度时均用 `priority_queue` 实现。
 
-输出方案[](#输出方案 "Permanent link")
-------------------------------
+## 输出方案
 
 开一个 `pre` 数组，在更新距离的时候记录下来后面的点是如何转移过去的，算法结束前再递归地输出路径即可。
 
 比如 Floyd 就要记录 `pre[i][j] = k;`，Bellman–Ford 和 Dijkstra 一般记录 `pre[v] = u`。
 
-参考资料与注释[](#参考资料与注释 "Permanent link")
-------------------------------------
-
-* * *
-
-> 本页面最近更新：2023/10/4 21:50:08，[更新历史](https://github.com/OI-wiki/OI-wiki/commits/master/docs/graph/shortest-path.md)  
-> 发现错误？想一起完善？ [在 GitHub 上编辑此页！](https://oi-wiki.org/edit-landing/?ref=/graph/shortest-path.md "编辑此页")  
-> 本页面贡献者：[StudyingFather](https://github.com/StudyingFather), [Chrogeek](https://github.com/Chrogeek), [du33169](https://github.com/du33169), [Enter-tainer](https://github.com/Enter-tainer), [AljcC](https://github.com/AljcC), [AndrewWayne](https://github.com/AndrewWayne), [Anguei](https://github.com/Anguei), [ArcticLampyrid](https://github.com/ArcticLampyrid), [boristown](https://github.com/boristown), [CCXXXI](https://github.com/CCXXXI), [ChungZH](https://github.com/ChungZH), [countercurrent-time](https://github.com/countercurrent-time), [Early0v0](https://github.com/Early0v0), [Error-Eric](https://github.com/Error-Eric), [FinBird](https://github.com/FinBird), [greyqz](https://github.com/greyqz), [H-J-Granger](https://github.com/H-J-Granger), [Haohu Shen](mailto:haohu.shen@ucalgary.ca), [hensier](https://github.com/hensier), [iamtwz](https://github.com/iamtwz), [ImpleLee](https://github.com/ImpleLee), [Ir1d](https://github.com/Ir1d), [isdanni](https://github.com/isdanni), [ksyx](https://github.com/ksyx), [mcendu](https://github.com/mcendu), [Menci](https://github.com/Menci), [miaotony](https://github.com/miaotony), [MingqiHuang](mailto:hmq011212@163.com), [NachtgeistW](https://github.com/NachtgeistW), [Nanarikom](https://github.com/Nanarikom), [ouuan](mailto:1609483441@qq.com), [ouuan](https://github.com/ouuan), [PeterlitsZo](https://github.com/PeterlitsZo), [renbaoshuo](https://github.com/renbaoshuo), [Reqwey](https://github.com/Reqwey), [Shawlleyw](https://github.com/Shawlleyw), [Steaunk](https://github.com/Steaunk), [SukkaW](https://github.com/SukkaW), [Tiphereth-A](https://github.com/Tiphereth-A), [TrisolarisHD](mailto:orzcyand1317@gmail.com), [Xeonacid](https://github.com/Xeonacid), [Yanjun-Zhao](https://github.com/Yanjun-Zhao), [zzjjbb](https://github.com/zzjjbb)  
-> 本页面的全部内容在 **[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.zh) 和 [SATA](https://github.com/zTrix/sata-license)** 协议之条款下提供，附加条款亦可能应用
+[^2]: 《算法导论（第 3 版中译本）》，机械工业出版社，2013 年，第 384 - 385 页。
+[^3]: [Fibonacci heap - Wikipedia](https://en.wikipedia.org/wiki/Fibonacci_heap#Worst_case)

@@ -81343,7 +81343,7 @@
     }
   },
   "defaultTrayMode": true,
-  "previousRelease": "1.9.25",
+  "previousRelease": "1.9.27",
   "showReleaseNotes": true,
   "showNewVersionNotification": true,
   "latexBoilerplate": "\\color{blue}",
