@@ -755,15 +755,111 @@ IPv6 分组各字段的含义：
 ### 通用转发
 
 回顾基于目的地的转发：[[#输入端口处理和基于目的地的转发]]
-- 查找目的 IP 地址
-- 然后将分组发送到有特定输出端口的交换结构
+- 查找目的 IP 地址（匹配）
+- 然后将分组发送到有特定输出端口的交换结构（动作）
 
+通用匹配：
+- 对协议栈的多个首部字段进行“**匹配**”，这些首部字段与不同层次的不同协议相关联
+- **动作**：
+	- 将分组转发到一个或多个输出端口（类似于基于目的地的转发）、
+	- 跨越多个通向服务的离开接口进行负载均衡分组
+	- 重写首部值（类似 NAT）
+	- 有意识地阻挡/丢弃某个分组（类似防火墙）
+	- 为进一步处理和动作而向某个特定的服务器发送一个分组（类似 DPI，Deep Packet Inspection）
 
-SDN：逻辑上集中的控制平面
-- 一个不同的（通常是远程）控制器和CA交互，控制器决定分组转发的逻辑（可编程），CA所在设备执行逻辑
+![[40-Network-layer-Data-plane-generalized-forwarding.png]]
+- 通用转发中，匹配+动作表将基于目的地转发的转发表泛化。
+- 更广泛地，基于网络层或链路层的源和目的地址做出转发决定，因此通用转发中的转发设备不是简单的 router 或 switcher，而是称作 packet switches —— 分组交换机。
+- 图 4-28 中每台分组交换机都有一章匹配+动作表，该表由远程控制器计算、安装和更新。注意与 4-2、4-3 两张图对比。
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001155320593.png" style="zoom:90%"/>
+### Openflow
 
+> OpenFlow — a highly visible standard that has pioneered the notion of the match-plus-action forwarding abstraction and controllers, as well as the SDN revolution more generally.
+
+匹配+动作的转发表在 Openflow 中称为流表 flow table，其中表项包含有：
+- ***A set of header field values to which an incoming packet will be matched***. As in the case of destination-based forwarding, hardware-based matching is most rapidly performed in TCAM memory, with more than a million destination address entries being possible [Bosshart 2013]. A packet that matches no flow table entry can be dropped or sent to the remote controller for more processing. In practice, a flow table may be implemented by multiple flow tables for performance or cost reasons [Bosshart 2013], but we’ll focus here on the abstraction of a single flow table.
+- ***A set of counters that are updated as packets are matched to flow table entries***. These counters might include the number of packets that have been matched by that table entry, and the time since the table entry was last updated.
+- ***A set of actions to be taken when a packet matches a flow table entry***. These actions might be to forward the packet to a given output port, to drop the packet, makes copies of the packet and sent them to multiple output ports, and/or to rewrite selected header fields.
+
+### Openflow 的匹配
+![[40-Network-layer-Data-plane-flow-table.png]]
+- 上图是流表的分组匹配字段，显示了 11 个分组首部字段和入端口 ID，这个 ID 用来匹配规则、行以动作
+- 众所周知，链路层中的帧、网络层中的数据报、传输层中的分组是逐层嵌套的，因此 Openflow 允许对来自三个层次的协议首部所选择的字段进行匹配：
+	- 图 4.29 所示的源 MAC 地址和目的 MAC 地址是与帧的发送接口和接收接口相关的链路层地址；
+	- 通过基于以太网地址而非 IP 地址进行转发，我们可以看到，启用 OpenFlow 的设备既可以作为路由器（第 3 层设备）转发数据报，也可以作为交换机（第 2 层设备）转发帧。
+	- 以太网类型字段与上层协议（如 IP）相对应，帧的有效载荷将根据该协议进行解复用，而 VLAN 字段则与我们将在第 6 章中学习的所谓虚拟局域网相关。
+- The ingress port refers to the input port at the packet switch on which a packet is received. The packet’s IP source address, IP destination address, IP protocol field, and IP type of service fields were discussed earlier in Section 4.3.1. The transport-layer source and destination port number fields can also be matched. 
+- Flow table entries may also have wildcards. For example, an IP address of 128.119.*.* in a flow table will match the corresponding address field of any datagram that has 128.119 as the first 16 bits of its address. Each flow table entry also has an associated priority. If a packet matches multiple flow table entries, the selected match and corresponding action will be that of the highest priority entry with which the packet matches.
+
+### Openflow 的动作
+
+Each flow table entry has a list of zero or more actions that ==determine the processing that is to be applied to a packet that matches a flow table entry==. If there are multiple actions, they are performed in the order specified in the list.
+
+Among the most important possible actions are:
+- ***Forwarding***. An incoming packet may be forwarded to a particular physical output port, broadcast over all ports (except the port on which it arrived) or multicast over a selected set of ports. The packet may be encapsulated and sent to the remote controller for this device. That controller then may (or may not) take some action on that packet, including installing new flow table entries, and may return the packet to the device for forwarding under the updated set of flow table rules.
+- ***Dropping***. A flow table entry with no action indicates that a matched packet should be dropped.
+- ***Modify-field***. The values in 10 packet-header fields (all layer 2, 3, and 4 fields shown in Figure 4.29 except the IP Protocol field) may be re-written before the packet is forwarded to the chosen output port.
+
+### Openflow 的实例
+
+![[40-Network-layer-Data-plane-openflow-instance.png]]
+
+#### A First Example: Simple Forwarding
+
+As a very simple example, suppose that the desired forwarding behavior is that packets from h5 or h6 destined to h3 or h4 are to be forwarded from s3 to s1, and then from s1 to s2 (thus completely avoiding the use of the link between s3 and s2). The flow table entry in s1 would be: 
+```
+# s1 Flow Table (Example 1) 
+Match                     Action
+Ingress Port = 1 ; IP Src = 10.3.*.* ; IP Dst = 10.2.*.* Forward(4) … … 
+```
+
+Of course, we’ll also need a flow table entry in s3 so that datagrams sent from h5 or h6 are forwarded to s1 over outgoing interface 3: 
+```
+# s3 Flow Table (Example 1)
+Match Action
+IP Src = 10.3.*.* ; IP Dst = 10.2.*.* Forward(3)
+… … 
+```
+
+Lastly, we’ll also need a flow table entry in s2 to complete this first example, so that datagrams arriving from s1 are forwarded to their destination, either host h3 or h4: 
+```
+# s2 Flow Table (Example 1) 
+Match Action
+Ingress port = 2 ; IP Dst = 10.2.0.3 Forward(3)
+Ingress port = 2 ; IP Dst = 10.2.0.4 Forward(4)
+… … 
+```
+
+#### A Second Example: Load Balancing
+
+As a second example, let’s consider a load-balancing scenario, where datagrams from h3 destined to 10.1.*.* are to be forwarded over the direct link between s2 and s1, while datagrams from h4 destined to 10.1.*.* are to be forwarded over the link between s2 and s3 (and then from s3 to s1). Note that this behavior couldn’t be achieved with IP’s destination-based forwarding. In this case, the flow table in s2 would be:
+```
+# s2 Flow Table (Example 2)
+Match Action
+Ingress port = 3; IP Dst = 10.1.*.* Forward(2)
+Ingress port = 4; IP Dst = 10.1.*.* Forward(1)
+… …
+```
+
+Flow table entries are also needed at s1 to forward the datagrams received from s2 to either h1 or h2; and flow table entries are needed at s3 to forward datagrams received on interface 4 from s2 over interface 3 toward s1. See if you can figure out these flow table entries at s1 and s3.
+
+#### A Third Example: Firewalling
+As a third example, let’s consider a firewall scenario in which s2 wants only to receive (on any of its interfaces) traffic sent from hosts attached to s3.
+```
+# s2 Flow Table (Example 3)
+Match Action
+IP Src = 10.3.*.* IP Dst = 10.2.0.3 Forward(3)
+IP Src = 10.3.*.* IP Dst = 10.2.0.4 Forward(4)
+… …
+```
+
+If there were no other entries in s2’s flow table, then only traffic from 10.3.*.* would be forwarded to the hosts attached to s2. 
+
+Although we’ve only considered a few basic scenarios here, the versatility and advantages of generalized forwarding are hopefully apparent. In homework problems, we’ll explore how flow tables can be used to create many different logical behaviors, including virtual networks—two or more logically separate networks (each with their own independent and distinct forwarding behavior)—that use the same physical set of packet switches and links. In Section 5.5, we’ll return to flow tables when we study the SDN controllers that compute and distribute the flow tables, and the protocol used for communicating between a packet switch and its controller.
+
+The match-plus-action flow tables that we’ve seen in this section are actually a limited form of programmability, specifying how a router should forward and manipulate (e.g., change a header field) a datagram, based on the match between the datagram’s header values and the matching conditions. One could imagine an even richer form of programmability—a programming language with higher-level constructs such as variables, general purpose arithmetic and Boolean operations, variables, functions, and conditional statements, as well as constructs specifically designed for datagram processing at line rate. P4 (Programming Protocol-independent Packet Processors) [P4 2020] is such a language, and has gained considerable interest and traction since its introduction five years ago [Bosshart 2014]
+
+### SDN 总结
 SDN的主要思路
 - 网络设备数据平面和控制平面分离
 - 数据平面-分组交换机
@@ -857,8 +953,3 @@ OpenFlow抽象
 - NAT
     - match：IP地址和端口号
     - action：重写地址和端口号
-
-> OpenFlow例子
-> 
-> <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001161835426.png" style="zoom:70%"/>
-

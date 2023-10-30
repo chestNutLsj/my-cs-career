@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "2e034d891c46e06b",
+        "id": "1f9d2d7350a9b24c",
         "type": "tabs",
         "children": [
           {
-            "id": "998ccaaf90250338",
+            "id": "2fe6498cfc7d5775",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
+                "file": "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
                 "mode": "source",
                 "source": false
               }
@@ -97,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
+                "file": "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
+                "file": "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,7 +136,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md"
+                "file": "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md"
               }
             }
           }
@@ -152,7 +152,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md"
+                "file": "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md"
               }
             }
           },
@@ -186,8 +186,17 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "998ccaaf90250338",
+  "active": "2fe6498cfc7d5775",
   "lastOpenFiles": [
+    "1-Theory/6-Network/Top-to-down/practice/4-网络层-数据平面.md",
+    "1-Theory/6-Network/Top-to-down/practice/3-传输层.md",
+    "1-Theory/6-Network/Top-to-down/practice/2-应用层.md",
+    "1-Theory/6-Network/Top-to-down/practice/1-绪论.md",
+    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
+    "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-openflow-instance.png",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-flow-table.png",
+    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-generalized-forwarding.png",
     "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-tunneling.png",
     "1-Theory/4-Architecture/THU-Liu/23-CPU-design.md",
     "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-multicycle.png",
@@ -200,10 +209,6 @@
     "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-B-type-flow.png",
     "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
     "1-Theory/4-Architecture/THU-Liu/20-Intruction.md",
-    "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-S-type-flow-1.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-I-type-load-flow.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-I-type-flow.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-S-type-flow.png",
     "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
     "1-Theory/4-Architecture/RISC-V/A1-RISC-V异常、中断.md",
     "1-Theory/4-Architecture/RISC-V/90-RV64.md",
@@ -218,15 +223,10 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/84-并查集.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
-    "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
     "1-Theory/4-Architecture/RISC-V/70-Compressed-instruction.md",
     "1-Theory/4-Architecture/RISC-V/60-Atomic-instruction.md",
     "1-Theory/4-Architecture/RISC-V/50-Float-Double-instruction.md",
     "1-Theory/4-Architecture/RISC-V/20-RV32I.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
-    "1-Theory/4-Architecture/RISC-V/40-Multiply-Divide-instruction.md",
-    "1-Theory/4-Architecture/RISC-V/30-RISC-V-assembly.md",
     "1-Theory/4-Architecture/RISC-V/assets",
     "1-Theory/4-Architecture/RISC-V",
     "8-SimpRead/详解 RISC v 中断/assets",
