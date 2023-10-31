@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "1f9d2d7350a9b24c",
+        "id": "90c4296b9666ffe2",
         "type": "tabs",
         "children": [
           {
-            "id": "2fe6498cfc7d5775",
+            "id": "8efa4c1c4ffd58ed",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -80,7 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 406.5,
+    "width": 494.5,
     "collapsed": true
   },
   "right": {
@@ -97,7 +93,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +109,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,9 +129,7 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -151,9 +143,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md"
-              }
+              "state": {}
             }
           },
           {
@@ -168,7 +158,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 206.5
+    "width": 206.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -186,47 +177,46 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "2fe6498cfc7d5775",
+  "active": "8efa4c1c4ffd58ed",
   "lastOpenFiles": [
+    "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
+    "1-Theory/4-Architecture/RISC-V/assets/A0-Privileged-architecture-int-register.png",
+    "1-Theory/4-Architecture/RISC-V/assets/A0-Privileged-architecture-virtual-addr-to-physical-addr.png",
+    "1-Theory/4-Architecture/RISC-V/assets/Pasted image 20231031182436.png",
+    "1-Theory/4-Architecture/RISC-V/assets/A0-Privileged-architecture-satp-MODE.png",
+    "1-Theory/4-Architecture/RISC-V/assets/A0-Privileged-architecture-satp-csr.png",
+    "1-Theory/4-Architecture/RISC-V/assets/A0-Privileged-architecture-rv64-sv39.png",
+    "1-Theory/4-Architecture/RISC-V/assets/A0-Privileged-architecture-pte-radixtree.png",
+    "1-Theory/4-Architecture/RISC-V/assets/A0-Privileged-architecture-rv32-sv32.png",
+    "1-Theory/4-Architecture/RISC-V/深入.md",
+    "1-Theory/4-Architecture/RISC-V/assets/A0-Privileged-architecture-sstatus.png",
+    "1-Theory/4-Architecture/RISC-V/assets/A0-Privileged-architecture-pmpcfg.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/95-Skew-heap.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/93-Fibonacci-heap.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/92-Min-max-heap.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/87-Strongly-Connected-Components.md",
+    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
     "1-Theory/6-Network/Top-to-down/practice/4-网络层-数据平面.md",
     "1-Theory/6-Network/Top-to-down/practice/3-传输层.md",
     "1-Theory/6-Network/Top-to-down/practice/2-应用层.md",
     "1-Theory/6-Network/Top-to-down/practice/1-绪论.md",
-    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
     "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
-    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-openflow-instance.png",
-    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-flow-table.png",
-    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-generalized-forwarding.png",
-    "1-Theory/6-Network/Top-to-down/assets/40-Network-layer-Data-plane-tunneling.png",
     "1-Theory/4-Architecture/THU-Liu/23-CPU-design.md",
-    "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-multicycle.png",
     "1-Theory/4-Architecture/THU-Liu/24-Pipeline.md",
-    "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-signal-control.png",
     "1-Theory/4-Architecture/THU-Liu/22-Datapath.md",
-    "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-auipc.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-jalr.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-J-type-flow.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-B-type-flow.png",
     "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
     "1-Theory/4-Architecture/THU-Liu/20-Intruction.md",
-    "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
     "1-Theory/4-Architecture/RISC-V/A1-RISC-V异常、中断.md",
     "1-Theory/4-Architecture/RISC-V/90-RV64.md",
     "1-Theory/4-Architecture/RISC-V/80-Vector.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/87-Strongly-Connected-Components.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/86-SPT-OIwiki.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/85-MST-OIwiki.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Boruvka's_algorithm.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Dijkstra_Animation.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/mst-3.apng",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/84-并查集.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
-    "1-Theory/4-Architecture/RISC-V/70-Compressed-instruction.md",
-    "1-Theory/4-Architecture/RISC-V/60-Atomic-instruction.md",
-    "1-Theory/4-Architecture/RISC-V/50-Float-Double-instruction.md",
-    "1-Theory/4-Architecture/RISC-V/20-RV32I.md",
     "1-Theory/4-Architecture/RISC-V/assets",
     "1-Theory/4-Architecture/RISC-V",
     "8-SimpRead/详解 RISC v 中断/assets",

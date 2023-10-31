@@ -1168,6 +1168,139 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
               "subpath": "#6-31 最短路径树不唯一问题",
               "title": "最短路径树唯一确定吗？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698734123114,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#完全二叉堆",
+              "title": "完全二叉堆的秩的关系：内部节点最大秩，父亲的秩，左右子的秩"
+            },
+            {
+              "type": "file",
+              "ctime": 1698734336343,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#逐层上滤",
+              "title": "二叉堆插入：逐层上滤步骤及效率"
+            },
+            {
+              "type": "file",
+              "ctime": 1698734436546,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#逐层下滤",
+              "title": "二叉堆删除：逐层下滤步骤及效率，注意ProperParent宏"
+            },
+            {
+              "type": "file",
+              "ctime": 1698735543808,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#自下而上的下滤",
+              "title": "Floyd建堆法详细步骤、效率、具体比较次数、不适用场景"
+            },
+            {
+              "type": "file",
+              "ctime": 1698735736666,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#思考",
+              "title": "大顶堆delMin操作可以达到O(logn)吗？具体是多少？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698736752559,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#性能",
+              "title": "胜者树细节：重赛次数、性能、用以k选取的比较次数"
+            },
+            {
+              "type": "file",
+              "ctime": 1698736919890,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#败者树",
+              "title": "败者树细节：思路、亚军、比较次数"
+            },
+            {
+              "type": "file",
+              "ctime": 1698737126927,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#利用优先级队列改进 PFS 框架的思路",
+              "title": "二叉堆对图PFS的改进：优劣"
+            },
+            {
+              "type": "file",
+              "ctime": 1698737196703,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#多叉堆形式",
+              "title": "多叉堆秩的计算方式"
+            },
+            {
+              "type": "file",
+              "ctime": 1698737239385,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#多叉堆特点",
+              "title": "多叉堆特点：堆高、下滤性能、上滤性能"
+            },
+            {
+              "type": "file",
+              "ctime": 1698737318283,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#多叉堆实现 PFS 的优势",
+              "title": "多叉堆实现 PFS 的优势"
+            },
+            {
+              "type": "file",
+              "ctime": 1698737722339,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#左式堆形态",
+              "title": "左式堆的形态、实现"
+            },
+            {
+              "type": "file",
+              "ctime": 1698737873527,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#空节点路径长度",
+              "title": "npl的计算方式"
+            },
+            {
+              "type": "file",
+              "ctime": 1698737922920,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#左式堆的左倾性",
+              "title": "左式堆的左倾性如何控制？左倾性的细节性质"
+            },
+            {
+              "type": "file",
+              "ctime": 1698738067035,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#最右侧通路——右侧链",
+              "title": "左式堆节点数与高度关系：右侧链与长度、最浅外部节点"
+            },
+            {
+              "type": "file",
+              "ctime": 1698738305304,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#实例",
+              "title": "左式堆如何实现堆的合并"
+            },
+            {
+              "type": "file",
+              "ctime": 1698738399705,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#左式堆合并的复杂度",
+              "title": "左式堆合并的复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698738439019,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
+              "subpath": "#插入与删除",
+              "title": "左式堆如何实现插入与删除"
+            },
+            {
+              "type": "file",
+              "ctime": 1698739299357,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
+              "subpath": "#10-4 O (1)时间确定祖先的秩",
+              "title": "二叉堆中如何在O(1)时间确定任何祖先的秩"
             }
           ],
           "title": "知识点细节"
@@ -1368,6 +1501,24 @@
               "ctime": 1698659860058,
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/87-Strongly-Connected-Components.md",
               "title": "强连通分量的求解方法"
+            },
+            {
+              "type": "file",
+              "ctime": 1698737591429,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/93-Fibonacci-heap.md",
+              "title": "Fibonacci-heap"
+            },
+            {
+              "type": "file",
+              "ctime": 1698738506556,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/92-Min-max-heap.md",
+              "title": "Min-max heap"
+            },
+            {
+              "type": "file",
+              "ctime": 1698739576827,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/95-Skew-heap.md",
+              "title": "Skew heap"
             }
           ],
           "title": "拓展延伸"
@@ -1606,6 +1757,69 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
               "subpath": "#6-25、26 边权重复时极小支撑树问题",
               "title": "边权重复时极小支撑树问题"
+            },
+            {
+              "type": "file",
+              "ctime": 1698739354151,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
+              "subpath": "#10-4-b 将 percolateUp 算法优化到 O (loglogn)",
+              "title": "如何将上滤算法的比较次数优化到O(loglogn)"
+            },
+            {
+              "type": "file",
+              "ctime": 1698739471689,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
+              "subpath": "#10-6 估算 percolateUp 的实际期望",
+              "title": "估算 percolateUp 的实际期望"
+            },
+            {
+              "type": "file",
+              "ctime": 1698739509074,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
+              "subpath": "#10-8 优先级队列与 Huffman 树",
+              "title": "CBA式算法构建Huffman树的时间下界"
+            },
+            {
+              "type": "file",
+              "ctime": 1698739706726,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
+              "subpath": "#10-9 利用频率已有序的性质在 O (n)完成构建 Huffman 树",
+              "title": "利用频率已有序的性质在 O (n)完成构建 Huffman 树"
+            },
+            {
+              "type": "file",
+              "ctime": 1698739760123,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
+              "subpath": "#10.17 利用多叉堆改进 Prim 算法",
+              "title": "利用多叉堆改进 Prim 算法"
+            },
+            {
+              "type": "file",
+              "ctime": 1698739806695,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
+              "subpath": "#10-19 为栈维护 getMax 接口",
+              "title": "为栈维护 getMax 接口"
+            },
+            {
+              "type": "file",
+              "ctime": 1698739814120,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
+              "subpath": "#10-20 为队列维护 getMax 接口",
+              "title": "为队列维护 getMax 接口"
+            },
+            {
+              "type": "file",
+              "ctime": 1698739833921,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
+              "subpath": "#10-21 合并 AVL 树",
+              "title": "合并大节点AVL树和小节点AVL树"
+            },
+            {
+              "type": "file",
+              "ctime": 1698739895454,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
+              "subpath": "#10-22 分裂 AVL 树",
+              "title": "分裂大节点AVL树和小节点AVL树"
             }
           ],
           "title": "习题解析好题"

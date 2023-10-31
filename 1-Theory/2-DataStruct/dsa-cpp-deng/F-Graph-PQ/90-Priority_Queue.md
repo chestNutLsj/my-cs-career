@@ -118,6 +118,12 @@ template <typename T> Rank percolateUp( T* A, Rank i ) { //对词条A[i]做上�
 
 #### 代码
 ```
+#define  ProperParent(PQ, n, i) /*父子（至多）三者中的大者*/ \
+            ( RChildValid(n, i) ? Bigger( PQ, Bigger( PQ, i, LChild(i) ), RChild(i) ) : \
+            ( LChildValid(n, i) ? Bigger( PQ, i, LChild(i) ) : i \
+            ) \
+            ) //相等时父节点优先，如此可避免不必要的交换
+
 template <typename T> T PQ_ComplHeap<T>::delMax() { //取出最大词条
    swap( _elem[0], _elem[--_size] ); //堆顶、堆尾互换
    percolateDown( _elem, _size, 0 ); //新堆顶下滤
@@ -132,11 +138,12 @@ template <typename T> Rank percolateDown( T* A, Rank n, Rank i ) {
    return i; //返回下滤抵达的位置（亦i亦j）
 }
 ```
+- 如何确保下滤操作正确性？即如何确保交换的节点是最大者？——ProperParent macro 定义了取父子三者中的最大者
 
 #### 效率
 - e 在每一高度至多交换一次，累计交换不超过 O (logn)次
 - 通过下滤，可在 O (logn)时间内，删除堆顶节点，并整体重新调整为堆
-- 数学期望呢？O (logn)因为堆底的元素通常较小
+- 数学期望呢？O (logn) 因为堆底的元素通常较小
 
 ### 建堆
 #### 自上而下的上滤
@@ -147,8 +154,9 @@ template <typename T> void heapify( T* A, const Rank n ) { //蛮力建堆算法�
 }
 
 ```
+
 ![[90-Priority_Queue-heap-heapify-naive.png]]
-- 从第一个节点开始，依次作为堆底，层层上滤；
+- 从第一个节点开始，==依次作为堆底，层层上滤==；
 
 **效率**：
 - 最坏情况下，每个节点都需上滤至根（非递减序列），所需成本线性正比于其深度
@@ -198,14 +206,14 @@ $$
 		- Place the last-inserted heap element in the position of the minimum element (essentially this is the delete)
 		- Upheap the replaced node to restore maximum heap property and correct storage of the heap in the array
 	- This will take O (n) for the search of the minimum element, then O (1) for the switch, and finally O (log n) for the upheap. In total this is linear time, essentially the best you can do.
-	- Remember to be careful with the the index operations, 2*i is the left child of node i and 2*i+1 is the right child of node i in an array based heap (assuming 0th element of the array is always empty and the root of the heap is at index 1)
+	- Remember to be careful with the the index operations, `2*i` is the left child of node i and `2*i+1` is the right child of node i in an array based heap (assuming 0th element of the array is always empty and the root of the heap is at index 1)
 	- 如果建立 [[92-Min-max-heap|min-max heap]]，则可以在 O (logn)时间内 delMin 和 delMax。
 
 
 ## 堆排序
 ### 思路
 ![[90-Priority_Queue-heapsort.png]]
-- 在 selectionSort ()中 将 U 替换为H
+- 在 selectionSort ()中 将 Unsorted 替换为 Heap
 - 初始化 ： heapify ()，O (n)
 - 迭代 ： delMax ()，O (logn) 
 - 不变性 ： H <= S
@@ -251,7 +259,7 @@ template <typename T> void Vector<T>::heapSort( Rank lo, Rank hi ) { // 0 <= lo 
 >
 >How to improve it?
 >- 图的合成数解决 Prim 歧义的思想 [[82-Graph-Exercise#6-23 合成数法消除 Prim 和 Dijkstra 算法的歧义性|6-23 合成数法消除 Prim 和 Dijkstra 算法的歧义性]]。
->
+>- 增加扰动也可以，但只适用于整数作数据域的情况。这些思想的本质还是将重复的关键码改进成单一的关键码。实际上堆排序的不稳定性，是其算法原理的固有不足：[[91-PQ-Exercise#10-14 HeapSort 稳定性分析]]
 
 ## 锦标赛排序
 ### 胜者树
@@ -295,7 +303,7 @@ TournamentSort():
 
 若在内部节点反其道而行之，记录对应比赛的败者，并增设根的“父节点”记录冠军：
 ![[90-Priority_Queue-loser-tree.png]]
-- 注意此时根节点并不是“亚军”，但胜者树的根的孩子之一是“亚军”
+- 注意此时根节点并不是“亚军”
 
 #### 实例
 ![[90-Priority_Queue-loser-instance.png]]
@@ -333,6 +341,7 @@ TournamentSort():
 - 相应地，上滤成本降低至 $\log_{d}n$
 - 但下滤成本反而增加，当 d>4 时，下滤成本增加至 $d\cdot\log_{d}n=\frac{d}{\ln d}\ln n$
 [[91-PQ-Exercise#10.17 利用多叉堆改进 Prim 算法|更详细的说明]]
+
 ### 多叉堆实现 PFS 的优势
 - 使用多叉堆实现 PFS 时，运行时间将是 $n\cdot d\cdot\log_{d}n+e\cdot\log_{d}n=(n\cdot d+e)\log_{d}n$ 
 - 取 $d\approx \frac{e}{n}+2$ 时总体性能达到最优：$O(e\log_{\frac{e}{n+2}}n)$ 
@@ -340,7 +349,8 @@ TournamentSort():
 - 对于稠密图改进极大：$e\log_{\frac{e}{n+2}}n\approx n^{2}\cdot\log_{\frac{n^{2}}{n+2}}n\approx n^{2}=O(e)$ 
 
 ### Fibonacci 堆
-![[93-Fibonacci-heap]]
+
+[[93-Fibonacci-heap]]
 
 ## 左式堆
 ### 堆合并问题
@@ -366,7 +376,7 @@ TournamentSort():
 ### 左式堆形态
 
 ![[90-Priority_Queue-leftheap.png]]
-- 保持堆序性，附加新条件，使得在堆合并过程中，只涉及少量节点：O (logn) 
+- **保持堆序性，附加新条件，使得在堆合并过程中，只涉及少量节点**：O (logn) 
 - 新条件 = 单侧倾斜： 节点分布偏向于左侧，合并操作只涉及右侧
 - 可是，果真如此，则拓扑上不见得是完全二叉树，结构性无法保证！？是的，实际上，结构性并非堆结构的本质要求——堆序性才是堆结构的关键所在。
 
@@ -401,7 +411,7 @@ template BinNodePosi merge(BinNodePosi, BinNodePosi);
 ### 空节点路径长度
 
 如何控制左式堆的倾斜度？——类似 AVL 的平衡因子、BTree 的外部节点，引入空节点路径长度这一指标：
-- 引入所有的外部节点，消除一度节点，将其转为真二叉树 
+- 引入所有的外部节点，消除度为 1 的节点，将其转为真二叉树 
 - 空节点路径长度 Null Path Length：
 	- 外部节点：$npl(NULL)=0$ 
 	- 内部节点：$npl(x)=1+min\{npl(lc(x)),npl(rc(x))\}$ 
@@ -454,7 +464,7 @@ BinNodePosi<T> merge( BinNodePosi<T> a, BinNodePosi<T> b ) {
 ![[90-Priority_Queue-leftheap-merge-instance-2.png]]
 ![[90-Priority_Queue-leftheap-merge-instance-3.png]]
 ### 左式堆合并的复杂度
-递归版合并算法的所有递归实例，可以排成一个线性序列，因此实质上是线性递归，运行时间正比于递归深度。
+递归版合并算法的所有递归实例，可以排成一个线性序列，因此**实质上是线性递归**，运行时间正比于递归深度。
 进一步地，递归只发生于两个待合并堆的最右侧通路上，因此若待合并堆的规模分别为 n 和 m，则其最右侧通路的长度不会超过 O (logn) 和 O (logm)，因此合并算法总体运行时间不超过 O (logn)+O (logm)=O (log (max (n, m)))
 
 ### 迭代实现合并
