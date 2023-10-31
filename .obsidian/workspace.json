@@ -11,8 +11,12 @@
             "id": "70889877afc67b5b",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -76,8 +80,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 494.5,
-    "collapsed": true
+    "width": 307.5
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -93,6 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -109,6 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -129,7 +134,9 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {}
+              "state": {
+                "file": "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md"
+              }
             }
           }
         ]
@@ -143,7 +150,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md"
+              }
             }
           },
           {
@@ -158,7 +167,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 206.5
+    "width": 206.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -178,6 +188,17 @@
   },
   "active": "70889877afc67b5b",
   "lastOpenFiles": [
+    "1-Theory/5-OS-principle/Internal&design-principle/60-IO管理与磁盘.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/42-加载和链接.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/10-操作系统概述.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/20-进程与线程.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/30-并发.md",
+    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
+    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-abstract-graph-network.png",
+    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-logically-centralized-control.png",
+    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-perrouter-control.png",
     "1-Theory/4-Architecture/THU-Liu/24-Pipeline.md",
     "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-phase.png",
     "1-Theory/4-Architecture/THU-Liu/25-Hazard-handle.md",
@@ -190,9 +211,6 @@
     "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-multicycle-controller.png",
     "1-Theory/4-Architecture/THU-Liu/assets/23-CPU-design-mips-multicycle-fsm.png",
     "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
-    "1-Theory/4-Architecture/RISC-V/assets/A0-Privileged-architecture-int-register.png",
-    "1-Theory/4-Architecture/RISC-V/assets/A0-Privileged-architecture-virtual-addr-to-physical-addr.png",
-    "1-Theory/4-Architecture/RISC-V/assets/Pasted image 20231031182436.png",
     "1-Theory/4-Architecture/RISC-V/深入.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/95-Skew-heap.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/93-Fibonacci-heap.md",
@@ -200,19 +218,12 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/92-Min-max-heap.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/87-Strongly-Connected-Components.md",
-    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
     "1-Theory/6-Network/Top-to-down/practice/4-网络层-数据平面.md",
     "1-Theory/6-Network/Top-to-down/practice/3-传输层.md",
     "1-Theory/6-Network/Top-to-down/practice/2-应用层.md",
     "1-Theory/6-Network/Top-to-down/practice/1-绪论.md",
     "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
     "1-Theory/4-Architecture/THU-Liu/22-Datapath.md",
-    "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
-    "1-Theory/4-Architecture/RISC-V/A1-RISC-V异常、中断.md",
-    "1-Theory/4-Architecture/RISC-V/90-RV64.md",
-    "1-Theory/4-Architecture/RISC-V/80-Vector.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/86-SPT-OIwiki.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/85-MST-OIwiki.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Boruvka's_algorithm.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Dijkstra_Animation.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/mst-3.apng",

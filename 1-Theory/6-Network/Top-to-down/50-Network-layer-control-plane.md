@@ -1,6 +1,21 @@
 
-## 5.1 导论
+## 5.1 概述
+### 控制平面介绍
+控制平面的作用，就是对路由器的转发表/流表进行计算、维护、安装等操作。根据上一章的讲解，了解到有两种路由控制策略：
 
+![[50-Network-layer-control-plane-perrouter-control.png]]
+- ***Per-router control***. Figure 5.1 illustrates the case ==where a routing algorithm runs in each and every router; both a forwarding and a routing function are contained within each router==. Each router has a routing component that communicates with the routing components in other routers to compute the values for its forwarding table. This per-router control approach has been used in the Internet for decades. The OSPF and BGP protocols that we’ll study in Sections 5.3 and 5.4 are based on this per-router approach to control.
+> 每一台路由器都运行路由选择算法（OSPF、BGP 等），每台路由器都包含转发和路由选择功能。
+> 
+> 每台路由器都由一个路由选择组件，用于与其它路由器中的路由选择组件通信，以计算其转发表的值。
+
+
+![[50-Network-layer-control-plane-logically-centralized-control.png]]
+- ***Logically centralized control***. Figure 5.2 illustrates the case in which ==a logically centralized controller computes and distributes the forwarding tables to be used by each and every router==. As we saw in Sections 4.4 and 4.5, the generalized match-plus-action abstraction allows the router to perform traditional IP forwarding as well as a rich set of other functions (load sharing, firewalling, and NAT) that had been previously implemented in separate middleboxes.
+- The controller interacts with a control agent (CA) in each of the routers via a well-defined protocol to configure and manage that router’s flow table. Typically, the CA has minimum functionality; its job is to communicate with the controller, and to do as the controller commands. Unlike the routing algorithms in Figure 5.1, the CAs do not directly interact with each other nor do they actively take part in computing the forwarding table. This is a key distinction between per-router control and logically centralized control
+> 控制协议与路由器中的控制代理进行交互，以配置和管理该路由器的流表。控制代理 CA 功能很少，只需与控制器通信并按命行事，CA 不能互相直接地交互、也不能主动参与计算流表。
+
+### 路由
 - 路由(route)：按照某种指标（传输延迟，所经过的站点数目等）找到一条从源节点到目标节点的较好路径
     - 较好路径：按照某种指标较小的路径
     - 指标：站数，延迟，费用，队列长度等，或者是一些单纯指标的加权平均
@@ -8,74 +23,86 @@
 - 以网络为单位（子网到子网）进行路由（路由信息通告+路由计算），而非主机到主机（主机到主机的路由规模比子网到子网大2-3个数量级）
     - 网络为单位进行路由，路由信息传输、计算和匹配的代价低
     - 前提条件是：一个网络所有节点地址前缀相同，且物理上聚集
-    - 路由就是：计算网络到其他网络如何走的问题
+    - **路由就是：计算网络到其他网络如何走的问题**
 - 网络到网络的路由 = 路由器-路由器之间路由
     - 网络对应的路由器到其他网络对应的路由器的路由
     - 在一个网络中：路由器-主机之间的通信，链路层解决
     - 到了这个路由器就是到了这个网络
 - 路由选择算法(routing algorithm)：网络层软件的一部分，完成路由功能
 
-网络的图抽象
+## 5.2 路由选择算法
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001184712732.png" />
+### 网络的拓扑图抽象
+![[50-Network-layer-control-plane-abstract-graph-network.png]]
+- Graph $G = (N, E)$ is a set N of nodes and a collection E of edges, where each edge is a pair of nodes from N.
+- In the context of network-layer routing, the ==nodes in the graph represent routers==—the points at which packet-forwarding decisions are made—
+- and the ==edges connecting these nodes represent the physical links== between these routers.
 
-*注：图抽象在其他网络场景中也十分有用，例如在P2P中，N是peer节点，E是TCP的连接*
 
-图抽象：边和路径的代价
-- c(x, x') = 链路的代价 (x, x')
-    - e.g., c(w, z) = 5
-- 代价可能总为１
-- 或是 链路带宽的倒数
-- 或是 拥塞情况的倒数
+边和路径的开销：
+- For our purposes, we’ll simply take the edge costs as a given and won’t worry about how they are determined. For any edge (x, y) in E, we denote c (x, y) as the cost of the edge between nodes x and y. If the pair (x, y) does not belong to E, we set c (x, y) = ∞.
+- Also, we’ll only consider undirected graphs in our discussion here, so that edge (x, y) is the same as edge (y, x) and that c (x, y) = c (y, x); however, the algorithms we’ll study can be easily extended to the case of directed links with a different cost in each direction.
+- Also, a node y is said to be a ***neighbor*** of node x if (x, y) belongs to E.
 
-$$ \text{Cost of path } (x_1, x_2, x_3, ... , x_p) = c(x_1, x_2) + c(x_2, x_3) + ... + c(x_{p-1}, x_p) $$ 
+网络拓扑图中的路径及路径开销：
+- a path in a graph G = (N, E) is a sequence of nodes (x1, x2, g, xp) such that each of the pairs (x1, x2), (x2, x3), g, (xp-1, xp) are edges in E.
+- The cost of a path (x1, x2, g, xp) is simply the sum of all the edge costs along the path, that is, c (x1, x2) + c (x2, x3) + g+ c (xp-1, xp). Given any two nodes x and y, there are typically many paths between the two nodes, with each path having a cost. One or more of these paths is a ***least-cost path***.
+- $$ \text{Cost of path } (x_1, x_2, x_3, ... , x_p) = c(x_1, x_2) + c(x_2, x_3) + ... + c(x_{p-1}, x_p) $$
+### 路由算法的目标与原则
 
-最优化原则(optimality principle)
-- 汇集树(sink tree)
-    - 此节点到所有其它节点的最优路径形成的树
-    - 路由选择算法就是为所有路由器找到并使用汇集树
+路由算法的天然目标就是寻找最低开销路径：
+- The least-cost problem is therefore clear: Find a path between the source and destination that has least cost.
+- In Figure 5.3, for example, the least-cost path between source node u and destination node w is (u, x, y, w) with a path cost of 3.
+- Note that if all edges in the graph have the same cost, the least-cost path is also the shortest path (that is, the path with the smallest number of links between the source and the destination).
+
+最优化原则 (optimality principle)
+- 汇集树 (sink tree)
+    - 此节点到所有其它节点的最优路径形成的树——数据结构里的SPT
+    - 路由选择算法就是为所有路由器找到并使用汇集树（最短路径树）
 
 路由选择算法的原则
-- 正确性(correctness)：算法必须是正确的和完整的，使分组一站一站接力，正确发向目标站；完整：目标所有的站地址，在路由表中都能找到相应的表项；没有处理不了的目标站地址；
-- 简单性(simplicity)：算法在计算机上应简单：最优但复杂的算法，时间上延迟很大，不实用，不应为了获取路由信息增加很多的通信量；
-- 健壮性(robustness)：算法应能适应通信量和网络拓扑的变化：通信量变化，网络拓扑的变化算法能很快适应；不向很拥挤的链路发数据，不向断了的链路发送数据；
-- 稳定性(stability)：产生的路由不应该摇摆
-- 公平性(fairness)：对每一个站点都公平
-- 最优性(optimality)：某一个指标的最优，时间上，费用上，等指标，或综合指标；实际上，获取最优的结果代价较高，可以是次优的
+- 正确性 (correctness)：算法必须是正确的和完整的，使分组一站一站接力，正确发向目标站；完整：目标所有的站地址，在路由表中都能找到相应的表项；没有处理不了的目标站地址；
+- 简单性 (simplicity)：算法在计算机上应简单：最优但复杂的算法，时间上延迟很大，不实用，不应为了获取路由信息增加很多的通信量；
+- 健壮性 (robustness)：算法应能适应通信量和网络拓扑的变化：通信量变化，网络拓扑的变化算法能很快适应；不向很拥挤的链路发数据，不向断了的链路发送数据；
+- 稳定性 (stability)：产生的路由不应该摇摆
+- 公平性 (fairness)：对每一个站点都公平
+- 最优性 (optimality)：某一个指标的最优，时间上，费用上，等指标，或综合指标；实际上，获取最优的结果代价较高，可以是次优的
 
-路由算法分类
+### 路由算法的分类
+
 - 全局或者局部路由信息？
-    - 全局：
+    - 全局：集中式路由选择算法
         - 所有的路由器拥有完整的拓扑和边的代价的信息（上帝视角）
-        - “link state”算法
-    - 分布式:
-        - 路由器只知道与它有物理连接关系的邻居路由器，和到相应邻居路由器的代价值
-        - 叠代地与邻居交换路由信息、计算路由信息
-        - “distance vector”算法
+        - A ***centralized routing algorithm*** computes the least-cost path between a source and destination using complete, global knowledge about the network. That is, the algorithm takes the connectivity between all nodes and all link costs as inputs. ==This then requires that the algorithm somehow obtain this information before actually performing the calculation==. The calculation itself can be run at one site (e.g., a logically centralized controller as in Figure 5.2) or could be replicated in the routing component of each and every router (e.g., as in Figure 5.1). ==The key distinguishing== feature here, however, ==is that the algorithm has complete information about connectivity and link costs==. 
+        - Algorithms with global state information are often referred to as ***link-state*** (LS) algorithms, since the algorithm must be aware of the cost of each link in the network. We’ll study LS algorithms in Section 5.2.1.
+    - 分布式：分散式路由选择算法
+        - 路由器只知道与它有物理连接关系的邻居路由器，和到相应邻居路由器的开销
+        - 迭代地与邻居交换路由信息、计算路由信息
+        - In a ***decentralized routing algorithm***, the calculation of the least-cost path is carried out in an iterative, distributed manner by the routers. ==No node has complete information about the costs of all network links. Instead, each node begins with only the knowledge of the costs of its own directly attached links==. Then, through an iterative process of calculation and exchange of information with its neighboring nodes, a node gradually calculates the least-cost path to a destination or set of destinations.
+        - The decentralized routing algorithm we’ll study below in Section 5.2.2 is called a ***distance-vector*** (DV) algorithm, because ==each node maintains a vector of estimates of the costs (distances) to all other nodes in the network==. 
+        - Such decentralized algorithms, with interactive message exchange between neighboring routers is perhaps ==more naturally suited to control planes where the routers interact directly with each other==, as in Figure 5.1.
+
 - 静态或者动态的？
     - 静态：
         - 路由随时间变化缓慢
+        - 人工手动调整
+        - 非自适应算法 (non-adaptive algorithm)：不能适应网络拓扑和通信量的变化，路由表是事先计算好的
     - 动态：
         - 路由变化很快
         - 周期性更新
         - 根据链路代价的变化而变化
-    - 静态-->非自适应算法(non-adaptive algorithm)：不能适应网络拓扑和通信量的变化，路由表是事先计算好的
-    - 动态-->自适应路由选择(adaptive algorithm)：能适应网络拓扑和通信量的变化
+        - 容易受路由选择循环、路由震荡之类的问题影响
+        - 自适应路由选择 (adaptive algorithm)：能适应网络拓扑和通信量的变化
 
-### 5.2 路由选择算法
+负载敏感的还是迟钝的？
+- In a ***load-sensitive algorithm***, link costs vary dynamically to reflect the current level of congestion in the underlying link. If a high cost is associated with a link that is currently congested, a routing algorithm will tend to choose routes around such a congested link. While early ARPAnet routing algorithms were load-sensitive `[McQuillan 1980]`, a number of difficulties were encountered `[Huitema 1998]`.
+- Today’s Internet routing algorithms (such as RIP, OSPF, and BGP) are ***load-insensitive***, as a link’s cost does not explicitly reflect its current (or recent past) level of congestion.
 
-#### 5.2.1 link state 链路状态算法
-
-LS路由的工作过程
-- 配置LS路由选择算法的路由工作过程
-    - 各点通过各种渠道（如泛洪等）获得整个网络拓扑，网络中所有链路代价等信息（这部分和算法没关系，属于协议和实现）
-    - 使用LS路由算法计算本站点到其它站点的最优路径（汇集树），得到路由表
-    - 按照此路由表转发分组（datagram方式）
-        - 严格意义上说不是路由的一个步骤
-        - 分发到输入端口的网络层
+### 链路状态路由选择算法
+#### LS 路由的基本工作过程
 
 ```mermaid
-graph LR
+graph TD
 
 A[获得网络拓扑和链路代价信息]
 B[使用最短路由算法得到路由表]
@@ -85,57 +112,58 @@ A-->B
 B-->C
 ```
 
-链路状态路由选择(link state routing)
-- LS路由的基本工作过程
-    1. 发现相邻节点，获知对方网络地址
-        - 一个路由器上电之后，向所有线路发送HELLO分组
-        - 其它路由器收到HELLO分组，回送应答，在应答分组中，告知自己的名字（全局唯一）
-        - 在LAN中，通过广播HELLO分组，获得其它路由器的信息，可以认为引入一个人工节点
-    2. 测量到相邻节点的代价（延迟，开销）
-        - 实测法，发送一个分组要求对方立即响应
-        - 回送一个ECHO分组
-        - 通过测量时间可以估算出延迟情况
-    3. 组装一个LS分组，描述它到相邻节点的代价情况
-        - 发送者名称
-        - 序号，年龄
-        - 列表：给出它相邻节点，和它到相邻节点的延迟
-    4. 将分组通过扩散的方法（泛洪）发到所有其它路由器（以上4步让每个路由器获得拓扑和边代价）
-        - 顺序号：用于控制无穷的扩散，每个路由器都记录（源路由器，顺序号），发现重复的或老的就不扩散
-            - 具体问题1：循环使用问题
-            - 具体问题2：路由器崩溃之后序号从0开始
-            - 具体问题3：序号出现错误
-        - 解决问题的办法：年龄字段(age)
-            - 生成一个分组时，年龄字段不为0
-            - 每个一个时间段，AGE字段减1
-            - AGE字段为0的分组将被抛弃
-        - 关于扩散分组的数据结构
-            - Source：从哪个节点收到LS分组
-            - Seq.，Age：序号，年龄
-            - Send flags：发送标记，必须向指定的哪些相邻站点转发LS分组
-            - ACK flags：本站点必须向哪些相邻站点发送应答
-            - DATA：来自source站点的LS分组
-            - 如：节点B的数据结构
 
-                <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211001230058910.png" />
-                
-                <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002003536511.png" />
+1. 发现相邻节点，获知对方网络地址
+	- 一个路由器上电之后，向所有线路发送广播分组
+	- 其它路由器收到广播分组，回送应答，在应答分组中，告知自己的 IP 地址
 
-    5. 通过Dijkstra算法找出最短路径（这才是路由算法）
-        - 每个节点独立算出来到其他节点（路由器=网络）的最短路径
-        - 迭代算法：第k步能够知道本节点到k个其他节点的最短路径
-        1. 路由器获得各站点LS分组和整个网络的拓扑
-        2. 通过Dijkstra算法计算出到其它各路由器的最短路径（汇集树：该源节点的路由表）
-        3. 将计算结果安装到路由表中
-- LS的应用情况
-    - OSPF协议是一种LS协议，被用于Internet上
-    - IS-IS(intermediate system-intermediate system)：被用于Internet主干中，Netware
+2. 测量到相邻节点的代价（延迟，开销）
+	- 实测法，发送一个分组要求对方立即响应
+	- 回送一个 ECHO 分组
+	- 通过测量时间可以估算出延迟情况
+
+3. 组装一个 LS 分组，描述它到相邻节点的代价情况
+	- 发送者 hostname + IP address
+	- 序号，年龄
+	- 列表：给出它相邻节点，和它到相邻节点的延迟/开销
+
+4. 将分组通过泛洪扩散的方法发到所有其它路由器（这 4 步让每个路由器获得拓扑和边代价）
+	- 顺序号：用于控制无穷的扩散，每个路由器都记录（源路由器，顺序号），发现重复的或老的就不扩散
+		- 具体问题1：循环使用问题
+		- 具体问题2：路由器崩溃之后序号从0开始
+		- 具体问题3：序号出现错误
+	- 解决问题的办法：年龄字段(age)
+		- 生成一个分组时，年龄字段不为0
+		- 每个一个时间段，AGE字段减1
+		- AGE字段为0的分组将被抛弃
+	- 关于扩散分组的数据结构
+		- Source：从哪个节点收到LS分组
+		- Seq.，Age：序号，年龄
+		- Send flags：发送标记，必须向指定的哪些相邻站点转发LS分组
+		- ACK flags：本站点必须向哪些相邻站点发送应答
+		- DATA：来自source站点的LS分组
+		- 如：节点B的数据结构
+
+5. 通过 Dijkstra 算法找出最短路径（这才是路由算法）
+	- 每个节点独立算出来到其他节点（路由器=网络）的最短路径
+	- 迭代算法：第 k 步能够知道本节点到 k 个最近的其他节点（近指代价，不是物理上的举例）
+		1. 路由器获得各站点 LS 分组和整个网络的拓扑
+		2. 通过 Dijkstra 算法计算出到其它各路由器的最短路径
+		3. 将计算结果安装到路由表中
+
+#### LS的应用情况
+- OSPF协议是一种LS协议，被用于Internet上
+- IS-IS(intermediate system-intermediate system)：被用于Internet主干中，Netware
+
+#### Dijkstra 算法
+
 - 符号标记：
-    - c(i, j)：从节点i到j的链路代价（初始状态下非相邻节点之间的链路代价为 $\infty$ ）
-    - D(v)：从源节点到节点V的当前路径代价（节点的代价）
-    - p(v)：从源到节点V的路径前序节点
+    - c(i, j)：从节点 i 到 j 的链路代价（初始状态下非相邻节点之间的链路代价为 $\infty$ ）
+    - D(v)：从源节点到节点 V 的最低开销路径的代价（节点的代价）
+    - p(v)：从源到节点 V 的路径前序节点
     - N'：当前已经知道最优路径的的节点集合（永久节点的集合）
 
-    <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002003950243.png" style="zoom:80%"/>
+该集中式路由选择算法由一个初始化步骤和其后的循环组成，循环执行的次数与网络中的节点个数相同，一旦终止，该算法就计算出从源节点 u 到网络中每个其他节点的最短路径。（无向图中最短路径树是唯一的）
 
 - LS路由选择算法的工作原理
     - 节点标记：每一个节点使用(D(v), p(v)) 如：(3, B)标记
@@ -168,7 +196,7 @@ B-->C
 
             <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002005838258.png" />
 
-#### 5.2.2 distance vector 距离矢量算法
+### 距离向量路由选择算法
 
 距离矢量路由选择(distance vector routing)：迭代式算法
 - 动态路由算法之一
@@ -304,11 +332,11 @@ LS 和 DV 算法的比较 *2种路由选择算法都有其优缺点，而且在�
         - 每一个节点的路由表可能被其它节点使用
             - 错误可以扩散到全网
 
-### 5.3 因特网中自治系统内部的路由选择（内部网关协议）
+## 5.3 因特网中自治系统内部的路由选择
 
 互联网中的内部网关协议有两种常见协议：RIP 和 OSPF
 
-#### 5.3.1 RIP
+### 5.3.1 RIP
 
 RIP(Routing Information Protocol)
 - 在1982年发布的BSD-UNIX中实现
@@ -347,7 +375,7 @@ RIP进程处理
 
 <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002161616471.png" style="zoom:80%"/>
 
-#### 5.3.2 OSPF
+### 5.3.2 OSPF
 
 OSPF(Open Shortest Path First) 开放最短路径优先协议
 - “open”：标准可公开获得
@@ -383,7 +411,7 @@ OSPF“高级”特性（在RIP中的没有的）
 - 边界路由器：连接其它的AS’s
 - 层次性的好处：每个链路状态分组仅仅在一个区域内进行泛洪
 
-### 5.4 ISP之间的路由选择（外部网关协议）：BGP（边界网关协议）
+## 5.4 ISP之间的路由选择（外部网关协议）：BGP
 
 平面路由
 - 一个平面的路由
@@ -514,7 +542,7 @@ BGP 路径选择
     - Intra-AS：关注性能
     - Inter-AS：策略可能比性能更重要
 
-### 5.5 SDN控制平面
+## 5.5 SDN控制平面
 
 前面关注了控制平面的传统方式，现在聚焦于SDN方式。
 
@@ -550,13 +578,6 @@ SDN：面临的挑战
 - 互联网络范围内的扩展性
     - 而不是仅仅在一个AS的内部部署，全网部署
 
-### 5.6 总结
-- 网络层控制平面的方法
-    - 每个路由器控制（传统方法）
-    - 逻辑上集中的控制(software defined networking)
-- 传统路由选择算法
-    - 在互联网上的实现：RIP, OSPF, BGP
-- SDN控制器
-    - 实际中的实现：ODL, ONOS
-- Internet Control Message Protocol
-- 网络管理和SNMP协议
+## 5.7 ICMP
+
+## 5.8 SNMP
