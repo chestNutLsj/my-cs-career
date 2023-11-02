@@ -1301,6 +1301,237 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
               "subpath": "#10-4 O (1)时间确定祖先的秩",
               "title": "二叉堆中如何在O(1)时间确定任何祖先的秩"
+            },
+            {
+              "type": "file",
+              "ctime": 1698903548051,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+              "subpath": "#理解 `next[]` 表",
+              "title": "理解 next[] 表"
+            },
+            {
+              "type": "file",
+              "ctime": 1698903774785,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+              "subpath": "#构造 `next[]` 表",
+              "title": "构造 next[] 表"
+            },
+            {
+              "type": "file",
+              "ctime": 1698903837994,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+              "subpath": "#分摊分析",
+              "title": "KMP算法分摊分析复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698903868067,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+              "subpath": "#改进 `next[]`",
+              "title": "改进 next[] 表"
+            },
+            {
+              "type": "file",
+              "ctime": 1698903939771,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+              "subpath": "#适用范围",
+              "title": "KMP算法的适用情景"
+            },
+            {
+              "type": "file",
+              "ctime": 1698904185679,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+              "subpath": "#坏字符移动的思路",
+              "title": "坏字符移动的思路"
+            },
+            {
+              "type": "file",
+              "ctime": 1698904219931,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+              "subpath": "#构建 `bc[]` 表",
+              "title": "构建 bc[] 表、及时间复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698904562454,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+              "subpath": "#性能分析",
+              "title": "坏字符策略的性能分析与适用场景"
+            },
+            {
+              "type": "file",
+              "ctime": 1698904767355,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+              "subpath": "#好后缀的经验",
+              "title": "好后缀的思路"
+            },
+            {
+              "type": "file",
+              "ctime": 1698905015370,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+              "subpath": "#构造 `gs[]` 表——借助最大匹配后缀串",
+              "title": "借助最大匹配后缀串构造 gs[] 表"
+            },
+            {
+              "type": "file",
+              "ctime": 1698905613701,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+              "subpath": "#如何构造 `ss[]`？",
+              "title": "构造 ss[] 表的时间复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698905636251,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+              "subpath": "#性能分析",
+              "title": "KMP、BM-BC、BM-GS策略性能分析与比较"
+            },
+            {
+              "type": "file",
+              "ctime": 1698906004357,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+              "subpath": "#利用散列优化",
+              "title": "散列如何优化KR法？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698906025558,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+              "subpath": "#快速指纹计算",
+              "title": "快速指纹计算：方法、复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698907736993,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#轴点划分：LUG 版",
+              "title": "轴点划分LUG版"
+            },
+            {
+              "type": "file",
+              "ctime": 1698907802299,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#轴点划分：DUP 版",
+              "title": "轴点划分DUP版：应对情形、改进之处、特点"
+            },
+            {
+              "type": "file",
+              "ctime": 1698907974127,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#轴点划分：LGU 版",
+              "title": "轴点划分LGU版：如何操作？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698908043751,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#分析递归深度",
+              "title": "快速排序递归深度的分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1698908076858,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#分析比较次数",
+              "title": "快速排序比较次数的分析：递推分析、后向分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1698908223414,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#众数与中位数",
+              "title": "众数与中位数：关系、确定众数候选的方法"
+            },
+            {
+              "type": "file",
+              "ctime": 1698908358914,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#中位数选取",
+              "title": "中位数选取：减治策略及复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698908489832,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#快速选取法",
+              "title": "k选取：基于快速化分的k选取策略、复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698908580897,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#线性选取",
+              "title": "k选取：线性选取策略、复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698908731372,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#输入敏感性与希尔排序性能分析",
+              "title": "输入敏感性与希尔排序性能分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1698908746998,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#shell 序列",
+              "title": "shell序列最后一趟复杂度为Ω(n^2)的原因"
+            },
+            {
+              "type": "file",
+              "ctime": 1698908803439,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#线性组合",
+              "title": "互素元素线性组合的最大不可表示数"
+            },
+            {
+              "type": "file",
+              "ctime": 1698908852647,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#有序性的保持和加强",
+              "title": "互素步长的排序后逆序对的间距"
+            },
+            {
+              "type": "file",
+              "ctime": 1698908981698,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#(g, h)-sorted 时 d-sorting 的排序成本",
+              "title": "(g, h)-sorted 时 d-sorting 的排序成本"
+            },
+            {
+              "type": "file",
+              "ctime": 1698909005365,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#Papernov-Stasevic Seq",
+              "title": "PS步长序列的时间复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698909047998,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#Pratt Seq",
+              "title": "Pratt步长序列的时间复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698909079127,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+              "subpath": "#Sedgewick Seq",
+              "title": "Sedgewick步长序列的时间复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698909377832,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
+              "subpath": "#12-10 基于 `median()` 算法设计 k-selection 算法",
+              "title": "如何基于中位数选取算法实现k选取？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698910614442,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
+              "subpath": "#12-14 Pratt 序列分析",
+              "title": "Pratt序列的详细分析"
             }
           ],
           "title": "知识点细节"
@@ -1820,6 +2051,76 @@
               "path": "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
               "subpath": "#10-22 分裂 AVL 树",
               "title": "分裂大节点AVL树和小节点AVL树"
+            },
+            {
+              "type": "file",
+              "ctime": 1698907436663,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A1-String-Exercise.md",
+              "subpath": "#11-4 KMP 复杂度分析",
+              "title": "KMP 复杂度的严谨分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1698907483145,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A1-String-Exercise.md",
+              "subpath": "#11-6 `gs[]` 构造算法的时间复杂度",
+              "title": "ss[]和gs[]表的构造算法复杂度"
+            },
+            {
+              "type": "file",
+              "ctime": 1698907570468,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A1-String-Exercise.md",
+              "subpath": "#11-7 模式枚举",
+              "title": "模式枚举问题：匹配间隔的设置对复杂度的影响"
+            },
+            {
+              "type": "file",
+              "ctime": 1698907603565,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A1-String-Exercise.md",
+              "subpath": "#11-9 分析蛮力算法的实际效率",
+              "title": "分析模式匹配蛮力算法的实际效率"
+            },
+            {
+              "type": "file",
+              "ctime": 1698909132544,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
+              "subpath": "#12-1 构造轴点的 LGU 策略",
+              "title": "LGU策略能否应对大量元素重复的情况？"
+            },
+            {
+              "type": "file",
+              "ctime": 1698909164274,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
+              "subpath": "#12-1-补 三点取中法的失衡概率",
+              "title": "三点取中法的失衡概率计算"
+            },
+            {
+              "type": "file",
+              "ctime": 1698909264220,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
+              "subpath": "#12-3 众数定义改为“不少于一半”的分析",
+              "title": "众数定义修改为“不少于一半”的分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1698909328158,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
+              "subpath": "#12-7 不等长向量长度的 `median()` 算法分析",
+              "title": "不等长向量长度的 `median()` 算法分析"
+            },
+            {
+              "type": "file",
+              "ctime": 1698910586369,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
+              "subpath": "#12-12 基数排序推广：希尔排序的基本思想",
+              "title": "基数排序推广：希尔排序的基本思想"
+            },
+            {
+              "type": "file",
+              "ctime": 1698910600897,
+              "path": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
+              "subpath": "#12-13 证明 g-sorted 的向量经过 h-sorting 后亦然保持 g-sorted",
+              "title": "证明 g-sorted 的向量经过 h-sorting 后亦然保持 g-sorted"
             }
           ],
           "title": "习题解析好题"

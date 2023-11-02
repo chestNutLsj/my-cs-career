@@ -134,8 +134,8 @@ A trie can be used to replace a hash table, over which it has the following adva
 
 However, tries are less efficient than a hash table when the data is directly accessed on a secondary storage device such as a hard disk drive that has higher random access time than the main memory. Tries are also disadvantageous when the key value cannot be easily represented as string, such as floating point numbers where multiple representations are possible (e.g. 1 is equivalent to 1.0, +1.0, 1.00, etc.), however it can be unambiguously represented as a binary number in IEEE 754, in comparison to two's complement format.
 
-Implementation strategies
--------------------------
+## Implementation strategies
+
 ![[A2-Trie-Tree-implementation.png]]
 Fig. 3: A trie implemented as a left-child right-sibling binary tree: vertical arrows are {baby, bad, bank, box, dad, dance}. The lists are sorted to allow traversal in lexicographic order.
 
@@ -235,10 +235,6 @@ References
 31.  **^** Yang, Lai; Xu, Lida; Shi, Zhongzhi (23 March 2012). "An enhanced dynamic hash TRIE algorithm for lexicon search". _Enterprise Information Systems_. **6** (4): 419–432. Bibcode: 2012EntIS... 6.. 419Y. doi: 10.1080/17517575.2012.665483. S2CID 37884057.
 32.  **^** Transier, Frederik; Sanders, Peter (December 2010). "Engineering basic algorithms of an in-memory text search engine". _ACM Transactions on Information Systems_. Association for Computing Machinery. **29** (1): 1–37. doi: 10.1145/1877766.1877768. S2CID 932749.
 
-External links
---------------
-
-*   NIST's Dictionary of Algorithms and Data Structures: Trie
 
 [^1]: Maabar, Maha (17 November 2014). "[Trie Data Structure](https://bioinformatics.cvr.ac.uk/trie-data-structure/)". CVR, University of Glasgow. Archived from the original on 27 January 2021. Retrieved 17 April 2022.
 [^2]: Thue, Axel (1912). "[Über die gegenseitige Lage gleicher Teile gewisser Zeichenreihen](https://archive.org/details/skrifterutgitavv121chri/page/n11/mode/2up)". Skrifter Udgivne Af Videnskabs-Selskabet I Christiania. 1912 (1): 1–67. Cited by Knuth.
