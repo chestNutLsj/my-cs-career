@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "fea4c821a9762143",
+        "id": "2b9e9397692bd056",
         "type": "tabs",
         "children": [
           {
-            "id": "a541fd4cad0c7f99",
+            "id": "5d9ba342d4362206",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/4-Architecture/THU-Liu/30-DRAM.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -92,6 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/4-Architecture/THU-Liu/30-DRAM.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,6 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/4-Architecture/THU-Liu/30-DRAM.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -128,7 +134,9 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {}
+              "state": {
+                "file": "1-Theory/4-Architecture/THU-Liu/30-DRAM.md"
+              }
             }
           }
         ]
@@ -142,7 +150,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/4-Architecture/THU-Liu/30-DRAM.md"
+              }
             }
           },
           {
@@ -157,8 +167,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 206.5,
-    "collapsed": true
+    "width": 206.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -176,27 +185,27 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "a541fd4cad0c7f99",
+  "active": "5d9ba342d4362206",
   "lastOpenFiles": [
+    "1-Theory/4-Architecture/THU-Liu/25-Hazard-handle.md",
+    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-pipeline-exception.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-exceptions.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-delay-slot-compare.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-control-hazards.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-brance-delay.jpg",
+    "1-Theory/4-Architecture/THU-Liu/assets/Pasted image 20231103233558.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-2-bit-predict.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-1-bit-predict.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-1bit-BHT.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-branch-hazard.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/41-Stack-queue-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2010-mid-1.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Intro-Exercise.md",
     "7-OS-application/Linux/Arch/Fcitx5输入法问题.md",
-    "1-Theory/4-Architecture/THU-Liu/25-Hazard-handle.md",
-    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-stall.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-nop.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-data-hazards.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-structure-hazards-handle.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-structure-hazards.png",
     "1-Theory/4-Architecture/THU-Liu/24-Pipeline.md",
-    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-compare.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-flow-control.png",
     "0-Assets/Excalidraw/Drawing 2023-11-02 23.19.36.excalidraw.md",
-    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-IF-segment.svg",
-    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-datapath.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-datapath.png",
     "0-Assets/Excalidraw/Drawing 2023-11-02 22.42.46.excalidraw.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/Summarize.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/67-Red-Black-Tree-instance.md",
@@ -214,7 +223,6 @@
     "1-Theory/4-Architecture/THU-Liu/13-Hamming-code.md",
     "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
     "1-Theory/4-Architecture/RISC-V/A1-RISC-V异常、中断.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/94-Priority-search-tree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Boruvka's_algorithm.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Dijkstra_Animation.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/mst-3.apng",
