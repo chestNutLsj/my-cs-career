@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "7878c238c284ae32",
+        "id": "86a3a3b5289c35dd",
         "type": "tabs",
         "children": [
           {
-            "id": "a3b2d2182ef260ba",
+            "id": "4b899477c7943c10",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -76,7 +76,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 374.5
+    "width": 318.5,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -92,7 +93,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -109,7 +109,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -130,9 +129,7 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -146,9 +143,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md"
-              }
+              "state": {}
             }
           },
           {
@@ -163,7 +158,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 206.5
+    "width": 206.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -181,44 +177,45 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "4b899477c7943c10",
   "lastOpenFiles": [
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+    "7-OS-application/Linux/Arch/Fcitx5输入法问题.md",
+    "1-Theory/4-Architecture/THU-Liu/25-Hazard-handle.md",
+    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-stall.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-nop.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-data-hazards.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-structure-hazards-handle.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-structure-hazards.png",
+    "1-Theory/4-Architecture/THU-Liu/24-Pipeline.md",
+    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-compare.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-flow-control.png",
+    "0-Assets/Excalidraw/Drawing 2023-11-02 23.19.36.excalidraw.md",
+    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-IF-segment.svg",
+    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-datapath.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-datapath.png",
+    "0-Assets/Excalidraw/Drawing 2023-11-02 22.42.46.excalidraw.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/Summarize.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/67-Red-Black-Tree-instance.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/16-Stirling-Approximation.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A1-String-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A2-Trie-Tree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/95-Skew-heap.md",
     "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
-    "1-Theory/4-Architecture/THU-Liu/25-Hazard-handle.md",
     "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
-    "1-Theory/4-Architecture/THU-Liu/24-Pipeline.md",
-    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-datapath-segment-registers.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-segments.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-storage.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-time-space-chart.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-connection-chart.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/24-Pipeline-operate-kinds.png",
     "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
     "1-Theory/4-Architecture/THU-Liu/13-Hamming-code.md",
     "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
     "1-Theory/4-Architecture/RISC-V/A1-RISC-V异常、中断.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/94-Priority-search-tree.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/93-Fibonacci-heap.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/93-Fibonacci-heap-fig-2-4.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/93-Fibonacci-heap-instance.png",
     "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md",
     "1-Theory/5-OS-principle/Internal&design-principle/60-IO管理与磁盘.md",
     "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
     "1-Theory/5-OS-principle/Internal&design-principle/42-加载和链接.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/10-操作系统概述.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/20-进程与线程.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/30-并发.md",
-    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-abstract-graph-network.png",
-    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-logically-centralized-control.png",
-    "1-Theory/4-Architecture/THU-Liu/20-Intruction.md",
-    "1-Theory/4-Architecture/THU-Liu/23-CPU-design.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Boruvka's_algorithm.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Dijkstra_Animation.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/mst-3.apng",
@@ -228,7 +225,6 @@
     "8-SimpRead/详解 RISC v 中断",
     "8-SimpRead/Insertion in a Red-Black Tree/assets",
     "8-SimpRead/Insertion in a Red-Black Tree",
-    "8-SimpRead/Deletion in a Red-Black Tree/assets",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
