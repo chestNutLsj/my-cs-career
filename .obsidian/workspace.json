@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "86a3a3b5289c35dd",
+        "id": "fea4c821a9762143",
         "type": "tabs",
         "children": [
           {
-            "id": "4b899477c7943c10",
+            "id": "a541fd4cad0c7f99",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -76,8 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 318.5,
-    "collapsed": true
+    "width": 224.50577545166016
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -177,8 +176,13 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "4b899477c7943c10",
+  "active": "a541fd4cad0c7f99",
   "lastOpenFiles": [
+    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/41-Stack-queue-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2010-mid-1.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Intro-Exercise.md",
     "7-OS-application/Linux/Arch/Fcitx5输入法问题.md",
     "1-Theory/4-Architecture/THU-Liu/25-Hazard-handle.md",
     "1-Theory/4-Architecture/THU-Liu/assets/25-Hazard-handle-stall.png",
@@ -211,11 +215,6 @@
     "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
     "1-Theory/4-Architecture/RISC-V/A1-RISC-V异常、中断.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/94-Priority-search-tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/93-Fibonacci-heap.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/60-IO管理与磁盘.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/42-加载和链接.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Boruvka's_algorithm.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Dijkstra_Animation.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/mst-3.apng",
