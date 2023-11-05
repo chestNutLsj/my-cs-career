@@ -22,7 +22,8 @@
     "emojiStyle": "twemoji",
     "iconInTabsEnabled": false,
     "iconsBackgroundCheckEnabled": false,
-    "iconInTitleEnabled": false
+    "iconInTitleEnabled": false,
+    "iconInFrontmatterEnabled": false
   },
   "0-Assets": "SiDatabricks",
   "5-Tools": "RiToolsFill",

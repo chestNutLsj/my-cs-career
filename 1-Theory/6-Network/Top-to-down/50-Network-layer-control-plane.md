@@ -152,24 +152,43 @@ B-->C
 		3. 将计算结果安装到路由表中
 
 #### LS的应用情况
-- OSPF协议是一种LS协议，被用于Internet上
+- OSPF 协议是一种 LS 协议，被用于 Internet 上
 - IS-IS(intermediate system-intermediate system)：被用于Internet主干中，Netware
 
 #### Dijkstra 算法
 
 - 符号标记：
-    - c(i, j)：从节点 i 到 j 的链路代价（初始状态下非相邻节点之间的链路代价为 $\infty$ ）
-    - D(v)：从源节点到节点 V 的最低开销路径的代价（节点的代价）
-    - p(v)：从源到节点 V 的路径前序节点
-    - N'：当前已经知道最优路径的的节点集合（永久节点的集合）
+    - $c(i, j)$：从节点 i 到 j 的链路代价（初始状态下非相邻节点之间的链路代价为 $\infty$ ）
+    - $D(v)$：从源节点到节点 V 的最低开销路径的代价（节点的代价）
+    - $p(v)$：从源到节点 V 的路径前序节点
+    - $N'$：当前已经知道最优路径的的节点集合（永久节点的集合）
 
 该集中式路由选择算法由一个初始化步骤和其后的循环组成，循环执行的次数与网络中的节点个数相同，一旦终止，该算法就计算出从源节点 u 到网络中每个其他节点的最短路径。（无向图中最短路径树是唯一的）
+
+```
+# Link-State Algorithm for Source Node u
+
+Initialization: 
+	N’ = {u}
+	for all nodes v
+		if v is a neighbor of u
+			then D(v) = c(u,v) 
+		else D(v) = ∞
+
+Loop:
+	find w not in N’ such that D(w) is a minimum
+	add w to N’
+	update D(v) for each neighbor v of w and not in N’:
+		D(v) = min(D(v), D(w)+ c(w,v) )
+	/* new cost to v is either old cost to v or known least path cost to w plus cost from w to v */
+	until N’= N
+```
 
 - LS路由选择算法的工作原理
     - 节点标记：每一个节点使用(D(v), p(v)) 如：(3, B)标记
         - D(v)从源节点由已知最优路径到达本节点的距离
         - P(v)前序节点来标注
-    - 2类节点
+    - 算法过程中节点有两类：
         - 临时节点(tentative node)：还没有找到从源节点到此节点的最优路径的节点
         - 永久节点(permanent node) N'：已经找到了从源节点到此节点的最优路径的节点
 - Dijkstra算法的框架
@@ -182,110 +201,173 @@ B-->C
         - 否则，不重新标注
     4. 开始一个新的循环（第2步）
     5. 最终搜索得源节点到所有节点的最优路径，算法终止
-    - 例子
 
-        <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002004447848.png" style="zoom:80%"/>
+>[! example] LS 算法的例子
+> 考查网络：计算从 u 到所有可能目的地的最低开销路径
+> ![[50-Network-layer-control-plane-abstract-graph-network.png]]
+> 
+> 计算过程如下表：
+> ![[50-Network-layer-control-plane-ls-algo-on-fig5-3.png]]
+> 
+> 具体步骤如下：
+> 1. In the ***initialization step***, the currently known least-cost paths from u to its directly attached neighbors, v, x, and w, are initialized to 2, 1, and 5, respectively. Note in particular that the cost to w is set to 5 (even though we will soon see that a lesser-cost path does indeed exist) since this is the cost of the direct (one hop) link from u to w. ==The costs to y and z are set to infinity because they are not directly connected to u==.
+> 2. In the ***first iteration***, we look among those nodes not yet added to the set N′ and ==find that node with the least cost as of the end of the previous iteration==. That node is x, with a cost of 1, and thus x is added to the set N′. Line 12 of the LS algorithm is then performed to update D (v) for all nodes v, yielding the results shown in the second line (Step 1) in Table 5.1. The cost of the path to v is unchanged. The cost of the path to w (which was 5 at the end of the initialization) through node x is found to have a cost of 4. Hence this lower-cost path is selected and w’s predecessor along the shortest path from u is set to x. Similarly, the cost to y (through x) is computed to be 2, and the table is updated accordingly.
+> 3. In the second iteration, nodes v and y are found to have the least-cost paths (2), and we break the tie arbitrarily and add y to the set N′ so that N′ now contains u, x, and y. The cost to the remaining nodes not yet in N′, that is, nodes v, w, and z, are updated via line 12 of the LS algorithm, yielding the results shown in the third row in Table 5.1.
+> 4. And so on . . .
+> 
+> LS 算法终止时，每个节点都得到从源节点沿最低开销路径的前一节点，前一节点又有前一节点，直到串联起整个图，得到最小路径树（汇集树）
+> 
+> 通过对每个目的节点存放从 u 到目的地的最低开销路径的下一跳节点，在一个节点中的转发表能够根据此信息而构建：
+> ![[50-Network-layer-control-plane-least-cost-path.png]]
 
-- Dijkstra算法的讨论
-    - 算法复杂度：考虑 $n$ 节点的情况
-        - 每一次迭代：需要检查所有不在永久集合N中的节点
-        - $n(n+1)/2$ 次比较： $O(n^2)$
-        - 有很有效的实现： $O(n\log{n})$ 最小堆 or 斐波那契堆
-    - 可能的震荡：
-        - e.g., 链路代价 = 链路承载的流量：切换路径过快
 
-            <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002005838258.png" />
+- Dijkstra算法的复杂度：考虑 $n$ 节点的情况
+	- 每一次迭代：需要检查所有不在永久集合 N 中的节点
+	- $n(n+1)/2$ 次比较： $O(n^2)$
+	- 有很有效的实现： $O(n\log{n})$ 最小堆 or 斐波那契堆
+
+#### 震荡问题
+
+![[50-Network-layer-control-plane-oscillations.png]]
+- 链路开销非对称时：$c(u,v) \ne c(v,u)$ 
+	- In this example, node z originates a unit of traffic destined for w, node x also originates a unit of traffic destined for w, and node y injects an amount of traffic equal to e, also destined for w. The initial routing is shown in Figure 5.5 (a) with the ==link costs corresponding to the amount of traffic carried==.
+	- When the LS algorithm is next run, node y determines (based on the link costs shown in Figure 5.5 (a)) that the clockwise path to w has a cost of 1, while the counterclockwise path to w (which it had been using) has a cost of 1 + e. Hence y’s least-cost path to w is now clockwise. Similarly, x determines that its new least-cost path to w is also clockwise, resulting in costs shown in Figure 5.5 (b).
+	- When the LS algorithm is run next, nodes x, y, and z all ==detect a zero-cost path to w in the counterclockwise direction, and all route their traffic to the counterclockwise routes==.
+	- The next time the LS algorithm is run, x, y, and z all then route their traffic to the clockwise routes.
+- 解决方案是让路由器不同时运行 LS 算法：
+	- Interestingly, researchers have found that routers in the Internet can self-synchronize among themselves `[Floyd Synchronization 1994]`. That is, ==even though they initially execute the algorithm with the same period but at different instants of time, the algorithm execution instance can eventually become, and remain==, synchronized at the routers.
+	- One way to avoid such ***self-synchronization*** is for each router to randomize the time it sends out a link advertisement.
 
 ### 距离向量路由选择算法
 
-距离矢量路由选择(distance vector routing)：迭代式算法
-- 动态路由算法之一
-- DV算法历史及应用情况
-    - 1957 Bellman, 1962 Ford Fulkerson
-    - 用于ARPANET, Internet(RIP) DECnet, Novell, ApplTalk
+距离矢量路由选择(distance vector routing)：迭代式、异步、分布式算法
+- It is ***distributed*** in that each node receives some information from one or more of its directly attached neighbors, performs a calculation, and then distributes the results of its calculation back to its neighbors.
+- It is ***iterative*** in that this process ==continues on until no more information is exchanged between neighbors==. (Interestingly, the algorithm is also self-terminating—there is no signal that the computation should stop; it just stops.)
+- The algorithm is ***asynchronous*** in that it does not require all of the nodes to operate in lockstep with each other. 
+
+#### Bellman-Ford 方程
+
+令 $d_{x}(y)$ 代表从节点 x 到节点 y 的最低路径开销，则其与 Bellman-Ford 方程相关：
+$$d_x(y) = \min_{v}(c(x, v) + d_v(y))\quad (5-1)$$
+- 其中 $c(x, v)$ 为 $x$ 到邻居 $v$ 的代价， $d_v(y)$ 为从邻居 $v$ 到目标 $y$ 的开销， $\min_v$ 为取所有 $x$ 的邻居取最小的 $v$ 
+- 这个算法的本质思想是贪心——每一步都选择朝向目标方向的最短距离。
+
+![[50-Network-layer-control-plane-bellman-ford-algo.png]]
+
+>[! note] Bellman-Ford 方程的两个重要应用
+>The Bellman-Ford equation is not just an intellectual curiosity. It actually has significant practical importance: 
+>1. ***the solution to the Bellman-Ford equation provides the entries in node x’s forwarding table***.
+>	- To see this, let v* be any neighboring node that achieves the minimum in Equation 5.1.
+>	- Then, if node x wants to send a packet to node y along a least-cost path, it should first forward the packet to node v*. 
+>	- Thus, node x’s forwarding table would specify node v* as the next-hop router for the ultimate destination y. 
+>
+>2. Another important practical contribution of the Bellman-Ford equation is that ***it suggests the form of the neighbor-to-neighbor communication that will take place in the DV algorithm***.
+
+#### DV 算法的思想
+
+每个节点 $x$ 以 $D_{x}(y)$ 开始，对网络 $N$ 中所有其他节点 $y$，估计从 $x$ 到 $y$ 的最低开销路径的开销。
+
+1. 令 $\textbf{D}_{x}=[D_{x}(y):y\in N]$ 为节点 $x$ 的距离向量，其是从 $x$ 到网络 $N$ 中其它所有节点 $y$ 的开销的估计。
+
+2. 使用 DV 算法，每个节点 $x$ 维护下列路由选择信息：
+    - 从 $x$ 到所有直连邻居 $v$ 的开销记为 $c(x,v)$
+    - 节点 $x$ 的距离向量 $\textbf{D}_{x}$，包含了 $x$ 到 $N$ 中所有目的地 $y$ 的开销的估计值 
+    - 对于 $x$ 的每个邻居 $v$，各自维护 $\textbf{D}_v = [D_v(y): y \in N]$
+
+3. DV 算法的核心思路：
+    - 每个节点都将自己的距离矢量的副本传送给邻居，定时或者DV有变化时，让对方去算
+    - 当 $x$ 从邻居那里收到新的距离向量时，保存 $v$ 的距离向量，然后使用 Bellman-Ford 方程更新 $x$ 自己的距离矢量：
+        - $$D_x(y) \leftarrow \min_v{c(x,v) + D_v(y)}, \qquad \text{for every $y \in N$ } $$ 
+        - 其中 $D_x(y)$ 为 $x$ 往 $y$ 的开销， $c(x,v)$ 为 $x$ 到邻居 $v$ 开销， $D_v(y)$ 为 $v$ 声称到 $y$ 的开销
+    - 如果节点 $x$ 的距离向量因为这个步骤而改变，那么 $x$ 接下来将向它的每个邻居发送更新后的距离向量，继而让所有邻居扩散地更新各自的距离向量。
+    - 只要所有的节点继续以异步的方式交换它们的距离向量，$D_x(y)$ 估计值最终会收敛于实际的最小开销值 $d_x(y)$
+
+```mermaid
+graph TD
+
+A[等待本地链路开销变化或者从邻居传送新的DV报文]
+B[重新计算各目标开销估计值]
+C[如果到任何目标的DV发生变化则通告邻居]
+
+A-->B
+B-->C
+C-->A
+```
+
+```
+// Distance-Vector Algorithm
+
+// At each node x:
+Initialization: 
+	for all destinations y in N: 
+		Dx(y)= c(x,y)/* if y is not a neighbor then c(x,y)= ∞ */ 
+	for each neighbor w
+		Dw(y) = ? for all destinations y in N
+	for each neighbor w
+		send distance vector Dx = [Dx(y): y in N] to w
+
+loop:
+	wait (until I see a link cost change to some neighbor w or  until I receive a distance vector from some neighbor w)
+	for each y in N:
+		Dx(y) = min_v{c(x,v) + Dv(y)}
+	
+if Dx(y) changed for any destination y
+	send distance vector Dx = [Dx(y): y in N] to all neighbors 
+	
+forever
+```
+
+In the DV algorithm, a node x updates its distance-vector estimate when it either sees a cost change in one of its directly attached links or receives a distance-vector update from some neighbor. But to update its own forwarding table for a given destination y, what node x really needs to know is not the shortest-path distance to y but instead the neighboring node v*(y) that is the next-hop router along the shortest path to y. As you might expect, the next-hop router v*(y) is the neighbor v that achieves the minimum in Line 15 of the DV algorithm. (If there are multiple neighbors v that achieve the minimum, then v*(y) can be any of the minimizing neighbors.) 
+> DV 算法中，节点 x 在得知其直接链路开销的改变、或收到邻居更新后的距离向量，会更新自己的距离向量。但是为了更新自己通向远处节点 y 的转发表，x 并不直接与 y 通信，而是只需要了解能够到达 y 的最小开销路径的下一条路由器 v* 节点即可。
+
+Thus, in Lines 14-15, for each destination y, node x also determines v*(y) and updates its forwarding table for destination y.
+
+- Recall that the ***LS algorithm is a centralized*** algorithm in the sense that it requires each node to first obtain a complete map of the network before running the Dijkstra algorithm.
+- The ***DV algorithm is decentralized*** and does not use such global information. Indeed, the only information a node will have is the costs of the links to its directly attached neighbors and information it receives from these neighbors. Each node waits for an update from any neighbor (Lines 13), calculates its new distance vector when receiving an update (Line 15), and distributes its new distance vector to its neighbors (Lines 17-18).
+
+DV-like algorithms are used in many routing protocols in practice, including
+- the Internet’s ***RIP*** and ***BGP***,
+- ISO ***IDRP***,
+- Novell ***IPX***,
+- and the ***original ARPAnet***.
+
+#### DV 算法的实例
+
 - 距离矢量路由选择的基本思想
-    - 各路由器维护一张路由表，结构如图（其它代价）
-
-        <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002010557843.png" style="zoom:60%"/>
-
+    - 各路由器维护一张路由表
     - 各路由器与相邻路由器交换路由表
     - 根据获得的路由信息，更新路由表
-- 代价及相邻节点间代价的获得
-    - 跳数(hops)，延迟(delay)，队列长度
-    - 相邻节点间代价的获得：通过实测
-- 路由信息的更新（定期测量它到相邻节点的代价，定期与相邻节点交换路由表(DV)，这里的距离矢量(DV)实际上为约定次序的往各个目标节点的代价向量：(目标, 代价)列表）
-    - 根据实测 得到本节点A到相邻站点的代价（如：延迟）
-    - 根据各相邻站点声称它们到目标站点B的代价
-    - 计算出本站点A经过各相邻站点到目标站点B的代价
-    - 找到一个最小的代价，和相应的下一个节点Z，到达节点B经过此节点Z，并且代价为A-Z-B的代价
+- 开销及相邻节点间开销的获得
+    - 跳数 (hops)，延迟 (delay)，队列长度
+    - 相邻节点间开销的获得：通过实测
+- 路由信息的更新（定期测量它到相邻节点的开销，定期与相邻节点交换路由表 (DV)，这里的距离矢量 (DV)实际上为约定次序的往各个目标节点的开销向量：(目标, 开销)列表）
+    - 根据实测 得到本节点 A 到相邻站点的开销（如：延迟）
+    - 根据各相邻站点声称它们到目标站点 B 的开销
+    - 计算出本站点 A 经过各相邻站点到目标站点 B 的开销
+    - 找到一个最小的开销，和相应的下一个节点 Z，到达节点 B 经过此节点 Z，并且开销为 A-Z-B 的开销
     - 其它所有的目标节点一个计算法
 
 > 例子：
 > 
-> <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002012113751.png" style="zoom:80%"/>
+> ![[50-Network-layer-control-plane-DV-operation.png]]
 > 
-> 以当前节点J为例，相邻节点A, I, H, K
-> - J测得到A, I, H, K的延迟为8ms, 10ms, 12ms, 6ms
-> - 通过交换DV，从A, I, H, K获得到它们到G的延迟为18ms, 31ms, 6ms, 31ms
-> - 因此从J经过A, I, H, K到G的延迟为26ms, 41ms, 18ms, 37ms
-> - 将到G的路由表项更新为18ms, 下一跳为：H
-> - 其它目标一样，除了本节点J
-
-距离矢量算法（Bellman-Ford）
-- Bellman-Ford方程（动态规划） *递归风车*
-    - 设 $d_x(y)$ 为从 $x$ 到 $y$ 的最小路径代价，那么 $$d_x(y) = \min_v(c(x, v) + d_v(y))$$
-    - 其中 $c(x, v)$ 为 $x$ 到邻居 $v$ 的代价， $d_v(y)$ 为从邻居 $v$ 到目标 $y$ 的代价， $\min_v$ 为取所有 $x$ 的邻居取最小的 $v$ 
-- Bellman-Ford例子
-
-    <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002012336956.png" style="zoom:60%"/>
-
-    - 明显的： $d_v(z) = 5$ , $d_x(z) = 3$ , $d_w(z) = 3$
-    - 由B-F方程得到：   
-    $$d_u(z) = \min(c(u,v) + d_v(z), c(u,x) + d_x(z), c(u,w) + d_w(z)) = \min(2+5, 1+3, 5+3) = 4 $$
-    - 那个能够达到目标 $z$ 最小代价的节点 $x$ ，就在到目标节点的下一条路径上，在转发表中使用
-- $D_x(y)$ 为节点 $x$ 到 $y$ 代价最小值的估计
-    - $x$ 节点维护距离矢量 $D_x = [D_x(y): y \in N]$
-- 节点 $x$ ：
-    - 知道到所有邻居 $v$ 的代价记为 $c(x,v)$
-    - 收到并维护一个它邻居的距离矢量集
-    - 对于每个邻居， $x$ 维护 $D_v = [D_v(y): y \in N]$
-- 核心思路：
-    - 每个节点都将自己的距离矢量估计值传送给邻居，定时或者DV有变化时，让对方去算
-    - 当 $x$ 从邻居收到DV时，自己运算，更新它自己的距离矢量
-        - 采用B-F equation：     
-            $$D_x(y) \leftarrow \min_v{c(x,v) + D_v(y)}, \qquad \text{for every $y \in N$ } $$ 其中 $D_x(y)$ 为 $x$ 往 $y$ 的代价， $c(x,v)$ 为 $x$ 到邻居 $v$ 代价， $D_v(y)$ 为 $v$ 声称到 $y$ 的代价
-    - $D_x(y)$ 估计值最终收敛于实际的最小代价值 $d_x(y)$
-        - 分布式、迭代算法
-            - 异步式，迭代：每次本地迭代被以下事件触发：
-                - 本地链路代价变化了
-                - 从邻居来了DV的更新消息
-            - 分布式：
-                - 每个节点只是在自己的DV改变之后向邻居通告
-                - 然后邻居们在有必要的时候通知他们的邻居
-            - 每个节点：
-
-                ```mermaid
-                graph TD
-
-                A[等待本地链路代价变化或者从邻居传送新的DV报文]
-                B[重新计算各目标代价估计值]
-                C[如果到任何目标的DV发生变化则通告邻居]
-
-                A-->B
-                B-->C
-                C-->A
-                ```
+> 以当前节点 J 为例，相邻节点 A, I, H, K
+> - J 测得到 A, I, H, K 的延迟为 8ms, 10ms, 12ms, 6ms
+> - 通过交换 DV，从 A, I, H, K 获得到它们到 G 的延迟为 18ms, 31ms, 6ms, 31ms
+> - 因此从 J 经过 A, I, H, K 到 G 的延迟为 26ms, 41ms, 18ms, 37ms
+> - 将到 G 的路由表项更新为 18ms, 下一跳为：H
+> - 其它目标一样，除了本节点 J
 
 DV的无穷计算问题
 - DV的特点
     - 好消息传的快，坏消息传的慢
 - 好消息的传播以每一个交换周期前进一个路由器的速度进行
-    - 好消息：某个路由器接入或有更短的路径（链路由断变为通，链路代价由大变小），举例：
+    - 好消息：某个路由器接入或有更短的路径（链路由断变为通，链路开销由大变小），举例：
 
         <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002012712585.png" style="zoom:80%"/>
 
     - 坏消息的传播速度非常慢（无穷计算问题）
-        - 例子：第一次交换之后，B从C处获得信息，C可以到达A（C-A，要经过B本身），但是路径是2，因此B变成3，从C处走；第二次交换，C从B处获得消息，B可以到达A，路径为3，因此，C到A从B走，代价为3；无限此之后，到A的距离变成INF，不可达
+        - 例子：第一次交换之后，B从C处获得信息，C可以到达A（C-A，要经过B本身），但是路径是2，因此B变成3，从C处走；第二次交换，C从B处获得消息，B可以到达A，路径为3，因此，C到A从B走，开销为3；无限此之后，到A的距离变成INF，不可达
 
             <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002012915419.png" style="zoom:80%"/>
 
@@ -309,7 +391,11 @@ DV的无穷计算问题
 > 
 > <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002113230006.png" style="zoom:80%"/>
 
-LS 和 DV 算法的比较 *2种路由选择算法都有其优缺点，而且在互联网上都有应用*
+
+### LS 与 DV 算法的比较
+
+*2种路由选择算法都有其优缺点，而且在互联网上都有应用*
+
 - 消息复杂度（DV胜出）
     - LS：有n节点，E条链路，发送报文O(nE)个
         - 局部的路由信息；全局传播
