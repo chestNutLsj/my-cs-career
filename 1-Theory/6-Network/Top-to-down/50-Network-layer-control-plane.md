@@ -340,23 +340,42 @@ DV-like algorithms are used in many routing protocols in practice, including
 - 开销及相邻节点间开销的获得
     - 跳数 (hops)，延迟 (delay)，队列长度
     - 相邻节点间开销的获得：通过实测
-- 路由信息的更新（定期测量它到相邻节点的开销，定期与相邻节点交换路由表 (DV)，这里的距离矢量 (DV)实际上为约定次序的往各个目标节点的开销向量：(目标, 开销)列表）
-    - 根据实测 得到本节点 A 到相邻站点的开销（如：延迟）
+- 路由信息的更新（定期测量它到相邻节点的开销，定期与相邻节点交换路由表 (DV)）
+    - 根据实测得到本节点 A 到相邻站点的开销（如：延迟）
     - 根据各相邻站点声称它们到目标站点 B 的开销
     - 计算出本站点 A 经过各相邻站点到目标站点 B 的开销
     - 找到一个最小的开销，和相应的下一个节点 Z，到达节点 B 经过此节点 Z，并且开销为 A-Z-B 的开销
     - 其它所有的目标节点一个计算法
 
-> 例子：
+> [! example] 例子：DV 算法初始化、更新、停止
 > 
 > ![[50-Network-layer-control-plane-DV-operation.png]]
 > 
-> 以当前节点 J 为例，相邻节点 A, I, H, K
-> - J 测得到 A, I, H, K 的延迟为 8ms, 10ms, 12ms, 6ms
-> - 通过交换 DV，从 A, I, H, K 获得到它们到 G 的延迟为 18ms, 31ms, 6ms, 31ms
-> - 因此从 J 经过 A, I, H, K 到 G 的延迟为 26ms, 41ms, 18ms, 37ms
-> - 将到 G 的路由表项更新为 18ms, 下一跳为：H
-> - 其它目标一样，除了本节点 J
+> The leftmost column of the figure displays three initial routing tables for each of the three nodes. For example, the table in the upper-left corner is node x’s initial routing table.
+> 
+> Within a specific routing table, each row is a distance vector— specifically, each node’s routing table includes its own distance vector and that of each of its neighbors. Thus, the first row in node x’s initial routing table is $\textbf{D}_{x} = [D_{x}(x), D_{x}(y), D_{x}(z)] = [0, 2, 7]$. The second and third rows in this table are the most recently received distance vectors from nodes y and z, respectively. Because at initialization node x has not received anything from node y or z, the entries in the second and third rows are initialized to infinity.
+> > 路由选择表的每一行是一个距离向量，而每个节点的路由表除了自身的距离向量外，还有直接邻居的距离向量的 copy。一开始还未从邻居接收到距离向量，因此初始化为无穷大。
+> 
+> After initialization, each node sends its distance vector to each of its two neighbors. This is illustrated in Figure 5.6 by the arrows from the first column of tables to the second column of tables. For example, node $x$ sends its distance vector $D_x = [0, 2, 7]$ to both nodes $y$ and $z$. After receiving the updates, each node recomputes its own distance vector. For example, node $x$ computes
+> $$
+  \begin{aligned}
+  D_{x}(x) &= 0\\
+  D_{x}(y) &= min\{c(x,y) + D_{y}(y), c(x,z) + D_{z}(y)\} = min\{2 + 0, 7 + 1\} = 2 \\
+  Dx(z) &= min\{c(x,y) + D_{y}(z), c(x,z) + D_{z}(z)\} = min\{2 + 1, 7 + 0\} = 3
+  \end{aligned}
+> $$
+> The second column therefore displays, for each node, the node’s new distance vector along with distance vectors just received from its neighbors.
+> > 第二列路由转发表显示了根据邻居节点的新的距离向量进行计算后的结果，并且原封不动地保存了来自邻居的距离向量
+> 
+> Note, for example, that node x’s estimate for the least cost to node z, Dx (z), has changed from 7 to 3. Also note that for node x, neighboring node y achieves the minimum in line 15 of the DV algorithm; thus, at this stage of the algorithm, we have at node x that v*(y) = y and v*(z) = y.
+> > 对于节点 x，在 DV 算法中确定了不论到 y 还是 z，下一跳 y 都是最近的路线，y 是下一条最近路线上的邻居。
+> 
+> After the nodes recompute their distance vectors, they again send their updated distance vectors to their neighbors (if there has been a change). This is illustrated in Figure 5.6 by the arrows from the second column of tables to the third column of tables. Note that only nodes x and z send updates: ***node y’s distance vector didn’t change so node y doesn’t send an update***. After receiving the updates, the nodes then recompute their distance vectors and update their routing tables, which are shown in the third column.
+> > 注意到 y 节点的距离向量在上一轮没有变化，因此其不必再更新，也就不必再发送自己的距离向量通知邻居。
+> 
+> The process of receiving updated distance vectors from neighbors, recomputing routing table entries, and ==informing neighbors of changed costs of the least-cost path to a destination ***continues until no update messages are sent***==. At this point, since no update messages are sent, no further routing table calculations will occur and the algorithm will enter a quiescent state; that is, all nodes will be performing the wait in Lines 13 of the DV algorithm. The algorithm remains in the quiescent state until a link cost changes, as discussed next.
+> > 没有更新报文发送时，停止路由转发表的计算，算法停留在静止状态。
+
 
 DV的无穷计算问题
 - DV的特点
@@ -386,11 +405,6 @@ DV的无穷计算问题
         - A从C获知D的距离为INF，但从B处获知它到D的距离为2。因此A到B的距离为3，从B走
         - B也有类似的问题
         - 经过无限次之后，A和B都知道到D的距离为INF
-
-> DV完整例子：
-> 
-> <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002113230006.png" style="zoom:80%"/>
-
 
 ### LS 与 DV 算法的比较
 

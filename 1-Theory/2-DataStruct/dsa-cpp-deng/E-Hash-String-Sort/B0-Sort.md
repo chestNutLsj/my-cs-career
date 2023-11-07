@@ -54,6 +54,8 @@ Rank Vector<T>::partition( Rank lo, Rank hi ) { // LUG版：基本形式
 }
 ```
 
+^8da135
+
 ![[B0-Sort-quicksort-LUG-2.png]]
 - `L <= pivot <= G` 且 `U=[lo,hi)` 中，`[lo]` 和 `[hi]` 交替空闲
 - 故序列中 U 部分单调减少，L 和 G 部分单调增加，这趟扫描一定能结束并正确归位 pivot

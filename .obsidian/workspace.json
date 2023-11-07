@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "5275b2fb1b0e91c2",
+        "id": "1dd3b77225b58f69",
         "type": "tabs",
         "children": [
           {
-            "id": "fab794f053fec672",
+            "id": "309e16cab1f3b42d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/4-Architecture/THU-Liu/40-IO.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md",
                 "mode": "source",
                 "source": false
               }
@@ -80,8 +80,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 299.50577545166016,
-    "collapsed": true
+    "width": 246.50577545166016
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -90,6 +89,7 @@
       {
         "id": "e5810eded0ce3a81",
         "type": "tabs",
+        "dimension": 44.09368635437882,
         "children": [
           {
             "id": "866a4e016d81b567",
@@ -97,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/4-Architecture/THU-Liu/40-IO.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/4-Architecture/THU-Liu/40-IO.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,7 +136,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "1-Theory/4-Architecture/THU-Liu/40-IO.md"
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md"
               }
             }
           }
@@ -145,6 +145,7 @@
       {
         "id": "2aabb86f31957f99",
         "type": "tabs",
+        "dimension": 55.90631364562118,
         "children": [
           {
             "id": "5402e2346c010391",
@@ -152,7 +153,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/4-Architecture/THU-Liu/40-IO.md"
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md"
               }
             }
           },
@@ -168,7 +169,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 206.5
+    "width": 206.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -186,45 +188,45 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "fab794f053fec672",
+  "active": "309e16cab1f3b42d",
   "lastOpenFiles": [
-    "1-Theory/4-Architecture/THU-Liu/assets/40-IO-relation.png",
-    "1-Theory/4-Architecture/THU-Liu/34-Disk.md",
-    "1-Theory/4-Architecture/THU-Liu/assets/34-Disk-structure.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/34-Disk-magnet-methods.png",
-    "1-Theory/4-Architecture/THU-Liu/33-Virtual-Memory.md",
-    "1-Theory/4-Architecture/THU-Liu/assets/33-Virtual-Memory-x86-four-level-page-table.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/33-Virtual-Memory-x86-segment-addressing.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/33-Virtual-Memory-x86-segment-translation.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/33-Virtual-Memory-x86-segment.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/33-Virtual-Memory-segment-table.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/33-Virtual-Memory-linux-process.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/33-Virtual-Memory-STBR.png",
-    "1-Theory/4-Architecture/THU-Liu/assets/33-Virtual-Memory-SV32.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
-    "0-Assets/Excalidraw/Drawing 2023-11-05 14.53.15.excalidraw.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2014-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/21-Vector-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/31-List-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2014-mid.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2014-mid-algo.png",
+    "0-Assets/Excalidraw/Drawing 2023-11-07 15.46.26.excalidraw.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2014-mid-fibsearch-tree.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2014-mid-fibsearch.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2014-mid-fibsearch-tree.png",
+    "1-Theory/4-Architecture/THU-Liu/41-Bus.md",
+    "1-Theory/4-Architecture/THU-Liu/assets/41-Bus-write-cycle.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/41-Bus-PCI.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/41-Bus-gang-transmit.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/41-Bus-async.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/41-Bus-sync-timer.png",
+    "1-Theory/4-Architecture/THU-Liu/assets/41-Bus-sync.png",
+    "1-Theory/4-Architecture/THU-Liu/40-IO.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/41-Stack-queue-Exercise.md",
+    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
+    "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
+    "1-Theory/4-Architecture/THU-Liu/34-Disk.md",
+    "1-Theory/4-Architecture/THU-Liu/33-Virtual-Memory.md",
+    "0-Assets/Excalidraw/Drawing 2023-11-05 14.53.15.excalidraw.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2011-mid.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2010-mid.md",
     "0-Assets/Excalidraw/Drawing 2023-11-05 13.12.09.excalidraw.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2010-final.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
     "0-Assets/Excalidraw/dsa-2010-mid-2.md",
-    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/71-Hash-Exercise.md",
     "1-Theory/4-Architecture/THU-Liu/31-Cache.md",
-    "1-Theory/4-Architecture/THU-Liu/30-DRAM.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets",
-    "1-Theory/4-Architecture/THU-Liu/25-Hazard-handle.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/41-Stack-queue-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Intro-Exercise.md",
-    "7-OS-application/Linux/Arch/Fcitx5输入法问题.md",
-    "1-Theory/4-Architecture/THU-Liu/24-Pipeline.md",
-    "0-Assets/Excalidraw/Drawing 2023-11-02 23.19.36.excalidraw.md",
-    "0-Assets/Excalidraw/Drawing 2023-11-02 22.42.46.excalidraw.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Boruvka's_algorithm.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Dijkstra_Animation.gif.crdownload",
