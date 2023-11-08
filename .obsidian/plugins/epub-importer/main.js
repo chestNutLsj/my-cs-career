@@ -26167,7 +26167,7 @@ var EpubImporterPlugin = class extends import_obsidian3.Plugin {
         }).open();
       }
     });
-    this.app.workspace.on("file-open", (file) => {
+    this.registerEvent(this.app.workspace.on("file-open", (file) => {
       if (!this.settings.autoOpenRightPanel)
         return;
       const bookNotePath = this.findBookNote(new Path(file.path));
@@ -26190,8 +26190,8 @@ var EpubImporterPlugin = class extends import_obsidian3.Plugin {
         }
       });
       this.app.workspace.revealLeaf(this.activeLeaf);
-    });
-    this.app.workspace.on("file-open", (file) => {
+    }));
+    this.registerEvent(this.app.workspace.on("file-open", (file) => {
       if (!this.settings.allbooks)
         return;
       const files_with_tag = getNotesWithTag(this.app, this.settings.tag);
@@ -26201,7 +26201,7 @@ var EpubImporterPlugin = class extends import_obsidian3.Plugin {
       } else {
         this.app.vault.create("AllBooks.md", files_with_tag.map((file2) => `[[${file2.path}|${file2.parent?.name}]]`).join("\n"));
       }
-    });
+    }));
   }
   onunload() {
   }
@@ -26236,7 +26236,7 @@ var EpubImporterPlugin = class extends import_obsidian3.Plugin {
       this.parser.chapters.forEach(Chapter2MD2);
       this.app.vault.create(Path.join(this.settings.savePath, epubName, epubName + ".md", "/"), content);
     }
-    this.copyImages(epubName);
+    this.copyImages();
     this.propertys.tags = (this.propertys.tags ? this.propertys.tags : []).concat([this.settings.tag]);
     if (this.settings.granularity != 0) {
       this.BookNote = "---\n" + (0, import_obsidian3.stringifyYaml)(this.propertys) + "\n---\n" + this.BookNote;
@@ -26244,7 +26244,7 @@ var EpubImporterPlugin = class extends import_obsidian3.Plugin {
     }
     import_fs_jetpack3.default.remove(this.parser.tmpPath);
   }
-  copyImages(epubName) {
+  copyImages() {
     const imagesPath = new Path(this.vaultPath, this.assetsPath, "/");
     import_fs_jetpack3.default.find(this.parser.tmpPath, { matching: ["*.jpg", "*.jpeg", "*.png"] }).forEach((file) => {
       import_fs_jetpack3.default.copy(file, imagesPath.join(new Path(file).name).string, { overwrite: true });

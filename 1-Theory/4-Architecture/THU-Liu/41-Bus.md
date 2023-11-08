@@ -246,10 +246,44 @@
 	- 上述两个信号均有效时的时钟上升沿开始传送数据 
 - 主设备准备结束数据传送时，将 FRAME# 信号失效
 
+#### Read Cycle
+
+![[41-Bus-PCI-read-cycle.png]]
+- 总线主设备得到授权后，将 FRAME# 置为有效 ，开始读事务。并通过 AD 发送要读的地址，C/BE# 发送读命令
+- 从设备根据 AD 上识别是否被选中
+- 主设备释放对 AD 的控制，同时，在 C/BE# 上给出 AD 上哪些位是有用的（1~4Byetes）。并置 IRDY# 为有效，表示已准备好，可以接收数据。
+- 被选中的从设备置 DEVSEL 信号，表示已收到命令并可响应。将读出的数据送 AD，并置 TRDY# 通知主设备接收。
+- 主设备可在周期 4 读到第一个数据。并根据需要决定是否要改变 C/BE# 的值 。
+- 如果从设备的速度不高，则需要插入等待周期。
+- 主设备通过 FRAME 信号通知从设备结束数据传输，并将 IRDY 置高。
+- 从设备相应地将 TRDY 和 DEVSEL 信号置高，总线返 回到空闲状态。
+
 #### Write Cycle
-![[41-Bus-write-cycle.png]]
-- This is the simplest bus cycle. Target devices detect the start of the bus cycle by the FRAME# is asserted at the second clock. At a bus cycle is initiated, the bus comand and the address is taken in to each target device attached to the bus, and a terget device which detects the cycle is for oneself asserts DEVSEL# to answer to the bus cycle. In this case, because the target device answers by the one clock, it is high-speed decoding. When the device answers by second or third clock, it is midium or slow decoding.
 
-After the terget device answered with DEVSEL#, the terget device confirms IRDY# is asserted (Write data is valid.), and takes data in the target device. At the same time, the target device knows that the transfer is the last cycle because of FRAME# is deasserted and IRDY# is asserted whitch means current data is last transfer.
+![[41-Bus-PCI-Write-cycle.png]]
 
-When the last data is taken in, the terget device drives DEVSEL# and TRDY# to be deasserted, and DEVSEL# and TRDY# are released at the next clock, and the target device finishes the bus cycle.
+### PCI 优化
+
+- 尽量使总线有效传输
+	- 可采用类似 RISC 的流水线技术，仲裁和数据传输并行进行
+- 总线占用
+	- 为上一主设备保留总线授权，直到有其他主设备申请使用总线
+	- 得到授权的主设备可在不仲裁的情况下直接开始下一传送过程
+- 仲裁时长
+	- 主设备和从设备尽力延长传输流（使用 xRDY）
+	- 从设备使用 STOP (abort or retry)信号终止连接
+	- 主设备通过 FRAME 信号终止连接 
+	- 仲裁器通过 GNT 信号终止连接
+- 延迟 (挂起, 时段分离)事务
+	- 对慢速设备，在请求后暂时释放总线
+
+### 总线其他问题
+
+- 中断：用于支持控制 I/O 设备
+- Cache 一致性：用于支持 I/O 和多处理器
+- 加锁：支持分时操作, I/O 和多处理器
+- 可配置地址空间
+
+### 总线参数选择
+
+![[41-Bus-params-option.png]]

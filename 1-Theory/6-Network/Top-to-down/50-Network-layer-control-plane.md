@@ -376,8 +376,7 @@ DV-like algorithms are used in many routing protocols in practice, including
 > The process of receiving updated distance vectors from neighbors, recomputing routing table entries, and ==informing neighbors of changed costs of the least-cost path to a destination ***continues until no update messages are sent***==. At this point, since no update messages are sent, no further routing table calculations will occur and the algorithm will enter a quiescent state; that is, all nodes will be performing the wait in Lines 13 of the DV algorithm. The algorithm remains in the quiescent state until a link cost changes, as discussed next.
 > > 没有更新报文发送时，停止路由转发表的计算，算法停留在静止状态。
 
-
-DV的无穷计算问题
+#### DV的无穷计算问题
 - DV的特点
     - 好消息传的快，坏消息传的慢
 - 好消息的传播以每一个交换周期前进一个路由器的速度进行
@@ -389,6 +388,8 @@ DV的无穷计算问题
         - 例子：第一次交换之后，B从C处获得信息，C可以到达A（C-A，要经过B本身），但是路径是2，因此B变成3，从C处走；第二次交换，C从B处获得消息，B可以到达A，路径为3，因此，C到A从B走，开销为3；无限此之后，到A的距离变成INF，不可达
 
             <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002012915419.png" style="zoom:80%"/>
+
+#### 毒性逆转
 
 通过 水平分裂(split horizon)算法 减少上面所说的坏消息的环路的情况
 - 一种对无穷计算问题的解决办法
