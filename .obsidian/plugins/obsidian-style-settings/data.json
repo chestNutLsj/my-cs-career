@@ -52,5 +52,9 @@
   "blue-topaz-theme@@outline-style": "default-outline-style",
   "blue-topaz-theme@@font-weight-inline-code": "regular",
   "blue-topaz-theme@@resizable-mermaid": true,
-  "blue-topaz-theme@@nowrap-outline": true
+  "blue-topaz-theme@@nowrap-outline": true,
+  "minimal-style@@callouts-style": "callouts-default",
+  "minimal-advanced@@styled-scrollbars": true,
+  "minimal-advanced@@cursor": "default",
+  "minimal-style@@blockquote-font-style": "italic"
 }
