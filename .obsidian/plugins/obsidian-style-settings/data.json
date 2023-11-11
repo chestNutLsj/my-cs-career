@@ -56,5 +56,7 @@
   "minimal-style@@callouts-style": "callouts-default",
   "minimal-advanced@@styled-scrollbars": true,
   "minimal-advanced@@cursor": "default",
-  "minimal-style@@blockquote-font-style": "italic"
+  "minimal-style@@blockquote-font-style": "italic",
+  "minimal-style@@sidebar-tabs-style": "sidebar-tabs-wide",
+  "minimal-style@@ribbon-style": "ribbon-bottom-left-hover"
 }

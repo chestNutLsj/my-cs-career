@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "171e41512df8da30",
+        "id": "bb1994e059cc047e",
         "type": "tabs",
         "children": [
           {
-            "id": "3db6e7a8c6266d14",
+            "id": "29d0bdd7c072d8be",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -80,7 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 367.50577545166016
+    "width": 285.50577545166016
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -97,7 +93,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +109,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,9 +129,7 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -152,9 +144,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md"
-              }
+              "state": {}
             }
           },
           {
@@ -169,7 +159,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 206.5
+    "width": 205.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -187,16 +177,23 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "3db6e7a8c6266d14",
+  "active": "29d0bdd7c072d8be",
   "lastOpenFiles": [
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2018-final.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/60-IO管理与磁盘.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B1-Sort-Exercise.md",
+    "0-Assets/Excalidraw/Drawing 2023-11-11 15.14.11.excalidraw.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2018-final-BTree.jpg",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2018-final-splay.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/60-IO管理与磁盘.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
     "1-Theory/4-Architecture/THU-Liu/20-Intruction.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/42-Catalan.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2016-final-dfs-1.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A1-String-Exercise.md",
@@ -209,22 +206,14 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/69-Finger-Search.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/assets/69-Finger-Search.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/65-Lowest-Common-Ancestor.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/BST-delete.jpg",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/60-Binary_Search_Tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2016-final-splay-4-8.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2016-final-splay.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2014-final.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2014-mid.md",
     "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
-    "1-Theory/5-OS-principle/408&&912/错题本.md",
-    "1-Theory/4-Architecture/fragments/MMU.md",
-    "1-Theory/5-OS-principle/408&&912/中断处理流程.md",
-    "1-Theory/4-Architecture/THU-Liu/42-Device.md",
-    "1-Theory/4-Architecture/THU-Liu/40-IO.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Boruvka's_algorithm.gif.crdownload",
