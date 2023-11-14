@@ -334,6 +334,8 @@ bool Hashtable<K, V>::put( K k, V v ) { //散列表词条插入
 }
 ```
 
+^cdd7a8
+
 删除：
 ```
 template <typename K, typename V> bool Hashtable<K, V>::remove( K k ) { //散列表词条删除算法
@@ -344,6 +346,8 @@ template <typename K, typename V> bool Hashtable<K, V>::remove( K k ) { //散列
 	return true;
 }
 ```
+
+^ce3d4c
 
 #### 平方试探
 Quadratic Probing:

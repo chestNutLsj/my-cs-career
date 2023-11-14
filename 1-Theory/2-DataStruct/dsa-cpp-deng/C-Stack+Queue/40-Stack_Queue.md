@@ -585,7 +585,7 @@ $t(r)=t$ 并且 $s[r]=SR.top()+1$
 ==Steap = Stack + Heap = push + pop + getMax==
 
 使用两个栈 S 和 P，S 存储数据，P 则存储 S 中对应后缀的最大者（即 S.getMax ()）
-![[40-Stack_Queue-steap.png]]
+
 ![[40-Stack_Queue-steap2.png]]
 
 ADT:
@@ -597,7 +597,7 @@ ADT:
 ==Queap = Queue + Heap = enqueue + dequeue + getMax==
 
 使用两个队列 Q 和 P，Q 存储数据并且是单进单出；P 存放 Q 的后缀的最大值，并且允许队尾插入和删除两种操作，即单进双出：
-![[40-Stack_Queue-queap.png]]
+
 ![[40-Stack_Queue-queap2.png]]
 
 ADT：

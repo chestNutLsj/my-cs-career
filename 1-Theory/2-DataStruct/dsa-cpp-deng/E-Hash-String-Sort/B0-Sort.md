@@ -373,6 +373,8 @@ T median ( Vector<T>& S1, Rank lo1, Rank n1, Vector<T>& S2, Rank lo2, Rank n2 ) 
 #### 快速选取法
 所谓第 k 小，是相对于序列整体而言，所以在访问每个元素至少一次之前，绝无可能确定，因此快速选取的下界是Ω(n)——最快也不过如此。
 
+![[Selecting_quickselect_frames.gif]]
+
 ```
 template <typename T> void quickSelect( Vector<T>& A, Rank k ) { //基于快速划分的k选取算法
 	for ( Rank lo = 0, hi = A.size(); lo < hi; ) {

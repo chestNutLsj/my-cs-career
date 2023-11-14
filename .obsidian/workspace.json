@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "a718a86cd0803ac3",
+        "id": "e9094ca8ddabde5d",
         "type": "tabs",
         "children": [
           {
-            "id": "23882b02acd131f7",
+            "id": "ec5afb65b64a81e1",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2020_21-final.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -72,13 +76,11 @@
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 285.50577545166016,
-    "collapsed": true
+    "width": 257.50577545166016
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -95,6 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2020_21-final.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,6 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2020_21-final.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -131,7 +135,9 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {}
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2020_21-final.md"
+              }
             }
           }
         ]
@@ -146,7 +152,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2020_21-final.md"
+              }
             }
           },
           {
@@ -161,8 +169,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 205.5,
-    "collapsed": true
+    "width": 205.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -175,58 +182,58 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "oz-clear-unused-images:Clear Unused Images": false,
       "obsidian-advanced-slides:Show Slide Preview": false,
-      "obsidian-excalidraw-plugin:新建绘图文件": false,
       "obsidian42-brat:BRAT": false,
-      "obsidian-importer:Open Importer": false
+      "obsidian-importer:Open Importer": false,
+      "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "23882b02acd131f7",
+  "active": "ec5afb65b64a81e1",
   "lastOpenFiles": [
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2020_21-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/Selecting_quickselect_frames.gif",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/Selecting_quickselect_frames.gif.crdownload",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/Pasted image 20231114201642.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2020_21-final-btree-delete-3.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2020_21-final-btree-delete-2.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2020_21-final-btree-delete-1.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2020_21-final-btree-delete-1.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2020_21-final-btree-insert-3.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2020_21-final-btree-insert-2.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2020_21-final-btree-insert-1.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/20-final-complexity-2.jpg",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2019-mid.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2019-mid-light-node.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/30-List.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2014-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2014-mid.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2018-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2015-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2010-mid.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/11-Intro-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
+    "0-Assets/Excalidraw/Drawing 2023-11-14 15.25.35.excalidraw.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2011-mid.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2010-final.md",
+    "0-Assets/Excalidraw/BinSearch_tree_pic.md",
+    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/68-B+Tree.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/30-并发.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
     "0-Assets/Excalidraw/Drawing 2023-11-13 18.04.55.excalidraw.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
-    "1-Theory/4-Architecture/THU-Liu/25-Hazard-handle.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/51-Tree-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2014-final.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2014-mid.md",
-    "1-Theory/2-DataStruct/Practice/408-真题/2015.md",
     "1-Theory/2-DataStruct/Practice/408-真题/assets/adjacencyNotes.pdf",
     "1-Theory/2-DataStruct/Practice/408-真题/assets",
-    "1-Theory/2-DataStruct/Practice/排序算法.md",
-    "1-Theory/2-DataStruct/Practice/使用队列和栈进行选择排序.md",
-    "1-Theory/2-DataStruct/Practice/assets/solu-2.jpg",
-    "1-Theory/2-DataStruct/Practice/assets/solu-1.jpg",
     "1-Theory/2-DataStruct/Practice/408-真题",
-    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
-    "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
-    "1-Theory/4-Architecture/THU-Liu/31-Cache.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2018-final.md",
-    "0-Assets/Excalidraw/Drawing 2023-11-12 17.33.48.excalidraw.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2014-final-FORWARD.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2014-final-DFS-FORWARD.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md",
-    "0-Assets/Excalidraw/Drawing 2023-11-12 15.43.39.excalidraw.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2014-final-avl.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2014-final-DFS.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2018-final-BTree.jpg",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2018-final-splay.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2016-final-dfs-1.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Boruvka's_algorithm.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Dijkstra_Animation.gif.crdownload",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/mst-3.apng",
     "1-Theory/4-Architecture/RISC-V/assets",
-    "1-Theory/4-Architecture/RISC-V",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",
