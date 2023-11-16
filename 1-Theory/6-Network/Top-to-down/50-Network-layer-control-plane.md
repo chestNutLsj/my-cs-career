@@ -375,18 +375,28 @@ DV-like algorithms are used in many routing protocols in practice, including
 > The process of receiving updated distance vectors from neighbors, recomputing routing table entries, and ==informing neighbors of changed costs of the least-cost path to a destination ***continues until no update messages are sent***==. At this point, since no update messages are sent, no further routing table calculations will occur and the algorithm will enter a quiescent state; that is, all nodes will be performing the wait in Lines 13 of the DV algorithm. The algorithm remains in the quiescent state until a link cost changes, as discussed next.
 > > 没有更新报文发送时，停止路由转发表的计算，算法停留在静止状态。
 
-#### DV的无穷计算问题
-- DV的特点
-    - 好消息传的快，坏消息传的慢
-- 好消息的传播以每一个交换周期前进一个路由器的速度进行
-    - 好消息：某个路由器接入或有更短的路径（链路由断变为通，链路开销由大变小），举例：
+#### DV 的无穷计算 Count-to-Infinity 问题
 
-        <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002012712585.png" style="zoom:80%"/>
+The settling of routes to best paths across the network is called convergence. Distance vector routing is useful as a simple technique by which routers can collectively compute shortest paths, but it has a serious drawback in practice: although it converges to the correct answer, it may do so slowly. In particular, it ***reacts rapidly to good news, but leisurely to bad news***. 
 
-    - 坏消息的传播速度非常慢（无穷计算问题）
-        - 例子：第一次交换之后，B从C处获得信息，C可以到达A（C-A，要经过B本身），但是路径是2，因此B变成3，从C处走；第二次交换，C从B处获得消息，B可以到达A，路径为3，因此，C到A从B走，开销为3；无限此之后，到A的距离变成INF，不可达
+Consider a router whose best route to destination X is long. If, on the next exchange, neighbor A suddenly reports a short delay to X, the router just switches over to using the line to A to send traffic to X. In one vector exchange, the good news is processed.
+> 好消息意味着断路变通路、长路边变短路，此时只需要一次向量交换即可传递好消息。
 
-            <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002012915419.png" style="zoom:80%"/>
+To see how fast good news propagates, consider the fiv e-node (linear) network of `Fig.5-10`, where the delay metric is the number of hops. Suppose A is down initially and all the other routers know this. In other words, they have all recorded the delay to A as infinity.
+> 这里延迟的指标是跳数。最初时 A 宕机，其它所有节点都知道这一特点，即距离为无穷大。
+
+![[50-Network-layer-control-plane-count-to-infinity.png]]
+When A comes up, the other routers learn about it via the vector exchanges. For simplicity, we will assume that there is a gigantic gong somewhere that is struck periodically to initiate a vector exchange at all routers simultaneously. At the time of the first exchange, B learns that its left-hand neighbor has zero delay to A. B now makes an entry in its routing table indicating that A is one hop away to the left. All the other routers still think that A is down. At this point, the routing table entries for A are as shown in the second row of `Fig.5-10(a)`. On the next exchange, C learns that B has a path of length 1 to A, so it updates its routing table to indicate a path of length 2, but D and E do not hear the good news until later. Clearly, ==the good news is spreading at the rate of one hop per exchange==. In a network whose longest path is of length N hops, within N exchanges everyone will know about newly revived links and routers.
+> 好消息传播时，每一次向量的交换可以向外传递一层（类似图的 BFS）。因此要传递到全图，需要的交换次数也不过是图的直径（顶点距离最长）。
+
+Now let us consider the situation of `Fig.5-10(b)`, in which all the links and routers are initially up. Routers B, C, D, and E have distances to A of 1, 2, 3, and 4 hops, respectively. Suddenly, either A goes down or the link between A and B is cut (which is effectively the same thing from B’s point of view).
+> 初始时路径开销为跳数，突然 A 宕机或 A 到 B 的链路切断，坏消息发生，并需要传递。
+![[50-Network-layer-control-plane-count-to-infinity-2.png]]
+
+At the first packet exchange, B does not hear anything from A. Fortunately, C says “Do not worry; I have a path to A of length 2.” Little does B suspect that C’s path runs through B itself. For all B knows, C might have 10 links all with separate paths to A of length 2. As a result, B thinks it can reach A via C, with a path length of 3. D and E do not update their entries for A on the first exchange.
+> 在第一次数据包交换时，B 没有收到 A 的任何消息。幸运的是，C 说：“别担心，我有一条到 A 的长度为 2 的路径。”B 几乎没有怀疑 C 的路径穿过 B 本身。对于所有 B 所知道的，C 可能具有 10 个链路，所有链路都具有到长度为 2 的 A 的单独路径。因此，B 认为它可以通过 C 到达 a，路径长度为 3。D 和 E 在第一次交换时不更新它们的 A 的条目。
+
+On the second exchange, C notices that each of its neighbors claims to have a path to A of length 3. It picks one of them at random and makes its new distance to A 4, as shown in the third row of Fig. 5-10(b). Subsequent exchanges produce the history shown in the rest of Fig. 5-10(b). From this figure, it should be clear why bad news travels slowly: no router ever has a value more than one higher than the minimum of all its neighbors. Gradually, all routers work their way up to infinity, but the number of exchanges required depends on the numerical value used for infinity. For this reason, it is wise to set infinity to the longest path plus 1. Not entirely surprisingly, this problem is known as the count-to-infinity problem. There have been many attempts to solve it, for example, preventing routers from advertising their best paths back to the neighbors from which they heard them. Split horizon with poisoned reverse rule are discussed in RFC 1058. Howev er, none of these heuristics work well in practice despite the colorful names. The core of the problem is that when X tells Y that it has a path somewhere, Y has no way of knowing whether it itself is on the path.
 
 #### 毒性逆转
 

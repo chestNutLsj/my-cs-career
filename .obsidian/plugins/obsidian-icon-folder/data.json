@@ -23,7 +23,8 @@
     "iconInTabsEnabled": false,
     "iconsBackgroundCheckEnabled": false,
     "iconInTitleEnabled": false,
-    "iconInFrontmatterEnabled": false
+    "iconInFrontmatterEnabled": false,
+    "iconsInNotesEnabled": true
   },
   "0-Assets": "SiDatabricks",
   "5-Tools": "RiToolsFill",
