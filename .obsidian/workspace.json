@@ -4,35 +4,69 @@
     "type": "split",
     "children": [
       {
-        "id": "6ea15b939cd09302",
+        "id": "e72f2784403c50b5",
         "type": "tabs",
         "children": [
           {
-            "id": "a7dbdaea367e59cd",
+            "id": "111e1fcaa52b42c1",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/912历年真题(2016-2023).pdf"
+              }
+            }
+          },
+          {
+            "id": "c24d09414c68713a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/60-Problem-of-concurrence.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "2e8014d07a370559",
+            "id": "c00e7d5db4cfc861",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "258690799806b69c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "215c9dfafaa00d5e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2014-mid.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -61,7 +95,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "MTTF",
+                "query": "",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -110,7 +144,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
+                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +161,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
+                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +183,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md"
+                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md"
               }
             }
           }
@@ -166,7 +200,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md"
+                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md"
               }
             }
           },
@@ -182,7 +216,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 205.5
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -200,46 +234,48 @@
       "obsidian-importer:Open Importer": false
     }
   },
-  "active": "2e8014d07a370559",
+  "active": "258690799806b69c",
   "lastOpenFiles": [
-    "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
-    "1-Theory/4-Architecture/THU-Liu/23-CPU-design.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/30-并发.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/60-Problem-of-concurrence.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/30-Mutex-lock.md",
-    "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/10-操作系统概述.md",
-    "1-Theory/4-Architecture/RISC-V/A1-RISC-V异常、中断.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/912真题复习笔记.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/912历年真题(2016-2023).pdf",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2019-mid.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2020_21-final.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2020-final-complexity.jpg",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2011-mid.md",
-    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
-    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-count-to-infinity-2.png",
-    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-count-to-infinity.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷I-左偏率.jpg",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2014-mid.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2014-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2011-mid.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2010-mid.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2010-final.md",
-    "AllBooks.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/30-SV39-multilevel-page-table.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/40-Manage-SV39-multilevel-pagetable.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/50-Address-space-of-kernel-and-app.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/70-Beyond-physical-memory.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/10-Rust-dynamic-mem-allocate.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2012_13-final-square-SPT.png",
-    "0-Assets/Excalidraw/assets/Pasted Image 20230802185303_799.png",
-    "0-Assets/Excalidraw/assets/Pasted Image 20230731231118_616.png",
-    "0-Assets/Excalidraw/assets/Pasted Image 20230731231530_192.png",
-    "0-Assets/Excalidraw/assets/Pasted Image 20230731225351_121.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2018-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/912历年真题(2016-2023).pdf",
+    "1-Theory/2-DataStruct/Practice/912-模拟题",
+    "1-Theory/5-OS-principle/Internal&design-principle/60-IO管理与磁盘.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/912真题复习笔记.md",
+    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
+    "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/82-Graph-Exercise.md",
+    "1-Theory/4-Architecture/THU-Liu/24-Pipeline.md",
+    "1-Theory/4-Architecture/THU-Liu/22-Datapath.md",
+    "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
+    "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
+    "1-Theory/6-Network/Top-to-down/10-Intro-of-Network.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/第3章+数据和信号.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/第4章+数字传输.md",
+    "1-Theory/6-Network/Data-communication-and-network/10-绪论-物理层.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/40-Signal.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/Pasted Image 20231117145800_772.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2012_13-final-avl.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2018-final-indirect-backward.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/Pasted Image 20231117140243_794.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2018-final-backward-cycle.png",
+    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-split-horizon.png",
+    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-poisoned-reverse.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2020-final-complexity.jpg",
+    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-count-to-infinity-2.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/未命名.canvas",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2020_21-final-btree-delete-1.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets/2020_21-final-btree-delete-1 2.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/assets/Selecting_quickselect_frames.gif.crdownload",
     "1-Theory/2-DataStruct/Practice/408-真题/assets/adjacencyNotes.pdf",
     "1-Theory/2-DataStruct/Practice/408-真题/assets",
@@ -247,8 +283,6 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Boruvka's_algorithm.gif.crdownload",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/Dijkstra_Animation.gif.crdownload",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/assets/mst-3.apng",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",

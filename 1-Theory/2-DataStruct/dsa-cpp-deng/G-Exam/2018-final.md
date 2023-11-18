@@ -33,9 +33,14 @@
 
 3. 有向图经 DFS 后若共有 k 条边被标记为 BACKWARD，则应该恰有 k 个环路。
 
-> ✅ 
-> ![[80A-Graph-dfs-backward.png]]
-> BACKWARD的意义：表明边的目的点 u 已被发现，但是还未访问完毕，从 DFSTree 的角度来看，BACKWARD 表明从树的低层向祖先的指向的边；因而出现 BACKWARD 必然代表出现了环路。
+> ~~✅~~ 
+> 
+> 正确答案：❌ 这里注意是有向图，有向图由于存在 FORWARD 和 CROSS 边，因此并不能保证非 TREE 边一定是 BACKWARD，因此也就不能保证环路数等于 BACKWARD 边数。举例如下图：
+> ![[2018-final-backward-cycle.png]]
+> 
+> 但是无向图只有 BACKWARD，能够保证其中的环路数和 BACKWARD 边数一致吗？答案也是否定的：
+> ![[2018-final-indirect-backward.png]]
+> 
 
 4. 左式堆中每一对兄弟节点的高度尽管未必左大右小，但左兄弟至少不低于右兄弟的一半。
 

@@ -20,7 +20,7 @@
     - 指标：站数，延迟，费用，队列长度等，或者是一些单纯指标的加权平均
     - 采用什么样的指标，表示网络使用者希望网络在什么方面表现突出，什么指标网络使用者比较重视
 - 以网络为单位（子网到子网）进行路由（路由信息通告+路由计算），而非主机到主机（主机到主机的路由规模比子网到子网大2-3个数量级）
-    - 网络为单位进行路由，路由信息传输、计算和匹配的代价低
+    - 网络为单位进行路由，路由信息传输、计算和匹配的开销低
     - 前提条件是：一个网络所有节点地址前缀相同，且物理上聚集
     - **路由就是：计算网络到其他网络如何走的问题**
 - 网络到网络的路由 = 路由器-路由器之间路由
@@ -39,13 +39,13 @@
 
 
 边和路径的开销：
-- For our purposes, we’ll simply take the edge costs as a given and won’t worry about how they are determined. For any edge (x, y) in E, we denote c (x, y) as the cost of the edge between nodes x and y. If the pair (x, y) does not belong to E, we set c (x, y) = ∞.
+- For our purposes, we’ll simply take the edge costs as a given and won’t worry about how they are determined. For any edge (x, y) in E, we denote c (x, y) as the cost of the edge between nodes *x* and y. If the pair (x, y) does not belong to E, we set c (x, y) = ∞.
 - Also, we’ll only consider undirected graphs in our discussion here, so that edge (x, y) is the same as edge (y, x) and that c (x, y) = c (y, x); however, the algorithms we’ll study can be easily extended to the case of directed links with a different cost in each direction.
-- Also, a node y is said to be a ***neighbor*** of node x if (x, y) belongs to E.
+- Also, a node *y* is said to be a ***neighbor*** of node *x* if (x, y) belongs to E.
 
 网络拓扑图中的路径及路径开销：
 - a path in a graph G = (N, E) is a sequence of nodes (x1, x2, g, xp) such that each of the pairs (x1, x2), (x2, x3), g, (xp-1, xp) are edges in E.
-- The cost of a path (x1, x2, g, xp) is simply the sum of all the edge costs along the path, that is, c (x1, x2) + c (x2, x3) + g+ c (xp-1, xp). Given any two nodes x and y, there are typically many paths between the two nodes, with each path having a cost. One or more of these paths is a ***least-cost path***.
+- The cost of a path (x1, x2, g, xp) is simply the sum of all the edge costs along the path, that is, c (x1, x2) + c (x2, x3) + g+ c (xp-1, xp). Given any two nodes *x* and y, there are typically many paths between the two nodes, with each path having a cost. One or more of these paths is a ***least-cost path***.
 - $$ \text{Cost of path } (x_1, x_2, x_3, ... , x_p) = c(x_1, x_2) + c(x_2, x_3) + ... + c(x_{p-1}, x_p) $$
 ### 路由算法的目标与原则
 
@@ -65,13 +65,13 @@
 - 健壮性 (robustness)：算法应能适应通信量和网络拓扑的变化：通信量变化，网络拓扑的变化算法能很快适应；不向很拥挤的链路发数据，不向断了的链路发送数据；
 - 稳定性 (stability)：产生的路由不应该摇摆
 - 公平性 (fairness)：对每一个站点都公平
-- 最优性 (optimality)：某一个指标的最优，时间上，费用上，等指标，或综合指标；实际上，获取最优的结果代价较高，可以是次优的
+- 最优性 (optimality)：某一个指标的最优，时间上，费用上，等指标，或综合指标；实际上，获取最优的结果开销较高，可以是次优的
 
 ### 路由算法的分类
 
 - 全局或者局部路由信息？
     - 全局：集中式路由选择算法
-        - 所有的路由器拥有完整的拓扑和边的代价的信息（上帝视角）
+        - 所有的路由器拥有完整的拓扑和边的开销的信息（上帝视角）
         - A ***centralized routing algorithm*** computes the least-cost path between a source and destination using complete, global knowledge about the network. That is, the algorithm takes the connectivity between all nodes and all link costs as inputs. ==This then requires that the algorithm somehow obtain this information before actually performing the calculation==. The calculation itself can be run at one site (e.g., a logically centralized controller as in Figure 5.2) or could be replicated in the routing component of each and every router (e.g., as in Figure 5.1). ==The key distinguishing== feature here, however, ==is that the algorithm has complete information about connectivity and link costs==. 
         - Algorithms with global state information are often referred to as ***link-state*** (LS) algorithms, since the algorithm must be aware of the cost of each link in the network. We’ll study LS algorithms in Section 5.2.1.
     - 分布式：分散式路由选择算法
@@ -89,7 +89,7 @@
     - 动态：
         - 路由变化很快
         - 周期性更新
-        - 根据链路代价的变化而变化
+        - 根据链路开销的变化而变化
         - 容易受路由选择循环、路由震荡之类的问题影响
         - 自适应路由选择 (adaptive algorithm)：能适应网络拓扑和通信量的变化
 
@@ -103,7 +103,7 @@
 ```mermaid
 graph TD
 
-A[获得网络拓扑和链路代价信息]
+A[获得网络拓扑和链路开销信息]
 B[使用最短路由算法得到路由表]
 C[使用此路由表]
 
@@ -116,17 +116,17 @@ B-->C
 	- 一个路由器上电之后，向所有线路发送广播分组
 	- 其它路由器收到广播分组，回送应答，在应答分组中，告知自己的 IP 地址
 
-2. 测量到相邻节点的代价（延迟，开销）
+2. 测量到相邻节点的开销（延迟，开销）
 	- 实测法，发送一个分组要求对方立即响应
 	- 回送一个 ECHO 分组
 	- 通过测量时间可以估算出延迟情况
 
-3. 组装一个 LS 分组，描述它到相邻节点的代价情况
+3. 组装一个 LS 分组，描述它到相邻节点的开销情况
 	- 发送者 hostname + IP address
 	- 序号，年龄
 	- 列表：给出它相邻节点，和它到相邻节点的延迟/开销
 
-4. 将分组通过泛洪扩散的方法发到所有其它路由器（这 4 步让每个路由器获得拓扑和边代价）
+4. 将分组通过泛洪扩散的方法发到所有其它路由器（这 4 步让每个路由器获得拓扑和边开销）
 	- 顺序号：用于控制无穷的扩散，每个路由器都记录（源路由器，顺序号），发现重复的或老的就不扩散
 		- 具体问题1：循环使用问题
 		- 具体问题2：路由器崩溃之后序号从0开始
@@ -145,7 +145,7 @@ B-->C
 
 5. 通过 Dijkstra 算法找出最短路径（这才是路由算法）
 	- 每个节点独立算出来到其他节点（路由器=网络）的最短路径
-	- 迭代算法：第 k 步能够知道本节点到 k 个最近的其他节点（近指代价，不是物理上的举例）
+	- 迭代算法：第 k 步能够知道本节点到 k 个最近的其他节点（近指开销，不是物理上的举例）
 		1. 路由器获得各站点 LS 分组和整个网络的拓扑
 		2. 通过 Dijkstra 算法计算出到其它各路由器的最短路径
 		3. 将计算结果安装到路由表中
@@ -157,8 +157,8 @@ B-->C
 #### Dijkstra 算法
 
 - 符号标记：
-    - $c(i, j)$：从节点 i 到 j 的链路代价（初始状态下非相邻节点之间的链路代价为 $\infty$ ）
-    - $D(v)$：从源节点到节点 V 的最低开销路径的代价（节点的代价）
+    - $c(i, j)$：从节点 i 到 j 的链路开销（初始状态下非相邻节点之间的链路开销为 $\infty$ ）
+    - $D(v)$：从源节点到节点 V 的最低开销路径的开销（节点的开销）
     - $p(v)$：从源到节点 V 的路径前序节点
     - $N'$：当前已经知道最优路径的的节点集合（永久节点的集合）
 
@@ -193,8 +193,8 @@ Loop:
 - Dijkstra算法的框架
     1. 初始化
         - 除了源节点外，所有节点都为临时节点
-        - 节点代价除了与源节点代价相邻的节点外,都为 $\infty$
-    2. 从所有临时节点中找到一个节点代价最小的临时节点，将之变成永久节点（当前节点）W
+        - 节点开销除了与源节点开销相邻的节点外,都为 $\infty$
+    2. 从所有临时节点中找到一个节点开销最小的临时节点，将之变成永久节点（当前节点）W
     3. 对此节点的所有在临时节点集合中的邻节点(V)
         - 如果 D(v) > D(w) + C(w, v)，则重新标注此点为 (D(v) + C(w, v), W)
         - 否则，不重新标注
@@ -209,9 +209,9 @@ Loop:
 > ![[50-Network-layer-control-plane-ls-algo-on-fig5-3.png]]
 > 
 > 具体步骤如下：
-> 1. In the ***initialization step***, the currently known least-cost paths from u to its directly attached neighbors, v, x, and w, are initialized to 2, 1, and 5, respectively. Note in particular that the cost to w is set to 5 (even though we will soon see that a lesser-cost path does indeed exist) since this is the cost of the direct (one hop) link from u to w. ==The costs to y and z are set to infinity because they are not directly connected to u==.
-> 2. In the ***first iteration***, we look among those nodes not yet added to the set N′ and ==find that node with the least cost as of the end of the previous iteration==. That node is x, with a cost of 1, and thus x is added to the set N′. Line 12 of the LS algorithm is then performed to update D (v) for all nodes v, yielding the results shown in the second line (Step 1) in Table 5.1. The cost of the path to v is unchanged. The cost of the path to w (which was 5 at the end of the initialization) through node x is found to have a cost of 4. Hence this lower-cost path is selected and w’s predecessor along the shortest path from u is set to x. Similarly, the cost to y (through x) is computed to be 2, and the table is updated accordingly.
-> 3. In the second iteration, nodes v and y are found to have the least-cost paths (2), and we break the tie arbitrarily and add y to the set N′ so that N′ now contains u, x, and y. The cost to the remaining nodes not yet in N′, that is, nodes v, w, and z, are updated via line 12 of the LS algorithm, yielding the results shown in the third row in Table 5.1.
+> 1. In the ***initialization step***, the currently known least-cost paths from u to its directly attached neighbors, v, x, and w, are initialized to 2, 1, and 5, respectively. Note in particular that the cost to w is set to 5 (even though we will soon see that a lesser-cost path does indeed exist) since this is the cost of the direct (one hop) link from u to w. ==The costs to *y* and *z* are set to infinity because they are not directly connected to u==.
+> 2. In the ***first iteration***, we look among those nodes not yet added to the set N′ and ==find that node with the least cost as of the end of the previous iteration==. That node is x, with a cost of 1, and thus *x* is added to the set N′. Line 12 of the LS algorithm is then performed to update D (v) for all nodes v, yielding the results shown in the second line (Step 1) in Table 5.1. The cost of the path to v is unchanged. The cost of the path to w (which was 5 at the end of the initialization) through node *x* is found to have a cost of 4. Hence this lower-cost path is selected and w’s predecessor along the shortest path from u is set to x. Similarly, the cost to *y* (through x) is computed to be 2, and the table is updated accordingly.
+> 3. In the second iteration, nodes v and *y* are found to have the least-cost paths (2), and we break the tie arbitrarily and add *y* to the set N′ so that N′ now contains u, x, and y. The cost to the remaining nodes not yet in N′, that is, nodes v, w, and z, are updated via line 12 of the LS algorithm, yielding the results shown in the third row in Table 5.1.
 > 4. And so on . . .
 > 
 > LS 算法终止时，每个节点都得到从源节点沿最低开销路径的前一节点，前一节点又有前一节点，直到串联起整个图，得到最小路径树（汇集树）
@@ -229,10 +229,10 @@ Loop:
 
 ![[50-Network-layer-control-plane-oscillations.png]]
 - 链路开销非对称时：$c(u,v) \ne c(v,u)$ 
-	- In this example, node z originates a unit of traffic destined for w, node x also originates a unit of traffic destined for w, and node y injects an amount of traffic equal to e, also destined for w. The initial routing is shown in Figure 5.5 (a) with the ==link costs corresponding to the amount of traffic carried==.
-	- When the LS algorithm is next run, node y determines (based on the link costs shown in Figure 5.5 (a)) that the clockwise path to w has a cost of 1, while the counterclockwise path to w (which it had been using) has a cost of 1 + e. Hence y’s least-cost path to w is now clockwise. Similarly, x determines that its new least-cost path to w is also clockwise, resulting in costs shown in Figure 5.5 (b).
-	- When the LS algorithm is run next, nodes x, y, and z all ==detect a zero-cost path to w in the counterclockwise direction, and all route their traffic to the counterclockwise routes==.
-	- The next time the LS algorithm is run, x, y, and z all then route their traffic to the clockwise routes.
+	- In this example, node *z* originates a unit of traffic destined for w, node *x* also originates a unit of traffic destined for w, and node *y* injects an amount of traffic equal to e, also destined for w. The initial routing is shown in Figure 5.5 (a) with the ==link costs corresponding to the amount of traffic carried==.
+	- When the LS algorithm is next run, node *y* determines (based on the link costs shown in Figure 5.5 (a)) that the clockwise path to w has a cost of 1, while the counterclockwise path to w (which it had been using) has a cost of 1 + e. Hence y’s least-cost path to w is now clockwise. Similarly, *x* determines that its new least-cost path to w is also clockwise, resulting in costs shown in Figure 5.5 (b).
+	- When the LS algorithm is run next, nodes x, y, and *z* all ==detect a zero-cost path to w in the counterclockwise direction, and all route their traffic to the counterclockwise routes==.
+	- The next time the LS algorithm is run, x, y, and *z* all then route their traffic to the clockwise routes.
 - 解决方案是让路由器不同时运行 LS 算法：
 	- Interestingly, researchers have found that routers in the Internet can self-synchronize among themselves `[Floyd Synchronization 1994]`. That is, ==even though they initially execute the algorithm with the same period but at different instants of time, the algorithm execution instance can eventually become, and remain==, synchronized at the routers.
 	- One way to avoid such ***self-synchronization*** is for each router to randomize the time it sends out a link advertisement.
@@ -246,9 +246,9 @@ Loop:
 
 #### Bellman-Ford 方程
 
-令 $d_{x}(y)$ 代表从节点 x 到节点 y 的最低路径开销，则其与 Bellman-Ford 方程相关：
+令 $d_{x}(y)$ 代表从节点 *x* 到节点 *y* 的最低路径开销，则其与 Bellman-Ford 方程相关：
 $$d_x(y) = \min_{v}(c(x, v) + d_v(y))\quad (5-1)$$
-- 其中 $c(x, v)$ 为 $x$ 到邻居 $v$ 的代价， $d_v(y)$ 为从邻居 $v$ 到目标 $y$ 的开销， $\min_v$ 为取所有 $x$ 的邻居取最小的 $v$ 
+- 其中 $c(x, v)$ 为 $x$ 到邻居 $v$ 的开销， $d_v(y)$ 为从邻居 $v$ 到目标 $y$ 的开销， $\min_v$ 为取所有 $x$ 的邻居取最小的 $v$ 
 - 这个算法的本质思想是贪心——每一步都选择朝向目标方向的最短距离。
 
 ![[50-Network-layer-control-plane-bellman-ford-algo.png]]
@@ -257,7 +257,7 @@ $$d_x(y) = \min_{v}(c(x, v) + d_v(y))\quad (5-1)$$
 >The Bellman-Ford equation is not just an intellectual curiosity. It actually has significant practical importance: 
 >1. ***the solution to the Bellman-Ford equation provides the entries in node x’s forwarding table***.
 >	- To see this, let v* be any neighboring node that achieves the minimum in Equation 5.1.
->	- Then, if node x wants to send a packet to node y along a least-cost path, it should first forward the packet to node v*. 
+>	- Then, if node *x* wants to send a packet to node *y* along a least-cost path, it should first forward the packet to node v*. 
 >	- Thus, node x’s forwarding table would specify node v* as the next-hop router for the ultimate destination y. 
 >
 >2. Another important practical contribution of the Bellman-Ford equation is that ***it suggests the form of the neighbor-to-neighbor communication that will take place in the DV algorithm***.
@@ -271,7 +271,7 @@ $$d_x(y) = \min_{v}(c(x, v) + d_v(y))\quad (5-1)$$
 2. 使用 DV 算法，每个节点 $x$ 维护下列路由选择信息：
     - 从 $x$ 到所有直连邻居 $v$ 的开销记为 $c(x,v)$
     - 节点 $x$ 的距离向量 $\textbf{D}_{x}$，包含了 $x$ 到 $N$ 中所有目的地 $y$ 的开销的估计值 
-    - 对于 $x$ 的每个邻居 $v$，各自维护 $\textbf{D}_v = [D_v(y): y \in N]$
+    - 对于 $x$ 的每个邻居 $v$，各自维护 $\textbf{D}_v = [D_v(y): *y* \in N]$
 
 3. DV 算法的核心思路：
     - 每个节点都将自己的距离矢量的副本传送给邻居，定时或者DV有变化时，让对方去算
@@ -298,28 +298,28 @@ C-->A
 
 // At each node x:
 Initialization: 
-	for all destinations y in N: 
-		Dx(y)= c(x,y)/* if y is not a neighbor then c(x,y)= ∞ */ 
+	for all destinations *y* in N: 
+		Dx(y)= c(x,y)/* if *y* is not a neighbor then c(x,y)= ∞ */ 
 	for each neighbor w
-		Dw(y) = ? for all destinations y in N
+		Dw(y) = ? for all destinations *y* in N
 	for each neighbor w
-		send distance vector Dx = [Dx(y): y in N] to w
+		send distance vector Dx = [Dx(y): *y* in N] to w
 
 loop:
 	wait (until I see a link cost change to some neighbor w or  until I receive a distance vector from some neighbor w)
-	for each y in N:
+	for each *y* in N:
 		Dx(y) = min_v{c(x,v) + Dv(y)}
 	
 if Dx(y) changed for any destination y
-	send distance vector Dx = [Dx(y): y in N] to all neighbors 
+	send distance vector Dx = [Dx(y): *y* in N] to all neighbors 
 	
 forever
 ```
 
-In the DV algorithm, a node x updates its distance-vector estimate when it either sees a cost change in one of its directly attached links or receives a distance-vector update from some neighbor. But to update its own forwarding table for a given destination y, what node x really needs to know is not the shortest-path distance to y but instead the neighboring node v*(y) that is the next-hop router along the shortest path to y. As you might expect, the next-hop router v*(y) is the neighbor v that achieves the minimum in Line 15 of the DV algorithm. (If there are multiple neighbors v that achieve the minimum, then v*(y) can be any of the minimizing neighbors.) 
-> DV 算法中，节点 x 在得知其直接链路开销的改变、或收到邻居更新后的距离向量，会更新自己的距离向量。但是为了更新自己通向远处节点 y 的转发表，x 并不直接与 y 通信，而是只需要了解能够到达 y 的最小开销路径的下一条路由器 v* 节点即可。
+In the DV algorithm, a node *x* updates its distance-vector estimate when it either sees a cost change in one of its directly attached links or receives a distance-vector update from some neighbor. But to update its own forwarding table for a given destination y, what node *x* really needs to know is not the shortest-path distance to *y* but instead the neighboring node v*(y) that is the next-hop router along the shortest path to y. As you might expect, the next-hop router v*(y) is the neighbor v that achieves the minimum in Line 15 of the DV algorithm. (If there are multiple neighbors v that achieve the minimum, then v*(y) can be any of the minimizing neighbors.) 
+> DV 算法中，节点 *x* 在得知其直接链路开销的改变、或收到邻居更新后的距离向量，会更新自己的距离向量。但是为了更新自己通向远处节点 *y* 的转发表，x 并不直接与 *y* 通信，而是只需要了解能够到达 *y* 的最小开销路径的下一条路由器 v* 节点即可。
 
-Thus, in Lines 14-15, for each destination y, node x also determines v*(y) and updates its forwarding table for destination y.
+Thus, in Lines 14-15, for each destination y, node *x* also determines v*(y) and updates its forwarding table for destination y.
 
 - Recall that the ***LS algorithm is a centralized*** algorithm in the sense that it requires each node to first obtain a complete map of the network before running the Dijkstra algorithm.
 - The ***DV algorithm is decentralized*** and does not use such global information. Indeed, the only information a node will have is the costs of the links to its directly attached neighbors and information it receives from these neighbors. Each node waits for an update from any neighbor (Lines 13), calculates its new distance vector when receiving an update (Line 15), and distributes its new distance vector to its neighbors (Lines 17-18).
@@ -327,7 +327,7 @@ Thus, in Lines 14-15, for each destination y, node x also determines v*(y) and u
 DV-like algorithms are used in many routing protocols in practice, including
 - the Internet’s ***RIP*** and ***BGP***,
 - ISO ***IDRP***,
-- Novell ***IPX***,
+- Novell ***IPx***,
 - and the ***original ARPAnet***.
 
 #### DV 算法的实例
@@ -352,7 +352,7 @@ DV-like algorithms are used in many routing protocols in practice, including
 > 
 > The leftmost column of the figure displays three initial routing tables for each of the three nodes. For example, the table in the upper-left corner is node x’s initial routing table.
 > 
-> Within a specific routing table, each row is a distance vector— specifically, each node’s routing table includes its own distance vector and that of each of its neighbors. Thus, the first row in node x’s initial routing table is $\textbf{D}_{x} = [D_{x}(x), D_{x}(y), D_{x}(z)] = [0, 2, 7]$. The second and third rows in this table are the most recently received distance vectors from nodes y and z, respectively. Because at initialization node x has not received anything from node y or z, the entries in the second and third rows are initialized to infinity.
+> Within a specific routing table, each row is a distance vector— specifically, each node’s routing table includes its own distance vector and that of each of its neighbors. Thus, the first row in node x’s initial routing table is $\textbf{D}_{x} = [D_{x}(x), D_{x}(y), D_{x}(z)] = [0, 2, 7]$. The second and third rows in this table are the most recently received distance vectors from nodes *y* and z, respectively. Because at initialization node *x* has not received anything from node *y* or z, the entries in the second and third rows are initialized to infinity.
 > > 路由选择表的每一行是一个距离向量，而每个节点的路由表除了自身的距离向量外，还有直接邻居的距离向量的 copy。一开始还未从邻居接收到距离向量，因此初始化为无穷大。
 > 
 > After initialization, each node sends its distance vector to each of its two neighbors. This is illustrated in Figure 5.6 by the arrows from the first column of tables to the second column of tables. For example, node $x$ sends its distance vector $D_x = [0, 2, 7]$ to both nodes $y$ and $z$. After receiving the updates, each node recomputes its own distance vector. For example, node $x$ computes
@@ -366,11 +366,11 @@ DV-like algorithms are used in many routing protocols in practice, including
 > The second column therefore displays, for each node, the node’s new distance vector along with distance vectors just received from its neighbors.
 > > 第二列路由转发表显示了根据邻居节点的新的距离向量进行计算后的结果，并且原封不动地保存了来自邻居的距离向量
 > 
-> Note, for example, that node x’s estimate for the least cost to node z, Dx (z), has changed from 7 to 3. Also note that for node x, neighboring node y achieves the minimum in line 15 of the DV algorithm; thus, at this stage of the algorithm, we have at node x that v*(y) = y and v*(z) = y.
-> > 对于节点 x，在 DV 算法中确定了不论到 y 还是 z，下一跳 y 都是最近的路线，y 是下一条最近路线上的邻居。
+> Note, for example, that node x’s estimate for the least cost to node z, Dx (z), has changed from 7 to 3. Also note that for node x, neighboring node *y* achieves the minimum in line 15 of the DV algorithm; thus, at this stage of the algorithm, we have at node *x* that v*(y) = *y* and v*(z) = y.
+> > 对于节点 x，在 DV 算法中确定了不论到 *y* 还是 z，下一跳 *y* 都是最近的路线，y 是下一条最近路线上的邻居。
 > 
-> After the nodes recompute their distance vectors, they again send their updated distance vectors to their neighbors (if there has been a change). This is illustrated in Figure 5.6 by the arrows from the second column of tables to the third column of tables. Note that only nodes x and z send updates: ***node y’s distance vector didn’t change so node y doesn’t send an update***. After receiving the updates, the nodes then recompute their distance vectors and update their routing tables, which are shown in the third column.
-> > 注意到 y 节点的距离向量在上一轮没有变化，因此其不必再更新，也就不必再发送自己的距离向量通知邻居。
+> After the nodes recompute their distance vectors, they again send their updated distance vectors to their neighbors (if there has been a change). This is illustrated in Figure 5.6 by the arrows from the second column of tables to the third column of tables. Note that only nodes *x* and *z* send updates: ***node y’s distance vector didn’t change so node *y* doesn’t send an update***. After receiving the updates, the nodes then recompute their distance vectors and update their routing tables, which are shown in the third column.
+> > 注意到 *y* 节点的距离向量在上一轮没有变化，因此其不必再更新，也就不必再发送自己的距离向量通知邻居。
 > 
 > The process of receiving updated distance vectors from neighbors, recomputing routing table entries, and ==informing neighbors of changed costs of the least-cost path to a destination ***continues until no update messages are sent***==. At this point, since no update messages are sent, no further routing table calculations will occur and the algorithm will enter a quiescent state; that is, all nodes will be performing the wait in Lines 13 of the DV algorithm. The algorithm remains in the quiescent state until a link cost changes, as discussed next.
 > > 没有更新报文发送时，停止路由转发表的计算，算法停留在静止状态。
@@ -379,7 +379,7 @@ DV-like algorithms are used in many routing protocols in practice, including
 
 The settling of routes to best paths across the network is called convergence. Distance vector routing is useful as a simple technique by which routers can collectively compute shortest paths, but it has a serious drawback in practice: although it converges to the correct answer, it may do so slowly. In particular, it ***reacts rapidly to good news, but leisurely to bad news***. 
 
-Consider a router whose best route to destination X is long. If, on the next exchange, neighbor A suddenly reports a short delay to X, the router just switches over to using the line to A to send traffic to X. In one vector exchange, the good news is processed.
+Consider a router whose best route to destination *x* is long. If, on the next exchange, neighbor A suddenly reports a short delay to x, the router just switches over to using the line to A to send traffic to x. In one vector exchange, the good news is processed.
 > 好消息意味着断路变通路、长路边变短路，此时只需要一次向量交换即可传递好消息。
 
 To see how fast good news propagates, consider the fiv e-node (linear) network of `Fig.5-10`, where the delay metric is the number of hops. Suppose A is down initially and all the other routers know this. In other words, they have all recorded the delay to A as infinity.
@@ -394,62 +394,90 @@ Now let us consider the situation of `Fig.5-10(b)`, in which all the links and r
 ![[50-Network-layer-control-plane-count-to-infinity-2.png]]
 
 At the first packet exchange, B does not hear anything from A. Fortunately, C says “Do not worry; I have a path to A of length 2.” Little does B suspect that C’s path runs through B itself. For all B knows, C might have 10 links all with separate paths to A of length 2. As a result, B thinks it can reach A via C, with a path length of 3. D and E do not update their entries for A on the first exchange.
-> 在第一次数据包交换时，B 没有收到 A 的任何消息。幸运的是，C 说：“别担心，我有一条到 A 的长度为 2 的路径。”B 几乎没有怀疑 C 的路径穿过 B 本身。对于所有 B 所知道的，C 可能具有 10 个链路，所有链路都具有到长度为 2 的 A 的单独路径。因此，B 认为它可以通过 C 到达 a，路径长度为 3。D 和 E 在第一次交换时不更新它们的 A 的条目。
+> 在第一次数据包交换时，B 没有收到 A 的任何消息（AB 链路已断）。然而，C 的向量中到 A 的开销仍然为 2 没有改变，B 却没有怀疑 C 的路径穿过 B 本身，B 还以为 C 有其它通向 A 的路径。因此，B 认为它可以通过 C 到达 A，路径长度为 3。D 和 E 在第一次交换时由于更靠近 C，C 的距离向量不更新 CD 或 CE 之间的开销，因此 D 和 E 也不更新它们到 A 的条目。
 
-On the second exchange, C notices that each of its neighbors claims to have a path to A of length 3. It picks one of them at random and makes its new distance to A 4, as shown in the third row of Fig. 5-10(b). Subsequent exchanges produce the history shown in the rest of Fig. 5-10(b). From this figure, it should be clear why bad news travels slowly: no router ever has a value more than one higher than the minimum of all its neighbors. Gradually, all routers work their way up to infinity, but the number of exchanges required depends on the numerical value used for infinity. For this reason, it is wise to set infinity to the longest path plus 1. Not entirely surprisingly, this problem is known as the count-to-infinity problem. There have been many attempts to solve it, for example, preventing routers from advertising their best paths back to the neighbors from which they heard them. Split horizon with poisoned reverse rule are discussed in RFC 1058. Howev er, none of these heuristics work well in practice despite the colorful names. The core of the problem is that when X tells Y that it has a path somewhere, Y has no way of knowing whether it itself is on the path.
+On the second exchange, C notices that each of its neighbors claims to have a path to A of length 3. It picks one of them at random and makes its new distance to A 4, as shown in the third row of `Fig.5-10(b)`. Subsequent exchanges produce the history shown in the rest of `Fig.5-10(b)`.
+> 在第二次交换中，C 注意到它的每个邻居都声称有一条长度为 3 的路径通往 A。它随机选择其中一个邻居，并将其到 A 的新距离定为 4，如图第三行所示。
+> 随后的交换产生了其余部分所示的历史记录。
+
+From this figure, it should be clear why bad news travels slowly: ***no router ever has a value more than one higher than the minimum of all its neighbors***. Gradually, all routers work their way up to infinity, but the number of exchanges required depends on the numerical value used for infinity. For this reason, it is wise to set infinity to the longest path plus 1. 
+> 从这张图中，我们可以清楚地看到坏消息传播缓慢的原因：***没有一个路由器的数值比其所有邻居的最小值高出一个以上***。逐渐地，所有路由器都会达到无穷大，但所需的交换次数取决于无穷大的数值。
+> 因此，将无穷大设置为最长路径加 1 是可选的。
+
+Not entirely surprisingly, this problem is known as the ***count-to-infinity*** problem. There have been many attempts to solve it, for example, preventing routers from advertising their best paths back to the neighbors from which they heard them. Split horizon with poisoned reverse rule are discussed in `RFC 1058`. However, none of these heuristics work well in practice despite the colorful names. ==The core of the problem is that when *x* tells *y* that it has a path somewhere, *y* has no way of knowing whether it itself is on the path==.
+> 即使是毒性逆转、水平分裂的方法在实践中也不是那么有效。这里的核心原因在于，当 *x* 告知 y——其有某条路径，但 *y* 却无法确定自身是否在这条路径之上。
 
 #### 毒性逆转
 
-通过 水平分裂(split horizon)算法 减少上面所说的坏消息的环路的情况
-- 一种对无穷计算问题的解决办法
-    - C知道要经过B才能到达A，所以C向B报告它到A的距离为INF；C 告诉D它到A的真实距离
-    - D告诉E，它到A的距离，但D告诉C它通向A的距离为INF
-    - 第一次交换：B通过测试发现到A的路径为INF，而C也告诉B到A的距离为INF，因此，B到A的距离为INF
-    - 第二次交换：C从B和D那里获知，到A的距离为INF，因此将它到A的距离为INF
-    - ……坏消息以一次交换一个节点的速度传播
-- 水平分裂的问题：在某些拓扑形式下会失败（存在环路）
-    - 例子：
-        - A,B到D的距离为2，C到D的距离为1
-        - 如果C-D路径失败
-        - C获知到D为INF，从A，B获知到D的距离为INF，因此C认为D不可达
-        - A从C获知D的距离为INF，但从B处获知它到D的距离为2。因此A到B的距离为3，从B走
-        - B也有类似的问题
-        - 经过无限次之后，A和B都知道到D的距离为INF
+![[50-Network-layer-control-plane-poisoned-reverse.png]]
+
+***Poisoned Reverse***: if *z* routes through *y* to get to destination *x*, then *z* will advertise to *y* that its distance to *x* is infinity, that is, *z* will advertise to *y* that $D_{z}(x) = ∞$ (even though *z* knows $D_{z}(x) =5$ in truth). *z* will continue telling this little white lie to *y* as long as it routes to *x* via *y*. Since *y* believes that *z* has no path to *x*, *y* will never attempt to route to *x* via z, as long as *z* continues to route to *x* via *y* (and lies about doing so).
+> **毒性逆转**：如果 *z* 需要经过 *y* 才能到达 *x* ，则 *z* 向 *y* 告知——z 到 *x* 的开销为∞，即 *y* 无法通过 *z* 到达 *x* 
+
+Let’s now see how poisoned reverse solves the particular looping problem we encountered before in Figure 5.5(b). As a result of the poisoned reverse, *y*’s distance table indicates $D_{z}(x) = ∞$. When the cost of the (x, y) link changes from 4 to 60 at time t0, *y* updates its table and continues to route directly to *x*, albeit at a higher cost of 60, and informs *z* of its new cost to *x*, that is, $D_{y}(x) = 60$. After receiving the update at t1, *z* immediately shifts its route to *x* to be via the direct (*z*, *x*) link at a cost of 50. Since this is a new least-cost path to *x*, and since the path no longer passes through *y*, *z* now informs *y* that $D_{z}(x) = 50$ at t2. After receiving the update from *z*, *y* updates its distance table with $D_{y}(x) = 51$. Also, since *z* is now on *y*’s least-cost path to x, *y* poisons the reverse path from *z* to *x* by informing *z* at time t3 that $D_{y}(x) = ∞$ (even though *y* knows that $D_y(x)$ = 51 in truth). 
+> 当链路（x,y）的开销在 t0时刻从 4增加至 60 时，y 相应地更新其路由表并通知 z—— $D_{y}(x)=60$。在 t1时刻 z 收到来自 y 的消息，于是立即知道通过（z,x）的直连路径开销更小（50），因此 z 不再通过 y 到达 x。于是 t2时刻 z 通知 y—— $D_{z}(x)=50$。接下来，t3时刻 y 得到 z 的消息，并更新自身到达 x 的开销—— $D_{y}(x)=51$，途中经过 z，因此同时为 `z->y->x` 添加毒性逆转—— $D_{y}(x)=∞$。
+
+Does poisoned reverse solve the general count-to-infinity problem? It does not. you should convince yourself that loops involving three or more nodes (rather than simply two immediately neighboring nodes) will not be detected by the poisoned reverse technique.
+> 毒性逆转策略并没有从根本上解决无穷计算的问题，事实上只要节点超过 3个，毒性逆转就会失效。
+
+> [! note] 另一种说法——水平分裂
+> 通过 水平分裂 (split horizon)算法 减少上面所说的坏消息的环路的情况
+> - 水平分裂（毒性逆转）策略优化了什么？
+> 	- C 知道要经过 B 才能到达 A，所以 C 向 B 报告它到 A 的距离为 INF；C 告诉 D 它到 A 的真实距离
+> 	- D 告诉 E，它到 A 的距离，但 D 告诉 C 它通向 A 的距离为 INF
+> 	- 第一次交换：B 通过测试发现到 A 的路径为 INF，而 C 也告诉 B 到 A 的距离为 INF，因此，B 到 A 的距离为 INF
+> 	- 第二次交换：C 从 B 和 D 那里获知，到 A 的距离为 INF，因此将它到 A 的距离为 INF
+> 	- ……
+> 	- 坏消息以一次交换一个节点的速度传播
+> 
+> - 水平分裂存在的问题：在某些拓扑形式下会失败（存在环路）
+> 	- 例子：
+> 		- ![[50-Network-layer-control-plane-split-horizon.png]]
+> 		- A, B 到 D 的距离为 2，C 到 D 的距离为1
+> 		- 如果 C-D 路径失败
+> 		- C 获知到 D 为 INF，从 A，B 获知到 D 的距离为 INF，因此 C 认为 D 不可达
+> 		- A 从 C 获知 D 的距离为 INF，但从 B 处获知它到 D 的距离为 2。因此 A 到 B 的距离为3，导致 A 选择从 B 走
+> 		- B 也有类似的问题
+> 		- 经过无限次之后，A 和 B 都知道到 D 的距离为 INF 
 
 ### LS 与 DV 算法的比较
 
-*2种路由选择算法都有其优缺点，而且在互联网上都有应用*
-
 - 消息复杂度（DV胜出）
-    - LS：有n节点，E条链路，发送报文O(nE)个
-        - 局部的路由信息；全局传播
-    - DV：只和邻居交换信息
-        - 全局的路由信息；局部传播
+    - LS：有 N 个节点，E 条链路，要求每个节点知道通往全局链路的开销，因此发送报文 $O(|N|\times |E|)$ 个
+        - 局部的路由信息改变时，需向全局传播新的链路开销；
+    - DV：仅在链路状态改变时，和邻居交换信息
+        - 通过局部的消息传递，进而获知全图；
+
 - 收敛时间（LS胜出）
-    - LS： $O(n^2)$ 算法
-        - 有可能震荡
+    - LS： $O(|N|^2)$ 算法，尽管有可能震荡
     - DV：收敛较慢
         - 可能存在路由环路
         - count-to-infinity 问题
+
 - 健壮性：路由器故障会发生什么（LS胜出）
     - LS：
-        - 节点会通告不正确的链路代价
-        - 每个节点只计算自己的路由表
+        - 节点会通告不正确的链路开销
+        - 每个节点只计算自己的路由表，可以丢弃任何收到的 LS 广播分组
         - 错误信息影响较小，局部，路由较健壮
     - DV：
-        - DV节点可能通告对全网所有节点的不正确路径代价
-            - 距离矢量
-        - 每一个节点的路由表可能被其它节点使用
-            - 错误可以扩散到全网
+        - DV节点可能通告对全网所有节点的不正确路径开销
+        - 每一个节点的路由表可能被其它节点使用，错误因此可能扩散到全网
 
 ## 5.3 因特网中自治系统内部的路由选择
 
-互联网中的内部网关协议有两种常见协议：RIP 和 OSPF
+LS 和 DV 路由算法的简单模型，并不能很好地概括巨构网络的形态，原因有下：
+- ***Scale***. As the number of routers becomes large, the overhead involved in communicating, computing, and storing routing information becomes prohibitive. Today’s Internet consists of hundreds of millions of routers. ==Storing routing information for possible destinations at each of these routers would clearly require enormous amounts of memory==. The overhead required to broadcast connectivity and link cost updates among all of the routers would be huge! A distance-vector algorithm that iterated among such a large number of routers would surely never converge. Clearly, something must be done to reduce the complexity of route computation in a network as large as the Internet.
+> 巨构网络中，存储路由信息的内存开销不可接受，并且 DS 算法永远不会真正地收敛。
+
+- ***Administrative autonomy***. As described in Section 1.3, the Internet is a network of ISPs, with each ISP consisting of its own network of routers. An ISP generally desires to operate its network as it pleases (for example, to run whatever routing algorithm it chooses within its network) or to hide aspects of its network’s internal organization from the outside. Ideally, an organization should be able to operate and administer its network as it wishes, while still being able to connect its network to other outside networks.
+> 区域管理自治：ISP 的局部网络，希望获得一定的自治权，自治系统 Autonomous System 在保护自身隐蔽的同时，一定程度上减轻了巨构网络的路由信息开销和复杂度。
+
+自治系统内运行的路由选择算法，称为自治系统内部路由选择协议(Intra-autonomous system routing protocol)。这通常有两种：***RIP*** 和 ***OSPF***
 
 ### 5.3.1 RIP
 
 RIP(Routing Information Protocol)
-- 在1982年发布的BSD-UNIX中实现
+- 在1982年发布的BSD-UNIx中实现
 - 基于 Distance vector 算法
     - 距离矢量：每条链路cost=1，# of hops (max = 15 hops) 跳数 （跳数为16表示目标不可达）
     - DV每隔30秒和邻居交换DV，通告(AD)
@@ -461,7 +489,7 @@ RIP 通告(advertisements)
 - DV：在邻居之间每30秒交换通告报文
     - 定期，而且在改变路由的时候发送通告报文
     - 在对方的请求下可以发送通告报文
-- 每一个通告：至多AS内部的25个目标网络的DV（用于小型网，代价小，简单）
+- 每一个通告：至多AS内部的25个目标网络的DV（用于小型网，开销小，简单）
     - 目标网络 + 跳数
 
 > 例子：
@@ -491,7 +519,7 @@ OSPF(Open Shortest Path First) 开放最短路径优先协议
 - “open”：标准可公开获得
 - 使用LS算法
     - LS分组在网络中（一个AS内部）分发
-    - 全局网络拓扑、代价在每一个节点中都保持
+    - 全局网络拓扑、开销在每一个节点中都保持
     - 路由计算采用Dijkstra算法
 - OSPF通告信息中携带：每一个邻居路由器一个表项
 - 通告信息会传遍AS全部（通过泛洪）
@@ -500,10 +528,10 @@ OSPF(Open Shortest Path First) 开放最短路径优先协议
 
 OSPF“高级”特性（在RIP中的没有的）
 - 安全：所有的OSPF报文都是经过认证的（防止恶意的攻击）
-- 允许有多个代价相同的路径存在（在RIP协议中只有一个），可以在多条路径之上做负载均衡
-- 对于每一个链路，对于不同的TOS有多重代价矩阵
-    - 例如：卫星链路代价对于尽力而为的服务代价设置比较低，对实时服务代价设置的比较高
-    - 支持按照不同的代价计算最优路径，如：按照时间和延迟分别计算最优路径
+- 允许有多个开销相同的路径存在（在RIP协议中只有一个），可以在多条路径之上做负载均衡
+- 对于每一个链路，对于不同的TOS有多重开销矩阵
+    - 例如：卫星链路开销对于尽力而为的服务开销设置比较低，对实时服务开销设置的比较高
+    - 支持按照不同的开销计算最优路径，如：按照时间和延迟分别计算最优路径
 - 对单播和多播的集成支持: 
     - Multicast OSPF (MOSPF) 使用相同的拓扑数据库，就像在OSPF中一样
 - 在大型网络中支持层次性OSPF
@@ -529,7 +557,7 @@ OSPF“高级”特性（在RIP中的没有的）
     - 通过LS，DV，或者其他路由算法，所有路由器都要知道其他所有路由器（子网）如何走
     - 所有路由器在一个平面
 - 平面路由的问题
-    - 规模巨大的网络中，路由信息的存储、传输和计算代价巨大
+    - 规模巨大的网络中，路由信息的存储、传输和计算开销巨大
         - DV：距离矢量很大，且不能够收敛
         - LS：几百万个节点的LS分组的泛洪传输，存储以及最短路径算法的计算
     - 管理问题：
@@ -584,10 +612,10 @@ OSPF“高级”特性（在RIP中的没有的）
 BGP基础
 - BGP会话：2个BGP路由器(“peers”)在一个半永久的TCP连接上交换BGP报文：
     - 通告向不同目标子网前缀的“路径”（BGP是一个“路径矢量”协议）
-- 当AS3网关路由器3a向AS2的网关路由器2c通告路径：AS3,X 
-    - 3a参与AS内路由运算，知道本AS所有子网X信息
-    - 语义上：AS3向AS2承诺，它可以向子网X转发数据报
-    - 3a是2c关于X的下一跳(next hop)
+- 当AS3网关路由器3a向AS2的网关路由器2c通告路径：AS3,x 
+    - 3a参与AS内路由运算，知道本AS所有子网x信息
+    - 语义上：AS3向AS2承诺，它可以向子网x转发数据报
+    - 3a是2c关于x的下一跳(next hop)
 
 路径的属性 & BGP路由
 - 当通告一个子网前缀时，通告包括 BGP 属性
@@ -596,7 +624,7 @@ BGP基础
     - AS-PATH：前缀的通告所经过的AS列表: AS 67 AS 17 
         - 检测环路；多路径选择
         - 在向其它AS转发时，需要将自己的AS号加在路径上
-    - NEXT-HOP：从当前AS到下一跳AS有多个链路，在NETX-HOP属性中，告诉对方通过那个I转发。
+    - NExT-HOP：从当前AS到下一跳AS有多个链路，在NETx-HOP属性中，告诉对方通过那个I转发。
     - 其它属性：路由偏好指标，如何被插入的属性
 - 基于策略的路由：
     - 当一个网关路由器接收到了一个路由通告，使用输入策略来接受或过滤(accept/decline)
@@ -606,15 +634,15 @@ BGP基础
 
 > BGP 路径通告例子：
 > 
-> - 路由器AS2.2c从AS3.3a接收到的AS3,X路由通告（通过eBGP）
-> - 基于AS2的输入策略，AS2.2c决定接收AS3,X的通告，而且通过iBGP）向AS2的所有路由器进行通告
-> - 基于AS2的策略，AS2路由器2a通过eBGP向AS1.1c路由器通告AS2,AS3,X 路由信息
+> - 路由器AS2.2c从AS3.3a接收到的AS3,x路由通告（通过eBGP）
+> - 基于AS2的输入策略，AS2.2c决定接收AS3,x的通告，而且通过iBGP）向AS2的所有路由器进行通告
+> - 基于AS2的策略，AS2路由器2a通过eBGP向AS1.1c路由器通告AS2,AS3,x 路由信息
 >     - 路径上加上了AS2自己作为AS序列的一跳
 > <br>
-> - 网关路由器可能获取有关一个子网X的多条路径，从多个eBGP会话上：
->     - AS1网关路由器1c从2a学习到路径：AS2,AS3,X
->     - AS1网关路由器1c从3a处学习到路径AS3,X
->     - 基于策略（对路径进行打分，考虑政治上、经济上等），AS1路由器1c选择了路径：AS3,X，而且通过iBGP告诉所有AS1内部的路由器
+> - 网关路由器可能获取有关一个子网x的多条路径，从多个eBGP会话上：
+>     - AS1网关路由器1c从2a学习到路径：AS2,AS3,x
+>     - AS1网关路由器1c从3a处学习到路径AS3,x
+>     - 基于策略（对路径进行打分，考虑政治上、经济上等），AS1路由器1c选择了路径：AS3,x，而且通过iBGP告诉所有AS1内部的路由器
 
 BGP报文
 - 使用TCP协议交换BGP报文。
@@ -629,13 +657,13 @@ BGP 路径选择
 - 路由器可能获得一个网络前缀的多个路径，路由器必须进行路径的选择，路由选择可以基于：
     - 本地偏好值属性：偏好策略决定
     - 最短AS-PATH：AS的跳数
-    - 最近的NEXT-HOP路由器：热土豆路由
+    - 最近的NExT-HOP路由器：热土豆路由
     - 附加的判据：使用BGP标示
 - 一个前缀对应着多种路径，采用消除规则直到留下一条路径
 
 热土豆路由
-- 假设2d通过iBGP获知，它可以通过2a或者2c到达X
-- 热土豆策略（“赶紧甩掉烫手的山芋”）：选择具备最小内部区域代价的网关作为往X的出口（如：2d选择2a，即使往X可能有比较多的AS跳数）：不要操心域间的代价！
+- 假设2d通过iBGP获知，它可以通过2a或者2c到达x
+- 热土豆策略（“赶紧甩掉烫手的山芋”）：选择具备最小内部区域开销的网关作为往x的出口（如：2d选择2a，即使往x可能有比较多的AS跳数）：不要操心域间的开销！
 
 为什么内部网关协议和外部网关协议如此不同？（内部网关协议更关注性能，外部网关协议更关注策略）
 - 策略：
