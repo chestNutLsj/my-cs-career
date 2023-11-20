@@ -234,8 +234,6 @@
 #### 相对寻址
 指令的地址由程序计数器 PC 的内容（即当前执行指令的地址）和指令的相对寻址偏移量相加得到。
 
-![[20-Intruction-relative-addressing.png]]
-
 ![[20-Intruction-relative-addressing-2.png]]
 
 1. 主要用于转移指令，对浮动程序很有用。

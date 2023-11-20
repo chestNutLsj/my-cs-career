@@ -688,7 +688,6 @@ void Graph<Tv, Te>::dfs( Rank s ) { // s < n
 
 #### 边分类
 ![[80A-Graph-edge-kinds.png]]
-我的笔记更完善：[[#^562460|DFS过程中边的状态]]
 
 ### 何时选用 BFS/DFS？
 ![[80A-Graph-when-bfs-dfs?.png]]

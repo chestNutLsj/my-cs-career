@@ -872,7 +872,7 @@ int RedBlack<T>::updateHeight( BinNodePosi<T> x ){
 }
 ```
 
-### 插入
+### 红黑树插入
 按 BST 的规则插入关键码 e ：`x = insert(e)`，常规算法中 x 必为叶节点。
 1. 不妨设 x 的父亲 p=x->parent 存在（否则 x 就是根，直接插入就好了），
 2. 将 x 染红：x->color = isRoot (x)? B: R;
@@ -967,7 +967,7 @@ void RedBlack<T>::solveDoubleRed( BinNodePosi<T> x ) { // x当前必为红
 | RR-1      | U.color == Black | 1~2        | 2       | 调整随即完成                     |
 | RR-2      | U.color == Red   | 0          | 3       | 可能再次导致双红，但势必规模缩小 |
 
-### 删除
+### 红黑树删除
 按照 BST 常规算法，执行 `r=removeAt (x,_hot)`，实际被摘除的可能是 x 的前驱或后继 w，无论如何，不妨统称为 x：
 1. x 由孩子 r 接替，此时另一孩子 k 必定为 NULL；
 2. 随后的调整过程中，x 可能逐层上升——故假想地、等效地理解：k 是一棵黑高度与 r 相等的子树且随 x 一并摘除（尽管实际上也未出现过）

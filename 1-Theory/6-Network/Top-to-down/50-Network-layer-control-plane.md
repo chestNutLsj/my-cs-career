@@ -472,21 +472,42 @@ LS 和 DV 路由算法的简单模型，并不能很好地概括巨构网络的�
 - ***Administrative autonomy***. As described in Section 1.3, the Internet is a network of ISPs, with each ISP consisting of its own network of routers. An ISP generally desires to operate its network as it pleases (for example, to run whatever routing algorithm it chooses within its network) or to hide aspects of its network’s internal organization from the outside. Ideally, an organization should be able to operate and administer its network as it wishes, while still being able to connect its network to other outside networks.
 > 区域管理自治：ISP 的局部网络，希望获得一定的自治权，自治系统 Autonomous System 在保护自身隐蔽的同时，一定程度上减轻了巨构网络的路由信息开销和复杂度。
 
-自治系统内运行的路由选择算法，称为自治系统内部路由选择协议(Intra-autonomous system routing protocol)。这通常有两种：***RIP*** 和 ***OSPF***
+自治系统内运行的路由选择算法，称为**自治系统内部路由选择协议**(Intra-autonomous system routing protocol) 或 **内部网关协议**(Interior Gateway Protocol)。
+
+IGP 通常有三种：
+1. 距离向量路由协议
+	- *RIP*、*IGRP*
+	- 这类协议使用 Bellman-Ford 算法计算路径。
+	- 在距离-矢量路由协议中，每个路由器并不了解整个网络的拓扑信息。它们只是向其它路由器通告自己的距离、也从其它路由器那里收到类似的通告。每个路由器都通过这种路由通告来传播它的路由表。在之后的通告周期中，各路由器通告其整张路由表。该过程持续至所有路由器的路由表都收敛至一稳定状态为止。
+	- 这类协议具有收敛缓慢、无穷计算的缺点，然而，它们通常容易处理且非常适合小型网络。
+
+2. 连接状态路由协议
+	- *OSPF*、*IS-IS*
+	- 在链路状态路由协议中，每个节点都知晓整个网络的拓扑信息。各节点使用自己了解的网络拓扑情况来各自独立地对网络中每个可能的目的地址计算出其最佳的转发地址（下一跳）。所有最佳转发地址汇集到一起构成该节点的完整路由表。
+	- 与距离-矢量路由协议使用的那种每个节点与其相邻节点分享自己的路由表的工作方式不同，链路状态路由协议的工作方式是节点间仅传播用于构造网络连通图所需的信息。
+	- 最初创建这类协议就是为了解决距离-矢量路由协议收敛缓慢的缺点，然而，为此链路状态路由协议会消耗大量的内存与处理器能力。
+
+3. 高级距离向量路由协议
+	- *EIGRP*（思科研发的私有协议）
+	- 又名混合路由协议或者平衡混合路由协议，是继距离-矢量路由协议与链路状态路由协议之后的又一个内部网关协议，强调了前两者的优点，规避了它们的不足。
 
 ### 5.3.1 RIP
 
+#### 简介
+
 RIP(Routing Information Protocol)
-- 在1982年发布的BSD-UNIx中实现
+- 在1982年发布的 BSD-UNIX 中实现
 - 基于 Distance vector 算法
-    - 距离矢量：每条链路cost=1，# of hops (max = 15 hops) 跳数 （跳数为16表示目标不可达）
-    - DV每隔30秒和邻居交换DV，通告(AD)
-    - 每个通告包括：最多25个目标子网
+    - 距离矢量：每条链路 cost=1，总跳数作为衡量到达目的网络的距离（跳数最大为 15，若 cost=16 即表示目标不可达）
+- 通过 UDP 报文进行路由信息交换，使用端口号 520
+- DV 每隔30秒和邻居交换 DV，通告(AD)
+- 每个通告包括：最多25个目标子网
 
-    <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002144643968.png" style="zoom:80%"/>
+![[50-Network-layer-control-plane-RIP-hops.png]]
 
-RIP 通告(advertisements)
-- DV：在邻居之间每30秒交换通告报文
+#### RIP 通告(advertisements)
+
+- 在邻居之间每30秒交换通告报文
     - 定期，而且在改变路由的时候发送通告报文
     - 在对方的请求下可以发送通告报文
 - 每一个通告：至多AS内部的25个目标网络的DV（用于小型网，开销小，简单）
@@ -494,11 +515,9 @@ RIP 通告(advertisements)
 
 > 例子：
 > 
-> <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002161034218.png" style="zoom:60%"/>
-> <br>
-> <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002161049443.png" style="zoom:60%"/>
+> 
 
-RIP：链路失效和恢复
+#### RIP：链路失效和恢复
 - 如果180秒没有收到通告信息-->邻居或者链路失效
     - 发现经过这个邻居的路由已失效
     - 新的通告报文会传递给邻居
@@ -506,7 +525,7 @@ RIP：链路失效和恢复
     - 链路失效快速（？）地在整网中传输
     - 使用毒性逆转(poison reverse)阻止ping-pong回路（不可达的距离：跳数无限 = 16 段）
 
-RIP进程处理
+#### RIP进程处理
 - RIP以应用进程的方式实现：route-d (daemon)
 - 通告报文通过UDP报文传送，周期性重复
 - 网络层的协议使用了传输层的服务，以应用层实体的方式实现
