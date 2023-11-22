@@ -339,7 +339,14 @@ TournamentSort():
 若将二叉堆改成多叉堆，则
 - 堆高降低至 $O (\log_{d}n)$ 
 - 相应地，上滤成本降低至 $\log_{d}n$
-- 但下滤成本反而增加，当 d>4 时，下滤成本增加至 $d\cdot\log_{d}n=\frac{d}{\ln d}\ln n$
+- 但下滤成本反而增加，只要 d>4，就增加至 $d\cdot\log_{d}n=\frac{d}{\ln d}\ln n$ 
+	- 可以由函数的极值得知，当 d=e 时，成本最低，而多叉堆 d>=3，因此 d=3 时成本最低，为 $\frac{3}{\ln 3}\ln n$ ，相较于完全二叉堆
+	- ![[90-Priority_Queue-d-ary-heap-percolatedown.png]]
+	- 并且，根据 wiki 上的描述，4-ary heap 的任何操作效率，都比 binary heap 更高：
+		- [ics.uci.edu/\~eppstein/261/lecture5a.pdf](https://ics.uci.edu/~eppstein/261/lecture5a.pdf)
+		- [d-ary heap - Wikipedia](https://en.wikipedia.org/wiki/D-ary_heap?useskin=vector)
+		- ![[90-Priority_Queue-4-ary-heap.png]]
+
 [[91-PQ-Exercise#10.17 利用多叉堆改进 Prim 算法|更详细的说明]]
 
 ### 多叉堆实现 PFS 的优势

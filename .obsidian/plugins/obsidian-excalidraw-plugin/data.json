@@ -73,7 +73,7 @@
   "library2": {
     "type": "excalidrawlib",
     "version": 2,
-    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.0.1",
+    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.0.2",
     "libraryItems": [
       {
         "status": "unpublished",
@@ -81344,7 +81344,7 @@
     }
   },
   "defaultTrayMode": false,
-  "previousRelease": "2.0.1",
+  "previousRelease": "2.0.2",
   "showReleaseNotes": true,
   "showNewVersionNotification": true,
   "latexBoilerplate": "\\color{blue}",
@@ -81680,5 +81680,17 @@
     "DECAY_TIME": 1000,
     "COLOR": "#ff0000"
   },
+  "embeddableMarkdownDefaults": {
+    "useObsidianDefaults": false,
+    "backgroundMatchCanvas": false,
+    "backgroundMatchElement": true,
+    "backgroundColor": "#fff",
+    "backgroundOpacity": 60,
+    "borderMatchElement": true,
+    "borderColor": "#fff",
+    "borderOpacity": 0,
+    "filenameVisible": false
+  },
+  "canvasImmersiveEmbed": true,
   "mathjaxSourceURL": "https://cdn.jsdelivr.net/npm/mathjax@3.2.1/es5/tex-svg.js"
 }

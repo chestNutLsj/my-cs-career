@@ -8,8 +8,8 @@ Partial style(s) is(are) sourced or adapted from Blue Topaz (https://github.com/
 
 */
 
-/*蓝色托帕石，适合Obsidian v1.2.8。uid [20231113] flying fly flies制作。如果喜欢，可以在Github里给我星星 https://github.com/whyt-byte */
-/*Blue Topaz for Obsidian v1.2.8, uid [20231113] created by flying fly flies. Feel free to use, share and modify. If you like the theme, please star me on GitHub https://github.com/whyt-byte */
+/*蓝色托帕石，适合Obsidian v1.2.8。uid [20231115] flying fly flies制作。如果喜欢，可以在Github里给我星星 https://github.com/whyt-byte */
+/*Blue Topaz for Obsidian v1.2.8, uid [20231115] created by flying fly flies. Feel free to use, share and modify. If you like the theme, please star me on GitHub https://github.com/whyt-byte */
 
 /*
 MIT License
@@ -794,6 +794,24 @@ settings:
       -
         label: Obsidian default
         value: native-scrollbars
+  -
+    id: scrollbar-thumb-bg
+    title: Scrollbar thumb background
+    title.zh: 滚动条滑块颜色
+    type: variable-themed-color
+    opacity: false
+    format: hex
+    default-light: '#'
+    default-dark: '#'
+  -
+    id: scrollbar-active-thumb-bg
+    title: Scrollbar thumb background (Active)
+    title.zh: 滚动条滑块颜色 （选择时）
+    type: variable-themed-color
+    opacity: false
+    format: hex
+    default-light: '#'
+    default-dark: '#'
   -
     id: view-button-front
     title: The view status button is placed in front of the header
@@ -2496,7 +2514,7 @@ settings:
     title.zh: 2.3.2.1 无序列表
     type: heading
     level: 4
-    collapsed: false
+    collapsed: true
   -
     id: colorful-unordered-list
     title: Toggle colorful unordered list marker
@@ -2729,6 +2747,33 @@ settings:
     level: 4
     collapsed: false
   -
+    id: bt-connected-indent-hover
+    title: Toggle connected indent (Hovering)
+    title.zh: 启用Connected indent lines（鼠标悬浮）
+    description: Inspired from the CSS snippet by KillyMXI (https://gist.github.com/KillyMXI/cbef8edff6dd55d9e6ea4df66567e9b1)
+    type: class-toggle
+    default: true
+  -
+    id: bt-connected-indent-line-color
+    title: Connected indent line color (Hovering)
+    type: variable-themed-color
+    format: hex
+    opacity: true
+    default-light: '#FFA8A8'
+    default-dark: '#926a6a'
+  -
+    id: bt-colorful-connected-indent-hover
+    title: Toggle colorful indentation lines (Hovering)
+    title.zh: 启用彩色Connected indent lines（鼠标悬浮）
+    type: class-toggle
+    default: true
+  -
+    id: bt-indentation-width-hover
+    title: Width of indentation lines (Hovering)
+    title.zh: 层级线宽度 （Hovering）
+    type: variable-text
+    default: 3px
+  -
     id: bt-list-indentation-margin-left-editing
     title: Move to right by ?px (Editing)
     title.zh: 向右移动 ?px (Editing)
@@ -2762,25 +2807,6 @@ settings:
     type: variable-number
     default: 1
     format: px
-  -
-    id: bt-connected-indent-hover
-    title: Toggle connected indent (Hovering)
-    title.zh: 启用Connected indent lines（鼠标悬浮）
-    description: Inspired from the CSS snippet by KillyMXI (https://gist.github.com/KillyMXI/cbef8edff6dd55d9e6ea4df66567e9b1)
-    type: class-toggle
-    default: true
-  -
-    id: bt-colorful-connected-indent-hover
-    title: Toggle colorful indentation lines (Hovering)
-    title.zh: 启用彩色Connected indent lines（鼠标悬浮）
-    type: class-toggle
-    default: false
-  -
-    id: bt-colorful-indentation-width-hover
-    title: Width of colorful indentation lines (Hovering)
-    title.zh: 彩色层级线宽度 （Hovering）
-    type: variable-text
-    default: 3px
   -
     id: bt-list-indentation-margin-left-reading
     title: Move to right by ?px (Reading)
@@ -4499,7 +4525,7 @@ settings:
     collapsed: true
   -
     id: style-options-for-admonition-plugin-header
-    title: 3.1 Admonition&Callout style
+    title: 3.1 Admonition & Callout style
     type: heading
     level: 2
     collapsed: true
@@ -4525,7 +4551,7 @@ settings:
     title.zh: Callout 外观样式设置
     type: class-select
     allowEmpty: false
-    default: traditional-callout-style
+    default: admonition-bg-color-same
     options:
       -
         label: Default
@@ -5633,7 +5659,6 @@ body {
   --list-marker-color-collapsed: var(--theme-color);
 
   --list-ul-colorful-marker-content: '\2022';
-  --list-colorful-marker: var(--theme-color);
 
   --he-title-bar-active-bg: var(--theme-color-translucent-005);
   --he-title-bar-active-pinned-bg: var(--theme-color-translucent-005);
@@ -5672,7 +5697,7 @@ body {
 
   --ribbon-background: var(--background-secondary-alt);--ribbon-background-collapsed: var(--background-secondary-alt);
 
-  --bt-colorful-indentation-width-hover: 3px;
+  --bt-indentation-width-hover: 3px;
 }
 
 
@@ -5740,8 +5765,8 @@ body.all-dark-pdf .print.theme-light,
   --background-black-or-white-1: #353535;
   --background-modifier-border-1: #000000;
   --background-transparent-blue: #003e759a;
-  --scrollbar-thumb: #5e5e5e7e;
-  --scrollbar-thumb-active: #5e5e5e;
+  --scrollbar-thumb-bg: #3f3f3f7e;
+  --scrollbar-active-thumb-bg: #4d4d4d88;
   --gray-1: #5C6370;
   --gray-2: #abb2bf;
   --red: #db7c84;
@@ -6014,6 +6039,8 @@ body.all-dark-pdf .print.theme-light,
   --window-shadow: 0 1px 3px hsla(207, 10%, 10%, 0.1);
   --window-shadow2:	0 0 9px hsla(212, 17%, 0%, 0.3);
   --bt-indentation-line-image: url("https://images.unsplash.com/photo-1511512608152-b60215d0dd61?auto=format&fit=crop&q=80&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=1770");
+  --bt-connected-indent-line-color: #926a6a;
+  --list-colorful-marker: #ff8686;
 }
 
 .theme-light {
@@ -6096,8 +6123,8 @@ body.all-dark-pdf .print.theme-light,
   --bg-color-settings-5: #d4d4d464;
   --bg-color-settings-6: #ffffff85;
 
-  --scrollbar-thumb: #e4e4e4a8;
-  --scrollbar-thumb-active: #e4e4e4;
+  --scrollbar-thumb-bg: #dcdcdcbe;
+  --scrollbar-active-thumb-bg: #ddddddd9;
 
   --gray-1: #383a42;
   --gray-2: #383a42;
@@ -6355,6 +6382,8 @@ body.all-dark-pdf .print.theme-light,
   --window-shadow: 0 1px 3px hsla(212, 17%, 80%, 0.2);
   --window-shadow2: 0 0 9px hsla(217, 15%, 83%, 0.7);
   --bt-indentation-line-image: url("https://images.unsplash.com/photo-1579546928686-286c9fbde1ec?auto=format&fit=crop&q=80&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=1839");
+  --bt-connected-indent-line-color: #FFA8A8;
+  --list-colorful-marker: #fd4949;
 }
 
 body.color-scheme-options-avocado-topaz .theme-light,
@@ -6394,8 +6423,8 @@ body.color-scheme-options-avocado-topaz.theme-light {
 
   --background-transparent-blue: #c6e5ffde;
 
-  --scrollbar-thumb: #c6c6c6a8;
-  --scrollbar-thumb-active: #c6c6c6;
+  --scrollbar-thumb-bg: #c6c6c6a8;
+  --scrollbar-active-thumb-bg: #c6c6c6;
   --search-result-file-title-color: var(--text-normal);
 
   --background-blockquote: #b6b6b62c;
@@ -6532,8 +6561,8 @@ body.color-scheme-options-avocado-topaz.theme-dark {
   --background-mobile-drawer-1: #1b1b1b;
   --background-mobile-drawer-2: #1b1b1b69;
   --background-transparent-blue: #003e759a;
-  --scrollbar-thumb: #8282827e;
-  --scrollbar-thumb-active: #828282;
+  --scrollbar-thumb-bg: #8282827e;
+  --scrollbar-active-thumb-bg: #828282;
   --search-result-file-title-color: var(--text-normal);
 
   --background-blockquote: #9191911c;
@@ -6897,8 +6926,8 @@ body.color-scheme-options-pink-topaz.theme-light {
   --background-mobile-drawer-2: #ffffff;
   --background-secondary-alt-bg-4-bt-publish: #f6f6f6;
 
-  --scrollbar-thumb: #e2bdbd8d;
-  --scrollbar-thumb-active: #e2bdbd;
+  --scrollbar-thumb-bg: #e2bdbd8d;
+  --scrollbar-active-thumb-bg: #e2bdbd;
   --search-result-file-title-color: #cc437c;
 
   --background-blockquote: #e6d6ba2c;
@@ -7039,8 +7068,8 @@ body.color-scheme-options-pink-topaz.theme-dark {
   --background-mobile-drawer-2: #1b1b1b69;
 
   --background-transparent-blue: #003e759a;
-  --scrollbar-thumb: #8d69698d;
-  --scrollbar-thumb-active: #8d6969;
+  --scrollbar-thumb-bg: #8d69698d;
+  --scrollbar-active-thumb-bg: #8d6969;
   --search-result-file-title-color: #c0689b;
 
   --background-blockquote: #9191911c;
@@ -7549,8 +7578,8 @@ body.color-scheme-options-flamingo.theme-light {
 
   --table-color-calendar-2: rgb(214, 118, 146);
   --table-color-rgb: 214, 118, 146;
-  --scrollbar-thumb: #f39ba050;
-  --scrollbar-thumb-active: #f39ba0;
+  --scrollbar-thumb-bg: #f39ba050;
+  --scrollbar-active-thumb-bg: #f39ba0;
 }
 
 body.color-scheme-options-flamingo.all-dark-pdf .print.theme-light,
@@ -7678,8 +7707,8 @@ body.color-scheme-options-flamingo.theme-dark {
 
   --table-color-calendar-2: rgb(215, 86, 125);
   --table-color-rgb: 215, 86, 125;
-  --scrollbar-thumb: #e2bdbd50;
-  --scrollbar-thumb-active: #e2bdbd;
+  --scrollbar-thumb-bg: #e2bdbd50;
+  --scrollbar-active-thumb-bg: #e2bdbd;
 }
 
 body.color-scheme-options-flamingo.theme-light #calendar-container {
@@ -8019,8 +8048,8 @@ body.color-scheme-options-honey-milk-topaz.theme-dark {
 
   --background-transparent-blue: #003e759a;
 
-  --scrollbar-thumb: #8282827e;
-  --scrollbar-thumb-active: #828282;
+  --scrollbar-thumb-bg: #8282827e;
+  --scrollbar-active-thumb-bg: #828282;
 
   --search-result-file-title-color: var(--main-color);
 
@@ -8334,8 +8363,8 @@ body.color-scheme-options-chocolate-topaz.theme-dark {
   --background-mobile-drawer-2: var(--bg-color);
 
   --background-transparent-blue: #003e759a;/*用在kanban里的，可以不调*/
-  --scrollbar-thumb: #8282827e;
-  --scrollbar-thumb-active: #828282;
+  --scrollbar-thumb-bg: #8282827e;
+  --scrollbar-active-thumb-bg: #828282;
 
   --search-result-file-title-color: var(--main-color);
 
@@ -9067,8 +9096,8 @@ body.color-scheme-options-lilac.theme-light {
 
   --background-secondary-alt-bg-4-bt-publish: #e1d5eb61;
 
-  --scrollbar-thumb: #aa7dd3a8;
-  --scrollbar-thumb-active: #aa7dd3;
+  --scrollbar-thumb-bg: #aa7dd3a8;
+  --scrollbar-active-thumb-bg: #aa7dd3;
 
   --search-result-file-title-color: #5a10a0;
 
@@ -9239,8 +9268,8 @@ body.color-scheme-options-lilac.theme-dark {
   --background-mobile-drawer-2: #1b1b1b69;
   --background-transparent-blue: #003e759a;
 
-  --scrollbar-thumb: #603a8199;
-  --scrollbar-thumb-active: #603a81;
+  --scrollbar-thumb-bg: #603a8199;
+  --scrollbar-active-thumb-bg: #603a81;
 
   --search-result-file-title-color: #a75ac6;
 
@@ -9480,7 +9509,7 @@ body.color-scheme-options-simplicity-topaz.theme-light {
   --background-modifier-border-hr: var(--simple-gray-5);
   --background-secondary-alt-bg-4-bt-publish: var(--simple-gray-5);
 
-  --scrollbar-thumb: var(--simple-gray-5);
+  --scrollbar-thumb-bg: var(--simple-gray-5);
 
   --color-black: var(--simple-black-1);
   --color-dark-gray: var(--simple-gray-1);
@@ -13414,8 +13443,8 @@ body.bt-connected-indent-hover .cm-s-obsidian:not(.kanban) .HyperMD-list-line-6:
   left: var(--list-threading-offset);
   bottom: 0;
   height: calc(100% - 1em);
-  width: var(--bt-colorful-indentation-width-hover);
-  background-color: var(--list-colorful-marker);
+  width: var(--bt-indentation-width-hover);
+  background-color: var(--bt-connected-indent-line-color);
 }
 body.bt-connected-indent-hover .cm-s-obsidian:not(.kanban) .HyperMD-list-line.HyperMD-task-line::after {
   max-height: calc(100% - 1.2em);
@@ -13433,8 +13462,8 @@ body.bt-connected-indent-hover .cm-s-obsidian:not(.kanban) .HyperMD-list-line-6:
   left: var(--list-threading-offset);
   top: 0;
   height: 100%;
-  width: var(--bt-colorful-indentation-width-hover);
-  background-color: var(--list-colorful-marker);
+  width: var(--bt-indentation-width-hover);
+  background-color: var(--bt-connected-indent-line-color);
 }
 
 /* elbows */
@@ -13451,8 +13480,8 @@ body.bt-connected-indent-hover .cm-s-obsidian:not(.kanban) .HyperMD-list-line-7:
   top: 0;
   height: calc(var(--line-height-list) / 2 * var(--font-size-list) + var(--list-spacing-bt) * 0.075em * 1.5);
   border-bottom-left-radius: var(--radius-m);
-  border-bottom: var(--bt-colorful-indentation-width-hover) solid var(--list-colorful-marker);
-  border-left: var(--bt-colorful-indentation-width-hover) solid var(--list-colorful-marker);
+  border-bottom: var(--bt-indentation-width-hover) solid var(--bt-connected-indent-line-color);
+  border-left: var(--bt-indentation-width-hover) solid var(--bt-connected-indent-line-color);
 }
 body.bt-connected-indent-hover .cm-s-obsidian:not(.kanban) .HyperMD-list-line.HyperMD-task-line::before {
   max-width: calc(var(--list-indent) - 0.35em);
@@ -13460,38 +13489,38 @@ body.bt-connected-indent-hover .cm-s-obsidian:not(.kanban) .HyperMD-list-line.Hy
 
 body.bt-colorful-indentation-lines.bt-indentation-line-gradient ul ul::before,
 body.bt-colorful-indentation-lines.bt-indentation-line-gradient ol ol::before  {
-  border-right-color: var(--list-colorful-marker) !important;
+  border-right-color: var(--bt-connected-indent-line-color) !important;
   border-image: linear-gradient(var(--bt-indentation-gradient-color-1), var(--bt-indentation-gradient-color-2)) 10;
 }
 
 body.bt-colorful-indentation-lines.bt-indentation-line-image :is(ul, ol) :is(ul, ol)::before {
-  border-right-color: var(--list-colorful-marker) !important;
+  border-right-color: var(--bt-connected-indent-line-color) !important;
   border-image: var(--bt-indentation-line-image) 10;
 }
 
 body.bt-colorful-indentation-lines :is(ul, ol) :is(ul, ol)::before {
-  border-right-color: var(--list-colorful-marker) !important;
+  border-right-color: var(--bt-connected-indent-line-color) !important;
   border-right-width: var(--bt-colorful-indentation-width);
   border-right-style: double;
 }
 body.bt-colorful-indentation-lines :is(ul, ol) :is(ul, ol) :is(ul, ol)::before {
-  border-right-color: var(--list-colorful-marker) !important;
+  border-right-color: var(--bt-connected-indent-line-color) !important;
   filter: hue-rotate(60deg);
 }
 body.bt-colorful-indentation-lines :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol)::before {
-  border-right-color: var(--list-colorful-marker) !important;
+  border-right-color: var(--bt-connected-indent-line-color) !important;
   filter: hue-rotate(120deg);
 }
 body.bt-colorful-indentation-lines :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol)::before {
-  border-right-color: var(--list-colorful-marker) !important;
+  border-right-color: var(--bt-connected-indent-line-color) !important;
   filter: hue-rotate(180deg);
 }
 body.bt-colorful-indentation-lines :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol)::before {
-  border-right-color: var(--list-colorful-marker) !important;
+  border-right-color: var(--bt-connected-indent-line-color) !important;
   filter: hue-rotate(240deg);
 }
 body.bt-colorful-indentation-lines :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol)::before {
-  border-right-color: var(--list-colorful-marker) !important;
+  border-right-color: var(--bt-connected-indent-line-color) !important;
   filter: hue-rotate(300deg);
 }
 
@@ -13503,7 +13532,7 @@ body.bt-colorful-indentation-lines-editing .HyperMD-list-line-6 .cm-hmd-list-ind
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-7 .cm-hmd-list-indent > .cm-indent::before,
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-8 .cm-hmd-list-indent > .cm-indent::before,
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-9 .cm-hmd-list-indent > .cm-indent::before {
-  border-color: var(--list-colorful-marker)
+  border-color: var(--bt-connected-indent-line-color)
 }
 
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-3 .cm-hmd-list-indent > .cm-indent ~ .cm-indent::before,
@@ -13513,7 +13542,7 @@ body.bt-colorful-indentation-lines-editing .HyperMD-list-line-6 .cm-hmd-list-ind
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-7 .cm-hmd-list-indent > .cm-indent ~ .cm-indent::before,
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-8 .cm-hmd-list-indent > .cm-indent ~ .cm-indent::before,
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-9 .cm-hmd-list-indent > .cm-indent ~ .cm-indent::before  {
-  border-color: var(--list-colorful-marker);
+  border-color: var(--bt-connected-indent-line-color);
   filter: hue-rotate(60deg);
 }
 
@@ -13523,7 +13552,7 @@ body.bt-colorful-indentation-lines-editing .HyperMD-list-line-6 .cm-hmd-list-ind
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-7 .cm-hmd-list-indent > .cm-indent ~ .cm-indent ~ .cm-indent::before,
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-8 .cm-hmd-list-indent > .cm-indent ~ .cm-indent ~ .cm-indent::before,
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-9 .cm-hmd-list-indent > .cm-indent ~ .cm-indent ~ .cm-indent::before {
-  border-color: var(--list-colorful-marker);
+  border-color: var(--bt-connected-indent-line-color);
   filter: hue-rotate(120deg);
 }
 
@@ -13532,7 +13561,7 @@ body.bt-colorful-indentation-lines-editing .HyperMD-list-line-6 .cm-hmd-list-ind
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-7 .cm-hmd-list-indent > .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent::before,
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-8 .cm-hmd-list-indent > .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent::before,
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-9 .cm-hmd-list-indent > .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent::before {
-  border-color: var(--list-colorful-marker);
+  border-color: var(--bt-connected-indent-line-color);
   filter: hue-rotate(180deg);
 }
 
@@ -13540,14 +13569,14 @@ body.bt-colorful-indentation-lines-editing .HyperMD-list-line-6 .cm-hmd-list-ind
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-7 .cm-hmd-list-indent > .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent::before,
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-8 .cm-hmd-list-indent > .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent::before,
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-9 .cm-hmd-list-indent > .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent::before {
-  border-color: var(--list-colorful-marker);
+  border-color: var(--bt-connected-indent-line-color);
   filter: hue-rotate(240deg);
 }
 
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-7 .cm-hmd-list-indent > .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent::before,
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-8 .cm-hmd-list-indent > .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent::before,
 body.bt-colorful-indentation-lines-editing .HyperMD-list-line-9 .cm-hmd-list-indent > .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent ~ .cm-indent::before{
-  border-color: var(--list-colorful-marker);
+  border-color: var(--bt-connected-indent-line-color);
   filter: hue-rotate(300deg);
 }
 
@@ -13556,19 +13585,19 @@ body.bt-connected-indent-hover .markdown-preview-view:not(.kanban) li {
 }
 
 /* In-between items */
-body.bt-connected-indent-hover .markdown-preview-view:not(.kanban) li > :is(ul, ol) > li:has(~ li:hover)::before,
-body.bt-connected-indent-hover .markdown-preview-view:not(.kanban) :is(ul, ol):has(~ *:hover) > li::before {
+body.bt-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li > :is(ul, ol) > li:has(~ li:hover)::before,
+body.bt-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) :is(ul, ol):has(~ *:hover) > li::before {
   content: "";
   position: absolute;
-  background-color: var(--list-colorful-marker);
-  width: var(--bt-colorful-indentation-width-hover);
+  background-color: var(--bt-connected-indent-line-color);
+  width: var(--bt-indentation-width-hover);
   top: calc(var(--list-spacing-bt) * 0.075em - var(--font-size-list) * 0.6);
   left: calc(-1.5 * var(--list-indent) - 1px);
   bottom: calc(var(--list-spacing-bt) * 0.075em - var(--font-size-list) * 0.5);
 }
 
 /* Elbows items */
-body.bt-connected-indent-hover .markdown-preview-view:not(.kanban) li > :is(ul, ol) > li:hover::before {
+body.bt-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li > :is(ul, ol) > li:hover::before {
   content: "";
   position: absolute;
   background-color: transparent;
@@ -13577,42 +13606,42 @@ body.bt-connected-indent-hover .markdown-preview-view:not(.kanban) li > :is(ul, 
   width: calc(1em + var(--size-4-4));
   height: calc(var(--font-size-list) * 1.27);
   border-bottom-left-radius: var(--radius-m);
-  border-bottom: var(--bt-colorful-indentation-width-hover) solid var(--list-colorful-marker);
-  border-left: var(--bt-colorful-indentation-width-hover) solid var(--list-colorful-marker);
+  border-bottom: var(--bt-indentation-width-hover) solid var(--bt-connected-indent-line-color);
+  border-left: var(--bt-indentation-width-hover) solid var(--bt-connected-indent-line-color);
 }
 
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li > :is(ul, ol) > li > :is(ul, ol) > li:has( ~ li:hover)::before,
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li > :is(ul, ol) > li > :is(ul, ol) > li:hover::before,
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) .markdown-preview-view:not(.kanban) li:hover > :is(ul, ol) > li > ul:has(+ ol) > li::before,
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover li:hover > :is(ul, ol) > li > ol:has(+ ul) > li::before {
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li > :is(ul, ol) > li > :is(ul, ol) > li:has( ~ li:hover)::before,
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li > :is(ul, ol) > li > :is(ul, ol) > li:hover::before,
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li:hover > :is(ul, ol) > li > ul:has(+ ol) > li::before,
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li:hover > :is(ul, ol) > li > ol:has(+ ul) > li::before {
   filter: hue-rotate(60deg);
 }
 
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li:has( ~ li:hover)::before,
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li:hover::before,
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > ul:has(+ ol) > li::before,
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > ol:has(+ ul) > li::before {
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li:has( ~ li:hover)::before,
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li:hover::before,
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > ul:has(+ ol) > li::before,
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > ol:has(+ ul) > li::before {
   filter: hue-rotate(120deg);
 }
 
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) >li:has( ~ li:hover)::before,
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li:hover::before,
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > ul:has(+ ol) > li::before,
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > ol:has(+ ul) > li::before {
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) >li:has( ~ li:hover)::before,
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li:hover::before,
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > ul:has(+ ol) > li::before,
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > ol:has(+ ul) > li::before {
   filter: hue-rotate(180deg);
 }
 
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) >li:has( ~ li:hover)::before,
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li:hover::before,
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > ul:has(+ ol) > li::before,
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > ol:has(+ ul) > li::before {
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) >li:has( ~ li:hover)::before,
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li:hover::before,
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > ul:has(+ ol) > li::before,
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > ol:has(+ ul) > li::before {
   filter: hue-rotate(240deg);
 }
 
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li:has( ~ li:hover)::before,
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li:hover::before,
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > ul:has(+ ol) > li::before,
-body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > ol:has(+ ul) > li::before {
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li:has( ~ li:hover)::before,
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li:hover::before,
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > ul:has(+ ol) > li::before,
+body.bt-connected-indent-hover.bt-colorful-connected-indent-hover .markdown-preview-view:not(.kanban) *:not([data-callout="kanban"]) > div > :is(ul, ol) li:hover > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > :is(ul, ol) > li > ol:has(+ ul) > li::before {
   filter: hue-rotate(300deg);
 }
 
@@ -16455,19 +16484,17 @@ body:not(.native-scrollbars) ::-webkit-scrollbar-thumb {
   border: 3px solid transparent;
   border-width: 3px 2px 3px 3px;
   min-height: 65px;
-  background-color: var(--scrollbar-thumb);
+  background-color: var(--scrollbar-thumb-bg);
   border: 3.5px solid transparent !important;
 }
 
 body:not(.native-scrollbars) ::-webkit-scrollbar {
-  background-color: transparent;
-  width: 13px;
-  height: 13px;
+  background: transparent;
 }
 
 body:not(.native-scrollbars) textarea:hover::-webkit-scrollbar-thumb:active,
 body:not(.native-scrollbars) ::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-active);
+  background: var(--scrollbar-active-thumb-bg);
 }
 
 body.remove-scrollbars ::-webkit-scrollbar-thumb {
@@ -16493,21 +16520,21 @@ body.body:not(.is-mobile).hover-scrollbars :is(.vertical-tab-header, .vertical-t
   overflow-y: overlay;
 }
 body.body:not(.is-mobile).hover-scrollbars :is(.vertical-tab-header, .vertical-tab-content, .nav-files-container, .view-content, .search-result-container, .git-view-body, .workspace-leaf-content[data-type=markdown] .cm-scroller, .markdown-preview-view, .suggestion-container .suggestion, .prompt-results, .markdown-embed-content, .community-modal-search-results-wrapper,.community-modal-info,.tag-container):hover {
-  color: var(--scrollbar-thumb);
+  color: var(--scrollbar-thumb-bg);
 }
 body.body:not(.is-mobile).hover-scrollbars :is(.vertical-tab-header, .vertical-tab-content, .nav-files-container, .view-content, .search-result-container, .git-view-body, .workspace-leaf-content[data-type=markdown] .cm-scroller, .markdown-preview-view, .suggestion-container .suggestion, .prompt-results, .community-modal-search-results-wrapper,.tag-container) > :not(h1, h2, h3, h4, h5, h6) {
   color: var(--text-normal);
 }
 
 body.body:not(.is-mobile).hover-scrollbars :is(.vertical-tab-header, .vertical-tab-content, .nav-files-container, .view-content, .search-result-container, .git-view-body, .workspace-leaf-content[data-type=markdown] .cm-scroller, .markdown-preview-view, .suggestion-container .suggestion, .prompt-results, .markdown-embed-content, .community-modal-search-results-wrapper,.community-modal-info,.tag-container)::-webkit-scrollbar-thumb:active {
-  background-color: var(--scrollbar-thumb-active) !important;
+  background-color: var(--scrollbar-active-thumb-bg) !important;
 }
 
 body.body:not(.is-mobile).hover-scrollbars .popover.hover-popover > .markdown-embed > .markdown-embed-content > .markdown-preview-view {
   color: transparent !important;
 }
 body.body:not(.is-mobile).hover-scrollbars .popover.hover-popover > .markdown-embed > .markdown-embed-content > .markdown-preview-view:hover {
-  color: var(--scrollbar-thumb) !important;
+  color: var(--scrollbar-thumb-bg) !important;
 }
 
 
@@ -16966,6 +16993,7 @@ button.copy-code-button:hover {
   padding: 8px 11px 0 !important;
 }
 
+
 .kanban-plugin__checkbox-wrapper {
   background: var(--background-transparent-black-or-white-2);
 }
@@ -17054,24 +17082,38 @@ button.kanban-plugin__new-item-button:hover {
 
 .theme-dark .kanban-plugin__lane-wrapper:nth-child(7n+1) {
   background: linear-gradient(to bottom, var(--kanban-color-1) 60%, transparent);
+  --scrollbar-thumb-bg: color-mix(in srgb, var(--kanban-color-1), transparent 60%);
+  --scrollbar-active-thumb-bg: var(--kanban-color-1);
 }
 .theme-dark .kanban-plugin__lane-wrapper:nth-child(7n+2) {
   background: linear-gradient(to bottom, var(--kanban-color-2) 60%, transparent);
+  --scrollbar-thumb-bg: color-mix(in srgb, var(--kanban-color-2), transparent 60%);
+  --scrollbar-active-thumb-bg: var(--kanban-color-2);
 }
 .theme-dark .kanban-plugin__lane-wrapper:nth-child(7n+3) {
   background: linear-gradient(to bottom, var(--kanban-color-3) 60%, transparent);
+  --scrollbar-thumb-bg: color-mix(in srgb, var(--kanban-color-3), transparent 60%);
+  --scrollbar-active-thumb-bg: var(--kanban-color-3);
 }
 .theme-dark .kanban-plugin__lane-wrapper:nth-child(7n+4) {
   background: linear-gradient(to bottom, var(--kanban-color-4) 60%, transparent);
+  --scrollbar-thumb-bg: color-mix(in srgb, var(--kanban-color-4), transparent 60%);
+  --scrollbar-active-thumb-bg: var(--kanban-color-4);
 }
 .theme-dark .kanban-plugin__lane-wrapper:nth-child(7n+5) {
   background: linear-gradient(to bottom, var(--kanban-color-5) 60%, transparent);
+  --scrollbar-thumb-bg: color-mix(in srgb, var(--kanban-color-5), transparent 60%);
+  --scrollbar-active-thumb-bg: var(--kanban-color-5);
 }
 .theme-dark .kanban-plugin__lane-wrapper:nth-child(7n+6) {
   background: linear-gradient(to bottom, var(--kanban-color-6) 60%, transparent);
+  --scrollbar-thumb-bg: color-mix(in srgb, var(--kanban-color-6), transparent 60%);
+  --scrollbar-active-thumb-bg: var(--kanban-color-6);
 }
 .theme-dark .kanban-plugin__lane-wrapper:nth-child(7n+0) {
   background: linear-gradient(to bottom, var(--kanban-color-7) 60%, transparent);
+  --scrollbar-thumb-bg: color-mix(in srgb, var(--kanban-color-7), transparent 60%);
+  --scrollbar-active-thumb-bg: var(--kanban-color-7);
 }
 
 body.style-options-for-kanban-plugin-static-all-color.theme-light {
@@ -17086,24 +17128,38 @@ body.style-options-for-kanban-plugin-static-all-color.theme-light {
 
 body.style-options-for-kanban-plugin-static-all-color.theme-light .kanban-plugin__lane-wrapper:nth-child(7n+1) {
   background: linear-gradient(to bottom, var(--kanban-color-1) 30%,  transparent) !important;
+  --scrollbar-thumb-bg: color-mix(in srgb, var(--kanban-color-1), transparent 60%);
+  --scrollbar-active-thumb-bg: var(--kanban-color-1);
 }
 body.style-options-for-kanban-plugin-static-all-color.theme-light .kanban-plugin__lane-wrapper:nth-child(7n+2) {
   background: linear-gradient(to bottom, var(--kanban-color-2) 30%,  transparent) !important;
+  --scrollbar-thumb-bg: color-mix(in srgb, var(--kanban-color-2), transparent 60%);
+  --scrollbar-active-thumb-bg: var(--kanban-color-2);
 }
 body.style-options-for-kanban-plugin-static-all-color.theme-light .kanban-plugin__lane-wrapper:nth-child(7n+3) {
   background: linear-gradient(to bottom, var(--kanban-color-3) 30%,  transparent) !important;
+  --scrollbar-thumb-bg: color-mix(in srgb, var(--kanban-color-3), transparent 60%);
+  --scrollbar-active-thumb-bg: var(--kanban-color-3);
 }
 body.style-options-for-kanban-plugin-static-all-color.theme-light .kanban-plugin__lane-wrapper:nth-child(7n+4) {
   background: linear-gradient(to bottom, var(--kanban-color-4) 30%,  transparent) !important;
+  --scrollbar-thumb-bg: color-mix(in srgb, var(--kanban-color-4), transparent 60%);
+  --scrollbar-active-thumb-bg: var(--kanban-color-4);
 }
 body.style-options-for-kanban-plugin-static-all-color.theme-light .kanban-plugin__lane-wrapper:nth-child(7n+5) {
   background: linear-gradient(to bottom, var(--kanban-color-5) 30%,  transparent) !important;
+  --scrollbar-thumb-bg: color-mix(in srgb, var(--kanban-color-5), transparent 60%);
+  --scrollbar-active-thumb-bg: var(--kanban-color-5);
 }
 body.style-options-for-kanban-plugin-static-all-color.theme-light .kanban-plugin__lane-wrapper:nth-child(7n+6) {
   background: linear-gradient(to bottom, var(--kanban-color-6) 30%,  transparent) !important;
+  --scrollbar-thumb-bg: color-mix(in srgb, var(--kanban-color-6), transparent 60%);
+  --scrollbar-active-thumb-bg: var(--kanban-color-6);
 }
 body.style-options-for-kanban-plugin-static-all-color.theme-light .kanban-plugin__lane-wrapper:nth-child(7n+0) {
   background: linear-gradient(to bottom, var(--kanban-color-7) 30%,  transparent) !important;
+  --scrollbar-thumb-bg: color-mix(in srgb, var(--kanban-color-7), transparent 60%);
+  --scrollbar-active-thumb-bg: var(--kanban-color-7);
 }
 body.style-options-for-kanban-plugin-static-all-color .kanban-plugin__item-title-wrapper {
   background: transparent !important;
@@ -17211,6 +17267,8 @@ body.style-options-for-kanban-plugin-static-all-image-two.theme-dark .kanban-plu
 
 body.style-options-for-kanban-plugin-static-plain .kanban-plugin__lane-wrapper {
   background: unset !important;
+  --scrollbar-thumb-bg: unset !important;
+  --scrollbar-active-thumb-bg: unset !important;
 }
 
 body.style-options-for-kanban-plugin-static-plain .kanban-plugin__lane {
@@ -17218,7 +17276,8 @@ body.style-options-for-kanban-plugin-static-plain .kanban-plugin__lane {
 }
 
 body.style-options-for-kanban-plugin-static-plain .kanban-plugin__lane-header-wrapper {
-  background: var(--background-transparent-black-or-white-2) !important;
+  background: unset !important;
+  border-bottom: 1px solid  var(--background-modifier-border) !important;
 }
 
 body.style-options-for-kanban-plugin-static-plain.theme-dark .kanban-plugin__lane-header-wrapper,
@@ -21915,26 +21974,23 @@ body.background-image-settings-switch.toggle-nonoverlapping-bg .workspace-split.
   background-size: 100% 100%;
 }
 
-body.background-notebook-liked-switch .markdown-embed :is(.markdown-preview-view, .markdown-rendered:not(.show-indentation-guide)) {
-  background-image: unset !important;
+body.background-notebook-liked-switch .markdown-embed :is(.markdown-preview-view, .markdown-rendered),
+body.background-notebook-liked-switch .cm-s-obsidian .cm-embed-block {
+  background: inherit !important;
 }
-body.background-notebook-liked-switch.notebook-liked-markdown-page-grid-notebook-1 :is(.markdown-preview-view, .markdown-rendered:not(.show-indentation-guide)),
+body.background-notebook-liked-switch.notebook-liked-markdown-page-grid-notebook-1 .markdown-preview-view.markdown-rendered,
 body.background-notebook-liked-switch.notebook-liked-markdown-page-grid-notebook-1 .cm-s-obsidian .cm-scroller {
   background: var(--bg-color-notebook);
   background-image: linear-gradient(90deg, var(--grid-notebook-line-color-1) 3%, transparent 0), linear-gradient(var(--grid-notebook-line-color-1) 3%, transparent 0);
   background-size: 20px 20px;
 }
 
-body:not(.toggle-fixed-pattern).background-notebook-liked-switch .markdown-rendered:not(.show-indentation-guide),
+body:not(.toggle-fixed-pattern).background-notebook-liked-switch .markdown-preview-view.markdown-rendered,
 body:not(.toggle-fixed-pattern).background-notebook-liked-switch .cm-s-obsidian .cm-scroller {
   background-attachment: local !important;
 }
 
-body.background-notebook-liked-switch .cm-s-obsidian .cm-embed-block {
-  background: inherit;
-}
-
-body.background-notebook-liked-switch.notebook-liked-markdown-page-dotted-notebook-1 :is(.markdown-preview-view, .markdown-rendered:not(.show-indentation-guide)),
+body.background-notebook-liked-switch.notebook-liked-markdown-page-dotted-notebook-1 .markdown-preview-view.markdown-rendered,
 body.background-notebook-liked-switch.notebook-liked-markdown-page-dotted-notebook-1 .cm-s-obsidian .cm-scroller {
   background: var(--bg-color-notebook);
   background-image: radial-gradient(var(--dotted-notebook-dot-color) 10%, transparent 0);
@@ -21942,7 +21998,7 @@ body.background-notebook-liked-switch.notebook-liked-markdown-page-dotted-notebo
   background-position: 8px 8px;
 }
 
-body.background-notebook-liked-switch.notebook-liked-markdown-page-dotted-notebook-2 :is(.markdown-preview-view, .markdown-rendered:not(.show-indentation-guide)),
+body.background-notebook-liked-switch.notebook-liked-markdown-page-dotted-notebook-2 .markdown-preview-view.markdown-rendered,
 body.background-notebook-liked-switch.notebook-liked-markdown-page-dotted-notebook-2 .cm-s-obsidian .cm-scroller {
   background: var(--bg-color-notebook);
   background-image: radial-gradient(var(--dotted-notebook-dot-color) 10%, transparent 0),
@@ -21952,7 +22008,7 @@ body.background-notebook-liked-switch.notebook-liked-markdown-page-dotted-notebo
 }
 
 /*https://www.jianshu.com/p/2b713844cfe9*/
-body.background-notebook-liked-switch.notebook-liked-markdown-page-grid-notebook-2 :is(.markdown-preview-view, .markdown-rendered:not(.show-indentation-guide)),
+body.background-notebook-liked-switch.notebook-liked-markdown-page-grid-notebook-2 .markdown-preview-view.markdown-rendered,
 body.background-notebook-liked-switch.notebook-liked-markdown-page-grid-notebook-2 .cm-s-obsidian .cm-scroller {
   background: var(--bg-color-notebook);
   background-image:
@@ -21964,25 +22020,25 @@ body.background-notebook-liked-switch.notebook-liked-markdown-page-grid-notebook
     transparent 0);
   background-size: 75px 75px, 75px 75px, 15px 15px, 15px 15px;
 }
-body.background-notebook-liked-switch.notebook-liked-markdown-page-stripe-notebook-1 :is(.markdown-preview-view, .markdown-rendered:not(.show-indentation-guide)),
+body.background-notebook-liked-switch.notebook-liked-markdown-page-stripe-notebook-1 .markdown-preview-view.markdown-rendered,
 body.background-notebook-liked-switch.notebook-liked-markdown-page-stripe-notebook-1 .cm-s-obsidian .cm-scroller {
   background: var(--stripe-notebook-stripe-color);
   background-image: repeating-linear-gradient(135deg,
   hsla(0,0%,100%,.03), hsla(0,0%,100%,.03) 13px, transparent 0, transparent 30px);
 }
-body.background-notebook-liked-switch.notebook-liked-markdown-page-stripe-notebook-1.theme-light :is(.markdown-preview-view, .markdown-rendered:not(.show-indentation-guide)),
+body.background-notebook-liked-switch.notebook-liked-markdown-page-stripe-notebook-1.theme-light .markdown-preview-view.markdown-rendered,
 body.background-notebook-liked-switch.notebook-liked-markdown-page-stripe-notebook-1.theme-light .cm-s-obsidian .cm-scroller {
   background: var(--stripe-notebook-stripe-color);
   background-image: repeating-linear-gradient(135deg,
   hsla(0,0%,100%,.3), hsla(0,0%,100%,.3) 13px, transparent 0, transparent 30px);
 }
-body.background-notebook-liked-switch.notebook-liked-markdown-page-stripe-notebook-2 :is(.markdown-preview-view, .markdown-rendered:not(.show-indentation-guide)),
+body.background-notebook-liked-switch.notebook-liked-markdown-page-stripe-notebook-2 .markdown-preview-view.markdown-rendered,
 body.background-notebook-liked-switch.notebook-liked-markdown-page-stripe-notebook-2 .cm-s-obsidian .cm-scroller {
   background: var(--stripe-notebook-stripe-color);
   background-image:repeating-linear-gradient(45deg,
   hsla(0,0%,100%,.025), hsla(0,0%,100%,.025) 20px, transparent 0, transparent 60px), repeating-linear-gradient(-45deg, hsla(0,0%,100%,.025), hsla(0,0%,100%,.025) 20px, transparent 0, transparent 60px);
 }
-body.background-notebook-liked-switch.notebook-liked-markdown-page-stripe-notebook-2.theme-light :is(.markdown-preview-view, .markdown-rendered:not(.show-indentation-guide)),
+body.background-notebook-liked-switch.notebook-liked-markdown-page-stripe-notebook-2.theme-light .markdown-preview-view.markdown-rendered,
 body.background-notebook-liked-switch.notebook-liked-markdown-page-stripe-notebook-2.theme-light .cm-s-obsidian .cm-scroller {
   background: var(--stripe-notebook-stripe-color);
   background-image:repeating-linear-gradient(45deg,
@@ -27469,18 +27525,13 @@ body.custom-unordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.Hype
 }
 .markdown-rendered.show-indentation-guide li > ul::before, 
 .markdown-rendered.show-indentation-guide li > ol::before {
-  margin-left: var(--bt-list-indentation-margin-left-reading, 0px);
+  margin-left: var(--bt-list-indentation-margin-left-reading, 0);
 }
-
 
 .is-focused .mod-active .workspace-tab-header.is-active
 .workspace-tab-header-inner-icon {
   color: var(--theme-color);
 }
-
-/* .has-list-bullet .list-bullet:after {
-  margin-left: -10px;
-} */
 
 body:not(.default-list-marker) .list-collapse-indicator:hover ~ .list-bullet:after,
 body:not(.default-list-marker) .cm-fold-indicator:hover ~ .list-bullet:after,
@@ -27507,6 +27558,28 @@ body:not(.default-list-marker) .markdown-rendered .has-list-bullet .has-list-bul
   background-color: var(--background-modifier-active-hover);
 }
 
+
+body.colorful-unordered-list ul > li::marker {
+  color: var(--list-colorful-marker);
+}
+body.colorful-unordered-list :is(ul, ol) ul li::marker {
+  color: hsl(calc(var(--accent-h) + 60),var(--accent-s),var(--accent-l));
+}
+body.colorful-ordered-list :is(ul, ol) :is(ul, ol) ul li::marker {
+  color: hsl(calc(var(--accent-h) + 120),var(--accent-s),calc(var(--accent-l) * 0.95));
+}
+body.colorful-ordered-list :is(ul, ol) :is(ul, ol) :is(ul, ol) ul li::marker {
+  color: hsl(calc(var(--accent-h) + 180),var(--accent-s),calc(var(--accent-l) * 0.95));
+}
+body.colorful-ordered-list :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) ul li::marker {
+  color: hsl(calc(var(--accent-h) + 240),var(--accent-s),calc(var(--accent-l) * 0.95));
+}
+body.colorful-ordered-list :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) ul li::marker {
+  color: hsl(calc(var(--accent-h) + 300),var(--accent-s),calc(var(--accent-l) * 0.95));
+}
+body.colorful-ordered-list :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) ul li::marker {
+  color: hsl(calc(var(--accent-h) + 0), var(--accent-s), calc(var(--accent-l) * 0.95));
+}
 
 body.colorful-unordered-list .markdown-source-view.mod-cm6 .list-bullet::after {
   content: var(--list-ul-colorful-marker-content);
@@ -27792,77 +27865,67 @@ body.colorful-ordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.Hype
 }
 
 body.colorful-ordered-list :is(ul, ol) ol li::marker {
-  color: hsl(calc(var(--accent-h) + 45),var(--accent-s),var(--accent-l));
+  color: hsl(calc(var(--accent-h) + 60),var(--accent-s),var(--accent-l));
 }
 body.colorful-ordered-list :is(ul, ol) ol li::before,
 body.colorful-ordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.HyperMD-list-line-2.cm-line div.cm-fold-indicator ~ span.cm-formatting.cm-formatting-list-ol,
 body.colorful-ordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.HyperMD-list-line-2.cm-line span.cm-hmd-list-indent ~ span.cm-formatting.cm-formatting-list-ol {
   color: var(--list-colorful-marker);
-  filter: hue-rotate(45deg);
+  filter: hue-rotate(60deg);
 }
 
 body.colorful-ordered-list :is(ul, ol) :is(ul, ol) ol li::marker {
-  color: hsl(calc(var(--accent-h) + 90),var(--accent-s),calc(var(--accent-l) * 0.95));
+  color: hsl(calc(var(--accent-h) + 120),var(--accent-s),calc(var(--accent-l) * 0.95));
 }
 body.colorful-ordered-list :is(ul, ol) :is(ul, ol) ol li::before,
 body.colorful-ordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.HyperMD-list-line-3.cm-line div.cm-fold-indicator ~ span.cm-formatting.cm-formatting-list-ol,
 body.colorful-ordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.HyperMD-list-line-3.cm-line span.cm-hmd-list-indent ~ span.cm-formatting.cm-formatting-list-ol {
   color: var(--list-colorful-marker);
-  filter: hue-rotate(90deg);
+  filter: hue-rotate(120deg);
 }
 
 body.colorful-ordered-list :is(ul, ol) :is(ul, ol) :is(ul, ol) ol li::marker {
-  color: hsl(calc(var(--accent-h) + 135),var(--accent-s),calc(var(--accent-l) * 0.95));
+  color: hsl(calc(var(--accent-h) + 180),var(--accent-s),calc(var(--accent-l) * 0.95));
 }
 body.colorful-ordered-list :is(ul, ol) :is(ul, ol) :is(ul, ol) ol li::before,
 body.colorful-ordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.HyperMD-list-line-4.cm-line div.cm-fold-indicator ~ span.cm-formatting.cm-formatting-list-ol,
 body.colorful-ordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.HyperMD-list-line-4.cm-line span.cm-hmd-list-indent ~ span.cm-formatting.cm-formatting-list-ol {
   color: var(--list-colorful-marker);
-  filter: hue-rotate(135deg);
+  filter: hue-rotate(180deg);
 }
 
 body.colorful-ordered-list :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) ol li::marker {
-  color: hsl(calc(var(--accent-h) + 180),var(--accent-s),calc(var(--accent-l) * 0.95));
+  color: hsl(calc(var(--accent-h) + 240),var(--accent-s),calc(var(--accent-l) * 0.95));
 }
 body.colorful-ordered-list :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) ol li::before,
 body.colorful-ordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.HyperMD-list-line-5.cm-line div.cm-fold-indicator ~ span.cm-formatting.cm-formatting-list-ol,
 body.colorful-ordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.HyperMD-list-line-5.cm-line span.cm-hmd-list-indent ~ span.cm-formatting.cm-formatting-list-ol {
   color: var(--list-colorful-marker);
-  filter: hue-rotate(180deg);
+  filter: hue-rotate(240deg);
 }
 
 body.colorful-ordered-list :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) ol li::marker {
-  color: hsl(calc(var(--accent-h) + 225),var(--accent-s),calc(var(--accent-l) * 0.95));
+  color: hsl(calc(var(--accent-h) + 300),var(--accent-s),calc(var(--accent-l) * 0.95));
 }
 
 body.colorful-ordered-list :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) ol li::before,
 body.colorful-ordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.HyperMD-list-line-6.cm-line div.cm-fold-indicator ~ span.cm-formatting.cm-formatting-list-ol,
 body.colorful-ordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.HyperMD-list-line-6.cm-line span.cm-hmd-list-indent ~ span.cm-formatting.cm-formatting-list-ol {
   color: var(--list-colorful-marker);
-  filter: hue-rotate(225deg);
+  filter: hue-rotate(300deg);
 }
 
 body.colorful-ordered-list :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) ol li::marker {
-  color: hsl(calc(var(--accent-h) + 270), var(--accent-s), calc(var(--accent-l) * 0.95));
+  color: hsl(calc(var(--accent-h) + 0), var(--accent-s), calc(var(--accent-l) * 0.95));
 }
 
 body.colorful-ordered-list :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) ol li::before,
 body.colorful-ordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.HyperMD-list-line-7.cm-line div.cm-fold-indicator ~ span.cm-formatting.cm-formatting-list-ol,
 body.colorful-ordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.HyperMD-list-line-7.cm-line span.cm-hmd-list-indent ~ span.cm-formatting.cm-formatting-list-ol {
   color: var(--list-colorful-marker);
-  filter: hue-rotate(270deg);
+  filter: hue-rotate(0deg);
 }
 
-body.colorful-ordered-list :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) ol li::before,
-body.colorful-ordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.HyperMD-list-line-8.cm-line div.cm-fold-indicator ~ span.cm-formatting.cm-formatting-list-ol,
-body.colorful-ordered-list .markdown-source-view.mod-cm6 .HyperMD-list-line.HyperMD-list-line-8.cm-line span.cm-hmd-list-indent ~ span.cm-formatting.cm-formatting-list-ol {
-  color: var(--list-colorful-marker);
-  filter: hue-rotate(340deg);
-}
-
-body.colorful-ordered-list :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) :is(ul, ol) ol li::marker {
-  color: hsl(calc(var(--accent-h) + 340),var(--accent-s),calc(var(--accent-l) * 0.95));
-}
 
 @property --colorA {
   syntax: '<color>';
