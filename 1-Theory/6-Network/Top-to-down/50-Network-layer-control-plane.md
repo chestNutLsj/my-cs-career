@@ -513,128 +513,238 @@ RIP(Routing Information Protocol)
 - 每一个通告：至多AS内部的25个目标网络的DV（用于小型网，开销小，简单）
     - 目标网络 + 跳数
 
-> 例子：
+> [! example] RIP 例子
+> ![[50-Network-layer-control-plane-RIP.png]]
 > 
-> 
+> ![[50-Network-layer-control-plane-RIP-next.png]]
 
 #### RIP：链路失效和恢复
 - 如果180秒没有收到通告信息-->邻居或者链路失效
     - 发现经过这个邻居的路由已失效
     - 新的通告报文会传递给邻居
     - 邻居因此发出新的通告（如果路由变化的话）
-    - 链路失效快速（？）地在整网中传输
-    - 使用毒性逆转(poison reverse)阻止ping-pong回路（不可达的距离：跳数无限 = 16 段）
+
+- 链路失效在整网中传输，可能存在无穷计算问题。想要解决由于网络环路导致的低性能，有以下几种方法：
+	- **水平分割**：水平分割指的是 RIP 从某个接口学到的路由，不会从该接口再发回给邻居设备。在帧中继和X.25等 NBMA 网络中，水平分割功能缺省为禁止状态。
+	- **毒性逆转**：毒性逆转指的是 RIP 从某个接口学到路由后，将该路由的开销设置为16（即指明该路由不可达），并从原接口发回邻居设备。阻止 ping-pong 回路（不可达的距离：跳数无限 = 16 段）
+	- **滞留计时器** (Hold-down timer): 一但抑制计时器被触发后，那么将会引起该路由进入长达 180 秒（即 6 个路由更新周期）的抑制状态阶段。在抑制计时器超时前，路由器不再接收关于这条路由的更新信息。
+	- **触发更新**：触发更新是指路由信息发生变化时，立即向邻居设备发送触发更新报文，通知变化的路由信息。（触发更新不会触发接收路由器重置自己的更新定时器）
+
+> [! tip] 水平分割和毒性逆转有什么不同？
+> Distance vector protocols have no idea what the overall topology looks like.
+> 
+> They believe that their neighbors tell them, which can lead top issues in certain topologies where routers advertise a route that is no longer reachable, simply because they are still rxing that route from another peer.
+> 
+> This advertisement will happen over and over again until the protocols infinite metric (rip/eigrp) or infinite update ttl (eigrp) are reached.
+> 
+> ***Split horizon*** simply states that you shouldn't advertise a route out an interface upon which you learned the route.
+> 
+> ***Poison reverse*** takes this a step further. It says "if you've told me this route is unreachable through you, I WILL advertise that route to you, but with an infinite metric."
+> 
+> The end result is that the state information is kept much cleaner during topology changes, which means faster convergence.
 
 #### RIP进程处理
-- RIP以应用进程的方式实现：route-d (daemon)
+- RIP以**应用进程**的方式实现：route-d (daemon)
 - 通告报文通过UDP报文传送，周期性重复
 - 网络层的协议使用了传输层的服务，以应用层实体的方式实现
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002161616471.png" style="zoom:80%"/>
+![[50-Network-layer-control-plane-RIP-levels.png]]
 
 ### 5.3.2 OSPF
 
+#### OSPF 特点
+
 OSPF(Open Shortest Path First) 开放最短路径优先协议
 - “open”：标准可公开获得
-- 使用LS算法
-    - LS分组在网络中（一个AS内部）分发
-    - 全局网络拓扑、开销在每一个节点中都保持
-    - 路由计算采用Dijkstra算法
-- OSPF通告信息中携带：每一个邻居路由器一个表项
-- 通告信息会传遍AS全部（通过泛洪）
-    - 在IP数据报上直接传送OSPF报文（而不是通过UDP和TCP）
-- IS-IS路由协议：几乎和OSPF一样
+- 是一种 LS 协议：
+	- **洪泛链路状态信息**：LS 分组在网络中（一个 AS 内部）分发，全局网络拓扑、开销在每一个节点中都保持
+	- **Dijkstra 算法**在本地计算，确定以当前节点为根的全局最短路径树；
+	- 链路开销的配置不固定——OSPF does not mandate a policy for how link weights are set (that is the job of the network administrator), but instead provides the mechanisms (protocol) for determining least-cost path routing for the given set of link weights.
+- 向自治系统中的所有其它路由器广播路由选择信息，而不仅是邻居路由器
+- 每当一条链路的状态变化时（如开销变化、连接或中断状态的变化等），路由器就会广播链路状态信息。
+- 即使链路状态未发生变化，也要周期性地广播链路状态（通常 30min），这增加了健壮性；
+- OSPF 通告(advertisement)包含在 OSPF 报文中，并且在 IP 数据报上直接传送 OSPF 报文，并以 89 作为协议号的标记。因此 OSPF 协议需要自己实现可靠报文传输、链路状态广播等功能；—— OSPF runs over IPv4 and IPv6, but does not use a transport protocol such as UDP or TCP. It encapsulates its data directly in IP packets with protocol number 89. This is in contrast to other routing protocols, such as the Routing Information Protocol (RIP) and the Border Gateway Protocol (BGP). OSPF implements its own transport error detection and correction functions. OSPF also uses multicast addressing for distributing route information within a broadcast domain. 
+- 需要检查链路是否正在运行（向邻居发送 HELLO 报文），并允许 OSPF 路由器获得相邻路由器的网络范围链路状态的数据库。
 
-OSPF“高级”特性（在RIP中的没有的）
-- 安全：所有的OSPF报文都是经过认证的（防止恶意的攻击）
-- 允许有多个开销相同的路径存在（在RIP协议中只有一个），可以在多条路径之上做负载均衡
-- 对于每一个链路，对于不同的TOS有多重开销矩阵
+#### OSPF 优点
+
+- **安全**：所有的 OSPF 报文都是经过认证的（防止恶意的攻击），手段有简单密钥和 MD5；
+- **允许有多个开销相同的路径存在**（在RIP协议中只有一个），可以在多条路径之上做负载均衡
+- 对于每一个链路，对于不同的 TOS(Terms of Service) 有多重开销矩阵
     - 例如：卫星链路开销对于尽力而为的服务开销设置比较低，对实时服务开销设置的比较高
-    - 支持按照不同的开销计算最优路径，如：按照时间和延迟分别计算最优路径
-- 对单播和多播的集成支持: 
-    - Multicast OSPF (MOSPF) 使用相同的拓扑数据库，就像在OSPF中一样
-- 在大型网络中支持层次性OSPF
+    - **支持按照不同的开销计算最优路径**，如：按照时间和延迟分别计算最优路径
+- **对单播和多播的综合支持**: 
+    - Multicast OSPF (MOSPF) 提供多播路由选择的扩展，使用现有的 OSPF 链路拓扑数据库，并为现有 OSPF 链路状态广播机制增加了一种新型的链路状态通告；
+- **在大型网络中支持层次性 OSPF**：
+	- ![[50-Network-layer-control-plane-OSPF-hierarchy.png]]
+	- 层次化配置多个区域，==每个区域都运行自己的 OSPF 协议==，区域内的每台路由器都向该区域内的所有其他路由器广播链路状态；
+	- 每个区域内，一台或多台==边界路由器==负责为流向该区域以外的分组提供路由选择；
+	- OSPF 的层次性有 2 个级别：本地区域，主干区域。
+		- 主干区域在同一个 AS 中只有一个，其主要作用就是为该 AS 中其他区域之间的流量提供路由选择。主干需要包含本 AS 中所有区域边界路由器；
+		- 本地区域之间不直接连通，需要分组先路由到区域边界路由器，再通过主干路由到目的区域的区域边界路由器，进而最终到达目的地；
+	- 特点总结：
+		- 链路状态通告仅仅在本地区域 Area 范围内进行
+		- 每一个节点拥有本地区域的拓扑信息；
+			- 关于其他区域，知道去它的方向，通过区域边界路由器（最短路径）传到其他区域
+		- 区域边界路由器：“汇总”到自己区域内网络的距离，向其它区域边界路由器通告（区域边界路由器参与多个区域的计算）
+		- 骨干路由器：仅仅在骨干区域内，运行 OSPF 路由
+		- 边界路由器：连接其它的 AS’s
+		- 层次性的好处：每个链路状态分组仅仅在一个区域内进行泛洪
 
-层次化的OSPF路由
+## 5.4 ISP之间的路由选择：BGP
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002170733474.png" style="zoom:60%"/>
+- 分组若要跨越多个 AS 进行路由，则需要自治系统间路由选择协议 (Inter-autonomous System Routing Protocol)。
+- AS 通信需要协调，因此采用统一的路由选择协议——边界网关协议 (Broder Gateway Protocol)
+- BGP 是一种分布式的、异步的协议。
 
-- 2个级别的层次性：本地区域，骨干区域
-    - 链路状态通告仅仅在本地区域Area范围内进行
-    - 每一个节点拥有本地区域的拓扑信息；
-        - 关于其他区域，知道去它的方向，通过区域边界路由器（最短路径）传到其他区域
-- 区域边界路由器：“汇总（聚集）”到自己区域内网络的距离，向其它区域边界路由器通告（区域边界路由器参与多个区域的计算）
-- 骨干路由器：仅仅在骨干区域内，运行OSPF路由
-- 边界路由器：连接其它的AS’s
-- 层次性的好处：每个链路状态分组仅仅在一个区域内进行泛洪
+> [! note] 平面路由 Vs. 层次路由
+> **平面路由**
+> - 一个平面的路由
+> 	- 一个网络中的所有路由器的地位一样
+> 	- 通过 LS，DV，或者其他路由算法，所有路由器都要知道其他所有路由器（子网）如何走
+> 	- 所有路由器在一个平面
+> 
+> - 平面路由的问题
+> 	- 规模巨大的网络中，路由信息的存储、传输和计算开销巨大
+> 		- DV：距离矢量很大，且不能够收敛
+> 		- LS：几百万个节点的 LS 分组的泛洪传输，存储以及最短路径算法的计算
+> 	- 管理问题：
+> 		- 不同的网络所有者希望按照自己的方式管理网络
+> 		- 希望对外隐藏自己网络的细节
+> 		- 还希望和其它网络互联
+> 
+> **层次路由**
+> - 层次路由：将互联网分成一个个 AS（路由器区域）
+> 	- 某个区域内的路由器集合，自治系统“autonomous systems”(AS)
+> 	- 一个 AS 用 AS Number (ASN)唯一标示
+> 	- 一个 ISP 可能包括 1 个或者多个 AS
+> - 路由变成了：2 个层次路由：自治区域内+自治区域间
+> 	- AS 内部路由：在同一个 AS 内路由器运行相同的路由协议
+> 		- “intra-AS” routing protocol：内部网关协议
+> 		- 不同的 AS 可能运行着不同的内部网关协议（私有）
+> 		- 能够解决规模和管理问题
+> 		- 如：RIP, OSPF, IGRP
+> 		- 网关路由器：AS 边缘路由器，可以连接到其他 AS
+> 	- AS 间运行 AS 间路由协议（每个自治区域只表现为一个点）
+> 		- “inter-AS” routing protocol：外部网关协议
+> 		- 解决 AS 之间的路由问题，完成 AS 之间的互联互通
+> - 层次路由的优点
+> 	- 解决了规模问题
+> 		- 内部网关协议解决：AS 内部数量有限的路由器相互到达的问题，AS 内部规模可控
+> 		- 如 AS 节点太多，可分割 AS，使得 AS 内部的节点数量有限
+> 		- AS 之间的路由的规模问题
+> 		- 增加一个 AS，对于 AS 之间的路由从总体上来说，只是增加了一个节点=子网（每个 AS 可以用一个点来表示）
+> 		- 对于其他 AS 来说只是增加了一个表项，就是这个新增的 AS 如何走的问题
+> 		- 扩展性强：规模增大，性能不会减得太多
+> 	- 解决了管理问题
+> 		- 各个 AS 可以运行不同的内部网关协议（私有）
+> 		- 可以使自己网络的细节不向外透露（安全）
 
-## 5.4 ISP之间的路由选择（外部网关协议）：BGP
+### BGP 的作用
 
-平面路由
-- 一个平面的路由
-    - 一个网络中的所有路由器的地位一样
-    - 通过LS，DV，或者其他路由算法，所有路由器都要知道其他所有路由器（子网）如何走
-    - 所有路由器在一个平面
-- 平面路由的问题
-    - 规模巨大的网络中，路由信息的存储、传输和计算开销巨大
-        - DV：距离矢量很大，且不能够收敛
-        - LS：几百万个节点的LS分组的泛洪传输，存储以及最短路径算法的计算
-    - 管理问题：
-        - 不同的网络所有者希望按照自己的方式管理网络
-        - 希望对外隐藏自己网络的细节
-        - 当然，还希望和其它网络互联
-- 所以需要层次化路由！
+In BGP, packets are not routed to a specific destination address, but instead to CIDRized prefixes, with each prefix representing a subnet or a collection of subnets. In the world of BGP, a destination may take the form 138.16.68/22, which for this example includes 1,024 IP addresses. Thus, a router’s forwarding table will have entries of the form (x, I), where x is a prefix (such as 138.16.68/22) and I is an interface number for one of the router’s interfaces. 
+> BGP 中分组不是路由到特定地址，而是 CIDR 化的前缀，这个前缀代表了一个子网或子网的集合。
+> 例如目标地址为 138.16.68/22，则是向含有 2^(32-22)=1024个 IP 地址的子网中发送 BGP 分组，这用二元组 *(x, I)* 表示，*x* 是子网的地址，*I* 是路由器的接口号。
 
-层次路由
-- 层次路由：将互联网分成一个个AS（路由器区域）
-    - 某个区域内的路由器集合，自治系统“autonomous systems”(AS)
-    - 一个AS用AS Number(ASN)唯一标示
-    - 一个ISP可能包括1个或者多个AS
-- 路由变成了：2个层次路由：自治区域内+自治区域间
-    - AS内部路由：在同一个AS内路由器运行相同的路由协议
-        - “intra-AS” routing protocol：内部网关协议
-        - 不同的AS可能运行着不同的内部网关协议（私有）
-        - 能够解决规模和管理问题
-        - 如：RIP, OSPF, IGRP
-        - 网关路由器：AS边缘路由器，可以连接到其他AS
-    - AS间运行AS间路由协议（每个自治区域只表现为一个点）
-        - “inter-AS” routing protocol：外部网关协议
-        - 解决AS之间的路由问题，完成AS之间的互联互通
+As an inter-AS routing protocol, BGP provides each router a means to: 
+1. ***Obtain prefix reachability information from neighboring ASs***. In particular, BGP allows each subnet to advertise its existence to the rest of the Internet. A subnet screams, “I exist and I am here,” and BGP makes sure that all the routers in the Internet know about this subnet. If it weren’t for BGP, each subnet would be an isolated island—alone, unknown and unreachable by the rest of the Internet. 
+> 从邻居 AS 获得前缀（目标子网）的可达信息。
+> BGP 允许每个子网向因特网的其余部分通告它的存在。
 
-层次路由的优点
-- 解决了规模问题
-    - 内部网关协议解决：AS内部数量有限的路由器相互到达的问题，AS内部规模可控
-        - 如AS节点太多，可分割AS，使得AS内部的节点数量有限
-    - AS之间的路由的规模问题
-        - 增加一个AS，对于AS之间的路由从总体上来说，只是增加了一个节点=子网（每个AS可以用一个点来表示）
-        - 对于其他AS来说只是增加了一个表项，就是这个新增的AS如何走的问题
-        - 扩展性强：规模增大，性能不会减得太多
-- 解决了管理问题
-    - 各个AS可以运行不同的内部网关协议（私有）
-    - 可以使自己网络的细节不向外透露（安全）
+2. ***Determine the “best” routes to the prefixes***. A router may learn about two or more different routes to a specific prefix. To determine the best route, the router will locally run a BGP route-selection procedure (using the prefix reachability information it obtained via neighboring routers). The best route will be determined based on policy as well as the reachability information.
+> 路由器可能知道到达目的子网的多个路由路径，为了确定最好的路由，需要本地运行一个 BGP 路由选择过程。
 
-互联网AS间路由：BGP
-- BGP (Border Gateway Protocol)：自治区域间路由协议“事实上的”标准（非某机构制定，而是大家约定俗成）
-    - “将互联网各个AS粘在一起的胶水”
-- BGP 提供给每个AS以以下方法：
-    - eBGP：从相邻的ASes那里获得子网可达信息
-    - iBGP：将获得的子网可达信息传遍到AS内部的所有路由器
-    - 根据子网可达信息和策略来决定到达子网的“好”路径
-    - 注：eBGP, iBGP 连接
+### 通告 BSP 的路由信息
 
-        <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002172739773.png" style="zoom:60%"/>
+![[50-Network-layer-control-plane-BGP-ASnetwork.png]]
+- 对于每个 AS，其中的路由器要么是网关路由器 gateway router，要么是内部路由器 internal router。
+	- A **gateway router** is a router on the edge of an AS that directly connects to one or more routers in other ASs. 
+	- An **internal router** connects only to hosts and routers within its own AS. 
+	- In AS1, for example, router 1c is a gateway router; routers 1a, 1b, and 1d are internal routers.
 
-- 允许子网向互联网其他网络通告“我在这里”
+- 在上述拓扑中，现实所有路由器通告对于前缀（子网）x 的可达性信息：
+	- At a high level, this is straightforward. **First**, AS3 sends a BGP message to AS2, saying that *x* exists and is in AS3; let’s denote this message as “AS3 x”. 
+	- Then AS2 sends a BGP message to AS1, saying that *x* exists and that you can get to *x* by first passing through AS2 and then going to AS3; let’s denote that message as “AS2 AS3 x”. 
+	- In this manner, each of the autonomous systems will not only learn about the existence of x, but also learn about a path of autonomous systems that leads to x.
+
+- 上面的描述给出了 BGP 报文路径穿越的大意，但在细节上还需继续考察：
+	- In BGP, pairs of routers exchange routing information over semi-permanent TCP connections using port 179.
+	- Each such TCP connection, along with all the BGP messages sent over the connection, is called a ***BGP connection***.
+	- Furthermore, a BGP connection that spans two ASs is called an ***external BGP*** (eBGP) connection, and a BGP session between routers in the same AS is called an ***internal BGP*** (iBGP) connection.
+	- ![[50-Network-layer-control-plane-BGP-eBGP.png]]
+	- ***Note that iBGP connections do not always correspond to physical links***.
+> BGP 中路由器通过端口号为 179 的半永久 TCP 连接交换路由选择信息。
+> 注意区分 eBGP 和 iBGP，并且 iBGP 并不总是与物理链路对应。
+
+- 区分 eBGP 和 iBGP 后，再次考虑向 AS1 和 AS2 中所有路由器通告前缀 x 的可达性信息：
+	- In this process, gateway router 3a first sends an eBGP message “AS3 x” to gateway router 2c. Gateway router 2c then sends the iBGP message “AS3 x” to all of the other routers in AS2, including to gateway router 2a.
+	- Gateway router 2a then sends the eBGP message “AS2 AS3 x” to gateway router 1c. Finally, gateway router 1c uses iBGP to send the message “AS2 AS3 x” to all the routers in AS1.
+	- After this process is complete, each router in AS1 and AS2 is aware of the existence of x and is also aware of an AS path that leads to x.
+
+### 确定最佳路由
+
+When a router advertises a prefix across a BGP connection, it includes with the prefix several ***BGP attributes***. In BGP jargon, a prefix along with its attributes is called a route.
+> 当一个路由器通过 BGP 连接通告一则前缀时，在前缀中需要包含一些 BGP 属性。在 BGP 的语境中，前缀+属性=路由。
+
+Two of the more important attributes are ***AS-PATH*** and ***NEXT-HOP***. 
+- The ***AS-PATH attribute*** contains the list of ASs through which the advertisement has passed, as we’ve seen in our examples above. To generate the AS-PATH value, when a prefix is passed to an AS, the AS adds its ASN to the existing list in the AS-PATH. For example, in Figure 5.10, there are two routes from AS1 to subnet x: one which uses the AS-PATH “AS2 AS3”; and another that uses the AS-PATH “A3”. BGP routers also use the AS-PATH attribute to detect and prevent looping advertisements; specifically, if a router sees that its own AS is contained in the path list, it will reject the advertisement.
+> AS-PATH 属性包含了通告已经通过的 AS 的列表，例如 `AS2 AS3 x` 表示 AS1 经过 AS2、AS3 后可以到达目的前缀 x。
+> 为了生成 AS-PATH，则在前缀 x 通过一个 AS 时，添加其对应的 ASN (AS 的标识)到现有的 AS-PATH 列表。如下图中：
+> ![[50-Network-layer-control-plane-BGP-ASN.png]]
+> AS1 到达 x 有两条路：
+> 1. 经过 1d-AS2-AS3 到达：`AS-PATH = AS2 AS3`
+> 2. 直接通过 1d 路由器到达 AS3 的 3d，再到达 x：`AS-PATH = AS3`
+> 另外，AS-PATH 属性可以用来检测和防止通告环路——如果一台路由器在路径列表中看到了包含它自己的 AS，将拒绝该通告（毒性逆转策略）。
+
+- Providing the critical link between the inter-AS and intra-AS routing protocols, the ***NEXT-HOP attribute*** has a subtle but important use. The NEXT-HOP is the IP address of the router interface that begins the AS-PATH. To gain insight into this attribute, let’s again refer to Figure 5.10. As indicated in Figure 5.10, the NEXTHOP attribute for the route “AS2 AS3 x” from AS1 to x that passes through AS2 is the IP address of the left interface on router 2a. The NEXT-HOP attribute for the route “AS3 x” from AS1 to x that bypasses AS2 is the IP address of the leftmost interface of router 3d.
+> NEXT-HOP 属性在 AS 间和 AS 内部路由选择协议之间提供关键链路。
+> NEXT-HOP 是 AS-PATH 起始的路由器接口的 IP 地址。如图 5-10 中，对于从 AS1 经过 AS2 到达 AS3中 x 的路由 `AS2 AS3 x` 来说，NEXT-HOP 是路由器 2a 最左边接口的 IP 地址；对 AS1直接到达 AS3中 x 的路由 `AS3 x` 来说，NEXT-HOP 是路由器3d 最左边接口的 IP 地址。
+
+In summary, in this toy example, each router in AS1 becomes aware of two BGP routes to prefix x:
+- IP address of leftmost interface for router 2a; AS2 AS3; x IP address of leftmost interface of router 3d; AS3; x 
+- Here, each BGP route is written as a list with three components: NEXT-HOP; ASPATH; destination prefix. In practice, a BGP route includes additional attributes, which we will ignore for the time being. Note that the NEXT-HOP attribute is an IP address of a router that does not belong to AS1; however, the subnet that contains this IP address directly attaches to AS1.
+
+### 路由选择算法
+
+#### 热土豆路由选择 (hot potato routing)
+
+![[50-Network-layer-control-plane-BGP-ASN.png]]
+- Consider router 1b in the network in Figure 5.10. As just described, this router will learn about two possible BGP routes to prefix x. In hot potato routing, the route chosen (from among all possible routes) is that route with the least cost to the NEXT-HOP router beginning that route.
+> 考查路由器 1b，它得知两条可能的 BGP 路由以到达前缀 x，而热土豆路由，意味着从所有可能的路由中，选择开销最小者，并路由到这个路径的 NEXT-HOP 路由器中。
+
+- In this example, router 1b will consult its intra-AS routing information to find the least-cost intra-AS path to NEXT-HOP router 2a and the least-cost intra-AS path to NEXT-HOP router 3d, and then select the route with the smallest of these least-cost paths. For example, suppose that cost is defined as the number of links traversed. Then the least cost from router 1b to router 2a is 2, the least cost from router 1b to router 2d is 3, and router 2a would therefore be selected. Router 1b would then consult its forwarding table (configured by its intra-AS algorithm) and find the interface I that is on the least-cost path to router 2a. It then adds (x, I) to its forwarding table.
+> 在本例中，路由器 1b 将查询其 AS 内路由信息，找出到 NEXT-HOP 路由器 2a 最低成本的 AS 内部路径，和到 NEXT-HOP 路由器 3d 最低成本的 AS 内部路径，然后选择这些路由中成本最低者。
+> 
+> 例如，假设成本定义为穿越的链路数。那么从路由器 1b 到路由器 2a 的最小成本是 2，从路由器 1b 到路由器 2d 的最小成本是 3，因此将选择路由器 2a。然后，路由器 1b 将查看其转发表（由其内部 AS 算法配置），并找到位于通往路由器 2a 的最小成本路径上的接口 I。然后，路由器 1b 会将 (x, I) 添加到其转发表中。
+
+在路由器转发表中增加 AS 外部目的地的步骤：
+![[50-Network-layer-control-plane-BGP-hot-potato.png]]
+- 在转发表中增加 AS 向外前缀时，BGP 和 OSPF 都会用到；
+
+热土豆路由的思想：
+- The idea behind hot-potato routing is for router 1b to get packets out of its AS as quickly as possible (more specifically, with the least cost possible) without worrying about the cost of the remaining portions of the path outside of its AS to the destination. In the name “hot potato routing,” a packet is analogous to a hot potato that is burning in your hands. Because it is burning hot, you want to pass it off to another person (another AS) as quickly as possible. Hot potato routing is thus a selfish algorithm—it tries to reduce the cost in its own AS while ignoring the other components of the end-to-end costs outside its AS. Note that with hot potato routing, two routers in the same AS may choose two different AS paths to the same prefix. For example, we just saw that router 1b would send packets through AS2 to reach x. However, router 1d would bypass AS2 and send packets directly to AS3 to reach x.
+
+#### 挑选合适的路由路径：BGP 路由器选择算法
+
+If there is only one such route, then BGP obviously selects that route. If there are two or more routes to the same prefix, then BGP ==sequentially invokes the following elimination rules until one route remains==: 
+1. A route is assigned a local preference value as one of its attributes (in addition to the AS-PATH and NEXT-HOP attributes). The local preference of a route could have been set by the router or could have been learned from another router in the same AS. The value of the local preference attribute is a policy decision that is left entirely up to the AS’s network administrator. (We will shortly discuss BGP policy issues in some detail.) The routes with the highest local preference values are selected. 
+2. From the remaining routes (all with the same highest local preference value), the route with the shortest AS-PATH is selected. If this rule were the only rule for route selection, then BGP would be using a DV algorithm for path determination, where the distance metric uses the number of AS hops rather than the number of router hops. 
+3. From the remaining routes (all with the same highest local preference value and the same AS-PATH length), hot potato routing is used, that is, the route with the closest NEXT-HOP router is selected. 
+4. If more than one route still remains, the router uses BGP identifiers to select the route; see [Stewart 1999].
+
+> [! example] BGP 路由选择的实例
+> ![[50-Network-layer-control-plane-BGP-ASN.png]]
+> As an example, let’s again consider router 1b in Figure 5.10. Recall that there are exactly two BGP routes to prefix x, one that passes through AS2 and one that bypasses AS2. Also recall that if hot potato routing on its own were used, then BGP would route packets through AS2 to prefix x. But in the above route-selection algorithm, rule 2 is applied before rule 3, causing BGP to select the route that bypasses AS2, since that route has a shorter AS PATH. So we see that with the above routeselection algorithm, BGP is no longer a selfish algorithm—it first looks for routes with short AS paths (thereby likely reducing end-to-end delay).
+
+### IP 任播
+
+### 路由选择策略
+
+### 组装在一起：Internet的全貌
+
 - 基于改进后的距离矢量算法（路径矢量）
     - 不仅仅是距离矢量，还包括到达各个目标网络的详细路径（AS序号的列表）能够避免简单DV算法的路由环路问题和无穷式的计算迭代
 
-BGP基础
-- BGP会话：2个BGP路由器(“peers”)在一个半永久的TCP连接上交换BGP报文：
-    - 通告向不同目标子网前缀的“路径”（BGP是一个“路径矢量”协议）
-- 当AS3网关路由器3a向AS2的网关路由器2c通告路径：AS3,x 
-    - 3a参与AS内路由运算，知道本AS所有子网x信息
-    - 语义上：AS3向AS2承诺，它可以向子网x转发数据报
-    - 3a是2c关于x的下一跳(next hop)
 
 路径的属性 & BGP路由
 - 当通告一个子网前缀时，通告包括 BGP 属性
@@ -679,10 +789,6 @@ BGP 路径选择
     - 最近的NExT-HOP路由器：热土豆路由
     - 附加的判据：使用BGP标示
 - 一个前缀对应着多种路径，采用消除规则直到留下一条路径
-
-热土豆路由
-- 假设2d通过iBGP获知，它可以通过2a或者2c到达x
-- 热土豆策略（“赶紧甩掉烫手的山芋”）：选择具备最小内部区域开销的网关作为往x的出口（如：2d选择2a，即使往x可能有比较多的AS跳数）：不要操心域间的开销！
 
 为什么内部网关协议和外部网关协议如此不同？（内部网关协议更关注性能，外部网关协议更关注策略）
 - 策略：
