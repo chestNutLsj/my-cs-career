@@ -336,7 +336,9 @@ IO multiplexing 对应的 I/O 系统调用是 `select` 和 `epoll` 等，也称�
 - `select` 和 `epoll` 的优势在于，采用单进程方式就可以同时处理多个文件或网络连接的 I/O 操作。
 - 其基本工作机制就是通过 `select` 或 `epoll` 系统调用来不断地轮询用户进程关注的所有文件句柄或 socket，当某个文件句柄或 socket 有数据到达了，`select` 或 `epoll` 系统调用就会返回到用户进程，用户进程再调用 `read` 系统调用，让内核将数据从内核的 I/O 缓冲区拷贝到用户进程的 buffer 中。
 
-在多路复用 IO 模型中，==对于用户进程关注的每一个文件句柄或 socket，一般都设置成为 **non-blocking**，只是用户进程是被 `select` 或 `epoll` 系统调用阻塞住了==。`select/epoll` 的**优势**：
+在多路复用 IO 模型中，==对于用户进程关注的每一个文件句柄或 socket，一般都设置成为 **non-blocking**，只是用户进程是被 `select` 或 `epoll` 系统调用阻塞住了==。
+
+`select/epoll` 的**优势**：
 - 并不会导致单个文件或 socket 的 I/O 访问性能更好，而是在有很多个文件或 socket 的 I/O 访问情况下，其总体效率会高。
 
 基于多路复用 IO 模型的文件读的执行过程如下图所示：

@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "995ac4fc4c9c300a",
+        "id": "8a29d6882ed12103",
         "type": "tabs",
         "children": [
           {
-            "id": "93e8c85aa66d1036",
+            "id": "f524b5010420247e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -48,7 +44,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "PSW",
+                "query": "PLIC",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -80,7 +76,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 309.50577545166016
+    "width": 309.50577545166016,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -97,7 +94,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +110,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,9 +130,7 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -152,9 +145,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md"
-              }
+              "state": {}
             }
           },
           {
@@ -169,7 +160,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -187,45 +179,46 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "93e8c85aa66d1036",
+  "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/10-绪论.md",
+    "1-Theory/6-Network/Data-communication-and-network/考试要点/50-应用层.md",
+    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
+    "1-Theory/6-Network/Data-communication-and-network/考试要点",
+    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-SDN-arch.png",
+    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-IP-anycast.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/10-File-based-stdio.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/20-Pipe.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/00-IPC-IO-Overview.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/10-IO-devices.md",
+    "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/9-IO-devices-management/20-External-devices.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/22-In-place-mergeSort.md",
+    "1-Theory/4-Architecture/RISC-V/A1-RISC-V异常、中断.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/9-设备IO.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/60-IO管理与磁盘.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/30-并发.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/20-进程与线程.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/41-Stride-schedule.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/5-进程.md",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets/IMG_20231124_215324.jpg",
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets/IMG_20231124_215313.jpg",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
-    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
     "1-Theory/6-Network/Top-to-down/assets/Pasted image 20231124200347.png",
     "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-BGP-hot-potato.png",
     "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-BGP-ASN.png",
     "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-BGP-eBGP.png",
     "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-BGP-ASnetwork.png",
     "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-OSPF-hierarchy.png",
-    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-RIP-levels.png",
-    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-RIP-next.png",
-    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-RIP.png",
     "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
     "1-Theory/4-Architecture/THU-Liu/31-Cache.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/91-PQ-Exercise.md",
-    "0-Assets/Excalidraw/Drawing 2023-11-23 20.51.54.excalidraw.md",
-    "1-Theory/4-Architecture/THU-Liu/13-Data-check-code.md",
-    "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/912历年真题(2016-2023).pdf",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2019-mid.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2020_21-final.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2018-final.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2016-final.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2014-mid.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2014-final.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2012_13-final.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2011-mid.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2010-mid.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/2010-final.md",
-    "0-Assets/Excalidraw/Drawing 2023-11-22 17.48.16.excalidraw.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/42-Catalan.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
-    "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
     "1-Theory/6-Network/THU-Xu/精简版PPT.pdf",
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets",
     "1-Theory/2-DataStruct/Practice/912-模拟题",
@@ -235,7 +228,6 @@
     "1-Theory/2-DataStruct/Practice/408-真题/assets",
     "1-Theory/2-DataStruct/Practice/408-真题",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/assets",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam",
     "未命名.canvas",
     "MyHome.canvas",
     "1-Theory/5-OS-principle-design/408&&912/中断处理流程.canvas",

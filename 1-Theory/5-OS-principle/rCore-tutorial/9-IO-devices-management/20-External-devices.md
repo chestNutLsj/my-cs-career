@@ -250,8 +250,8 @@ fn virtio_gpu<T: Transport>(transport: T) {
 在 RISC-V 中，与外设连接的 I/O 控制器的一个重要组成是平台级中断控制器（Platform-Level Interrupt Controller，PLIC），
 - 它的一端汇聚了各种外设的中断信号，另一端连接到 CPU 的外部中断引脚上。
 - 当一个外部设备发出中断请求时，PLIC 会将其转发给 RISC-V CPU, CPU 会执行对应的中断处理程序来响应中断。
-- 通过 RISC-V 的 `mie` 寄存器中的 `meie` 位，可以控制这个引脚是否接收外部中断信号。
-- 当然，通过 RISC-V 中 M Mode 的中断委托机制，也可以在 RISC-V 的 S Mode 下，通过 `sie` 寄存器中的 `seie` 位，对中断信号是否接收进行控制。
+- 通过 RISC-V 的 `mstatus` 寄存器中的 `meie` 位，可以控制这个引脚是否接收外部中断信号。
+- 当然，通过 RISC-V 中 M Mode 的中断委托机制，也可以在 RISC-V 的 S Mode 下，通过 `sstatus` 寄存器中的 `seie` 位，对中断信号是否接收进行控制。
 
 >[! note] **中断控制器（Interrupt Controller）**
 >计算机中的中断控制器是一种硬件，可帮助处理器处理来自多个不同 I/O 设备的中断请求（Interrupt Request，简称 IRQ）。这些中断请求可能同时发生，并首先经过中断控制器的处理，即中断控制器根据 IRQ 的优先级对同时发生的中断进行排序，然后把优先级最高的 IRQ 传给处理器，让操作系统执行相应的中断处理例程 （Interrupt Service Routine，简称 ISR）。

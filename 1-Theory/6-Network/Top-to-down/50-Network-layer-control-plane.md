@@ -654,6 +654,13 @@ As an inter-AS routing protocol, BGP provides each router a means to:
 2. ***Determine the “best” routes to the prefixes***. A router may learn about two or more different routes to a specific prefix. To determine the best route, the router will locally run a BGP route-selection procedure (using the prefix reachability information it obtained via neighboring routers). The best route will be determined based on policy as well as the reachability information.
 > 路由器可能知道到达目的子网的多个路由路径，为了确定最好的路由，需要本地运行一个 BGP 路由选择过程。
 
+### BGP 报文
+- 使用TCP协议交换BGP报文。
+- BGP 报文：
+    - OPEN：打开TCP连接，认证发送方
+    - UPDATE：通告新路径（或者撤销原路径）
+    - KEEPALIVE：在没有更新时保持连接，也用于对 OPEN 请求确认 NOTIFICATION：报告以前消息的错误，也用来关闭连接
+
 ### 通告 BSP 的路由信息
 
 ![[50-Network-layer-control-plane-BGP-ASnetwork.png]]
@@ -722,92 +729,131 @@ In summary, in this toy example, each router in AS1 becomes aware of two BGP rou
 - 在转发表中增加 AS 向外前缀时，BGP 和 OSPF 都会用到；
 
 热土豆路由的思想：
-- The idea behind hot-potato routing is for router 1b to get packets out of its AS as quickly as possible (more specifically, with the least cost possible) without worrying about the cost of the remaining portions of the path outside of its AS to the destination. In the name “hot potato routing,” a packet is analogous to a hot potato that is burning in your hands. Because it is burning hot, you want to pass it off to another person (another AS) as quickly as possible. Hot potato routing is thus a selfish algorithm—it tries to reduce the cost in its own AS while ignoring the other components of the end-to-end costs outside its AS. Note that with hot potato routing, two routers in the same AS may choose two different AS paths to the same prefix. For example, we just saw that router 1b would send packets through AS2 to reach x. However, router 1d would bypass AS2 and send packets directly to AS3 to reach x.
+- The idea behind hot-potato routing is for router 1b to get packets out of its AS as quickly as possible (more specifically, with the least cost possible) without worrying about the cost of the remaining portions of the path outside of its AS to the destination.
+- In the name “hot potato routing,” a packet is analogous to a hot potato that is burning in your hands. *Because it is burning hot, you want to pass it off to another person (another AS) as quickly as possible*. Hot potato routing is thus a selfish algorithm—it tries to reduce the cost in its own AS while ignoring the other components of the end-to-end costs outside its AS.
+- Note that with hot potato routing, two routers in the same AS may choose two different AS paths to the same prefix. For example, we just saw that router 1b would send packets through AS2 to reach x. However, router 1d would bypass AS2 and send packets directly to AS3 to reach x.
+> 热土豆路由的思路，就是尽快扔掉这个烫手山芋——尽快将分组传递出当前 AS，而不管其它 AS 的实际总和代价如何。
+> 这是一种自私的路由策略——只是尽可能地降低自身 AS 的负载。
 
 #### 挑选合适的路由路径：BGP 路由器选择算法
 
 If there is only one such route, then BGP obviously selects that route. If there are two or more routes to the same prefix, then BGP ==sequentially invokes the following elimination rules until one route remains==: 
-1. A route is assigned a local preference value as one of its attributes (in addition to the AS-PATH and NEXT-HOP attributes). The local preference of a route could have been set by the router or could have been learned from another router in the same AS. The value of the local preference attribute is a policy decision that is left entirely up to the AS’s network administrator. (We will shortly discuss BGP policy issues in some detail.) The routes with the highest local preference values are selected. 
-2. From the remaining routes (all with the same highest local preference value), the route with the shortest AS-PATH is selected. If this rule were the only rule for route selection, then BGP would be using a DV algorithm for path determination, where the distance metric uses the number of AS hops rather than the number of router hops. 
-3. From the remaining routes (all with the same highest local preference value and the same AS-PATH length), hot potato routing is used, that is, the route with the closest NEXT-HOP router is selected. 
-4. If more than one route still remains, the router uses BGP identifiers to select the route; see [Stewart 1999].
+1. A route is assigned a ***local preference*** value as one of its attributes (in addition to the AS-PATH and NEXT-HOP attributes). The local preference of a route could have been set by the router or could have been learned from another router in the same AS. The value of the local preference attribute is a policy decision that is left entirely up to the AS’s network administrator. (We will shortly discuss BGP policy issues in some detail.) The routes with the highest local preference values are selected. 
+> 路由被指派一个本地偏好的属性（不同于 AS-PATH 和 NEXT-HOP）。这个本地偏好属性可以由路由器设置，也可以从同一 AS 的其它路由器处学习。
+> 这个本地偏好的属性完全由本地 AS 的网络管理员决定，本质就是一个选择分组的优先级。
+
+2. From the remaining routes (all with the same highest local preference value), ***the route with the shortest AS-PATH is selected***. If this rule were the only rule for route selection, then BGP would be using a DV algorithm for path determination, where the distance metric uses the number of AS hops rather than the number of router hops. 
+> 如果本地偏好最高的路由有多个时，则选择其中 AS-PATH 属性最短的路由。
+> 如果这是唯一的路由选择规则，则 BGP 可以使用 DV 算法，其中的度量使用 AS 跳数，而不是路由器跳数。
+
+3. From the remaining routes (all with the same highest local preference value and the same AS-PATH length), ***hot potato routing is used***, that is, the route with the closest NEXT-HOP router is selected. 
+> 如果 local preference 和 AS-PATH 的长度都相同，且仍有多个路由，则使用热土豆策略。
+
+4. If more than one route still remains, the router uses BGP identifiers to select the route; see `[Stewart 1999]`.
+> 经过三次筛选后还是有多个路由，则使用 BGP 标识符。
 
 > [! example] BGP 路由选择的实例
+> As an example, let’s again consider router 1b in Figure 5.10.
 > ![[50-Network-layer-control-plane-BGP-ASN.png]]
-> As an example, let’s again consider router 1b in Figure 5.10. Recall that there are exactly two BGP routes to prefix x, one that passes through AS2 and one that bypasses AS2. Also recall that if hot potato routing on its own were used, then BGP would route packets through AS2 to prefix x. But in the above route-selection algorithm, rule 2 is applied before rule 3, causing BGP to select the route that bypasses AS2, since that route has a shorter AS PATH. So we see that with the above routeselection algorithm, BGP is no longer a selfish algorithm—it first looks for routes with short AS paths (thereby likely reducing end-to-end delay).
+> 
+> Recall that there are exactly two BGP routes to prefix *x*, one that passes through AS2 and one that bypasses AS2. Also recall that if hot potato routing on its own were used, then BGP would route packets through AS2 to prefix *x*.
+> 
+> But in the above route-selection algorithm, rule 2 is applied before rule 3, causing BGP to select the route that bypasses AS2, since that route has a shorter AS PATH. So we see that ***with the above route selection algorithm, BGP is no longer a selfish algorithm***—it first looks for routes with short AS paths (thereby likely reducing end-to-end delay).
 
 ### IP 任播
 
-### 路由选择策略
+IP 任播的使用情景：
+1. replicating the same content on different servers in many different dispersed geographical locations, 
+2. having each user access the content from the server that is closest.
+> 一个是在不同地理位置的不同服务器上复制相同内容，一个是每个用户都从各自最近的服务器上获取内容。
+
+- For example, a CDN may replicate videos and other objects on servers in different countries.
+- Similarly, the DNS system can replicate DNS records on DNS servers throughout the world. When a user wants to access this replicated content, it is desirable to point the user to the “nearest” server with the replicated content.
+
+> [! example] 以 CDB 为例考查 BGP 的 IP 任播
+> ![[50-Network-layer-control-plane-IP-anycast.png]]
+> During the IP-anycast configuration stage, the CDN company assigns the same IP address to each of its servers, and uses standard BGP to advertise this IP address from each of the servers.
+> > IP 任播配置阶段，CDN 提供商会为它的每个服务器分配相同的 IP 地址，并使用标准 BGP 从这些服务器来通告这个 IP 地址。
+> 
+> When a BGP router receives multiple route advertisements for this IP address, it treats these advertisements as providing different paths to the same physical location (when, in fact, the advertisements are for different paths to different physical locations). When configuring its routing table, each router will locally use the BGP route-selection algorithm to pick the “best” (for example, closest, as determined by AS-hop counts) route to that IP address. 
+> > 当某台 BGP 路由器收到对于该 IP 地址的多个路由通告时，它将这些通告视作为同一物理地址提供不同的的路径（实际上这些通告通往了不同的物理地址）。
+> > 配置其路由表时，每台路由器在本地使用 BGP 路由选择算法——选择最佳的通向该 IP 地址的路径。
+> 
+> ==For example==, if one BGP route (corresponding to one location) is only one AS hop away from the router, and all other BGP routes (corresponding to other locations) are two or more AS hops away, then the BGP router would choose to route packets to the location that is one hop away.
+> 
+> After this initial BGP address-advertisement phase, the CDN can do its main job of distributing content. When a client requests the video, the CDN returns to the client the common IP address used by the geographically dispersed servers, no matter where the client is located. ***When the client sends a request to that IP address, Internet routers then forward the request packet to the “closest” server, as defined by the BGP route-selection algorithm***.
+
+Although the above CDN example nicely illustrates how IP-anycast can be used, in practice, CDNs generally choose not to use IP-anycast because BGP routing changes can result in different packets of the same TCP connection arriving at different instances of the Web server. But IP-anycast is extensively used by the DNS system to direct DNS queries to the closest root DNS server.
+> 实践中 CDN 并不适用 IP 任播，因为 CDN 建立的 TCP 连接在 BGP 路由改变时，同一 TCP 连接却会产生不同的分组。但是 DNS 建立在 UDP 上，因此 DNS 常使用 IP 任播。
+
+Recall from Section 2.4, there are currently 13 IP addresses for root DNS servers. But corresponding to each of these addresses, there are multiple DNS root servers, with some of these addresses having over 100 DNS root servers scattered over all corners of the world. ==When a DNS query is sent to one of these 13 IP addresses, IP anycast is used to route the query to the nearest of the DNS root servers that is responsible for that address==. `[Li 2018]` presents recent measurements illustrating Internet anycast, use, performance, and challenges.
+
+>[! note] 为什么要区分 AS 间和 AS 内部路由协议？
+>内部网关协议更关注性能，外部网关协议更关注策略。
+>
+>- 策略：
+>	- Inter-AS：管理员需要控制通信路径，谁在使用它的网络进行数据传输；
+>	- Intra-AS：一个管理者，所以无需策略；
+>		- AS 内部的各子网的主机尽可能地利用资源进行快速路由
+>- 规模：
+>	- AS 间路由必须考虑规模问题，以便支持全网的数据转发
+>	- AS 内部路由规模不是一个大的问题
+>		- 如果 AS 太大，可将此 AS 分成小的 AS；规模可控
+>		- AS 之间只不过多了一个点而已
+>		- 或者 AS 内部路由支持层次性，层次性路由节约了表空间，降低了更新的数据流量
+>- 性能：
+>	- Intra-AS：关注性能
+>	- Inter-AS：策略可能比性能更重要
 
 ### 组装在一起：Internet的全貌
 
-- 基于改进后的距离矢量算法（路径矢量）
-    - 不仅仅是距离矢量，还包括到达各个目标网络的详细路径（AS序号的列表）能够避免简单DV算法的路由环路问题和无穷式的计算迭代
+以一个完整的例子考查网络层、传输层、应用层的 Internet：
 
+任务目标：Suppose you have just created a small company that has a number of servers, including a public Web server that describes your company’s products and services, a mail server from which your employees obtain their e-mail messages, and a DNS server. Naturally, you would like the entire world to be able to visit your Web site in order to learn about your exciting products and services. Moreover, you would like your employees to be able to send and receive e-mail to potential customers throughout the world.
 
-路径的属性 & BGP路由
-- 当通告一个子网前缀时，通告包括 BGP 属性
-    - prefix + attributes = “route”
-- 2个重要的属性：
-    - AS-PATH：前缀的通告所经过的AS列表: AS 67 AS 17 
-        - 检测环路；多路径选择
-        - 在向其它AS转发时，需要将自己的AS号加在路径上
-    - NExT-HOP：从当前AS到下一跳AS有多个链路，在NETx-HOP属性中，告诉对方通过那个I转发。
-    - 其它属性：路由偏好指标，如何被插入的属性
-- 基于策略的路由：
-    - 当一个网关路由器接收到了一个路由通告，使用输入策略来接受或过滤(accept/decline)
-        - 过滤原因例1：不想经过某个AS，转发某些前缀的分组
-        - 过滤原因例2：已经有了一条往某前缀的偏好路径
-    - 策略也决定了是否向它别的邻居通告收到的这个路由信息
+实现步骤：
+1. 联网、获取本地 ISP 的支持：To meet these goals, you first need to obtain Internet connectivity, which is done by contracting with, and connecting to, a local ISP. Your company will have a gateway router, which will be connected to a router in your local ISP. This connection might be a DSL connection through the existing telephone infrastructure, a leased line to the ISP’s router, or one of the many other access solutions described in Chapter 1. Your local ISP will also provide you with an IP address range, for example, a /24 address range consisting of 256 addresses.
+2. 获得本地 ISP 分配的 IP 范围后，为自己的设备分配 IP：Once you have your physical connectivity and your IP address range, you will assign one of the IP addresses (in your address range) to your Web server, one to your mail server, one to your DNS server, one to your gateway router, and other IP addresses to other servers and networking devices in your company’s network.
+3. 注册域名，绑定 IP 和域名：In addition to contracting with an ISP, you will also need to contract with an Internet registrar to obtain a domain name for your company, as described in Chapter 2. For example, if your company’s name is, say, `Xanadu Inc.`, you will naturally try to obtain the domain name `xanadu.com`. 
+4. 互联网注册机构在顶级域名服务器中为公司域名注册：Your company must also obtain presence in the DNS system. Specifically, because outsiders will want to contact your DNS server to obtain the IP addresses of your servers, you will also need to provide your registrar with the IP address of your DNS server. Your registrar will then put an entry for your DNS server (domain name and corresponding IP address) in the `.com` top-level-domain servers, as described in Chapter 2. ==After this step is completed, any user who knows your domain name (e.g., xanadu. com) will be able to obtain the IP address of your DNS server via the DNS system==.
+5. 在自己的 DNS 服务器中包含 Web 服务器的主机名：So that people can discover the IP addresses of your Web server, in your DNS server you will need to include entries that map the host name of your Web server (e.g., `www.xanadu.com` ) to its IP address. You will want to have similar entries for other publicly available servers in your company, including your mail server. In this manner, ==if Alice wants to browse your Web server, the DNS system will contact your DNS server, find the IP address of your Web server, and give it to Alice==. Alice can then establish a TCP connection directly with your Web server.
+6. 本地 ISP 使用 BGP 向其他 AS 或 ISP 通告 IP 前缀：However, there still remains one other necessary and crucial step to allow outsiders from around the world to access your Web server. Consider what happens when Alice, who knows the IP address of your Web server, sends an IP datagram (e.g., a TCP SYN segment) to that IP address. This datagram will be routed through the Internet, visiting a series of routers in many different ASs, and eventually reach your Web server. When any one of the routers receives the datagram, it is going to look for an entry in its forwarding table to determine on which outgoing port it should forward the datagram. Therefore, each of the routers needs to know about the existence of your company’s /24 prefix (or some aggregate entry). How does a router become aware of your company’s prefix? As we have just seen, it becomes aware of it from BGP! ==Specifically, when your company contracts with a local ISP and gets assigned a prefix (i.e., an address range), your local ISP will use BGP to advertise your prefix to the ISPs to which it connects. Those ISPs will then, in turn, use BGP to propagate the advertisement==. Eventually, all Internet routers will know about your prefix (or about some aggregate that includes your prefix) and thus be able to appropriately forward datagrams destined to your Web and mail servers
 
-> BGP 路径通告例子：
-> 
-> - 路由器AS2.2c从AS3.3a接收到的AS3,x路由通告（通过eBGP）
-> - 基于AS2的输入策略，AS2.2c决定接收AS3,x的通告，而且通过iBGP）向AS2的所有路由器进行通告
-> - 基于AS2的策略，AS2路由器2a通过eBGP向AS1.1c路由器通告AS2,AS3,x 路由信息
->     - 路径上加上了AS2自己作为AS序列的一跳
-> <br>
-> - 网关路由器可能获取有关一个子网x的多条路径，从多个eBGP会话上：
->     - AS1网关路由器1c从2a学习到路径：AS2,AS3,x
->     - AS1网关路由器1c从3a处学习到路径AS3,x
->     - 基于策略（对路径进行打分，考虑政治上、经济上等），AS1路由器1c选择了路径：AS3,x，而且通过iBGP告诉所有AS1内部的路由器
-
-BGP报文
-- 使用TCP协议交换BGP报文。
-- BGP 报文：
-    - OPEN：打开TCP连接，认证发送方
-    - UPDATE：通告新路径（或者撤销原路径）
-    - KEEPALIVE：在没有更新时保持连接，也用于对OPEN 请求确认NOTIFICATION：报告以前消息的错误，也用来关闭连接
-
-关于其他自治区域的可达信息，是由内部网关运算和外部网关运算协议的结果共同决定的。首先由外部网关协议规划到目标子网的路径，然后信息传输进入各子网内部后由内部网关协议决定出入口如何走
-
-BGP 路径选择
-- 路由器可能获得一个网络前缀的多个路径，路由器必须进行路径的选择，路由选择可以基于：
-    - 本地偏好值属性：偏好策略决定
-    - 最短AS-PATH：AS的跳数
-    - 最近的NExT-HOP路由器：热土豆路由
-    - 附加的判据：使用BGP标示
-- 一个前缀对应着多种路径，采用消除规则直到留下一条路径
-
-为什么内部网关协议和外部网关协议如此不同？（内部网关协议更关注性能，外部网关协议更关注策略）
-- 策略：
-    - Inter-AS：管理员需要控制通信路径，谁在使用它的网络进行数据传输；
-    - Intra-AS：一个管理者，所以无需策略；
-        - AS内部的各子网的主机尽可能地利用资源进行快速路由
-- 规模：
-    - AS间路由必须考虑规模问题，以便支持全网的数据转发
-    - AS内部路由规模不是一个大的问题
-        - 如果AS太大，可将此AS分成小的AS；规模可控
-        - AS之间只不过多了一个点而已
-        - 或者AS内部路由支持层次性，层次性路由节约了表空间，降低了更新的数据流量
-- 性能：
-    - Intra-AS：关注性能
-    - Inter-AS：策略可能比性能更重要
-
-## 5.5 SDN控制平面
+## 5.5 SDN 控制平面
 
 前面关注了控制平面的传统方式，现在聚焦于SDN方式。
+
+### SDN 体系结构的四个关键特征
+
+- ***Flow-based forwarding***. Packet forwarding by SDN-controlled switches can be based on any number of header field values in the transport-layer, network-layer, or link-layer header. We saw in Section 4.4 that the OpenFlow1.0 abstraction allows forwarding based on eleven different header field values. This contrasts sharply with the traditional approach to router-based forwarding that we studied in Sections 5.2–5.4, where forwarding of IP datagrams was based solely on a datagram’s destination IP address. Recall from Figure 5.2 that packet forwarding rules are specified in a switch’s flow table; it is the job of the SDN control plane to compute, manage and install flow table entries in all of the network’s switches. 
+> 基于流的转发。SDN 控制的交换机可以基于传输层、网络层、链路层的任意数量的首部字段进行分组转发。
+> 这与传统方法仅基于数据报目的 IP 地址的转发形成鲜明对比——SDN 中分组转发规则被精确规定在交换机的流表中，SDN 控制平面的工作是计算、管理、安装所有网络交换机中的流表项。
+> ![[50-Network-layer-control-plane-logically-centralized-control.png]]
+
+- ***Separation of data plane and control plane***. This separation is shown clearly in Figures 5.2 and 5.14. The data plane consists of the network’s switches— relatively simple (but fast) devices that execute the “match plus action” rules in their flow tables. The control plane consists of servers and software that determine and manage the switches’ flow tables.
+> 数据平面与控制平面分离。数据平面包含网络层交换机，规则是仅根据流表执行匹配+采取动作。
+> 控制平面由中央服务器（可以有镜像）和决定、管理交换机流表的软件组成。
+
+- ***Network control functions: external to data-plane switches***. Given that the “S” in SDN is for “software,” it’s perhaps not surprising that the SDN control plane is implemented in software. Unlike traditional routers, however, this software executes on servers that are both distinct and remote from the network’s switches. As shown in Figure 5.14, the control plane itself consists of two components—an SDN controller (or network operating system `[Gude 2008]`) and a set of network-control applications. The controller maintains accurate network state information (e.g., the state of remote links, switches, and hosts); provides this information to the networkcontrol applications running in the control plane; and provides the means through which these applications can monitor, program, and control the underlying network devices. Although the controller in Figure 5.14 is shown as a single central server, in practice the controller is only logically centralized; it is typically implemented on several servers that provide coordinated, scalable performance and high availability. 
+> 网络控制功能，位于数据平面交换机的外部。
+> SDN 的控制平面是由软件实现的，这个软件与路由器分离，而是在单独的服务器上运行。
+> ![[50-Network-layer-control-plane-SDN-arch.png]]
+> 具体结构如上，其中控制平面有两部分：
+> 1. SDN 控制器，或称网络操作系统。用于维护准确的网络状态信息，如远程链路、交换机和主机状态等；为运行在控制平面中的网络控制应用程序提供这些信息；提供监视、编程、控制网络设备的接口（方法）给相应应用程序。
+> 2. 若干网络控制应用程序。
+
+- ***A programmable network***. The network is programmable through the network-control applications running in the control plane. These applications represent the “brains” of the SDN control plane, using the APIs provided by the SDN controller to specify and control the data plane in the network devices. For example, a routing network-control application might determine the end-end paths between sources and destinations (for example, by executing Dijkstra’s algorithm using the nodestate and link-state information maintained by the SDN controller). Another network application might perform access control, that is, determine which packets are to be blocked at a switch, as in our third example in Section 4.4.3. Yet another application might have switches forward packets in a manner that performs server load balancing (the second example we considered in Section 4.4.3).
+> 可编程的网络——通过控制平面的网络控制应用程序实现。这些程序使用 SDN 控制器提供的 API 来定义、控制数据平面。
+
+> [! note] SDN 与传统模式的对比
+> - From this discussion, we can see that SDN represents a significant “unbundling” of network functionality—==data plane switches, SDN controllers, and network-control applications are separate entities== that may each be provided by different vendors and organizations.
+> 
+> - This contrasts with the ==pre-SDN model== in which a switch/router (together with its embedded control plane software and protocol implementations) ==was monolithic, vertically integrated, and sold by a single vendor==. 
+> 
+
+### SDN 控制器与网络控制应用程序
+
+### OpenFlow协议
 
 OpenFlow：控制器<-->交换机报文
 - 一些关键的控制器到交换机的报文
@@ -841,6 +887,6 @@ SDN：面临的挑战
 - 互联网络范围内的扩展性
     - 而不是仅仅在一个AS的内部部署，全网部署
 
-## 5.7 ICMP
+## 5.6 ICMP
 
-## 5.8 SNMP
+## 5.7 SNMP
