@@ -853,40 +853,136 @@ Recall from Section 2.4, there are currently 13 IP addresses for root DNS server
 
 ### SDN 控制器与网络控制应用程序
 
+***SDN control plane divides broadly into two components— the SDN controller and the SDN network-control applications.***
+
+![[50-Network-layer-control-plane-SDN-controller.png]]
+
+SDN 控制器的功能自底向上的层次可分为：
+1. A ***communication layer***: communicating between the SDN controller and controlled network devices. Clearly, if an SDN controller is going to control the operation of a remote SDN-enabled switch, host, or other device, a protocol is needed to transfer information between the controller and that device. In addition, a device must be able to communicate locally-observed events to the controller (for example, a message indicating that an attached link has gone up or down, that a device has just joined the network, or a heartbeat indicating that a device is up and operational). ==These events provide the SDN controller with an up-to-date view of the network’s state==. This protocol constitutes the lowest layer of the controller architecture, as shown in Figure 5.15. ==The communication between the controller and the controlled devices cross what has come to be known as the controller’s “southbound” interface==. In Section 5.5.2, we’ll study OpenFlow—a specific protocol that provides this communication functionality. OpenFlow is implemented in most, if not all, SDN controllers.
+> 通信层，负责 SDN 控制器与受控网络设备之间的通信。
+> 控制器控制网络设备需要通信，而网络设备也需要将本地事件发送给控制器，以便控制器及时地判断网络状态。
+
+2. A ***network-wide state-management layer***. The ultimate control decisions made by the SDN control plane—for example, configuring flow tables in all switches to achieve the desired end-end forwarding, to implement load balancing, or to implement a particular firewalling capability—will ==require that the controller have up-to-date information about state of the networks’ hosts, links, switches, and other SDN-controlled devices==. A switch’s flow table contains counters whose values might also be profitably used by network-control applications; these values should thus be available to the applications. Since the ultimate aim of the control plane is to determine flow tables for the various controlled devices, ==a controller might also maintain a copy of these tables==. These pieces of information all constitute examples of the network-wide “state” maintained by the SDN controller.
+> 网络范围状态管理层。SDN 控制平面的一切控制决策，都要经过对网络状态的评估后给出。
+> 另外，控制器为了决定不同受控设备的流表，需要这些流表的 copy。
+
+3. ***The interface to the network-control application layer***. The controller interacts with network-control applications through its “northbound” interface. ==This API allows network-control applications to read/write network state and flow tables within the state-management layer==. Applications can register to be notified when state-change events occur, so that they can take actions in response to network event notifications sent from SDN-controlled devices. Different types of APIs may be provided; we’ll see that two popular SDN controllers communicate with their applications using a REST `[Fielding 2000]` request-response interface.
+> 开放给网络控制应用程序层的接口。这些接口被网络控制应用程序用于读写网络状态和流表内容。
+
+> [! note] 分布式的 SDN 控制器
+> SDN controller can be considered to be “logically centralized,” that is, that the controller may be viewed externally (for example, from the point of view of SDN-controlled devices and external network-control applications) as a single, monolithic service.
+> > SDN 控制器在逻辑上可以视作中心的、垄断的、独立的。
+> 
+> However, these services and the databases used to hold state information are implemented in practice by a distributed set of servers for fault tolerance, high availability, or for performance reasons.
+> > 但是由于容错、高可用、性能等因素的顾虑，实践中 SDN 控制器是由一组分布式的服务器实现的。
+> 
+> With controller functions being implemented by a set of servers, the semantics of the controller’s internal operations (e.g., maintaining logical time ordering of events, consistency, consensus, and more) must be considered `[Panda 2013]`. Such concerns are common across many different distributed systems; see `[Lamport 1989, Lampson 1996]` for elegant solutions to these challenges. Modern controllers such as OpenDaylight `[OpenDaylight 2020]` and ONOS `[ONOS 2020]` (see sidebar) have placed considerable emphasis on architecting a logically centralized but physically distributed controller platform that provides scalable services and high availability to the controlled devices and network-control applications alike.
+
 ### OpenFlow协议
 
-OpenFlow：控制器<-->交换机报文
-- 一些关键的控制器到交换机的报文
-    - 特性：控制器查询交换机特性，交换机应答
-    - 配置：交换机查询/设置交换机的配置参数
-    - 修改状态：增加删除修改OpenFlow表中的流表
-    - packet-out：控制器可以将分组通过特定的端口发出
-- 一些关键的交换机到控制器的报文
-    - 分组进入：将分组（和它的控制）传给控制器，见来自控制器的packet-out报文
-    - 流移除：在交换机上删除流表项
-    - 端口状态：通告控制器端口的变化
+OpenFlow 协议特点：
+- 运行在 SDN 控制器、SDN 控制的交换机、其他实现 OpenFlow API 的设备之间；
+- 基于 TCP 协议，端口号为 6653；
 
-*幸运的是，网络管理员不需要直接通过创建/发送流表来编程交换机，而是采用在控制器上的app自动运算和配置*
+`控制器->受控交换机` 流动的重要报文：
+- ***Configuration***：控制器增加/删除或修改交换机流表中的表项，并设置交换机端口特性
+- ***Modify-state***：允许控制器查询/设置交换机的配置参数
+- ***Read-state***：控制器从交换机流表和端口收集统计数据和计数器值
+- ***Send-packet***：控制器在受控交换机中从特定端口发送特定的报文
 
-OpenDaylight (ODL) 控制器
-- ODL Lithium 控制器
-- 网络应用可以在SDN控制内或者外面
-- 服务抽象层SAL：和内部以及外部的应用以及服务进行交互
+`受控交换机->控制器` 流动的重要报文：
+- ***Flow-removed***：通知控制器已有一个流表项被删除，如超时、收到 modify-state 报文等情况；
+- ***Port-status***：向控制器通告交换机端口状态的变化
+- ***Packet-in***：如果分组到达交换机端口，却不能与任何流表项匹配，则发送给控制器额外处理；匹配的分组如有需要，也可能发送给控制器。
 
-ONOS 控制器
-- 控制应用和控制器分离（应用app在控制器外部）
-- 意图框架：服务的高级规范：描述什么而不是如何
-- 相当多的重点聚焦在分布式核心上，以提高服务的可靠性，性能的可扩展性
+### 数据平面和控制平面交互的例子
 
-SDN：面临的挑战
-- 强化控制平面：可信、可靠、性能可扩展性、安全的分布式系统
-    - 对于失效的鲁棒性：利用为控制平面可靠分布式系统的强大理论
-    - 可信任，安全：从开始就进行铸造
-- 网络、协议满足特殊任务的需求
-    - e.g., 实时性，超高可靠性、超高安全性
-- 互联网络范围内的扩展性
-    - 而不是仅仅在一个AS的内部部署，全网部署
+>[! warning] 这里的 Dijkstra 算法与 LS 路由策略中的 Dijkstra 算法有差异！
+>The SDN scenario in Figure 5.16 has two important differences from the earlier per-router-control scenario of Sections 5.2.1 and 5.3, where Dijkstra’s algorithm was implemented in each and every router and link-state updates were flooded among all network routers:
+>- Dijkstra’s algorithm is executed as a separate application, outside of the packet switches.
+>- Packet switches send link updates to the SDN controller and not to each other.
+
+![[50-Network-layer-control-plane-SDN-controller-scenario.png]]
+
+In this example, let’s assume that the link between switch s1 and s2 goes down; that shortest path routing is implemented, and consequently and that incoming and outgoing flow forwarding rules at s1, s3, and s4 are affected, but that s2’s operation is unchanged. Let’s also assume that OpenFlow is used as the communication layer protocol, and that the control plane performs no other function other than link-state routing.
+> 假设：路由器 S1和 S2之间的链路断开；路由选择策略是最短路径；除 S2外，S1、S3、S4的出入流转发规则都受到影响；采用 OpenFlow 作为通信层协议，控制平面只使用链路状态路由策略。
+
+1. Switch s1, experiencing a link failure between itself and s2, notifies the SDN controller of the link-state change using the OpenFlow port-status message.
+> 交换机 S1意识到与 S2之间的链路出现故障，因此使用 OpenFlow 的 port-status 报文将链路状态的变化通知给 SDN 控制器。
+
+2. The SDN controller receives the OpenFlow message indicating the link-state change, and notifies the link-state manager, which updates a link-state database.
+> SDN 控制器接收到 OpenFlow 消息后，通知链路状态管理器——更新链路状态数据库。
+
+3. The network-control application that implements Dijkstra’s link-state routing has previously registered to be notified when link state changes. That application receives the notification of the link-state change.
+> 实现 Dijkstra 算法的链路状态路由策略的网络控制应用程序先前已经注册完毕，当链路状态更新时得到通告。应用程序接收链路状态变化的通告。
+
+4. The link-state routing application interacts with the link-state manager to get updated link state; it might also consult other components in the state-management layer. It then computes the new least-cost paths.
+> 链路状态路由选择程序与链路状态管理器交互，以得到更新后的链路状态；它也会参考状态管理层中的其他组件，之后计算最低开销的路径。
+
+5. The link-state routing application then interacts with the flow table manager, which determines the flow tables to be updated.
+> 链路状态路由选择程序之后与流表管理器交互，这决定了流表如何更新。
+
+6. The flow table manager then uses the OpenFlow protocol to update flow table entries at affected switches—s1 (which will now route packets destined to s2 via s4), s2 (which will now begin receiving packets from s1 via intermediate switch s4), and s4 (which must now forward packets from s1 destined to s2).
+> 流表管理器接着使用 OpenFlow 协议来更新位于受影响的交换机 S1、S2 和 S4的流表项。其中 S1将分组通过 S4 路由到 S2，S2通过中介路由 S4接收 S 来自 S1的分组，S4必须转发来自 S1并通往 S2的分组。
+
+### SDN控制器案例
+
+>[! example] SDN 控制器案例 I ：OpenDaylight (ODL) 控制器
+> ![[50-Network-layer-control-plane-OpenDayLight.png]]
+> Figure 5.17 presents a simplified view of the OpenDaylight (ODL) controller platform. 
+> 
+> ODL’s Basic Network Functions are at the heart of the controller, and correspond closely to the network-wide state management capabilities that we encountered in Figure 5.15.
+> > ODL 的基本网络功能位于控制器的中心部位，与网络范围状态管理的功能紧密对应。
+> 
+> The Service Abstraction Layer (SAL) is the controller’s nerve center, allowing controller components and applications to invoke each other’s services, access configuration and operational data, and to subscribe to events they generate. The SAL also provides a uniform abstract interface to specific protocols operating between the ODL controller and the controlled devices. These protocols include OpenFlow (which we covered in Section 4.5), and the Simple Network Management Protocol (SNMP) and the Network Configuration (NETCONF) protocol, both of which we’ll cover in Section 5.7.
+> > 服务抽象层 SAL 是控制器的神经中枢，允许控制器组件和应用程序互相调用服务、获取配置和可操作的数据、订阅各自的事件。
+> > SAL 也会提供统一的抽象接口给运行在 ODL 控制器和受控设备之间的特定协议。这些协议有 OpenFlow、SNMP、NETCONF 等。
+> 
+> The Open vSwitch Database Management Protocol (OVSDB) is used to manage data center switching, an important application area for SDN technology. We’ll introduce data center networking in Chapter 6.
+> > OVSDB 用于管理数据中心交换，这是 SDN 技术应用的重要领域。
+> 
+> Network Orchestrations and Applications determine how data-plane forwarding and other services, such as firewalling and load balancing, are accomplished in the controlled devices. ODL provides two ways in which applications can interoperate with native controller services (and hence devices) and with each other.
+> > 网络应用程序决定数据平面转发分组以及其他服务（比如防火墙、负载均衡）如何在受控设备中实现。ODL 提供**两种方法**，应用程序借此与原生控制器的服务交互或与其它程序交互。
+> 
+> In the API-Driven (AD-SAL) approach, shown in Figure 5.17, applications communicate with controller modules using a REST request-response API running over HTTP. 
+> > 在 **API 驱动的方法**中，应用程序通过一个 `REST请求-响应API` 与控制器模块交流。
+> 
+> Initial releases of the OpenDaylight controller provided only the AD-SAL. As ODL became increasingly used for network configuration and management, later ODL releases introduced a Model-Driven (MD-SAL) approach. Here, the YANG data modeling language `[RFC 6020]` defines models of device, protocol, and network configuration and operational state data. Devices are then configured and managed by manipulating this data using the NETCONF protocol.
+> > 早期版本的 ODL 控制器只提供 API-SAL，随着 ODL 逐渐应用于网络配置和管理，后来引入了**模型驱动的方法**。YANG 数据模型语言定义了设备、协议、网络配置和操作状态数据的模型，设备通过 NETCONF 协议进行配置、管理。
+
+>[! example] SDN 控制器案例 II ：ONOS 控制器
+> ![[50-Network-layer-control-plane-ONOS.png]]
+> Figure 5.18 presents a simplified view of the ONOS controller ONOS 2020]. Similar to the canonical controller in Figure 5.15, *three layers* can be identified in the ONOS controller: 
+> - ***Northbound abstractions and protocols***. A unique feature of ONOS is its intent framework, which allows an application to request a high-level service (e.g., to setup a connection between host A and Host B, or conversely to not allow Host A and host B to communicate) without having to know the details of how this service is performed. State information is provided to network-control applications across the northbound API either synchronously (via query) or asynchronously (via listener callbacks, e.g., when network state changes).
+> > 北向抽象和协议。ONOS 的特点之一就是意图框架，它允许应用请求高层服务而不必知道服务如何实现的具体细节。
+> > 状态信息同步或异步地通过北向 API 提供给网络控制应用程序。
+> 
+> - ***Distributed core***. The state of the network’s links, hosts, and devices is maintained in ONOS’s distributed core. ONOS is deployed as a service on a set of interconnected servers, with each server running an identical copy of the ONOS software; an increased number of servers offers an increased service capacity. The ONOS core provides the mechanisms for service replication and coordination among instances, providing the applications above and the network devices below with the abstraction of logically centralized core services.
+> > 分布式核。网络连接、主机、设备的状态在 ONOS 的分布式核中维护。ONOS 作被部署为在一系列互联的服务器上的一种服务，每台服务器运行着 ONOS 软件的相同副本，增加服务器数量就增加了服务能力。
+> > ONOS 核提供了在实例之间服务复制和协同的机制，这种机制为上层应用程序和下层网络设备提供了逻辑上集中的核服务抽象。
+> 
+> - ***Southbound abstractions and protocols***. The southbound abstractions mask the hetero-geneity of the underlying hosts, links, switches, and protocols, allowing the distributed core to be both device and protocol agnostic. Because of this abstraction, the southbound interface below the distributed core is logically higher than in our canonical controller in Figure 5.14 or the ODL controller in Figure 5.17.
+> > 南向抽象和协议。南向抽象屏蔽了底层主机、链路、交换机、协议的异构性，允许分布式核对设备和协议不必全知。由于这层抽象，位于分布式核下方的南向接口逻辑上比 5-14图中的规范控制器或 5-17中的 ODL 控制器更高层。
 
 ## 5.6 ICMP
 
-## 5.7 SNMP
+### 用途
+
+The Internet Control Message Protocol (ICMP), specified in `[RFC 792]`, is ***used by hosts and routers to communicate network-layer information to each other***.
+
+The most typical use of ICMP is for error reporting. For example, when running an HTTP session, you may have encountered an error message such as “Destination network unreachable.” This message had its origins in ICMP. At some point, an IP router was unable to find a path to the host specified in your HTTP request. That router created and sent an ICMP message to your host indicating the error.
+> ICMP 最典型的应用就是差错报告。例如，当运行 HTTP 会话时，有可能遇到一则差错报告——“目标网络不可达”。这条信息来自于 ICMP——在某个位置，IP 路由器无法找到通向 HTTP 请求中指定主机的线路，就会创建并发送一则 ICMP 消息给请求主机并提示错误。
+
+### 报文
+
+ICMP is often considered part of IP, but architecturally it lies just above IP, as ICMP messages are carried inside IP datagrams. That is, ICMP messages are carried as IP payload, just as TCP or UDP segments are carried as IP payload. Similarly, when a host receives an IP datagram with ICMP specified as the upper-layer protocol (an upper-layer protocol number of 1), it demultiplexes the datagram’s contents to ICMP, just as it would demultiplex a datagram’s content to TCP or UDP. ICMP messages have a type and a code field, and contain the header and the first 8 bytes of the IP datagram that caused the ICMP message to be generated in the first place (so that the sender can determine the datagram that caused the error). Selected ICMP message types are shown in Figure 5.19. Note that ICMP messages are used not only for signaling error conditions.
+![[50-Network-layer-control-plane-ICMP-message-types.png]]
+
+The well-known ping program sends an ICMP type 8 code 0 message to the specified host. The destination host, seeing the echo request, sends back a type 0 code 0 ICMP echo reply. Most TCP/IP implementations support the ping server directly in the operating system; that is, the server is not a process. Chapter 11 of [Stevens 1990] provides the source code for the ping client program. Note that the client program needs to be able to instruct the operating system to generate an ICMP message of type 8 code 0. Another interesting ICMP message is the source quench message. This message is seldom used in practice. Its original purpose was to perform congestion control—to allow a congested router to send an ICMP source quench message to a host to force that host to reduce its transmission rate. We have seen in Chapter 3 that TCP has its own congestion-control mechanism that operates at the transport layer, and that Explicit Congestion Notification bits can be used by network-later devices to signal congestion.
+
+### Traceroute 与 ICMP
+
+Traceroute is implemented with ICMP messages. To determine the names and addresses of the routers between source and destination, Traceroute in the source sends a series of ordinary IP datagrams to the destination. Each of these datagrams carries a UDP segment with an unlikely UDP port number. The first of these datagrams has a TTL of 1, the second of 2, the third of 3, and so on. The source also starts timers for each of the datagrams. When the nth datagram arrives at the nth router, the nth router observes that the TTL of the datagram has just expired. According to the rules of the IP protocol, the router discards the datagram and sends an ICMP warning message to the source (type 11 code 0). This warning message includes the name of the router and its IP address. When this ICMP message arrives back at the source, the source obtains the round-trip time from the timer and the name and IP address of the nth router from the ICMP message. How does a Traceroute source know when to stop sending UDP segments? Recall that the source increments the TTL field for each datagram it sends. Thus, one of the datagrams will eventually make it all the way to the destination host. Because this datagram contains a UDP segment with an unlikely port number, the destination host sends a port unreachable ICMP message (type 3 code 3) back to the source. When the source host receives this particular ICMP message, it knows it does not need to send additional probe packets. (The standard Traceroute program actually sends sets of three packets with the same TTL; thus, the Traceroute output provides three results for each TTL.) In this manner, the source host learns the number and the identities of routers that lie between it and the destination host and the round-trip time between the two hosts. Note that the Traceroute client program must be able to instruct the operating system to generate UDP datagrams with specific TTL values and must also be able to be notified by its operating system when ICMP messages arrive. Now that you understand how Traceroute works, you may want to go back and play with it some more.
+
+## 5.7 SNMP/NETCONF
+
