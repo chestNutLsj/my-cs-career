@@ -975,14 +975,183 @@ The most typical use of ICMP is for error reporting. For example, when running a
 
 ### 报文
 
-ICMP is often considered part of IP, but architecturally it lies just above IP, as ICMP messages are carried inside IP datagrams. That is, ICMP messages are carried as IP payload, just as TCP or UDP segments are carried as IP payload. Similarly, when a host receives an IP datagram with ICMP specified as the upper-layer protocol (an upper-layer protocol number of 1), it demultiplexes the datagram’s contents to ICMP, just as it would demultiplex a datagram’s content to TCP or UDP. ICMP messages have a type and a code field, and contain the header and the first 8 bytes of the IP datagram that caused the ICMP message to be generated in the first place (so that the sender can determine the datagram that caused the error). Selected ICMP message types are shown in Figure 5.19. Note that ICMP messages are used not only for signaling error conditions.
-![[50-Network-layer-control-plane-ICMP-message-types.png]]
+ICMP is often considered part of IP, but architecturally it lies just above IP, as ICMP messages are carried inside IP datagrams. That is, ICMP messages are carried as IP payload, just as TCP or UDP segments are carried as IP payload. Similarly, when a host receives an IP datagram with ICMP specified as the upper-layer protocol (an upper-layer protocol number of 1), it demultiplexes the datagram’s contents to ICMP, just as it would demultiplex a datagram’s content to TCP or UDP.
+> ICMP 报文包含在 IP 数据报中，就像 TCP 或 UDP 报文一样是 IP 数据报的负载。
+> 相应的，当主机接收到一个 IP 数据报，其指明上层协议为 ICMP（上层协议编码为 1），将会被解复用并把内容交给 ICMP，就像解复用将数据内容传递给 TCP 或 UDP 一样。
 
-The well-known ping program sends an ICMP type 8 code 0 message to the specified host. The destination host, seeing the echo request, sends back a type 0 code 0 ICMP echo reply. Most TCP/IP implementations support the ping server directly in the operating system; that is, the server is not a process. Chapter 11 of [Stevens 1990] provides the source code for the ping client program. Note that the client program needs to be able to instruct the operating system to generate an ICMP message of type 8 code 0. Another interesting ICMP message is the source quench message. This message is seldom used in practice. Its original purpose was to perform congestion control—to allow a congested router to send an ICMP source quench message to a host to force that host to reduce its transmission rate. We have seen in Chapter 3 that TCP has its own congestion-control mechanism that operates at the transport layer, and that Explicit Congestion Notification bits can be used by network-later devices to signal congestion.
+ICMP messages have a type and a code field, and contain the header and the first 8 bytes of the IP datagram that caused the ICMP message to be generated in the first place (so that the sender can determine the datagram that caused the error). Selected ICMP message types are shown in Figure 5.19. Note that ICMP messages are used not only for signaling error conditions.
+> ICMP 报文有一个类型和一个编码字段，并且引起 ICMP 报文首次生成的 IP 数据报的首部和前 8 个字节（发送方可以据此确定引发该差错的数据报）
+> 下图包含了 ICMP 报文类型和编码的解释，要注意 ICMP 不止是用来通知差错情况。
+> ![[50-Network-layer-control-plane-ICMP-message-types.png]]
 
-### Traceroute 与 ICMP
+The well-known *ping* program sends an ICMP type 8 code 0 message to the specified host. The destination host, seeing the echo request, sends back a type 0 code 0 ICMP echo reply. Most TCP/IP implementations support the ping server directly in the operating system; that is, the server is not a process. Chapter 11 of `[Stevens 1990]` provides the source code for the ping client program. Note that the client program needs to be able to instruct the operating system to generate an ICMP message of type 8 code 0.
+> *Ping* 程序就是向特定主机发送一个类型 8 编码 0 的 ICMP 报文，当目标主机看到这则回送请求后，反向发送一个类型 0 编码 0 的 ICMP 回送响应。大多数 TCP/IP 的实现直接在操作系统中支持 *Ping* 服务器，即该服务器不是一个进程。
+> 要注意 *Ping* 程序的客户端要能够通知操作系统生成一个类型 8编码 0的 ICMP 报文。
 
-Traceroute is implemented with ICMP messages. To determine the names and addresses of the routers between source and destination, Traceroute in the source sends a series of ordinary IP datagrams to the destination. Each of these datagrams carries a UDP segment with an unlikely UDP port number. The first of these datagrams has a TTL of 1, the second of 2, the third of 3, and so on. The source also starts timers for each of the datagrams. When the nth datagram arrives at the nth router, the nth router observes that the TTL of the datagram has just expired. According to the rules of the IP protocol, the router discards the datagram and sends an ICMP warning message to the source (type 11 code 0). This warning message includes the name of the router and its IP address. When this ICMP message arrives back at the source, the source obtains the round-trip time from the timer and the name and IP address of the nth router from the ICMP message. How does a Traceroute source know when to stop sending UDP segments? Recall that the source increments the TTL field for each datagram it sends. Thus, one of the datagrams will eventually make it all the way to the destination host. Because this datagram contains a UDP segment with an unlikely port number, the destination host sends a port unreachable ICMP message (type 3 code 3) back to the source. When the source host receives this particular ICMP message, it knows it does not need to send additional probe packets. (The standard Traceroute program actually sends sets of three packets with the same TTL; thus, the Traceroute output provides three results for each TTL.) In this manner, the source host learns the number and the identities of routers that lie between it and the destination host and the round-trip time between the two hosts. Note that the Traceroute client program must be able to instruct the operating system to generate UDP datagrams with specific TTL values and must also be able to be notified by its operating system when ICMP messages arrive. Now that you understand how Traceroute works, you may want to go back and play with it some more.
+Another interesting ICMP message is the source quench message. This message is seldom used in practice. Its original purpose was to perform congestion control—to allow a congested router to send an ICMP source quench message to a host to force that host to reduce its transmission rate. We have seen in Chapter 3 that TCP has its own congestion-control mechanism that operates at the transport layer, and that Explicit Congestion Notification bits can be used by network-later devices to signal congestion.
+> ICMP 报文还可以是源抑制报文，即类型 4 编码 0. 它发明的初衷是为了拥塞控制——允许一个拥塞的路由器发送 ICMP 源抑制报文到发送方主机，以强迫该主机降低发送速率。
+> 然而 TCP 有自己的拥塞控制机制，并且运行在传输层，并且 ECN （显式拥塞通知机制）也可以被网络层后端设备用于拥塞通知。因此 ICMP 源抑制报文并不常用。
+
+### *Traceroute* 与 ICMP
+
+*Traceroute* is implemented with ICMP messages. To determine the names and addresses of the routers between source and destination, *Traceroute* in the source sends a series of ordinary IP datagrams to the destination. Each of these datagrams carries a UDP segment with an unlikely UDP port number.
+> *Traceroute* 程序也是由 ICMP 报文实现的，用于确定源到目的之间的路由器的名字和地址。
+> 源端的 *Traceroute* 程序发送一系列普通的 IP 数据报给目的端，这些数据报每个都携带不可达 UDP 端口号的 UDP 段。
+
+The first of these datagrams has a TTL of 1, the second of 2, the third of 3, and so on. The source also starts timers for each of the datagrams. When the *n*th datagram arrives at the *n*th router, the *n*th router observes that the TTL of the datagram has just expired. According to the rules of the IP protocol, the router discards the datagram and sends an ICMP warning message to the source (type 11 code 0). This warning message includes the name of the router and its IP address. When this ICMP message arrives back at the source, the source obtains the round-trip time from the timer and the name and IP address of the *n*th router from the ICMP message.
+> 这些数据报中的第一个数据报的 TTL 为 1，第二个为 2 依次递增。源端也会为每个数据报启动一个计时器，当第 n 个数据报到达第 n 个路由器时，该路由器检查数据报的 TTL 正好过期，则根据 IP 协议的规则丢弃该数据报，并回送一个 ICMP 警告报文给源端（类型 11 编码 0）.
+> 这个 ICMP 警告报文包含丢弃数据报的路由器的名字和 IP 地址，当 ICMP 返回到源端时，源端由此从计时器获得 RTT、从 ICMP 报文中获得第 n 个路由器的名字和 IP 地址。
+
+How does a *Traceroute* source know when to stop sending UDP segments? Recall that the source increments the TTL field for each datagram it sends. Thus, one of the datagrams will eventually make it all the way to the destination host. Because this datagram contains a UDP segment with an unlikely port number, the destination host sends a port unreachable ICMP message (type 3 code 3) back to the source. When the source host receives this particular ICMP message, it knows it does not need to send additional probe packets. (The standard *Traceroute* program actually sends sets of three packets with the same TTL; thus, the *Traceroute* output provides three results for each TTL.) In this manner, the source host learns the number and the identities of routers that lie between it and the destination host and the round-trip time between the two hosts.
+> *Traceroute* 如何知晓停止发送 UDP 报文段？即一直保持 TTL 字段递增的方式发送 UDP 报文段，直到目标地址发送的 ICMP 报文（类型 3 编码 3）回到源端。
+> 通常 *Traceroute* 程序会对每个相同 TTL 的报文发送三个（作为一组），因此输出时也会对每个 TTL 产生三个结果。
+
+Note that the *Traceroute* client program must be able to instruct the operating system to generate UDP datagrams with specific TTL values and must also be able to be notified by its operating system when ICMP messages arrive. Now that you understand how *Traceroute* works, you may want to go back and play with it some more.
 
 ## 5.7 SNMP/NETCONF
+
+网络管理的定义：Network management includes the deployment, integration, and coordination of the hardware, software, and human elements to monitor, test, poll, configure, analyze, evaluate, and control the network and element resources to meet the real-time, operational performance, and Quality of Service requirements at a reasonable cost.
+> 网络管理包括硬件」软件和人类元素的部署、继承、协同，以监视、测试、轮训、配置、分析、评估、控制网络和网元资源，用合理的成本满足实时、操作性能和服务质量的综合需求。
+
+### 网络管理框架
+
+![[50-Network-layer-control-plane-network-management.png]]
+
+上图展示了网络管理的几个重要组件：
+- ***Managing server***. The managing server is an application, typically with network managers (humans) in the loop, running in a centralized network management station in the network operations center (NOC). The managing server is the locus of activity for network management: it controls the collection, processing, analysis, and dispatching of network management information and commands. It is here that actions are initiated to configure, monitor, and control the network’s managed devices. In practice, a network may have several such managing servers.
+> 管理服务器：管理服务器是一个应用程序，通常需要网络管理员的参与，运行在集中式的网络运行中心的网络管理工作站上。
+> 管理服务器正是网络管理活动发生的地方——它控制网络管理信息和命令的收集、处理、分析、分派。也是在这里开始对网络上的受管设备的配置、监视和控制活动。
+
+- ***Managed device***. A managed device is a piece of network equipment (including its software) that resides on a managed network. A managed device might be a host, router, switch, middlebox, modem, thermometer, or other network-connected device. The device itself will have many manageable components (e.g., a network interface is but one component of a host or router), and configuration parameters for these hardware and software components (e.g., an intra-AS routing protocol, such as OSPF). 
+> 受管设备：即受管网络中设备的一部分，可能是主机、路由器、交换机、中间盒、调制解调器、温度计（物联网设备）或其他网络连接的设备。
+> 这些受管设备自身有许多可管理组件（网络接口卡本身是主机或路由器的一部分）和这些软硬件组件的配置参数（如 OSPF 等域间路由协议）
+
+- ***Data***. Each managed device will have data, also known as “state,” associated with it. There are several different types of data. Configuration data is device information explicitly configured by the network manager, for example, a manager-assigned/ configured IP address or interface speed for a device interface. Operational data is information that the device acquires as it operates, for example, the list of immediate neighbors in OSPF protocol. Device statistics are status indicators and counts that are updated as the device operators (e.g., the number of dropped packets on an interface, or the device’s cooling fan speed). The network manager can query remote device data, and in some cases, control the remote device by writing device data values, as discussed below. As shown in Figure 5.17, the managing server also maintains its own copy of configuration, operational and statistics data from its managed devices as well as network-wide data (e.g., the network’s topology).
+> 数据：每个受管设备都有各自的数据，或称为状态。
+> 数据的类型有数种：
+> - 配置数据：是由网络管理员显式设置得设备信息，如管理员为设备接口指定的 IP 地址或接口速率；
+> - 运行数据：设备在运行时获取的数据，如 OSPF 中的直接邻居列表；
+> - 设备统计数据：随着设备运行而更新的状态指示器和计数，如接口上丢弃的数据报数量或设备的冷却风扇速度；
+> 
+> 网络管理员可以查询远程设备的数据，某些情况下可以通过重写这些数据的值控制远程设备。
+> 
+> 如 [[50-Network-layer-control-plane-OpenDayLight.png|图 5-17]] 中展示的那样，管理服务器维护着自己的受管设备配置文件、运行和统计数据的拷贝，以及全网范围内的数据（如网络拓扑结构）。
+
+- ***Network management agent***. The network management agent is a software process running in the managed device that communicates with the managing server, taking local actions at the managed device under the command and control of the managing server. The network management agent is similar to the routing agent that we saw in Figure 5.2.
+> 网络管理代理：运行在受管设备上的软件，用于与管理服务器通信并在其管理和控制下对受管设备采取本地动作。
+> 类似于 [[50-Network-layer-control-plane-logically-centralized-control.png|图 5-2]] 中看到的路由代理。
+
+- ***Network management protocol***. The final component of a network management framework is the network management protocol. This protocol runs between the managing server and the managed devices, allowing the managing server to query the status of managed devices and take actions at these devices via its agents. Agents can use the network management protocol to inform the managing server of exceptional events (e.g., component failures or violation of performance thresholds). It’s important to note that the network management protocol does not itself manage the network. Instead, it provides capabilities that network managers can use to manage (“monitor, test, poll, configure, analyze, evaluate, and control”) the network. This is a subtle, but important, distinction.
+> 网络管理协议：运行在管理服务器和受管设备之间，允许管理服务器查询受管设备的状态和通过各自的代理对受管设备采取行动。
+> 代理们可以使用网络管理协议通知管理服务器一些异常事件，如组件故障、超出性能阈值等。
+> 需要注意，网络管理服务器自己不能管理网络，而是提供给网络管理者以管理网络的能力——提供接口。
+
+实践中通常有三种常用的方法来管理网络：
+1. CLI. A network operator may issue direct Command Line Interface (CLI) commands to the device. These commands can be typed directly on a managed device’s console (if the operator is physically present at the device), or over a Telnet or secure shell (SSH) connection, possibly via scripting, between the managing server/controller and the managed device. CLI commands are vendorand device-specific and can be rather arcane. While seasoned network wizards may be able to use CLI to flawlessly configure network devices, CLI use is prone to errors, and it is difficult to automate or efficiently scale for large networks. Consumer-oriented network devices, such as your wireless home router, may export a management menu that you (the network manager!) can access via HTTP to configure that device. While this approach may work well for single, simple devices and is less error-prone than CLI, it also doesn’t scale to larger-sized networks. • SNMP/MIB. In this approach, the network operator can query/set the data contained in a device’s Management Information Base (MIB) objects using the Simple Network Management Protocol (SNMP). Some MIBs are device- and vendor-specific, while other MIBs (e.g., the number of IP datagrams discarded at a router due to errors in an IP datagram header, or the number of UDP segments received at a host) are device-agnostic, providing abstraction and generality. A network operator would most typically use this approach to query and monitor operational state and device statistics, and then use CLI to actively control/configure the device. We note, importantly, that both approaches manage devices individually. We’ll cover the SNMP and MIBs, which have been in use since the late 1980s, in Section 5.7.2 below. A network-management workshop convened by the Internet Architecture Board in 2002 [RFC 3535] noted not only the value of the SNMP/ MIB approach for device monitoring but also noted its shortcomings, particularly for device configuration and network management at scale. This gave rise to the most recent approach for network management, using NETCONF and YANG. • NETCONF/YANG. The NETCONF/YANG approach takes a more abstract, network-wide, and holistic view toward network management, with a much stronger emphasis on configuration management, including specifying correctness constraints and providing atomic management operations over multiple controlled devices. YANG [RFC 6020] is a data modeling language used to model configuration and operational data. The NETCONF protocol [RFC 6241] is used to communicate YANG-compatible actions and data to/from/among remote devices. We briefly encountered NETCONF and YANG in our case study of OpenDaylight Controller in Figure 5.17 and will study them in Section 5.7.3 below.
+
+### SNMP
+
+The Simple Network Management Protocol version 3 (SNMPv3) `[RFC 3410]` is an application-layer protocol used to convey network-management control and information messages between a managing server and an agent executing on behalf of that managing server. The most common usage of SNMP is in a request-response mode in which an SNMP managing server sends a request to an SNMP agent, who receives the request, performs some action, and sends a reply to the request. Typically, a request will be used to query (retrieve) or modify (set) MIB object values associated with a managed device. A second common usage of SNMP is for an agent to send an unsolicited message, known as a trap message, to a managing server. Trap messages are used to notify a managing server of an exceptional situation (e.g., a link interface going up or down) that has resulted in changes to MIB object values. MIB objects are specified in a data description language known as SMI (Structure of Management Information) [RFC 2578; RFC 2579; RFC 2580], a rather oddly named component of the network management framework whose name gives no hint of its functionality. A formal definition language is used to ensure that the syntax and semantics of the network management data are well defined and unambiguous. Related MIB objects are gathered into MIB modules. As of late 2019, there are more than 400 MIBrelated RFCs and a much larger number of vendor-specific (private) MIB modules. SNMPv3 defines seven types of messages, known generically as protocol data units—PDUs—as shown in Table 5.2 and described below. The format of the PDU is shown in Figure 5.21.
+
+![[50-Network-layer-control-plane-SNMP.png]]
+
+![[50-Network-layer-control-plane-SNMP-PDU-format.png]]
+
+- The GetRequest, GetNextRequest, and GetBulkRequest PDUs are all sent from a managing server to an agent to request the value of one or more MIB objects at the agent’s managed device. The MIB objects whose values are being requested are specified in the variable binding portion of the PDU. GetRequest, GetNextRequest, and GetBulkRequest differ in the granularity of their data requests. GetRequest can request an arbitrary set of MIB values; multiple GetNextRequests can be used to sequence through a list or table of MIB objects; GetBulkRequest allows a large block of data to be returned, avoiding the overhead incurred if multiple GetRequest or GetNextRequest messages were to be sent. In all three cases, the agent responds with a Response PDU containing the object identifiers and their associated values. • The SetRequest PDU is used by a managing server to set the value of one or more MIB objects in a managed device. An agent replies with a Response PDU with the “noError” error status to confirm that the value has indeed been set. • The InformRequest PDU is used by a managing server to notify another managing server of MIB information that is remote to the receiving server. • The Response PDU is typically sent from a managed device to the managing server in response to a request message from that server, returning the requested information. • The final type of SNMPv3 PDU is the trap message. Trap messages are generated asynchronously; that is, they are not generated in response to a received request but rather in response to an event for which the managing server requires notification. RFC 3418 defines well-known trap types that include a cold or warm start by a device, a link going up or down, the loss of a neighbor, or an authentication failure event. A received trap request has no required response from a managing server.
+
+Given the request-response nature of SNMP, it is worth noting here that although SNMP PDUs can be carried via many different transport protocols, the SNMP PDU is typically carried in the payload of a UDP datagram. Indeed, RFC 3417 states that UDP is “the preferred transport mapping.” However, since UDP is an unreliable transport protocol, there is no guarantee that a request, or its response, will be received at the intended destination. The request ID field of the PDU (see Figure 5.21) is used by the managing server to number its requests to an agent; the agent’s response takes its request ID from that of the received request. Thus, the request ID field can be used by the managing server to detect lost requests or replies. It is up to the managing server to decide whether to retransmit a request if no corresponding response is received after a given amount of time. In particular, the SNMP standard does not mandate any particular procedure for retransmission, or even if retransmission is to be done in the first place. It only requires that the managing server “needs to act responsibly in respect to the frequency and duration of retransmissions.” This, of course, leads one to wonder how a “responsible” protocol should act!
+
+### MIB
+
+We learned earlier that a managed device’s operational state data (and to some extent its configuration data) in the SNMP/MIB approach to network management are represented as objects that are gathered together into an MIB for that device. An MIB object might be a counter, such as the number of IP datagrams discarded at a router due to errors in an IP datagram header; or the number of carrier sense errors in an Ethernet interface card; descriptive information such as the version of the software running on a DNS server; status information such as whether a particular device is functioning correctly; or protocol-specific information such as a routing path to a destination. Related MIB objects are gathered into MIB modules. There are over 400 MIB modules defined in various IETC RFC’s; there are many more device- and vendor-specific MIBs. [RFC 4293] specifies the MIB module that defines managed objects (including ipSystemStatsInDelivers) for managing implementations of the Internet Protocol (IP) and its associated Internet Control Message Protocol (ICMP). [RFC 4022] specifies the MIB module for TCP, and [RFC 4113] specifies the MIB module for UDP.
+
+While MIB-related RFCs make for rather tedious and dry reading, it is nonetheless instructive (i.e., like eating vegetables, it is “good for you”) to consider an example of a MIB object, The ipSystem-StatsInDelivers object-type definition from [RFC 4293] defines a 32-bit read-only counter that keeps track of the number of IP datagrams that were received at the managed device and were successfully delivered to an upper-layer protocol. In the example below, Counter32 is one of the basic data types defined in the SMI.
+
+```
+ipSystemStatsInDelivers OBJECT-TYPE
+ SYNTAX Counter32
+ MAX-ACCESS read-only
+ STATUS current
+ DESCRIPTION
+ “The total number of datagrams successfully delivered to IPuser-protocols (including ICMP).
+ When tracking interface statistics, the counter of the interface to which these datagrams 
+were addressed is incremented. This interface 
+might not be the same as the input interface 
+for some of the datagrams.
+ Discontinuities in the value of this counter can 
+occur at re-initialization of the management 
+system, and at other times as indicated by the 
+value of ipSystemStatsDiscontinuityTime.”
+ ::= { ipSystemStatsEntry 18 }
+```
+
+### NETCONF
+
+The NETCONF protocol operates between the managing server and the managed network devices, providing messaging to (i) retrieve, set, and modify configuration data at managed devices; (ii) to query operational data and statistics at managed devices; and (iii) to subscribe to notifications generated by managed devices. The managing server actively controls a managed device by sending it configurations, which are specified in a structured XML document, and activating a configuration at the managed device. NETCONF uses a remote procedure call (RPC) paradigm, where protocol messages are also encoded in XML and exchanged between the managing server and a managed device over a secure, connection-oriented session such as the TLS (Transport Layer Security) protocol (discussed in Chapter 8) over TCP.
+
+![[50-Network-layer-control-plane-NETCONF-session.png]]
+
+Figure 5.22 shows an example NETCONF session. First, the managing server establishes a secure connection to the managed device. (In NETCONF parlance, the managing server is actually referred to as the “client” and the managed device as the “server,” since the managing server establishes the connection to the managed device. But we’ll ignore that here for consistency with the longer-standing networkmanagement server/client terminology shown in Figure 5.20.) Once a secure connection has been established, the managing server and the managed device exchange messages, declaring their “capabilities”—NETCONF functionality that supplements the base NETCONF specification in [RFC 6241]. Interactions between the managing server and managed device take the form of a remote procedure call, using the and messages. These messages are used to retrieve, set, query and modify device configurations, operational data and statistics, and to subscribe to device notifications. Device notifications themselves are proactively sent from managed device to the managing server using NETCONF messages. A session is closed with the `<session-close message>`.
+
+Table 5.3 shows a number of the important NETCONF operations that a managing server can perform at a managed device. As in the case of SNMP, we see operations for retrieving operational state data (), and for event notification. However, the , , and operation demonstrate NETCONF’s particular emphasis on device configuration. Using the basic operations shown in Table 5.3, it is also possible to create a set of more sophisticated network management transactions that either complete atomically (i.e., as a group) and successfully on a set of devices, or are fully reversed and leave the devices in their pre-transaction state. Such multi-device transactions—“enabl[ing] operators to concentrate on the configuration of the network as a whole rather than individual devices” was an important operator requirement put forth in [RFC 3535]. A full description of NETCONF is beyond our scope here; [RFC 6241, RFC 5277, Claise 2019; Schonwalder 2010] provide more in-depth coverage. But since this is the first time we’ve seen protocol messages formatted as an XML document (rather than the traditional message with header fields and message body, e.g., as shown in Figure 5.21 for the SNMP PDU), let’s conclude our brief study of NETCONF with two examples. In the first example, the XML document sent from the managing server to the managed device is a NETCONF command requesting all device configuration and operational data. With this command, the server can learn about the device’s configuration.
+
+![[50-Network-layer-control-plane-NETCONF-operation.png]]
+
+```
+01 <?xml version=”1.0” encoding=”UTF-8”?>
+02 <rpc message-id=”101”
+03 xmlns=”urn:ietf:params:xml:ns:netconf:base:1.0”>
+04 <get/>
+05 </rpc>
+```
+
+Although few people can completely parse XML directly, we see that the NETCONF command is relatively human-readable, and is much more reminiscent of HTTP and HTML than the protocol message formats that we saw for SNMP PDU format in Figure 5.21. The RPC message itself spans lines 02–05 (we have added line numbers here for pedagogical purposes). The RPC has a message ID value of 101, declared in line 02, and contains a single NETCONF `<get>` command. The reply from the device contains a matching ID number (101), and all of the device’s configuration data (in XML format, of course), starting in line 04, ultimately with a closing ` </rpc-reply> `.
+
+```
+01 <?xml version=”1.0” encoding=”UTF-8”?>
+02 <rpc-reply message-id=”101”
+03 xmlns=”urn:ietf:params:xml:ns:netconf:base:1.0”>
+04 <!-- . . . all configuration data returned... -->
+. . .
+</rpc-reply>
+```
+
+In the second example below, adapted from [RFC 6241], the XML document sent from the managing server to the managed device sets the Maximum Transmission Unit (MTU) of an interface named “Ethernet0/0” to 1500 bytes:
+```
+01 <?xml version=”1.0” encoding=”UTF-8”?>
+02 <rpc message-id=”101”
+03 xmlns=”urn:ietf:params:xml:ns:netconf:base:1.0”>
+04 <edit-config>
+05 <target>
+06 <running/>
+07 </target>
+08 <config>
+09 <top xmlns=”http://example.com/schema/
+1.2/config”>
+10 <interface>
+11 <name>Ethernet0/0</name>
+12 <mtu>1500</mtu>
+13 </interface>
+14 </top>
+15 </config>
+16 </edit-config>
+17 </rpc>
+```
+
+The RPC message itself spans lines 02–17, has a message ID value of 101, and contains a single NETCONF command, spanning lines 04–15. Line 06 indicates that the running device configuration at the managed device will be changed. Lines 11 and 12 specify the MTU size to be set of the Ethernet0/0 interface. Once the managed device has changed the interface’s MTU size in the configuration, it responds back to the managing server with an OK reply (line 04 below), again within an XML document:
+
+```
+01 <?xml version=”1.0” encoding=”UTF-8”?>
+02 <rpc-reply message-id=”101”
+03 xmlns=”urn:ietf:params:xml:ns:netconf:base:1.0”>
+04 <ok/>
+05 </rpc-reply>
+```
+
+>[! note] YANG
+>YANG is the data modeling language used to precisely specify the structure, syntax, and semantics of network management data used by NETCONF, in much the same way that the SMI is used to specify MIBs in SNMP. All YANG definitions are contained in modules, and an XML document describing a device and its capabilities can be generated from a YANG module.
+>
+>YANG features a small set of built-in data types (as in the case of SMI) and also allows data modelers to express constraints that must be satisfied by a valid NETCONF configuration—a powerful aid in helping ensure that NETCONF configurations satisfy specified correctness and consistency constraints. YANG is also used to specify NETCONF notifications.
+>
+>A fuller discussion of YANG is beyond our scope here. For more information, we refer the interested reader to the excellent book [Claise 2019].
 
