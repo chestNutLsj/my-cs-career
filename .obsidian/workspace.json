@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "71e27914adfce2b7",
+        "id": "d61518e0bd30f065",
         "type": "tabs",
         "children": [
           {
-            "id": "33d8f08da645c22d",
+            "id": "b64f92cc1f6da268",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "PLIC",
+                "query": "sfence",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -80,7 +80,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 366.50577545166016
+    "width": 366.50577545166016,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -187,19 +188,33 @@
       "obsidian42-brat:BRAT": false
     }
   },
-  "active": "33d8f08da645c22d",
+  "active": "b64f92cc1f6da268",
   "lastOpenFiles": [
-    "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/assets/40-内存与虚存-LFU-clear-counts.png",
-    "1-Theory/5-OS-principle/Internal&design-principle/assets/Pasted image 20231127212128.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-CSMA.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-ALOHA.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-slot-ALOHA.png",
+    "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md",
     "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-TDM-FDM.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-CRC-calc.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-CRC.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-two-dimensional-even-parity.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-EDC.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-Network-Adapter.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-wireless-link-layer.png",
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/10-Interface.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/00-FS-Overview.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Concepts-and-syscall.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Integrate-easyfs-into-kernel.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/5-进程.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/41-Stride-schedule.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/assets/Pasted image 20231127220528.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/70-Beyond-physical-memory.md",
     "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
-    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-NETCONF-operation.png",
-    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-NETCONF-session.png",
-    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-SNMP-PDU-format.png",
-    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-SNMP.png",
-    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-network-management.png",
     "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/40-Switching-privilege.md",
     "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
@@ -211,19 +226,6 @@
     "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/40-Signal.md",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/00-Concurrence-Overview.md",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/40-Semaphore.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/50-Condition-variable-mechanism.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/30-SV39-multilevel-page-table.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/40-Manage-SV39-multilevel-pagetable.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/41-Stride-schedule.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/20-Address-space.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Memory-management-Overview.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/10-File-based-stdio.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
-    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-ICMP-message-types.png",
-    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-ONOS.png",
-    "1-Theory/6-Network/Top-to-down/assets/50-Network-layer-control-plane-OpenDayLight.png",
     "1-Theory/6-Network/Data-communication-and-network/考试要点",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/912历年真题(2016-2023).pdf",
     "1-Theory/6-Network/THU-Xu/精简版PPT.pdf",

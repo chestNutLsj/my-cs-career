@@ -44,20 +44,27 @@
         - 为了将一个数据报从源主机传输到目的主机，数据报必须通过沿端到端路径上的各段链路传输；
     - 链路层协议的数据单元称为：**帧 frame**，封装链路层数据报；
 
-数据链路层负责从一个节点通过链路将（**帧**中的）数据报发送到相邻的物理节点（一个子网内部的2节点）
+数据链路层负责从一个节点通过链路将（**帧**中的）数据报发送到相邻的物理节点。     
 
-链路层：点到点，传输帧        
-网络层：端到端        
-传输层：进程到进程，不可靠-->可靠       
-应用层：交换报文，实现网络应用       
+>[! note] 链路层传递数据的步骤
+> Consider sending a datagram from one of the wireless hosts to one of the servers.
+> ![[60-Link-layer-and-LAN-wireless-link-layer.png]]
+> This datagram will actually pass through ***six links***:
+> - a WiFi link between sending host and WiFi access point,
+> - an Ethernet link between the access point and a link-layer switch;
+> - a link between the link-layer switch and the router,
+> - a link between the two routers;
+> - an Ethernet link between the router and a link-layer switch; 
+> - and finally an Ethernet link between the switch and the server.
+> 
+> Over a given link, a transmitting node encapsulates the datagram in a link-layer frame and transmits the frame into the link.
 
 链路层：上下文
 - 数据报（分组）在不同的链路上以不同的链路协议传送：
     - 第一跳链路：以太网
     - 中间链路：帧中继链路
-    - 最后一跳802.11：
+    - 最后一跳802.11：无线网络协议
 - 不同的链路协议提供不同的服务
-    - e.g., 比如在链路层上提供（或没有）可靠数据传送
 
 > 传输类比
 > - 从Princeton到Lausanne
@@ -66,54 +73,64 @@
 >     - 火车：Geneva to Lausanne
 > - 旅行者 = 数据报 datagram
 > - 交通段 = 通信链路 communication link
-> - 交通模式 = 链路层协议：数据链路层和局域网protocol
+> - 交通工具 = 链路层协议：数据链路层和局域网protocol
 > - 票务代理 = 路由算法 routing algorithm
 
-链路层服务（一般化的链路层服务，不是所有的链路层都提供这些服务一个特定的链路层只是提供其中一部分的服务（子集））
-- 成帧，链路接入：
-    - 将数据报封装在帧中，加上帧头、帧尾部
-    - 如果采用的是共享性介质，信道接入获得信道访问权
+### 链路层提供的服务
+> 一般化的链路层服务，不是所有的链路层都提供这些服务，一个特定的链路层只是提供其中一部分的服务（子集）
+
+- 成帧：
+    - 将网络数据报封装在帧中的数据字段，再加上帧头、帧尾部（具体的结构由链路层协议规定）
     - 在帧头部使用“MAC”（物理）地址来标示源和目的
         - 不同于IP地址
-- 在（一个网络内）相邻两个节点完成可靠数据传递
-    - 已经学过了（传输层）
-    - 在低出错率的链路上（光纤和双绞线电缆）很少使用
-    - 在无线链路经常使用：出错率高
-        - Q：为什么在链路层和传输层都实现了可靠性
-- 在相邻节点间（一个子网内）进行可靠的转发
-    - 已经学习过（传输层）
-    - 在低差错链路上很少使用（光纤，一些双绞线）
-        - 出错率低，没有必要在每一个帧中做差错控制的工作，协议复杂
-            - 发送端对每一帧进行差错控制编码，根据反馈做相应的动作
-            - 接收端进行差错控制解码，反馈给发送端（ACK，NAK）
-        - 在本层放弃可靠控制的工作，在网络层或者是传输层做可靠控制的工作，或者根本就不做可靠控制的工作
+
+- 链路接入：
+    - MAC (Medium Access Control, 媒体访问控制)协议规定了帧在链路上传输的规则；
+    - 在链路两端各自仅有一个发送方或接收方的点对点链路，MAC 允许只要链路空闲，就可以发送帧；
+    - 若是多个节点共享单个广播链路，MAC 则会协调多个节点的帧传输。
+
+- 可靠交付：
+    - 在（一个网络内）相邻两个节点完成可靠数据传递——保证无差错地经链路层移动每个网络层数据报；
+    - 与传输层的可靠交付类似，链路层可靠交付的实现也是通过确认+重传
+    - 在低出错率的链路上（光纤和双绞线电缆）很少使用——有线链路层协议通常不提供可靠交付服务
+		- 出错率低，没有必要在每一个帧中做差错控制的工作，协议复杂
+			- 发送端对每一帧进行差错控制编码，根据反馈做相应的动作
+			- 接收端进行差错控制解码，反馈给发送端（ACK，NAK）
+			- 在本层放弃可靠控制的工作，在网络层或者是传输层做可靠控制的工作，或者根本就不做可靠控制的工作
     - 在高差错链路上需要进行可靠的数据传送
-        - 高差错链路：无线链路：
-        - Q：为什么要在采用无线链路的网络上，链路层做可靠数据传输工作；还要在传输层做端到端的可靠性工作？
+        - 高差错链路：无线链路
+        - Q：为什么要在采用无线链路的网络上，链路层做可靠数据传输工作，还要在传输层做端到端的可靠性工作？
         - 原因：出错率高，如果在链路层不做差错控制工作，漏出去的错误比较高；到了上层如果需要可靠控制的数据传输代价会很大
-            - 如不做local recovery工作，总体代价大
+
 - 流量控制：
     - 使得相邻的发送和接收方节点的速度匹配
-- 错误检测：
-    - 差错由信号衰减和噪声引起
+
+- 差错检测与纠正
+    - 差错由信号衰减和噪声引起，导致接收方的硬件在判断电平时认错
+    - 传输层和网络层也有有限的差错检测功能，但链路层的差错检测通常由硬件实现，也更复杂；
     - 接收方检测出的错误： 
-        - 通知发送端进行重传或丢弃帧
-- 差错纠正：
+        - 通知发送端进行重传或丢
     - 错误不太严重时，接收端检查和根据网络编码纠正bit错误，不通过重传来纠正错误
+
 - 半双工和全双工：
     - 半双工：链路可以双向传输，但一次只有一个方向
 
-链路层在哪里实现？
-- 在每一个主机上，网卡实现链路层和物理层的功能
-    - 也在每个路由器上，插多个网卡，实现链路层和相应物理层的功能
-    - 交换机的每个端口上
-- 链路层功能在“适配器”上实现(也叫 network interface card, NIC) 或者在一个芯片组上
+### 链路层在何处实现？
+
+![[60-Link-layer-and-LAN-Network-Adapter.png]]
+
+- 链路层主体功能在“网络适配器”上实现
+    - 也叫 network interface card, NIC
+    - 或者在一个芯片组上，核心部分是链路层控制器
     - 以太网卡，802.11网卡；以太网芯片组
     - 实现链路层和相应的物理层功能
-- 接到主机的系统总线上
-- 硬件、软件和固件的综合体
-
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002224550874.png" style="zoom:60%" />
+    - 在每一个主机上，网卡实现链路层和物理层的功能
+        - 也在每个路由器上，插多个网卡，实现链路层和相应物理层的功能
+        - 交换机的每个端口上
+        - 接到主机的系统总线上
+    - 硬件、软件和固件的综合体
+        - 其中软件组件实现了高层链路层的功能，如组装链路层寻址信息、激活控制器硬件等；接收端链路层软件响应控制器中断、处理差错和传递数据给网络层；
+        - 链路层是硬件和软件分界的位置。
 
 适配器（网卡）通信
 - 发送方：
@@ -125,195 +142,224 @@
     - 检查有无出错，执行rdt和流量控制功能等
     - 解封装数据报，将帧交给上层
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002224607535.png" style="zoom:60%"/>
+## 6.2 差错检测和纠正
 
-适配器是半自治的，实现了链路和物理层功能
-
-### 6.2 差错检测和纠正
-
-错误检测
+![[60-Link-layer-and-LAN-EDC.png]]
 - EDC = 差错检测和纠正位（冗余位）
-- D = 数据由差错检测保护，可以包含头部字段
+- D = 数据（由差错检测保护，可以包含头部字段）
 - 错误检测不是100%可靠的！
     - 协议会漏检一些错误，但是很少
     - 更长的EDC字段可以得到更好的检测和纠正效果
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002224745844.png" style="zoom:60%"/>
+### 奇偶校验
 
-奇偶校验
 - 加一个校验位，使得整个出现的1的个数是奇数还是偶数，是奇数->奇校验，是偶数->偶校验
+- Receiver operation is also simple with a single parity bit. The receiver need only count the number of 1s in the received d+1 bits. *If an odd number of 1-valued bits are found with an even parity scheme, the receiver knows that at least one bit error has occurred*. More precisely, it knows that some odd number of bit errors have occurred.
+> 以奇校验为例，接收方只需检查收到的数据是否仍是奇数个 1。
+> 这种校验方式能够检验奇数个位的错误。
+> 然而，如果是偶数个位的错误，则 1的数量仍是奇数个，因此无法检验。
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002224811357.png" style="zoom:60%"/>
+- If the probability of bit errors is small and errors can be assumed to occur independently from one bit to the next, the probability of multiple bit errors in a packet would be extremely small. In this case, a single parity bit might suffice. However, measurements have shown that, rather than occurring independently, errors are often clustered together in “bursts.” Under burst error conditions, the probability of undetected errors in a frame protected by single-bit parity can approach 50 percent `[Spragins 1991]`.
+> 如果位发生错误之间是独立的且概率较低，那么单个位奇偶校验足够有用。
+> 但是研究显示，错误会突发地集中在某个区域内出错，这种情况下单个位奇偶校验的成功率仅仅是 50%。
 
-Internet校验和
-- 目标：检测在传输报文段时的错误（如位翻转），（注：仅仅用在传输层）
-- 发送方：
-    - 将报文段看成16-bit整数
-    - 报文段的校验和：和（1’的补码和）
-    - 发送方将checksum的值放在“UDP校验和”字段
-- 接收方：
-    - 计算接收到的报文段的校验和
-    - 检查是否与携带校验和字段值一致：
-        - 不一致：检出错误
-        - 一致：没有检出错误，但可能还是有错误
-- 有更简单的检查方法 —— 全部加起来看是不是全1
+- 二维奇偶校验：
+	- ![[60-Link-layer-and-LAN-two-dimensional-even-parity.png]]
+	- Figure 6.5 shows a two-dimensional generalization of the single-bit parity scheme. Here, the *d* bits in *D* are divided into *i* rows and *j* columns. A parity value is computed for each row and for each column. The resulting *i + j + 1* parity bits comprise the link-layer frame’s error-detection bits.
+	- Suppose now that a single bit error occurs in the original d bits of information. With this ***two-dimensional parity*** scheme, the parity of both the column and the row containing the flipped bit will be in error. The receiver can thus not only detect the fact that a single bit error has occurred, but can use the column and row indices of the column and row with parity errors to actually identify the bit that was corrupted and correct that error!（二维奇偶校验策略位每一行和每一列都设置奇偶校验位，因此一个位出错会在行和列同时显示，也因此具有定位出错位的位置的能力）
+	- Figure 6.5 shows an example in which the 1-valued bit in position (2,2) is corrupted and switched to a 0—an error that is both detectable and correctable at the receiver. Although our discussion has focused on the original d bits of information, a single error in the parity bits themselves is also detectable and correctable.
+	- Two-dimensional parity can also detect (but not correct!) any combination of two errors in a packet.（二维奇偶校验也能够检测到一个分组中任意两位的错误，但是无法纠正）
 
-检验和：CRC（循环冗余校验）
+### 校验和
+
+- The ***Internet checksum*** is that bytes of data are treated as 16-bit integers and summed. The 1s complement of this sum then forms the Internet checksum that is carried in the segment header.
+- As discussed in Section 3.3, the receiver checks the checksum by taking the 1s complement of the sum of the received data (including the checksum) and checking whether the result is all 0 bits. If any of the bits are 1, an error is indicated. `RFC 1071` discusses the Internet checksum algorithm and its implementation in detail.
+> 校验和是将字节流数据视作 16bit 整数相加，然后取对 1 的补码填入分组首部的校验和字段。
+> 当接收方收到分组时，通过校验和字段与数据字段相加进行检验——结果是 0 表明没有错，否则意味着差错发生。
+
+- In the TCP and UDP protocols, the Internet checksum is computed over all fields (header and data fields included).
+- In IP, the checksum is computed over the IP header (since the UDP or TCP segment has its own checksum).
+- In other protocols, for example, XTP `[Strayer 1992]`, one checksum is computed over the header and another checksum is computed over the entire packet.
+> TCP 和 UDP 的校验和会计算所有域（即包括首部和数据域），IP 只计算首部。
+
+- 通常校验和用于 TCP 和 UDP 这样的传输层协议中，CRC 用于链路层协议中。这是因为传输层通过软件实现，因此简单的差错检测可以在不过分影响性能的情况下使用；而链路层的差错检测通过硬件实现，速度更快，因此可以使用 CRC 这样繁琐的差错检测方案。
+
+### 循环冗余校验
+
 1. 模2运算（加法不进位，减法不借位，位和位之间没有关系）：同0异1，异或运算
+	- 模 2 加减都相当于 XOR 异或运算
+	- 模 2 除与算术除类似，从被除数最高位开始，如果最高位（包括运算过程中的情况）是 1，则商的该位是 1，其余位做模 2 减；如果最高位是 0，则商的该位是 0.
+	- 模 2 乘，乘 $2^r$ 相当于左移 r 位。
+
 2. 位串的两种表示：位串 or 多项式 的表示方式
-    $$1011 \iff 1 * x^3 + 0 * x^2 + 1 * x^1 + 1 * x^0 = x^3 + x + 1$$
-3. 生成多项式：r次方（r+1位）
-4. 约定：在发送方发送的D位数据比特后附上r位的冗余位R（R是余数，具体见下），使得序列正好被生成多项式整除，则没有出错
-- 强大的差错检测码
-- 将数据比特D，看成是二进制的数据
-- 生成多项式G：双方协商r+1位模式（r次方）
-- 生成和检查所使用的位模式
-- 目标：选择r位CRC附加位R，使得
-    - <D,R> 正好被G整除 (mod 2) 
-- 接收方知道G，将<D,R>除以G。如果非0余数：检查出错误！
-- 能检出所有少于r+1位的突发错误
-- 实际中广泛使用（以太网、802.11 WiFi、ATM）
+$$1011 \iff 1 * x^3 + 0 * x^2 + 1 * x^1 + 1 * x^0 = x^3 + x + 1$$
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002225357330.png" style="zoom:60%"/>
+3. 生成多项式：r+1 位（发送方和接收方要预先约定好），记为 *G*
 
-CRC例子
-- 需要： $\text{D} * 2^r \text{ XOR R} = n\text{G}$
-- 等价于： $\text{D} * 2^r = n\text{G } \text{XOR R} $
-- 等价于：两边同除G，得到余数R
-    $$R = \text{remainder}[\frac{\text{D} * 2^r}{\text{G}}]$$
-    其中 remainder 表示余数运算，当余数R不足r位时进行补0
+4. 在发送方发送的 D 位数据比特后附上 r 位的冗余位 R，使得序列正好被生成多项式整除，则没有出错
+	- ![[60-Link-layer-and-LAN-CRC.png]]
+	- 将数据比特 D，看成是 d 位二进制的数据
+	- 生成多项式 G：双方协商 r+1 位模式串
+	- 选择 r 位 CRC 附加位 R，得到 D+R 模式串（d+r 位模式串），其正好能被 G 整除 (mod 2) 
+	- 接收方知道 G，将收到的 d+r 位模式串除以 G，如果非 0 余数：检查出错误！
+	- 用公式表示上述过程，即
+		- 发送方进行的操作是 $\text{D} \times 2^{r} \text{ XOR R} = n\text{G}$，
+		- 接收方则对该式两边都用 R 异或—— $\text{D}\times 2^{r}=n\text{G XOR R}$，其含义就是如果用 G 来除 $\text{D}\times 2^r$，余数值刚好是 R
+		- 即 $\text{R}=\text{remainder} \frac{D\times 2^{r}}{G}$ 
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211002230858718.png" style="zoom:60%"/>
+>[! example] CRC 实例
+> ![[60-Link-layer-and-LAN-CRC-calc.png]]
+> Figure 6.7 illustrates this calculation for the case of D = 101110, d = 6, G = 1001, and r = 3. The 9 bits transmitted in this case are 101110 011.
+> 
+> You should check these calculations for yourself and also check that indeed $D \times 2^{r} = 101011 \times G \text{ XOR } R$.
 
-RC性能分析
-- 突发错误和突发长度
-- CRC检错性能描述
-- 能够检查出所有的1bit错误
-- 能够检查出所有的双bits的错误
-- 能够检查出所有长度小于等于r位的错误
-- 出现长度为r+1的突发错误，检查不出的概率是 $\frac{1}{2^{r-1}}$
-- 出现长度大于r+1的突发错误，检查不出的概率是 $\frac{1}{2^r}$
+5. International standards have been defined for 8-, 12-, 16-, and 32-bit generators, G. The CRC-32 32-bit standard, which has been adopted in a number of link-level IEEE protocols, uses a generator of $$G_{CRC-32} = 100000100110000010001110110110111$$
 
-### 6.3 多点访问协议
+7. CRC 性能分析
+	- 突发错误和突发长度
+	- CRC检错性能描述
+	- 能够检查出所有的1bit 错误
+	- 能够检查出所有的双 bits 的错误
+	- 能够检查出所有长度小于等于 r 位的错误
+	- 出现长度为 r+1 的突发错误，检查不出的概率是 $\frac{1}{2^{r-1}}$
+	- 出现长度大于 r+1 的突发错误，检查不出的概率是 $\frac{1}{2^r}$
 
-点到点不存在多点访问的问题（两个访问端都确定好了），多点连接则需要考虑。
+## 6.3 多点访问链路和协议
 
-多路访问链路和协议
+> 点到点不存在多点访问的问题（两个访问端都确定好了），多点连接则需要考虑。
+
+### 链路类型
+
 - 两种类型的链路（一个子网内部链路连接形式）：
-    - 点对点
-        - 拨号访问的PPP
-        - 以太网交换机和主机之间的点对点链路
-    - 广播（共享线路或媒体），也称为多点连接的网络
-        - 传统以太网（同轴电缆连接所有节点，所有节点通过比较MAC地址确认帧发送的目标地址）
-        - HFC上行链路
-        - 802.11无线局域网
+    - 点对点链路
+        - 链路两端的接收方和发送方各自只有 1 个设备
+        - 拨号访问的 PPP（Point-to-Point Protocol，点对点协议）
+        - 高级数据链路控制 HDLC（High-level Data Link Control）
+    - 广播，也称为多点连接的网络
+        - 多个发送或接收节点连接到相同、单一、共享的信道
+        - 广播的含义，即任何一个节点传输一个帧时，信道广播该帧，链路上其他节点都收到一个副本
+        - 举例：
+            - 传统以太网（同轴电缆连接所有节点，所有节点通过比较 MAC 地址确认帧发送的目标地址）
+            - HFC 上行链路
+            - 802.11无线局域网
 
-多路访问协议（介质访问控制协议：MAC）
-- 单个共享的广播型链路
-- 2个或更多站点同时传送：冲突(collision)
-    - 多个节点在同一个时刻发送，则会收到2个或多个信号叠加
-- 分布式算法-决定节点如何使用共享信道，即：决定节点什么时候可以发送？
-- 关于共享控制的通信必须用借助信道本身传输！
-    - 没有带外的信道，只有这一个信道，各节点使用其协调信道使用
-    - 用于传输控制信息
+### 多路访问控制协议
+
+多路访问协议
+- 作用：规范、处理共享的广播信道上的传输行为
+- 冲突/碰撞 (collision)：
+	- 多个节点在同一个时刻发送，则接收方会收到 2 个或多个信号叠加
+	- 碰撞发生时，所有接收节点都无法获得有效的传输帧，即碰撞帧将所有帧都污染了；
+	- 碰撞发生就会极大地浪费广播信道的带宽，因此决定节点如何使用共享信道以致碰撞频率降低，可以很大程度地提高广播信道的带宽利用率。
+- **共享控制**：传输控制信息，使得各节点协调信道的使用
+    - 没有带外的信道，只有这一个信道，即要占用信道本身的带宽；
 
 理想的多路访问协议
-- 给定：Rbps的广播信道
+- 给定：*R* bps 的广播信道
 - 必要条件：
-    1. 当一个节点要发送时，可以R速率发送 —— 满速。
-    2. 当M个节点要发送，每个可以以R/M的平均速率发送 —— 公平、均分
-    3. 完全分布的：
-          - 没有特殊节点协调发送
-          - 没有时钟和时隙的同步
-    4. 简单
+    1. 当一个节点要发送时，可以 R 速率发送 —— 满速
+    2. 当 M 个节点要发送，每个可以以 R/M 的平均速率发送 —— 公平、均分
+    3. 分布式的：不会因为中心节点的崩溃而导致系统崩溃
+    4. 简单又好用
 
-MAC(媒体访问控制)协议：分类：3大类：
-- 信道划分(partition)
-    - 把信道划分成小片（时间、频率、编码）
-    - 分配片给每个节点专用
-- 随机访问(random)：“想用就用”
-    - 信道不划分，允许冲突/碰撞
-    - 检测冲突，冲突后恢复
-- 依次轮流：分为 完全分布式的（令牌方式） 和 主节点协调式的（主节点轮流询问）
-    - 节点依次轮流
-    - 但是有很多数据传输的节点可以获得较长的信道使用权
+MAC（多路访问控制，既可以是 multiple，也可以是 medium）协议：
+- 分类：3大类：
+	- 信道划分 (partition)
+		- 把信道划分成小片（时间、频率、编码）
+		- 分配片给每个节点专用
+	- 随机访问 (random)：“想用就用”
+		- 信道不划分，允许冲突/碰撞
+		- 检测冲突，冲突后恢复
+	- 依次轮流：分为 完全分布式的（令牌方式） 和 主节点协调式的（主节点轮流询问）
+		- 节点依次轮流
+		- 但是有很多数据传输的节点可以获得较长的信道使用权（发送数据较长者）
 
-a. 信道划分MAC协议
+#### 信道划分协议
+
 - TDMA(time division multiple access)分时复用
-    - 轮流使用信道，信道的时间分为周期
-    - 每个站点使用每周期中固定的时隙（长度=帧传输时间）传输帧
-    - 如果站点无帧传输，时隙空闲->浪费
-    - 如：6站LAN，1、3、4有数据报，时隙2、5、6空闲
+    - 将时间划分为时间帧 time frame，进一步划分每个时间帧为 N 个时隙 slot；
+    - 每个站点使用每周期中固定的时隙（长度=帧传输时间）传输数据帧
+    - 通常时隙的长度要能容纳一个数据帧；
+    - 优势：每个节点得到的传输速率都是 R/N bps，绝对公平
+    - 缺点：
+        - 如果站点无帧传输，时隙空闲->浪费 （改进方法，统计时分复用）
+        - 即使只有一个节点在使用信道，也只能获得 R/N bps 的传输速率
+        - 节点必须等待传输序列中的轮次才能发送数据帧
+
+![[60-Link-layer-and-LAN-TDM-FDM.png]]
+
 - FDMA(frequency division multiple access)频分复用
     - 信道的有效频率范围被分成一个个小的频段
     - 每个站点被分配一个固定的频段
     - 分配给站点的频段如果没有被使用，则空闲
-    - 例如：6站LAN，1、3、4有数据报，频段2、5、6空闲
+    - 优缺点与 TDMA 类似；
+
 - CDMA(code division multiple access)码分复用
     - 有站点在整个频段上同时进行传输，采用编码原理加以区分
-    - 完全无冲突
+    - 如果编码理想地不会冲突，那么不同节点同时传输的问题即刻解决——各自相应的接收方仍能正确接收来自发送方的数据帧
     - 假定：信号同步很好，线性叠加
+    - 应用：蜂窝电话（无线信道）
+
 - 比方
     - TDM：不同的人在不同的时刻讲话
     - FDM：不同的组在不同的小房间里通信
     - CDMA：不同的人使用不同的语言讲话
 
-b. 随机存取协议
+#### 随机接入协议
+
 - 当节点有帧要发送时
-    - 以信道带宽的全部Rbps发送
+    - 总是以信道带宽的全部 R bps 发送，遇到碰撞就反复地重发帧，直到该帧不碰撞地正确传输（当然不是立即重发，而是涉及到碰撞的节点，就各自独立地随机等待一段时间后重发）
     - 没有节点间的预先协调
 - 两个或更多节点同时传输，会发生->冲突“collision”
 - 随机存取协议规定: 
     - 如何检测冲突
-    - 如何从冲突中恢复（如：通过稍后的重传）
+    - 如何从冲突中恢复（如：通过重传）
     - 随机MAC协议：
         - 时隙ALOHA
         - 纯ALOHA（非时隙）
         - CSMA, CSMA/CD, CSMA/CA
 
-b.1 时隙ALOHA
-- 假设
-    - 所有帧是等长的，能够持续一个时隙
-    - 时间被划分成相等的时隙/时槽，每个时隙可发送一帧
-    - 节点只在时隙开始时发送帧
-    - 共享信道的所有节点在时钟上是同步的
-    - 如果两个或多个节点在一个时隙传输，所有的站点都能检测到冲突
-- 运行
-    - 当节点获取新的帧，在下一个时隙传输
-    - 传输时没有检测到冲突（可从信道内的信息能量的幅度判断），成功
-        - 节点能够在下一时隙发送新帧
-    - 检测时如果检测到冲突，失败
-        - 节点在每一个随后的时隙以概率p重传帧直到成功（可能仍然发生冲突，但是时间越长，冲突概率越低）
-- 优点
-    - 节点可以以信道带宽全速连续传输
-    - 高度分布：仅需要节点之间在时隙上的同步
-    - 简单
-- 缺点
-    - 存在冲突，浪费时隙
-    - 即使有帧要发送，仍然有可能存在空闲的时隙
-    - 节点检测冲突的时间 小于 帧传输的时间
-        - 必须传完
-    - 需要时钟上同步
+1. **时隙 ALOHA** 协议
+	- 假设：
+		- 所有帧是等长的 L 比特，能够持续一个时隙
+		- 时间被划分成相等的时隙（长度为 L/R 秒），每个时隙可发送一帧
+		- 节点只在时隙开始时发送帧
+		- 共享信道的所有节点在时钟上是同步的——每个节点都知道时隙何时开始
+		- 如果两个或多个节点在一个时隙中碰撞，所有的站点在该时隙结束之前都能检测到碰撞事件
+	- 运行：
+		- 当节点有一个新的帧要发送，在下一个时隙内传输整个帧
+		- 传输时没有检测到冲突（可从信道内的信息能量的幅度判断），成功，并且节点能够在下一时隙发送新帧
+		- 如果发生碰撞，则节点在时隙结束前检测到这次碰撞，只有在每一个随后的时隙以概率 p 重传帧直到成功（可能仍然发生冲突，但是时间越长，冲突概率越低）
+			- 这里概率 p，指的是几何分布——每次判断，有 p 的概率重发后不冲突，直到n次后重发成功的总概率
+	- 优点
+		- 节点可以以信道带宽全速连续传输，尤其是在只有一个节点占用信道时
+		- 高度分散：每个节点检测碰撞、独立地决定什么时候重传
+		- 简单
+	- 缺点
+		- 时隙ALOHA需要在节点中对时隙同步
+		- 存在冲突，浪费时隙
+		- 即使有帧要发送，仍然有可能存在空闲的时隙
+		- 节点检测冲突的时间 小于 帧传输的时间
+		- 必须传完
+	- 效率 (Efficiency)
+		- 定义：当有大量活跃节点且每个节点都由大量的帧需要发送，长期运行中成功时隙所占的份额。（成功时隙指的是恰好只有一个节点传输的时隙）
+		- ![[60-Link-layer-and-LAN-slot-ALOHA.png]]
+		- 假设 N 个节点，每个节点都有很多帧要发送，在每个时隙中的传输概率是 $p$ 
+		- 一个节点成功传输概率是 $p(1-p)^{N-1}$ （几何分布）
+		- 任何一个节点的成功概率是 $N \times p(1-p)^{N-1}$
+		- $N$ 个节点的最大效率：求出使 $f(p) = N \times p(1-p)^{N-1}$ 最大的 $p^{ ' }$
+		- 代入 $p^{ ' }$ 得到最大 $f(p^{ ' }) = N \times p^{ ' }(1-p^{ ' })^{N-1}$ 
+		- $N$ 为无穷大时的极限为 $1/e=0.37$ ，即最好情况：信道利用率 $37\%$ 
 
-时隙ALOHA的效率(Efficiency)      
-注：效率：当有很多节点，每个节点有很多帧要发送时，x%的时隙是成功传输帧的时隙    
-- 假设N个节点，每个节点都有很多帧要发送，在每个时隙中的传输概率是 $p$
-- 一个节点成功传输概率是 $p(1-p)^{N-1}$
-- 任何一个节点的成功概率是 $N * p(1-p)^{N-1}$
-- $N$ 个节点的最大效率：求出使 $f(P) = N * p(1-p)^{N-1}$ 最大的 $p^{ * }$
-- 代入 $p^{ * }$ 得到最大 $f(p^{ * }) = N * p^{ * }(1-p^{ * })^{N-1}$ 
-- $N$ 为无穷大时的极限为 $1/e=0.37$ ，即最好情况：信道利用率 $37$ %
 
-b.2 纯ALOHA（非时隙）：数据帧一形成立即发送
-- 无时隙ALOHA：简单、无须节点间在时间上同步
-- 当有帧需要传输：马上传输
-- 冲突的概率增加:
-    - 帧在 $t_0$发送，和其它在 $[t_0-1, t_0+1]$ 区间内开始发送的帧冲突
-    - 和当前帧冲突的区间（其他帧在此区间开始传输）增大了一倍
-
-纯ALOHA的效率
-
-$$
+2. **纯 ALOHA**（非时隙）：数据帧一形成立即发送
+	- 无时隙 ALOHA：简单、无须节点间在时间上同步（时隙 ALOHA 需要在时隙上同步，每个时隙开始时进行传输）
+	- 当有帧从网络层传递下来，就立刻传输；如果一个传输的帧与其它帧的传输发生了碰撞，这个节点在完整传输完碰撞帧后，立即以概率 p 尝试重传，否则等待一个帧传输时间；
+	- 冲突的概率增加:
+		- 帧在 $t_0$ 发送，和其它在 $[t_0-1, t_0+1]$ 区间内开始发送的帧冲突
+		- 和当前帧冲突的区间（其他帧在此区间开始传输）增大了一倍
+		- ![[60-Link-layer-and-LAN-ALOHA.png]]
+	- 纯ALOHA的效率$$
 \begin{split}
 P(\text{指定节点成功}) &= P(\text{节点传输}) \times \\ 
 &\quad P(\text{其它节点在 $[t_0-1, t_0]$ 不传}) \times \\ 
@@ -322,33 +368,35 @@ P(\text{指定节点成功}) &= P(\text{节点传输}) \times \\
 &= p(1-p)^{2(N-1)}
 \end{split}
 $$
+		- 选择最佳的 $p$ 且 $N$ 趋向无穷大时，效率为 $\frac{1}{2e} = 17.5\%$ ，效率比时隙 ALOHA 更差了！
 
-选择最佳的 $p$ 且 $N$ 趋向无穷大时，效率为 $1/(2e) = 17.5$ %，效率比时隙ALOHA更差了！
+>[! note] ALOHA 的特点与改进目标——CSMA
+> ALOHA 协议的特点就是：在发送自己的帧之前不查看链路的情况，这种情况既自私又无礼——把公共链路当成自己独占的；
+> 
+> 因此改进方向就是在发送前先查看链路的状态，如果空闲再发送，这就引出了两种思想：
+> - ***Listen before speaking***. If someone else is speaking, wait until they are finished. In the networking world, this is called carrier sensing—a node listens to the channel before transmitting. If a frame from another node is currently being transmitted into the channel, a node then waits until it detects no transmissions for a short amount of time and then begins transmission. —— 载波侦听
+> - ***If someone else begins talking at the same time, stop talking***. In the networking world, this is called ***collision detection***—a transmitting node listens to the channel while it is transmitting. If it detects that another node is transmitting an interfering frame, it stops transmitting and waits a random amount of time before repeating the sense-and-transmit-when-idle cycle. —— 碰撞检测
 
-如何提升 纯ALOHA 的效率？CSMA
+3. ***CSMA***(载波侦听多路访问) —— “说之前先听”
+	- CSMA：在传输前先侦听信道：
+		- 如果侦听到信道空闲，传送整个帧
+		- 如果侦听到信道忙，推迟传送
+	- CSMA 冲突
+		- 冲突仍然可能发生——由传播延迟造成：两个节点可能侦听不到正在进行的传输
+	- 冲突：
+		- 整个冲突帧的传输时间都被浪费了，是无效的传输
+	- 本质：
+		- ==传播延迟（距离）决定了冲突的概率==
+		- 本质上是节点依据本地的信道使用情况来判断全部信道的使用情况——距离越远，延时越大，发生冲突的可能性就越大
+	- 举例：
+		- ![[60-Link-layer-and-LAN-CSMA.png]]
+		- Figure 6.12 shows a space-time diagram of four nodes (A, B, C, D) attached to a linear broadcast bus. The horizontal axis shows the position of each node in space; the vertical axis represents time.
+		- At time t0, node B senses the channel is idle, as no other nodes are currently transmitting. Node B thus begins transmitting, with its bits propagating in both directions along the broadcast medium. The downward propagation of B’s bits in Figure 6.12 with increasing time indicates that a nonzero amount of time is needed for B’s bits actually to propagate (albeit at near the speed of light) along the broadcast medium.（t0时刻，B 意识到链路空闲，于是开始传输帧，上图中蓝色区域向下、向两边蔓延，即数据在链路上向两侧传播，并且传播需要时间）
+		- At time t1 (t1 > t0), node D has a frame to send. Although node B is currently transmitting at time t1, the bits being transmitted by B have yet to reach D, and thus D senses the channel idle at t1. In accordance with the CSMA protocol, D thus begins transmitting its frame. A short time later, B’s transmission begins to interfere with D’s transmission at D.（t1时刻 D 也有帧需要发送，此时也检测到链路空闲——实际上 B 发送的帧还未传播到 D 处——但是根据 CSMA 协议，D 仍然头铁地传输帧，于是碰撞发生了）
+		- From Figure 6.12, it is evident that the end-to-end ***channel propagation delay*** of a broadcast channel—the time it takes for a signal to propagate from one of the nodes to another—will play a crucial role in determining its performance. The longer this propagation delay, the larger the chance that a carrier-sensing node is not yet able to sense a transmission that has already begun at another node in the network.（信道传播时延在此处至关重要，传播时延越长，载波侦听策略所不能帧听到远处已发送帧的节点的可能就越大）
+	- 改进：CSMA --> CSMA/CD（目前有线介质的局域网如“以太网”采用的方式
 
-b.3 CSMA(载波侦听多路访问) —— “说之前听”
-- Aloha：如何提高ALOHA的效率
-    - 发之前不管有无其他节点在传输
-- CSMA：在传输前先侦听信道：
-    - 如果侦听到信道空闲，传送整个帧
-    - 如果侦听到信道忙，推迟传送
-    - 人类类比：不要打断别人正在进行的说话！
-
-CSMA冲突
-- 冲突仍然可能发生：
-    - 由传播延迟造成：两个节点可能侦听不到正在进行的传输
-- 冲突：
-    - 整个冲突帧的传输时间都被浪费了，是无效的传输
-- 注意：
-    - 传播延迟（距离）决定了冲突的概率
-
-本质上是节点依据本地的信道使用情况来判断全部信道的使用情况。         
-距离越远，延时越大，发生冲突的可能性就越大
-
-可以改进CSMA --> CSMA/CD（目前有形介质的局域网如“以太网”采用的方式
-
-b.4 CSMA/CD(冲突检测) —— “边说边听” 
+4. ***CSMA/CD***(冲突检测) —— “边说边听” 
 - 载波侦听CSMA：和在CSMA中一样发送前侦听信道
 - 没有传完一个帧就可以在短时间内检测到冲突
 - 冲突发生时则传输终止，减少对信道的浪费
@@ -356,8 +404,6 @@ b.4 CSMA/CD(冲突检测) —— “边说边听”
     - 检测信号强度，比较传输与接收到的信号是否相同
     - 通过周期的过零点检测
 - 人类类比：礼貌的对话人
-
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211003010859719.png" style="zoom:80%"/>
 
 以太网CSMA/CD算法
 1. 适配器获取数据报，创建帧
@@ -390,7 +436,7 @@ CSMA/CD效率
     - 当 $t_{trans}$ 变成无穷大时
 - 比ALOHA更好的性能，而且简单，廉价，分布式！
 
-b.5 无线局域网CSMA/CA
+5. 无线局域网 CSMA/CA
 
 WLAN由于是无线形式，更加倾向于选择CSMA/CA
 
@@ -476,7 +522,8 @@ DOCSIS：data over cable service interface spec
         - 各站点对于该时隙的使用是随机访问的
         - 一旦碰撞（请求不成功，结果是：在下行的MAP中没有为它分配，则二进制退避）选择时隙上传输
 
-c. 轮流(Taking Turns)MAC协议
+#### 轮流协议
+
 - 信道划分MAC协议：固定分配、平分
     - 共享信道在高负载时是有效和公平的
     - 在低负载时效率低下
@@ -520,9 +567,9 @@ MAC协议总结
         - 集中：由一个中心节点轮询；分布：通过令牌控制
         - 蓝牙、FDDI、令牌环
 
-### 6.4 LANS
+## 6.4 LANS
 
-#### 6.4.1 addressing, ARP
+### 6.4.1 addressing, ARP
 
 - MAC地址和ARP
     - 32bit IP地址：
@@ -609,7 +656,7 @@ ARP协议：在同一个LAN (网络)
 >     - R转发数据报，数据报源IP地址为A，目标IP地址为B
 >     - R创建一个链路层的帧，目标MAC地址为B，帧中包含A到B的IP数据报
 
-#### 6.4.2 Ethernet
+### 6.4.2 Ethernet
 
 以太网
 - 目前最主流的LAN技术：98%占有率
@@ -715,7 +762,7 @@ Manchester编码 —— 物理层
     - 除非发往同一个目标站点
 - 10Gbps now!
 
-#### 6.4.3 switches 链路层交换机
+### 6.4.3 switches 链路层交换机
 
 Hub：集线器 （星形）
 - 网段(LAN segments)：可以允许一个站点发送的网络范围
@@ -805,11 +852,11 @@ Hub：集线器 （星形）
         - 不是即插即用的，配置网络地址（子网前缀）
         - 三层设备，速率低
 
-### 6.5 链路虚拟化：MPLS
+## 6.5 链路虚拟化：MPLS
 
 MPLS：多协议标记交换。按照标签label来交换分组，而非按照目标IP查询路由表进行存储转发，效率更高
 
-### 6.6 数据中心网络
+## 6.6 数据中心网络
 
 数万-数十万台主机构成DC网络
 
@@ -817,7 +864,7 @@ MPLS：多协议标记交换。按照标签label来交换分组，而非按照�
 - 在阵列之间增加吞吐（多个可能的路由路径）
 - 通过冗余度增加可靠性
 
-### 6.7 a day in the life of web request
+## 6.7 a day in the life of web request
 
 回顾：页面请求的历程（以一个web页面请求的例子：综述！）
 - 目标：标示、回顾和理解涉及到的协议（所有层次），以一个看似简单的场景：请求www页面
@@ -862,7 +909,7 @@ MPLS：多协议标记交换。按照标签label来交换分组，而非按照�
 - IP数据报包含HTTP应答最后被路由到客户端
 - web页面最后显示出来了！
 
-### 6.8 总结
+## 6.8 总结
 
 - 数据链路层服务背后的原理:
     - 检错、纠错
