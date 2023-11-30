@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "d61518e0bd30f065",
+        "id": "16660b2f4edd3410",
         "type": "tabs",
         "children": [
           {
-            "id": "b64f92cc1f6da268",
+            "id": "1bb749e9d249ab9c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -48,7 +44,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "sfence",
+                "query": "引用计数",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -80,8 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 366.50577545166016,
-    "collapsed": true
+    "width": 366.50577545166016
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -98,7 +93,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +109,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,9 +129,7 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -153,9 +144,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md"
-              }
+              "state": {}
             }
           },
           {
@@ -170,7 +159,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -188,44 +178,43 @@
       "obsidian42-brat:BRAT": false
     }
   },
-  "active": "b64f92cc1f6da268",
+  "active": "1bb749e9d249ab9c",
   "lastOpenFiles": [
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-CSMA.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-ALOHA.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-slot-ALOHA.png",
-    "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md",
     "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-TDM-FDM.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-CRC-calc.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-CRC.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-two-dimensional-even-parity.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-EDC.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-Network-Adapter.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-wireless-link-layer.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-ARP-inter-LAN.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-ARP-table.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-ARP-instra-LAN.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-switcher.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-DOCSIS.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-CSMACA-DIFS.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-CSMA-CA-DIFS.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-CSMA-CA-flow.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-CSMA-CA-flow.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-hidden-node-problem.png",
+    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
+    "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/20-Impl-application-prog.md",
+    "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/30-SV39-multilevel-page-table.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/6-文件系统.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/10-Interface.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/40-Signal.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/20-Pipe.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/30-Impl-batch-OS.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/10-Privilege-mechanism.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/40-Manage-SV39-multilevel-pagetable.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/00-FS-Overview.md",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Concepts-and-syscall.md",
     "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/30-Integrate-easyfs-into-kernel.md",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/5-进程.md",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/41-Stride-schedule.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/assets/Pasted image 20231127220528.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/70-Beyond-physical-memory.md",
-    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/40-Switching-privilege.md",
-    "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/30-Mutex-lock.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/30-并发.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/20-Kernelmode-thread-management.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/10-Usermode-thread-management.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/60-Problem-of-concurrence.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/40-Signal.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/00-Concurrence-Overview.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/40-Semaphore.md",
     "1-Theory/6-Network/Data-communication-and-network/考试要点",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/912历年真题(2016-2023).pdf",
     "1-Theory/6-Network/THU-Xu/精简版PPT.pdf",

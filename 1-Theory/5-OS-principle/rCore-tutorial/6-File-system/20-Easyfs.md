@@ -1094,7 +1094,7 @@ impl EasyFileSystem {
 `Inode` 和 `DiskInode` 的区别从它们的名字中就可以看出： `DiskInode` 放在磁盘块中比较固定的位置，而 `Inode` 是放在内存中的记录文件索引节点信息的数据结构。
 
 ```
-// easy-fs/src/vfs. rs
+// easy-fs/src/vfs.rs
 
 pub struct Inode {
     block_id: usize,

@@ -368,7 +368,7 @@ P(\text{指定节点成功}) &= P(\text{节点传输}) \times \\
 &= p(1-p)^{2(N-1)}
 \end{split}
 $$
-		- 选择最佳的 $p$ 且 $N$ 趋向无穷大时，效率为 $\frac{1}{2e} = 17.5\%$ ，效率比时隙 ALOHA 更差了！
+		- 选择最佳的 $p$ 且 $N$ 趋向无穷大时，效率为 $\frac{1}{2e} = 17.5\%$ ，效率比时隙 ALOHA 更差！
 
 >[! note] ALOHA 的特点与改进目标——CSMA
 > ALOHA 协议的特点就是：在发送自己的帧之前不查看链路的情况，这种情况既自私又无礼——把公共链路当成自己独占的；
@@ -394,269 +394,205 @@ $$
 		- At time t0, node B senses the channel is idle, as no other nodes are currently transmitting. Node B thus begins transmitting, with its bits propagating in both directions along the broadcast medium. The downward propagation of B’s bits in Figure 6.12 with increasing time indicates that a nonzero amount of time is needed for B’s bits actually to propagate (albeit at near the speed of light) along the broadcast medium.（t0时刻，B 意识到链路空闲，于是开始传输帧，上图中蓝色区域向下、向两边蔓延，即数据在链路上向两侧传播，并且传播需要时间）
 		- At time t1 (t1 > t0), node D has a frame to send. Although node B is currently transmitting at time t1, the bits being transmitted by B have yet to reach D, and thus D senses the channel idle at t1. In accordance with the CSMA protocol, D thus begins transmitting its frame. A short time later, B’s transmission begins to interfere with D’s transmission at D.（t1时刻 D 也有帧需要发送，此时也检测到链路空闲——实际上 B 发送的帧还未传播到 D 处——但是根据 CSMA 协议，D 仍然头铁地传输帧，于是碰撞发生了）
 		- From Figure 6.12, it is evident that the end-to-end ***channel propagation delay*** of a broadcast channel—the time it takes for a signal to propagate from one of the nodes to another—will play a crucial role in determining its performance. The longer this propagation delay, the larger the chance that a carrier-sensing node is not yet able to sense a transmission that has already begun at another node in the network.（信道传播时延在此处至关重要，传播时延越长，载波侦听策略所不能帧听到远处已发送帧的节点的可能就越大）
-	- 改进：CSMA --> CSMA/CD（目前有线介质的局域网如“以太网”采用的方式
+	- 改进：CSMA --> CSMA/CD（目前有线介质的局域网如“以太网”采用的方式）
 
 4. ***CSMA/CD***(冲突检测) —— “边说边听” 
-- 载波侦听CSMA：和在CSMA中一样发送前侦听信道
-- 没有传完一个帧就可以在短时间内检测到冲突
-- 冲突发生时则传输终止，减少对信道的浪费
-- 冲突检测CD技术，有线局域网中容易实现：
-    - 检测信号强度，比较传输与接收到的信号是否相同
-    - 通过周期的过零点检测
-- 人类类比：礼貌的对话人
-
-以太网CSMA/CD算法
-1. 适配器获取数据报，创建帧
-2. 发送前：侦听信道CS
-    - 闲：开始传送帧
-    - 忙：一直等到闲再发送
-3. 发送过程中，冲突检测CD
-    - 没有冲突：成功
-    - 检测到冲突：放弃，之后尝试重发
-4. 发送方适配器检测到冲突，除放弃外，还发送一个Jam信号，所有听到冲突的适配器也是如此
-    - 强化冲突：让所有站点都知道冲突（如何实现：信号强度大，持续时间长） 强化冲突的原因：放弃的信号可能持续时间很短，其他节点可能会接收不到，认为没有发生冲突，导致接受失败
-5. 如果放弃，适配器进入指数退避状态 *exponential backoff 二进制指数退避算法*
-    - 在第m次失败后，适配器随机选择一个{ 0，1，2，……，2^m-1}中的K，等待K*512位时，然后转到步骤2
-    - 此时若两个站点继续选择了同一个K，则在K*512位时两者又同时重发，又会产生冲突
-    - 随着m的增大，成功的概率越来越大，但是平均等待时间会变长
-    - 注：指数退避：
-        - 目标：适配器试图适应当前负载（自适应算法），在一个变化的碰撞窗口中随机选择时间点尝试重发
-            - 高负载（重传节点多）：重传窗口时间大，减少冲突，但等待时间长
-            - 低负载（重传节点少）：使得各站点等待时间少，但冲突概率大
-
-CSMA/CD效率
-- $t_{prop}$ 为LAN上2个节点的最大传播延迟
-- $t_{trans}$ 为传输最大帧的时间
-- 则：     
-    
-    $$ efficiency = \frac{1}{1 + 5 * t_{prop} / t_{trans}} $$
-
-- 效率变为 $1$ ：
-    - 当 $t_{prop}$ 变成 $0$ 时
-    - 当 $t_{trans}$ 变成无穷大时
-- 比ALOHA更好的性能，而且简单，廉价，分布式！
+	- CSMA 的缺点：只是在发送前进行碰撞检测，不能确定远端是否有帧已经开始发送；并且即使发送过程中出现了碰撞，还是头铁地将帧传输完；
+	- 改进：加入碰撞检测
+		- 在传输帧的同时，检测是否发生了碰撞，一旦检测到碰撞，就各自停止传输——减少对信道的浪费
+		- ![[60-Link-layer-and-LAN-CSMA-CD.png]]
+		- ![[60-Link-layer-and-LAN-CSMA-CD-flow.png]]
+	- 更具体的步骤：
+		1. The adapter obtains a datagram from the network layer, prepares a link-layer frame, and puts the frame adapter buffer.（从网络层获取的数据报在链路层打包成帧，然后放入帧适配器的缓存区中）
+		2. If the adapter senses that the channel is idle (that is, there is no signal energy entering the adapter from the channel), it starts to transmit the frame. If, on the other hand, the adapter senses that the channel is busy, it waits until it senses no signal energy and then starts to transmit the frame.（如果适配器检测到链路空闲，就开始传输帧；否则就等待，直到链路不忙）
+		3. While transmitting, the adapter monitors for the presence of signal energy coming from other adapters using the broadcast channel.（传输帧过程中，适配器监视信道，查看是否有来自其它适配器的信号）
+		4. If the adapter transmits the entire frame without detecting signal energy from other adapters, the adapter is finished with the frame. If, on the other hand, the adapter detects signal energy from other adapters while transmitting, it aborts the transmission, and transmits a ***jam*** signal.（如果适配器传输完整的帧且没有检测到其它适配器的能量，则该次传输帧完成；否则丢弃当前的传输，并传输一个 *jam* 信号，表示当前信道已被占用）
+			- *jam* 信号的作用：强化冲突，确保整条链路上的所有接收者都能检测到碰撞的发生。
+		5. After aborting, the adapter waits a random amount of time and then returns to step 2.（停止当前传输后，适配器各自等待随机时间后再回到步骤 2，开始尝试新的传输）
+	- 碰撞后等待的时间间隔如何设置？**二进制指数后退**！
+		- 在第 n 次失败（发送时有碰撞）后，适配器随机选择一个 $\{ 0，1，2，3，……，2^{n-1}\}$ 中的 *K* 值，等待 `K*512` 比特时间（即 发送 512 比特进入以太网所需时间量的 *K* 倍），n 能够取得的最大值不超过 10；
+		- 可选 K 的集合随着碰撞次数指数增长，而选取 K 的方式是等概率地随机选取，因此随着 n 的增大，能够成功发送的概率越来越大；（不成功就是有两个适配器选取的 K 值相同）
+		- 另外有新的帧刚刚到达，而其它适配器正在退避过程中——新的帧会抢先发送，因为它直接运行了 CSMA/CD 策略；
+		- 指数退避的特点：
+			- 高负载（重传节点多）：重传窗口时间大，减少冲突，但等待时间长
+			- 低负载（重传节点少）：使得各站点等待时间少，但冲突概率大
+		- CSMA/CD 的效率：
+			- 有大量活跃节点和每个节点都由大量帧要发送的理想情况下，帧在信道中无碰撞地传输时间在长期运行时间中的所占份额：
+			- 令 $t_{prop}$ 为 LAN 上 2 个节点的最大传播延迟，$t_{trans}$ 为传输最大以太网帧的时间，则效率计算式为：
+			- $$ efficiency = \frac{1}{1 + 5 \times t_{prop} / t_{trans}} $$
+			- 当 $t_{prop}$ 变成 $0$ ——信道传播速度足够快，或当 $t_{trans}$ 变成无穷大——帧无穷大，将使效率增加并接近 1；
 
 5. 无线局域网 CSMA/CA
-
-WLAN由于是无线形式，更加倾向于选择CSMA/CA
-
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211003011006144.png" style="zoom:70%"/>
-
-无线局域网中的 MAC：CSMA/CA —— 冲突控制
-- 冲突： $2^+$ 站点（AP或者站点）在同一个时刻发送
-- 802.11：CSMA —— 发送前侦听信道，实现事先避免冲突
-    - 不会和其它节点正在进行的传输发生冲突
-- 802.11：没有冲突检测！
-    - 无法检测冲突：自身信号远远大于其他节点信号（无线情况下，电磁波信号成平方反比衰减）
-    - 即使能CD：不冲突 $\neq$ 成功 （有 隐藏终端 的问题：A的电磁波信号到达B时，C与A的距离比B与A的距离远，故此时电磁波到达不了C，即检测不到冲突，但是B周边会有A、C的电磁波的叠加干扰），同时 冲突 $\neq$ 不成功
-    - 目标：avoid collisions：CSMA/C(ollision)A(voidance)
-        - 无法CD，一旦发送一股脑全部发送完毕，不CD
-        - 为了避免无CD带来的信道利用率低的问题，事前进行冲突避免
-
-无线局域网：CSMA/CA
-- 发送方
-    - 如果站点侦测到信道空闲持续DIFS长，则传输整个帧 (no CD)
-    - 如果侦测到信道忙碌，那么 选择一个随机回退值，并在信道空闲时递减该值；如果信道忙碌，回退值不会变化；到数到0时（只生在信道闲时）发送整个帧。如果没有收到ACK，增加回退值，重复这段的整个过程
-- 802.11 接收方
-    - 如果帧正确，则在SIFS后发送ACK
-
-（无线链路特性，需要每帧确认（有线网由于边发边确认，不需要接收ACK信息就可以知道是否发送成功）；例如：由于隐藏终端问题，在接收端可能形成干扰，接收方没有正确地收到。链路层可靠机制）
-
-IEEE 802.11 MAC 协议: CSMA/CA
-- 在count down时，侦听到了信道空闲为什么不发送，而要等到0时在发送？以下例子可以很好地说明这一点
-    - 2个站点有数据帧需要发送，第三个节点正在发送
-    - LAN CD：让2者听完第三个节点发完，立即发送
-        - 冲突：放弃当前的发送，避免了信道的浪费于无用冲突帧的发送
-        - 代价不昂贵
-    - WLAN：CA
-        - 无法CD，一旦发送就必须发完，如冲突信道浪费严重，代价高昂
-        - 思想：尽量事先避免冲突，而不是在发生冲突时放弃然后重发
-        - 听到发送的站点，分别选择随机值，回退到0发送
-            - 不同的随机值，一个站点会胜利
-            - 失败站点会冻结计数器，当胜利节点发完再发
-- 无法完全避免冲突
-    - 两个站点相互隐藏：
-        - A,B 相互隐藏，C在传输
-        - A,B选择了随机回退值
-        - 一个节点如A胜利了，发送
-        - 而B节点收不到，顺利count down到0 发送
-        - A,B的发送在C附近形成了干扰
-    - 选择了非常靠近的随机回退值：
-        - A,B选择的值非常近
-        - A到0后发送
-        - 但是这个信号还没到达B时
-        - B也到0了，发送
-        - 冲突
-
-冲突避免：RTS-CTS交换 —— 对长帧的可选项
-- 思想：允许发送方“预约”信道，而不是随机访问该信道：避免长数据帧的冲突（可选项）
-- 发送方首先使用CSMA向BS发送一个小的RTS分组
-    - RTS可能会冲突（但是由于比较短，浪费信道较少）
-- BS广播 clear-to-send CTS，作为RTS的响应
-- CTS能够被所有涉及到的节点听到
-    - 发送方发送数据帧
-    - 其它节点抑制发送
-
-采用小的预约分组，可以完全避免数据帧的冲突
-
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211003011156385.png" style="zoom:70%"/>
-
-b.6 线缆接入网络 —— 有线电视公司提供
-
-- 多个40Mbps下行（广播）信道，FDM
-    - 下行：通过FDM分成若干信道，互联网、数字电视等
-    - 互联网信道：只有1个用户（不存在竞争） —— CMTS在其上传输，将数据往下放
-- 多个30Mbps上行的信道，FDM
-    - 多路访问：所有用户使用；接着TDM分成微时隙
-    - 部分时隙：分配（预约）；部分时隙：竞争；
-
-DOCSIS：data over cable service interface spec 
-- 采用FDM进行信道的划分：若干上行、下行信道
-- 下行信道：
-    - 在下行MAP帧中：CMTS告诉各节点微时隙分配方案，分配给各站点的上行微时隙
-    - 另外：头端传输下行数据（给各个用户）
-- TDM上行信道
-    - 采用TDM的方式将上行信道分成若干微时隙：MAP指定
-    - 站点采用分配给它的微时隙上行数据传输：分配
-    - 在特殊的上行微时隙中，各站点请求上行微时隙：竞争
-        - 各站点对于该时隙的使用是随机访问的
-        - 一旦碰撞（请求不成功，结果是：在下行的MAP中没有为它分配，则二进制退避）选择时隙上传输
+	- 无线信道倾向于选择 CSMA/CA：因为无线信道中传输者在传输数据报的过程中，会关闭接收器，因而不适用 CSMA/CD；
+	- 由于[隐藏节点问题](https://en.wikipedia.org/wiki/Hidden_node_problem)，CSMA/CA 并不是绝对可靠的；
+		- ![[60-Link-layer-and-LAN-hidden-node-problem.png]]
+		- In one scenario, Station A can communicate with Station B. Station C can also communicate with Access Point Station B. However, Stations A and C cannot communicate with each other as they are out of range of each other, and thus start to transmit simultaneously preventing B from receiving messages intended for it.
+	- 碰撞避免的策略：
+		- ![[60-Link-layer-and-LAN-CSMA-CA-flow.png]]
+		- 发送方：
+			- 如果站点侦测到信道空闲持续 DIFS 长，则传输整个帧
+			- 如果侦测到信道忙碌，那么选择一个随机回退值，并在信道空闲时递减该值；如果信道忙碌，回退值不会变化；回退值递减到 0 时（只发生在信道闲时）发送整个帧。
+			- 如果没有收到 ACK，增加回退值，重复这段的整个过程；
+			- ![[60-Link-layer-and-LAN-CSMACA-DIFS.png]]
+		- 802.11 接收方
+			- 如果帧正确，则在 SIFS 后发送 ACK
+		- *无线链路特性，需要每帧都请求、确认（有线网由于边发边确认，不需要接收 ACK 信息就可以知道是否发送成功），这里的失败原因还是在担心隐藏节点问题。*
+	- 细节问题：
+		- 在随机回退值 count down 时，侦听到了信道空闲为什么不发送，而要等到0时在发送？以下例子可以很好地说明这一点
+		- 考虑 2 个站点有数据帧需要发送，第 3 个节点正在发送的情况：
+		- 有线局域网使用CD：让 2 者听完第三个节点发完，立即发送
+			- 冲突：放弃当前的发送，避免了信道的浪费于无用冲突帧的发送
+			- 代价不昂贵
+		- 无线局域网使用 CA：
+			- 无法 CD，一旦发送就必须发完，如冲突信道浪费严重，代价高昂
+			- 思想：尽量事先避免冲突，而不是在发生冲突时放弃然后重发
+			- 听到发送的站点，分别选择随机值，回退到 0 发送
+				- 不同的随机值，一个站点会胜利
+				- 失败站点会冻结计数器，当胜利节点发完再发
+	- 进一步地冲突避免：RTS-CTS 交换 —— 对长帧的可选项
+		- ![[60-Link-layer-and-LAN-CSMA-CA-DIFS.png]]
+		- 思想：允许发送方“预约”信道，而不是随机访问该信道：避免长数据帧的冲突（可选项）
+		- 发送方首先使用CSMA向接收方发送一个小的RTS分组
+			- RTS 可能会冲突（但是由于比较短，浪费信道较少）
+		- 接收方广播 CTS，作为 RTS 的响应
+			- CTS 能够被所有涉及到的节点听到
+			- 正确的发送方能够发送数据帧，而其它节点抑制发送
+		- 采用小的预约分组，可以完全避免数据帧的冲突
 
 #### 轮流协议
 
-- 信道划分MAC协议：固定分配、平分
-    - 共享信道在高负载时是有效和公平的
-    - 在低负载时效率低下
-        - 只能等到自己的时隙开始发送或者利用1/N的信道频率发送
-        - 当只有一个节点有帧传时，也只能够得到1/N个带宽分配
-- 随机访问MAC协议
-    - 在低负载时效率高：单个节点可以完全利用信道全部带宽
-    - 高负载时：冲突开销较大，效率极低，时间很多浪费在冲突中
-- 轮流协议
-    - 有2者的优点
-    - 缺点：复杂
+- 回顾：
+	- MAC 协议的两个理想目标：(1) when only one node is active, the active node has a throughput of R bps, and (2) when M nodes are active, then each active node has a throughput of nearly R/M bps.
+	- 信道划分协议：固定分配、平分
+		- 共享信道在高负载时是有效和公平的
+		- 在低负载时效率低下：只能等到自己的时隙开始发送或者利用1/N 的信道频率发送，当只有一个节点有帧传时，也只能够得到1/N 个带宽分配
+	- 随机访问MAC协议
+		- 在低负载时效率高：单个节点可以完全利用信道全部带宽
+		- 高负载时：冲突开销较大，效率极低，时间很多浪费在冲突中
 
-轮流MAC协议
-- 轮询：（本身有一个主节点）
-    - 主节点邀请从节点依次传送
-    - 从节点一般比较“dumb”
-    - 缺点：
-        - 轮询开销：轮询本身消耗信道带宽
-        - 等待时间：每个节点需等到主节点轮询后开始传输，即使只有一个节点，也需要等到轮询一周后才能够发送
-        - 单点故障 <-- 本身可靠性差：主节点失效时造成整个系统无法工作
-- 令牌传递：（没有主节点）
-    - 控制令牌(token)循环从一个节点到下一个节点传递 （“击鼓传花”）。如果令牌到达的节点需要发送信息，就将令牌位置位为0，将令牌帧变为数据帧，发送的数据绕行一周后再由自己收下（为什么不是由目标节点收下？“一发多收”，目标节点有多个，如果由目标节点收下会导致后面的目标节点收不到，所以需要轮转一圈，确认经过了所有节点后由自己收下）
-    - 令牌报文：特殊的帧
-    - 缺点：
-        - 令牌开销：本身消耗带宽
-        - 延迟：只有等到抓住令牌，才可传输
-        - 单点故障(token)：
-            - 令牌丢失系统级故障，整个系统无法传输
-            - 复杂机制重新生成令牌
+- 轮流协议：有两种策略：轮询 polling 和令牌 token-passing
+	- 轮询：
+		- 从链路上所有节点中选出一个主节点，主节点以循环的方式轮询每个节点——In particular, the master node first sends a message to node 1, saying that it (node 1) can transmit up to some maximum number of frames. After node 1 transmits some frames, the master node tells node 2 it (node 2) can transmit up to the maximum number of frames. (The master node can determine when a node has finished sending its frames by observing the lack of a signal on the channel.) The procedure continues in this manner, with the master node polling each of the nodes in a cyclic manner.
+		- 从节点没有自己的链路支配权；
+		- 缺点：
+			- 轮询开销：轮询本身消耗信道带宽
+			- 轮询时延：通知一个节点可以开始传输的时间
+			- 等待时间：每个节点需等到主节点轮询后开始传输，即使只有一个节点，也需要等到轮询一周后才能够发送
+			- 单点故障：主节点失效时造成整个系统无法工作
+	- 令牌传递：（没有主节点）
+		- 控制令牌 (token)循环从一个节点到下一个节点传递 （“击鼓传花”）。如果令牌到达的节点需要发送信息，就将令牌位置位为 0，将令牌帧变为数据帧，发送的数据绕行一周后再由自己收下
+			- 为什么不是由目标节点收下？“一发多收”，目标节点有多个，如果由目标节点收下会导致后面的目标节点收不到，所以需要轮转一圈，确认经过了所有节点后由自己收下
+		- 令牌报文：特殊的帧
+		- 缺点：
+			- 令牌开销：本身消耗带宽
+			- 延迟：只有等到抓住令牌，才可传输
+			- 单点故障 (token)：
+				- 一个节点的故障会导致整个信道故障——单向传输的弊端；因此改进目标就是双向传输，可是又涉及复杂的令牌设计问题
+				- 令牌丢失系统级故障，整个系统无法传输
+				- 复杂机制重新生成令牌
 
-MAC协议总结
-- 多点接入问题：对于一个共享型介质，各个节点如何协调对它的访问和使用？
-    - 信道划分：按时间、频率或者编码
-        - TDMA、FDMA、CDMA
-    - 随机访问（动态）
-        - ALOHA, S-ALOHA, CSMA, CSMA/CD
-        - 载波侦听：在有些介质上很容易（wire：有线介质），但在有些介质上比较困难（wireless：无线）
-        - CSMA/CD：802.3 Ethernet网中使用
-        - CSMA/CA：802.11WLAN中使用
-    - 依次轮流协议
-        - 集中：由一个中心节点轮询；分布：通过令牌控制
-        - 蓝牙、FDDI、令牌环
+### DOCSIS：综合三种访问方式的例子
 
-## 6.4 LANS
+Recall from Section 1.2.1 that a cable access network typically connects several thousand residential cable modems to a cable modem termination system (CMTS) at the cable network headend. The Data-Over-Cable Service Interface Specifications (DOCSIS) specifies the cable data network architecture and its protocols.
+> 电缆接入网通常将几千个住宅电缆调制解调器与**电缆调制解调器端系统**在电缆网头端连接，而 DOCSIS 接口规定了电缆数据网络体系结构和相关协议。
 
-### 6.4.1 addressing, ARP
+DOCSIS uses FDM to divide the downstream (CMTS to modem) and upstream (modem to CMTS) network segments into multiple frequency channels. Each downstream channel is between 24 MHz and 192 MHz wide, with a maximum throughput of approximately 1.6 Gbps per channel; each upstream channel has channel widths ranging from 6.4 MHz to 96 MHz, with a maximum upstream throughput of approximately 1 Gbps. Each upstream and downstream channel is a broadcast channel. Frames transmitted on the downstream channel by the CMTS are received by all cable modems receiving that channel; since there is just a single CMTS transmitting into the downstream channel, however, there is no multiple access problem. The upstream direction, however, is more interesting and technically challenging, since multiple cable modems share the same upstream channel (frequency) to the CMTS, and thus collisions can potentially occur.
+> - DOCSIS 采用 FDM 进行信道的划分——将上行、下行网络段划分为多个不同频率的信道
+> - 下行信道：
+> 	- 信道频率在 24MHz 到192MHz，最大吞吐量 1.6Gbps per channel
+> 	- 下行、上行信道都是广播信道，CMTS 在下行信道中传输的帧被信道上所有接收方调制解调器都能收到；
+> 	- 单一的 CMTS 在下行信道传输可以避免多路访问问题；但反之上行信道的碰撞问题比较复杂；
+> 	- 在下行 MAP 帧中：CMTS 告诉各节点微时隙分配方案，分配给各站点的上行微时隙
+> 	- 另外：头端传输下行数据（给各个用户）
+> - 上行信道：
+> 	- 信道频率在 6.4MHz 到 96MHz，最大吞吐量约 1Gbps.
+> 	- 采用 TDM 的方式将上行信道分成若干微时隙：MAP 指定
+> 	- 站点采用分配给它的微时隙上行数据传输：分配
+> 	- 在特殊的上行微时隙中，各站点请求上行微时隙：竞争
+> 	- 各站点对于该时隙的使用是随机访问的
+> 	- 一旦碰撞（请求不成功，结果是：在下行的 MAP 中没有为它分配，则二进制退避）选择时隙上传输
 
-- MAC地址和ARP
-    - 32bit IP地址：
+![[60-Link-layer-and-LAN-DOCSIS.png]]
+As illustrated in Figure 6.14, each upstream channel is divided into intervals of time (TDM-like), each containing a sequence of mini-slots during which cable modems can transmit to the CMTS. The CMTS explicitly grants permission to individual cable modems to transmit during specific mini-slots. The CMTS accomplishes this by sending a control message known as a MAP message on a downstream channel to specify which cable modem (with data to send) can transmit during which mini-slot for the interval of time specified in the control message. Since mini-slots are explicitly allocated to cable modems, the CMTS can ensure there are no colliding transmissions during a mini-slot.
+> 上行线路划分为时间间隔，每个时间间隔有一个微时隙序列，电缆 modem 在微时隙中向 CMTS 传输帧。
+> CMTS 显式地允许每个电缆 modem 在特定的微时隙中传输——在下行信道中通过发送 MAP 报文，控制指定的电缆 modem 获得微时隙中传输指定时间间隔的权限。——轮询的思路，从而确保没有碰撞。
+
+如何确定电缆 modem 有数据要发送？This is accomplished by having cable modems send mini-slot-request frames to the CMTS during a special set of interval mini-slots that are dedicated for this purpose, as shown in Figure 6.14. These mini-slot-request frames are transmitted in a random access manner and so may collide with each other. A cable modem can neither sense whether the upstream channel is busy nor detect collisions. Instead, the cable modem infers that its mini-slot-request frame experienced a collision if it does not receive a response to the requested allocation in the next downstream control message. When a collision is inferred, a cable modem uses binary exponentia backoff to defer the retransmission of its mini-slot-request frame to a future time slot. When there is little traffic on the upstream channel, a cable modem may actually transmit data frames during slots nominally assigned for mini-slot-request frames (and thus avoid having to wait for a mini-slot assignment).
+> - 电缆 modem 在特定的微时隙间隔内，发送微时隙间隔请求——获取发送权。
+> - 这些微时隙请求帧是随机接入的方式进行传输，因此可能互相碰撞。然而电缆 modem 既不能侦听上行信道是否繁忙，也不能检测碰撞。
+> - 事实上，电缆 modem 如果没有在下一个下行控制报文中收到请求分配的响应，于是推断出微时隙请求帧发生了碰撞——当检测到碰撞，就使用二进制指数回退将微时隙请求帧延后重新发送。
+
+## 6.4 交换局域网
+
+链路层设备如链路层交换机等，不识别网络层地址，因此 RIP、OSPF 这类路由选择算法无法用于确定链路层帧的路径——因而需要链路层地址转发链路层帧。
+
+### 链路层寻址和ARP
+
+- MAC地址
+    - IP地址：
         - 网络层地址
-        - 前n-1跳：用于使数据报到达目的IP子网 —— IP地址的网络号部分
+        - 前 n-1 跳：用于使数据报到达目的 IP 子网
         - 最后一跳：到达子网中的目标节点 —— IP地址的主机号部分
     - LAN（MAC/物理/以太网）地址：
-        - 用于使帧从一个网卡传递到与其物理连接的另一个网卡（在同一个物理网络中）
+        - 用于使帧从一个网卡传递到与其物理连接的另一个网卡（在同一个物理网络中）（注意到，并不是每个主机或路由器都由链路层地址，实际上链路层地址与适配器一一对应）
         - 48bit MAC地址固化在适配器的ROM，有时也可以通过软件设定
-        - 理论上全球任何2个网卡的MAC地址都不相同
-        - e.g., 1A-2F-BB-76-09-AD <-- 16进制表示（每一位代表4个bits）
+            - 理论上全球任何2个网卡的 MAC 地址都不相同
+        - 链路层交换机的任务是在主机与路由器之间承载链路层帧，即主机或路由器不必明确地将帧寻址到具体的交换机：
+        - ![[60-Link-layer-and-LAN-switcher.png]]
 
-网络地址和mac地址分离
-- IP地址和MAC地址的作用不同
-    - a) IP地址是分层的
-        - 一个子网所有站点网络号一致，路由聚集，减少路由表
-            - 需要一个网络中的站点地址网络号一致，如果捆绑需要定制网卡非常麻烦
-        - 希望网络层地址是配置的；IP地址完成网络到网络的交付
-    - b) mac地址是一个平面的
-        - 网卡在生产时不知道被用于哪个网络，因此给网卡一个唯一的标示，用于区分一个网络内部不同的网卡即可
-        - 可以完成一个物理网络内部的节点到节点的数据交付网络地址和mac地址分离
-- 分离好处
-    - a) 网卡坏了，ip不变，可以捆绑到另外一个网卡的mac上
-    - b) 物理网络还可以除IP之外支持其他网络层协议，链路协议为任意上层网络协议，如IPX等
-- 捆绑的问题
-    - a) 如果仅仅使用IP地址，不用mac地址，那么它仅支持IP协议
-    - b) 每次上电都要重新写入网卡IP地址；
-    - c) 另外一个选择就是不使用任何地址；不用MAC地址，则每到来一个帧都要上传到IP层次，由它判断是不是需要接受，干扰一次
+>[! note] MAC 如何确保不冲突？
+> The answer is that the ==IEEE manages the MAC address space==.
+> In particular, when a company wants to manufacture adapters, it purchases a chunk of the address space consisting of $2^{24}$ addresses for a nominal fee. IEEE allocates the chunk of $2^{24}$ addresses by fixing the first 24 bits of a MAC address and letting the company create unique combinations of the last 24 bits for each adapter.
 
-> 假设网络上要将一个数据包（名为PAC）由北京的一台主机（名称为A，IP地址为IP_A，MAC地址为MAC_A）发送到华盛顿的一台主机（名称为B，IP地址为IP_B，MAC地址为MAC_B）。       
-> 这两台主机之间不可能是直接连接起来的，因而数据包在传递时必然要经过许多中间节点（如路由器，服务器等等），我们假定在传输过程中要经过C1、C2、C3（其MAC地址分别为M1，M2，M3）三个节点。          
-> A在将PAC发出之前，先发送一个ARP请求，找到其要到达IP_B所必须经历的第一个中间节点C1的MAC地址M1，然后在其数据包中封装（Encapsulation）这些地址：IP_A、IP_B，MAC_A和M1。当PAC传到C1后，再由ARP根据其目的IP地址IP_B，找到其要经历的第二个中间节点C2的MAC地址M2，然后再将带有M2的数据包传送到C2。如此类推，直到最后找到带有IP地址为IP_B的B主机的地址MAC_B，最终传送给主机B。
+- 网络地址和 MAC 地址分离
+	- IP 地址和 MAC 地址的结构不同
+		1) IP 地址是分层的
+			- 一个子网所有站点网络号一致，路由聚集，减少路由表的长度
+			- 需要一个网络中的站点地址网络号一致，如果捆绑需要定制网卡非常麻烦
+			- 希望网络层地址是动态配置的，随着主机移动（局域网的网段）变化而变化
+			- IP 地址完成网络到网络的交付
+		2) MAC 地址是扁平的的
+			- 网卡在生产时不知道被用于哪个网络，因此给网卡一个唯一的标示，用于区分一个网络内部不同的网卡即可
+			- 可以完成一个物理网络内部的节点到节点的数据交付网络地址和 MAC 地址分离
+	- 分离好处：
+		1) 网卡坏了，IP 不变，可以捆绑到另外一个 MAC 的网卡上
+		2) 物理网络还可以除 IP 之外支持其他网络层协议，链路协议为任意上层网络协议，如 IPX 等
+	- 捆绑的问题
+		1) 如果仅仅使用 IP 地址，不用 MAC 地址，那么它仅支持 IP 协议
+		2) 每次上电都要重新写入网卡 IP 地址；
+		3) 另外一个选择就是不使用任何地址；不用MAC地址，则每到来一个帧都要上传到IP层次，由它判断是不是需要接受，干扰一次
 
-LAN地址和ARP
-- 局域网上每个适配器都有一个唯一的LAN地址
+- 帧的发送与广播
+	- When an adapter wants to send a frame to some destination adapter, ==the sending adapter inserts the destination adapter’s MAC address into the frame and then sends the frame into the LAN==. Thus, when an adapter receives a frame, it will check to see whether the destination MAC address in the frame matches its own MAC address. If there is a match, the adapter extracts the enclosed datagram and passes the datagram up the protocol stack. If there isn’t a match, the adapter discards the frame, without passing the network-layer datagram up. Thus, the destination only will be interrupted when the frame is received.（要发送给指定目的适配器时，会将目的适配器的 MAC 地址插入帧中再发送到 LAN。当适配器收到帧时，检查其中的 MAC 地址是否匹配，若匹配则提取帧中的数据并上交给网络层；若不匹配，则丢弃。）
+	- However, sometimes a sending adapter does want all the other adapters on the LAN to receive and process the frame it is about to send. In this case, the sending adapter inserts a special MAC broadcast address into the destination address field of the frame. For LANs that use 6-byte addresses (such as Ethernet and 802.11), the broadcast address is a string of 48 consecutive 1s (that is, FF-FF-FF-FF-FF-FF in hexadecimal notation).（若将插入的 MAC 地址设置为 FF-FF-FF-FF-FF-FF，则意味着在LAN中广播该帧）
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211003091929111.png" style="zoom:80%"/>
+- 地址解析协议：Address Resolution Protocol
+	- 提供 IP 地址和 MAC 地址之间的转换：
+	- 在同一个 LAN 的例子：
+		- ![[60-Link-layer-and-LAN-ARP-instra-LAN.png]]
+		- 假设 C 向 A 发送 IP 数据报，则源主机需要向其适配器提供 IP 数据报和目的主机的 MAC 地址，然后由适配器构造成一个包含目的地 MAC 地址的链路层帧，再发送到 LAN 中；
+		- ARP 的作用是，将相同 LAN 上的任何 IP 作为输入，返回相应的 MAC 地址——类似 DNS，但 DNS 支持的主机范围在全世界，而 ARP 只支持当前 LAN；
+		- ARP 解析地址的工具是 ARP 表，在 LAN 上的每个 IP 节点都有一个 ARP 表
+			- ARP 表：包括一些 LAN 节点 IP/MAC 地址的映射 —— `<IP address; MAC address; TTL>`
+			- ![[60-Link-layer-and-LAN-ARP-table.png]]
+			- TTL 时间是指地址映射失效的时间，典型是 20min。20min 内直接使用缓存 —— 高效；20min 后删除 —— 保持最新；
+		- 如果 ARP 表中没有目的主机的表项：
+			- 发送方构造一个 ARP 分组，其中包括发送方和接收方的 IP 地址和 MAC 地址，广播之，从而每个适配器都受到该分组，并将其传递给 ARP 模块，
+			- ARP 模块检查后确定是否与其中的目的地址匹配，若匹配则在自己的 ARP 表中添加源主机的映射，并且单播回送一个正确的 ARP 响应分组，从而让源主机也正确地建立 ARP 映射；
+		- 节点在自己的 ARP 表中，缓存 IP-to-MAC 地址映射关系，直到信息超时
+			- 软状态：靠定期刷新维持的系统状态
+			- 定期刷新周期之间维护的状态信息可能和原有系统不一致
+		- ARP 是即插即用的，即节点自己创建和管理 ARP 的表项，无需网络管理员的干预。
+	- 跨越路由器发送到不同 LAN 的例子：
+		- ![[60-Link-layer-and-LAN-ARP-inter-LAN.png]]
+		- 每台主机仅有一个 IP 地址和一个适配器（即一个 MAC 地址），而路由器对每个端口都有一个 IP 地址，因此路由器中对每个端口都有一个 ARP 模块和适配器；
+		- 子网由掩码划分，其中子网 1 的前缀是 111.111.111，而子网 2 的前缀是 222.222.222。因此考查从子网 1 的一台主机向子网 2 的一台主机发送数据报：
+			- In order for a datagram to go from 111.111.111.111 to a host on Subnet 2, the datagram must first be sent to the router interface 111.111.111.110, which is the IP address of the first-hop router on the path to the final destination. Thus, the appropriate MAC address for the frame is the address of the adapter for router interface 111.111.111.110, namely, E6-E9-00-17- BB-4B. How does the sending host acquire the MAC address for 111.111.111.110? By using ARP, of course!（IP 为111.111.111.111的主机向子网 2发送一个数据报，则应当首先发送到 IP 为111.111.111.110的路由器端口，因此正确的 MAC 地址也应当是该路由器端口的适配器的 MAC 地址。而这个 MAC 地址属于子网 1内部，因此通过 ARP 协议获取）
+			- Once the sending adapter has this MAC address, it creates a frame (containing the datagram addressed to 222.222.222.222) and sends the frame into Subnet 1. The router adapter on Subnet 1 sees that the link-layer frame is addressed to it, and therefore passes the frame to the network layer of the router. Hooray—the IP datagram has successfully been moved from source host to the router!
+			- But we are not finished. We still have to move the datagram from the router to the destination. The router now has to determine the correct interface on which the datagram is to be forwarded. As discussed in Chapter 4, this is done by consulting a forwarding table in the router. The forwarding table tells the router that the datagram is to be forwarded via router interface 222.222.222.220. This interface then passes the datagram to its adapter, which encapsulates the datagram in a new frame and sends the frame into Subnet 2. （在路由器内部如何判断正确的转发接口？路由表！因此该数据报（此时已经被脱去链路层附加的头部）被查表后转发到 IP 为222.222.222.220的接口，然后重新封装新的链路层帧头（因为目的MAC地址发生了改变））
+			- This time, the destination MAC address of the frame is indeed the MAC address of the ultimate destination. And how does the router obtain this destination MAC address? From ARP, of course!
 
-- MAC地址由IEEE管理和分配
-- 制造商购入MAC地址空间（保证唯一性）
-- 类比：
-    - (a)MAC地址：社会安全号、身份证号码
-    - (b)IP地址：通讯地址、住址
-- MAC平面地址 --> 支持移动
-    - 可以将网卡到接到其它网络
-- IP地址有层次 --> 不能移动
-    - 依赖于节点连接的IP子网，与子网的网络号相同（有与其相连的子网相同的网络前缀）
-
-ARP(Address Resolution Protocol)
-- 问题：已知B的IP地址，如何确定B的MAC地址？ARP协议
-    - 在LAN上的每个IP节点都有一个ARP表
-    - ARP表：包括一些LAN节点IP/MAC地址的映射
-        `<IP address; MAC address; TTL>`
-        - TTL时间是指地址映射失效的时间，典型是20min。20min内直接使用缓存 —— 高效；20min后删除 —— 保持最新
-
-ARP协议：在同一个LAN (网络)
-- A要发送帧给B（B的IP地址已知），但B的MAC地址不在A的ARP表中
-- A广播包含B的IP地址的ARP查询包
-    - Destination MAC address = FF-FF-FF-FF-FF-FF
-    - LAN上的所有节点都会收到该查询包
-- B接收到ARP包，回复A自己的MAC地址
-    - 帧发送给A
-    - 用A的MAC地址（单播）
-- A在自己的ARP表中，缓存IP-to-MAC地址映射关系，直到信息超时
-    - 软状态：靠定期刷新维持的系统状态
-    - 定期刷新周期之间维护的状态信息可能和原有系统不一致
-- ARP是即插即用的
-    - 节点自己创建ARP的表项
-    - 无需网络管理员的干预、配置和操作
-
-> 例：路由到其他LAN
-> - Walkthrough：发送数据报：由A通过R到B，假设A知道B的IP地址
-> - 在R上有两个ARP表，分别对应两个LAN
-> - 在源主机的路由表中，发现到目标主机的下一跳时111.111.111.110
-> - 在源主机的ARP表中，发现其MAC地址是E6-E9-00-17-BB-4B, etc
-> 
-> <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211003092755106.png" style="zoom:60%"/>
-> 
-> - 编址：
->     - A创建数据报，源IP地址：A；目标IP地址：B 
->     - A创建一个链路层的帧，目标MAC地址是R，该帧包含A到B的IP数据报
->     - 帧从A发送到R
->     - 帧被R接收到，从中提取出IP分组，交给上层IP协议实体
->     - R转发数据报，数据报源IP地址为A，目标IP地址为B
->     - R创建一个链路层的帧，目标MAC地址为B，帧中包含A到B的IP数据报
-
-### 6.4.2 Ethernet
+### Ethernet
 
 以太网
 - 目前最主流的LAN技术：98%占有率
@@ -762,7 +698,7 @@ Manchester编码 —— 物理层
     - 除非发往同一个目标站点
 - 10Gbps now!
 
-### 6.4.3 switches 链路层交换机
+### switches 链路层交换机
 
 Hub：集线器 （星形）
 - 网段(LAN segments)：可以允许一个站点发送的网络范围
