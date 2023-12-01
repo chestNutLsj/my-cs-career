@@ -594,199 +594,252 @@ As illustrated in Figure 6.14, each upstream channel is divided into intervals o
 
 ### Ethernet
 
-以太网
-- 目前最主流的LAN技术：98%占有率
-- 廉价：30元RMB 100Mbps！
-- 最早广泛应用的LAN技术
-- 比令牌网和ATM网络简单、廉价
-- 带宽不断提升：10M, 100M, 1G, 10G
+特点：
+- 目前最主流的有线 LAN 技术：98%占有率
+- 廉价：30元 RMB 100Mbps！——广泛应用、流行，均摊下来成本很低。
+- 最早广泛应用的 LAN 技术——先发优势
+- 比令牌环和 ATM 网络简单、廉价
+- 带宽不断提升：10M, 100M, 1G, 10G——其它 LAN 技术的优势也可以被以太网吸收
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211003093457375.png" style="zoom:60%"/>
-
-以太网：物理拓扑
-- 总线：在上个世纪90年代中期很流行
+#### 物理拓扑
+- 总线：初代拓扑结构，在上个世纪 80-90年代很流行
+    - 广播局域网
     - 所有节点在一个碰撞域内，一次只允许一个节点发送
     - 可靠性差，如果介质破损（总线长，破损概率大），截面形成信号的反射，发送节点误认为是冲突，总是冲突 —— 需要中继器吸收电磁能量
-- 星型：目前最主流
-    - 连接选择：hub 或者 switch 
-    - 现在一般是交换机在中心
-    - 每个节点以及相连的交换机端口使用（独立的）以太网协议（不会和其他节点的发送产生碰撞）
+- 星型：90年代后期
+    - 连接选择：集线器 Hub 
+    - Hub 是物理层设备，作用于各比特而不是帧——简单地将比特流在输出端口重新生成，抵消传输过程中的能量损耗
+    - 基于集线器的星型拓扑以太网也是广播局域网，一个接口收到比特流，其他接口都要输出；
+    - 仍有碰撞：如果 Hub 从两个不同接口同时收到帧，则在内部出现碰撞，需要源发送方重新发送该帧；
+- 星型：21 世纪
+    - 中心部位：集线器 Hub 改进成交换机 Switch
+    - 交换机每个节点以及相连的交换机端口使用（独立的）以太网协议（不会和其他节点的发送产生碰撞）
+    - 交换机是接收-存储-转发，而不是直接转发；另外交换机只运行在第二层（链路层）
+    - *（不要与网络层交换机混淆，那里只是一个概念，“用于转发分组的机器”，实际上对应的物理实体是路由器或三层交换机）*
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211003093613325.png" style="zoom:60%" />
+![[60-Link-layer-and-LAN-Ethernet-Topo.png]]
 
-以太帧结构
-- 发送方适配器在以太网帧中封装IP数据报，或其他网络层协议数据单元
+![[60-Link-layer-and-LAN-Ethernet-logical-topo.png]]
 
-|preamble|destination address|source address|type|data(payload)|CRC|
-|:---:|:---:|:---:|:---:|:---:|:---:|
+### 以太网帧
 
+**发送方适配器在以太网帧中封装 IP 数据报，或其他网络层协议数据单元**
+
+考虑以下情景：发送方适配器的 MAC 地址为 AA-AA-AA-AA-AA-AA，接收方适配器的 MAC 地址为 BB-BB-BB-BB-BB-BB；发送方适配器封装一个以太网帧，其负载是一个 IP 数据报，然后传递给物理层，接收方适配器从物理层中提取该以太网帧，解封后上传给网络层：
+![[60-Link-layer-and-LAN-Ethernet-frame.png]]
 - 前导码：
-- 7B 10101010 + 1B 10101011
-- 用来同步接收方和发送方的时钟速率
-    - 使得接收方将自己的时钟调到发送端的时钟
-    - 从而可以按照发送端的时钟来接收所发送的帧
-- 地址：6字节源MAC地址，目标MAC地址
-    - 如：帧目标地址=本站MAC地址，或是广播地址，接收，递交帧中的数据到网络层
-    - 否则，适配器忽略该帧
-- 类型：指出高层协（大多情况下是IP，但也支持其它网络层协议Novell IPX和AppleTalk）
+	- 8字节：前 7个均为 10101010，最后一个为 10101011。前 7字节用于“唤醒”接收适配器，并且将其时钟与发送方时钟进行同步
+	- 漂移 drift 问题：发送方适配器传输速率的误差、链路传播和中继器的误差、噪声等等，都会造成接收与发送的不匹配，因此前 7 字节的比特能够锁定发送方适配器的时钟，使得接收方将自己的时钟调到发送端的时钟，从而可以按照发送端的时钟来接收所发送的帧
+	- 第 8个字节的最后两位 `11`，用于题型适配器——大的要来了！
+- 地址：源 MAC 地址、目标 MAC 地址均为 6字节
+	- 接收方收到帧后，检查其中的目标地址，若与本站 MAC 地址相同，或是广播地址，则接收，递交帧中的数据到网络层
+	- 否则，适配器丢弃该帧
+	- 源 MAC 地址在建立 ARP 表时和接收回应帧时有用
+- 类型：
+	- 2字节
+	- 指出高层协议（大多情况下是 IP，但也支持其它网络层协议 Novell IPX 和 AppleTalk，还有 ARP 这个处于链路层和网络层分界处的协议也有独特的类型编号），使得以太网帧中的负载能够正确提交；
+- 数据：
+	- 46~1500 字节
+		- 46 字节要求 IP 数据报的最小长度不小于 46 字节，因此如果不足 46 字节，需要进行填充
+		- 以太网的最大传输单元 MTU=1500 字节，如果 IP 数据报超过1500 字节，就要分片（IPv4允许分片，但 IPv6不允许）
+	- 承载IP数据报或其它网络层协议的数据单元
 - CRC：在接收方校验
-    - 如果没有通过校验，丢弃错误帧
+	- 如果没有通过校验，丢弃错误帧
+	- 4 字节—— $CRC_{32}$ 的生成多项式
 
-以太网：无连接、不可靠的服务（有形介质，出错概率较低）
-- 无连接：帧传输前，发送方和接收方之间没有握手
-- 不可靠：接收方适配器不发送ACKs或NAKs给发送方
-    - 递交给网络层的数据报流可能有gap
-    - 如上层使用像传输层TCP协议这样的rdt，gap会被补上（源主机，TCP实体）
-    - 否则，应用层就会看到gap
-- 以太网的MAC协议：采用二进制退避的CSMA/CD介质访问控制形式
+>[! note] 以太网帧的长度
+>- 头部长度：8+6+6+2=22 字节
+>- 尾部长度：4 字节
+>- 数据长度：46~1500 字节
+>
+>故最小长度 72字节，最大长度 1526字节
 
-802.3 以太网标准：链路和物理层
-- 很多不同的以太网标准
-    - 相同的MAC协议（介质访问控制）和帧结构
-    - 不同的速率：2Mbps、10Mbps 、100Mbps 、1Gbps、10Gbps
-    - 不同的物理层标准
-    - 不同的物理层媒介：光纤，同轴电缆和双绞线
+#### 以太网服务的特点：无连接、不可靠
 
-以太网使用CSMA/CD
-- 没有时隙
-- NIC如果侦听到其它NIC在发送就不发送：载波侦听(carrier sense)
-- 发送时，适配器当侦听到其它适配器在发送就放弃对当前帧的发送，冲突检测(collision detection)
-- 冲突后尝试重传，重传前适配器等待一个随机时间，随机访问(random access)
+- 无连接：帧传输前，发送方和接收方之间没有握手，直接将以太网帧发送到局域网中
+	- 类似：This layer-2 connectionless service is analogous to IP’s layer-3 datagram service and UDP’s layer-4 connectionless service.
+- 不可靠：接收方适配器不发送 ACK 或 NAK 给发送方
+	- 递交给网络层的数据报流可能有 gap
+	- 如上层使用像传输层 TCP 协议这样的 RDT 协议，gap 会被补上（重传，尽管以太网不知道这个数据是全新的还是重传的）
+	- 否则，应用层就会看到 gap（UDP协议）
 
-*具体看上面的CSMA/CD部分*
 
-以太网在低负载和高负载的情况下都较好。低负载时好是由于CDMA/CD，高负载时好是由于引入了交换机，端口可以并发
+#### 以太网技术
 
-10BaseT and 100BaseT
-- 100Mbps速率也被称之为“fast ethernet”
-- T代表双绞线
-- 节点连接到HUB上：“star topology”物理上星型
-- 逻辑上总线型，盒中总线
-- 节点和HUB间的最大距离是100m
+>[! note] 眼花缭乱的以太网技术缩写词
+> 10BASE-T, 10BASE-2, 100BASE-T, 1000BASE-LX, 10GBASE-T and 40GBASE-T.
+> - The first part of the acronym refers to the speed of the standard: 10, 100, 1000, or 10G, for 10 Megabit (per second), 100 Megabit, Gigabit, 10 Gigabit and 40 Gigibit Ethernet, respectively.数字是指该标准提供的速率，单位是 Mbps，最后一个是 Gbps。 
+> - “BASE” refers to baseband Ethernet, meaning that the physical media only carries Ethernet traffic; almost all of the 802.3 standards are for baseband Ethernet.BASE 指基带baseband 
+> - The final part of the acronym refers to the physical media itself; Ethernet is both a link-layer and a physical-layer specification and is carried over a variety of physical media including coaxial cable, copper wire, and fiber. Generally, a “T” refers to twisted-pair copper wires. 以太网是链路层和物理层的规范，对物理介质也有规定——T 指双绞铜线
+> 
+> 上面提到了 802.3，它是 IEEE 的 CSMA/CD 以太网工作组，对这些杂乱的标准进行了统一化。
+> - 以太网的 MAC 协议：采用二进制退避的 CSMA/CD 协议
+> 	- 没有时隙
+> 	- NIC 如果侦听到其它 NIC 在发送就不发送：载波侦听 (carrier sense)
+> 	- 发送时，适配器当侦听到其它适配器在发送就放弃对当前帧的发送，冲突检测 (collision detection)
+> 	- 冲突后尝试重传，重传前适配器等待一个随机时间，随机访问 (random access)
+> - ==以太网在低负载和高负载的情况下都较好==。低负载时好是由于CDMA/CD，高负载时好是由于引入了交换机，端口可以并发
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211003095952932.png" style="zoom:80%"/>
+- 10BASE-2 和 10BASE-5
+	- The early 10BASE-2 and 10BASE-5 standards specify 10 Mbps Ethernet over two types of coaxial cable（同轴电缆）, each limited in length to 500 meters.限制长度不超过 500 米——传输损耗与噪声
+	- Longer runs could be obtained by using a ***repeater***(转发器)—a physical layer device that receives a signal on the input side, and regenerates the signal on the output side.（repeater 重新生成信号，保持能量强度）
+	- A coaxial cable corresponds nicely to our view of Ethernet as a broadcast medium—all frames transmitted by one interface are received at other interfaces, and Ethernet’s CDMA/CD protocol nicely solves the multiple access problem. Nodes simply attach to the cable, and voila, we have a local area network!
 
-Hubs
-- Hubs本质上是物理层的中继器：
-    - 从一个端口收，转发到所有其他端口
-    - 速率一致
-    - 没有帧的缓存
-    - 在hub端口上没有CSMA/CD机制：适配器检测冲突
-    - 提供网络管理功能
+- 10BaseT and 100BaseT
+	- 100Mbps 速率也被称之为“fast ethernet”（只是当时算快的）
+	- T 代表双绞铜线，后面改进到光纤——代号是 FX, SX, BX
+	- 节点连接到 HUB 上：物理上星型，逻辑上总线型，Hub 内部是总线
+	- 节点和 HUB 间的最大距离是100m（双绞铜线），光纤则是数千米
 
-Manchester编码 —— 物理层
-- 在10BaseT中使用
-- 每一个bit的位时中间有一个信号跳变，传送1时信号周期的中间有一个向下的跳变，传送0时信号周期的中间有一个向上的跳变（为什么要跳变？为了在电磁波信号中将时钟信号通过一些简单的电路抽取出来）
-- 允许在接收方和发送方节点之间进行时钟同步
-    - 节点间不需要集中的和全局的时钟
-- 10Mbps，使用20M带宽，效率50%
-- Hey, this is physical-layer stuff!
+![[60-Link-layer-and-LAN-Ethernet-standards.png]]
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211003100140814.png" style="zoom:60%"/>
+- ***Gigabit Ethernet***: 
+	- an extension to the 10 Mbps and 100 Mbps Ethernet standards.
+	- Offering a raw data rate of 40,000 Mbps, 40 Gigabit Ethernet maintains full compatibility with the huge installed base of Ethernet equipment.最大速率 40Gbps，与所有以太网设备兼容
+	- The standard for Gigabit Ethernet, referred to as IEEE 802.3z, does the following: 
+		- Uses the standard Ethernet frame format and is backward compatible with 10BASE-T and 100BASE-T technologies. This allows for easy integration of Gigabit Ethernet with the existing installed base of Ethernet equipment. 使用标准以太网帧，与 10BAST-T 等保持后向兼容——便于集成和实现该标准
+		- Allows for point-to-point links as well as shared broadcast channels. Point-to-point links use switches while broadcast channels use hubs, as described earlier. In Gigabit Ethernet jargon, hubs are called *buffered distributors*.允许点对点链路共享广播信道，并且集线器开始成为带缓存的分配器
+		- Uses CSMA/CD for shared broadcast channels. In order to have acceptable efficiency, the maximum distance between nodes must be severely restricted. 使用 CSMA/CD 策略，因此严格限制节点之间的最大距离
+		- Allows for full-duplex operation at 40 Gbps in both directions for point-to-point channels. 允许全双工
+		- 编码策略：8B10B
+	- Initially operating over optical fiber, Gigabit Ethernet is now able to run over category 5 UTP cabling (for 1000BASE-T and 10GBASE-T).支持光纤和双绞铜线
 
-100BaseT中的4b5b编码（5个bit代表4个bit）
+>[!note] 交换机的力量：是否需要新的以太网 MAC 协议？
+> As we’ll see shortly, a switch coordinates its transmissions and never forwards more than one frame onto the same interface at any time. Furthermore, modern switches are full-duplex, so that a switch and a node can each send frames to each other at the same time without interference. 
+> > 对于基于交换机的星型拓扑，交换机的策略是存储转发分组交换，交换机会协调帧的传输，在任何时候都不会向相同接口转发超过 1 个帧；
+> > 
+> > 现代交换机是全双工的，因此一台交换机和一个节点能够同时向双方发送帧——不会有干扰。
+> 
+> In other words, in a switch-based Ethernet LAN there are no collisions and, therefore, ***there is no need for a MAC protocol!***
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211003102620272.png" style="zoom:60%"/>
+- Manchester 编码 —— 物理层
+	- 在 10BaseT 中使用
+	- 每一个 bit 的位时中间有一个信号跳变，传送 1 时信号周期的中间有一个向下的跳变，传送 0 时信号周期的中间有一个向上的跳变
+		- 为什么要跳变？为了在电磁波信号中将时钟信号通过一些简单的电路抽取出来——获得时序信息
+		- 允许在接收方和发送方节点之间进行时钟同步——自同步的编码方案
+		- 其它自同步编码方案：曼彻斯特编码、RZ（归零码）、差分曼彻斯特编码
+		- 自同步需要归零，因此周期内不归零的编码方案都不是自同步的
+	- 10Mbps，使用20M 带宽，效率50%
+	- ![[60-Link-layer-and-LAN-code-exhibit.png]]
 
-千兆以太网
-- 采用标准的以太帧格式
-- 允许点对点链路和共享广播信道
-- 物理编码：8b10b编码
-- 在共享模式，继续使用CSMA/CD MAC技术，节点间需要较短距离以提高利用率
-- 交换模式：全双工千兆可用于点对点链路
-    - 站点使用专用信道，基本不会冲突，效率高
-    - 除非发往同一个目标站点
-- 10Gbps now!
+- 块编码
+	- 100BaseT 中的 4b5b 编码（5 个 bit 代表 4 个 bit）
+	- ![[60-Link-layer-and-LAN-ethernet-4b5b.png]]
 
 ### switches 链路层交换机
 
-Hub：集线器 （星形）
-- 网段(LAN segments)：可以允许一个站点发送的网络范围
-    - 在一个碰撞域，同时只允许一个站点在发送（发之前先侦听，做信道检测）
-    - 如果有2个节点同时发送，则会碰撞
-    - 通常拥有相同的前缀，比IP子网更详细的前缀
-- HUB可以级联，所有以hub连到一起的站点处在一个网段/碰撞域（一个碰撞域内一次只能有一个节点发送，两个站点同步发送会导致碰撞，会采用CSMA/CD的方式尝试再次重发）
-    - 骨干hub将所有网段连到了一起
-- 通过hub可扩展节点之间的最大距离
-- 通过HUB，不能将10BaseT和100BaseT的网络连接到一起
+- Hub的碰撞问题
+	- 网段 (LAN segments)：可以允许一个站点发送的网络范围
+		- 在一个碰撞域，同时只允许一个站点在发送——CSMA
+		- 如果有 2 个节点同时发送，则会碰撞
+		- 通常拥有相同的前缀，比 IP 子网更详细的前缀
+	- Hub 可以级联，所有以 Hub 连到一起的站点处在一个网段/碰撞域（一个碰撞域内一次只能有一个节点发送，两个站点同步发送会导致碰撞，会采用 CSMA/CD 的方式尝试再次重发）
+	- 骨干 Hub 将所有网段连到了一起
+		- 通过 Hub 可扩展节点之间的最大距离
+		- 通过 Hub，不能将 10BaseT 和 100BaseT 的网络连接到一起
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211003102803772.png" style="zoom:60%"/>
+#### 交换机的特点
 
-高负载情况下，由于CSMA/CD的限制，一般选择将HUB升级为交换机。（HUB“一发全收”，交换机只会存储帧并转发给确定的端口“选择性转发”，并行性强）
-
-交换机
-- 链路层设备：扮演主动角色（端口执行以太网协议）
-    - 对帧进行存储和转发
-    - 对于到来的帧，检查帧头，根据目标MAC地址进行选择性转发（而HUB是“一发全收”）
-    - 当帧需要向某个（些）网段进行转发，需要使用CSMA/CD进行接入控制
-    - 通常一个交换机端口一个独立网段，允许多个节点同时发送，并发性强
-    - 交换机也可以级联，多级结构中通过自学习连接源站点和目标站点
-- 透明：主机对交换机的存在可以不关心
-    - 通过交换机相联的各节点好像这些站点是直接相联的一样（因为交换机处于链路层，路由节点/主机处于网络层）
-    - 有MAC地址；无IP地址
+- 接收、存储、转发
+	- 链路层设备：扮演主动角色（端口执行以太网协议），与之相对的 Hub 是被动地转发接口的所有数据
+	- 对帧进行缓存，根据链路情况进行转发（避免碰撞）
+	- 选择性转发：对于到来的帧，检查帧头，根据目标 MAC 地址进行选择性转发
+- 接入控制：
+	- 当帧需要向某个（些）网段进行转发，需要使用 CSMA/CD 进行接入控制
+	- 对每个帧进入的链路使用以太网协议，没有碰撞——每条链路都是一个独立的碰撞域
+- 并发性：
+	- 通常一个交换机端口一个独立网段，允许多个节点同时发送，并发性强
+- 多级结构：
+	- 交换机也可以级联，多级结构中通过自学习连接源站点和目标站点
+- **透明**性：
+	- 主机对交换机的存在可以不关心
+	- 通过交换机相联的各节点好像这些站点是直接相联的一样——主机或路由器向另一个主机或路由器直接寻址一个帧，而不是交换机
+- 处于链路层：
+	- 有 MAC 地址；无 IP 地址
 - 即插即用，自学习(self learning)：
-    - 交换机无需配置
+	- 交换机表无需手动配置
+- 全双工
 
-交换机：多路同时传输
-- 主机有一个专用和直接到交换机的连接
-- 交换机缓存到来的帧
-- 对每个帧进入的链路使用以太网协议，没有碰撞；全双工
-    - 每条链路都是一个独立的碰撞域
-    - MAC协议在其中的作用弱化了，基本上就是一个交换设备
-- 交换：A-to-A' 和 B-to-B' 可以同时传输，没有碰撞
+#### 交换机转发、过滤
 
-交换机转发表（转发表是自学习的，不用网络管理员配置）
-- Q：交换机如何知道通过接口1到达A，通过接口5到达B'？
-    - A：每个交换机都有一个交换表 switch table，每个表项：
-        - （主机的MAC地址，到达该MAC经过的接口，时戳）
-        - 比较像路由表！
-- Q：每个表项是如何创建的？如何维护的？
-    - 有点像路由协议？
+- 过滤 filtering
+	- 决定一个帧应该转发到某个接口还是丢弃
+- 转发 forwarding
+	- 决定一个帧被导向哪个接口，并把帧移动到对应接口
 
-交换机：自学习
-- 交换机通过学习得到哪些主机（mac地址）可以通过哪些端口到达
-- 当接收到帧，交换机学习到发送站点所在的端口（网段）
-- 在交换表中记录发送方MAC地址/进入端口映射关系（软状态维护：通过时戳，隔一段时间就删掉这个表项）
+- 交换机转发表：实现过滤和转发功能的基础
+	- 表项的结构：
+		- ![[60-Link-layer-and-LAN-switch-forward-table.png]]
+		- MAC 地址、转发该地址的接口、表项存在的时间
+		- 基于 MAC 地址转发
+	- 转发情况：
+		- 当接收到帧，有三种情况：suppose a frame with destination address `DD-DD-DD-DD-DD-DD` arrives at the switch on interface *x*.
+			1) 表中没有转发到该地址 (`DD-DD-DD-DD-DD-DD`) 的表项：则向除 *x* 外的所有接口，转发该帧的副本——广播之
+			2) 表中存在该地址的表项，但是接口为 *x*：表示帧从包括 `DD-DD-DD-DD-DD-DD` 的网段中到来，无需转发到其他接口——丢弃之
+			3) 表中存在该地址的表项，且接口 *y≠x*：转发到 *y* 接口对应的网段
+		- 举例：查看上图转发表
+			- Suppose that a frame with destination address `62-FE-F7-11-89-A3` arrives at the switch from interface *1*. The switch examines its table and sees that the destination is on the LAN segment connected to interface *1*. ==This means that the frame has already been broadcast on the LAN segment that contains the destination==. The switch therefore filters (that is, discards) the frame. 相同接口的数据报，已经在到达交换机之前在相同网段中进行了广播；
+			- Now suppose a frame with the same destination address arrives from interface 2. The switch again examines its table and sees that the destination is in the direction of interface 1; it therefore forwards the frame to the output buffer preceding interface 1.
+			- 即，交换机在不同接口间转发以太网帧，是单播的，一一对应的。
+	- 如何构造交换机转发表？自学习！
+		1) The switch table is *initially empty*.
+		2) For each incoming frame received on an interface, the switch stores in its table (1) the MAC address in the frame’s source address field, (2) the interface from which the frame arrived, and (3) the current time. In this manner, the switch records in its table the LAN segment on which the sender resides. If every host in the LAN eventually sends a frame, then every host will eventually get recorded in the table. 存储在表项中的内容：源主机 MAC 地址、帧到达的接口、当前时间。
+		3) The switch deletes an address in the table if no frames are received with that address as the source address after some period of time (the ***aging time***). In this manner, if a PC is replaced by another PC (with a different adapter), the MAC address of the original PC will eventually be purged from the switch table.一段时间后没有收到对应源地址的帧，就删除相关表项——保持最新！
 
-    <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211003104914637.png" style="zoom:60%"/>
+#### 链路层交换机提供的高级功能
+- ***Elimination of collisions***. In a LAN built from switches (and without hubs), there is no wasted bandwidth due to collisions! The switches buffer frames and never transmit more than one frame on a segment at any one time. As with a router, the maximum aggregate throughput of a switch is the sum of all the switch interface rates. Thus, switches provide a significant performance improvement over LANs with broadcast links. **消除碰撞**。交换机会缓存帧并在同一网段上只传输一个帧（同一时间），消除了 LAN 中的碰撞——没有因碰撞而浪费的带宽，因此类似路由器，其总速率就是所有接口速率之和。
+- ***Heterogeneous links***. Because a switch isolates one link from another, the different links in the LAN can operate at different speeds and can run over different media. For example, the uppermost switch in Figure 6.15 might have three1 Gbps 1000BASE-T copper links, two 100 Mbps 100BASE-FX fiber links, and one 100BASE-T copper link. Thus, a switch is ideal for mixing legacy equipment with new equipment. **异质链路**。交换机将链路彼此隔离，不同链路因此得以运行不同的速率或媒体——原有设备和新设备可以混用。 
+- ***Management***. In addition to providing enhanced security (see sidebar on Focus on Security), a switch also eases network management. For example, if an adapter malfunctions and continually sends Ethernet frames (called a jabbering adapter), a switch can detect the problem and internally disconnect the malfunctioning adapter. With this feature, the network administrator need not get out of bed and drive back to work in order to correct the problem. Similarly, a cable cut disconnects only that host that was using the cut cable to connect to the switch. In the days of coaxial cable, many a network manager spent hours “walking the line” (or more accurately, “crawling the floor”) to find the cable break that brought down the entire network. Switches also gather statistics on bandwidth usage, collision rates, and traffic types, and make this information available to the network manager. This information can be used to debug and correct problems, and to plan how the LAN should evolve in the future. Researchers are exploring adding yet more management functionality into Ethernet LANs in prototype deployments `[Casado 2007; Koponen 2011]`. **管理功能**。交换机能阻止不停发送帧的适配器——避免洪泛；能检测到失联的适配器——帮助确定断开的链路；能收集带宽使用数据、碰撞率、流量类型——帮助网络管理员调试。
 
-交换机：过滤／转发
-- 当交换机收到一个帧：
-    1. 记录进入链路，发送主机的MAC地址
-    2. 使用目标MAC地址对交换表进行索引
-    3. ```
-       if entry found for destination{   // 选择性转发
-           if dest on segment from which frame arrived{
-               drop the frame // 过滤
-           }
-           else forward the frame on interface indicated // 转发
-       }
-       else flood // 泛洪：除了帧到达的网段，向所有网络接口发送
-       ```
-
-> 自学习，转发的例子：
-> - 帧的目标：A'，不知道其位置在哪：泛洪
-> - 知道目标A对应的链路：选择性发送到那个端口
+>[!note] 交换机毒化
+> When a host is connected to a switch, it typically only receives frames that are intended for it. For example,  when host A sends a frame to host B, and there is an entry for host B in the switch table, then the switch will forward the frame only to host B. If host C happens to be running a sniffer, host C will not be able to sniff this A-to-B frame. Thus, in a switched-LAN environment (in contrast to a broadcast link environment such as 802.11 LANs or hub–based Ethernet LANs), ==it is more difficult for an attacker to sniff frames==.
+> > 交换机使得链路中不同网段的节点之间的帧传递是单播的，因此如果其它网段的节点使用嗅探器试图抓包——将会失败，因此相较于传统的广播链路，交换机使得攻击者更难嗅探到包。
 > 
-> <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211003105023894.png" width=300/>
-> <br>
-> <img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211003105040787.png" width=300/>
+> However, because the switch broadcasts frames that have destination addresses that are not in the switch table, the sniffer at C can still sniff some frames that are not intended for C. Furthermore, a sniffer will be able sniff all Ethernet broadcast frames with broadcast destination address FF–FF–FF–FF–FF–FF.
+> > 但是，交换机会在转发表中不存在对应表项时，广播收到的帧，并且对于要求广播的帧也会进行广播——此时就会被嗅探到。
+> 
+> A well-known attack against a switch, called ***switch poisoning***, is to send tons of packets to the switch with many different bogus source MAC addresses, thereby filling the switch table with bogus entries and leaving no room for the MAC addresses of the legitimate hosts. This causes the switch to broadcast most frames, which can then be picked up by the sniffer `[Skoudis 2006]`. 
+> > 因此可行的嗅探攻击办法就是“交换机毒化”，伪造大量的不同源 MAC 地址的帧，填满交换机表，从而让交换机不停地广播合法的帧——从而得以嗅探成功。
+> 
+> As this attack is rather involved even for a sophisticated attacker, switches are significantly less vulnerable to sniffing than are hubs and wireless LANs.
 
-交换机 vs. 路由器
-- 都是存储转发设备，但层次不同
-    - 交换机：链路层设备（检查链路层头部）
-    - 路由器：网络层设备（检查网络层的头部）
-- 都有转发表：
-    - 交换机：维护交换表，按照MAC地址转发
-        - 执行过滤、自学习和生成树算法
-        - 即插即用；二层设备，速率高
-        - 执行生成树算法，限制广播帧的转发
-        - ARP表项随着站点数量增多而增多
-    - 路由器：路由器维护路由表，执行路由算法
-        - 路由算法能够避免环路，无需执行生成树算法，可以以各种拓扑构建网络
-        - 对广播分组做限制
-        - 不是即插即用的，配置网络地址（子网前缀）
-        - 三层设备，速率低
+#### 交换机 Vs. 路由器
+
+![[60-Link-layer-and-LAN-switches-routers-hosts.png]]
+
+>[! note] 交换机 vs. 路由器
+>- 都是存储转发设备，但层次不同
+>	- 交换机：链路层设备（检查链路层头部）
+>	- 路由器：网络层设备（检查网络层的头部）
+>	- 不过这是传统的分类方式，如今现代交换机的思路仍是“匹配+动作”，但是能够匹配的项从链路层帧、到网络层数据报各自的首部（OpenFlow 能够基于 11 种不同的首部字段进行转发）
+>- 都有转发表：
+>	- 交换机：维护交换表，按照 MAC 地址转发
+>		- 自学习的：即插即用；
+>		- 二层设备，速率高
+>		- 执行生成树算法：限制广播帧的循环转发，将交换网络的活跃节点拓扑组成一棵生成树
+>		- ARP 表项随着站点数量增多而增多——大型交换网络中 ARP 的流量和处理量相当 considerable
+>		- 对于广播风暴不提供任何保护措施：如果某主机出现故障，不停地传输广播帧，交换机会忠实地转发，从而导致整个以太网的崩溃
+>	- 路由器：路由器维护路由表，执行路由算法
+>		- 网络寻址是分层的（MAC 地址是扁平的）：因此即使存在冗余路径，分组也不会通过路由器循环。不过路由表出现错误时，可能会循环，但分组中 TTL 字段避免了无限循环。
+>		- 因此分组不会限制在一棵固定的生成树上，而是会动态地选择最小的生成树——路由选择算法的优势！
+>		- 对广播分组做限制：设置防火墙
+>		- 不是即插即用的，配置网络地址（子网前缀）
+>		- 三层设备，速率低：对分组的处理时间更长
+>- 何时使用？
+>	- 小网络用交换机
+>	- 大网络用路由器
+>
+
+### 虚拟局域网
+
+> [! note] 传统的扁平结构的缺点
+> 前文提到的不论是 MAC 地址的扁平特性、还是交换机基于一张转发表忠实地转发帧，这都表明交换机 LAN 的结构是扁平的。这样的结构存在许多缺点：
+> - ***Lack of traffic isolation***. Although the hierarchy localizes group traffic to within a single switch, broadcast traffic (e.g., frames carrying ARP and DHCP messages or frames whose destination has not yet been learned by a self-learning switch) must still traverse the entire institutional network. Limiting the scope of such broadcast traffic would improve LAN performance. Perhaps more importantly, it also may be desirable to limit LAN broadcast traffic for security/privacy reasons. For example, if one group contains the company’s executive management team and another group contains disgruntled employees running Wireshark packet sniffers, the network manager may well prefer that the executives’ traffic never even reaches employee hosts. This type of isolation could be provided by replacing the center switch in Figure 6.15 with a router. We’ll see shortly that this isolation also can be achieved via a switched (layer 2) solution. 广播流量（如 ARP 报文、DHCP 报文、未学习的转发表项）会传播到该交换机所属的所有网段——浪费巨大，限制广播的范围将有效提升 LAN 的性能。并且更重要的是，出于安全性、隐私性原因，部分主机的广播分组应当针对某些特定主机。之前所学，能够提供这种范围划分的设备是路由器，但是路由器的速度较慢，因此交换机提供了 VLAN 功能进行范围划分。
+> - ***Inefficient use of switches***. If instead of three groups, the institution had 10 groups, then 10 first-level switches would be required. If each group were small, say less than 10 people, then a single 96-port switch would likely be large enough to accommodate everyone, but this single switch would not provide traffic isolation. 如果在用户分组多而组内用户少时，就会出现每个用户分组都要配备一台交换机，每台交换机都要具有所有用户数量的接口——昂贵，而利用率低。
+> - ***Managing users***. If an employee moves between groups, the physical cabling must be changed to connect the employee to a different switch in Figure 6.15. Employees belonging to two groups make the problem even harder. 扁平结构不适用于管理用户。
+> 
+
+
 
 ## 6.5 链路虚拟化：MPLS
 
@@ -800,7 +853,7 @@ MPLS：多协议标记交换。按照标签label来交换分组，而非按照�
 - 在阵列之间增加吞吐（多个可能的路由路径）
 - 通过冗余度增加可靠性
 
-## 6.7 a day in the life of web request
+## 6.7 链路层、网络层、传输层、应用层综合实例
 
 回顾：页面请求的历程（以一个web页面请求的例子：综述！）
 - 目标：标示、回顾和理解涉及到的协议（所有层次），以一个看似简单的场景：请求www页面
