@@ -839,73 +839,185 @@ As illustrated in Figure 6.14, each upstream channel is divided into intervals o
 > - ***Managing users***. If an employee moves between groups, the physical cabling must be changed to connect the employee to a different switch in Figure 6.15. Employees belonging to two groups make the problem even harder. 扁平结构不适用于管理用户。
 > 
 
+支持 VLAN 的交换机：
+- 允许经一个单一的物理局域网基础设施定义多个虚拟局域网，在一个 VLAN 内的主机彼此能够通信，不在同一个 VLAN 的主机彼此不能通信；
+- 在一个基于端口的 VLAN 中，交换机的端口由网络管理员划分成组，每个组构成一个逻辑上的 VLAN，在这个 VLAN 中形成一个逻辑上的广播域。示意图如下：
+	- ![[60-Link-layer-and-LAN-VLAN.png]]
+	- 端口 2~8 属于 EE 专业，9~15 属于 CS 专业
 
+**新的问题**：如何在两个不同的 VLAN 中交换信息？
+- 直接办法：新增一个路由器，将不同 VLAN 连接到不同端口上；
+- 更好的办法：将 VLAN 交换机和路由器由网络管理员统一配置，视作一个既有交换机功能、又有路由器功能的单一设备。
+
+**更新的问题**：如何连接相同 VLAN，但是处于不同物理区域的设备？
+- 第一种方法：在每台交换机上定义一个相同 VLAN 的端口，然后用电缆连接：
+	- ![[60-Link-layer-and-LAN-VLAN-connect.png]]
+	- 不过这种方法的弊端是，拓展性不好，因为要有 N 个 VLAN，就要白白占据 N 个端口，在端口有限的设备上难以达到要求。
+- 第二种方法：VLAN 干线 trunking 连接
+	- ![[60-Link-layer-and-LAN-VLAN-trunking.png]]
+	- 每台交换机只开一个特殊端口，用 trunk 连接，由此处理所有 VLAN 中的帧；
+	- **新新新的问题**：这种情况下要怎么确定帧属于哪个 VLAN？
+		- 802.1Q 出手了！——新新新的以太网帧格式
+		- ![[60-Link-layer-and-LAN-802-1Q.png]]
+		- 在初始的以太网帧的 Type 字段之前，添加了一个 4 字节的 VLAN 标签——现在首部长度是 26 字节，加上尾部 CRC 字段的 4 字节一共添加了 30 字节的控制信息。
+		- VLAN 标签由在 VLAN trunk 发送侧的交换机添加进帧的首部（因此要重新计算 CRC），解析后由 VLAN trunk 接收侧的交换机删除。
+		- VLAN 标签本身由一个标签协议控制符（TPID，2 字节，固定值为 81-00H）、一个标签控制信息字段（12 比特）、一个优先权字段（3 比特，类似 IP 数据报的 TOS 字段 type of service 根据不同的服务提供不同的优先级）
 
 ## 6.5 链路虚拟化：MPLS
 
-MPLS：多协议标记交换。按照标签label来交换分组，而非按照目标IP查询路由表进行存储转发，效率更高
+MPLS：多协议标记交换。按照标签 label 来交换分组，而非按照目标 IP 查询路由表进行存储转发，效率更高。
+
+Multiprotocol Label Switching (MPLS) evolved from a number of industry efforts in the mid-to-late 1990s to improve the forwarding speed of IP routers by adopting a key concept from the world of virtual-circuit networks: a fixed-length label. The goal was not to abandon the destination-based IP datagram-forwarding infrastructure for one based on fixed-length labels and virtual circuits, but to augment it by selectively labeling datagrams and allowing routers to forward datagrams based on fixed-length labels (rather than destination IP addresses) when possible. Importantly, these techniques work hand-in-hand with IP, using IP addressing and routing. The IETF unified these efforts in the MPLS protocol [RFC 3031, RFC 3032], effectively blending VC techniques into a routed datagram network.
+
+![[60-Link-layer-and-LAN-MPLS-header.png]]
+- Figure 6.28 shows that a link-layer frame transmitted between MPLS-capable devices has a small MPLS header added between the layer-2 (e.g., Ethernet) header and layer-3 (i.e., IP) header. RFC 3032 defines the format of the MPLS header for such links; headers are defined for ATM and frame-relayed networks as well in other RFCs. Among the fields in the MPLS header are the label, 3 bits reserved for experimental use, a single S bit, which is used to indicate the end of a series of “stacked” MPLS headers (an advanced topic that we’ll not cover here), and a time-to-live field.
+- It’s immediately evident from Figure 6.28 that an MPLS-enhanced frame can only be sent between routers that are both MPLS capable (since a non-MPLS-capable router would be quite confused when it found an MPLS header where it had expected to find the IP header!). An MPLS-capable router is often referred to as a labelswitched router, since it forwards an MPLS frame by looking up the MPLS label in its forwarding table and then immediately passing the datagram to the appropriate output interface. Thus, the MPLS-capable router need not extract the destination IP address and perform a lookup of the longest prefix match in the forwarding table.
+
+But how does a router know if its neighbor is indeed MPLS capable, and how does a router know what label to associate with the given IP destination?
+- ![[60-Link-layer-and-LAN-MPLS-forwarding.png]]
+- In the example in Figure 6.29, routers R1 through R4 are MPLS capable. R5 and R6 are standard IP routers. R1 has advertised to R2 and R3 that it (R1) can route to destination A, and that a received frame with MPLS label 6 will be forwarded to destination A. Router R3 has advertised to router R4 that it can route to destinations A and D, and that incoming frames with MPLS labels 10 and 12, respectively, will be switched toward those destinations. Router R2 has also advertised to router R4 that it (R2) can reach destination A, and that a received frame with MPLS label 8 will be switched toward A. Note that router R4 is now in the interesting position of having two MPLS paths to reach A: via interface 0 with outbound MPLS label 10, and via interface 1 with an MPLS label of 8. The broad picture painted in Figure 6.29 is that IP devices R5, R6, A, and D are connected together via an MPLS infrastructure (MPLS-capable routers R1, R2, R3, and R4) in much the same way that a switched LAN or an ATM network can connect together IP devices. And like a switched LAN or ATM network, the MPLScapable routers R1 through R4 do so *without ever touching the IP header of a packet*.
+
+Thus far, the emphasis of our discussion of MPLS has been on the fact that MPLS performs switching based on labels, without needing to consider the IP address of a packet. The true advantages of MPLS and the reason for current interest in MPLS, however, lie not in the potential increases in switching speeds, but rather in the new traffic management capabilities that MPLS enables. As noted above, R4 has two MPLS paths to A. If forwarding were performed up at the IP layer on the basis of IP address, the IP routing protocols we studied in Chapter 5 would specify only a single, least-cost path to A. ==Thus, MPLS provides the ability to forward packets along routes that would not be possible using standard IP routing protocols==. This is one simple form of traffic engineering using MPLS [RFC 3346; RFC 3272; RFC 2702; Xiao 2000], in which a network operator can override normal IP routing and force some of the traffic headed toward a given destination along one path, and other traffic destined toward the same destination along another path (whether for policy, performance, or some other reason).
 
 ## 6.6 数据中心网络
 
-数万-数十万台主机构成DC网络
+数据中心网络的开支：
+- The cost of a large data center is huge, exceeding $12 million per month for a 100,000 host data center in 2009 [Greenberg 2009a]. Of these costs, about 45 percent can be attributed to the hosts themselves (which need to be replaced every 3–4 years); 25 percent to infrastructure, including transformers, uninterruptable power supplies (UPS) systems, generators for long-term outages, and cooling systems; 15 percent for electric utility costs for the power draw; and 15 percent for networking, including network gear (switches, routers, and load balancers), external links, and transit traffic costs. (In these percentages, costs for equipment are amortized so that a common cost metric is applied for one-time purchases and ongoing expenses such as power.) While networking is not the largest cost, networking innovation is the key to reducing overall cost and maximizing performance [Greenberg 2009a].
 
-在交换机之间，机器阵列之间有丰富的互连措施:
-- 在阵列之间增加吞吐（多个可能的路由路径）
-- 通过冗余度增加可靠性
+数据中心的物理结构：
+- The hosts in data centers, called blades and resembling pizza boxes, are generally commodity hosts that include CPU, memory, and disk storage. The hosts are stacked in racks, with each rack typically having 20 to 40 blades. At the top of each rack, there is a switch, aptly named the Top of Rack (TOR) switch, that interconnects the hosts in the rack with each other and with other switches in the data center. Specifically, each host in the rack has a network interface that connects to its TOR switch, and each TOR switch has additional ports that can be connected to other switches. Today, hosts typically have 40 Gbps or 100 Gbps Ethernet connections to their TOR switches [FB 2019; Greenberg 2015; Roy 2015; Singh 2015]. Each host is also assigned its own data-centerinternal IP address.
+
+数据中心支持的流量：
+- ![[60-Link-layer-and-LAN-DataCenter.png]]
+- The data center network supports two types of traffic: traffic flowing between external clients and internal hosts and traffic flowing between internal hosts. To handle flows between external clients and internal hosts, the data center network includes one or more border routers, connecting the data center network to the public Internet. The data center network therefore interconnects the racks with each other and connects the racks to the border routers. Figure 6.30 shows an example of a data center network.
+
+### 负载均衡
+
+To support requests from external clients, each application is associated with a publicly visible IP address to which clients send their requests and from which they receive responses. Inside the data center, the external requests are first directed to a load balancer whose job it is to distribute requests to the hosts, balancing the load across the hosts as a function of their current load [Patel 2013; Eisenbud 2016]. A large data center will often have several load balancers, each one devoted to a set of specific cloud applications. Such a load balancer is sometimes referred to as a “layer-4 switch” since it makes decisions based on the destination port number (layer 4) as well as destination IP address in the packet. Upon receiving a request for a particular application, the load balancer forwards it to one of the hosts that handles the application. (A host may then invoke the services of other hosts to help process the request.) The load balancer not only balances the work load across hosts, but also provides a NAT-like function, translating the public external IP address to the internal IP address of the appropriate host, and then translating back for packets traveling in the reverse direction back to the clients. This prevents clients from contacting hosts directly, which has the security benefit of hiding the internal network structure and preventing clients from directly interacting with the hosts.
+
+### 结构
+
+For a small data center housing only a few thousand hosts, a simple network consisting of a border router, a load balancer, and a few tens of racks all interconnected by a single Ethernet switch could possibly suffice. But to scale to tens to hundreds of thousands of hosts, a data center often employs a hierarchy of routers and switches, such as the topology shown in Figure 6.30. At the top of the hierarchy, the border router connects to access routers (only two are shown in Figure 6.30, but there can be many more). Below each access router, there are three tiers of switches. Each access router connects to a top-tier switch, and each top-tier switch connects to multiple second-tier switches and a load balancer. Each second-tier switch in turn connects to multiple racks via the racks’ TOR switches (third-tier switches). All links typically use Ethernet for their link-layer and physical-layer protocols, with a mix of copper and fiber cabling. With such a hierarchical design, it is possible to scale a data center to hundreds of thousands of hosts.
+
+Because it is critical for a cloud application provider to continually provide applications with high availability, data centers also include redundant network equipment and redundant links in their designs (not shown in Figure 6.30). For example, each TOR switch can connect to two tier-2 switches, and each access router, tier-1 switch, and tier-2 switch can be duplicated and integrated into the design [Cisco 2012; Greenberg 2009b]. In the hierarchical design in Figure 6.30, observe that the hosts below each access router form a single subnet. In order to localize ARP broadcast traffic, each of these subnets is further partitioned into smaller VLAN subnets, each comprising a few hundred hosts [Greenberg 2009a].
+
+Although the conventional hierarchical architecture just described solves the problem of scale, it suffers from limited host-to-host capacity [Greenberg 2009b]. To understand this limitation, consider again Figure 6.30, and suppose each host connects to its TOR switch with a 10 Gbps link, whereas the links between switches are 100 Gbps Ethernet links. Two hosts in the same rack can always communicate at a full 10 Gbps, limited only by the rate of the hosts’ network interface controllers. However, if there are many simultaneous flows in the data center network, the maximum rate between two hosts in different racks can be much less. To gain insight into this issue, consider a traffic pattern consisting of 40 simultaneous flows between 40 pairs of hosts in different racks. Specifically, suppose each of 10 hosts in rack 1 in Figure 6.30 sends a flow to a corresponding host in rack 5. Similarly, there are ten simultaneous flows between pairs of hosts in racks 2 and 6, ten simultaneous flows between racks 3 and 7, and ten simultaneous flows between racks 4 and 8. If each flow evenly shares a link’s capacity with other flows traversing that link, then the 40 flows crossing the 100 Gbps A-to-B link (as well as the 100 Gbps B-to-C link) will each only receive 100 Gbps / 40 = 2.5 Gbps, which is significantly less than the 10 Gbps network interface rate. The problem becomes even more acute for flows between hosts that need to travel higher up the hierarchy.
+
+There are several possible solutions to this problem:
+- One possible solution to this limitation is to deploy higher-rate switches and routers. But this would significantly increase the cost of the data center, because switches and routers with high port speeds are very expensive. 
+- A second solution to this problem, which can be adopted whenever possible, is to co-locate related services and data as close to one another as possible (e.g., in the same rack or in a nearby rack) [Roy 2015; Singh 2015] in order to minimize inter-rack communication via tier-2 or tier-1 switches. But this can only go so far, as a key requirement in data centers is flexibility in placement of computation and services [Greenberg 2009b; Farrington 2010]. For example, a large-scale Internet search engine may run on thousands of hosts spread across multiple racks with significant bandwidth requirements between all pairs of hosts. Similarly, a cloud computing service (such Amazon Web Services or Microsoft Azure) may wish to place the multiple virtual machines comprising a customer’s service on the physical hosts with the most capacity irrespective of their location in the data center. If these physical hosts are spread across multiple racks, network bottlenecks as described above may result in poor performance.
+- A final piece of the solution is to provide increased connectivity between the TOR switches and tier-2 switches, and between tier-2 switches and tier-1 switches. For example, as shown in Figure 6.31, each TOR switch could be connected to two tier-2 switches, which then provide for multiple link- and switch-disjoint paths between racks. 
+	- ![[60-Link-layer-and-LAN-data-network-topo.png]]
+	- In Figure 6.31, there are four distinct paths between the first tier-2 switch and the second tier-2 switch, together providing an aggregate capacity of 400 Gbps between the first two tier-2 switches. Increasing the degree of connectivity between tiers has two significant benefits: there is both increased capacity and increased reliability (because of path diversity) between switches. In Facebook’s data center [FB 2014; FB 2019], each TOR is connected to four different tier-2 switches, and each tier-2 switch is connected to four different tier-1 switches.
+
+A direct consequence of the increased connectivity between tiers in data center networks is that multi-path routing can become a first-class citizen in these networks. Flows are by default multipath flows. A very simple scheme to achieve multi-path routing is Equal Cost Multi Path (ECMP) [RFC 2992], which performs a randomized next-hop selection along the switches between source and destination. Advanced schemes using finer-grained load balancing have also been proposed [Alizadeh 2014; Noormohammadpour 2018]. While these schemes perform multi-path routing at the flow level, there are also designs that route individual packets within a flow among multiple paths [He 2015; Raiciu 2010]
+
+### 数据中心网络的发展趋势
+
+Data center networking is evolving rapidly, with the trends being driven by cost reduction, virtualization, physical constraints, modularity, and customization.
+
+#### Cost Reduction
+
+In order to reduce the cost of data centers, and at the same time improve their delay and throughput performance, as well as ease of expansion and deployment, Internet cloud giants are continually deploying new data center network designs. Although some of these designs are proprietary, others (e.g., [FB 2019]) are explicitly open or described in the open literature (e.g., [Greenberg 2009b; Singh 2015]). Many important trends can thus be identified.
+
+Figure 6.31 illustrates one of the most important trends in data center networking—the emergence of a hierarchical, tiered network interconnecting the data center hosts. This hierarchy conceptually serves the same purpose as a single (very, very!), large crossbar switch that we studied in Section 4.2.2, allowing any host in the data center to communicate with any other host. But as we have seen, this tiered interconnection network has many advantages over a conceptual crossbar switch, including multiple paths from source to destination and the increased capacity (due to multipath routing) and reliability (due to multiple switch- and link-disjoint paths between any two hosts).
+
+The data center interconnection network is comprised of a large number of smallsized switches. For example, in Google’s Jupiter datacenter fabric, one configuration has 48 links between the ToR switch and its servers below, and connections up to 8 tier-2 switches; a tier-2 switch has links to 256 ToR switches and links up to 16 tier-1 switches [Singh 2015]. In Facebook’s data center architecture, each ToR switch connects up to four different tier-2 switches (each in a different “spline plane”), and each tier-2 switch connects up to 4 of the 48 tier-1 switches in its spline plane; there are four spline planes. Tier-1 and tier-2 switches connect down to a larger, scalable number of tier-2 or ToR switches, respectively, below [FB 2019]. For some of the largest data center operators, these switches are being built in-house from commodity, off-the-shelf, merchant silicon [Greenberg 2009b; Roy 2015; Singh 2015] rather than being purchased from switch vendors.
+
+A multi-switch layered (tiered, multistage) interconnection network such as that in Figure 6.31 and as implemented in the data center architectures discussed above is known as Clos networks, named after Charles Clos, who studied such networks [Clos 1953] in the context of telephony switching. Since then, a rich theory of Clos networks has been developed, finding additional use in data center networking and in multiprocessor interconnection networks.
+
+#### Centralized SDN Control and Management
+
+Because a data center is managed by a single organization, it is perhaps natural that a number of the largest data center operators, including Google, Microsoft, and Facebook, are embracing the notion of SDN-like logically centralized control. Their architectures also reflect a clear separation of a data plane (comprised of relatively simple, commodity switches) and a software-based control plane, as we saw in Section 5.5. Due to the immense-scale of their data centers, automated configuration and operational state management, as we encountered in Section 5.7, are also crucial.
+
+#### Virtualization
+
+Virtualization has been a driving force for much of the growth of cloud computing and data center networks more generally. Virtual Machines (VMs) decouple software running applications from the physical hardware. This decoupling also allows seamless migration of VMs between physical servers, which might be located on different racks. Standard Ethernet and IP protocols have limitations in enabling the movement of VMs while maintaining active network connections across servers. Since all data center networks are managed by a single administrative authority, an elegant solution to the problem is to treat the entire data center network as a single, flat, layer-2 network. Recall that in a typical Ethernet network, the ARP protocol maintains the binding between the IP address and hardware (MAC) address on an interface. To emulate the effect of having all hosts connect to a “single” switch, the ARP mechanism is modified to use a DNS style query system instead of a broadcast, and the directory maintains a mapping of the IP address assigned to a VM and which physical switch the VM is currently connected to in the data center network. Scalable schemes that implement this basic design have been proposed in [Mysore 2009; Greenberg 2009b] and have been successfully deployed in modern data centers.
+
+#### Physical Constraints
+
+Unlike the wide area Internet, data center networks operate in environments that not only have very high capacity (40 Gbps and 100 Gbps links are now commonplace) but also have extremely low delays (microseconds). Consequently, buffer sizes are small and congestion control protocols such as TCP and its variants do not scale well in data centers. In data centers, congestion control protocols have to react fast and operate in extremely low loss regimes, as loss recovery and timeouts can lead to extreme inefficiency. Several approaches to tackle this issue have been proposed and deployed, ranging from data center-specific TCP variants [Alizadeh 2010] to implementing Remote Direct Memory Access (RDMA) technologies on standard Ethernet [Zhu 2015; Moshref 2016; Guo 2016]. Scheduling theory has also been applied to develop mechanisms that decouple flow scheduling from rate control, enabling very simple congestion control protocols while maintaining high utilization of the links [Alizadeh 2013; Hong 2012].
+
+#### Hardware Modularity and Customization
+
+Another major trend is to employ shipping container–based modular data centers (MDCs) [YouTube 2009; Waldrop 2007]. In an MDC, a factory builds, within a standard 12-meter shipping container, a “mini data center” and ships the container to the data center location. Each container has up to a few thousand hosts, stacked in tens of racks, which are packed closely together. At the data center location, multiple containers are interconnected with each other and also with the Internet. Once a prefabricated container is deployed at a data center, it is often difficult to service. Thus, each container is designed for graceful performance degradation: as components (servers and switches) fail over time, the container continues to operate but with degraded performance. When many components have failed and performance has dropped below a threshold, the entire container is removed and replaced with a fresh one.
+
+Building a data center out of containers creates new networking challenges. With an MDC, there are two types of networks: the container-internal networks within each of the containers and the core network connecting each container [Guo 2009; Farrington 2010]. Within each container, at the scale of up to a few thousand hosts, it is possible to build a fully connected network using inexpensive commodity Gigabit Ethernet switches. However, the design of the core network, interconnecting hundreds to thousands of containers while providing high host-to-host bandwidth across containers for typical workloads, remains a challenging problem. A hybrid electrical/optical switch architecture for interconnecting the containers is described in [Farrington 2010].
+
+Another important trend is that large cloud providers are increasingly building or customizing just about everything that is in their data centers, including network adapters, switches routers, TORs, software, and networking protocols [Greenberg 2015; Singh 2015]. Another trend, pioneered by Amazon, is to improve reliability with “availability zones,” which essentially replicate distinct data centers in different nearby buildings. By having the buildings nearby (a few kilometers apart), transactional data can be synchronized across the data centers in the same availability zone while providing fault tolerance [Amazon 2014]. Many more innovations in data center design are likely to continue to come.
 
 ## 6.7 链路层、网络层、传输层、应用层综合实例
 
-回顾：页面请求的历程（以一个web页面请求的例子：综述！）
-- 目标：标示、回顾和理解涉及到的协议（所有层次），以一个看似简单的场景：请求www页面
-- 场景：学生在校园启动一台笔记本电脑：请求和接受 www.google.com
+Figure 6.32 illustrates our setting: a student, Bob, connects a laptop to his school’s Ethernet switch and downloads a Web page (say the home page of `www.google.com`). As we now know, there’s a lot going on “under the hood” to satisfy this seemingly simple request.
 
-日常场景
+![[60-Link-layer-and-LAN-Web-request.png]]
 
-<img src="http://knight777.oss-cn-beijing.aliyuncs.com/img/image-20211003110344335.png" style="zoom:90%"/>
+### 预备：DHCP、UDP、IP、Ethernet
 
-1. 连接到互联网
-- 笔记本需要一个IP地址，第一跳路由器的IP地址，DNS的地址：采用DHCP
-- DHCP请求被封装在UDP中，进而封装在IP，进而封装在802.3以太网帧中
-- 以太网的帧在LAN上广播(destination: FFFFFFFFFFFF)，被运行中的DHCP服务器接收到
-- 以太网帧中解封装IP分组，解封装UDP，解封装DHCP
-- DHCP 服务器生成DHCP ACK 包括客户端IP地址，第一跳路由器IP地址和DNS名字服务器地址
-- 在DHCP服务器封装，帧通过LAN转发（交换机学习）在客户端段解封装
-- 客户端接收DHCP ACK应答
-- 此时：客户端便有了IP地址，知道了DNS域名服务器的名字和IP地址第一跳路由器的IP地址
+Let’s suppose that Bob boots up his laptop and then connects it to an Ethernet cable connected to the school’s Ethernet switch, which in turn is connected to the school’s router, as shown in Figure 6.32. The school’s router is connected to an ISP, in this example, comcast.net. In this example, comcast.net is providing the DNS service for the school; thus, the DNS server resides in the Comcast network rather than the school network. We’ll assume that the DHCP server is running within the router, as is often the case.
+> - Bob 使用自己的笔电，通过以太网电缆链接到学校的以太网交换机，
+> - 这个以太网交换机与学校的路由器相联，
+> - 学校路由器与 ISP 连接，ISP 的名字为 `comcast.net`，其为学校提供 DNS 解析服务，所以本地 DNS 服务器在 `comcast.net` 的子网中，
+> - DHCP 运行在路由器中，用于动态地为主机分配临时 IP 地址。
 
-2. ARP（DNS之前，HTTP之前）
-- 在发送HTTP request请求之前，需要知道 www.google.com 的IP地址：DNS
-- DNS查询被创建，封装在UDP段中，封装在IP数据报中，封装在以太网的帧中。将帧传递给路由器，但是需要知道路由器的接口：MAC地址：ARP
-- ARP查询广播，被路由器接收，路由器用ARP应答，给出其IP地址某个端口的MAC地址
-- 客户端现在知道第一跳路由器MAC地址，所以可以发送DNS查询帧了
+When Bob first connects his laptop to the network, he can’t do anything (e.g., download a Web page) without an IP address. Thus, the first network-related action taken by Bob’s laptop is to run the DHCP protocol to obtain an IP address, as well as other information, from the local DHCP server:
+> Bob 刚连接到网络时，没有 IP 地址，因此什么事也做不成。于是首先要运行的协议就是 DHCP：
 
-3. 使用DNS
-- 包含了DNS查询的IP数据报通过LAN交换机转发，从客户端到第一跳路由器
-- IP数据报被转发，从校园到达comcast网络，路由（路由表被RIP，OSPF，IS-IS 和/或 BGP协议创建）到DNS服务器
-- 被DNS服务器解封装
-- DNS服务器回复给客户端： www.google.com 的IP地址
+1. The operating system on Bob’s laptop creates a DHCP request message (Section 4.3.3) and puts this message within a UDP segment (Section 3.3) with destination port 67 (DHCP server) and source port 68 (DHCP client). The UDP segment is then placed within an IP datagram (Section 4.3.1) with a broadcast IP destination address (255.255.255.255) and a source IP address of 0.0.0.0, since Bob’s laptop doesn’t yet have an IP address. 
+> - Bob 笔电的 OS 创建一个 DHCP 请求信息，其放在 UDP 报文段中，目标端口 67 指向 DHCP 服务器，源端口 68指向 DHCP 客户端；
+> - 之后这个 UDP 段存放在 IP 数据报中，然后使用 IP 地址 255.255.255.255 广播，其中源地址是 0.0.0.0（因为这个笔电目前还没有 IP 地址）
 
-4. TCP连接携带HTTP报文
-- 为了发送HTTP请求，客户端打开到达web服务器的TCP sockect
-- TCP SYN 段（3次握手的第1次握手）域间路由到web服务
-- web服务器用TCP SYNACK应答（3次握手的第2次握手）
-- 客户端再次进行ACK确认的发送（3次握手的第3次握手）
-- TCP连接建立了！
+2. The IP datagram containing the DHCP request message is then placed within an Ethernet frame (Section 6.4.2). The Ethernet frame has a destination MAC addresses of FF:FF:FF:FF:FF: FF so that the frame will be broadcast to all devices connected to the switch (hopefully including a DHCP server); the frame’s source MAC address is that of Bob’s laptop, 00:16:D3:23:68:8A.
+> - 包含 DHCP 请求信息的 IP 数据报被包装在以太网帧中，以太网帧的目标 MAC 地址是 FF:FF:FF:FF:FF:FF（当然也是广播，因为它还不知道 DHCP 服务器的 MAC 地址是什么）
+> - 源 MAC 地址就是这台笔电的适配器的地址 00:16:D3:23:68:8A
 
-5. HTTP请求和应答
-- HTTP请求发送到TCP socket中
-- IP数据报包含HTTP请求，最终路由到 www.google.com
-- IP数据报包含HTTP应答最后被路由到客户端
-- web页面最后显示出来了！
+3. The broadcast Ethernet frame containing the DHCP request is the first frame sent by Bob’s laptop to the Ethernet switch. The switch broadcasts the incoming frame on all outgoing ports, including the port connected to the router.
+> - 这个带有 DHCP 请求新的广播以太网帧是 Bob 的笔电发送给以太网交换机的第一个帧，这意味着以太网交换机的交换机转发表中没有对应的表项，因此它会复制、广播给所有其他接口，
+> - 于是这个帧能够抵达路由器——其中的 DHCP 服务器会响应，分配一个 IP 地址；
 
-## 6.8 总结
+4. The router receives the broadcast Ethernet frame containing the DHCP request on its interface with MAC address 00:22:6B:45:1F:1B and the IP datagram is extracted from the Ethernet frame. The datagram’s broadcast IP destination address indicates that this IP datagram should be processed by upper layer protocols at this node, so the datagram’s payload (a UDP segment) is thus demultiplexed (Section 3.2) up to UDP, and the DHCP request message is extracted from the UDP segment. The DHCP server now has the DHCP request message.
+> - 路由器接收到含有 DHCP 请求的广播帧，此处的接收接口是路由器上 MAC 地址为 `00:22:6B:45:1F:1B` 的适配器，
+> - 从这个以太网帧中提取出 IP 数据报，得知这个数据报是通过广播到达的，表明这个 IP 数据报应当在此节点交由上层协议进行处理，于是数据报中的负载——UDP 字段解复用并交付给 UDP 协议，
+> - UDP 协议会从中提取出 DHCP 请求，得到 Bob 请求 DHCP 分配 IP 地址的请求信息；
 
-- 数据链路层服务背后的原理:
-    - 检错、纠错
-    - 共享广播式信道：多路访问
-    - 链路编址
-- 各种链路层技术的实例和实现
-    - Ethernet
-    - 交换式LANS，VLANs
-    - 虚拟成链路层的网络：MPLS
-- 综合：一个web页面请求的日常场景
+5. Let’s suppose that the DHCP server running within the router can allocate IP addresses in the CIDR (Section 4.3.3) block 68.85.2.0/24. In this example, all IP addresses used within the school are thus within Comcast’s address block. Let’s suppose the DHCP server allocates address 68.85.2.101 to Bob’s laptop. The DHCP server creates a DHCP ACK message (Section 4.3.3) containing this IP address, as well as the IP address of the DNS server (68.87.71.226), the IP address for the default gateway router (68.85.2.1), and the subnet block (68.85.2.0/24) (equivalently, the “network mask”). The DHCP message is put inside a UDP segment, which is put inside an IP datagram, which is put inside an Ethernet frame. The Ethernet frame has a source MAC address of the router’s interface to the home network (00:22:6B:45:1F:1B) and a destination MAC address of Bob’s laptop (00:16:D3:23:68:8A).
+> - DHCP 服务器以 CIDR 块 68.85.2.0/24 分配 IP 地址——学校的所有 IP 地址都在 `comcast.net` 的地址块中（其地址块为 `68.80.0.0/13` ）
+> - 假设 DHCP 服务器分配 68.85.2.101 的 IP 地址给 Bob 的笔电，于是 DHCP 服务器需要生成的响应报文中，应当包含如下地址：
+> 	- 分配的 IP 地址：68.85.2.101
+> 	- 本地 DNS 服务器的 IP 地址：68.87.71.226
+> 	- 默认网关路由器的 IP 地址：68.85.2.1
+> 	- 子网块：68.85.2.0/24
+> - DHCP 服务器已经生成了包含所需信息的 ACK 响应报文，于是通过 UDP、IP、Ethernet 一层层地重新包装，再发送到以太网中；
+> 	- 注意，ACK 响应的以太网帧中，源 MAC 地址是路由器接口的适配器的 MAC 地址 `00:22:6B:45:1F:1B`，
+> 	- 目的 MAC 地址是 Bob 的笔电的适配器的 MAC 地址 `00:16:D3:23:68:8A`
+
+6. The Ethernet frame containing the DHCP ACK is sent (unicast) by the router to the switch. Because the switch is self-learning (Section 6.4.3) and previously received an Ethernet frame (containing the DHCP request) from Bob’s laptop, the switch knows to forward a frame addressed to `00:16:D3:23:68:8A` only to the output port leading to Bob’s laptop.
+> - 包含 DHCP ACK 的以太网帧有了具体的发送目标，于是单播地从路由器发送给交换机，
+> - 交换机是自学习的，因此之前从 DHCP 请求帧中学习到 Bob 笔电的 MAC 地址和来路接口，于是记录了对应的转发表项，因此可以单播地从交换机转发到 Bob 的主机上；
+
+7. Bob’s laptop receives the Ethernet frame containing the DHCP ACK, extracts the IP datagram from the Ethernet frame, extracts the UDP segment from the IP datagram, and extracts the DHCP ACK message from the UDP segment. Bob’s DHCP client then records its IP address and the IP address of its DNS server. It also installs the address of the default gateway into its IP forwarding table (Section 4.1). Bob’s laptop will send all datagrams with destination address outside of its subnet 68.85.2.0/24 to the default gateway. At this point, Bob’s laptop has initialized its networking components and is ready to begin processing the Web page fetch. (Note that only the last two DHCP steps of the four presented in Chapter 4 are actually necessary.)
+> - Bob 的笔电收到了包含 DHCP ACK 的以太网帧，从中一层层地从 Ethernet frame、IP datagram、UDP segment 中由 DHCP 客户端提取出 DHCP ACK 信息，
+> - 现在，Bob 笔电上的 DHCP 服务器记录下分配到的 IP 地址和解析这个 IP 地址的 DNS 服务器的地址，并且在 IP 转发表中安装默认网关的地址（68.85.2.1），
+> - 现在，Bob 笔电上的所有数据报（除了发送给自身所在网段 68.85.2.0/24 的），都将发送给默认网关；
+
+OK，Bob 现在迈出了第一步——初始化好笔电的网络组件（==有了自己的 IP，能够向 DNS 服务器请求网址解析，获知了自己所在的网段和默认转发网关==）。
+
+### 仍在准备：DNS、ARP
+
+When Bob types the URL for `www.google.com` into his Web browser, he begins the long chain of events that will eventually result in Google’s home page being displayed by his Web browser. Bob’s Web browser begins the process by creating a TCP socket (Section 2.7) that will be used to send the HTTP request (Section 2.2) to `www.google.com`. In order to create the socket, Bob’s laptop will need to know the IP address of `www.google.com`. We learned in Section 2.5, that the DNS protocol is used to provide this name-to-IP-address translation service.
+> - Bob 在其网络浏览器中键入谷歌的 URL 后，浏览器将会创建一个 TCP socket，用于向谷歌发送 HTTP 请求，
+> - 在创建这个 TCP socket 之前，首先需要得知 URL `www.google.com` 背后的 IP 地址究竟是什么——DNS 协议闪亮登场！
+
+8. The operating system on Bob’s laptop thus creates a DNS query message (Section 2.5.3), putting the string “ `www.google.com` ” in the question section of the DNS message. This DNS message is then placed within a UDP segment with a destination port of 53 (DNS server). The UDP segment is then placed within an IP datagram with an IP destination address of 68.87.71.226 (the address of the DNS server returned in the DHCP ACK in step 5) and a source IP address of 68.85.2.101.
+> - Bob 的笔电上 OS 创建一个 DNS 请求信息，希望获取 `www.google.com` 的 IP 地址信息，
+> - 该报文首先包装在 UDP 段中，其中目标端口 53 指向 DNS 服务器，接着被打包进 IP 数据报，其中目标 IP 地址是 DNS 服务器的地址 68.87.71.226，源 IP 地址是前文从 DHCP 服务器那里分配得到的 68.85.2.101；
+
+9. Bob’s laptop then places the datagram containing the DNS query message in an Ethernet frame. This frame will be sent (addressed, at the link layer) to the gateway router in Bob’s school’s network. However, even though Bob’s laptop knows the IP address of the school’s gateway router (68.85.2.1) via the DHCP ACK message in step 5 above, it doesn’t know the gateway router’s MAC address. In order to obtain the MAC address of the gateway router, Bob’s laptop will need to use the ARP protocol (Section 6.4.1). 10. Bob’s laptop creates an ARP query message with a target IP address of 68.85.2.1 (the default gateway), places the ARP message within an Ethernet frame with a broadcast destination address (FF:FF:FF:FF:FF:FF) and sends the Ethernet frame to the switch, which delivers the frame to all connected devices, including the gateway router. 11. The gateway router receives the frame containing the ARP query message on the interface to the school network, and finds that the target IP address of 68.85.2.1 in the ARP message matches the IP address of its interface. The gateway router thus prepares an ARP reply, indicating that its MAC address of 00:22:6B:45:1F:1B corresponds to IP address 68.85.2.1. It places the ARP reply message in an Ethernet frame, with a destination address of 00:16:D3:23:68:8A (Bob’s laptop) and sends the frame to the switch, which delivers the frame to Bob’s laptop. 12. Bob’s laptop receives the frame containing the ARP reply message and extracts the MAC address of the gateway router (00:22:6B:45:1F:1B) from the ARP reply message. 13. Bob’s laptop can now (finally!) address the Ethernet frame containing the DNS query to the gateway router’s MAC address. Note that the IP datagram in this frame has an IP destination address of 68.87.71.226 (the DNS server), while the frame has a destination address of 00:22:6B:45:1F:1B (the gateway router). Bob’s laptop sends this frame to the switch, which delivers the frame to the gateway router.
+
+### 还在准备：OSPF/RIP、BGP、DNS Server
+
+14. The gateway router receives the frame and extracts the IP datagram containing the DNS query. The router looks up the destination address of this datagram (68.87.71.226) and determines from its forwarding table that the datagram should be sent to the leftmost router in the Comcast network in Figure 6.32. The IP datagram is placed inside a link-layer frame appropriate for the link connecting the school’s router to the leftmost Comcast router and the frame is sent over this link. 15. The leftmost router in the Comcast network receives the frame, extracts the IP datagram, examines the datagram’s destination address (68.87.71.226) and determines the outgoing interface on which to forward the datagram toward the DNS server from its forwarding table, which has been filled in by Comcast’s intra-domain protocol (such as RIP, OSPF or IS-IS, Section 5.3) as well as the Internet’s inter-domain protocol, BGP (Section 5.4). 16. Eventually the IP datagram containing the DNS query arrives at the DNS server. The DNS server extracts the DNS query message, looks up the name www.google.com in its DNS database (Section 2.5), and finds the DNS resource record that contains the IP address (64.233.169.105) for www.google.com. (assuming that it is currently cached in the DNS server). Recall that this cached data originated in the authoritative DNS server (Section 2.5.2) for google.com. The DNS server forms a DNS reply message containing this hostname-to-IPaddress mapping, and places the DNS reply message in a UDP segment, and the segment within an IP datagram addressed to Bob’s laptop (68.85.2.101). This datagram will be forwarded back through the Comcast network to the school’s router and from there, via the Ethernet switch to Bob’s laptop. 17. Bob’s laptop extracts the IP address of the server www.google.com from the DNS message. Finally, after a lot of work, Bob’s laptop is now ready to contact the www.google.com server!
+
+### 大的终于来了：TCP、HTTP
+
+18. Now that Bob’s laptop has the IP address of www.google.com , it can create the TCP socket (Section 2.7) that will be used to send the HTTP GET message (Section 2.2.3) to www.google.com. When Bob creates the TCP socket, the TCP in Bob’s laptop must first perform a three-way handshake (Section 3.5.6) with the TCP in www.google.com. Bob’s laptop thus first creates a TCP SYN segment with destination port 80 (for HTTP), places the TCP segment inside an IP datagram with a destination IP address of 64.233.169.105 ( www.google.com ), places the datagram inside a frame with a destination MAC address of 00:22:6B:45:1F: 1B (the gateway router) and sends the frame to the switch. 19. The routers in the school network, Comcast’s network, and Google’s network forward the datagram containing the TCP SYN toward www.google.com , using the forwarding table in each router, as in steps 14–16 above. Recall that the router forwarding table entries governing forwarding of packets over the inter-domain link between the Comcast and Google networks are determined by the BGP protocol (Chapter 5). 20. Eventually, the datagram containing the TCP SYN arrives at www.google.com. The TCP SYN message is extracted from the datagram and demultiplexed to the welcome socket associated with port 80. A connection socket (Section 2.7) is created for the TCP connection between the Google HTTP server and Bob’s laptop. A TCP SYNACK (Section 3.5.6) segment is generated, placed inside a datagram addressed to Bob’s laptop, and finally placed inside a link-layer frame appropriate for the link connecting www.google.com to its first-hop router. 21. The datagram containing the TCP SYNACK segment is forwarded through the Google, Comcast, and school networks, eventually arriving at the Ethernet controller in Bob’s laptop. The datagram is demultiplexed within the operating system to the TCP socket created in step 18, which enters the connected state. 22. With the socket on Bob’s laptop now (finally!) ready to send bytes to www.google.com, Bob’s browser creates the HTTP GET message (Section 2.2.3) containing the URL to be fetched. The HTTP GET message is then written into the socket, with the GET message becoming the payload of a TCP segment. The TCP segment is placed in a datagram and sent and delivered to www.google.com as in steps 18–20 above. 23. The HTTP server at www.google.com reads the HTTP GET message from the TCP socket, creates an HTTP response message (Section 2.2), places the requested Web page content in the body of the HTTP response message, and sends the message into the TCP socket. 24. The datagram containing the HTTP reply message is forwarded through the Google, Comcast, and school networks, and arrives at Bob’s laptop. Bob’s Web browser program reads the HTTP response from the socket, extracts the html for the Web page from the body of the HTTP response, and finally (finally!) displays the Web page!

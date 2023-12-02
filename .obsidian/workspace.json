@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "3f682ce3eac8e600",
+        "id": "274bf91e6c5de5fb",
         "type": "tabs",
         "children": [
           {
-            "id": "8078f5930f234535",
+            "id": "569f43ef53660e81",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -44,7 +44,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "TrapContext",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -76,8 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 366.50577545166016,
-    "collapsed": true
+    "width": 366.50577545166016
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -160,8 +159,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 282.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -179,20 +177,30 @@
       "obsidian42-brat:BRAT": false
     }
   },
-  "active": "3d3d978ac964e0aa",
+  "active": "569f43ef53660e81",
   "lastOpenFiles": [
-    "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
     "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-switches-routers-hosts.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-switch-forward-table.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-code-exhibit.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-ethernet-4b5b.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-Ethernet-standards.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-Ethernet-frame.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-Ethernet-logical-topo.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-Ethernet-Topo.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/10-Red-black-tree-Advanced.md",
+    "1-Theory/6-Network/Top-to-down/70-Wireless-and-Mobile-Network.md",
+    "1-Theory/6-Network/Top-to-down/50-Network-layer-Control-plane.md",
+    "1-Theory/6-Network/Top-to-down/80-Network-Security.md",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-Web-request.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-data-network-topo.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-DataCenter.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-MPLS-forwarding.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-MPLS-header.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-802-1Q.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-VLAN-trunking.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-VLAN-connect.png",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-VLAN.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Important-and-hard-problems⭐.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/912历年真题(2016-2023).pdf",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
+    "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
+    "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
+    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-switches-routers-hosts.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/912真题复习笔记.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2010-final.md",
@@ -200,7 +208,6 @@
     "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/30-Qemu-boot-and-compile-process.md",
     "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/10-Exec-env-and-Rust.md",
     "1-Theory/5-OS-principle/rCore-tutorial/0-OS-overview/50-rCore-env-config.md",
-    "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/65-Lowest-Common-Ancestor.md",
     "1-Theory/5-OS-principle/Internal&design-principle/30-并发.md",
     "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/20-Impl-application-prog.md",
@@ -210,14 +217,6 @@
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/10-Usermode-thread-management.md",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/20-Kernelmode-thread-management.md",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/60-Problem-of-concurrence.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/30-SV39-multilevel-page-table.md",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-ARP-inter-LAN.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-ARP-table.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/C-Stack+Queue/40-Stack_Queue.md",
-    "1-Theory/6-Network/Top-to-down/50-Network-layer-control-plane.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/6-文件系统.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/10-Interface.md",
     "1-Theory/6-Network/Data-communication-and-network/考试要点",
     "1-Theory/6-Network/THU-Xu/精简版PPT.pdf",
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets",

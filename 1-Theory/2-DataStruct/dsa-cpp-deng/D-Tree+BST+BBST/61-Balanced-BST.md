@@ -843,7 +843,7 @@ BST 的访问需要稳定的结构——修改导致的结构变化，需要加�
 ![[60E-BBST-Red-black-tree-collapse-to-btree.png]]
 
 ### 红黑树的高度
-- 包含 n 个内部节点的红黑树 T，高度为 O (logn)——BTree 是平衡的，等价地 Red-black Tree 自然也平衡；
+- 包含 n 个内部节点的红黑树 T，高度为 $O (\log n)$ ——BTree 是平衡的，等价地 Red-black Tree 自然也平衡；
 - 若红黑树 T 的高度为 h，对应红高度为 R，黑高度为 H，则有如下关系：H <= h <= R+H <= 2H；
 - 将红黑树 T 收拢成一棵 B 树 $T_B$，则红黑树的黑高度是 $T_B$ 的高度，$T_B$ 的每个超级节点都恰好包含红黑树 T 的一个黑节点；
 - 可以推断得，红黑树的高度 $H\le \lfloor\log_{\lceil \frac{4}{2}\rceil} \frac{n+1}{2}\rfloor+1=\log_{2}(n+1)$ 
