@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "274bf91e6c5de5fb",
+        "id": "5e74bf77459d50eb",
         "type": "tabs",
         "children": [
           {
-            "id": "569f43ef53660e81",
+            "id": "3f0dcbe98e5f80c2",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -76,7 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 366.50577545166016
+    "width": 272.50577545166016
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -93,6 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "1-Theory/6-Network/Data-communication-and-network/Mynote/90-Physics-layer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -109,6 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "1-Theory/6-Network/Data-communication-and-network/Mynote/90-Physics-layer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -129,7 +131,9 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {}
+              "state": {
+                "file": "1-Theory/6-Network/Data-communication-and-network/Mynote/90-Physics-layer.md"
+              }
             }
           }
         ]
@@ -144,7 +148,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "1-Theory/6-Network/Data-communication-and-network/Mynote/90-Physics-layer.md"
+              }
             }
           },
           {
@@ -159,7 +165,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 282.5
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -172,51 +178,51 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "oz-clear-unused-images:Clear Unused Images": false,
       "obsidian-advanced-slides:Show Slide Preview": false,
-      "obsidian-importer:Open Importer": false,
       "obsidian-excalidraw-plugin:新建绘图文件": false,
-      "obsidian42-brat:BRAT": false
+      "obsidian42-brat:BRAT": false,
+      "obsidian-importer:Open Importer": false
     }
   },
-  "active": "569f43ef53660e81",
+  "active": "5402e2346c010391",
   "lastOpenFiles": [
-    "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/第9章+使用电话网和有线电视网进行数据传输.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/第8章+交换.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/第7章-传输介质.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/第6章-带宽利用.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/50-模拟传输.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/90-Physics-layer.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/40-数字传输 1.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/40-数字传输.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/assets/40-数字传输-mlt3.png",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/assets/40-数字传输-4dpam5.png",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/assets/40-数字传输-8b6t.png",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/assets/40-数字传输-2b1q.png",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/assets/40-数字传输-Bipolar.png",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/assets/40-数字传输-Polar-biphase.png",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/assets/40-数字传输-polar-RZ.png",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/assets/40-数字传输-polar-NRZ.png",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/assets/40-数字传输-unipolar-NRZ.png",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/assets/40-数字传输-r-carried-ratio.png",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/第4章+存储系统.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/30-数据和信号.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/30-Data-and-signal 1.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/20-网络模型.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/20-网络模型 1.md",
+    "1-Theory/6-Network/Data-communication-and-network/Mynote/10-绪论.md",
     "1-Theory/6-Network/Top-to-down/70-Wireless-and-Mobile-Network.md",
-    "1-Theory/6-Network/Top-to-down/50-Network-layer-Control-plane.md",
+    "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md",
     "1-Theory/6-Network/Top-to-down/80-Network-Security.md",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-Web-request.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-data-network-topo.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-DataCenter.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-MPLS-forwarding.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-MPLS-header.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-802-1Q.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-VLAN-trunking.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-VLAN-connect.png",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-VLAN.png",
+    "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
+    "0-Assets/Excalidraw/Drawing 2023-11-05 13.12.09.excalidraw.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Concepts-and-syscall.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/00-Process-Overview.md",
+    "1-Theory/6-Network/Top-to-down/50-Network-layer-Control-plane.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/61-Balanced-BST.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/62-BST-Exercise.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Important-and-hard-problems⭐.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/912历年真题(2016-2023).pdf",
     "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
-    "1-Theory/6-Network/Top-to-down/40-Network-layer-Data-plane.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
-    "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
-    "1-Theory/6-Network/Top-to-down/assets/60-Link-layer-and-LAN-switches-routers-hosts.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/912真题复习笔记.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/90-Priority_Queue.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2010-final.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam",
-    "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/30-Qemu-boot-and-compile-process.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/1-App-basic-exec-env/10-Exec-env-and-Rust.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/0-OS-overview/50-rCore-env-config.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/65-Lowest-Common-Ancestor.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/30-并发.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/20-Impl-application-prog.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/40-Manage-SV39-multilevel-pagetable.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/50-Condition-variable-mechanism.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/30-Mutex-lock.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/10-Usermode-thread-management.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/20-Kernelmode-thread-management.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/60-Problem-of-concurrence.md",
     "1-Theory/6-Network/Data-communication-and-network/考试要点",
     "1-Theory/6-Network/THU-Xu/精简版PPT.pdf",
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets",

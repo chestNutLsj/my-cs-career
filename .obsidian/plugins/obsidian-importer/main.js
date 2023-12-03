@@ -49,7 +49,7 @@ ${t.join(`
 					SELECT ztitle, zurlstring FROM ziccloudsyncingobject 
 					WHERE zidentifier = ${t.attachmentInfo.attachmentIdentifier}`,`[**${i.ZTITLE}**](${i.ZURLSTRING})`;case"com.apple.notes.gallery":return i=await this.importer.database.get`
 					SELECT hex(zmergeabledata1) as zhexdata FROM ziccloudsyncingobject 
-					WHERE zidentifier = ${t.attachmentInfo.attachmentIdentifier}`,o=this.importer.decodeData(i.zhexdata,Fn),await o.format();case"com.apple.paper.doc.scan":case"com.apple.paper":i=await this.importer.database.get`
+					WHERE zidentifier = ${t.attachmentInfo.attachmentIdentifier}`,o=this.importer.decodeData(i.zhexdata,Fn),await o.format();case"com.apple.paper.doc.scan":case"com.apple.drawing":case"com.apple.drawing.2":case"com.apple.paper":i=await this.importer.database.get`
 					SELECT z_pk, zhandwritingsummary 
 					FROM (SELECT *, NULL AS zhandwritingsummary FROM ziccloudsyncingobject) 
 					WHERE zidentifier = ${t.attachmentInfo.attachmentIdentifier}`,r=i==null?void 0:i.Z_PK;break;default:i=await this.importer.database.get`
