@@ -621,7 +621,7 @@ As illustrated in Figure 6.14, each upstream channel is divided into intervals o
 
 ![[60-Link-layer-and-LAN-Ethernet-logical-topo.png]]
 
-### 以太网帧
+#### 以太网帧
 
 **发送方适配器在以太网帧中封装 IP 数据报，或其他网络层协议数据单元**
 

@@ -164,7 +164,7 @@
 物理媒体作为信息传递的中介，可以分为两类：
 - 导引型媒体：电波沿着固体媒体前行，如光缆、双绞铜线、同轴电缆等
 - 非导引型媒体：电波在空气或外层空间传播，如 WLAN、数字卫星频道等
-[[第7章-传输介质|传输介质细节]]
+[[70-传输介质|传输介质细节]]
 
 
 ### 接入网和物理媒体
@@ -305,7 +305,7 @@ FDM：在不同频段传输不同信道的数据，数字电视（和数字广�
 	- ![[10-Intro-of-Network-and-Internet-circuit-switched.png]]
 	- Because each link has four circuits, for each link used by the end-to-end connection, the connection gets one fourth of the link’s total transmission capacity for the duration of the connection. Thus, for example, if each link between adjacent switches has a transmission rate of 1 Mbps, then each end-to-end circuit-switch connection gets 250 kbps of dedicated transmission rate.
 
-2. 交换节点和交换节点之间的链路较粗，带宽较大，可以采用时分多路复用、频分多路复用、码分多路复用（多用于接入网）、波分多路复用（多用于光纤（光通信））等多种方法分解成小片 (pieces)。[[第6章-带宽利用|复用的详细介绍]]
+2. 交换节点和交换节点之间的链路较粗，带宽较大，可以采用时分多路复用、频分多路复用、码分多路复用（多用于接入网）、波分多路复用（多用于光纤（光通信））等多种方法分解成小片 (pieces)。[[60-带宽利用|复用的详细介绍]]
 
 3. 通过信令系统，可以挑出每两个节点之间当前没有用的片，串在一起，形成两台主机之间的独享线路  
 
@@ -321,7 +321,7 @@ FDM：在不同频段传输不同信道的数据，数字电视（和数字广�
 网络资源（如带宽）被分成片
 - 为呼叫分配片
 - 如果某个呼叫没有数据，则其资源片处于空闲状态（不共享）
-- 将带宽分成片，怎么分？[[第6章-带宽利用|复用的详细介绍]]
+- 将带宽分成片，怎么分？[[60-带宽利用|复用的详细介绍]]
     - 频分(Frequency-division multiplexing)：将可用通讯频率覆盖范围分为多个频段
     - 时分(Time-division multiplexing)：将节点和节点之间的通信能力按时间分为T为单位的周期，每个T中分为若干小片，每个周期的第i片被第i个用户所使用
     - 波分(Wave-division multiplexing)：采用光电路，将可用波段分为若干个小的波段，每个用户使用其中一个小波段

@@ -26088,6 +26088,9 @@ function getNotesWithTag(app, tag) {
 }
 
 // src/utils/path.ts
+function convertToValidFilename(string) {
+  return string.replace(/[/|\\:*?"<>]/g, "");
+}
 var Path = class {
   constructor(...paths) {
     if (paths.length > 1) {
@@ -26104,7 +26107,7 @@ var Path = class {
       if (path2 === sep || path2 === "") {
         this.data = [];
       } else {
-        this.data = path2.split(sep);
+        this.data = path2.split(sep).filter((d) => d != "");
       }
       this.sep = sep;
     }
@@ -26148,7 +26151,14 @@ var Path = class {
     return this.name.split(".").slice(-1)[0];
   }
   get string() {
-    return this.data.join(this.sep);
+    const firstOne = this.data[0];
+    const result = this.data.map(convertToValidFilename);
+    if (firstOne.length == 2 && firstOne[1] == ":") {
+      console.log(result);
+      result[0] = result[0] + ":";
+      console.log(result);
+    }
+    return result.join(this.sep);
   }
 };
 
@@ -26245,7 +26255,7 @@ var EpubImporterPlugin = class extends import_obsidian3.Plugin {
     import_fs_jetpack3.default.remove(this.parser.tmpPath);
   }
   copyImages() {
-    const imagesPath = new Path(this.vaultPath, this.assetsPath, "/");
+    const imagesPath = new Path("/", this.vaultPath, this.assetsPath);
     import_fs_jetpack3.default.find(this.parser.tmpPath, { matching: ["*.jpg", "*.jpeg", "*.png"] }).forEach((file) => {
       import_fs_jetpack3.default.copy(file, imagesPath.join(new Path(file).name).string, { overwrite: true });
     });
@@ -26262,9 +26272,11 @@ var EpubImporterPlugin = class extends import_obsidian3.Plugin {
     }
     const content = NoteParser.getParseredNote((0, import_obsidian3.htmlToMarkdown)(cpt.html ? cpt.html : ""), epubName, this.assetsPath);
     if (!restricted) {
-      await this.app.vault.create(notePath.withSuffix("md").string, content);
-      this.BookNote += `${"	".repeat(serialNumber.length - 1)}- [[${notePath.string.replace(/\\/g, "/")}|${noteName}]]
+      if (!this.app.vault.getAbstractFileByPath(notePath.withSuffix("md").string)) {
+        await this.app.vault.create(notePath.withSuffix("md").string, content);
+        this.BookNote += `${"	".repeat(serialNumber.length - 1)}- [[${notePath.string.replace(/\\/g, "/")}|${noteName}]]
 `;
+      }
     } else {
       let parentPath = notePath;
       const delta = serialNumber.length - this.settings.granularity;
