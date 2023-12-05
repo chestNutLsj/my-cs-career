@@ -899,15 +899,15 @@ BinNodePosi<T> RedBlack<T>::insert( const T & e ) {
 #### 双红修正
 ![[60E-BBST-Red-black-tree-double-red.png]]
 考查祖父 g=p->parent，和叔父 u=uncle (x)=sibling (p)，根据 u 的颜色分别处理：
-- RR-1:  u->color == B
+- RR-1:  u->color == Black
 	- 此时，x、p、g 的四个孩子（可能包含外部节点）全为黑且黑高度相同；
 	- 则进行 **3+4 重构**，并且将 b 转黑，a 和 c 转红，
-	- 从 B 树的角度理解，双红冲突的本质就是在三叉节点中插入红关键码后黑关键码不再居中（RRB 或 BRR）——**重新染色**即可：
+	- 从 B 树的角度理解，双红冲突的本质就是在三叉节点中插入红关键码后黑关键码不再居中（RRB 或 BRR）——**再重新染色**即可，此后，调整随即完成：
 	- ![[60E-BBST-Red-black-tree-RR1-1.png]]
 	- ![[60E-BBST-Red-black-tree-RR1-2.png]]
 	- ![[60E-BBST-Red-black-tree-RR1-3.png]]
 
-- RR-2:  u->color == R
+- RR-2:  u->color == Red
 	- 此时对应的 B 树中，**等效于超级节点发生上溢**，
 	- 则将 p 与 u 转黑，g 转红，
 	- 在 B 树中等效于节点分裂、g 上升一层：
@@ -1011,11 +1011,13 @@ bool RedBlack<T>::remove( const T& e ) { //从红黑树中删除关键码e
 
 #### 双黑修复
 ![[60E-BBST-Red-black-tree-double-black.png]]
-考查 r 的父亲 p 和兄弟 s，分以下四种情况处理：
+
+考查 x 的父亲 p 和兄弟 s，分以下四种情况处理：
+
 1. BB-1:  s 为黑且至少有一个红孩子t
 	- 通过 3+4 重构后，r 保持黑色，将 a、c 染黑，b 继承 p 的颜色，此时红黑树的性质在全局恢复，删除完成！
 	- ![[60E-BBST-Red-black-tree-BB1-1.png]]
-	- **等价于通过关键码的旋转，消除超级节点的下溢**——对应的 B 树中，p 若为红，其超级节点的两侧必有一黑；p 若为黑，必自成超级节点：
+	- **等价于通过关键码的旋转，消除超级节点的下溢**——对应的 B 树中，p 若为红，其超级节点的两侧必有且仅有一黑；p 若为黑，必自成超级节点：
 	- ![[60E-BBST-Red-black-tree-BB1-2.png]]
 
 2. BB-2R:  s 为黑，且两个孩子均为黑，p 为红
@@ -1026,7 +1028,7 @@ bool RedBlack<T>::remove( const T& e ) { //从红黑树中删除关键码e
 
 3. BB-2B：s 为黑，且两个孩子均为黑，p 为黑
 	- ==s 转红，r 与 p 保持黑==，红黑树的性质在局部恢复；
-	- 对应的 B 树中，**等效于下溢节点与兄弟合并**——合并前 p 和 s 均属与单关键码节点，因此孩子的下溢修复后，父节点可能又会下溢，不过最多下溢至根 O (logn)步：
+	- 对应的 B 树中，**等效于下溢节点与兄弟合并**——==合并前 p 和 s 均属与单关键码节点，因此孩子的下溢修复后，父节点可能又会下溢==，不过最多下溢至根 O (logn)步：
 	- ![[60E-BBST-Red-black-tree-BB2B-1.png]]
 	- ![[60E-BBST-Red-black-tree-BB2B-2.png]]
 

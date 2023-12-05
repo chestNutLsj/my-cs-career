@@ -1,15 +1,3 @@
-## 本章内容
-
-- 理解传输层的工作原理
-    - 多路复用/解复用
-    - 可靠数据传输(reliable data transfer, RDT)
-    - 流量控制
-    - 拥塞控制
-- 学习Internet的传输层协议
-    - UDP：无连接传输
-    - TCP：面向连接的可靠传输
-    - TCP的拥塞控制
-
 ## 3.1 概述和传输层服务
 
 ### 传输服务和协议
@@ -697,7 +685,9 @@ TCP relies on many of the underlying principles discussed in the previous sectio
 ![[30-Transport-layer-TCP-segment-structure.png]]
 - As with UDP, the header includes **source and destination port numbers**, which are used for multiplexing/demultiplexing data from/to upper-layer applications. 
 - Also, as with UDP, the header includes a checksum field.
-- The 32-bit **sequence number field** and the 32-bit **acknowledgment number field** are used by the TCP sender and receiver in implementing a reliable data transfer service. *注：这里第二行的“序号”不是前面讲的 PDU 的序号（不是分组号），而是对字节计数的序号——body 部分的第一个字节在整个字节流中的偏移量 offset（第 $i$ 个 MSS 的第一个字节在字节流中的位置，初始的序号称为 $X$ ， $X$ 在建立连接时两个进程商量好，第 $n$ 个的序号为 $X+n*MSS$ ）*
+- The 32-bit **sequence number field** and the 32-bit **acknowledgment number field** are used by the TCP sender and receiver in implementing a reliable data transfer service. 
+> 注：这里第二行的“序号”不是前面讲的 PDU 的序号（不是分组号），而是对字节计数的序号——body 部分的第一个字节在整个字节流中的偏移量 offset（第 $i$ 个 MSS 的第一个字节在字节流中的位置，初始的序号称为 $X$ ， $X$ 在建立连接时两个进程商量好，第 $n$ 个的序号为 $X+n*MSS$ ）
+
 - The 16-bit **receive window field** is used for flow control. It is used to indicate the number of bytes that a receiver is willing to accept.
 - The 4-bit **header length field** specifies the length of the TCP header in 32-bit words. (指示 TCP 首部的长度) The TCP header can be of variable length due to the TCP options field. (Typically, the options field is empty, so that the length of the ==typical TCP header is 20 bytes==.)
 - The **optional and variable-length options field** is used when a sender and receiver negotiate the maximum segment size (MSS) or as a window scaling factor for use in high-speed networks. A time-stamping option is also defined. See RFC 854 and RFC 1323 for additional details. 
