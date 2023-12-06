@@ -27,7 +27,7 @@ gs[i]:        10  10  10  10  10  10  10  10   5   1
 index:         0   1   2   3   4   5   6   7   8   9  10  11
 P[i]:          P   H   I   L   A   D   E   L   P   H   I   A
 next[i]:
-改进-next[i]:
+imp-next[i]:
 bc[i]:
 ss[i]:
 gs[i]:

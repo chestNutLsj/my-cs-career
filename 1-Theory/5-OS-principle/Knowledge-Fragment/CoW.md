@@ -34,12 +34,3 @@ In the Qt framework, many types are copy-on-write ("implicitly shared" in Qt's t
 ## In computer storage
 
 COW may also be used as the underlying mechanism for snapshots, such as those provided by logical volume management, file systems such as Btrfs and ZFS, and database servers such as Microsoft SQL Server. Typically, the snapshots store only the modified data, and are stored close to the original, so they are only a weak form of incremental backup and cannot substitute for a full backup.
-
-## See also
-* Allocate-on-flush
-* Dirty COW – a computer security vulnerability for the Linux kernel
-* Flyweight pattern
-* Memory management
-* Persistent data structure
-* ReFS
-* Wear leveling
