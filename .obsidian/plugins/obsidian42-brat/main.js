@@ -1,3 +1,4 @@
+"use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -669,21 +670,24 @@ var grabReleaseFileFromRepository = async (repository, version, fileName, debugL
   }
 };
 var grabManifestJsonFromRepository = async (repositoryPath, rootManifest = true, debugLogging = true) => {
-  const manifestJsonPath = GITHUB_RAW_USERCONTENT_PATH + repositoryPath + (rootManifest === true ? "/HEAD/manifest.json" : "/HEAD/manifest-beta.json");
+  const manifestJsonPath = GITHUB_RAW_USERCONTENT_PATH + repositoryPath + (rootManifest ? "/HEAD/manifest.json" : "/HEAD/manifest-beta.json");
   try {
     const response = await (0, import_obsidian.request)({ url: manifestJsonPath });
     return response === "404: Not Found" ? null : await JSON.parse(response);
   } catch (error) {
-    if (error != "Error: Request failed, status 404" && debugLogging) {
-      console.log(`error in grabManifestJsonFromRepository for ${manifestJsonPath}`, error);
+    if (error !== "Error: Request failed, status 404" && debugLogging) {
+      console.log(
+        `error in grabManifestJsonFromRepository for ${manifestJsonPath}`,
+        error
+      );
     }
     return null;
   }
 };
 var grabCommmunityPluginList = async (debugLogging = true) => {
-  const pluginListURL = `https://raw.githubusercontent.com/obsidianmd/obsidian-releases/HEAD/community-plugins.json`;
+  const pluginListUrl = `https://raw.githubusercontent.com/obsidianmd/obsidian-releases/HEAD/community-plugins.json`;
   try {
-    const response = await (0, import_obsidian.request)({ url: pluginListURL });
+    const response = await (0, import_obsidian.request)({ url: pluginListUrl });
     return response === "404: Not Found" ? null : await JSON.parse(response);
   } catch (error) {
     if (debugLogging)
@@ -692,9 +696,9 @@ var grabCommmunityPluginList = async (debugLogging = true) => {
   }
 };
 var grabCommmunityThemesList = async (debugLogging = true) => {
-  const themesURL = `https://raw.githubusercontent.com/obsidianmd/obsidian-releases/HEAD/community-css-themes.json`;
+  const themesUrl = `https://raw.githubusercontent.com/obsidianmd/obsidian-releases/HEAD/community-css-themes.json`;
   try {
-    const response = await (0, import_obsidian.request)({ url: themesURL });
+    const response = await (0, import_obsidian.request)({ url: themesUrl });
     return response === "404: Not Found" ? null : await JSON.parse(response);
   } catch (error) {
     if (debugLogging)
@@ -703,9 +707,9 @@ var grabCommmunityThemesList = async (debugLogging = true) => {
   }
 };
 var grabCommmunityThemeCssFile = async (repositoryPath, betaVersion = false, debugLogging) => {
-  const themesURL = `https://raw.githubusercontent.com/${repositoryPath}/HEAD/theme${betaVersion ? "-beta" : ""}.css`;
+  const themesUrl = `https://raw.githubusercontent.com/${repositoryPath}/HEAD/theme${betaVersion ? "-beta" : ""}.css`;
   try {
-    const response = await (0, import_obsidian.request)({ url: themesURL });
+    const response = await (0, import_obsidian.request)({ url: themesUrl });
     return response === "404: Not Found" ? null : response;
   } catch (error) {
     if (debugLogging)
@@ -714,9 +718,9 @@ var grabCommmunityThemeCssFile = async (repositoryPath, betaVersion = false, deb
   }
 };
 var grabCommmunityThemeManifestFile = async (repositoryPath, debugLogging = true) => {
-  const themesURL = `https://raw.githubusercontent.com/${repositoryPath}/HEAD/manifest.json`;
+  const themesUrl = `https://raw.githubusercontent.com/${repositoryPath}/HEAD/manifest.json`;
   try {
-    const response = await (0, import_obsidian.request)({ url: themesURL });
+    const response = await (0, import_obsidian.request)({ url: themesUrl });
     return response === "404: Not Found" ? null : response;
   } catch (error) {
     if (debugLogging)
@@ -735,10 +739,14 @@ var checksumForString = (str) => {
   return checksum(str).toString();
 };
 var grabChecksumOfThemeCssFile = async (repositoryPath, betaVersion, debugLogging) => {
-  const themeCSS = await grabCommmunityThemeCssFile(repositoryPath, betaVersion, debugLogging);
-  return themeCSS ? checksumForString(themeCSS) : "0";
+  const themeCss = await grabCommmunityThemeCssFile(
+    repositoryPath,
+    betaVersion,
+    debugLogging
+  );
+  return themeCss ? checksumForString(themeCss) : "0";
 };
-var grabLastCommitInfoForAFile = async (repositoryPath, path, debugLogging = true) => {
+var grabLastCommitInfoForFile = async (repositoryPath, path, debugLogging = true) => {
   const url = `https://api.github.com/repos/${repositoryPath}/commits?path=${path}&page=1&per_page=1`;
   try {
     const response = await (0, import_obsidian.request)({ url });
@@ -749,29 +757,30 @@ var grabLastCommitInfoForAFile = async (repositoryPath, path, debugLogging = tru
     return null;
   }
 };
-var grabLastCommitDateForAFile = async (repositoryPath, path) => {
-  const test = await grabLastCommitInfoForAFile(repositoryPath, path);
-  if (test[0].commit.committer.date) {
+var grabLastCommitDateForFile = async (repositoryPath, path) => {
+  var _a;
+  const test = await grabLastCommitInfoForFile(repositoryPath, path);
+  if (test && test.length > 0 && ((_a = test[0].commit.committer) == null ? void 0 : _a.date)) {
     return test[0].commit.committer.date;
-  } else
+  } else {
     return "";
+  }
 };
 
-// src/ui/settings.ts
+// src/settings.ts
 var DEFAULT_SETTINGS = {
   pluginList: [],
   pluginSubListFrozenVersion: [],
   themesList: [],
-  updateAtStartup: false,
-  updateThemesAtStartup: false,
-  ribbonIconEnabled: true,
+  updateAtStartup: true,
+  updateThemesAtStartup: true,
   loggingEnabled: false,
   loggingPath: "BRAT-log",
   loggingVerboseEnabled: false,
-  debuggingMode: true,
+  debuggingMode: false,
   notificationsEnabled: true
 };
-async function addBetaPluginToList(plugin, repositoryPath, specifyVersion = "") {
+function addBetaPluginToList(plugin, repositoryPath, specifyVersion = "") {
   let save = false;
   if (!plugin.settings.pluginList.contains(repositoryPath)) {
     plugin.settings.pluginList.unshift(repositoryPath);
@@ -785,44 +794,49 @@ async function addBetaPluginToList(plugin, repositoryPath, specifyVersion = "") 
     save = true;
   }
   if (save) {
-    plugin.saveSettings();
+    void plugin.saveSettings();
   }
 }
-async function existBetaPluginInList(plugin, repositoryPath) {
+function existBetaPluginInList(plugin, repositoryPath) {
   return plugin.settings.pluginList.contains(repositoryPath);
 }
-async function addBetaThemeToList(plugin, repositoryPath, themeCSS) {
+function addBetaThemeToList(plugin, repositoryPath, themeCss) {
   const newTheme = {
     repo: repositoryPath,
-    lastUpdate: checksumForString(themeCSS)
+    lastUpdate: checksumForString(themeCss)
   };
   plugin.settings.themesList.unshift(newTheme);
-  plugin.saveSettings();
+  void plugin.saveSettings();
 }
-async function existBetaThemeinInList(plugin, repositoryPath) {
-  const testIfThemExists = plugin.settings.themesList.find((t) => t.repo === repositoryPath);
+function existBetaThemeinInList(plugin, repositoryPath) {
+  const testIfThemExists = plugin.settings.themesList.find(
+    (t) => t.repo === repositoryPath
+  );
   return testIfThemExists ? true : false;
 }
 function updateBetaThemeLastUpdateChecksum(plugin, repositoryPath, checksum2) {
   plugin.settings.themesList.forEach((t) => {
     if (t.repo === repositoryPath) {
       t.lastUpdate = checksum2;
-      plugin.saveSettings();
+      void plugin.saveSettings();
     }
   });
 }
 
 // src/utils/notifications.ts
 var import_obsidian2 = require("obsidian");
-function ToastMessage(plugin, msg, timeoutInSeconds = 10, contextMenuCallback) {
-  if (plugin.settings.notificationsEnabled === false)
+function toastMessage(plugin, msg, timeoutInSeconds = 10, contextMenuCallback) {
+  if (!plugin.settings.notificationsEnabled)
     return;
   const additionalInfo = contextMenuCallback ? import_obsidian2.Platform.isDesktop ? "(click=dismiss, right-click=Info)" : "(click=dismiss)" : "";
-  const newNotice = new import_obsidian2.Notice(`BRAT
+  const newNotice = new import_obsidian2.Notice(
+    `BRAT
 ${msg}
-${additionalInfo}`, timeoutInSeconds * 1e3);
+${additionalInfo}`,
+    timeoutInSeconds * 1e3
+  );
   if (contextMenuCallback)
-    newNotice.noticeEl.oncontextmenu = async () => {
+    newNotice.noticeEl.oncontextmenu = () => {
       contextMenuCallback();
     };
 }
@@ -839,29 +853,53 @@ async function isConnectedToInternet() {
 
 // src/features/themes.ts
 var themeSave = async (plugin, cssGithubRepository, newInstall) => {
-  let themeCSS = await grabCommmunityThemeCssFile(cssGithubRepository, true, plugin.settings.debuggingMode);
-  if (!themeCSS)
-    themeCSS = await grabCommmunityThemeCssFile(cssGithubRepository, false, plugin.settings.debuggingMode);
-  if (!themeCSS) {
-    ToastMessage(plugin, "There is no theme.css or theme-beta.css file in the root path of this repository, so there is no theme to install.");
+  let themeCss = await grabCommmunityThemeCssFile(
+    cssGithubRepository,
+    true,
+    plugin.settings.debuggingMode
+  );
+  if (!themeCss)
+    themeCss = await grabCommmunityThemeCssFile(
+      cssGithubRepository,
+      false,
+      plugin.settings.debuggingMode
+    );
+  if (!themeCss) {
+    toastMessage(
+      plugin,
+      "There is no theme.css or theme-beta.css file in the root path of this repository, so there is no theme to install."
+    );
     return false;
   }
-  const themeManifest = await grabCommmunityThemeManifestFile(cssGithubRepository, plugin.settings.debuggingMode);
+  const themeManifest = await grabCommmunityThemeManifestFile(
+    cssGithubRepository,
+    plugin.settings.debuggingMode
+  );
   if (!themeManifest) {
-    ToastMessage(plugin, "There is no manifest.json file in the root path of this repository, so theme cannot be installed.");
+    toastMessage(
+      plugin,
+      "There is no manifest.json file in the root path of this repository, so theme cannot be installed."
+    );
     return false;
   }
   const manifestInfo = await JSON.parse(themeManifest);
   const themeTargetFolderPath = (0, import_obsidian3.normalizePath)(themesRootPath(plugin) + manifestInfo.name);
-  const adapter = plugin.app.vault.adapter;
-  if (await adapter.exists(themeTargetFolderPath) === false)
+  const { adapter } = plugin.app.vault;
+  if (!await adapter.exists(themeTargetFolderPath))
     await adapter.mkdir(themeTargetFolderPath);
-  await adapter.write((0, import_obsidian3.normalizePath)(themeTargetFolderPath + "/theme.css"), themeCSS);
-  await adapter.write((0, import_obsidian3.normalizePath)(themeTargetFolderPath + "/manifest.json"), themeManifest);
-  updateBetaThemeLastUpdateChecksum(plugin, cssGithubRepository, checksumForString(themeCSS));
+  await adapter.write((0, import_obsidian3.normalizePath)(themeTargetFolderPath + "/theme.css"), themeCss);
+  await adapter.write(
+    (0, import_obsidian3.normalizePath)(themeTargetFolderPath + "/manifest.json"),
+    themeManifest
+  );
+  updateBetaThemeLastUpdateChecksum(
+    plugin,
+    cssGithubRepository,
+    checksumForString(themeCss)
+  );
   let msg = ``;
   if (newInstall) {
-    await addBetaThemeToList(plugin, cssGithubRepository, themeCSS);
+    addBetaThemeToList(plugin, cssGithubRepository, themeCss);
     msg = `${manifestInfo.name} theme installed from ${cssGithubRepository}. `;
     setTimeout(() => {
       plugin.app.customCss.setTheme(manifestInfo.name);
@@ -869,44 +907,57 @@ var themeSave = async (plugin, cssGithubRepository, newInstall) => {
   } else {
     msg = `${manifestInfo.name} theme updated from ${cssGithubRepository}.`;
   }
-  plugin.log(msg + `[Theme Info](https://github.com/${cssGithubRepository})`, false);
-  ToastMessage(plugin, `${msg}`, 20, async () => {
+  void plugin.log(msg + `[Theme Info](https://github.com/${cssGithubRepository})`, false);
+  toastMessage(plugin, `${msg}`, 20, () => {
     window.open(`https://github.com/${cssGithubRepository}`);
   });
   return true;
 };
 var themesCheckAndUpdates = async (plugin, showInfo) => {
-  if (await isConnectedToInternet() === false) {
+  if (!await isConnectedToInternet()) {
     console.log("BRAT: No internet detected.");
     return;
   }
   let newNotice;
   const msg1 = `Checking for beta theme updates STARTED`;
-  plugin.log(msg1, true);
+  await plugin.log(msg1, true);
   if (showInfo && plugin.settings.notificationsEnabled)
     newNotice = new import_obsidian3.Notice(`BRAT
 ${msg1}`, 3e4);
   for (const t of plugin.settings.themesList) {
-    let lastUpdateOnline = await grabChecksumOfThemeCssFile(t.repo, true, plugin.settings.debuggingMode);
+    let lastUpdateOnline = await grabChecksumOfThemeCssFile(
+      t.repo,
+      true,
+      plugin.settings.debuggingMode
+    );
     if (lastUpdateOnline === "0")
-      lastUpdateOnline = await grabChecksumOfThemeCssFile(t.repo, false, plugin.settings.debuggingMode);
+      lastUpdateOnline = await grabChecksumOfThemeCssFile(
+        t.repo,
+        false,
+        plugin.settings.debuggingMode
+      );
+    console.log("BRAT: lastUpdateOnline", lastUpdateOnline);
     if (lastUpdateOnline !== t.lastUpdate)
       await themeSave(plugin, t.repo, false);
   }
   const msg2 = `Checking for beta theme updates COMPLETED`;
-  plugin.log(msg2, true);
+  (async () => {
+    await plugin.log(msg2, true);
+  })();
   if (showInfo) {
-    if (plugin.settings.notificationsEnabled)
+    if (plugin.settings.notificationsEnabled && newNotice)
       newNotice.hide();
-    ToastMessage(plugin, msg2);
+    toastMessage(plugin, msg2);
   }
 };
-var themeDelete = async (plugin, cssGithubRepository) => {
-  plugin.settings.themesList = plugin.settings.themesList.filter((t) => t.repo != cssGithubRepository);
-  plugin.saveSettings();
+var themeDelete = (plugin, cssGithubRepository) => {
+  plugin.settings.themesList = plugin.settings.themesList.filter(
+    (t) => t.repo !== cssGithubRepository
+  );
+  void plugin.saveSettings();
   const msg = `Removed ${cssGithubRepository} from BRAT themes list and will no longer be updated. However, the theme files still exist in the vault. To remove them, go into Settings > Appearance and remove the theme.`;
-  plugin.log(msg, true);
-  ToastMessage(plugin, `${msg}`);
+  void plugin.log(msg, true);
+  toastMessage(plugin, `${msg}`);
 };
 var themesRootPath = (plugin) => {
   return (0, import_obsidian3.normalizePath)(plugin.app.vault.configDir + "/themes") + "/";
@@ -919,7 +970,7 @@ var import_obsidian4 = require("obsidian");
 var promotionalLinks = (containerEl, settingsTab = true) => {
   const linksDiv = containerEl.createEl("div");
   linksDiv.style.float = "right";
-  if (settingsTab === false) {
+  if (!settingsTab) {
     linksDiv.style.padding = "10px";
     linksDiv.style.paddingLeft = "15px";
     linksDiv.style.paddingRight = "15px";
@@ -952,8 +1003,12 @@ var AddNewTheme = class extends import_obsidian4.Modal {
     if (this.address === "")
       return;
     const scrubbedAddress = this.address.replace("https://github.com/", "");
-    if (await existBetaThemeinInList(this.plugin, scrubbedAddress)) {
-      ToastMessage(this.plugin, `This plugin is already in the list for beta testing`, 10);
+    if (existBetaThemeinInList(this.plugin, scrubbedAddress)) {
+      toastMessage(
+        this.plugin,
+        `This plugin is already in the list for beta testing`,
+        10
+      );
       return;
     }
     if (await themeSave(this.plugin, scrubbedAddress, true)) {
@@ -965,14 +1020,16 @@ var AddNewTheme = class extends import_obsidian4.Modal {
     this.contentEl.createEl("form", {}, (formEl) => {
       formEl.addClass("brat-modal");
       new import_obsidian4.Setting(formEl).addText((textEl) => {
-        textEl.setPlaceholder("Repository (example: https://github.com/GitubUserName/repository-name");
+        textEl.setPlaceholder(
+          "Repository (example: https://github.com/GitubUserName/repository-name"
+        );
         textEl.onChange((value) => {
           this.address = value.trim();
         });
-        textEl.inputEl.addEventListener("keydown", async (e) => {
+        textEl.inputEl.addEventListener("keydown", (e) => {
           if (e.key === "Enter" && this.address !== " ") {
             e.preventDefault();
-            await this.submitForm();
+            void this.submitForm();
           }
         });
         textEl.inputEl.style.width = "100%";
@@ -984,7 +1041,9 @@ var AddNewTheme = class extends import_obsidian4.Modal {
         }, 10);
       });
       formEl.createDiv("modal-button-container", (buttonContainerEl) => {
-        buttonContainerEl.createEl("button", { attr: { type: "button" }, text: "Never mind" }).addEventListener("click", () => this.close());
+        buttonContainerEl.createEl("button", { attr: { type: "button" }, text: "Never mind" }).addEventListener("click", () => {
+          this.close();
+        });
         buttonContainerEl.createEl("button", {
           attr: { type: "submit" },
           cls: "mod-cta",
@@ -1005,22 +1064,34 @@ var AddNewTheme = class extends import_obsidian4.Modal {
           titleEl.remove();
         });
       }, 50);
-      formEl.addEventListener("submit", async (e) => {
+      formEl.addEventListener("submit", (e) => {
         e.preventDefault();
         if (this.address !== "")
-          await this.submitForm();
+          void this.submitForm();
       });
     });
   }
-  async onClose() {
+  onClose() {
     if (this.openSettingsTabAfterwards) {
-      await this.plugin.app.setting.open();
-      await this.plugin.app.setting.openTabById("obsidian42-brat");
+      this.plugin.app.setting.open();
+      this.plugin.app.setting.openTabById(this.plugin.APP_ID);
     }
   }
 };
 
 // src/ui/SettingsTab.ts
+var createLink = (githubResource, optionalText) => {
+  const newLink = new DocumentFragment();
+  const linkElement = document.createElement("a");
+  linkElement.textContent = githubResource;
+  linkElement.href = `https://github.com/${githubResource}`;
+  newLink.appendChild(linkElement);
+  if (optionalText) {
+    const textNode = document.createTextNode(optionalText);
+    newLink.appendChild(textNode);
+  }
+  return newLink;
+};
 var BratSettingsTab = class extends import_obsidian5.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
@@ -1029,113 +1100,125 @@ var BratSettingsTab = class extends import_obsidian5.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    promotionalLinks(containerEl, true);
-    containerEl.createEl("h1", { text: this.plugin.appName });
-    containerEl.createEl("h2", { text: "by TfTHacker" });
-    new import_obsidian5.Setting(containerEl).setName("Auto-update plugins at startup").setDesc("If enabled all beta plugins will be checked for updates each time Obsidian starts. Note: this does not update frozen version plugins.").addToggle((cb) => {
+    new import_obsidian5.Setting(containerEl).setName("Auto-update plugins at startup").setDesc(
+      "If enabled all beta plugins will be checked for updates each time Obsidian starts. Note: this does not update frozen version plugins."
+    ).addToggle((cb) => {
       cb.setValue(this.plugin.settings.updateAtStartup);
       cb.onChange(async (value) => {
         this.plugin.settings.updateAtStartup = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(containerEl).setName("Auto-update themes at startup").setDesc("If enabled all beta themes will be checked for updates each time Obsidian starts.").addToggle((cb) => {
+    new import_obsidian5.Setting(containerEl).setName("Auto-update themes at startup").setDesc(
+      "If enabled all beta themes will be checked for updates each time Obsidian starts."
+    ).addToggle((cb) => {
       cb.setValue(this.plugin.settings.updateThemesAtStartup);
       cb.onChange(async (value) => {
         this.plugin.settings.updateThemesAtStartup = value;
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(containerEl).setName("Ribbon Button").setDesc("Toggle ribbon button off and on.").addToggle((cb) => {
-      cb.setValue(this.plugin.settings.ribbonIconEnabled);
-      cb.onChange(async (value) => {
-        this.plugin.settings.ribbonIconEnabled = value;
-        if (this.plugin.settings.ribbonIconEnabled === false)
-          this.plugin.ribbonIcon.remove();
-        else
-          this.plugin.showRibbonButton();
-      });
-    });
+    promotionalLinks(containerEl, true);
     containerEl.createEl("hr");
     containerEl.createEl("h2", { text: "Beta Plugin List" });
-    containerEl.createEl("div", { text: `The following is a list of beta plugins added via the command palette "Add a beta plugin for testing" or "Add a beta plugin with frozen version for testing". A frozen version is a specific release of a plugin based on its releease tag. ` });
+    containerEl.createEl("div", {
+      text: `The following is a list of beta plugins added via the command palette "Add a beta plugin for testing" or "Add a beta plugin with frozen version for testing". A frozen version is a specific release of a plugin based on its releease tag. `
+    });
     containerEl.createEl("p");
-    containerEl.createEl("div", { text: `Click the x button next to a plugin to remove it from the list.` });
+    containerEl.createEl("div", {
+      text: `Click the x button next to a plugin to remove it from the list.`
+    });
     containerEl.createEl("p");
     containerEl.createEl("span").createEl("b", { text: "Note: " });
-    containerEl.createSpan({ text: "This does not delete the plugin, this should be done from the  Community Plugins tab in Settings." });
+    containerEl.createSpan({
+      text: "This does not delete the plugin, this should be done from the  Community Plugins tab in Settings."
+    });
     new import_obsidian5.Setting(containerEl).addButton((cb) => {
       cb.setButtonText("Add Beta plugin");
-      cb.onClick(async () => {
+      cb.onClick(() => {
         this.plugin.app.setting.close();
-        await this.plugin.betaPlugins.displayAddNewPluginModal(true, false);
+        this.plugin.betaPlugins.displayAddNewPluginModal(true, false);
       });
     });
-    const pluginSubListFrozenVersionNames = new Set(this.plugin.settings.pluginSubListFrozenVersion.map((x) => x.repo));
+    const pluginSubListFrozenVersionNames = new Set(
+      this.plugin.settings.pluginSubListFrozenVersion.map((x) => x.repo)
+    );
     for (const bp of this.plugin.settings.pluginList) {
       if (pluginSubListFrozenVersionNames.has(bp)) {
         continue;
       }
-      new import_obsidian5.Setting(containerEl).setName(bp).addButton((btn) => {
+      new import_obsidian5.Setting(containerEl).setName(createLink(bp)).addButton((btn) => {
         btn.setIcon("cross");
         btn.setTooltip("Delete this beta plugin");
-        btn.onClick(async () => {
+        btn.onClick(() => {
           if (btn.buttonEl.textContent === "")
             btn.setButtonText("Click once more to confirm removal");
           else {
-            btn.buttonEl.parentElement.parentElement.remove();
-            await this.plugin.betaPlugins.deletePlugin(bp);
+            const { buttonEl } = btn;
+            const { parentElement } = buttonEl;
+            if (parentElement == null ? void 0 : parentElement.parentElement) {
+              parentElement.parentElement.remove();
+              this.plugin.betaPlugins.deletePlugin(bp);
+            }
           }
         });
       });
     }
     new import_obsidian5.Setting(containerEl).addButton((cb) => {
       cb.setButtonText("Add Beta plugin with frozen version");
-      cb.onClick(async () => {
+      cb.onClick(() => {
         this.plugin.app.setting.close();
-        await this.plugin.betaPlugins.displayAddNewPluginModal(true, true);
+        this.plugin.betaPlugins.displayAddNewPluginModal(true, true);
       });
     });
     for (const bp of this.plugin.settings.pluginSubListFrozenVersion) {
-      new import_obsidian5.Setting(containerEl).setName(`${bp.repo} (version ${bp.version})`).addButton((btn) => {
+      new import_obsidian5.Setting(containerEl).setName(createLink(bp.repo, ` (version ${bp.version})`)).addButton((btn) => {
         btn.setIcon("cross");
         btn.setTooltip("Delete this beta plugin");
-        btn.onClick(async () => {
+        btn.onClick(() => {
           if (btn.buttonEl.textContent === "")
             btn.setButtonText("Click once more to confirm removal");
           else {
-            btn.buttonEl.parentElement.parentElement.remove();
-            await this.plugin.betaPlugins.deletePlugin(bp.repo);
+            const { buttonEl } = btn;
+            const { parentElement } = buttonEl;
+            if (parentElement == null ? void 0 : parentElement.parentElement) {
+              parentElement.parentElement.remove();
+              this.plugin.betaPlugins.deletePlugin(bp.repo);
+            }
           }
         });
       });
     }
-    containerEl.createEl("hr");
     containerEl.createEl("h2", { text: "Beta Themes List" });
     new import_obsidian5.Setting(containerEl).addButton((cb) => {
       cb.setButtonText("Add Beta Theme");
-      cb.onClick(async () => {
+      cb.onClick(() => {
         this.plugin.app.setting.close();
         new AddNewTheme(this.plugin).open();
       });
     });
     for (const bp of this.plugin.settings.themesList) {
-      new import_obsidian5.Setting(containerEl).setName(bp.repo).addButton((btn) => {
+      new import_obsidian5.Setting(containerEl).setName(createLink(bp.repo)).addButton((btn) => {
         btn.setIcon("cross");
         btn.setTooltip("Delete this beta theme");
-        btn.onClick(async () => {
+        btn.onClick(() => {
           if (btn.buttonEl.textContent === "")
             btn.setButtonText("Click once more to confirm removal");
           else {
-            btn.buttonEl.parentElement.parentElement.remove();
-            await themeDelete(this.plugin, bp.repo);
+            const { buttonEl } = btn;
+            const { parentElement } = buttonEl;
+            if (parentElement == null ? void 0 : parentElement.parentElement) {
+              parentElement.parentElement.remove();
+              themeDelete(this.plugin, bp.repo);
+            }
           }
         });
       });
     }
-    containerEl.createEl("hr");
     containerEl.createEl("h2", { text: "Monitoring" });
-    new import_obsidian5.Setting(containerEl).setName("Enable Notifications").setDesc("BRAT will provide popup notifications for its various activities. Turn this off means  no notifications from BRAT.").addToggle((cb) => {
+    new import_obsidian5.Setting(containerEl).setName("Enable Notifications").setDesc(
+      "BRAT will provide popup notifications for its various activities. Turn this off means  no notifications from BRAT."
+    ).addToggle((cb) => {
       cb.setValue(this.plugin.settings.notificationsEnabled);
       cb.onChange(async (value) => {
         this.plugin.settings.notificationsEnabled = value;
@@ -1150,8 +1233,8 @@ var BratSettingsTab = class extends import_obsidian5.PluginSettingTab {
       });
     });
     new import_obsidian5.Setting(this.containerEl).setName("BRAT Log File Location").setDesc("Logs will be saved to this file. Don't add .md to the file name.").addSearch((cb) => {
-      cb.setPlaceholder("Example: BRAT-log").setValue(this.plugin.settings.loggingPath).onChange(async (new_folder) => {
-        this.plugin.settings.loggingPath = new_folder;
+      cb.setPlaceholder("Example: BRAT-log").setValue(this.plugin.settings.loggingPath).onChange(async (newFolder) => {
+        this.plugin.settings.loggingPath = newFolder;
         await this.plugin.saveSettings();
       });
     });
@@ -1162,7 +1245,9 @@ var BratSettingsTab = class extends import_obsidian5.PluginSettingTab {
         await this.plugin.saveSettings();
       });
     });
-    new import_obsidian5.Setting(containerEl).setName("Debugging Mode").setDesc("Atomic Bomb level console logging. Can be used for troubleshoting and development.").addToggle((cb) => {
+    new import_obsidian5.Setting(containerEl).setName("Debugging Mode").setDesc(
+      "Atomic Bomb level console logging. Can be used for troubleshoting and development."
+    ).addToggle((cb) => {
       cb.setValue(this.plugin.settings.debuggingMode);
       cb.onChange(async (value) => {
         this.plugin.settings.debuggingMode = value;
@@ -1190,11 +1275,21 @@ var AddNewPluginModal = class extends import_obsidian6.Modal {
     let scrubbedAddress = this.address.replace("https://github.com/", "");
     if (scrubbedAddress.endsWith(".git"))
       scrubbedAddress = scrubbedAddress.slice(0, -4);
-    if (await existBetaPluginInList(this.plugin, scrubbedAddress)) {
-      ToastMessage(this.plugin, `This plugin is already in the list for beta testing`, 10);
+    if (existBetaPluginInList(this.plugin, scrubbedAddress)) {
+      toastMessage(
+        this.plugin,
+        `This plugin is already in the list for beta testing`,
+        10
+      );
       return;
     }
-    const result = await this.betaPlugins.addPlugin(scrubbedAddress, false, false, false, this.version);
+    const result = await this.betaPlugins.addPlugin(
+      scrubbedAddress,
+      false,
+      false,
+      false,
+      this.version
+    );
     if (result) {
       this.close();
     }
@@ -1204,15 +1299,17 @@ var AddNewPluginModal = class extends import_obsidian6.Modal {
     this.contentEl.createEl("form", {}, (formEl) => {
       formEl.addClass("brat-modal");
       new import_obsidian6.Setting(formEl).addText((textEl) => {
-        textEl.setPlaceholder("Repository (example: https://github.com/GitubUserName/repository-name)");
+        textEl.setPlaceholder(
+          "Repository (example: https://github.com/GitubUserName/repository-name)"
+        );
         textEl.onChange((value) => {
           this.address = value.trim();
         });
-        textEl.inputEl.addEventListener("keydown", async (e) => {
+        textEl.inputEl.addEventListener("keydown", (e) => {
           if (e.key === "Enter" && this.address !== " ") {
             if (this.useFrozenVersion && this.version !== "" || !this.useFrozenVersion) {
               e.preventDefault();
-              await this.submitForm();
+              void this.submitForm();
             }
           }
         });
@@ -1228,7 +1325,9 @@ var AddNewPluginModal = class extends import_obsidian6.Modal {
         });
       }
       formEl.createDiv("modal-button-container", (buttonContainerEl) => {
-        buttonContainerEl.createEl("button", { attr: { type: "button" }, text: "Never mind" }).addEventListener("click", () => this.close());
+        buttonContainerEl.createEl("button", { attr: { type: "button" }, text: "Never mind" }).addEventListener("click", () => {
+          this.close();
+        });
         buttonContainerEl.createEl("button", {
           attr: { type: "submit" },
           cls: "mod-cta",
@@ -1249,20 +1348,20 @@ var AddNewPluginModal = class extends import_obsidian6.Modal {
           titleEl.remove();
         });
       }, 50);
-      formEl.addEventListener("submit", async (e) => {
+      formEl.addEventListener("submit", (e) => {
         e.preventDefault();
         if (this.address !== "") {
           if (this.useFrozenVersion && this.version !== "" || !this.useFrozenVersion) {
-            await this.submitForm();
+            void this.submitForm();
           }
         }
       });
     });
   }
-  async onClose() {
+  onClose() {
     if (this.openSettingsTabAfterwards) {
-      await this.plugin.app.setting.open();
-      await this.plugin.app.setting.openTabById("obsidian42-brat");
+      this.plugin.app.setting.open();
+      this.plugin.app.setting.openTabById(this.plugin.APP_ID);
     }
   }
 };
@@ -1275,43 +1374,63 @@ var BetaPlugins = class {
   }
   /**
    * opens the AddNewPluginModal to get info for  a new beta plugin
-   * @param   {boolean}   openSettingsTabAfterwards will open settings screen afterwards. Used when this command is called from settings tab
-   * @param   {boolean}   useFrozenVersion          install the plugin using frozen version.
-   * @return  {<Promise><void>}
+   * @param openSettingsTabAfterwards - will open settings screen afterwards. Used when this command is called from settings tab
+   * @param useFrozenVersion - install the plugin using frozen version.
    */
-  async displayAddNewPluginModal(openSettingsTabAfterwards = false, useFrozenVersion = false) {
-    const newPlugin = new AddNewPluginModal(this.plugin, this, openSettingsTabAfterwards, useFrozenVersion);
+  displayAddNewPluginModal(openSettingsTabAfterwards = false, useFrozenVersion = false) {
+    const newPlugin = new AddNewPluginModal(
+      this.plugin,
+      this,
+      openSettingsTabAfterwards,
+      useFrozenVersion
+    );
     newPlugin.open();
   }
   /**
    * Validates that a GitHub repository is plugin
    *
-   * @param   {string}                     repositoryPath   GithubUser/RepositoryName (example: TfThacker/obsidian42-brat)
-   * @param   {[type]}                     getBetaManifest  test the beta version of the manifest, not at the root
-   * @param   {[type]}                     false            [false description]
-   * @param   {[type]}                     reportIssues      will display notices as it finds issues
+   * @param repositoryPath - GithubUser/RepositoryName (example: TfThacker/obsidian42-brat)
+   * @param getBetaManifest - test the beta version of the manifest, not at the root
+   * @param false - [false description]
+   * @param reportIssues - will display notices as it finds issues
    *
-   * @return  {Promise<PluginManifest>}                     the manifest file if found, or null if its incomplete
+   * @returns the manifest file if found, or null if its incomplete
    */
   async validateRepository(repositoryPath, getBetaManifest = false, reportIssues = false) {
     const noticeTimeout = 15;
-    const manifestJson = await grabManifestJsonFromRepository(repositoryPath, !getBetaManifest, this.plugin.settings.debuggingMode);
+    const manifestJson = await grabManifestJsonFromRepository(
+      repositoryPath,
+      !getBetaManifest,
+      this.plugin.settings.debuggingMode
+    );
     if (!manifestJson) {
       if (reportIssues)
-        ToastMessage(this.plugin, `${repositoryPath}
-This does not seem to be an obsidian plugin, as there is no manifest.json file.`, noticeTimeout);
+        toastMessage(
+          this.plugin,
+          `${repositoryPath}
+This does not seem to be an obsidian plugin, as there is no manifest.json file.`,
+          noticeTimeout
+        );
       return null;
     }
     if (!("id" in manifestJson)) {
       if (reportIssues)
-        ToastMessage(this.plugin, `${repositoryPath}
-The plugin id attribute for the release is missing from the manifest file`, noticeTimeout);
+        toastMessage(
+          this.plugin,
+          `${repositoryPath}
+The plugin id attribute for the release is missing from the manifest file`,
+          noticeTimeout
+        );
       return null;
     }
     if (!("version" in manifestJson)) {
       if (reportIssues)
-        ToastMessage(this.plugin, `${repositoryPath}
-The version attribute for the release is missing from the manifest file`, noticeTimeout);
+        toastMessage(
+          this.plugin,
+          `${repositoryPath}
+The version attribute for the release is missing from the manifest file`,
+          noticeTimeout
+        );
       return null;
     }
     return manifestJson;
@@ -1319,174 +1438,240 @@ The version attribute for the release is missing from the manifest file`, notice
   /**
    * Gets all the release files based on the version number in the manifest
    *
-   * @param   {string}                        repositoryPath  path to the GitHub repository
-   * @param   {PluginManifest<ReleaseFiles>}  manifest        manifest file
-   * @param   {boolean}                       getManifest     grab the remote manifest file
-   * @param   {string}                        specifyVersion  grab the specified version if set
+   * @param repositoryPath - path to the GitHub repository
+   * @param manifest       - manifest file
+   * @param getManifest    - grab the remote manifest file
+   * @param specifyVersion - grab the specified version if set
    *
-   * @return  {Promise<ReleaseFiles>}                         all relase files as strings based on the ReleaseFiles interaface
+   * @returns all relase files as strings based on the ReleaseFiles interaface
    */
   async getAllReleaseFiles(repositoryPath, manifest, getManifest, specifyVersion = "") {
     const version = specifyVersion === "" ? manifest.version : specifyVersion;
     const reallyGetManifestOrNot = getManifest || specifyVersion !== "";
     return {
-      mainJs: await grabReleaseFileFromRepository(repositoryPath, version, "main.js", this.plugin.settings.debuggingMode),
-      manifest: reallyGetManifestOrNot ? await grabReleaseFileFromRepository(repositoryPath, version, "manifest.json", this.plugin.settings.debuggingMode) : "",
-      styles: await grabReleaseFileFromRepository(repositoryPath, version, "styles.css", this.plugin.settings.debuggingMode)
+      mainJs: await grabReleaseFileFromRepository(
+        repositoryPath,
+        version,
+        "main.js",
+        this.plugin.settings.debuggingMode
+      ),
+      manifest: reallyGetManifestOrNot ? await grabReleaseFileFromRepository(
+        repositoryPath,
+        version,
+        "manifest.json",
+        this.plugin.settings.debuggingMode
+      ) : "",
+      styles: await grabReleaseFileFromRepository(
+        repositoryPath,
+        version,
+        "styles.css",
+        this.plugin.settings.debuggingMode
+      )
     };
   }
   /**
    * Writes the plugin release files to the local obsidian .plugins folder
    *
-   * @param   {string}              betaPluginID  the id of the plugin (not the repository path)
-   * @param   {ReleaseFiles<void>}  relFiles      release file as strings, based on the ReleaseFiles interface
+   * @param betaPluginId - the id of the plugin (not the repository path)
+   * @param relFiles     - release file as strings, based on the ReleaseFiles interface
    *
-   * @return  {Promise<void>}                     
    */
-  async writeReleaseFilesToPluginFolder(betaPluginID, relFiles) {
-    const pluginTargetFolderPath = (0, import_obsidian7.normalizePath)(this.plugin.app.vault.configDir + "/plugins/" + betaPluginID) + "/";
-    const adapter = this.plugin.app.vault.adapter;
-    if (await adapter.exists(pluginTargetFolderPath) === false || !await adapter.exists(pluginTargetFolderPath + "manifest.json")) {
+  async writeReleaseFilesToPluginFolder(betaPluginId, relFiles) {
+    var _a, _b;
+    const pluginTargetFolderPath = (0, import_obsidian7.normalizePath)(this.plugin.app.vault.configDir + "/plugins/" + betaPluginId) + "/";
+    const { adapter } = this.plugin.app.vault;
+    if (!await adapter.exists(pluginTargetFolderPath) || !await adapter.exists(pluginTargetFolderPath + "manifest.json")) {
       await adapter.mkdir(pluginTargetFolderPath);
     }
-    await adapter.write(pluginTargetFolderPath + "main.js", relFiles.mainJs);
-    await adapter.write(pluginTargetFolderPath + "manifest.json", relFiles.manifest);
+    await adapter.write(pluginTargetFolderPath + "main.js", (_a = relFiles.mainJs) != null ? _a : "");
+    await adapter.write(
+      pluginTargetFolderPath + "manifest.json",
+      (_b = relFiles.manifest) != null ? _b : ""
+    );
     if (relFiles.styles)
       await adapter.write(pluginTargetFolderPath + "styles.css", relFiles.styles);
   }
   /**
-   * Primary function for adding a new beta plugin to Obsidian. 
+   * Primary function for adding a new beta plugin to Obsidian.
    * Also this function is used for updating existing plugins.
    *
-   * @param   {string}              repositoryPath     path to GitHub repository formated as USERNAME/repository
-   * @param   {boolean}             updatePluginFiles  true if this is just an update not an install
-   * @param   {boolean}             seeIfUpdatedOnly   if true, and updatePluginFiles true, will just check for updates, but not do the update. will report to user that there is a new plugin
-   * @param   {boolean}             reportIfNotUpdted  if true, report if an update has not succed
-   * @param   {string}              specifyVersion     if not empty, need to install a specified version instead of the value in manifest{-beta}.json
-   * @param   {boolean}             forceReinstall     if true, will force a reinstall of the plugin, even if it is already installed
+   * @param repositoryPath    - path to GitHub repository formated as USERNAME/repository
+   * @param updatePluginFiles - true if this is just an update not an install
+   * @param seeIfUpdatedOnly  - if true, and updatePluginFiles true, will just check for updates, but not do the update. will report to user that there is a new plugin
+   * @param reportIfNotUpdted - if true, report if an update has not succed
+   * @param specifyVersion    - if not empty, need to install a specified version instead of the value in manifest-beta.json
+   * @param forceReinstall    - if true, will force a reinstall of the plugin, even if it is already installed
    *
-   * @return  {Promise<boolean>}                       true if succeeds
+   * @returns true if succeeds
    */
   async addPlugin(repositoryPath, updatePluginFiles = false, seeIfUpdatedOnly = false, reportIfNotUpdted = false, specifyVersion = "", forceReinstall = false) {
-    var _a;
+    console.log(
+      "BRAT: addPlugin",
+      repositoryPath,
+      updatePluginFiles,
+      seeIfUpdatedOnly,
+      reportIfNotUpdted,
+      specifyVersion,
+      forceReinstall
+    );
     const noticeTimeout = 10;
     let primaryManifest = await this.validateRepository(repositoryPath, true, false);
     const usingBetaManifest = primaryManifest ? true : false;
-    if (usingBetaManifest === false)
+    if (!usingBetaManifest)
       primaryManifest = await this.validateRepository(repositoryPath, false, true);
     if (primaryManifest === null) {
       const msg = `${repositoryPath}
 A manifest.json or manifest-beta.json file does not exist in the root directory of the repository. This plugin cannot be installed.`;
-      this.plugin.log(msg, true);
-      ToastMessage(this.plugin, `${msg}`, noticeTimeout);
+      await this.plugin.log(msg, true);
+      toastMessage(this.plugin, `${msg}`, noticeTimeout);
       return false;
     }
-    if (!primaryManifest.hasOwnProperty("version")) {
+    if (!Object.hasOwn(primaryManifest, "version")) {
       const msg = `${repositoryPath}
 The manifest${usingBetaManifest ? "-beta" : ""}.json file in the root directory of the repository does not have a version number in the file. This plugin cannot be installed.`;
-      this.plugin.log(msg, true);
-      ToastMessage(this.plugin, `${msg}`, noticeTimeout);
+      await this.plugin.log(msg, true);
+      toastMessage(this.plugin, `${msg}`, noticeTimeout);
       return false;
     }
-    if (primaryManifest.hasOwnProperty("minAppVersion")) {
+    if (!Object.hasOwn(primaryManifest, "minAppVersion")) {
       if (!(0, import_obsidian7.requireApiVersion)(primaryManifest.minAppVersion)) {
         const msg = `Plugin: ${repositoryPath}
 
 The manifest${usingBetaManifest ? "-beta" : ""}.json for this plugin indicates that the Obsidian version of the app needs to be ${primaryManifest.minAppVersion}, but this installation of Obsidian is ${import_obsidian7.apiVersion}. 
 
 You will need to update your Obsidian to use this plugin or contact the plugin developer for more information.`;
-        this.plugin.log(msg, true);
-        ToastMessage(this.plugin, `${msg}`, 30);
+        await this.plugin.log(msg, true);
+        toastMessage(this.plugin, `${msg}`, 30);
         return false;
       }
     }
     const getRelease = async () => {
-      const rFiles = await this.getAllReleaseFiles(repositoryPath, primaryManifest, usingBetaManifest, specifyVersion);
+      const rFiles = await this.getAllReleaseFiles(
+        repositoryPath,
+        // @ts-expect-error typescript will complain that this can be null, but in this case it won't be
+        primaryManifest,
+        usingBetaManifest,
+        specifyVersion
+      );
       if (usingBetaManifest || rFiles.manifest === "")
         rFiles.manifest = JSON.stringify(primaryManifest);
-      if (rFiles.mainJs === null) {
+      if (usingBetaManifest || rFiles.mainJs === null) {
         const msg = `${repositoryPath}
 The release is not complete and cannot be download. main.js is missing from the Release`;
-        this.plugin.log(msg, true);
-        ToastMessage(this.plugin, `${msg}`, noticeTimeout);
+        await this.plugin.log(msg, true);
+        toastMessage(this.plugin, `${msg}`, noticeTimeout);
         return null;
       }
       return rFiles;
     };
-    if (updatePluginFiles === false || forceReinstall === true) {
+    if (!updatePluginFiles || forceReinstall) {
       const releaseFiles = await getRelease();
       if (releaseFiles === null)
         return false;
       await this.writeReleaseFilesToPluginFolder(primaryManifest.id, releaseFiles);
-      if (forceReinstall === false)
-        await addBetaPluginToList(this.plugin, repositoryPath, specifyVersion);
+      if (!forceReinstall)
+        addBetaPluginToList(this.plugin, repositoryPath, specifyVersion);
       await this.plugin.app.plugins.loadManifests();
-      if (forceReinstall === true) {
+      if (forceReinstall) {
         await this.reloadPlugin(primaryManifest.id);
-        this.plugin.log(`${repositoryPath} reinstalled`, true);
-        ToastMessage(this.plugin, `${repositoryPath}
-Plugin has been reinstalled and reloaded.`, noticeTimeout);
+        await this.plugin.log(`${repositoryPath} reinstalled`, true);
+        toastMessage(
+          this.plugin,
+          `${repositoryPath}
+Plugin has been reinstalled and reloaded.`,
+          noticeTimeout
+        );
       } else {
         const versionText = specifyVersion === "" ? "" : ` (version: ${specifyVersion})`;
         const msg = `${repositoryPath}${versionText}
 The plugin has been registered with BRAT. You may still need to enable it the Community Plugin List.`;
-        this.plugin.log(msg, true);
-        ToastMessage(this.plugin, msg, noticeTimeout);
+        await this.plugin.log(msg, true);
+        toastMessage(this.plugin, msg, noticeTimeout);
       }
     } else {
       const pluginTargetFolderPath = this.plugin.app.vault.configDir + "/plugins/" + primaryManifest.id + "/";
       let localManifestContents = "";
       try {
-        localManifestContents = await this.plugin.app.vault.adapter.read(pluginTargetFolderPath + "manifest.json");
+        localManifestContents = await this.plugin.app.vault.adapter.read(
+          pluginTargetFolderPath + "manifest.json"
+        );
       } catch (e) {
         if (e.errno === -4058 || e.errno === -2) {
-          await this.addPlugin(repositoryPath, false, usingBetaManifest, false, specifyVersion);
+          await this.addPlugin(
+            repositoryPath,
+            false,
+            usingBetaManifest,
+            false,
+            specifyVersion
+          );
           return true;
         } else
-          console.log("BRAT - Local Manifest Load", primaryManifest.id, JSON.stringify(e, null, 2));
+          console.log(
+            "BRAT - Local Manifest Load",
+            primaryManifest.id,
+            JSON.stringify(e, null, 2)
+          );
       }
       if (specifyVersion !== "" || this.plugin.settings.pluginSubListFrozenVersion.map((x) => x.repo).includes(repositoryPath)) {
-        ToastMessage(this.plugin, `The version of ${repositoryPath} is frozen, not updating.`, 3);
+        toastMessage(
+          this.plugin,
+          `The version of ${repositoryPath} is frozen, not updating.`,
+          3
+        );
         return false;
       }
-      const localManifestJSON = await JSON.parse(localManifestContents);
-      if (localManifestJSON.version !== primaryManifest.version) {
+      const localManifestJson = await JSON.parse(
+        localManifestContents
+      );
+      if (localManifestJson.version !== primaryManifest.version) {
         const releaseFiles = await getRelease();
         if (releaseFiles === null)
           return false;
         if (seeIfUpdatedOnly) {
-          const msg = `There is an update available for ${primaryManifest.id} from version ${localManifestJSON.version} to ${primaryManifest.version}. `;
-          this.plugin.log(msg + `[Release Info](https://github.com/${repositoryPath}/releases/tag/${primaryManifest.version})`, false);
-          ToastMessage(this.plugin, msg, 30, async () => {
-            window.open(`https://github.com/${repositoryPath}/releases/tag/${primaryManifest.version}`);
+          const msg = `There is an update available for ${primaryManifest.id} from version ${localManifestJson.version} to ${primaryManifest.version}. `;
+          await this.plugin.log(
+            msg + `[Release Info](https://github.com/${repositoryPath}/releases/tag/${primaryManifest.version})`,
+            true
+          );
+          toastMessage(this.plugin, msg, 30, () => {
+            if (primaryManifest) {
+              window.open(
+                `https://github.com/${repositoryPath}/releases/tag/${primaryManifest.version}`
+              );
+            }
           });
         } else {
           await this.writeReleaseFilesToPluginFolder(primaryManifest.id, releaseFiles);
           await this.plugin.app.plugins.loadManifests();
-          if ((_a = this.plugin.app.plugins.plugins[primaryManifest.id]) == null ? void 0 : _a.manifest)
-            await this.reloadPlugin(primaryManifest.id);
+          await this.reloadPlugin(primaryManifest.id);
           const msg = `${primaryManifest.id}
-Plugin has been updated from version ${localManifestJSON.version} to ${primaryManifest.version}. `;
-          this.plugin.log(msg + `[Release Info](https://github.com/${repositoryPath}/releases/tag/${primaryManifest.version})`, false);
-          ToastMessage(this.plugin, msg, 30, async () => {
-            window.open(`https://github.com/${repositoryPath}/releases/tag/${primaryManifest.version}`);
+Plugin has been updated from version ${localManifestJson.version} to ${primaryManifest.version}. `;
+          await this.plugin.log(
+            msg + `[Release Info](https://github.com/${repositoryPath}/releases/tag/${primaryManifest.version})`,
+            true
+          );
+          toastMessage(this.plugin, msg, 30, () => {
+            if (primaryManifest) {
+              window.open(
+                `https://github.com/${repositoryPath}/releases/tag/${primaryManifest.version}`
+              );
+            }
           });
         }
       } else if (reportIfNotUpdted)
-        ToastMessage(this.plugin, `No update available for ${repositoryPath}`, 3);
+        toastMessage(this.plugin, `No update available for ${repositoryPath}`, 3);
     }
     return true;
   }
   /**
    * reloads a plugin (assuming it has been enabled by user)
    * pjeby, Thanks Bro https://github.com/pjeby/hot-reload/blob/master/main.js
-   * 
-   * @param   {string<void>}   pluginName  name of plugin
    *
-   * @return  {Promise<void>}              
+   * @param pluginName - name of plugin
+   *
    */
   async reloadPlugin(pluginName) {
-    const plugins = this.plugin.app.plugins;
+    const { plugins } = this.plugin.app;
     try {
       await plugins.disablePlugin(pluginName);
       await plugins.enablePlugin(pluginName);
@@ -1498,36 +1683,44 @@ Plugin has been updated from version ${localManifestJSON.version} to ${primaryMa
   /**
    * updates a beta plugin
    *
-   * @param   {string}   repositoryPath  repository path on GitHub
-   * @param   {boolean}  onlyCheckDontUpdate only looks for update
+   * @param repositoryPath - repository path on GitHub
+   * @param onlyCheckDontUpdate - only looks for update
    *
-   * @return  {Promise<void>}                  
    */
   async updatePlugin(repositoryPath, onlyCheckDontUpdate = false, reportIfNotUpdted = false, forceReinstall = false) {
-    const result = await this.addPlugin(repositoryPath, true, onlyCheckDontUpdate, reportIfNotUpdted, "", forceReinstall);
-    if (result === false && onlyCheckDontUpdate === false)
-      ToastMessage(this.plugin, `${repositoryPath}
+    const result = await this.addPlugin(
+      repositoryPath,
+      true,
+      onlyCheckDontUpdate,
+      reportIfNotUpdted,
+      "",
+      forceReinstall
+    );
+    if (!result && !onlyCheckDontUpdate)
+      toastMessage(this.plugin, `${repositoryPath}
 Update of plugin failed.`);
     return result;
   }
   /**
    * walks through the list of plugins without frozen version and performs an update
    *
-   * @param   {boolean}           showInfo  should this with a started/completed message - useful when ran from CP
-   * @return  {Promise<void>}              
+   * @param showInfo - should this with a started/completed message - useful when ran from CP
+   *
    */
-  async checkForUpdatesAndInstallUpdates(showInfo = false, onlyCheckDontUpdate = false) {
-    if (await isConnectedToInternet() === false) {
+  async checkForPluginUpdatesAndInstallUpdates(showInfo = false, onlyCheckDontUpdate = false) {
+    if (!await isConnectedToInternet()) {
       console.log("BRAT: No internet detected.");
       return;
     }
     let newNotice;
     const msg1 = `Checking for plugin updates STARTED`;
-    this.plugin.log(msg1, true);
+    await this.plugin.log(msg1, true);
     if (showInfo && this.plugin.settings.notificationsEnabled)
       newNotice = new import_obsidian7.Notice(`BRAT
 ${msg1}`, 3e4);
-    const pluginSubListFrozenVersionNames = new Set(this.plugin.settings.pluginSubListFrozenVersion.map((f) => f.repo));
+    const pluginSubListFrozenVersionNames = new Set(
+      this.plugin.settings.pluginSubListFrozenVersion.map((f) => f.repo)
+    );
     for (const bp of this.plugin.settings.pluginList) {
       if (pluginSubListFrozenVersionNames.has(bp)) {
         continue;
@@ -1535,40 +1728,49 @@ ${msg1}`, 3e4);
       await this.updatePlugin(bp, onlyCheckDontUpdate);
     }
     const msg2 = `Checking for plugin updates COMPLETED`;
-    this.plugin.log(msg2, true);
+    await this.plugin.log(msg2, true);
     if (showInfo) {
-      newNotice.hide();
-      ToastMessage(this.plugin, msg2, 10);
+      if (newNotice) {
+        newNotice.hide();
+      }
+      toastMessage(this.plugin, msg2, 10);
     }
   }
   /**
    * Removes the beta plugin from the list of beta plugins (does not delete them from disk)
    *
-   * @param   {string<void>}   betaPluginID  repository path
+   * @param betaPluginID - repository path
    *
-   * @return  {Promise<void>}                [return description]
    */
-  async deletePlugin(repositoryPath) {
+  deletePlugin(repositoryPath) {
     const msg = `Removed ${repositoryPath} from BRAT plugin list`;
-    this.plugin.log(msg, true);
-    this.plugin.settings.pluginList = this.plugin.settings.pluginList.filter((b) => b != repositoryPath);
-    this.plugin.settings.pluginSubListFrozenVersion = this.plugin.settings.pluginSubListFrozenVersion.filter(
-      (b) => b.repo != repositoryPath
+    void this.plugin.log(msg, true);
+    this.plugin.settings.pluginList = this.plugin.settings.pluginList.filter(
+      (b) => b !== repositoryPath
     );
-    this.plugin.saveSettings();
+    this.plugin.settings.pluginSubListFrozenVersion = this.plugin.settings.pluginSubListFrozenVersion.filter(
+      (b) => b.repo !== repositoryPath
+    );
+    void this.plugin.saveSettings();
   }
   /**
    * Returns a list of plugins that are currently enabled or currently disabled
    *
-   * @param   {boolean[]}        enabled  true for enabled plugins, false for disabled plutings
+   * @param enabled - true for enabled plugins, false for disabled plutings
    *
-   * @return  {PluginManifest[]}           manifests  of plugins
+   * @returns manifests  of plugins
    */
   getEnabledDisabledPlugins(enabled) {
     const pl = this.plugin.app.plugins;
     const manifests = Object.values(pl.manifests);
-    const enabledPlugins = Object.values(pl.plugins).map((p) => p.manifest);
-    return enabled ? manifests.filter((manifest) => enabledPlugins.find((pluginName) => manifest.id === pluginName.id)) : manifests.filter((manifest) => !enabledPlugins.find((pluginName) => manifest.id === pluginName.id));
+    const enabledPlugins = Object.values(pl.plugins).map(
+      (p) => p.manifest
+    );
+    return enabled ? manifests.filter(
+      (manifest) => enabledPlugins.find((pluginName) => manifest.id === pluginName.id)
+    ) : manifests.filter(
+      (manifest) => !enabledPlugins.find((pluginName) => manifest.id === pluginName.id)
+    );
   }
 };
 
@@ -1584,26 +1786,25 @@ function addIcons() {
 // src/utils/logging.ts
 var import_obsidian9 = require("obsidian");
 var import_obsidian_daily_notes_interface = __toESM(require_main());
-function logger(plugin, textToLog, verboseLoggingOn = false) {
+async function logger(plugin, textToLog, verboseLoggingOn = false) {
   if (plugin.settings.debuggingMode)
     console.log("BRAT: " + textToLog);
   if (plugin.settings.loggingEnabled) {
-    if (plugin.settings.loggingVerboseEnabled === false && verboseLoggingOn === true) {
+    if (!plugin.settings.loggingVerboseEnabled && verboseLoggingOn) {
       return;
     } else {
       const fileName = plugin.settings.loggingPath + ".md";
       const dateOutput = "[[" + (0, import_obsidian9.moment)().format((0, import_obsidian_daily_notes_interface.getDailyNoteSettings)().format).toString() + "]] " + (0, import_obsidian9.moment)().format("HH:mm");
-      const machineName = import_obsidian9.Platform.isDesktop ? window.require("os").hostname() : "MOBILE";
+      const os = window.require("os");
+      const machineName = import_obsidian9.Platform.isDesktop ? os.hostname() : "MOBILE";
       let output = dateOutput + " " + machineName + " " + textToLog.replace("\n", " ") + "\n\n";
-      setTimeout(async () => {
-        if (await plugin.app.vault.adapter.exists(fileName) === true) {
-          const fileContents = await plugin.app.vault.adapter.read(fileName);
-          output = output + fileContents;
-          const file = plugin.app.vault.getAbstractFileByPath(fileName);
-          await plugin.app.vault.modify(file, output);
-        } else
-          await plugin.app.vault.create(fileName, output);
-      }, 10);
+      if (await plugin.app.vault.adapter.exists(fileName)) {
+        const fileContents = await plugin.app.vault.adapter.read(fileName);
+        output = output + fileContents;
+        const file = plugin.app.vault.getAbstractFileByPath(fileName);
+        await plugin.app.vault.modify(file, output);
+      } else
+        await plugin.app.vault.create(fileName, output);
     }
   }
 }
@@ -1613,13 +1814,18 @@ var import_obsidian10 = require("obsidian");
 var GenericFuzzySuggester = class extends import_obsidian10.FuzzySuggestModal {
   constructor(plugin) {
     super(plugin.app);
-    this.scope.register(["Shift"], "Enter", (evt) => this.enterTrigger(evt));
-    this.scope.register(["Ctrl"], "Enter", (evt) => this.enterTrigger(evt));
+    this.data = [];
+    this.scope.register(["Shift"], "Enter", (evt) => {
+      this.enterTrigger(evt);
+    });
+    this.scope.register(["Ctrl"], "Enter", (evt) => {
+      this.enterTrigger(evt);
+    });
   }
   setSuggesterData(suggesterData) {
     this.data = suggesterData;
   }
-  async display(callBack) {
+  display(callBack) {
     this.callbackFunction = callBack;
     this.open();
   }
@@ -1632,12 +1838,12 @@ var GenericFuzzySuggester = class extends import_obsidian10.FuzzySuggestModal {
   onChooseItem() {
     return;
   }
-  // required by TS, but not using
   renderSuggestion(item, el) {
     el.createEl("div", { text: item.item.display });
   }
   enterTrigger(evt) {
-    const selectedText = document.querySelector(".suggestion-item.is-selected div").textContent;
+    var _a;
+    const selectedText = (_a = document.querySelector(".suggestion-item.is-selected div")) == null ? void 0 : _a.textContent;
     const item = this.data.find((i) => i.display === selectedText);
     if (item) {
       this.invokeCallback(item, evt);
@@ -1648,7 +1854,9 @@ var GenericFuzzySuggester = class extends import_obsidian10.FuzzySuggestModal {
     this.invokeCallback(item.item, evt);
   }
   invokeCallback(item, evt) {
-    this.callbackFunction(item, evt);
+    if (typeof this.callbackFunction === "function") {
+      this.callbackFunction(item, evt);
+    }
   }
 };
 
@@ -1661,8 +1869,8 @@ var PluginCommands = class {
         icon: "BratIcon",
         name: "Plugins: Add a beta plugin for testing",
         showInRibbon: true,
-        callback: async () => {
-          await this.plugin.betaPlugins.displayAddNewPluginModal(false, false);
+        callback: () => {
+          this.plugin.betaPlugins.displayAddNewPluginModal(false, false);
         }
       },
       {
@@ -1670,8 +1878,8 @@ var PluginCommands = class {
         icon: "BratIcon",
         name: "Plugins: Add a beta plugin with frozen version based on a release tag",
         showInRibbon: true,
-        callback: async () => {
-          await this.plugin.betaPlugins.displayAddNewPluginModal(false, true);
+        callback: () => {
+          this.plugin.betaPlugins.displayAddNewPluginModal(false, true);
         }
       },
       {
@@ -1680,7 +1888,7 @@ var PluginCommands = class {
         name: "Plugins: Check for updates to all beta plugins and UPDATE",
         showInRibbon: true,
         callback: async () => {
-          await this.plugin.betaPlugins.checkForUpdatesAndInstallUpdates(true, false);
+          await this.plugin.betaPlugins.checkForPluginUpdatesAndInstallUpdates(true, false);
         }
       },
       {
@@ -1689,7 +1897,7 @@ var PluginCommands = class {
         name: "Plugins: Only check for updates to beta plugins, but don't Update",
         showInRibbon: true,
         callback: async () => {
-          await this.plugin.betaPlugins.checkForUpdatesAndInstallUpdates(true, true);
+          await this.plugin.betaPlugins.checkForPluginUpdatesAndInstallUpdates(true, true);
         }
       },
       {
@@ -1697,19 +1905,21 @@ var PluginCommands = class {
         icon: "BratIcon",
         name: "Plugins: Choose a single plugin version to update",
         showInRibbon: true,
-        callback: async () => {
-          const pluginSubListFrozenVersionNames = new Set(this.plugin.settings.pluginSubListFrozenVersion.map((f) => f.repo));
+        callback: () => {
+          const pluginSubListFrozenVersionNames = new Set(
+            this.plugin.settings.pluginSubListFrozenVersion.map((f) => f.repo)
+          );
           const pluginList = Object.values(this.plugin.settings.pluginList).filter((f) => !pluginSubListFrozenVersionNames.has(f)).map((m) => {
             return { display: m, info: m };
           });
           const gfs = new GenericFuzzySuggester(this.plugin);
           gfs.setSuggesterData(pluginList);
-          await gfs.display(async (results) => {
+          gfs.display((results) => {
             const msg = `Checking for updates for ${results.info}`;
-            this.plugin.log(msg, true);
-            ToastMessage(this.plugin, `
+            void this.plugin.log(msg, true);
+            toastMessage(this.plugin, `
 ${msg}`, 3);
-            await this.plugin.betaPlugins.updatePlugin(results.info, false, true);
+            void this.plugin.betaPlugins.updatePlugin(results.info, false, true);
           });
         }
       },
@@ -1718,19 +1928,26 @@ ${msg}`, 3);
         icon: "BratIcon",
         name: "Plugins: Choose a single plugin to reinstall",
         showInRibbon: true,
-        callback: async () => {
-          const pluginSubListFrozenVersionNames = new Set(this.plugin.settings.pluginSubListFrozenVersion.map((f) => f.repo));
+        callback: () => {
+          const pluginSubListFrozenVersionNames = new Set(
+            this.plugin.settings.pluginSubListFrozenVersion.map((f) => f.repo)
+          );
           const pluginList = Object.values(this.plugin.settings.pluginList).filter((f) => !pluginSubListFrozenVersionNames.has(f)).map((m) => {
             return { display: m, info: m };
           });
           const gfs = new GenericFuzzySuggester(this.plugin);
           gfs.setSuggesterData(pluginList);
-          await gfs.display(async (results) => {
+          gfs.display((results) => {
             const msg = `Reinstalling ${results.info}`;
-            ToastMessage(this.plugin, `
+            toastMessage(this.plugin, `
 ${msg}`, 3);
-            this.plugin.log(msg, true);
-            await this.plugin.betaPlugins.updatePlugin(results.info, false, false, true);
+            void this.plugin.log(msg, true);
+            void this.plugin.betaPlugins.updatePlugin(
+              results.info,
+              false,
+              false,
+              true
+            );
           });
         }
       },
@@ -1739,16 +1956,22 @@ ${msg}`, 3);
         icon: "BratIcon",
         name: "Plugins: Restart a plugin that is already installed",
         showInRibbon: true,
-        callback: async () => {
-          const pluginList = Object.values(this.plugin.app.plugins.manifests).map((m) => {
+        callback: () => {
+          const pluginList = Object.values(
+            this.plugin.app.plugins.manifests
+          ).map((m) => {
             return { display: m.id, info: m.id };
           });
           const gfs = new GenericFuzzySuggester(this.plugin);
           gfs.setSuggesterData(pluginList);
-          await gfs.display(async (results) => {
-            ToastMessage(this.plugin, `${results.info}
-Plugin reloading .....`, 5);
-            await this.plugin.betaPlugins.reloadPlugin(results.info);
+          gfs.display((results) => {
+            toastMessage(
+              this.plugin,
+              `${results.info}
+Plugin reloading .....`,
+              5
+            );
+            void this.plugin.betaPlugins.reloadPlugin(results.info);
           });
         }
       },
@@ -1757,17 +1980,17 @@ Plugin reloading .....`, 5);
         icon: "BratIcon",
         name: "Plugins: Disable a plugin - toggle it off",
         showInRibbon: true,
-        callback: async () => {
+        callback: () => {
           const pluginList = this.plugin.betaPlugins.getEnabledDisabledPlugins(true).map((manifest) => {
             return { display: `${manifest.name} (${manifest.id})`, info: manifest.id };
           });
           const gfs = new GenericFuzzySuggester(this.plugin);
           gfs.setSuggesterData(pluginList);
-          await gfs.display(async (results) => {
-            this.plugin.log(`${results.display} plugin disabled`, false);
+          gfs.display((results) => {
+            void this.plugin.log(`${results.display} plugin disabled`, false);
             if (this.plugin.settings.debuggingMode)
               console.log(results.info);
-            await this.plugin.app.plugins.disablePluginAndSave(results.info);
+            void this.plugin.app.plugins.disablePluginAndSave(results.info);
           });
         }
       },
@@ -1776,15 +1999,15 @@ Plugin reloading .....`, 5);
         icon: "BratIcon",
         name: "Plugins: Enable a plugin - toggle it on",
         showInRibbon: true,
-        callback: async () => {
+        callback: () => {
           const pluginList = this.plugin.betaPlugins.getEnabledDisabledPlugins(false).map((manifest) => {
             return { display: `${manifest.name} (${manifest.id})`, info: manifest.id };
           });
           const gfs = new GenericFuzzySuggester(this.plugin);
           gfs.setSuggesterData(pluginList);
-          await gfs.display(async (results) => {
-            this.plugin.log(`${results.display} plugin enabled`, false);
-            await this.plugin.app.plugins.enablePluginAndSave(results.info);
+          gfs.display((results) => {
+            void this.plugin.log(`${results.display} plugin enabled`, false);
+            void this.plugin.app.plugins.enablePluginAndSave(results.info);
           });
         }
       },
@@ -1794,20 +2017,28 @@ Plugin reloading .....`, 5);
         name: "Plugins: Open the GitHub repository for a plugin",
         showInRibbon: true,
         callback: async () => {
-          const communityPlugins = await grabCommmunityPluginList(this.plugin.settings.debuggingMode);
-          const communityPluginList = Object.values(communityPlugins).map((p) => {
-            return { display: `Plugin: ${p.name}  (${p.repo})`, info: p.repo };
-          });
-          const bratList = Object.values(this.plugin.settings.pluginList).map((p) => {
-            return { display: "BRAT: " + p, info: p };
-          });
-          communityPluginList.forEach((si) => bratList.push(si));
-          const gfs = new GenericFuzzySuggester(this.plugin);
-          gfs.setSuggesterData(bratList);
-          await gfs.display(async (results) => {
-            if (results.info)
-              window.open(`https://github.com/${results.info}`);
-          });
+          const communityPlugins = await grabCommmunityPluginList(
+            this.plugin.settings.debuggingMode
+          );
+          if (communityPlugins) {
+            const communityPluginList = Object.values(
+              communityPlugins
+            ).map((p) => {
+              return { display: `Plugin: ${p.name}  (${p.repo})`, info: p.repo };
+            });
+            const bratList = Object.values(
+              this.plugin.settings.pluginList
+            ).map((p) => {
+              return { display: "BRAT: " + p, info: p };
+            });
+            communityPluginList.forEach((si) => bratList.push(si));
+            const gfs = new GenericFuzzySuggester(this.plugin);
+            gfs.setSuggesterData(bratList);
+            gfs.display((results) => {
+              if (results.info)
+                window.open(`https://github.com/${results.info}`);
+            });
+          }
         }
       },
       {
@@ -1816,16 +2047,22 @@ Plugin reloading .....`, 5);
         name: "Themes: Open the GitHub repository for a theme (appearance)",
         showInRibbon: true,
         callback: async () => {
-          const communityTheme = await grabCommmunityThemesList(this.plugin.settings.debuggingMode);
-          const communityThemeList = Object.values(communityTheme).map((p) => {
-            return { display: `Theme: ${p.name}  (${p.repo})`, info: p.repo };
-          });
-          const gfs = new GenericFuzzySuggester(this.plugin);
-          gfs.setSuggesterData(communityThemeList);
-          await gfs.display(async (results) => {
-            if (results.info)
-              window.open(`https://github.com/${results.info}`);
-          });
+          const communityTheme = await grabCommmunityThemesList(
+            this.plugin.settings.debuggingMode
+          );
+          if (communityTheme) {
+            const communityThemeList = Object.values(communityTheme).map(
+              (p) => {
+                return { display: `Theme: ${p.name}  (${p.repo})`, info: p.repo };
+              }
+            );
+            const gfs = new GenericFuzzySuggester(this.plugin);
+            gfs.setSuggesterData(communityThemeList);
+            gfs.display((results) => {
+              if (results.info)
+                window.open(`https://github.com/${results.info}`);
+            });
+          }
         }
       },
       {
@@ -1833,18 +2070,22 @@ Plugin reloading .....`, 5);
         icon: "BratIcon",
         name: "Plugins: Open Plugin Settings Tab",
         showInRibbon: true,
-        callback: async () => {
+        callback: () => {
           const settings = this.plugin.app.setting;
-          const listOfPluginSettingsTabs = Object.values(settings.pluginTabs).map((t) => {
+          const listOfPluginSettingsTabs = Object.values(
+            settings.pluginTabs
+          ).map((t) => {
             return { display: "Plugin: " + t.name, info: t.id };
           });
           const gfs = new GenericFuzzySuggester(this.plugin);
-          const listOfCoreSettingsTabs = Object.values(settings.settingTabs).map((t) => {
+          const listOfCoreSettingsTabs = Object.values(
+            settings.settingTabs
+          ).map((t) => {
             return { display: "Core: " + t.name, info: t.id };
           });
           listOfPluginSettingsTabs.forEach((si) => listOfCoreSettingsTabs.push(si));
           gfs.setSuggesterData(listOfCoreSettingsTabs);
-          await gfs.display(async (results) => {
+          gfs.display((results) => {
             settings.open();
             settings.openTabById(results.info);
           });
@@ -1855,7 +2096,7 @@ Plugin reloading .....`, 5);
         icon: "BratIcon",
         name: "Themes: Grab a beta theme for testing from a Github repository",
         showInRibbon: true,
-        callback: async () => {
+        callback: () => {
           new AddNewTheme(this.plugin).open();
         }
       },
@@ -1864,29 +2105,33 @@ Plugin reloading .....`, 5);
         icon: "BratIcon",
         name: "Themes: Update beta themes",
         showInRibbon: true,
-        callback: async () => await themesCheckAndUpdates(this.plugin, true)
+        callback: async () => {
+          await themesCheckAndUpdates(this.plugin, true);
+        }
       },
       {
         id: "BRAT-allCommands",
         icon: "BratIcon",
         name: "All Commands list",
         showInRibbon: false,
-        callback: async () => this.ribbonDisplayCommands()
+        callback: () => {
+          this.ribbonDisplayCommands();
+        }
       }
     ];
     this.plugin = plugin;
-    this.bratCommands.forEach(async (item) => {
+    this.bratCommands.forEach((item) => {
       this.plugin.addCommand({
         id: item.id,
         name: item.name,
         icon: item.icon,
-        callback: async () => {
-          await item.callback();
+        callback: () => {
+          item.callback();
         }
       });
     });
   }
-  async ribbonDisplayCommands() {
+  ribbonDisplayCommands() {
     const bratCommandList = [];
     this.bratCommands.forEach((cmd) => {
       if (cmd.showInRibbon)
@@ -1894,43 +2139,56 @@ Plugin reloading .....`, 5);
     });
     const gfs = new GenericFuzzySuggester(this.plugin);
     const settings = this.plugin.app.setting;
-    const listOfCoreSettingsTabs = Object.values(settings.settingTabs).map((t) => {
+    const listOfCoreSettingsTabs = Object.values(
+      settings.settingTabs
+    ).map((t) => {
       return {
         display: "Core: " + t.name,
-        info: async () => {
+        info: () => {
           settings.open();
           settings.openTabById(t.id);
         }
       };
     });
-    const listOfPluginSettingsTabs = Object.values(settings.pluginTabs).map((t) => {
+    const listOfPluginSettingsTabs = Object.values(
+      settings.pluginTabs
+    ).map((t) => {
       return {
         display: "Plugin: " + t.name,
-        info: async () => {
+        info: () => {
           settings.open();
           settings.openTabById(t.id);
         }
       };
     });
-    bratCommandList.push({ display: "---- Core Plugin Settings ----", info: async () => {
-      await this.ribbonDisplayCommands();
-    } });
+    bratCommandList.push({
+      display: "---- Core Plugin Settings ----",
+      info: () => {
+        this.ribbonDisplayCommands();
+      }
+    });
     listOfCoreSettingsTabs.forEach((si) => bratCommandList.push(si));
-    bratCommandList.push({ display: "---- Plugin Settings ----", info: async () => {
-      await this.ribbonDisplayCommands();
-    } });
+    bratCommandList.push({
+      display: "---- Plugin Settings ----",
+      info: () => {
+        this.ribbonDisplayCommands();
+      }
+    });
     listOfPluginSettingsTabs.forEach((si) => bratCommandList.push(si));
     gfs.setSuggesterData(bratCommandList);
-    await gfs.display(async (results) => await results.info());
+    gfs.display((results) => {
+      if (typeof results.info === "function") {
+        results.info();
+      }
+    });
   }
 };
 
 // src/utils/BratAPI.ts
 var BratAPI = class {
   constructor(plugin) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.console = (logDescription, ...outputs) => {
-      console.log("BRAT: " + logDescription, outputs);
+      console.log("BRAT: " + logDescription, ...outputs);
     };
     this.themes = {
       themeseCheckAndUpates: async (showInfo) => {
@@ -1940,18 +2198,26 @@ var BratAPI = class {
         const scrubbedAddress = cssGithubRepository.replace("https://github.com/", "");
         await themeSave(this.plugin, scrubbedAddress, true);
       },
-      themesDelete: async (cssGithubRepository) => {
+      themesDelete: (cssGithubRepository) => {
         const scrubbedAddress = cssGithubRepository.replace("https://github.com/", "");
-        await themeDelete(this.plugin, scrubbedAddress);
+        themeDelete(this.plugin, scrubbedAddress);
       },
       grabCommmunityThemeCssFile: async (repositoryPath, betaVersion = false) => {
-        return await grabCommmunityThemeCssFile(repositoryPath, betaVersion, this.plugin.settings.debuggingMode);
+        return await grabCommmunityThemeCssFile(
+          repositoryPath,
+          betaVersion,
+          this.plugin.settings.debuggingMode
+        );
       },
       grabChecksumOfThemeCssFile: async (repositoryPath, betaVersion = false) => {
-        return await grabChecksumOfThemeCssFile(repositoryPath, betaVersion, this.plugin.settings.debuggingMode);
+        return await grabChecksumOfThemeCssFile(
+          repositoryPath,
+          betaVersion,
+          this.plugin.settings.debuggingMode
+        );
       },
-      grabLastCommitDateForAFile: async (repositoryPath, path) => {
-        return await grabLastCommitDateForAFile(repositoryPath, path);
+      grabLastCommitDateForFile: async (repositoryPath, path) => {
+        return await grabLastCommitDateForFile(repositoryPath, path);
       }
     };
     this.plugin = plugin;
@@ -1962,43 +2228,45 @@ var BratAPI = class {
 var ThePlugin = class extends import_obsidian11.Plugin {
   constructor() {
     super(...arguments);
-    this.appName = "Obsidian42 - Beta Reviewer's Auto-update Tool (BRAT)";
-    this.appID = "obsidian42-brat";
+    this.APP_NAME = "Obsidian42 - Beta Reviewer's Auto-update Tool (BRAT)";
+    this.APP_ID = "obsidian42-brat";
+    this.settings = DEFAULT_SETTINGS;
+    this.betaPlugins = new BetaPlugins(this);
+    this.commands = new PluginCommands(this);
+    this.bratApi = new BratAPI(this);
   }
   async onload() {
     console.log("loading Obsidian42 - BRAT");
     await this.loadSettings();
     this.addSettingTab(new BratSettingsTab(this.app, this));
-    this.betaPlugins = new BetaPlugins(this);
-    this.commands = new PluginCommands(this);
     addIcons();
-    if (this.settings.ribbonIconEnabled)
-      this.showRibbonButton();
+    this.showRibbonButton();
     this.app.workspace.onLayoutReady(() => {
       if (this.settings.updateAtStartup) {
-        setTimeout(async () => {
-          await this.betaPlugins.checkForUpdatesAndInstallUpdates(false);
+        setTimeout(() => {
+          void this.betaPlugins.checkForPluginUpdatesAndInstallUpdates(false);
         }, 6e4);
       }
       if (this.settings.updateThemesAtStartup) {
-        setTimeout(async () => {
-          await themesCheckAndUpdates(this, false);
+        setTimeout(() => {
+          void themesCheckAndUpdates(this, false);
         }, 12e4);
       }
-      setTimeout(async () => {
-        this.bratAPI = new BratAPI(this);
-        globalThis.bratAPI = this.bratAPI;
+      setTimeout(() => {
+        window.bratAPI = this.bratApi;
       }, 500);
     });
   }
   showRibbonButton() {
-    this.ribbonIcon = this.addRibbonIcon("BratIcon", "BRAT", async () => this.commands.ribbonDisplayCommands());
+    this.addRibbonIcon("BratIcon", "BRAT", () => {
+      this.commands.ribbonDisplayCommands();
+    });
   }
-  log(textToLog, verbose = false) {
-    logger(this, textToLog, verbose);
+  async log(textToLog, verbose = false) {
+    await logger(this, textToLog, verbose);
   }
   onunload() {
-    console.log("unloading " + this.appName);
+    console.log("unloading " + this.APP_NAME);
   }
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());

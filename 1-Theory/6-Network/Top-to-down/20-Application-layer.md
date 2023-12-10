@@ -150,7 +150,7 @@ C/S和P2P体系结构的混合体
 - UDP socket：
     - UDP服务，两个进程之间的通信需要之前无需建立连接
         - 每个报文都是独立传输的
-        - 前后报文可能给不同的分布式进程
+        - 前后报文可能给不同的进程
     - 因此，==只能用一个整数表示本应用实体的标示==
         - 因为这个报文可能传给另外一个分布式进程
     - 穿过层间接口的信息大小最小，便于管理
@@ -284,7 +284,7 @@ Web是一种应用，HTTP是支持Web应用的协议。
 - 通过**URL**（通用资源定位符）对每个对象进行引用
     - **访问协议（HTTP、FTP等等），用户名，口令字，端口等；**
     - 匿名访问时可以不提供用户名和口令
-- URL 格式: $Prot://user:psw@www.someSchool.edu:port/someDept/pic.gif$
+- URL 格式: `Prot://user:psw@www.someSchool.edu:port/someDept/pic.gif`
 	- 其中 Prot 为 协议名，
 	- user: psw 为 用户: 口令，
 	- `www.someSchool.edu` 为 主机名，
@@ -464,7 +464,7 @@ Content-Type: text/html #对象类型
 - 400 Bad Request
     - 一个通用的差错代码，==表示该请求不能被服务器解读==
 - 404 Not Found
-    - 请求的文档在该服务上没有找到
+    - 请求的文档在该服务器上没有找到
 - 505 HTTP Version Not Supported
 
 ### 维护用户-服务器状态：cookies
@@ -505,7 +505,7 @@ Cookies能带来什么：
 - 目标：不访问原始服务器，就满足客户的请求，对客户端来说速度快，对服务器和网络来说负载压力更小
 
 ![[20-Application-layer-web-cache.png]]
-- Web 缓存具有自己的磁盘存储空间，在存储空间中保存最近请求过的对象的副本；
+- Web 缓存具有自己的磁盘存储空间，在**存储空间中保存最近请求过的对象的副本**；
 - 用户设置浏览器——使 HTTP 优先通过缓存访问 Web。
 
 As an example, suppose a browser is requesting the object `http://www.someschool.edu/campus.gif`. Here is what happens: 
@@ -567,19 +567,22 @@ As an example, suppose a browser is requesting the object `http://www.someschool
 
 如何使用条件 GET？
 - 缓存：在 HTTP 请求中使用 GET 方法，并且增加一个首部行 `If-modified-since:` —— 指定缓存拷贝的日期：
+
 ```
 If-modified-since: <date>
 ```
+
 - 服务器：
     - 如果缓存拷贝陈旧没有变化，则响应报文不包含对象：
-	```
+```
 	HTTP/1.0 304 Not Modified
-	```
-    - 如果缓存拷贝的原对象已经被修改，则响应报文包含对象：
-	```
+```
+
+- 如果缓存拷贝的原对象已经被修改，则响应报文包含对象：
+```
 	HTTP/1.0 200 OK
 	<data>
-	```
+```
 
 >[! example] 条件 GET 方法举例
 >To illustrate how the conditional GET operates, let’s walk through an example. 
@@ -632,15 +635,19 @@ To motivate the need for HTTP/2, recall that HTTP/1.1 uses persistent TCP connec
 > 仅通过单个 TCP 连接传输一个网页的所有对象有行首阻塞问题。
 
 To understand HOL blocking, consider a Web page that includes an HTML base page, a large video clip near the top of Web page, and many small objects below the video. Further suppose there is a low-to-medium speed bottleneck link (for example, a low-speed wireless link) on the path between server and client. ==Using a single TCP connection, the video clip will take a long time to pass through the bottleneck link, while the small objects are delayed as they wait behind the video clip==; that is, the video clip at the head of the line blocks the small objects behind it. 
+> 类比 OS 中的长进程占用了短进程的执行时间，使得短进程不得不等待很久才会得到执行。长消息也是如此，如果加载一个包含视频、文字的网站，先传送视频的话，就会极大地延长网页打开的时间。
 
 #### How HTTP/1.1 and TCP deal with HOL?
 HTTP/1.1 browsers typically work around this problem by opening multiple parallel TCP connections, thereby having objects in the same web page sent in parallel to the browser. This way, the small objects can arrive at and be rendered in the browser much faster, thereby reducing user-perceived delay. TCP congestion control, discussed in detail in Chapter 3, also provides browsers an unintended incentive (预期外的激励，指不能预先确定的) to use multiple parallel TCP connections rather than a single persistent connection. Very roughly speaking, TCP congestion control aims to give each TCP connection sharing a bottleneck link an equal share of the available bandwidth of that link; so if there are n TCP connections operating over a bottleneck link, then each connection approximately gets 1/nth of the bandwidth. By opening multiple parallel TCP connections to transport a single Web page, the browser can “cheat” and grab a larger portion of the link bandwidth. Many HTTP/1.1 browsers open up to six parallel TCP connections not only to circumvent(避免，绕过) HOL blocking but also to obtain more bandwidth. 
+> HTTP/1.1 和 TCP 通过打开多个连接、并发地进行数据传输来避免 HOL 问题，但这并不能根治，而且多连接策略意味着会极大地加大服务器的负载。
 
 #### The purpose of HTTP/2
 One of the primary goals of HTTP/2 is to get rid of (or at least reduce the number of) parallel TCP connections for transporting a single Web page. This not only reduces the number of sockets that need to be open and maintained at servers, but also allows TCP congestion control to operate as intended. But with only one TCP connection to transport a Web page, HTTP/2 requires carefully designed mechanisms to avoid HOL blocking.
 
 #### HTTP/2 Framing
-The HTTP/2 solution for HOL blocking is to break each message into small frames, and interleave (交错，夹带) the request and response messages on the same TCP connection. 
+The HTTP/2 solution for HOL blocking is to ***break each message into small frames, and interleave the request and response messages on the same TCP connection***. 
+> HTTP/2 的解决办法就是将整块的信息打碎成多个小片段，在同一个 TCP 连接中交错地请求、响应——完成传输；
+> 类比 OS 的 RR 调度策略，给每个进程都分配固定的执行时间，执行完一段就让渡 CPU 给其他进程。
 
 To understand this, consider again the example of a Web page consisting of one large video clip and, say, 8 smaller objects. Thus the server will receive 9 concurrent requests from any browser wanting to see this Web page. For each of these requests, the server needs to send 9 competing HTTP response messages to the browser. Suppose all frames are of fixed length, the video clip consists of 1000 frames, and each of the smaller objects consists of two frames. ==With frame interleaving, after sending one frame from the video clip, the first frames of each of the small objects are sent==. Then after sending the second frame of the video clip, the last frames of each of the small objects are sent. Thus, all of the smaller objects are sent after sending a total of 18 frames. If interleaving were not used, the smaller objects would be sent only after sending 1016 frames. Thus the HTTP/2 framing mechanism can significantly decrease user-perceived delay. 
 
@@ -652,12 +659,13 @@ The ability to break down an HTTP message into independent frames, interleave th
 Message prioritization allows developers to customize the relative priority of requests to better optimize application performance. 
 
 As we just learned, the framing sub-layer organizes messages into parallel streams of data destined to the same requestor. When a client sends concurrent requests to a server, it can ==prioritize the responses it is requesting by assigning a weight between 1 and 256 to each message==. **The higher number indicates higher priority**. Using these weights, the server can send first the frames for the responses with the highest priority. In addition to this, ==the client also states each message’s **dependency on other messages** by specifying the ID of the message on which it depends==. 
+> 另外，HTTP/2也支持对请求进行优先级划分，根据权重的不同分配不同的服务器响应时间；客户端会评估每条信息对其它信息的依赖度——如果一条信息被大量其他信息所依赖，那么通常来说它具有更重要的地位。
 
-Another feature of HTTP/2 is **the ability for a server to send multiple responses for a single client request**. That is, in addition to the response to the original request, the server can push additional objects to the client, without the client having to request each one. This is possible since the HTML base page indicates the objects that will be needed to fully render the Web page. So ==instead of waiting for the HTTP requests for these objects, the server can analyze the HTML page, identify the objects that are needed, and send them to the client before receiving explicit requests for these objects==. Server push eliminates the extra latency due to waiting for the requests.
-> 预先发送可能请求的资源。
+Another feature of HTTP/2 is ***the ability for a server to send multiple responses for a single client request***. That is, in addition to the response to the original request, the server can push additional objects to the client, without the client having to request each one. This is possible since the HTML base page indicates the objects that will be needed to fully render the Web page. So ==instead of waiting for the HTTP requests for these objects, the server can analyze the HTML page, identify the objects that are needed, and send them to the client before receiving explicit requests for these objects==. Server push eliminates the extra latency due to waiting for the requests.
+> HTTP/2 的另一个特点是可以在一个客户端请求中，服务器预先发送可能请求的多个资源。将被动化为主动，更方便服务器进行策略优化。
 
 ### HTTP/3
-**QUIC**, discussed in Chapter 3, is a new “transport” protocol that is implemented in the application layer over the bare-bones(简陋的) UDP protocol. 
+***QUIC***, discussed in Chapter 3, is a new “transport” protocol that is implemented in the application layer over the bare-bones(简陋的) UDP protocol. 
 
 QUIC has several features that are desirable for HTTP, such as 
 - message multiplexing (interleaving), 
@@ -674,7 +682,7 @@ HTTP/3 is yet a new HTTP protocol that is designed to operate over QUIC. As of 2
     - 客户端：发起传输的一方
     - 服务器：远程主机
 - `[RFC 959]`
-- ftp服务器：端口号为21
+- ftp 端口号：21用于控制命令，20用于数据传输。
 
 ![[20-Application-layer-FTP.png]]
 
@@ -744,6 +752,7 @@ A typical message starts its journey in the sender’s user agent, then travels 
 
 > [! note] SMTP has no intermediate mail server!
 > It is important to observe that SMTP does not normally use intermediate mail servers for sending mail, even when the two mail servers are located at opposite ends of the world. If Alice’s server is in Hong Kong and Bob’s server is in St. Louis, the TCP connection is a direct connection between the Hong Kong and St. Louis servers. 
+> > SMTP 没有中间服务器，无论多么远，都会直接建立 TCP 连接、发送邮件。除非接收方服务器宕机，邮件将会保存在发送方的服务器中并等待重发。
 > 
 > In particular, ==if Bob’s mail server is down, the message remains in Alice’s mail server and waits for a new attempt== — the message does not get placed in some intermediate mail server.
 
@@ -756,10 +765,11 @@ A typical message starts its journey in the sender’s user agent, then travels 
 - 命令/响应交互
     - 命令：ASCII文本
     - 响应：状态码和状态信息
-- 报文必须为7位ASCII码（所有的字节范围为0-127，包括邮件内容）
+- **报文必须为7位ASCII码**（所有的字节范围为0-127，包括邮件内容）
 
 > [! note] SMTP, a legacy technology.
 > For example, it restricts the body (not just the headers) of all mail messages to simple 7-bit ASCII. This restriction made sense in the early 1980s when transmission capacity was scarce and no one was e-mailing large attachments or large image, audio, or video files. 
+> > SMTP 限制其报文在首部和主体部分的编码都是 ASCII，这在过去带宽有限时很有帮助，但如今已经远远不能提供足够的服务——例如在多媒体资源中，会将多媒体资源都编码成 ASCII 再发送，这意味着接收方需要从 ASCII 编码的信息中再还原为二进制的多媒体文件，才可以使用。
 > 
 > But today, in the multimedia era, the 7-bit ASCII restriction is a bit of a pain — ==it requires binary multimedia data to be encoded to ASCII before being sent over SMTP==; and it requires the corresponding ASCII message to be decoded back to binary after SMTP transport. Recall from Section 2.2 that ==HTTP does not require multimedia data to be ASCII encoded before transfer==.
 
@@ -803,7 +813,7 @@ A typical message starts its journey in the sender’s user agent, then travels 
     - ==关闭==：
 
 #### SMTP：总结
-- SMTP 使用**持久连接**，使用 TCP 可靠数据传输服务
+- SMTP 使用**持久连接**，**使用 TCP 可靠数据传输服务**
 - SMTP要求报文（首部和主体）为7位ASCII编码
 - SMTP 服务器使用 `CRLF.CRLF` 决定报文的尾部
 - SMTP与HTTP比较：
@@ -853,6 +863,7 @@ base64 encoded data .....           # 编码好的数据
 - Now let’s consider the path an e-mail message takes when it is sent from Alice to Bob. We just learned that at some point along the path the e-mail message needs to be deposited in Bob’s mail server. This could be done simply by having Alice’s user agent send the message directly to Bob’s mail server. 
 - However, ==typically the sender’s user agent does not dialogue directly with the recipient’s mail server==. Instead, as shown in Figure 2.16, Alice’s user agent uses SMTP or HTTP to deliver the e-mail message into her mail server, then Alice’s mail server uses SMTP (as an SMTP client) to relay the e-mail message to Bob’s mail server. 
 - Why the two-step procedure? Primarily because without relaying through Alice’s mail server, Alice’s user agent doesn’t have any recourse to an unreachable destination mail server. By having Alice first deposit the e-mail in her own mail server, ==Alice’s mail server can repeatedly try to send the message to Bob’s mail server, say every 30 minutes, until Bob’s mail server becomes operational==. (And if Alice’s mail server is down, then she has the recourse of complaining to her system administrator!)
+> 邮件发送需要分为两步，第一步使用 SMTP 或 HTTP 将邮件发送到自己的 SMTP 服务器，第二步使用 SMTP 将邮件从自己的服务器发向目的方的服务器。
 
 - 但是，似乎忘了什么...SMTP 是个 push protocol，它是没法从邮件服务器获得邮件的！
 - **邮件访问协议**：从邮件服务器拉取、访问邮件
@@ -948,8 +959,8 @@ When a recipient, such as Bob, wants to access a message in his mailbox, the e-m
 - 但 IP 地址不好记忆（IPv4是一个4字节即32bit 的数字；如果是 IPv6的话是一个16字节128bit 的数字），不便人类使用（没有人类语言的语义）
 - 人类一般倾向于使用一些有意义的字符串来标识Internet上的设备
     - 例如：
-        - qzheng@ustc.edu.cn 所在的邮件服务器
-        - www.ustc.edu.cn 所在的web服务器
+        - `qzheng@ustc.edu.cn` 所在的邮件服务器
+        - `www.ustc.edu.cn` 所在的 web 服务器
 - 存在着 “字符串”——IP地址 的转换的必要性
 - 人类用户提供要访问机器的“字符串”名称
 - 由 DNS(Domain Name System) 负责转换成为二进制的网络地址（IP 地址）
@@ -966,8 +977,8 @@ When a recipient, such as Bob, wants to access a message in his mailbox, the e-m
 
 #### DNS 是什么？
 The DNS is 
-1) a distributed database implemented in a hierarchy of DNS servers, and 
-2) an application-layer protocol that allows hosts to query the distributed database.
+1) a ***distributed database*** implemented in a hierarchy of DNS servers, and 
+2) an application-layer protocol that ==allows hosts to query the distributed database==.
 
 The DNS servers are often UNIX machines running the Berkeley Internet Name Domain (BIND) software `[BIND 2020]`. 
 
@@ -995,6 +1006,8 @@ As an example, consider what happens when a browser (that is, an HTTP client), r
 #### Host aliasing
 DNS provides a few other important services in addition to translating hostnames to IP addresses:
 - **Host aliasing**. A host with a complicated hostname can have one or more alias names. For example, a hostname such as `relay1.west-coast.enterprise.com` could have, say, two aliases such as `enterprise.com` and `www.enterprise.com`. In this case, the hostname `relay1.west-coast.enterprise.com` is said to be a canonical hostname (规范主机名). Alias hostnames, when present, are typically more mnemonic (好记的) than canonical hostnames. DNS can be invoked by an application to obtain the canonical hostname for a supplied alias hostname as well as the IP address of the host.
+> 主机别名，即为难记的主机名提供简单的别名；另外，还可以为不同的主机（即有不同的 IP），提供相同的 URL，从而实现负载均衡。
+
 #### Mail Server aliasing
 - **Mail server aliasing**. For obvious reasons, it is highly desirable that e-mail addresses be mnemonic. For example, if Bob has an account with Yahoo Mail, Bob’s e-mail address might be as simple as `bob@yahoo.com`. However, the hostname of the Yahoo mail server is more complicated and much less mnemonic than simply yahoo. com (for example, the canonical hostname might be something like `relay1.west-coast.yahoo.com`). ==DNS can be invoked by a mail application to obtain the canonical hostname for a supplied alias hostname as well as the IP address of the host==. In fact, the MX record (see below) permits a company’s mail server and Web server to have identical (aliased) hostnames; for example, a company’s Web server and mail server can both be called `enterprise.com`.
 #### Load distribution
@@ -1005,7 +1018,7 @@ DNS provides a few other important services in addition to translating hostnames
 #### DNS域名结构
 - 一个层面命名设备会有很多重名
 - DNS采用层次树状结构的命名方法
-- Internet根被划为几百个顶级域(top lever domains)
+- Internet根被划为几百个**顶级域**(top lever domains)
 	- 通用的(generic)
 		- .com ; .edu ; .gov ; .int ; .mil ; .net ; .org ; .firm ; .hsop ; .web ; .arts ; .rec ;
 	- 国家的(countries)
@@ -1056,15 +1069,16 @@ DNS provides a few other important services in addition to translating hostnames
 
 ### DNS 的工作机理
 [[#Most important translate hostname to IP-address|From the perspective of the invoking application]] in the user’s host, DNS is a black box providing a simple, straightforward translation service. But in fact, the **black box** that implements the service is complex, consisting of a large number of DNS servers distributed around the globe, as well as an application-layer protocol that specifies how the DNS servers and querying hosts communicate.
+> 用户视角下的 DNS 就是一个黑箱，只需要提供 URL，就会得到 IP。
 
 #### 分布式、层次数据库
 
 >[! note] DNS 不采用集中式(整个网络使用一个 DNS 服务器)数据库的原因
 >The problems with a centralized design include: 
->- **A single point of failure**. If the DNS server crashes, so does the entire Internet! 
->- **Traffic volume**. A single DNS server would have to handle all DNS queries (for all the HTTP requests and e-mail messages generated from hundreds of millions of hosts). 
->- **Distant centralized database**. A single DNS server cannot be “close to” all the querying clients. If we put the single DNS server in New York City, then all queries from Australia must travel to the other side of the globe, perhaps over slow and congested links. This can lead to significant delays. 
->- **Maintenance**. The single DNS server would have to keep records for all Internet hosts. Not only would this centralized database be huge, but it would have to be updated frequently to account for every new host.
+>- ***A single point of failure***. If the DNS server crashes, so does the entire Internet! 
+>- ***Traffic volume***. A single DNS server would have to handle all DNS queries (for all the HTTP requests and e-mail messages generated from hundreds of millions of hosts). 
+>- ***Distant centralized database***. A single DNS server cannot be “close to” all the querying clients. If we put the single DNS server in New York City, then all queries from Australia must travel to the other side of the globe, perhaps over slow and congested links. This can lead to significant delays. 
+>- ***Maintenance***. The single DNS server would have to keep records for all Internet hosts. Not only would this centralized database be huge, but it would have to be updated frequently to account for every new host.
 >总之，集中式数据库既不合适、也不可行。
 
 **No single DNS server has all of the mappings for all of the hosts in the Internet. Instead, the mappings are distributed across the DNS servers**.
@@ -1077,7 +1091,9 @@ DNS 分为三类：root DNS servers, top-level domain (TLD) DNS servers, and aut
 To understand how these three classes of servers interact, suppose a DNS client wants to determine the IP address for the hostname `www.amazon.com`. 
 1. To a first approximation, the following events will take place. The client first contacts one of the ==root servers, which returns IP addresses for TLD servers for the top-level domain `com`==. 
 2. The client then contacts one of these TLD servers, which returns the IP address of an authoritative server for `amazon.com`. 
-3. Finally, the client contacts one of the authoritative servers for amazon. com, which returns the IP address for the hostname `www.amazon.com`.
+3. Finally, the client contacts one of the authoritative servers for `amazon.com`, which returns the IP address for the hostname `www.amazon.com`.
+
+> 用户->根 DNS 服务器，获得顶级域名的IP->TLD 服务器，获得权威域名的IP->目的主机的IP
 
 > [! note] More about DNS hierarchy
 > - **Root DNS servers**. There are more than 1000 root servers instances scattered all over the world, as shown in Figure 2.18. These root servers are copies of 13 different root servers, managed by 12 different organizations, and coordinated through the Internet Assigned Numbers Authority `[IANA 2020]`. The full list of root name servers, along with the organizations that manage them and their IP addresses can be found at `[Root Servers 2020]`. ==Root name servers provide the IP addresses of the TLD servers==. 
@@ -1093,6 +1109,7 @@ To understand how these three classes of servers interact, suppose a DNS client 
 There is another important type of DNS server called the **local DNS server**. A local DNS server does not strictly belong to the hierarchy of servers but is nevertheless central to the DNS architecture. Each ISP—such as a residential ISP or an institutional ISP—has a local DNS server (also called a default name server). 
 
 ==When a host connects to an ISP, the ISP provides the host with the IP addresses of one or more of its local DNS servers==(typically through **DHCP**, which is discussed in Chapter 4). You can easily determine the IP address of your local DNS server by accessing network status windows in Windows or UNIX. 
+> 本地域名服务器不在上述 DNS 层次中，实际上是由 ISP 服务商提供给本地用户使用的。当用户的主机连接到 ISP，会通过 DHCP 获得临时 IP 地址，然后可以通过本地域名服务器加快解析到外部网络的速度。
 
 A host’s ==local DNS server is typically “close to” the host==. For an institutional ISP, the local DNS server may be on the same LAN as the host; for a residential ISP, it is typically separated from the host by no more than a few routers. ==When a host makes a DNS query, the query is sent to the local DNS server, which acts a proxy, forwarding the query into the DNS server hierarchy, as we’ll discuss in more detail below==.
 
@@ -1122,7 +1139,9 @@ In practice, the queries typically follow the pattern in Figure 2.19: ==The quer
 >递归查询的缺陷：
 >- 问题：根服务器的负担太重
 >- 解决：迭代查询
+
 #### DNS caching
+
 上文中可以看到，为了请求一个地址，要进行多次的、重复的 DNS 查询，这可以通过设立 DNS 缓存来优化查询时间和请求次数。
 
 In a query chain, when a DNS server receives a DNS reply (containing, for example, a mapping from a hostname to an IP address), it can ==cache the mapping in its local memory==. 
@@ -1235,7 +1254,7 @@ Because hosts and mappings between hostnames and IP addresses are by no means pe
 - 重定向攻击
     - 中间人攻击
         - 截获查询，伪造回答，从而攻击某个（DNS 回答指定的 IP）站点
-    - DNS 中毒
+    - DNS 污染 (poison)
         - 发送伪造的应答给 DNS 服务器，希望它能够缓存这个虚假的结果
     - 技术上较困难：分布式截获和伪造
 - 利用 DNS 基础设施进行 DDoS
