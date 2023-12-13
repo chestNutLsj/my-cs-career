@@ -4,47 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "255a9f3ec0f39b24",
+        "id": "00dd30abf48e094a",
         "type": "tabs",
         "children": [
           {
-            "id": "e0602dc3f9ae43ee",
+            "id": "1469aac498fe520c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷II.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "769316268124947d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "473ebcd35c23e2db",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/6-Network/Top-to-down/50-Network-layer-Control-plane.md",
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -122,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/50-Network-layer-Control-plane.md",
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/50-Network-layer-Control-plane.md",
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -161,7 +136,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/50-Network-layer-Control-plane.md"
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md"
               }
             }
           }
@@ -178,7 +153,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/50-Network-layer-Control-plane.md"
+                "file": "1-Theory/6-Network/Top-to-down/20-Application-layer.md"
               }
             }
           },
@@ -212,10 +187,18 @@
       "obsidian42-brat:BRAT": false
     }
   },
-  "active": "473ebcd35c23e2db",
+  "active": "1469aac498fe520c",
   "lastOpenFiles": [
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2018-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2019-mid.md",
     "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2010-final.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/30-SV39-multilevel-page-table.md",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
     "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷II.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2016-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
+    "1-Theory/6-Network/Top-to-down/50-Network-layer-Control-plane.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2020_21-final.md",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/60-Problem-of-concurrence.md",
     "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/50-Condition-variable-mechanism.md",
@@ -242,16 +225,8 @@
     "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/16-Stirling-Approximation.md",
     "1-Theory/4-Architecture/THU-Liu/41-Bus.md",
     "1-Theory/5-OS-principle/Internal&design-principle/72-符号链接与硬链接.md",
-    "1-Theory/5-OS-principle/Knowledge-Fragment/CoW.md",
-    "5-Tools/Shell/shell-script-learn/Linux Shell 学习笔记.md",
-    "1-Theory/4-Architecture/THU-Liu/22-Datapath.md",
     "1-Theory/4-Architecture/THU-Liu/Organization2022fall.pdf",
     "1-Theory/4-Architecture/THU-Liu/MIPS Reference Sheet.pdf",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/B-Vector+List/20-Vector.md",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A1-String-Exercise.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2011-mid.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2014-mid.md",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/assets",
     "1-Theory/6-Network/THU-Xu/精简版PPT.pdf",
     "1-Theory/6-Network/THU-Xu/assets",
