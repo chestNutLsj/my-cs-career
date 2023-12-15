@@ -31,7 +31,7 @@ void Vector<T>::quickSort( Rank lo, Rank hi ) { // 0 <= lo < hi <= size
 思路：减治
 - ![[B0-Sort-quicksort-LUG.png]]
 - 任取一个候选者（如 `[0]`）
-- 将序列划分为三段：L + U + G，分别是小于、为扫描到的、大于部分 
+- 将序列划分为三段：L + U + G，分别是小于、未扫描到的、大于部分 
 - **交替地**向内移动 lo 和 hi
 - 逐个检查当前元素：
 	- 若更小/大，则转移归入 L/G 
