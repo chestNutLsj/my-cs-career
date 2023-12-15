@@ -419,6 +419,8 @@ int* buildGS ( char* P ) { //构造好后缀位移量表：O(m)
 }
 ```
 
+^3958ff
+
 ### 性能分析
 ![[A0-String-analysis.png]]
 - 空间 = |bc| + |gs| = O (|Σ| + m) 

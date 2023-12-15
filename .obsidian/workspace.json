@@ -8,55 +8,40 @@
         "type": "tabs",
         "children": [
           {
-            "id": "1469aac498fe520c",
+            "id": "81b84ffdf982ea99",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2010-mid.md",
-                "mode": "preview",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "d3a3c3b051991e00",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2018-final.md",
+                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷III.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "023066cf28fe38fa",
+            "id": "bbde2ba281d636b9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷II.md",
-                "mode": "preview",
+                "file": "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md",
+                "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "6af46969054e1473",
+            "id": "21f0abe6bf29e334",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "1-Theory/5-OS-principle/Internal&design-principle/21-进程、线程、纤程与协程.md",
-                "mode": "source",
-                "source": false
+                "file": "0-Assets/Excalidraw/Drawing 2023-12-15 20.19.33.excalidraw.md"
               }
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -134,7 +119,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle/Internal&design-principle/21-进程、线程、纤程与协程.md",
+                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷III.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +136,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle/Internal&design-principle/21-进程、线程、纤程与协程.md",
+                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷III.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -173,7 +158,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "1-Theory/5-OS-principle/Internal&design-principle/21-进程、线程、纤程与协程.md"
+                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷III.md"
               }
             }
           }
@@ -190,7 +175,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle/Internal&design-principle/21-进程、线程、纤程与协程.md"
+                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷III.md"
               }
             }
           },
@@ -224,44 +209,44 @@
       "obsidian42-brat:BRAT": false
     }
   },
-  "active": "6af46969054e1473",
+  "active": "81b84ffdf982ea99",
   "lastOpenFiles": [
-    "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷II.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2018-final.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2010-mid.md",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/70-Hash.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2010-final.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/B0-Sort.md",
-    "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
-    "1-Theory/6-Network/Top-to-down/20-Application-layer.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2019-mid.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/30-SV39-multilevel-page-table.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2016-final.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/50-Tree.md",
-    "1-Theory/6-Network/Top-to-down/50-Network-layer-Control-plane.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2020_21-final.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/60-Problem-of-concurrence.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/50-Condition-variable-mechanism.md",
-    "1-Theory/6-Network/Top-to-down/10-Intro-of-Network.md",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷II-exponential-vs-binary.png",
-    "0-Assets/Excalidraw/Drawing 2023-12-08 19.32.41.excalidraw.md",
-    "0-Assets/Excalidraw/Drawing 2023-12-06 18.16.59.excalidraw.md",
-    "0-Assets/Excalidraw/Drawing 2023-12-07 15.39.06.excalidraw.md",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷II-broadcast-domain.png",
     "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷II-csma-cs-slot.png",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷II-p-persistent.png",
-    "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/616bb2ac6f87a87b5187790f5d3cd4e.jpg",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/BC06E42BF6F188CE95FBA8DC2959C5EB.png",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷II-improved-clock.png",
-    "1-Theory/5-OS-principle/Internal&design-principle/30-并发.md",
-    "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷II-pipeline-4.png",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷II-pipeline=3.png",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷II-pipeline-2.png",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷III.md",
+    "1-Theory/6-Network/Top-to-down/50-Network-layer-Control-plane.md",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-SNMP-agent.png",
+    "1-Theory/5-OS-principle/Internal&design-principle/72-符号链接与硬链接.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/8-并发.md",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-virtual-circuit-route-table.png",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-Virtual-circuit.png",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-SIGKILL.png",
+    "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/60-IO管理与磁盘.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/30-Mutex-lock.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2020_21-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
+    "1-Theory/4-Architecture/THU-Liu/41-Bus.md",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-daisy-chain-arbitration.png",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-SRAM-static.png",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-DRAM-read.png",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-volatile-SRAM.png",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷-III-FLASH-opt.png",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷-III-FLASH.png",
+    "1-Theory/5-OS-principle/Internal&design-principle/62-SSD.md",
+    "0-Assets/Excalidraw/Drawing 2023-12-15 20.19.33.excalidraw.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2010-mid.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2011-mid.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2012_13-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2014-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2014-mid.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2016-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2018-final.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2019-mid.md",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷II.md",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
     "1-Theory/4-Architecture/THU-Liu/Organization2022fall.pdf",
     "1-Theory/4-Architecture/THU-Liu/MIPS Reference Sheet.pdf",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/assets",

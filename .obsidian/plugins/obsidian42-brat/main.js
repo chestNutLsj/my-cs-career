@@ -671,8 +671,12 @@ var grabReleaseFileFromRepository = async (repository, version, fileName, debugL
 };
 var grabManifestJsonFromRepository = async (repositoryPath, rootManifest = true, debugLogging = true) => {
   const manifestJsonPath = GITHUB_RAW_USERCONTENT_PATH + repositoryPath + (rootManifest ? "/HEAD/manifest.json" : "/HEAD/manifest-beta.json");
+  if (debugLogging)
+    console.log("grabManifestJsonFromRepository manifestJsonPath", manifestJsonPath);
   try {
     const response = await (0, import_obsidian.request)({ url: manifestJsonPath });
+    if (debugLogging)
+      console.log("grabManifestJsonFromRepository response", response);
     return response === "404: Not Found" ? null : await JSON.parse(response);
   } catch (error) {
     if (error !== "Error: Request failed, status 404" && debugLogging) {
@@ -1004,11 +1008,7 @@ var AddNewTheme = class extends import_obsidian4.Modal {
       return;
     const scrubbedAddress = this.address.replace("https://github.com/", "");
     if (existBetaThemeinInList(this.plugin, scrubbedAddress)) {
-      toastMessage(
-        this.plugin,
-        `This plugin is already in the list for beta testing`,
-        10
-      );
+      toastMessage(this.plugin, `This theme is already in the list for beta testing`, 10);
       return;
     }
     if (await themeSave(this.plugin, scrubbedAddress, true)) {
@@ -1023,6 +1023,7 @@ var AddNewTheme = class extends import_obsidian4.Modal {
         textEl.setPlaceholder(
           "Repository (example: https://github.com/GitubUserName/repository-name"
         );
+        textEl.setValue(this.address);
         textEl.onChange((value) => {
           this.address = value.trim();
         });
@@ -1302,6 +1303,7 @@ var AddNewPluginModal = class extends import_obsidian6.Modal {
         textEl.setPlaceholder(
           "Repository (example: https://github.com/GitubUserName/repository-name)"
         );
+        textEl.setValue(this.address);
         textEl.onChange((value) => {
           this.address = value.trim();
         });
@@ -1505,15 +1507,16 @@ The version attribute for the release is missing from the manifest file`,
    * @returns true if succeeds
    */
   async addPlugin(repositoryPath, updatePluginFiles = false, seeIfUpdatedOnly = false, reportIfNotUpdted = false, specifyVersion = "", forceReinstall = false) {
-    console.log(
-      "BRAT: addPlugin",
-      repositoryPath,
-      updatePluginFiles,
-      seeIfUpdatedOnly,
-      reportIfNotUpdted,
-      specifyVersion,
-      forceReinstall
-    );
+    if (this.plugin.settings.debuggingMode)
+      console.log(
+        "BRAT: addPlugin",
+        repositoryPath,
+        updatePluginFiles,
+        seeIfUpdatedOnly,
+        reportIfNotUpdted,
+        specifyVersion,
+        forceReinstall
+      );
     const noticeTimeout = 10;
     let primaryManifest = await this.validateRepository(repositoryPath, true, false);
     const usingBetaManifest = primaryManifest ? true : false;
@@ -1555,7 +1558,9 @@ You will need to update your Obsidian to use this plugin or contact the plugin d
       );
       if (usingBetaManifest || rFiles.manifest === "")
         rFiles.manifest = JSON.stringify(primaryManifest);
-      if (usingBetaManifest || rFiles.mainJs === null) {
+      if (this.plugin.settings.debuggingMode)
+        console.log("BRAT: rFiles.manifest", usingBetaManifest, rFiles);
+      if (rFiles.mainJs === null) {
         const msg = `${repositoryPath}
 The release is not complete and cannot be download. main.js is missing from the Release`;
         await this.plugin.log(msg, true);
@@ -2228,19 +2233,34 @@ var BratAPI = class {
 var ThePlugin = class extends import_obsidian11.Plugin {
   constructor() {
     super(...arguments);
-    this.APP_NAME = "Obsidian42 - Beta Reviewer's Auto-update Tool (BRAT)";
+    this.APP_NAME = "BRAT";
     this.APP_ID = "obsidian42-brat";
     this.settings = DEFAULT_SETTINGS;
     this.betaPlugins = new BetaPlugins(this);
     this.commands = new PluginCommands(this);
     this.bratApi = new BratAPI(this);
+    this.obsidianProtocolHandler = (params) => {
+      if (!params.plugin && !params.theme) {
+        toastMessage(this, `Could not locate the repository from the URL.`, 10);
+        return;
+      }
+      for (const which of ["plugin", "theme"]) {
+        if (params[which]) {
+          const modal = which === "plugin" ? new AddNewPluginModal(this, this.betaPlugins) : new AddNewTheme(this);
+          modal.address = params[which];
+          modal.open();
+          return;
+        }
+      }
+    };
   }
   async onload() {
-    console.log("loading Obsidian42 - BRAT");
+    console.log("loading " + this.APP_NAME);
     await this.loadSettings();
     this.addSettingTab(new BratSettingsTab(this.app, this));
     addIcons();
     this.showRibbonButton();
+    this.registerObsidianProtocolHandler("brat", this.obsidianProtocolHandler);
     this.app.workspace.onLayoutReady(() => {
       if (this.settings.updateAtStartup) {
         setTimeout(() => {
