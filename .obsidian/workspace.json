@@ -8,7 +8,31 @@
         "type": "tabs",
         "children": [
           {
-            "id": "81b84ffdf982ea99",
+            "id": "a97d677286123479",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "e1b3c1613a569021",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷II.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "39e28f6e8c4ef32c",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -20,28 +44,67 @@
             }
           },
           {
-            "id": "bbde2ba281d636b9",
+            "id": "65a79e943b55fefc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md",
+                "file": "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "cba92b394fb84596",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "21f0abe6bf29e334",
+            "id": "b862117ae04c6924",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "0-Assets/Excalidraw/Drawing 2023-12-15 20.19.33.excalidraw.md"
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/40-Time-sharing-preemptive.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "b90921133268d14f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/4-Architecture/RISC-V/A1-RISC-V异常、中断.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "b6ac36d189e384c3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
+                "mode": "preview",
+                "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 7
       }
     ],
     "direction": "vertical"
@@ -70,8 +133,8 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "生成树",
-                "matchingCase": true,
+                "query": "sscratch",
+                "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
@@ -98,11 +161,12 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 288.50577545166016
+    "width": 314.50577545166016
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -119,7 +183,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷III.md",
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +200,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷III.md",
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -158,7 +222,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷III.md"
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md"
               }
             }
           }
@@ -175,7 +239,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷III.md"
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md"
               }
             }
           },
@@ -209,54 +273,54 @@
       "obsidian42-brat:BRAT": false
     }
   },
-  "active": "81b84ffdf982ea99",
+  "active": "b6ac36d189e384c3",
   "lastOpenFiles": [
-    "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷III.md",
-    "1-Theory/6-Network/Top-to-down/50-Network-layer-Control-plane.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Memory-management-Overview.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/50-Address-space-of-kernel-and-app.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/40-Manage-SV39-multilevel-pagetable.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/30-SV39-multilevel-page-table.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/20-Address-space.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/10-Rust-dynamic-mem-allocate.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/30-Manage-mechanism.md",
+    "1-Theory/4-Architecture/RISC-V/A1-RISC-V异常、中断.md",
+    "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/40-Time-sharing-preemptive.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/69-Finger-Search.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/1-应用程序与基本执行环境.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/30-Multiprog-coop-schedule.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/20-Task-switch.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/20-Core-structure-for-management.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Concepts-and-syscall.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/40-Switching-privilege.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/30-Impl-batch-OS.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/20-Impl-application-prog.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/10-Privilege-mechanism.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/10-Multiprog-place-loader.md",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-float-cache.png",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-2-way-cache.png",
+    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-cache-hit-rate.png",
+    "1-Theory/6-Network/ComputerNetwork-6th-Tanenbaum/40-MAC-sublayer/assets/80-Switching-spanning-tree.png",
+    "1-Theory/6-Network/ComputerNetwork-6th-Tanenbaum/40-MAC-sublayer/assets/80-Switching-bridges-parallel-links.png",
+    "1-Theory/6-Network/ComputerNetwork-6th-Tanenbaum/40-MAC-sublayer/assets/80-Switching-network-devices-1.png",
+    "1-Theory/6-Network/ComputerNetwork-6th-Tanenbaum/40-MAC-sublayer/assets/80-Switching-network-devices.png",
+    "1-Theory/6-Network/ComputerNetwork-6th-Tanenbaum/40-MAC-sublayer/assets",
+    "1-Theory/6-Network/ComputerNetwork-6th-Tanenbaum/40-MAC-sublayer",
+    "1-Theory/6-Network/ComputerNetwork-6th-Tanenbaum/30-Data-Link-Layer",
+    "1-Theory/6-Network/ComputerNetwork-6th-Tanenbaum",
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-SNMP-agent.png",
-    "1-Theory/5-OS-principle/Internal&design-principle/72-符号链接与硬链接.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/8-并发.md",
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-virtual-circuit-route-table.png",
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-Virtual-circuit.png",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-SIGKILL.png",
-    "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/60-IO管理与磁盘.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/30-Mutex-lock.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2020_21-final.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/81-Graph-Application.md",
-    "1-Theory/4-Architecture/THU-Liu/41-Bus.md",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-daisy-chain-arbitration.png",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/E-Hash-String-Sort/A0-String.md",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-SRAM-static.png",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-DRAM-read.png",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-volatile-SRAM.png",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷-III-FLASH-opt.png",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷-III-FLASH.png",
-    "1-Theory/5-OS-principle/Internal&design-principle/62-SSD.md",
-    "0-Assets/Excalidraw/Drawing 2023-12-15 20.19.33.excalidraw.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2010-mid.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2011-mid.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2012_13-final.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2014-final.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2014-mid.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2016-final.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2018-final.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2019-mid.md",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷II.md",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/F-Graph-PQ/80-Graph.md",
     "1-Theory/4-Architecture/THU-Liu/Organization2022fall.pdf",
     "1-Theory/4-Architecture/THU-Liu/MIPS Reference Sheet.pdf",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/assets",
     "1-Theory/6-Network/THU-Xu/精简版PPT.pdf",
     "1-Theory/6-Network/THU-Xu/assets",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/912历年真题(2016-2023).pdf",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam",
-    "1-Theory/6-Network/DCN-Forouzan/考试要点",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets",
-    "1-Theory/2-DataStruct/Practice/912-模拟题",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/未命名.canvas",
     "未命名.canvas",
     "MyHome.canvas",
