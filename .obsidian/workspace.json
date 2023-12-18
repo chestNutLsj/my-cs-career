@@ -4,47 +4,59 @@
     "type": "split",
     "children": [
       {
-        "id": "00dd30abf48e094a",
+        "id": "666835c03786dacf",
         "type": "tabs",
         "children": [
           {
-            "id": "a97d677286123479",
+            "id": "e73a474a97141883",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/30-Impl-batch-OS.md",
                 "mode": "preview",
                 "source": false
               }
             }
           },
           {
-            "id": "e1b3c1613a569021",
+            "id": "278bf61e267ee29f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷II.md",
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
                 "mode": "preview",
                 "source": false
               }
             }
           },
           {
-            "id": "39e28f6e8c4ef32c",
+            "id": "cee19fcd8230bcb7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷III.md",
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "65a79e943b55fefc",
+            "id": "8eae3075ccab8a4a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "0baeda68a43ee5e9",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -56,55 +68,19 @@
             }
           },
           {
-            "id": "cba92b394fb84596",
+            "id": "18574ec7748c83a1",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b862117ae04c6924",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/40-Time-sharing-preemptive.md",
-                "mode": "preview",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b90921133268d14f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/4-Architecture/RISC-V/A1-RISC-V异常、中断.md",
-                "mode": "preview",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b6ac36d189e384c3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
+                "file": "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
                 "mode": "preview",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 7
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -133,7 +109,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "sscratch",
+                "query": "set_kernel",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -161,12 +137,11 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 314.50577545166016
+    "width": 331.50577545166016
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -183,7 +158,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
+                "file": "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -200,7 +175,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
+                "file": "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -222,7 +197,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md"
+                "file": "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md"
               }
             }
           }
@@ -239,7 +214,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md"
+                "file": "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md"
               }
             }
           },
@@ -255,7 +230,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 262.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -273,34 +248,34 @@
       "obsidian42-brat:BRAT": false
     }
   },
-  "active": "b6ac36d189e384c3",
+  "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/4-地址空间.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Memory-management-Overview.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/50-Address-space-of-kernel-and-app.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/40-Manage-SV39-multilevel-pagetable.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/70-文件系统.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/40-内存与虚存.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/6-File-system/20-Easyfs.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/21-进程、线程、纤程与协程.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/30-SV39-multilevel-page-table.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/20-Address-space.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/10-Rust-dynamic-mem-allocate.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/30-Manage-mechanism.md",
-    "1-Theory/4-Architecture/RISC-V/A1-RISC-V异常、中断.md",
-    "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/40-Time-sharing-preemptive.md",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/D-Tree+BST+BBST/69-Finger-Search.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/1-应用程序与基本执行环境.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/30-Multiprog-coop-schedule.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/20-Task-switch.md",
+    "1-Theory/5-OS-principle/Internal&design-principle/60-IO管理与磁盘.md",
     "1-Theory/5-OS-principle/rCore-tutorial/5-Process/40-Scheduling.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/20-Core-structure-for-management.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/10-Concepts-and-syscall.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/40-Switching-privilege.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/30-Impl-batch-OS.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
     "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/20-Impl-application-prog.md",
     "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/10-Privilege-mechanism.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/00-Multiprog-Overview.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/30-Multiprog-coop-schedule.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/Practice/3-多道程序与分时多任务.md",
     "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/10-Multiprog-place-loader.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/5-Process/30-Manage-mechanism.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/20-Task-switch.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/3-Multiprog-and-time-sharing/40-Time-sharing-preemptive.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/50-Address-space-of-kernel-and-app.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/40-Manage-SV39-multilevel-pagetable.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/20-Address-space.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/10-Rust-dynamic-mem-allocate.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/00-Memory-management-Overview.md",
+    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/30-Impl-batch-OS.md",
+    "1-Theory/4-Architecture/RISC-V/A0-Privileged-architecture.md",
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-float-cache.png",
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-2-way-cache.png",
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-cache-hit-rate.png",
