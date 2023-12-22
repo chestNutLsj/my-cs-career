@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "f4827921a45aa982",
+        "id": "60eea9e5b169bc8b",
         "type": "tabs",
         "children": [
           {
-            "id": "7cf37f3352a95807",
+            "id": "84c6e489a228406a",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷II.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -97,7 +93,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷II.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +109,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷II.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,9 +129,7 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷II.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -152,9 +144,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷II.md"
-              }
+              "state": {}
             }
           },
           {
@@ -187,11 +177,11 @@
       "obsidian42-brat:BRAT": false
     }
   },
-  "active": "7cf37f3352a95807",
+  "active": "84c6e489a228406a",
   "lastOpenFiles": [
     "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
-    "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md",
     "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷II.md",
+    "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md",
     "1-Theory/4-Architecture/THU-Liu/25-Hazard-handle.md",
     "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷III.md",
     "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷I.md",
