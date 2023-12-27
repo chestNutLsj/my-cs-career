@@ -623,17 +623,18 @@ DFS 过程中顶点的状态：
 
 - DFS 过程中边的状态：  ^804025
 	- TREE
-	- CROSS：表明边的目的点 u 已经访问完毕，但是当前节点的发现时间晚于 u，这通常出现在有向图中，从 DFSTree 的角度看，当前节点 v 是较上溯到公共祖先的另一支子树中目标节点 u 的深度更深；
-	- FORWARD：表明边的目的点 u 已经访问完毕，并且当前节点的发现时间还要早于 u，这通常出现在有向图中，从 DFSTree 的角度看，当前节点 v 是较上溯到公共祖先的另一支子树中目标节点 u 的深度更浅；
+	- CROSS：表明边的目的点 u 已经访问完毕，但是当前节点的发现时间晚于 u，这只会出现在有向图中；
+	- FORWARD：表明边的目的点 u 已经访问完毕，并且当前节点的发现时间还要早于 u，这只会出现在有向图中；
+	- ![[2018-final-DFS.png]]
 	- BACKWARD：表明边的目的点 u 已被发现，但是还未访问完毕，从 DFSTree 的角度来看，BACKWARD 表明从树的低层向祖先的指向的边；
 
 ##### 有向图
 ![[80A-Graph-dfs-directed-graph-instance1.png]]
-- 注意到 A->c 时 c 已经访问完毕，而 dTime (A)<dTime (c)，表明 a 的深度较浅，由此<a, c>是一条FORWARD前向边；
+- 注意到 A->c 时 c 已经访问完毕，而 dTime (A)<dTime (c)，表明 a 的深度较浅，由此 `<a, c>` 是一条 FORWARD 前向边；
 
 ![[80A-Graph-dfs-directed-graph-instance2.png]]
 - 注意到此处 G->a 的 BACKWARD 出现了 loop，表明 a->f->g 构成了一条环路； ^dde3d5
-- 而 G->c 时，c 已访问完毕，且 dTime (G)>dTime (c)，表明 G 的深度更深，由此<g, c>是一条 CROSS 跨边；
+- 而 G->c 时，c 已访问完毕，且 dTime (G)>dTime (c)，由此 `<g, c>` 是一条 CROSS 跨边；
 
 ![[80A-Graph-dfs-directed-graph-instance3.png]]
 - 注意到此时 a 所属的连通分量已经访问完毕，但是全图仍有未访问节点，于是根据邻接表找到它们，进行 dfs 全局遍历；
@@ -701,7 +702,7 @@ void Graph<Tv, Te>::dfs( Rank s ) { // s < n
 	- BFS
 
 - 有向图是否存在环路：只能 DFS，因为 BFS 没有 BACKWARD ^02bb00
-	- 进一步地，如何判断 BACKWARD 是环路？毕竟不是出现 BACKWARD 就代表出现环路—— [[81-Graph-Application#^67e5d3|判断目标节点是否 VISITED]]，即是否是 DAG;
+	- 进一步地，如何判断 BACKWARD 是环路？出现 BACKWARD 就代表出现环路—— [[81-Graph-Application#^67e5d3|判断目标节点是否 VISITED]]，即是否是 DAG;
 - 计算图是否构成[[#^e03e5a|欧拉回路]]：DFS [[82-Graph-Exercise#6-10 DFS 在 O (n+e)内判断是否存在欧拉环路并构造之|习题解析6-10]] 
 - 给出图的拓扑排序：DFS，方便确定节点是否还有出度
 - [[81-Graph-Application#双连通分量|双连通分量]]、[[87-Strongly-Connected-Components|强连通分量]] 的分解：DFS

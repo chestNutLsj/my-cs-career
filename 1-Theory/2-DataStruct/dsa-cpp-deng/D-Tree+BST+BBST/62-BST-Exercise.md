@@ -80,7 +80,7 @@ h' <= |ap| + 1 <= h + 1
 
 为此可以统一约定：在BST::insert(e)内的查找定位过程中，**凡遇到数值相同的节点，均优先向右侧深入**；而在BST::search(e)的查找过程中，凡遇到数值相同的节点，均向左侧深入。 当然，将以上约定的左、右次序颠倒过来，亦同样可行。
 
-## 7-12 高度 h 的 AVL 树任一叶节点深度均不小于 $\lceil \frac{h}{2}\rceil$
+## 7-12 高度 h 的 AVL 树任一叶节点深度均不小于 h/2
 对树高 h 做数学归纳。作为归纳基，h = 1时的情况显然。假设以上命题对高度小于 h 的 AVL 树均成立，以下考查高度为 h 的 AVL 树。
 ![[61-Exercise-shallowest-node-in-avl.png]]
 
@@ -442,69 +442,6 @@ add the left and right subtree results as the child pointers
 return the new (subtree) root
 ```
 
-```cpp
-#include <iostream>
-#include <vector>
-
-struct TreeNode {
-    int val;
-    TreeNode* left;
-    TreeNode* right;
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-};
-
-TreeNode* buildTree(std::vector<int>& inorder, std::vector<int>& preorder) {
-    // Base case: If size is zero, return nullptr
-    if (preorder.empty()) {
-        return nullptr;
-    }
-
-    // Determine the root value from the preorder traversal
-    int rootValue = preorder[0];
-    TreeNode* root = new TreeNode(rootValue);
-
-    // Find the index of the root value in the inorder traversal
-    int index = 0;
-    while (inorder[index] != rootValue) {
-        index++;
-    }
-
-    // Recurse for the left subtree with updated size
-    root->left = buildTree(std::vector<int>(inorder.begin(), inorder.begin() + index),
-                           std::vector<int>(preorder.begin() + 1, preorder.begin() + 1 + index));
-
-    // Recurse for the right subtree with updated size
-    root->right = buildTree(std::vector<int>(inorder.begin() + index + 1, inorder.end()),
-                            std::vector<int>(preorder.begin() + 1 + index, preorder.end()));
-
-    return root;
-}
-
-// Helper function to print the tree (for testing)
-void printTree(TreeNode* root) {
-    if (root == nullptr) {
-        return;
-    }
-    printTree(root->left);
-    std::cout << root->val << " ";
-    printTree(root->right);
-}
-
-int main() {
-    // Example usage
-    std::vector<int> inorder = {9, 3, 15, 20, 7};
-    std::vector<int> preorder = {3, 9, 20, 15, 7};
-
-    TreeNode* result = buildTree(inorder, preorder);
-
-    // Print the constructed tree (inorder traversal)
-    printTree(result);
-
-    return 0;
-}
-
-```
-
 Basically, this decides the structure of the tree based on the size and traverses that structure, building the actual nodes along the way. It shouldn't be too hard to adapt it for B Trees.
 
 ### soulution 2 (correct)
@@ -599,7 +536,9 @@ Test:
 
 ### 好节点策略
 证明存在一种插入方式使得 B 树的高度最小：
+
 ![[26379328603383702313b9a23c5de8e9.png]]
+
 但是这个序列非常难以描述，只做拓展性的思考题。
 
 ## 8-6 考查 BTree 节点插入导致的分裂次数
