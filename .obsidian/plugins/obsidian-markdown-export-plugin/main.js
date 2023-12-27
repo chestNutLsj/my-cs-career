@@ -287,6 +287,7 @@ var DEFAULT_SETTINGS = {
 
 // src/utils.ts
 var path2 = __toESM(require("path"));
+var fs = __toESM(require("fs"));
 var import_md5 = __toESM(require_md5());
 var import_obsidian2 = require("obsidian");
 
@@ -359,9 +360,37 @@ async function tryRun(plugin, file, outputFormat = "markdown") {
     }
   }
 }
+function getResourceOsPath(plugin, resouorce) {
+  if (resouorce === null) {
+    return ".";
+  }
+  const appPath = plugin.app.vault.getResourcePath(resouorce);
+  const match = appPath.match(/app:\/\/(.*?)\//);
+  if (match) {
+    const hash = match[1];
+    const result = appPath.replace(`app://${hash}/`, "/").split("?")[0];
+    return decodeURIComponent(result);
+  }
+  return ".";
+}
+function fileExists(path4) {
+  try {
+    return fs.statSync(path4).isFile();
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      return false;
+    } else {
+      throw error;
+    }
+  }
+}
 async function tryCreateFolder(plugin, path4) {
   try {
-    await plugin.app.vault.createFolder(path4);
+    if (path4.startsWith("/")) {
+      fs.mkdirSync(path4, { recursive: true });
+    } else {
+      await plugin.app.vault.createFolder(path4);
+    }
   } catch (error) {
     if (!error.message.contains("Folder already exists")) {
       throw error;
@@ -370,7 +399,11 @@ async function tryCreateFolder(plugin, path4) {
 }
 async function tryCreate(plugin, path4, data) {
   try {
-    await plugin.app.vault.create(path4, data);
+    if (path4.startsWith("/")) {
+      fs.writeFileSync(path4, data);
+    } else {
+      await plugin.app.vault.create(path4, data);
+    }
   } catch (error) {
     if (!error.message.contains("file already exists")) {
       throw error;
@@ -391,11 +424,19 @@ async function tryCopyImage(plugin, contentPath) {
         if (urlEncodedImageLink.startsWith("http")) {
           continue;
         }
-        plugin.app.vault.adapter.copy(filePath, path2.join(plugin.settings.output, plugin.settings.attachment, imageLinkMd5.concat(imageExt))).catch((error) => {
-          if (!error.message.contains("file already exists")) {
-            throw error;
+        const targetPath = path2.join(plugin.settings.output, plugin.settings.attachment, imageLinkMd5.concat(imageExt));
+        try {
+          if (!fileExists(targetPath)) {
+            if (plugin.settings.output.startsWith("/")) {
+              const resourceOsPath = getResourceOsPath(plugin, ifile);
+              fs.copyFileSync(resourceOsPath, targetPath);
+            } else {
+              await plugin.app.vault.adapter.copy(filePath, targetPath);
+            }
           }
-        });
+        } catch (error) {
+          console.error(`Failed to copy file from ${filePath} to ${targetPath}: ${error.message}`);
+        }
       }
     });
   } catch (error) {

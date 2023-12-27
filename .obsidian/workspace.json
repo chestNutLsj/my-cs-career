@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "60eea9e5b169bc8b",
+        "id": "6582342aa60f72e6",
         "type": "tabs",
         "children": [
           {
-            "id": "84c6e489a228406a",
+            "id": "566d989ea10c4a26",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -120,7 +120,9 @@
             "state": {
               "type": "all-properties",
               "state": {
-                "sortOrder": "frequency"
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
               }
             }
           },
@@ -169,16 +171,35 @@
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
       "markdown-importer:打开 Markdown 格式转换器": false,
-      "table-editor-obsidian:Advanced Tables Toolbar": false,
       "oz-clear-unused-images:Clear Unused Images": false,
       "obsidian-advanced-slides:Show Slide Preview": false,
       "obsidian-importer:Open Importer": false,
       "obsidian-excalidraw-plugin:新建绘图文件": false,
-      "obsidian42-brat:BRAT": false
+      "obsidian42-brat:BRAT": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "84c6e489a228406a",
+  "active": "3d3d978ac964e0aa",
   "lastOpenFiles": [
+    "6-Scholar/Papers/@alizadehDataCenterTCP.md",
+    "1-Theory/4-Architecture/THU-Liu/12-Data-Expression-and-EDC.md",
+    "1-Theory/3-Algorithm/Practice/LuoGu",
+    "1-Theory/3-Algorithm/Practice/CodeForces",
+    "1-Theory/3-Algorithm/Practice/AcWing",
+    "1-Theory/3-Algorithm/Practice",
+    "1-Theory/3-Algorithm/fragments/将整数分解为 0~9(每个数字只出现一次) 之间的算术运算.md",
+    "1-Theory/3-Algorithm/迷宫问题.md",
+    "1-Theory/3-Algorithm/fragments",
+    "1-Theory/5-OS-principle/Internal&design-principle/60-IO管理与磁盘.md",
+    "1-Theory/4-Architecture/THU-Liu/41-Bus.md",
+    "1-Theory/4-Architecture/THU-Liu/21-RISC-V.md",
+    "1-Theory/6-Network/Top-to-down/50-Network-layer-Control-plane.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2011-mid.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Important-and-hard-problems⭐.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2014-mid.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/Mid-final-exam/2019-mid.md",
+    "1-Theory/4-Architecture/THU-Liu/20-Intruction.md",
+    "1-Theory/2-DataStruct/dsa-cpp-deng/A-Introduction/10-Introduction.md",
     "1-Theory/6-Network/Top-to-down/30-Transport-layer.md",
     "1-Theory/2-DataStruct/Practice/912-模拟题/2024-威卷II.md",
     "1-Theory/6-Network/Top-to-down/60-Link-layer-and-LAN.md",
@@ -191,20 +212,6 @@
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/60-Time-sharing-multitask-based-on-address-space.md",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/50-Address-space-of-kernel-and-app.md",
     "1-Theory/5-OS-principle/rCore-tutorial/4-Memory-address/20-Address-space.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/2-Batch-system/30-Impl-batch-OS.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/Practice/2-批处理操作系统.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/20-Pipe.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/50-CPU调度.md",
-    "1-Theory/4-Architecture/THU-Liu/22-Datapath.md",
-    "1-Theory/5-OS-principle/Internal&design-principle/30-并发.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/30-Mutex-lock.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/20-Kernelmode-thread-management.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/10-Usermode-thread-management.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/00-Concurrence-Overview.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/50-Condition-variable-mechanism.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/60-Problem-of-concurrence.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/8-Concurrence/40-Semaphore.md",
-    "1-Theory/5-OS-principle/rCore-tutorial/7-IPC-IOredirect/40-Signal.md",
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-float-cache.png",
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-2-way-cache.png",
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-cache-hit-rate.png",
@@ -220,11 +227,6 @@
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-virtual-circuit-route-table.png",
     "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-Virtual-circuit.png",
     "1-Theory/4-Architecture/THU-Liu/Organization2022fall.pdf",
-    "1-Theory/4-Architecture/THU-Liu/MIPS Reference Sheet.pdf",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/assets",
-    "1-Theory/6-Network/THU-Xu/精简版PPT.pdf",
-    "1-Theory/6-Network/THU-Xu/assets",
-    "1-Theory/2-DataStruct/dsa-cpp-deng/G-Practice/912历年真题(2016-2023).pdf",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/未命名.canvas",
     "未命名.canvas",
     "MyHome.canvas",

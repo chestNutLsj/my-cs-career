@@ -5161,27 +5161,40 @@ var TextExtractorPlugin = class extends import_obsidian4.Plugin {
     await loadSettings(this);
     await NU();
     this.addSettingTab(new TextExtractorSettingsTab(this));
+    this.addCommand({
+      id: "extract-to-clipboard",
+      name: "Extract text to clipboard",
+      callback: () => {
+        const file = getActiveFile(this.app);
+        if (file != null && zF(file.path)) {
+          extractToClipboard(file);
+        }
+      }
+    });
+    this.addCommand({
+      id: "extract-to-new-note",
+      name: "Extract text into a new note",
+      callback: () => {
+        const file = getActiveFile(this.app);
+        if (file != null && zF(file.path)) {
+          extractToNewNote(file);
+        }
+      }
+    });
     this.registerEvent(app.workspace.on("file-menu", (menu, file, _source) => {
       if (file instanceof import_obsidian4.TFile && zF(file.path)) {
         if (import_obsidian4.Platform.isDesktopApp) {
           menu.addItem((item) => {
             item.setTitle("Text Extractor");
             const submenu = item.setSubmenu();
-            const { clipboard } = require("electron");
             submenu.addItem((item2) => {
               item2.setTitle("Extract Text to clipboard").setIcon("clipboard-copy").onClick(async () => {
-                let text2 = await extractTextWithNotice(file);
-                await clipboard.writeText(text2);
-                new import_obsidian4.Notice("Text Extractor - Text copied to clipboard");
+                extractToClipboard(file);
               });
             });
             submenu.addItem((item2) => {
               item2.setTitle("Extract text into a new note").setIcon("document").onClick(async () => {
-                let contents = await extractTextWithNotice(file);
-                contents = `${contents}
-
-![[${file.path}]]`;
-                await createNote(file.basename, contents);
+                extractToNewNote(file);
               });
             });
             if (import_obsidian4.Platform.isDesktopApp) {
@@ -5197,11 +5210,7 @@ var TextExtractorPlugin = class extends import_obsidian4.Plugin {
         } else {
           menu.addItem((item) => {
             item.setTitle("Extract text into a new note").setIcon("document").onClick(async () => {
-              let contents = await extractTextWithNotice(file);
-              contents = `${contents}
-
-![[${file.path}]]`;
-              await createNote(file.basename, contents);
+              extractToNewNote(file);
             });
           });
         }
@@ -5223,6 +5232,23 @@ async function extractTextWithNotice(file) {
     new import_obsidian4.Notice(`Text Extractor - Error extracting text from file ${file.path}`);
     throw e2;
   }
+}
+async function extractToClipboard(file) {
+  const { clipboard } = require("electron");
+  let text2 = await extractTextWithNotice(file);
+  await clipboard.writeText(text2);
+  new import_obsidian4.Notice("Text Extractor - Text copied to clipboard");
+}
+async function extractToNewNote(file) {
+  let contents = await extractTextWithNotice(file);
+  contents = `${contents}
+
+![[${file.path}]]`;
+  await createNote(file.basename, contents);
+}
+function getActiveFile(app2) {
+  var _a2, _b;
+  return (_b = (_a2 = app2.workspace.activeEditor) == null ? void 0 : _a2.file) != null ? _b : app2.workspace.getActiveFile();
 }
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.

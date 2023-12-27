@@ -96,7 +96,7 @@
 	- PCI
 	- EISA
 	- SCSI：Small Computer System Interface
-	- USB
+	- USB：Universal Serial Bus
 	- Bluetooth...
 
 ![[41-Bus-types.png]]

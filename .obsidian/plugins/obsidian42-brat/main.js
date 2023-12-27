@@ -778,6 +778,7 @@ var DEFAULT_SETTINGS = {
   themesList: [],
   updateAtStartup: true,
   updateThemesAtStartup: true,
+  enableAfterInstall: true,
   loggingEnabled: false,
   loggingPath: "BRAT-log",
   loggingVerboseEnabled: false,
@@ -912,7 +913,7 @@ var themeSave = async (plugin, cssGithubRepository, newInstall) => {
     msg = `${manifestInfo.name} theme updated from ${cssGithubRepository}.`;
   }
   void plugin.log(msg + `[Theme Info](https://github.com/${cssGithubRepository})`, false);
-  toastMessage(plugin, `${msg}`, 20, () => {
+  toastMessage(plugin, msg, 20, () => {
     window.open(`https://github.com/${cssGithubRepository}`);
   });
   return true;
@@ -961,7 +962,7 @@ var themeDelete = (plugin, cssGithubRepository) => {
   void plugin.saveSettings();
   const msg = `Removed ${cssGithubRepository} from BRAT themes list and will no longer be updated. However, the theme files still exist in the vault. To remove them, go into Settings > Appearance and remove the theme.`;
   void plugin.log(msg, true);
-  toastMessage(plugin, `${msg}`);
+  toastMessage(plugin, msg);
 };
 var themesRootPath = (plugin) => {
   return (0, import_obsidian3.normalizePath)(plugin.app.vault.configDir + "/themes") + "/";
@@ -1101,6 +1102,15 @@ var BratSettingsTab = class extends import_obsidian5.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
+    new import_obsidian5.Setting(containerEl).setName("Auto-enable plugins after installation").setDesc(
+      'If enabled beta plugins will be automatically enabled after installtion by default. Note: you can toggle this on and off for each plugin in the "Add Plugin" form.'
+    ).addToggle((cb) => {
+      cb.setValue(this.plugin.settings.enableAfterInstall);
+      cb.onChange(async (value) => {
+        this.plugin.settings.enableAfterInstall = value;
+        await this.plugin.saveSettings();
+      });
+    });
     new import_obsidian5.Setting(containerEl).setName("Auto-update plugins at startup").setDesc(
       "If enabled all beta plugins will be checked for updates each time Obsidian starts. Note: this does not update frozen version plugins."
     ).addToggle((cb) => {
@@ -1268,6 +1278,7 @@ var AddNewPluginModal = class extends import_obsidian6.Modal {
     this.address = "";
     this.openSettingsTabAfterwards = openSettingsTabAfterwards;
     this.useFrozenVersion = useFrozenVersion;
+    this.enableAfterInstall = plugin.settings.enableAfterInstall;
     this.version = "";
   }
   async submitForm() {
@@ -1289,7 +1300,9 @@ var AddNewPluginModal = class extends import_obsidian6.Modal {
       false,
       false,
       false,
-      this.version
+      this.version,
+      false,
+      this.enableAfterInstall
     );
     if (result) {
       this.close();
@@ -1327,6 +1340,23 @@ var AddNewPluginModal = class extends import_obsidian6.Modal {
         });
       }
       formEl.createDiv("modal-button-container", (buttonContainerEl) => {
+        buttonContainerEl.createEl(
+          "label",
+          {
+            cls: "mod-checkbox"
+          },
+          (labelEl) => {
+            const checkboxEl = labelEl.createEl("input", {
+              attr: { tabindex: -1 },
+              type: "checkbox"
+            });
+            checkboxEl.checked = this.enableAfterInstall;
+            checkboxEl.addEventListener("click", () => {
+              this.enableAfterInstall = checkboxEl.checked;
+            });
+            labelEl.appendText("Enable after installing the plugin");
+          }
+        );
         buttonContainerEl.createEl("button", { attr: { type: "button" }, text: "Never mind" }).addEventListener("click", () => {
           this.close();
         });
@@ -1506,7 +1536,7 @@ The version attribute for the release is missing from the manifest file`,
    *
    * @returns true if succeeds
    */
-  async addPlugin(repositoryPath, updatePluginFiles = false, seeIfUpdatedOnly = false, reportIfNotUpdted = false, specifyVersion = "", forceReinstall = false) {
+  async addPlugin(repositoryPath, updatePluginFiles = false, seeIfUpdatedOnly = false, reportIfNotUpdted = false, specifyVersion = "", forceReinstall = false, enableAfterInstall = this.plugin.settings.enableAfterInstall) {
     if (this.plugin.settings.debuggingMode)
       console.log(
         "BRAT: addPlugin",
@@ -1515,7 +1545,8 @@ The version attribute for the release is missing from the manifest file`,
         seeIfUpdatedOnly,
         reportIfNotUpdted,
         specifyVersion,
-        forceReinstall
+        forceReinstall,
+        enableAfterInstall
       );
     const noticeTimeout = 10;
     let primaryManifest = await this.validateRepository(repositoryPath, true, false);
@@ -1526,14 +1557,14 @@ The version attribute for the release is missing from the manifest file`,
       const msg = `${repositoryPath}
 A manifest.json or manifest-beta.json file does not exist in the root directory of the repository. This plugin cannot be installed.`;
       await this.plugin.log(msg, true);
-      toastMessage(this.plugin, `${msg}`, noticeTimeout);
+      toastMessage(this.plugin, msg, noticeTimeout);
       return false;
     }
     if (!Object.hasOwn(primaryManifest, "version")) {
       const msg = `${repositoryPath}
 The manifest${usingBetaManifest ? "-beta" : ""}.json file in the root directory of the repository does not have a version number in the file. This plugin cannot be installed.`;
       await this.plugin.log(msg, true);
-      toastMessage(this.plugin, `${msg}`, noticeTimeout);
+      toastMessage(this.plugin, msg, noticeTimeout);
       return false;
     }
     if (!Object.hasOwn(primaryManifest, "minAppVersion")) {
@@ -1544,7 +1575,7 @@ The manifest${usingBetaManifest ? "-beta" : ""}.json for this plugin indicates t
 
 You will need to update your Obsidian to use this plugin or contact the plugin developer for more information.`;
         await this.plugin.log(msg, true);
-        toastMessage(this.plugin, `${msg}`, 30);
+        toastMessage(this.plugin, msg, 30);
         return false;
       }
     }
@@ -1564,7 +1595,7 @@ You will need to update your Obsidian to use this plugin or contact the plugin d
         const msg = `${repositoryPath}
 The release is not complete and cannot be download. main.js is missing from the Release`;
         await this.plugin.log(msg, true);
-        toastMessage(this.plugin, `${msg}`, noticeTimeout);
+        toastMessage(this.plugin, msg, noticeTimeout);
         return null;
       }
       return rFiles;
@@ -1576,6 +1607,14 @@ The release is not complete and cannot be download. main.js is missing from the 
       await this.writeReleaseFilesToPluginFolder(primaryManifest.id, releaseFiles);
       if (!forceReinstall)
         addBetaPluginToList(this.plugin, repositoryPath, specifyVersion);
+      if (enableAfterInstall) {
+        const { plugins } = this.plugin.app;
+        const pluginTargetFolderPath = (0, import_obsidian7.normalizePath)(
+          plugins.getPluginFolder() + "/" + primaryManifest.id
+        );
+        await plugins.loadManifest(pluginTargetFolderPath);
+        await plugins.enablePlugin(primaryManifest.id);
+      }
       await this.plugin.app.plugins.loadManifests();
       if (forceReinstall) {
         await this.reloadPlugin(primaryManifest.id);
@@ -1588,8 +1627,11 @@ Plugin has been reinstalled and reloaded.`,
         );
       } else {
         const versionText = specifyVersion === "" ? "" : ` (version: ${specifyVersion})`;
-        const msg = `${repositoryPath}${versionText}
-The plugin has been registered with BRAT. You may still need to enable it the Community Plugin List.`;
+        let msg = `${repositoryPath}${versionText}
+The plugin has been registered with BRAT.`;
+        if (!enableAfterInstall) {
+          msg += " You may still need to enable it the Community Plugin List.";
+        }
         await this.plugin.log(msg, true);
         toastMessage(this.plugin, msg, noticeTimeout);
       }
