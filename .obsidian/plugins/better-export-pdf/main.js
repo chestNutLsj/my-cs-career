@@ -4242,53 +4242,11 @@ __export(main_exports, {
   default: () => BetterExportPdfPlugin
 });
 module.exports = __toCommonJS(main_exports);
-var fs = __toESM(require("fs/promises"));
+var fs2 = __toESM(require("fs/promises"));
+var import_obsidian4 = require("obsidian");
 var os = __toESM(require("os"));
-var import_obsidian = require("obsidian");
-var path = __toESM(require("path"));
+var path2 = __toESM(require("path"));
 var electron = __toESM(require("electron"));
-
-// src/utils.ts
-var TreeNode = class {
-  constructor(key, title, level) {
-    this.children = [];
-    this.key = key;
-    this.title = title;
-    this.level = level;
-    this.children = [];
-  }
-};
-function getHeadingTree(doc = document) {
-  const headings = doc.querySelectorAll("h1, h2, h3, h4, h5, h6");
-  const root = new TreeNode("", "Root", 0);
-  let prev = root;
-  headings.forEach((heading) => {
-    var _a;
-    const level = parseInt(heading.tagName.slice(1));
-    const link = heading.querySelector("a.md-print-anchor");
-    const regexMatch = /^af:\/\/(.+)$/.exec((_a = link == null ? void 0 : link.href) != null ? _a : "");
-    if (!regexMatch) {
-      return;
-    }
-    const newNode = new TreeNode(regexMatch[1], heading.innerText, level);
-    while (prev.level >= level) {
-      prev = prev.parent;
-    }
-    prev.children.push(newNode);
-    newNode.parent = prev;
-    prev = newNode;
-  });
-  return root;
-}
-function modifyHeadings(doc) {
-  const headings = doc.querySelectorAll("h1, h2, h3, h4, h5, h6");
-  headings.forEach((heading, i) => {
-    const link = document.createElement("a");
-    link.href = `af://n${i}`;
-    link.className = "md-print-anchor";
-    heading.appendChild(link);
-  });
-}
 
 // node_modules/.pnpm/tslib@1.14.1/node_modules/tslib/tslib.es6.js
 var extendStatics = function(d, b) {
@@ -15018,14 +14976,14 @@ var parameters = /* @__PURE__ */ new Map([
   ["Z", 0],
   ["z", 0]
 ]);
-var parse = function(path2) {
+var parse = function(path3) {
   var cmd;
   var ret = [];
   var args = [];
   var curArg = "";
   var foundDecimal = false;
   var params = 0;
-  for (var _i = 0, path_1 = path2; _i < path_1.length; _i++) {
+  for (var _i = 0, path_1 = path3; _i < path_1.length; _i++) {
     var c = path_1[_i];
     if (parameters.has(c)) {
       params = parameters.get(c);
@@ -15339,8 +15297,8 @@ var segmentToBezier = function(cx1, cy1, th0, th1, rx, ry, sinTh, cosTh) {
   ];
   return result;
 };
-var svgPathToOperators = function(path2) {
-  return apply(parse(path2));
+var svgPathToOperators = function(path3) {
+  return apply(parse(path3));
 };
 
 // node_modules/.pnpm/pdf-lib@1.17.1/node_modules/pdf-lib/es/api/operations.js
@@ -15497,7 +15455,7 @@ var drawEllipse = function(options) {
     popGraphicsState()
   ]).filter(Boolean);
 };
-var drawSvgPath = function(path2, options) {
+var drawSvgPath = function(path3, options) {
   var _a, _b, _c;
   return __spreadArrays([
     pushGraphicsState(),
@@ -15511,7 +15469,7 @@ var drawSvgPath = function(path2, options) {
     options.borderWidth && setLineWidth(options.borderWidth),
     options.borderLineCap && setLineCap(options.borderLineCap),
     setDashPattern((_b = options.borderDashArray) !== null && _b !== void 0 ? _b : [], (_c = options.borderDashPhase) !== null && _c !== void 0 ? _c : 0)
-  ], svgPathToOperators(path2), [
+  ], svgPathToOperators(path3), [
     // prettier-ignore
     options.color && options.borderWidth ? fillAndStroke() : options.color ? fill() : options.borderColor ? stroke() : closePath(),
     popGraphicsState()
@@ -18437,7 +18395,7 @@ var JavaScriptEmbedder_default = JavaScriptEmbedder;
 var PDFDocument = (
   /** @class */
   function() {
-    function PDFDocument3(context, ignoreEncryption, updateMetadata) {
+    function PDFDocument2(context, ignoreEncryption, updateMetadata) {
       var _this = this;
       this.defaultWordBreaks = [" "];
       this.computePages = function() {
@@ -18476,7 +18434,7 @@ var PDFDocument = (
       if (updateMetadata)
         this.updateInfoDict();
     }
-    PDFDocument3.load = function(pdf, options) {
+    PDFDocument2.load = function(pdf, options) {
       if (options === void 0) {
         options = {};
       }
@@ -18494,12 +18452,12 @@ var PDFDocument = (
               return [4, PDFParser_default.forBytesWithOptions(bytes, parseSpeed, throwOnInvalidObject, capNumbers).parseDocument()];
             case 1:
               context = _f.sent();
-              return [2, new PDFDocument3(context, ignoreEncryption, updateMetadata)];
+              return [2, new PDFDocument2(context, ignoreEncryption, updateMetadata)];
           }
         });
       });
     };
-    PDFDocument3.create = function(options) {
+    PDFDocument2.create = function(options) {
       if (options === void 0) {
         options = {};
       }
@@ -18512,14 +18470,14 @@ var PDFDocument = (
           pageTreeRef = context.register(pageTree);
           catalog = PDFCatalog_default.withContextAndPages(context, pageTreeRef);
           context.trailerInfo.Root = context.register(catalog);
-          return [2, new PDFDocument3(context, false, updateMetadata)];
+          return [2, new PDFDocument2(context, false, updateMetadata)];
         });
       });
     };
-    PDFDocument3.prototype.registerFontkit = function(fontkit) {
+    PDFDocument2.prototype.registerFontkit = function(fontkit) {
       this.fontkit = fontkit;
     };
-    PDFDocument3.prototype.getForm = function() {
+    PDFDocument2.prototype.getForm = function() {
       var form = this.formCache.access();
       if (form.hasXFA()) {
         console.warn("Removing XFA form data as pdf-lib does not support reading or writing XFA");
@@ -18527,63 +18485,63 @@ var PDFDocument = (
       }
       return form;
     };
-    PDFDocument3.prototype.getTitle = function() {
+    PDFDocument2.prototype.getTitle = function() {
       var title = this.getInfoDict().lookup(PDFName_default.Title);
       if (!title)
         return void 0;
       assertIsLiteralOrHexString(title);
       return title.decodeText();
     };
-    PDFDocument3.prototype.getAuthor = function() {
+    PDFDocument2.prototype.getAuthor = function() {
       var author = this.getInfoDict().lookup(PDFName_default.Author);
       if (!author)
         return void 0;
       assertIsLiteralOrHexString(author);
       return author.decodeText();
     };
-    PDFDocument3.prototype.getSubject = function() {
+    PDFDocument2.prototype.getSubject = function() {
       var subject = this.getInfoDict().lookup(PDFName_default.Subject);
       if (!subject)
         return void 0;
       assertIsLiteralOrHexString(subject);
       return subject.decodeText();
     };
-    PDFDocument3.prototype.getKeywords = function() {
+    PDFDocument2.prototype.getKeywords = function() {
       var keywords = this.getInfoDict().lookup(PDFName_default.Keywords);
       if (!keywords)
         return void 0;
       assertIsLiteralOrHexString(keywords);
       return keywords.decodeText();
     };
-    PDFDocument3.prototype.getCreator = function() {
+    PDFDocument2.prototype.getCreator = function() {
       var creator = this.getInfoDict().lookup(PDFName_default.Creator);
       if (!creator)
         return void 0;
       assertIsLiteralOrHexString(creator);
       return creator.decodeText();
     };
-    PDFDocument3.prototype.getProducer = function() {
+    PDFDocument2.prototype.getProducer = function() {
       var producer = this.getInfoDict().lookup(PDFName_default.Producer);
       if (!producer)
         return void 0;
       assertIsLiteralOrHexString(producer);
       return producer.decodeText();
     };
-    PDFDocument3.prototype.getCreationDate = function() {
+    PDFDocument2.prototype.getCreationDate = function() {
       var creationDate = this.getInfoDict().lookup(PDFName_default.CreationDate);
       if (!creationDate)
         return void 0;
       assertIsLiteralOrHexString(creationDate);
       return creationDate.decodeDate();
     };
-    PDFDocument3.prototype.getModificationDate = function() {
+    PDFDocument2.prototype.getModificationDate = function() {
       var modificationDate = this.getInfoDict().lookup(PDFName_default.ModDate);
       if (!modificationDate)
         return void 0;
       assertIsLiteralOrHexString(modificationDate);
       return modificationDate.decodeDate();
     };
-    PDFDocument3.prototype.setTitle = function(title, options) {
+    PDFDocument2.prototype.setTitle = function(title, options) {
       assertIs(title, "title", ["string"]);
       var key = PDFName_default.of("Title");
       this.getInfoDict().set(key, PDFHexString_default.fromText(title));
@@ -18592,63 +18550,63 @@ var PDFDocument = (
         prefs.setDisplayDocTitle(true);
       }
     };
-    PDFDocument3.prototype.setAuthor = function(author) {
+    PDFDocument2.prototype.setAuthor = function(author) {
       assertIs(author, "author", ["string"]);
       var key = PDFName_default.of("Author");
       this.getInfoDict().set(key, PDFHexString_default.fromText(author));
     };
-    PDFDocument3.prototype.setSubject = function(subject) {
+    PDFDocument2.prototype.setSubject = function(subject) {
       assertIs(subject, "author", ["string"]);
       var key = PDFName_default.of("Subject");
       this.getInfoDict().set(key, PDFHexString_default.fromText(subject));
     };
-    PDFDocument3.prototype.setKeywords = function(keywords) {
+    PDFDocument2.prototype.setKeywords = function(keywords) {
       assertIs(keywords, "keywords", [Array]);
       var key = PDFName_default.of("Keywords");
       this.getInfoDict().set(key, PDFHexString_default.fromText(keywords.join(" ")));
     };
-    PDFDocument3.prototype.setCreator = function(creator) {
+    PDFDocument2.prototype.setCreator = function(creator) {
       assertIs(creator, "creator", ["string"]);
       var key = PDFName_default.of("Creator");
       this.getInfoDict().set(key, PDFHexString_default.fromText(creator));
     };
-    PDFDocument3.prototype.setProducer = function(producer) {
+    PDFDocument2.prototype.setProducer = function(producer) {
       assertIs(producer, "creator", ["string"]);
       var key = PDFName_default.of("Producer");
       this.getInfoDict().set(key, PDFHexString_default.fromText(producer));
     };
-    PDFDocument3.prototype.setLanguage = function(language) {
+    PDFDocument2.prototype.setLanguage = function(language) {
       assertIs(language, "language", ["string"]);
       var key = PDFName_default.of("Lang");
       this.catalog.set(key, PDFString_default.of(language));
     };
-    PDFDocument3.prototype.setCreationDate = function(creationDate) {
+    PDFDocument2.prototype.setCreationDate = function(creationDate) {
       assertIs(creationDate, "creationDate", [[Date, "Date"]]);
       var key = PDFName_default.of("CreationDate");
       this.getInfoDict().set(key, PDFString_default.fromDate(creationDate));
     };
-    PDFDocument3.prototype.setModificationDate = function(modificationDate) {
+    PDFDocument2.prototype.setModificationDate = function(modificationDate) {
       assertIs(modificationDate, "modificationDate", [[Date, "Date"]]);
       var key = PDFName_default.of("ModDate");
       this.getInfoDict().set(key, PDFString_default.fromDate(modificationDate));
     };
-    PDFDocument3.prototype.getPageCount = function() {
+    PDFDocument2.prototype.getPageCount = function() {
       if (this.pageCount === void 0)
         this.pageCount = this.getPages().length;
       return this.pageCount;
     };
-    PDFDocument3.prototype.getPages = function() {
+    PDFDocument2.prototype.getPages = function() {
       return this.pageCache.access();
     };
-    PDFDocument3.prototype.getPage = function(index) {
+    PDFDocument2.prototype.getPage = function(index) {
       var pages = this.getPages();
       assertRange(index, "index", 0, pages.length - 1);
       return pages[index];
     };
-    PDFDocument3.prototype.getPageIndices = function() {
+    PDFDocument2.prototype.getPageIndices = function() {
       return range(0, this.getPageCount());
     };
-    PDFDocument3.prototype.removePage = function(index) {
+    PDFDocument2.prototype.removePage = function(index) {
       var pageCount = this.getPageCount();
       if (this.pageCount === 0)
         throw new RemovePageFromEmptyDocumentError();
@@ -18656,11 +18614,11 @@ var PDFDocument = (
       this.catalog.removeLeafNode(index);
       this.pageCount = pageCount - 1;
     };
-    PDFDocument3.prototype.addPage = function(page) {
+    PDFDocument2.prototype.addPage = function(page) {
       assertIs(page, "page", ["undefined", [PDFPage_default, "PDFPage"], Array]);
       return this.insertPage(this.getPageCount(), page);
     };
-    PDFDocument3.prototype.insertPage = function(index, page) {
+    PDFDocument2.prototype.insertPage = function(index, page) {
       var pageCount = this.getPageCount();
       assertRange(index, "index", 0, pageCount);
       assertIs(page, "page", ["undefined", [PDFPage_default, "PDFPage"], Array]);
@@ -18678,13 +18636,13 @@ var PDFDocument = (
       this.pageCount = pageCount + 1;
       return page;
     };
-    PDFDocument3.prototype.copyPages = function(srcDoc, indices) {
+    PDFDocument2.prototype.copyPages = function(srcDoc, indices) {
       return __awaiter(this, void 0, void 0, function() {
         var copier, srcPages, copiedPages, idx, len, srcPage, copiedPage, ref;
         return __generator(this, function(_a) {
           switch (_a.label) {
             case 0:
-              assertIs(srcDoc, "srcDoc", [[PDFDocument3, "PDFDocument"]]);
+              assertIs(srcDoc, "srcDoc", [[PDFDocument2, "PDFDocument"]]);
               assertIs(indices, "indices", [Array]);
               return [4, srcDoc.flush()];
             case 1:
@@ -18703,13 +18661,13 @@ var PDFDocument = (
         });
       });
     };
-    PDFDocument3.prototype.copy = function() {
+    PDFDocument2.prototype.copy = function() {
       return __awaiter(this, void 0, void 0, function() {
         var pdfCopy, contentPages, idx, len;
         return __generator(this, function(_a) {
           switch (_a.label) {
             case 0:
-              return [4, PDFDocument3.create()];
+              return [4, PDFDocument2.create()];
             case 1:
               pdfCopy = _a.sent();
               return [4, pdfCopy.copyPages(this, this.getPageIndices())];
@@ -18745,7 +18703,7 @@ var PDFDocument = (
         });
       });
     };
-    PDFDocument3.prototype.addJavaScript = function(name, script) {
+    PDFDocument2.prototype.addJavaScript = function(name, script) {
       assertIs(name, "name", ["string"]);
       assertIs(script, "script", ["string"]);
       var embedder = JavaScriptEmbedder_default.for(script, name);
@@ -18753,7 +18711,7 @@ var PDFDocument = (
       var javaScript = PDFJavaScript_default.of(ref, this, embedder);
       this.javaScripts.push(javaScript);
     };
-    PDFDocument3.prototype.attach = function(attachment, name, options) {
+    PDFDocument2.prototype.attach = function(attachment, name, options) {
       if (options === void 0) {
         options = {};
       }
@@ -18781,7 +18739,7 @@ var PDFDocument = (
         });
       });
     };
-    PDFDocument3.prototype.embedFont = function(font, options) {
+    PDFDocument2.prototype.embedFont = function(font, options) {
       if (options === void 0) {
         options = {};
       }
@@ -18827,7 +18785,7 @@ var PDFDocument = (
         });
       });
     };
-    PDFDocument3.prototype.embedStandardFont = function(font, customName) {
+    PDFDocument2.prototype.embedStandardFont = function(font, customName) {
       assertIs(font, "font", ["string"]);
       if (!isStandardFont(font)) {
         throw new TypeError("`font` must be one of type `StandardFonts`");
@@ -18838,7 +18796,7 @@ var PDFDocument = (
       this.fonts.push(pdfFont);
       return pdfFont;
     };
-    PDFDocument3.prototype.embedJpg = function(jpg) {
+    PDFDocument2.prototype.embedJpg = function(jpg) {
       return __awaiter(this, void 0, void 0, function() {
         var bytes, embedder, ref, pdfImage;
         return __generator(this, function(_a) {
@@ -18857,7 +18815,7 @@ var PDFDocument = (
         });
       });
     };
-    PDFDocument3.prototype.embedPng = function(png) {
+    PDFDocument2.prototype.embedPng = function(png) {
       return __awaiter(this, void 0, void 0, function() {
         var bytes, embedder, ref, pdfImage;
         return __generator(this, function(_a) {
@@ -18876,7 +18834,7 @@ var PDFDocument = (
         });
       });
     };
-    PDFDocument3.prototype.embedPdf = function(pdf, indices) {
+    PDFDocument2.prototype.embedPdf = function(pdf, indices) {
       if (indices === void 0) {
         indices = [0];
       }
@@ -18889,15 +18847,15 @@ var PDFDocument = (
                 "string",
                 Uint8Array,
                 ArrayBuffer,
-                [PDFDocument3, "PDFDocument"]
+                [PDFDocument2, "PDFDocument"]
               ]);
               assertIs(indices, "indices", [Array]);
-              if (!(pdf instanceof PDFDocument3))
+              if (!(pdf instanceof PDFDocument2))
                 return [3, 1];
               _a = pdf;
               return [3, 3];
             case 1:
-              return [4, PDFDocument3.load(pdf)];
+              return [4, PDFDocument2.load(pdf)];
             case 2:
               _a = _b.sent();
               _b.label = 3;
@@ -18909,7 +18867,7 @@ var PDFDocument = (
         });
       });
     };
-    PDFDocument3.prototype.embedPage = function(page, boundingBox, transformationMatrix) {
+    PDFDocument2.prototype.embedPage = function(page, boundingBox, transformationMatrix) {
       return __awaiter(this, void 0, void 0, function() {
         var embeddedPage;
         return __generator(this, function(_a) {
@@ -18924,7 +18882,7 @@ var PDFDocument = (
         });
       });
     };
-    PDFDocument3.prototype.embedPages = function(pages, boundingBoxes, transformationMatrices) {
+    PDFDocument2.prototype.embedPages = function(pages, boundingBoxes, transformationMatrices) {
       if (boundingBoxes === void 0) {
         boundingBoxes = [];
       }
@@ -18975,7 +18933,7 @@ var PDFDocument = (
         });
       });
     };
-    PDFDocument3.prototype.flush = function() {
+    PDFDocument2.prototype.flush = function() {
       return __awaiter(this, void 0, void 0, function() {
         return __generator(this, function(_a) {
           switch (_a.label) {
@@ -19003,7 +18961,7 @@ var PDFDocument = (
         });
       });
     };
-    PDFDocument3.prototype.save = function(options) {
+    PDFDocument2.prototype.save = function(options) {
       if (options === void 0) {
         options = {};
       }
@@ -19033,7 +18991,7 @@ var PDFDocument = (
         });
       });
     };
-    PDFDocument3.prototype.saveAsBase64 = function(options) {
+    PDFDocument2.prototype.saveAsBase64 = function(options) {
       if (options === void 0) {
         options = {};
       }
@@ -19053,7 +19011,7 @@ var PDFDocument = (
         });
       });
     };
-    PDFDocument3.prototype.findPageForAnnotationRef = function(ref) {
+    PDFDocument2.prototype.findPageForAnnotationRef = function(ref) {
       var pages = this.getPages();
       for (var idx = 0, len = pages.length; idx < len; idx++) {
         var page = pages[idx];
@@ -19064,7 +19022,7 @@ var PDFDocument = (
       }
       return void 0;
     };
-    PDFDocument3.prototype.embedAll = function(embeddables) {
+    PDFDocument2.prototype.embedAll = function(embeddables) {
       return __awaiter(this, void 0, void 0, function() {
         var idx, len;
         return __generator(this, function(_a) {
@@ -19091,7 +19049,7 @@ var PDFDocument = (
         });
       });
     };
-    PDFDocument3.prototype.updateInfoDict = function() {
+    PDFDocument2.prototype.updateInfoDict = function() {
       var pdfLib = "pdf-lib (https://github.com/Hopding/pdf-lib)";
       var now = /* @__PURE__ */ new Date();
       var info = this.getInfoDict();
@@ -19102,7 +19060,7 @@ var PDFDocument = (
       if (!info.get(PDFName_default.of("CreationDate")))
         this.setCreationDate(now);
     };
-    PDFDocument3.prototype.getInfoDict = function() {
+    PDFDocument2.prototype.getInfoDict = function() {
       var existingInfo = this.context.lookup(this.context.trailerInfo.Info);
       if (existingInfo instanceof PDFDict_default)
         return existingInfo;
@@ -19110,12 +19068,12 @@ var PDFDocument = (
       this.context.trailerInfo.Info = this.context.register(newInfo);
       return newInfo;
     };
-    PDFDocument3.prototype.assertFontkit = function() {
+    PDFDocument2.prototype.assertFontkit = function() {
       if (!this.fontkit)
         throw new FontkitNotRegisteredError();
       return this.fontkit;
     };
-    return PDFDocument3;
+    return PDFDocument2;
   }()
 );
 var PDFDocument_default = PDFDocument;
@@ -19503,12 +19461,12 @@ var PDFPage = (
         graphicsState: graphicsStateKey
       }));
     };
-    PDFPage2.prototype.drawSvgPath = function(path2, options) {
+    PDFPage2.prototype.drawSvgPath = function(path3, options) {
       var _a, _b, _c, _d, _e, _f, _g, _h, _j;
       if (options === void 0) {
         options = {};
       }
-      assertIs(path2, "path", ["string"]);
+      assertIs(path3, "path", ["string"]);
       assertOrUndefined(options.x, "options.x", ["number"]);
       assertOrUndefined(options.y, "options.y", ["number"]);
       assertOrUndefined(options.scale, "options.scale", ["number"]);
@@ -19537,7 +19495,7 @@ var PDFPage = (
         options.borderColor = rgb(0, 0, 0);
       }
       var contentStream = this.getContentStream();
-      contentStream.push.apply(contentStream, drawSvgPath(path2, {
+      contentStream.push.apply(contentStream, drawSvgPath(path3, {
         x: (_a = options.x) !== null && _a !== void 0 ? _a : this.x,
         y: (_b = options.y) !== null && _b !== void 0 ? _b : this.y,
         scale: options.scale,
@@ -19888,6 +19846,63 @@ var PDFButton = (
 );
 var PDFButton_default = PDFButton;
 
+// src/utils.ts
+var TreeNode = class {
+  constructor(key, title, level) {
+    this.children = [];
+    this.key = key;
+    this.title = title;
+    this.level = level;
+    this.children = [];
+  }
+};
+function getHeadingTree(doc = document) {
+  const headings = doc.querySelectorAll("h1, h2, h3, h4, h5, h6");
+  const root = new TreeNode("", "Root", 0);
+  let prev = root;
+  headings.forEach((heading) => {
+    var _a;
+    const level = parseInt(heading.tagName.slice(1));
+    const link = heading.querySelector("a.md-print-anchor");
+    const regexMatch = /^af:\/\/(.+)$/.exec((_a = link == null ? void 0 : link.href) != null ? _a : "");
+    if (!regexMatch) {
+      return;
+    }
+    const newNode = new TreeNode(regexMatch[1], heading.innerText, level);
+    while (prev.level >= level) {
+      prev = prev.parent;
+    }
+    prev.children.push(newNode);
+    newNode.parent = prev;
+    prev = newNode;
+  });
+  return root;
+}
+function modifyHeadings(doc) {
+  const headings = doc.querySelectorAll("h1, h2, h3, h4, h5, h6");
+  headings.forEach((heading, i) => {
+    const link = document.createElement("a");
+    link.href = `af://n${i}`;
+    link.className = "md-print-anchor";
+    heading.appendChild(link);
+  });
+}
+function waitFor(cond, timeout = 0) {
+  return new Promise((resolve, reject) => {
+    const startTime = Date.now();
+    const poll = () => {
+      if (cond()) {
+        resolve(true);
+      } else if (timeout > 0 && Date.now() - startTime >= timeout) {
+        reject(new Error("Timeout exceeded"));
+      } else {
+        setTimeout(poll, 500);
+      }
+    };
+    poll();
+  });
+}
+
 // src/pdf.ts
 async function getHeadingPosition(pdfDoc) {
   const pages = pdfDoc.getPages();
@@ -20051,8 +20066,162 @@ async function addPageNumbers(doc, setting) {
     });
   }
 }
+async function editPDF(data, doc, { format, position }) {
+  const pdfDoc = await PDFDocument_default.load(data);
+  const posistions = await getHeadingPosition(pdfDoc);
+  const headings = await getHeadingTree(doc);
+  const outlines = generateOutlines(headings, posistions);
+  setOutline(pdfDoc, outlines);
+  await addPageNumbers(pdfDoc, {
+    format,
+    position
+  });
+  data = await pdfDoc.save();
+  return data;
+}
+
+// src/modal.ts
+var import_obsidian = require("obsidian");
+var ExportConfigModal = class extends import_obsidian.Modal {
+  constructor(app, callback, config) {
+    super(app);
+    this.canceled = true;
+    this.result = config != null ? config : {
+      pageSise: "A4",
+      marginType: "1",
+      showTitle: true,
+      open: true,
+      scale: 100,
+      landscape: false,
+      marginTop: "0",
+      marginBottom: "0",
+      marginLeft: "0",
+      marginRight: "0"
+    };
+    this.callback = callback;
+  }
+  onOpen() {
+    const { contentEl } = this;
+    contentEl.empty();
+    this.titleEl.setText("Export to PDF");
+    new import_obsidian.Setting(contentEl).setName("Add filename as title").addToggle(
+      (toggle) => toggle.setTooltip("Add filename as title").setValue(true).onChange(async (value) => {
+        this.result["showTitle"] = value;
+      })
+    );
+    const pageSizes = [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5",
+      "A6",
+      "Legal",
+      "Letter",
+      "Tabloid",
+      "Ledger"
+    ];
+    new import_obsidian.Setting(contentEl).setName("Page size").addDropdown((dropdown) => {
+      dropdown.addOptions(Object.fromEntries(pageSizes.map((size) => [size, size]))).setValue(this.result.pageSise).onChange(async (value) => {
+        this.result["pageSise"] = value;
+      });
+    });
+    new import_obsidian.Setting(contentEl).setName("Margin").addDropdown((dropdown) => {
+      dropdown.addOption("0", "None").addOption("1", "Default").addOption("2", "Small").addOption("3", "Custom").setValue("1").onChange(async (value) => {
+        this.result["marginType"] = value;
+        if (value == "3") {
+          topEl.settingEl.hidden = false;
+          btmEl.settingEl.hidden = false;
+        } else {
+          topEl.settingEl.hidden = true;
+          btmEl.settingEl.hidden = true;
+        }
+      });
+    });
+    const topEl = new import_obsidian.Setting(contentEl).setName("Top/Bottom").addText((text) => {
+      text.setPlaceholder("margin top").setValue(this.result["marginTop"]).onChange((value) => {
+        this.result["marginTop"] = value;
+      });
+    }).addText(
+      (text) => text.setPlaceholder("margin bottom").setValue(this.result["marginBottom"]).onChange((value) => {
+        this.result["marginBottom"] = value;
+      })
+    );
+    topEl.settingEl.hidden = true;
+    const btmEl = new import_obsidian.Setting(contentEl).setName("Left/Right").addText((text) => {
+      text.setPlaceholder("margin left").setValue(this.result["marginLeft"]).onChange((value) => {
+        this.result["marginLeft"] = value;
+      });
+    }).addText(
+      (text) => text.setPlaceholder("margin right").setValue(this.result["marginRight"]).onChange((value) => {
+        this.result["marginRight"] = value;
+      })
+    );
+    btmEl.settingEl.hidden = true;
+    new import_obsidian.Setting(contentEl).setName("Downscale precent").addSlider((slider) => {
+      slider.setLimits(0, 100, 1).setValue(this.result["scale"]).onChange(async (value) => {
+        this.result["scale"] = value;
+        slider.showTooltip();
+      });
+    });
+    new import_obsidian.Setting(contentEl).setName("Landscape").addToggle(
+      (toggle) => toggle.setTooltip("landscape").setValue(this.result["landscape"]).onChange(async (value) => {
+        this.result["landscape"] = value;
+      })
+    );
+    new import_obsidian.Setting(contentEl).setName("Open after export").addToggle(
+      (toggle) => toggle.setTooltip("Open the exported file after exporting.").setValue(this.result["open"]).onChange(async (value) => {
+        this.result["open"] = value;
+      })
+    );
+    new import_obsidian.Setting(contentEl).setHeading().addButton((button) => {
+      button.setButtonText("Export").onClick(async () => {
+        this.canceled = false;
+        this.close();
+        await this.callback(this.result);
+      });
+      button.buttonEl.style.marginRight = "auto";
+      button.buttonEl.style.marginLeft = "auto";
+      button.buttonEl.style.width = "-webkit-fill-available";
+      button.buttonEl.style.marginBottom = "2em";
+    });
+  }
+  onClose() {
+    const { contentEl } = this;
+    contentEl.empty();
+  }
+};
+
+// src/setting.ts
+var import_obsidian2 = require("obsidian");
+var ConfigSettingTab = class extends import_obsidian2.PluginSettingTab {
+  constructor(app, plugin) {
+    super(app, plugin);
+    this.plugin = plugin;
+  }
+  display() {
+    const { containerEl } = this;
+    containerEl.empty();
+    new import_obsidian2.Setting(containerEl).setName("Page number format").setDesc("{page}: current page number, {pages}: total page numbers, examples: {page} / {pages}").addText(
+      (text) => text.setPlaceholder("{page}").setValue(this.plugin.settings.pageFormat).onChange(async (value) => {
+        this.plugin.settings.pageFormat = value;
+        await this.plugin.saveSettings();
+      })
+    );
+    new import_obsidian2.Setting(containerEl).setName("Footer bottom distance").addText(
+      (text) => text.setPlaceholder("20").setValue(this.plugin.settings.distance).onChange(async (value) => {
+        this.plugin.settings.distance = value;
+        await this.plugin.saveSettings();
+      })
+    );
+  }
+};
 
 // src/render.ts
+var fs = __toESM(require("fs/promises"));
+var import_obsidian3 = require("obsidian");
+var path = __toESM(require("path"));
 async function renderMermaid(doc) {
   doc.querySelectorAll(".language-mermaid").forEach(async (element, i) => {
     var _a;
@@ -20062,36 +20231,162 @@ async function renderMermaid(doc) {
     bindFunctions(element);
   });
 }
+function getAppScripts() {
+  return Array.from(document.scripts).map((script) => script.src).filter((src) => src == null ? void 0 : src.startsWith("app://"));
+}
+function getAllStyles(doc, clear = false) {
+  const cssTexts = [];
+  Array.from(document.styleSheets).forEach((sheet) => {
+    var _a, _b;
+    const id = (_a = sheet.ownerNode) == null ? void 0 : _a.id;
+    if (id == null ? void 0 : id.startsWith("svelte-")) {
+      return;
+    }
+    const href = (_b = sheet.ownerNode) == null ? void 0 : _b.href;
+    const division = `/* ----------${id ? `id:${id}` : href ? `href:${href}` : ""}---------- */`;
+    if (id || href) {
+      console.log(division);
+    }
+    cssTexts.push(division);
+    Array.from(sheet.cssRules).forEach((rule) => {
+      if (clear) {
+        if (rule instanceof CSSStyleRule) {
+          if (/^(.CodeMirror|.cm-)[^,]*$/.test(rule.selectorText)) {
+            return;
+          }
+          if (id != "MJX-CHTML-styles" && (rule == null ? void 0 : rule.selectorText) && !doc.querySelector(rule == null ? void 0 : rule.selectorText)) {
+            return;
+          }
+        }
+        if (rule.cssText.startsWith("@font-face")) {
+          return;
+        }
+      }
+      const cssText = rule.cssText.replaceAll(`url("public/`, `url("https://publish.obsidian.md/public/`).replaceAll(`url("lib/`, `url("https://publish.obsidian.md/lib/`);
+      cssTexts.push(cssText);
+    });
+  });
+  return cssTexts;
+}
+function insertScripts(doc) {
+  const element = doc.body;
+  getAppScripts().forEach((src) => {
+    console.log("src:", src);
+    const script = doc.createElement("script");
+    if (src.includes("mermaid")) {
+      return;
+    }
+    script.src = src;
+    script.type = "text/javascript";
+    element.appendChild(script);
+  });
+  {
+    const mathjax1 = `<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"><\/script>`;
+    const mathjax2 = `<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"><\/script>`;
+    const script1 = document.createElement("span");
+    script1.innerHTML = mathjax1;
+    element.appendChild(script1);
+    const script2 = document.createElement("span");
+    script2.innerHTML = mathjax2;
+    element.appendChild(script2);
+  }
+}
+async function createHead(doc, tempPath) {
+  const cssTexts = getAllStyles(doc);
+  const stylePatch = `
+		/* ---------- css patch ---------- */
+    @media print {
+    	.print .markdown-preview-view {
+    		height: auto !important;
+    	}
+
+			.md-print-anchor {
+				white-space: pre !important;
+				border-left: none !important;
+				border-right: none !important;
+				border-top: none !important;
+				border-bottom: none !important;
+				display: inline-block !important;
+				position: absolute !important;
+				width: 1px !important;
+				height: 1px !important;
+				right: 0 !important;
+				outline: 0 !important;
+				background: 0 0 !important;
+				text-decoration: initial !important;
+				text-shadow: initial !important;
+			}
+			
+			.markdown-preview-view {
+				text-align: justify;
+				hyphens: auto;
+			}
+    }
+		`;
+  cssTexts.push(stylePatch);
+  const appCssFile = path.join(tempPath, "app.css");
+  await fs.writeFile(appCssFile, cssTexts.join("\n"));
+  const linkNode = doc.createElement("link");
+  linkNode.href = "./app.css";
+  linkNode.rel = "stylesheet";
+  const styleElement = doc.createElement("style");
+  styleElement.innerHTML = cssTexts.join("\n");
+  doc.head.appendChild(styleElement);
+  insertScripts(doc);
+  return doc;
+}
+async function createBody(plugin, doc, file, config) {
+  const view = plugin.app.workspace.getActiveViewOfType(import_obsidian3.MarkdownView);
+  const renderNode = doc.createElement("div");
+  await import_obsidian3.MarkdownRenderer.render(plugin.app, view.data, renderNode, file.path, view);
+  Array.from(renderNode.attributes).forEach((attr) => {
+    renderNode.removeAttribute(attr.name);
+  });
+  renderNode.className = "markdown-preview-view markdown-rendered";
+  if (config == null ? void 0 : config["showTitle"]) {
+    const header = doc.createElement("h1");
+    header.innerHTML = file.basename;
+    renderNode.insertBefore(header, renderNode.firstChild);
+  }
+  const printNode = document.createElement("div");
+  printNode.className = "print";
+  printNode.appendChild(renderNode);
+  doc.body.appendChild(printNode);
+  Array.from(document.body.attributes).forEach(({ name, value }) => {
+    doc.body.setAttribute(name, value);
+  });
+  doc.body.addClass("theme-light");
+  doc.body.removeClass("theme-dark");
+  modifyHeadings(doc);
+  await renderMermaid(doc);
+}
+async function renderFile(plugin, file, tempPath, config) {
+  const doc = document.implementation.createHTMLDocument(file.basename);
+  await createBody(plugin, doc, file, config);
+  await createHead(doc, tempPath);
+  return doc;
+}
 
 // src/main.ts
 var isDev = false;
 var DEFAULT_SETTINGS = {
   pageFormat: "{page}",
-  distance: "20"
+  distance: "15"
 };
-var BetterExportPdfPlugin = class extends import_obsidian.Plugin {
+var BetterExportPdfPlugin = class extends import_obsidian4.Plugin {
   async onload() {
     await this.loadSettings();
     this.registerCommand();
     this.registerSetting();
     this.registerEvents();
   }
-  registerIcon() {
-    const ribbonIconEl = this.addRibbonIcon("dice", "Sample Plugin", (evt) => {
-      new import_obsidian.Notice("This is a notice!");
-    });
-    ribbonIconEl.addClass("my-plugin-ribbon-class");
-  }
-  registerStstusBar() {
-    const statusBarItemEl = this.addStatusBarItem();
-    statusBarItemEl.setText("Status Bar Text");
-  }
   registerCommand() {
     this.addCommand({
       id: "export-current-file-to-pdf",
       name: "Export Current file to PDF",
       checkCallback: (checking) => {
-        const view = this.app.workspace.getActiveViewOfType(import_obsidian.MarkdownView);
+        var _a;
+        const view = this.app.workspace.getActiveViewOfType(import_obsidian4.MarkdownView);
         const file = view == null ? void 0 : view.file;
         if (!file) {
           return;
@@ -20099,33 +20394,31 @@ var BetterExportPdfPlugin = class extends import_obsidian.Plugin {
         if (checking) {
           return true;
         }
-        new ExportConfigModal(this.app, async (config) => {
-          try {
-            await this.exportToPDF(file, config);
-          } catch (error2) {
-            console.error(error2);
-          } finally {
-            document.querySelectorAll("webview").forEach((node) => {
-              var _a;
-              console.log("webview");
-              if (!isDev) {
-                (_a = node.parentNode) == null ? void 0 : _a.removeChild(node);
-              }
-            });
-          }
-        }).open();
+        new ExportConfigModal(
+          this.app,
+          async (config) => {
+            try {
+              await this.exportToPDF(file, config);
+            } catch (error2) {
+              console.error(error2);
+            } finally {
+              document.querySelectorAll("webview").forEach((node) => {
+                var _a2;
+                console.log("webview");
+                if (!isDev) {
+                  (_a2 = node.parentNode) == null ? void 0 : _a2.removeChild(node);
+                }
+              });
+            }
+          },
+          (_a = this.settings) == null ? void 0 : _a.prevConfig
+        ).open();
         return true;
       }
     });
   }
   registerSetting() {
     this.addSettingTab(new ConfigSettingTab(this.app, this));
-  }
-  registerOther() {
-    this.registerDomEvent(document, "click", (evt) => {
-      console.log("click", evt);
-    });
-    this.registerInterval(window.setInterval(() => console.log("setInterval"), 5 * 60 * 1e3));
   }
   registerEvents() {
     this.registerEvent(
@@ -20136,21 +20429,28 @@ var BetterExportPdfPlugin = class extends import_obsidian.Plugin {
             title = `${title} (dev)`;
           }
           item.setTitle(title).setIcon("download").setSection("action").onClick(async () => {
-            new ExportConfigModal(this.app, async (config) => {
-              try {
-                await this.exportToPDF(file, config);
-              } catch (error2) {
-                console.error(error2);
-              } finally {
-                document.querySelectorAll("webview").forEach((node) => {
-                  var _a;
-                  console.log("webview");
-                  if (!isDev) {
-                    (_a = node.parentNode) == null ? void 0 : _a.removeChild(node);
-                  }
-                });
-              }
-            }).open();
+            var _a;
+            new ExportConfigModal(
+              this.app,
+              async (config) => {
+                try {
+                  this.settings.prevConfig = config;
+                  await this.saveSettings();
+                  await this.exportToPDF(file, config);
+                } catch (error2) {
+                  console.error(error2);
+                } finally {
+                  document.querySelectorAll("webview").forEach((node) => {
+                    var _a2;
+                    console.log("webview");
+                    if (!isDev) {
+                      (_a2 = node.parentNode) == null ? void 0 : _a2.removeChild(node);
+                    }
+                  });
+                }
+              },
+              (_a = this.settings) == null ? void 0 : _a.prevConfig
+            ).open();
           });
         });
       })
@@ -20199,27 +20499,27 @@ var BetterExportPdfPlugin = class extends import_obsidian.Plugin {
       return;
     }
     const outputFile = result.filePath;
-    const tempRoot = path.join(os.tmpdir(), "Obdisian");
+    const tempRoot = path2.join(os.tmpdir(), "Obdisian");
     try {
-      await fs.mkdir(tempRoot, { recursive: true });
+      await fs2.mkdir(tempRoot, { recursive: true });
     } catch (error2) {
     }
-    const tempPath = await fs.mkdtemp(path.join(tempRoot, "export"));
+    const tempPath = await fs2.mkdtemp(path2.join(tempRoot, "export"));
     try {
-      await fs.mkdir(tempPath, { recursive: true });
+      await fs2.mkdir(tempPath, { recursive: true });
     } catch (error2) {
     }
-    const view = this.app.workspace.getActiveViewOfType(import_obsidian.MarkdownView);
+    const view = this.app.workspace.getActiveViewOfType(import_obsidian4.MarkdownView);
     const preview = view.previewMode;
     preview.renderer.showAll = true;
     await preview.renderer.unfoldAllHeadings();
     const webview = document.createElement("webview");
-    const doc = await this.renderFile(file, tempPath, config);
+    const doc = await renderFile(this, file, tempPath, config);
     console.log(file);
-    const tempFile = path.join(tempPath, "index.html");
+    const tempFile = path2.join(tempPath, "index.html");
     console.log("temp html file:", tempFile);
     const html = `<html>${doc.documentElement.innerHTML}</html>`;
-    await fs.writeFile(tempFile, html);
+    await fs2.writeFile(tempFile, html);
     webview.src = `file:///${tempFile}`;
     webview.nodeintegration = true;
     let completed = false;
@@ -20234,17 +20534,11 @@ var BetterExportPdfPlugin = class extends import_obsidian.Plugin {
     await sleep(5e3);
     try {
       let data = await w.printToPDF(printOptions);
-      const pdfDoc = await PDFDocument_default.load(data);
-      const posistions = await getHeadingPosition(pdfDoc);
-      const headings = await getHeadingTree(doc);
-      const outlines = generateOutlines(headings, posistions);
-      setOutline(pdfDoc, outlines);
-      await addPageNumbers(pdfDoc, {
+      data = await editPDF(data, doc, {
         format: this.settings.pageFormat,
         position: parseFloat(this.settings.distance) || parseFloat((_e = config["marginBottom"]) != null ? _e : "30") / 2
       });
-      data = await pdfDoc.save();
-      await fs.writeFile(outputFile, data);
+      await fs2.writeFile(outputFile, data);
       if (config.open) {
         electron.remote.shell.openPath(outputFile);
       }
@@ -20252,231 +20546,6 @@ var BetterExportPdfPlugin = class extends import_obsidian.Plugin {
       console.log(error2);
     }
     console.log("finished");
-  }
-  async renderMarkdown(file) {
-    const workspace = this.app.workspace;
-    console.log("workspace:", workspace);
-    const view = this.app.workspace.getActiveViewOfType(import_obsidian.MarkdownView);
-    const leaf = workspace.getLeaf("window");
-    console.log("leaf:", leaf);
-    await leaf.openFile(file, { active: true });
-    await waitFor(() => leaf == null ? void 0 : leaf.view.previewMode, 2e3);
-    console.log("view:", view);
-    console.log("data:", view.data);
-    await view.setMode(view.modes["preview"]);
-    const preview = view.previewMode;
-    console.log("====preview:", preview);
-    preview.renderer.showAll = true;
-    await preview.renderer.unfoldAllHeadings();
-    let lastRender = preview.renderer.lastRender;
-    preview.renderer.rerender(true);
-    let isRendered = false;
-    preview.renderer.onRendered(() => {
-      isRendered = true;
-    });
-    await waitFor(
-      // @ts-ignore
-      () => preview.renderer.lastRender != lastRender && isRendered,
-      10 * 1e3
-    );
-    const container = preview.containerEl;
-    console.log("html:", container.innerHTML);
-    await waitFor(() => {
-      const currRender = preview.renderer.lastRender;
-      if (currRender == lastRender) {
-        return true;
-      }
-      lastRender = currRender;
-      return false;
-    });
-    console.log("container:", container);
-  }
-  /**
-   * 处理 body 正文内容 <body></body>
-   * @param doc
-   * @param file
-   */
-  async createBody(doc, file, config) {
-    const view = this.app.workspace.getActiveViewOfType(import_obsidian.MarkdownView);
-    const renderNode = doc.createElement("div");
-    await import_obsidian.MarkdownRenderer.render(this.app, view.data, renderNode, file.path, view);
-    Array.from(renderNode.attributes).forEach((attr) => {
-      renderNode.removeAttribute(attr.name);
-    });
-    renderNode.className = "markdown-preview-view markdown-rendered";
-    if (config == null ? void 0 : config["showTitle"]) {
-      const header = doc.createElement("h1");
-      header.innerHTML = file.basename;
-      renderNode.insertBefore(header, renderNode.firstChild);
-    }
-    const printNode = document.createElement("div");
-    printNode.className = "print";
-    printNode.appendChild(renderNode);
-    doc.body.appendChild(printNode);
-    Array.from(document.body.attributes).forEach(({ name, value }) => {
-      doc.body.setAttribute(name, value);
-    });
-    doc.body.addClass("theme-light");
-    doc.body.removeClass("theme-dark");
-    modifyHeadings(doc);
-    await renderMermaid(doc);
-  }
-  async renderFile(file, tempPath, config) {
-    const doc = document.implementation.createHTMLDocument(file.basename);
-    await this.createBody(doc, file, config);
-    await this.createHead(doc, tempPath);
-    return doc;
-  }
-  /**
-   * 创建 <head></head>
-   * @param title
-   * @param container
-   * @returns
-   */
-  async createHead(doc, tempPath) {
-    const cssTexts = this.getAllStyles(doc);
-    const stylePatch = `
-		/* ---------- css patch ---------- */
-    @media print {
-    	.print .markdown-preview-view {
-    		height: auto !important;
-    	}
-
-			.md-print-anchor {
-				white-space: pre !important;
-				border-left: none !important;
-				border-right: none !important;
-				border-top: none !important;
-				border-bottom: none !important;
-				display: inline-block !important;
-				position: absolute !important;
-				width: 1px !important;
-				height: 1px !important;
-				right: 0 !important;
-				outline: 0 !important;
-				background: 0 0 !important;
-				text-decoration: initial !important;
-				text-shadow: initial !important;
-			}
-			
-			.markdown-preview-view {
-				text-align: justify;
-				hyphens: auto;
-			}
-    }
-		`;
-    cssTexts.push(stylePatch);
-    const appCssFile = path.join(tempPath, "app.css");
-    await fs.writeFile(appCssFile, cssTexts.join("\n"));
-    const linkNode = doc.createElement("link");
-    linkNode.href = "./app.css";
-    linkNode.rel = "stylesheet";
-    const styleElement = doc.createElement("style");
-    styleElement.innerHTML = cssTexts.join("\n");
-    doc.head.appendChild(styleElement);
-    this.insertScripts(doc);
-    return doc;
-  }
-  insertScripts(doc) {
-    const element = doc.body;
-    this.getAppScripts().forEach((src) => {
-      console.log("src:", src);
-      const script = doc.createElement("script");
-      if (src.includes("mermaid")) {
-        return;
-      }
-      script.src = src;
-      script.type = "text/javascript";
-      element.appendChild(script);
-    });
-    {
-      const mathjax1 = `<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"><\/script>`;
-      const mathjax2 = `<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"><\/script>`;
-      const script1 = document.createElement("span");
-      script1.innerHTML = mathjax1;
-      element.appendChild(script1);
-      const script2 = document.createElement("span");
-      script2.innerHTML = mathjax2;
-      element.appendChild(script2);
-    }
-  }
-  getStyleTags() {
-    return Array.from(document.getElementsByTagName("style")).map((style) => {
-      return style.textContent || style.innerHTML;
-    });
-  }
-  getAllStyles(doc, clear = false) {
-    const cssTexts = [];
-    Array.from(document.styleSheets).forEach((sheet) => {
-      var _a, _b;
-      const id = (_a = sheet.ownerNode) == null ? void 0 : _a.id;
-      if (id == null ? void 0 : id.startsWith("svelte-")) {
-        return;
-      }
-      const href = (_b = sheet.ownerNode) == null ? void 0 : _b.href;
-      const division = `/* ----------${id ? `id:${id}` : href ? `href:${href}` : ""}---------- */`;
-      if (id || href) {
-        console.log(division);
-      }
-      cssTexts.push(division);
-      Array.from(sheet.cssRules).forEach((rule) => {
-        if (clear) {
-          if (rule instanceof CSSStyleRule) {
-            if (/^(.CodeMirror|.cm-)[^,]*$/.test(rule.selectorText)) {
-              return;
-            }
-            if (id != "MJX-CHTML-styles" && (rule == null ? void 0 : rule.selectorText) && !doc.querySelector(rule == null ? void 0 : rule.selectorText)) {
-              return;
-            }
-          }
-          if (rule.cssText.startsWith("@font-face")) {
-            return;
-          }
-        }
-        const cssText = rule.cssText.replaceAll(`url("public/`, `url("https://publish.obsidian.md/public/`).replaceAll(`url("lib/`, `url("https://publish.obsidian.md/lib/`);
-        cssTexts.push(cssText);
-      });
-    });
-    return cssTexts;
-  }
-  async getAllScripts() {
-    const scriptTags = document.scripts;
-    const jsScripts = [];
-    for (let i = 0; i < scriptTags.length; i++) {
-      const scriptTag = scriptTags[i];
-      const src = scriptTag.src;
-      const content = scriptTag.textContent || scriptTag.innerHTML;
-      if (src) {
-        const scriptContent = await fetch(src).then((res) => res.text());
-        jsScripts.push(scriptContent);
-      } else {
-        jsScripts.push(content);
-      }
-    }
-    return jsScripts;
-  }
-  getAppScripts() {
-    return Array.from(document.scripts).map((script) => script.src).filter((src) => src == null ? void 0 : src.startsWith("app://"));
-  }
-  async inlineMedia(doc, file) {
-    doc.querySelectorAll("img, audio, video").forEach(async (elem) => {
-      var _a;
-      const src = elem.getAttribute("src");
-      if (!(src == null ? void 0 : src.startsWith("app:"))) {
-        return;
-      }
-      try {
-        const filePath = this.app.vault.resolveFileUrl(src);
-        let extension = file.extension;
-        const base64 = await fs.readFile(filePath, { encoding: "base64" });
-        const type = (_a = this.app.viewRegistry.typeByExtension[extension]) != null ? _a : "audio";
-        if (extension === "svg")
-          extension += "+xml";
-        elem.setAttribute("src", `data:${type}/${extension};base64,${base64}`);
-      } catch (error2) {
-        console.log(error2);
-      }
-    });
   }
   changeConfig() {
     var _a;
@@ -20505,144 +20574,6 @@ var BetterExportPdfPlugin = class extends import_obsidian.Plugin {
     });
   }
 };
-var ExportConfigModal = class extends import_obsidian.Modal {
-  constructor(app, callback) {
-    super(app);
-    this.canceled = true;
-    this.result = {
-      pageSise: "A4",
-      marginType: "1",
-      showTitle: true,
-      open: true,
-      scale: 100,
-      landscape: false,
-      marginTop: "0",
-      marginBottom: "0",
-      marginLeft: "0",
-      marginRight: "0"
-    };
-    this.callback = callback;
-  }
-  onOpen() {
-    const { contentEl } = this;
-    contentEl.empty();
-    this.titleEl.setText("Export to PDF");
-    new import_obsidian.Setting(contentEl).setName("Add filename as title").addToggle(
-      (toggle) => toggle.setTooltip("Add filename as title").setValue(true).onChange(async (value) => {
-        this.result["showTitle"] = value;
-      })
-    );
-    const pageSizes = ["A0", "A1", "A2", "A3", "A4", "A5", "A6", "Legal", "Letter", "Tabloid", "Ledger"];
-    new import_obsidian.Setting(contentEl).setName("Page size").addDropdown((dropdown) => {
-      dropdown.addOptions(Object.fromEntries(pageSizes.map((size) => [size, size]))).setValue("A4").onChange(async (value) => {
-        this.result["pageSise"] = value;
-      });
-    });
-    new import_obsidian.Setting(contentEl).setName("Margin").addDropdown((dropdown) => {
-      dropdown.addOption("0", "None").addOption("1", "Default").addOption("2", "Small").addOption("3", "Custom").setValue("1").onChange(async (value) => {
-        this.result["marginType"] = value;
-        if (value == "3") {
-          topEl.settingEl.hidden = false;
-          btmEl.settingEl.hidden = false;
-        } else {
-          topEl.settingEl.hidden = true;
-          btmEl.settingEl.hidden = true;
-        }
-      });
-    });
-    const topEl = new import_obsidian.Setting(contentEl).setName("Top/Bottom").addText((text) => {
-      text.setPlaceholder("margin top").setValue("0").onChange((value) => {
-        this.result["marginTop"] = value;
-      });
-    }).addText(
-      (text) => text.setPlaceholder("margin bottom").setValue("0").onChange((value) => {
-        this.result["marginBottom"] = value;
-      })
-    );
-    topEl.settingEl.hidden = true;
-    const btmEl = new import_obsidian.Setting(contentEl).setName("Left/Right").addText((text) => {
-      text.setPlaceholder("margin left").setValue("0").onChange((value) => {
-        this.result["marginLeft"] = value;
-      });
-    }).addText(
-      (text) => text.setPlaceholder("margin right").setValue("0").onChange((value) => {
-        this.result["marginRight"] = value;
-      })
-    );
-    btmEl.settingEl.hidden = true;
-    new import_obsidian.Setting(contentEl).setName("Downscale precent").addSlider((slider) => {
-      slider.setLimits(0, 100, 1).setValue(100).onChange(async (value) => {
-        this.result["scale"] = value;
-        slider.showTooltip();
-      });
-    });
-    new import_obsidian.Setting(contentEl).setName("Landscape").addToggle(
-      (toggle) => toggle.setTooltip("landscape").setValue(false).onChange(async (value) => {
-        this.result["landscape"] = value;
-      })
-    );
-    new import_obsidian.Setting(contentEl).setName("Open after export").addToggle(
-      (toggle) => toggle.setTooltip("Open the exported file after exporting.").setValue(true).onChange(async (value) => {
-        this.result["open"] = value;
-      })
-    );
-    new import_obsidian.Setting(contentEl).setHeading().addButton((button) => {
-      button.setButtonText("Export").onClick(async () => {
-        this.canceled = false;
-        this.close();
-        await this.callback(this.result);
-      });
-      button.buttonEl.style.marginRight = "auto";
-      button.buttonEl.style.marginLeft = "auto";
-      button.buttonEl.style.width = "-webkit-fill-available";
-      button.buttonEl.style.marginBottom = "2em";
-    });
-  }
-  onClose() {
-    const { contentEl } = this;
-    contentEl.empty();
-  }
-};
-var ConfigSettingTab = class extends import_obsidian.PluginSettingTab {
-  constructor(app, plugin) {
-    super(app, plugin);
-    this.plugin = plugin;
-  }
-  display() {
-    const { containerEl } = this;
-    containerEl.empty();
-    new import_obsidian.Setting(containerEl).setName("Page number format").setDesc("{page}: current page number, {pages}: total page numbers, examples: {page} / {pages}").addText(
-      (text) => text.setPlaceholder("{page}").setValue(this.plugin.settings.pageFormat).onChange(async (value) => {
-        this.plugin.settings.pageFormat = value;
-        await this.plugin.saveSettings();
-      })
-    );
-    new import_obsidian.Setting(containerEl).setName("Footer bottom distance").addText(
-      (text) => text.setPlaceholder("20").setValue(this.plugin.settings.distance).onChange(async (value) => {
-        this.plugin.settings.distance = value;
-        await this.plugin.saveSettings();
-      })
-    );
-  }
-};
-function waitFor(cond, timeout = 0) {
-  return new Promise((resolve, reject) => {
-    const startTime = Date.now();
-    const poll = () => {
-      if (cond()) {
-        resolve(true);
-      } else if (timeout > 0 && Date.now() - startTime >= timeout) {
-        reject(new Error("Timeout exceeded"));
-      } else {
-        setTimeout(poll, 500);
-      }
-    };
-    poll();
-  });
-}
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 /*! Bundled license information:
 
 tslib/tslib.es6.js:
