@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "fc3dab6abba9a607",
+        "id": "2ae714154e5d31ea",
         "type": "tabs",
         "children": [
           {
-            "id": "2b7f5d5d165d9193",
+            "id": "4f968525977cbaa3",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -179,9 +179,12 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "2b7f5d5d165d9193",
+  "active": "4f968525977cbaa3",
   "lastOpenFiles": [
     "AllBooks.md",
+    "1-Theory/4-Architecture/CSAPP/Keypoints/00-课程准备与介绍.md",
+    "README.md",
+    "5-Tools/Obsidian/Obsidian高阶技巧总结.md",
     "1-Theory/8-Compiler/Compiler-Principle-2th/10-Introduction/2.3 第1章 引论.md",
     "1-Theory/8-Compiler/Compiler-Principle-2th/2.1 译者序.md",
     "1-Theory/8-Compiler/2 编译原理（第2版）/2 编译原理（第2版）.md",
@@ -204,9 +207,6 @@
     "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.8 实践程序.md",
     "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.7 练习.md",
     "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.6 本章小结.md",
-    "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.5 12.5 图形化编程补充读物/5.17.5.2 12.5.2 何去何从.md",
-    "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.5 12.5 图形化编程补充读物/5.17.5.1 12.5.1 用场景构建器构建JavaFX应用程序.md",
-    "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.5 12.5 图形化编程补充读物/5.17.5 12.5 图形化编程补充读物.md",
     "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.5 12.5 图形化编程补充读物",
     "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.4 12.4 泛型",
     "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.3 12.3 链式数据结构",
