@@ -11,11 +11,28 @@
             "id": "4f968525977cbaa3",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/00-Intro.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "a8973caaea638a93",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/20-Learning-to-Answer-Y-N.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -76,7 +93,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 395.50577545166016
+    "width": 256.50577545166016,
+    "collapsed": true
   },
   "right": {
     "id": "1516a4ce828ea6b6",
@@ -93,6 +111,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/20-Learning-to-Answer-Y-N.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -109,6 +128,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/20-Learning-to-Answer-Y-N.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -131,7 +151,9 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {}
+              "state": {
+                "file": "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/20-Learning-to-Answer-Y-N.md"
+              }
             }
           }
         ]
@@ -146,7 +168,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/20-Learning-to-Answer-Y-N.md"
+              }
             }
           },
           {
@@ -161,7 +185,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 262.5
+    "width": 262.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -179,8 +204,30 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "4f968525977cbaa3",
+  "active": "a8973caaea638a93",
   "lastOpenFiles": [
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/assets/20-Learning-to-Answer-Y-N-funtime.png",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/assets/20-Learning-to-Answer-Y-N-cyclic-PLA.png",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/assets/20-Learning-to-Answer-Y-N-PLA.png",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/assets/20-Learning-to-Answer-Y-N-linear-classifier-app.png",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/assets/20-Learning-to-Answer-Y-N-linear-classifiers.png",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/assets/20-Learning-to-Answer-Y-N-vector-H.png",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/assets/20-Learning-to-Answer-Y-N-hypothesis-set.png",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/00-Intro.md",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/20-Learning-to-Answer-Y-N.md",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/10-The-Learning-Problem.md",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/assets/10-The-Learning-Problem-ML-vs-statistics.png",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/assets/10-The-Learning-Problem-ML-vs-AI.png",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/assets/10-The-Learning-Problem-ML-vs-DM.png",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/assets/10-The-Learning-Problem-learning-model.png",
+    "5-Tools/LaTeX/字体命令.md",
+    "5-Tools/LaTeX",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations/assets",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-techniques",
+    "3-AI/1-MachineLearning/ntu-htlin/ML-foundations",
+    "3-AI/1-MachineLearning/ntu-htlin/courseinfo.md",
+    "3-AI/1-MachineLearning/ntu-hylee-23spring/README.md",
+    "3-AI/1-MachineLearning/ntu-htlin",
     "AllBooks.md",
     "1-Theory/4-Architecture/CSAPP/Keypoints/00-课程准备与介绍.md",
     "README.md",
@@ -200,33 +247,11 @@
     "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.22 附录E javadoc.md",
     "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.21 附录D DecimalFormat类.md",
     "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.20 附录C protected和包修饰符.md",
-    "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.19 附录B 运行Applet.md",
-    "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.18 附录A 获取Java.md",
-    "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.10 自测问题答案.md",
-    "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.9 编程项目.md",
-    "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.8 实践程序.md",
-    "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.7 练习.md",
-    "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.6 本章小结.md",
     "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.5 12.5 图形化编程补充读物",
     "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.4 12.4 泛型",
     "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.3 12.3 链式数据结构",
     "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.2 12.2 Java集合框架",
     "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型/5.17.1 12.1 基于数组的数据结构",
-    "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.17 第12章 动态数据结构和泛型",
-    "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.16 第11章 递归/5.16.2 11.2 运用递归编程",
-    "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.16 第11章 递归/5.16.1 11.1 递归基础",
-    "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.16 第11章 递归",
-    "0-Assets/Epubook/程序员编程语言经典合集（计算机科学丛书5册套装），javapython编程语言含经典教材龙书《编译原理》 (Bruce Eckel  Alfred V. Aho  Monica S. Lam etc.) (Z-Library)/5 Java程序设计与问题求解（原书第8版）/5.15 第10章 流、文件IO和网络/5.15.5 10.5 包含对象和数组的二进制文件IO",
-    "1-Theory/5-OS-principle/Internal&design-principle/assets/40-内存虚存-imp-clock.gif",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-float-cache.png",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-2-way-cache.png",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-cache-hit-rate.png",
-    "1-Theory/6-Network/ComputerNetwork-6th-Tanenbaum/40-MAC-sublayer/assets/80-Switching-spanning-tree.png",
-    "1-Theory/6-Network/ComputerNetwork-6th-Tanenbaum/40-MAC-sublayer/assets/80-Switching-bridges-parallel-links.png",
-    "1-Theory/6-Network/ComputerNetwork-6th-Tanenbaum/40-MAC-sublayer/assets/80-Switching-network-devices-1.png",
-    "1-Theory/6-Network/ComputerNetwork-6th-Tanenbaum/40-MAC-sublayer/assets/80-Switching-network-devices.png",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-SNMP-agent.png",
-    "1-Theory/2-DataStruct/Practice/912-模拟题/assets/2024-威卷III-virtual-circuit-route-table.png",
     "1-Theory/2-DataStruct/dsa-cpp-deng/G-Exam/未命名.canvas",
     "未命名.canvas",
     "MyHome.canvas",

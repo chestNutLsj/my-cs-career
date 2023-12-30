@@ -5,11 +5,11 @@
     "fontSize": 16,
     "iconColor": null,
     "recentlyUsedIcons": [
+      "TiTex",
       "LiCpu",
       "TiBinaryTree",
       "SiLeanpub",
-      "TiFileExport",
-      "LiImport"
+      "TiFileExport"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -84,5 +84,6 @@
   "0-Assets/Import": "LiImport",
   "0-Assets/Export": "TiFileExport",
   "1-Theory/1-ProgramLanguage/Rust/Cargo": "SiCargo",
-  "0-Assets/Epubook": "SiLeanpub"
+  "0-Assets/Epubook": "SiLeanpub",
+  "5-Tools/LaTeX": "TiTex"
 }
